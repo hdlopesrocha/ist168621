@@ -1,0 +1,30 @@
+// =============================================================================================
+// =============================================================================================
+// =============================================================================================
+
+Combinando TV Interativa e Hipervídeo - 04445709.pdf
+
+"O conceito de hipervídeo é um caso específico de
+hipermídia que, por sua vez, deriva do conceito de hipertexto.
+T. H. Nelson, em um artigo publicado em 1965 [20], afirma
+que um hipertexto é um conjunto de textos e imagens
+interconectados de uma forma tão complexa que não é
+conveniente representá-lo em papel. Se, ao invés de apenas
+textos e imagens, outros meios de comunicação (mídias),
+como sons e vídeos, fossem incorporados, então o conceito de
+hipermídia seria construído.
+No caso particular do hipervídeo, pode-se defini-lo como
+um fluxo de vídeo que contém embutidas em si âncoras que
+podem levar o usuário a um outro fluxo de informação
+implementado, possivelmente, em outra mídia."
+
+T. H. Nelson, “Complex information processing: a file structure for the
+complex, the changing and the indeterminate”, in Proc. 20th ACM
+National Conference. Cleveland, Ohio, USA: ACM Press, August 1965,
+pp. 84–100
+
+Neste paper é apresentada um a alternativa ao SMIL (synchronized Mltimedia Integration Language) e HTIMEL (HTML with time extension)
+A arquitectura da solução Hipervideo usa os codecs MPEG, o que é muito baixo nível e depende da meneira como o MPEG comprime os dados.
+No MPEG existem frames completos e frames cujo o conteúdo é extraído de outros frames, isto cria uma dependencia dos frames completos e como inserir conteúdo multimedia no video.
+
+No caso do WebRTC, o codec de video é o VP8/VP9, seria interessante explorar como é realizada a compressão e se é possível saltar para qualquer frame sem que hajam artefactos visiveis
