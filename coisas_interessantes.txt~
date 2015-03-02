@@ -23,4 +23,8 @@ complex, the changing and the indeterminate”, in Proc. 20th ACM
 National Conference. Cleveland, Ohio, USA: ACM Press, August 1965,
 pp. 84–100
 
+Neste paper é apresentada um a alternativa ao SMIL (synchronized Mltimedia Integration Language) e HTIMEL (HTML with time extension)
+A arquitectura da solução Hipervideo usa os codecs MPEG, o que é muito baixo nível e depende da meneira como o MPEG comprime os dados.
+No MPEG existem frames completos e frames cujo o conteúdo é extraído de outros frames, isto cria uma dependencia dos frames completos e como inserir conteúdo multimedia no video.
 
+No caso do WebRTC, o codec de video é o VP8/VP9, seria interessante explorar como é realizada a compressão e se é possível saltar para qualquer frame sem que hajam artefactos visiveis
