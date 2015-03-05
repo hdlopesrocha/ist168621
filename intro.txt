@@ -1,0 +1,38 @@
+A necessidade em montar uma rede de comunicações, à escala global, numa era quando a tecnologia não estava ao dispor de toda a gente, fez com que alguns protocolos de comunicação não fossem os mais adequados para uma grande quantidade de utilizadores. O protocolo IP na versão quatro limita o número de endereços disponíveis para estabelecer pontos de comunicação. Uma solução temporária para este problema surgiu com a criação do NAT, que permitiu usar menos IP's no domínio público reencaminhando tráfego para endereços privados.
+
+(Falar dos quatro tipos de NAT)
+
+Rapidamente o Symmetric NAT, também devido à menor vulnerabilidade (citar algum estudo sobre isto), tornou-se a alternativa preferida na Internet atingindo uma taxa de utilização na ordem dos X% com uma variância de Y (citar algum estudo sobre isto)
+
+Este método de tradução de endereços ajusta-se ao modelo Cliente-Servidor, na medida em que quem começa a comunicação é o cliente, começando por executar uma acção sobre o servidor, este por sua vez responde a esse pedido única e exclusivamente para o cliente respectivo.
+
+Num ambiente onde as comunicações têm o requisito de serem em tempo real, por utilizadores com endereços privados, o modelo Cliente-Servidor não é adequado. Um mecanismo para iludir os utilizadores que estão a comunicar em tempo real é usar um servidor público como passo intermédio para comunicação. De entre as várias abordagens possíveis, um chat pode ser implementado com um esquema Publish-Subscriber (explicar o que é) ou através de polling ao servidor (...).
+
+Este modelo requer uma infraestrutura por parte de quem fornece o serviço de comunicação e para além disso não fornece a melhor qualidade de serviço, pois a sobrecarga dessa infraestrutura pode causar uma qualidade de serviço degradada para todos os seus utilizadores.
+
+Vários esforços têm sido feitos ao longo do tempo por (... Google WebRTC ... Skype ... outros), para fornecerem o serviço de comunicação o mais descentralizado possível (breve resumo sobre o skype e uso de STUN e TURN).
+
+(Falar sobre WebRTC)
+
+Embora o skype resolva uma grande fatia das necessidades das pessoas ao nível da comunicação em tempo real, seria interessante estender a comunição ao nível do HyperVideo ou HyperMedia.
+
+Uma clara vantagem em usar tecnologias como WebRTC surge da facilidade em usar uma aplicação de comunicação, não sendo necessário instalar qualquer programa à excepção do próprio webbrowser, incluíndo também vantagem de não ser necessário instalar qualquer plugin. Ambos os endpoints adquirem o mesmo frontent através do download da página web que incluí scripts responsáveis pela comunicação (falar de mobile agents? javascript?)
+
+A reprodução de conteúdo hypermedia, sobre WebRTC, mesmo assim introduz alguns desafios nomeadamente (...) estudos feitos nesta área levaram ao desenvolvimento de linguagens como SMIL e HTIMEL (é este o nome?) que permitem especificar uma sequência temporal de conteúdos multimédia e interação entre os vários, possibilitando assim maior interactividade na reprodução de conteúdos multimédia (por exemplo mudar a câmara, definir um percurso diferente no filme, ...) 
+
+Os desafios neste trabalho envolvem uma componente de organização dados multimédia de uma forma interactiva. A gravação de vídeo para posterior reprodução é um requisito fundamental assim como aceder a streams de som, video ou dados em tempo real.
+
+O uso de um formato para especificar sequências temporais de conteúdos multimédia como XML são apenas declarativas e só provocam os comportamentos que os parsers estão aptos para "entender", tornando assim uma especificação limitativa. A nossa abordagem para reproduzir as mesmas funcionalidades passa por escrever código javascript, a vantagem em usar javascript passa pelo leque de diferentes tipos de desenrolar de uma sequência de conteúdos, possibilitanto a existência de um estado interno mais complexo. Por exemplo torna-se possível introduzir alguma aleatoriadade na história, ou até mesmo escolher a história com base no perfil de utilizador e nas suas escolhas anteriores.
+
+Outra grande vantagem do javascript é a sua portabilidade, tornando assim qualquer aplicação acessível "on demand".
+
+(abordar aqui como pode ser feita a gravação, em RAM (desvantagens)? usar um servidor local? público?)
+
+Realtime Personal WebSite
+
+Um dos cuidados que queremos ter ao desenvolver um sistema deste tipo é possibilitar a extensão para outros usos, não limitando a interface a um único tipo de actividade.
+
+Até agora a forma mais rica e mais flexível de expor contéudo multimédia é através de websites. Por isso seria interessante que o utilizador pudesse disponibilizar uma interface em html para o acesso dos seus conteúdos. Isto é, cada utilizador forneceria uma simples página web aos outros utilizadores, com uma interface adequada ao tipo de conteúdo.
+
+Cada utilizador poderia personalizar o seu site consoante a sua preferência de comunicação. Isto é, para utilizadores que preferem só comunicação por texto, apenas seria transferido o plugin (javascript) que permitisse comunicação via texto. Outro caso mais interessante que ultrapassa o conceito Hypermedia seria a possibilidade de edição de documentos em grupo.
+
