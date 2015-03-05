@@ -1,9 +1,8 @@
-\documentclass{article}
+\documentclass[11pt,twocolumn]{article}
 
 
 
 
-\usepackage[brazilian]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[fleqn]{amsmath}
@@ -11,6 +10,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{makeidx}
+\usepackage{blindtext}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{mathtools}
@@ -48,7 +48,7 @@
 \usepackage{titlesec}
 \titleformat{\section}{\hrule \large\bfseries}{\thesection}{1em}{}
 
-\title{Conversas Hiperligadas: Novo Paradigma de Comunicação e Colaboração potenciado pela Tecnologia WebRTC}
+\title{Conversas Hiperligadas: Novo Paradigma de Comunicação e Colaboração, potenciado pela Tecnologia WebRTC}
 \author{
 	Henrique Lopes Rocha \\ hdlopesrocha91@gmail.com
 }
@@ -56,34 +56,37 @@
 
 
 
-\date{Fevereiro 2015}
+\date{\today}
 \begin{document}
+
+\begingroup
+\let\onecolumn\twocolumn
+
 	\maketitle
-	\newpage
-	\tableofcontents
-	\newpage
 
-\textbf{Abstract}
+
+\begin{abstract}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam lobortis facilisis sem. Nullam nec mi et neque pharetra sollicitudin. Praesent imperdiet mi nec ante. Donec ullamcorper, felis non sodales commodo, lectus velit ultrices augue, a dignissim nibh lectus placerat pede.
+\end{abstract}
+
+\endgroup
+
+
 \section{Introduction}
-The need to build a global comunication network in an era when, almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly know users. IPv4 limits the number o public addresses in such a way that today are scarse. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group though their private addresses, this technique is also know as Network Address Translation (NAT).
+The need to build a global comunication network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. IPv4 limits the number of public addresses in such a way that today are scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each element is identified publicly by the same IP address but different ports, this technique is also know as Network Address Translation (NAT).
 
-    
+Initially NAT offered an alternative for address exhaustion and a false sensation of better security, asymetric NAT became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that IP disponibilizes is also small compared to our current needs, worse than that, NAT also difficults end-to-end communication, forcing most of applications that follows this model to be implemented unificiently.
+
+Applications based on multimedia and file sharing were one of the most strained. To enable end-to-end comunication, one could simulate it via intermediate public servers or using STUN and TURN servers to overpass NAT. 
+
+Client-Server models aren't suitable for real time comunication between two private end points. For example, amongst multiple alternatives, a messaging service could be implemented through a publish subscriber schema or by polling a messaging server. Clearly this type of communication requires a more expensive infrastructure and, at most cases, more network usage, leading to a worse quality of service. The requirements of video comunication makes this kind of model out of question.
+
+Efforts were made by Skype and Google to provide real time comunication between two or more entities, either having public or private addresses.
+
 \begin{thebibliography}{9}
 
 
-\bibitem{activator} Typesafe - Build Reactive Applications on the JVM - \url{http://typesafe.com/}
-\bibitem{github} GitHub - Build software better, together - \url{http://github.com/}
-\bibitem{gitlab} GitLab - Version Control on your Server - \url{http://gitlab.com/}
-\bibitem{gitolite} Gitolite - Hosting Git Repositories - \url{http://gitolite.com/}
-\bibitem{gitweb} Gitweb - Git SCM Wiki - \url{http://git.wiki.kernel.org/index.php/Gitweb}
-\bibitem{iptables} iptables - Linux man page - \url{http://linux.die.net/man/8/iptables}
-\bibitem{jquery} jQuery - write less, do more - \url{http://jquery.com/}
-\bibitem{json} JSON - JavaScript Object Notation - \url{http://json.org/}
-\bibitem{mongodb} MongoDB - NoSQL database - \url{http://mongodb.org/}
-\bibitem{rest} REST - Representational state transfer - \url{http://en.wikipedia.org/wiki/Representational_state_transfer}
-\bibitem{sdk} Android SDK - Software Development Kit - \url{http://developer.android.com/sdk/index.html}
-\bibitem{ubuntu} Ubuntu Server - for scale-out computing - \url{http://www.ubuntu.com/server}
-\bibitem{virtualbox} VirtualBox - Oracle VM - \url{http://virtualbox.org/}
+\bibitem{ipv4} Next Generation Internet: IPv4 Address Exhaustion, Mitigation Strategies and Implications for the U.S. - An IEEE-USA White Paper - 2009
 
 
 

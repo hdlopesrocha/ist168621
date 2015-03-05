@@ -1,2 +1,0 @@
-\select@language {brazilian}
-\contentsline {section}{\numberline {1}Introduction}{3}

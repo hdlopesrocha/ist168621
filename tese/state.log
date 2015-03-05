@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.2.28)  5 MAR 2015 01:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.2.28)  5 MAR 2015 23:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2014/05/01>
 Babel <3.9k> and hyphenation patterns for 3 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -23,20 +23,6 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2014/03/24 3.9k The Babel package
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel-portuges/portuges.ldf
-Language: portuges 2008/03/18 v1.2q Portuguese support from the babel system
-
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2014/03/24 3.9k Babel common definitions
-\babel@savecnt=\count87
-\U@D=\dimen103
-)
-\l@brazilian = a dialect from \language\l@portuges 
-Package babel Info: Making " an active character on input line 145.
-))
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2014/04/30 v1.2b Input encoding file
 \inpenc@prehook=\toks14
@@ -51,7 +37,7 @@ Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-global.def
 File: uni-global.def 2013/05/13 UCS: Unicode global data
 )
-\uc@secondtry=\count88
+\uc@secondtry=\count87
 \uc@combtoks=\toks16
 \uc@combtoksb=\toks17
 \uc@temptokena=\toks18
@@ -74,46 +60,46 @@ Package: amstext 2000/06/29 v2.01
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks19
-\ex@=\dimen104
+\ex@=\dimen103
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen105
+\pmbraise@=\dimen104
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count89
+\inf@bad=\count88
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count90
-\leftroot@=\count91
+\uproot@=\count89
+\leftroot@=\count90
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count92
-\DOTSCASE@=\count93
+\classnum@=\count91
+\DOTSCASE@=\count92
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
-\big@size=\dimen106
+\big@size=\dimen105
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count94
-\c@MaxMatrixCols=\count95
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
 \dotsspace@=\muskip10
-\c@parentequation=\count96
-\dspbrk@lvl=\count97
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
 \tag@help=\toks20
-\row@=\count98
-\column@=\count99
-\maxfields@=\count100
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
 \andhelp@=\toks21
-\eqnshift@=\dimen107
-\alignsep@=\dimen108
-\tagshift@=\dimen109
-\tagwidth@=\dimen110
-\totwidth@=\dimen111
-\lineht@=\dimen112
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
 \@envbody=\toks22
 \multlinegap=\skip44
 \multlinetaggap=\skip45
@@ -136,23 +122,23 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks24
 )
-\lst@mode=\count101
+\lst@mode=\count100
 \lst@gtempboxa=\box28
 \lst@token=\toks25
-\lst@length=\count102
-\lst@currlwidth=\dimen113
-\lst@column=\count103
-\lst@pos=\count104
-\lst@lostspace=\dimen114
-\lst@width=\dimen115
-\lst@newlines=\count105
-\lst@lineno=\count106
-\lst@maxwidth=\dimen116
+\lst@length=\count101
+\lst@currlwidth=\dimen112
+\lst@column=\count102
+\lst@pos=\count103
+\lst@lostspace=\dimen113
+\lst@width=\dimen114
+\lst@newlines=\count104
+\lst@lineno=\count105
+\lst@maxwidth=\dimen115
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2014/03/04 1.5c (Carsten Heinz)
-\c@lstnumber=\count107
-\lst@skipnumbers=\count108
+\c@lstnumber=\count106
+\lst@skipnumbers=\count107
 \lst@framebox=\box29
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
@@ -177,14 +163,39 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count109
+\Gread@gobject=\count108
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
 Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 )
+(/usr/share/texlive/texmf-dist/tex/latex/blindtext/blindtext.sty
+Package: blindtext 2012/01/06 V2.0 blindtext-Package
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
+)
+\c@blindtext=\count109
+\c@Blindtext=\count110
+\c@blind@countparstart=\count111
+\blind@countxx=\count112
+\blindtext@numBlindtext=\count113
+\blind@countyy=\count114
+\c@blindlist=\count115
+\c@blindlistlevel=\count116
+\c@blindlist@level=\count117
+\blind@listitem=\count118
+\c@blind@listcount=\count119
+\c@blind@levelcount=\count120
+\blind@mathformula=\count121
+\blind@Mathformula=\count122
+\c@blind@randomcount=\count123
+\c@blind@randommax=\count124
+\c@blind@pangramcount=\count125
+\c@blind@pangrammax=\count126
+)
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count110
+\c@float@type=\count127
 \float@exts=\toks26
 \float@box=\box30
 \@float@everytoks=\toks27
@@ -204,23 +215,23 @@ File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 )
-\Gin@req@height=\dimen117
-\Gin@req@width=\dimen118
+\Gin@req@height=\dimen116
+\Gin@req@width=\dimen117
 )
 (/usr/share/texlive/texmf-dist/tex/latex/mh/mathtools.sty
 Package: mathtools 2014/05/21 v1.14 mathematical typesetting tools
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count111
-\calc@Bcount=\count112
-\calc@Adimen=\dimen119
-\calc@Bdimen=\dimen120
+\calc@Acount=\count128
+\calc@Bcount=\count129
+\calc@Adimen=\dimen118
+\calc@Bdimen=\dimen119
 \calc@Askip=\skip46
 \calc@Bskip=\skip47
 LaTeX Info: Redefining \setlength on input line 75.
 LaTeX Info: Redefining \addtolength on input line 76.
-\calc@Ccount=\count113
+\calc@Ccount=\count130
 \calc@Cskip=\skip48
 )
 (/usr/share/texlive/texmf-dist/tex/latex/mh/mhsetup.sty
@@ -228,15 +239,15 @@ Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
 )
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count114
-\l_MT_multwidth_dim=\dimen121
+\g_MT_multlinerow_int=\count131
+\l_MT_multwidth_dim=\dimen120
 \origjot=\skip49
-\l_MT_shortvdotswithinadjustabove_dim=\dimen122
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen123
-\l_MT_above_intertext_sep=\dimen124
-\l_MT_below_intertext_sep=\dimen125
-\l_MT_above_shortintertext_sep=\dimen126
-\l_MT_below_shortintertext_sep=\dimen127
+\l_MT_shortvdotswithinadjustabove_dim=\dimen121
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen122
+\l_MT_above_intertext_sep=\dimen123
+\l_MT_below_intertext_sep=\dimen124
+\l_MT_above_shortintertext_sep=\dimen125
+\l_MT_below_shortintertext_sep=\dimen126
 )
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
@@ -244,22 +255,22 @@ Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
-\captionmargin=\dimen128
-\captionmargin@=\dimen129
-\captionwidth=\dimen130
-\caption@tempdima=\dimen131
-\caption@indent=\dimen132
-\caption@parindent=\dimen133
-\caption@hangindent=\dimen134
+\captionmargin=\dimen127
+\captionmargin@=\dimen128
+\captionwidth=\dimen129
+\caption@tempdima=\dimen130
+\caption@indent=\dimen131
+\caption@parindent=\dimen132
+\caption@hangindent=\dimen133
 )
-\c@ContinuedFloat=\count115
+\c@ContinuedFloat=\count132
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
-\c@subfigure=\count116
-\c@subtable=\count117
+\c@subfigure=\count133
+\c@subtable=\count134
 )
 (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
@@ -275,17 +286,17 @@ Package ifvtex Info: VTeX not detected.
 (/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count118
-\Gm@cntv=\count119
-\c@Gm@tempcnt=\count120
-\Gm@bindingoffset=\dimen135
-\Gm@wd@mp=\dimen136
-\Gm@odd@mp=\dimen137
-\Gm@even@mp=\dimen138
-\Gm@layoutwidth=\dimen139
-\Gm@layoutheight=\dimen140
-\Gm@layouthoffset=\dimen141
-\Gm@layoutvoffset=\dimen142
+\Gm@cnth=\count135
+\Gm@cntv=\count136
+\c@Gm@tempcnt=\count137
+\Gm@bindingoffset=\dimen134
+\Gm@wd@mp=\dimen135
+\Gm@odd@mp=\dimen136
+\Gm@even@mp=\dimen137
+\Gm@layoutwidth=\dimen138
+\Gm@layoutheight=\dimen139
+\Gm@layouthoffset=\dimen140
+\Gm@layoutvoffset=\dimen141
 \Gm@dimlist=\toks28
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
@@ -310,14 +321,13 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \ttl@box=\box33
 \beforetitleunit=\skip50
 \aftertitleunit=\skip51
-\ttl@plus=\dimen143
-\ttl@minus=\dimen144
+\ttl@plus=\dimen142
+\ttl@minus=\dimen143
 \ttl@toksa=\toks29
-\titlewidth=\dimen145
-\titlewidthlast=\dimen146
-\titlewidthfirst=\dimen147
-)
-No file state.aux.
+\titlewidth=\dimen144
+\titlewidthlast=\dimen145
+\titlewidthfirst=\dimen146
+) (./state.aux)
 \openout1 = `state.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
@@ -332,23 +342,24 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
 LaTeX Font Info:    ... okay on input line 60.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
 LaTeX Font Info:    ... okay on input line 60.
+
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
-\c@lstlisting=\count121
+\c@lstlisting=\count138
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count122
-\scratchdimen=\dimen148
+\scratchcounter=\count139
+\scratchdimen=\dimen147
 \scratchbox=\box34
-\nofMPsegments=\count123
-\nofMParguments=\count124
+\nofMPsegments=\count140
+\nofMParguments=\count141
 \everyMPshowfont=\toks30
-\MPscratchCnt=\count125
-\MPscratchDim=\dimen149
-\MPnumerator=\count126
-\makeMPintoPDFobject=\count127
+\MPscratchCnt=\count142
+\MPscratchDim=\dimen148
+\MPnumerator=\count143
+\makeMPintoPDFobject=\count144
 \everyMPtoPDFconversion=\toks31
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -416,16 +427,16 @@ Package caption Info: End \AtBeginDocument code.
 * \topmargin=-9.68535pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=10.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=65.0pt
-* \marginparsep=11.0pt
+* \marginparwidth=4.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
-* \@twocolumnfalse
+* \@twocolumntrue
 * \@twosidefalse
 * \@mparswitchfalse
 * \@reversemarginfalse
@@ -434,49 +445,38 @@ Package caption Info: End \AtBeginDocument code.
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 61.
+LaTeX Font Info:    Try loading font information for U+msa on input line 65.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 61.
+LaTeX Font Info:    Try loading font information for U+msb on input line 65.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-No file state.toc.
-\tf@toc=\write3
-\openout3 = `state.toc'.
 
-[2]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 74.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [3] (./state.aux)
+] [2
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./state.aux) ) 
 Here is how much of TeX's memory you used:
- 7786 strings out of 494997
- 111655 string characters out of 6180509
- 199592 words of memory out of 5000000
- 10869 multiletter control sequences out of 15000+600000
- 14144 words of font info for 46 fonts, out of 8000000 for 9000
+ 7504 strings out of 494997
+ 108397 string characters out of 6180509
+ 194604 words of memory out of 5000000
+ 10598 multiletter control sequences out of 15000+600000
+ 11662 words of font info for 37 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 38i,6n,49p,594b,591s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> <
-/home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </hom
-e/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/hd
-lopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/hdlope
-srocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/hdlopesroc
-ha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-Output written on state.pdf (3 pages, 55898 bytes).
+ 38i,8n,49p,710b,633s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ec
+rm1095.600pk> </home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
+00.600pk> </home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.6
+00pk> </home/hdlopesrocha/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk
+>
+Output written on state.pdf (2 pages, 43816 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 32 compressed objects within 1 object stream
+ 159 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
