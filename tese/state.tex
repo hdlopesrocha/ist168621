@@ -77,19 +77,17 @@ The need to build a global comunication network in an era when almost nobody had
 
 Initially NAT offered an alternative for address exhaustion and a false sensation of better security, asymetric NAT became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that IP disponibilizes is also small compared to our current needs, worse than that, NAT also difficults end-to-end communication, forcing most of applications that follows this model to be implemented unificiently.
 
-Applications based on multimedia and file sharing were one of the most strained. To enable end-to-end comunication, one could simulate it via intermediate public servers or using STUN and TURN servers to overpass NAT. 
+Applications based on multimedia and file sharing were one of the most strained by NAT. Those kind applications requires real time communication in order to achieve the best performance. STUN and TURN \cite{natvoip} servers are a possible solution to overpass NAT, although, none of those an establish direct connections on multiple level NATs.
 
-Client-Server models aren't suitable for real time comunication between two private end points. For example, amongst multiple alternatives, a messaging service could be implemented through a publish subscriber schema or by polling a messaging server. Clearly this type of communication requires a more expensive infrastructure and, at most cases, more network usage, leading to a worse quality of service. The requirements of video comunication makes this kind of model out of question.
+Most of client-server applications aren't affected by NAT when the servers are public, but they aren't suitable for real time comunication between two private end points. Clearly this type of communication requires a more expensive infrastructure and, at most cases, more network usage, leading to a worse quality of service. The requirements of video comunication makes this kind of model out of question.
 
-Efforts were made by Skype and Google to provide real time comunication between two or more entities, either having public or private addresses.
+On the other hand, TURN uses public servers to redirect traffic between private end points, it may use a P2P network relay to find the best peer, but after that the behaviour is much like client-server. Direct communication is only achieved by STUN when NAT is type \textit{full cone}. {\color{red} [reference to NAT types]}. ICE uses STUN when it's possible and TURN otherwise.
 
 \begin{thebibliography}{9}
 
 
 \bibitem{ipv4} Next Generation Internet: IPv4 Address Exhaustion, Mitigation Strategies and Implications for the U.S. - An IEEE-USA White Paper - 2009
-
-
-
+\bibitem{natvoip} How NAT-Compatible Are VoIP Applications? Ying-Dar Lin, Chien-Chao Tseng, Cheng-Yuan Ho, and Yu-Hsien Wu, National Chiao Tung University
 
 
 \end{thebibliography}
