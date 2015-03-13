@@ -83,6 +83,8 @@ Most of client-server applications aren't affected by NAT when the servers are p
 
 On the other hand, TURN uses public servers to redirect traffic between private end points, it may use a P2P network relay to find the best peer, but after that the behaviour is much like client-server. Direct communication is only achieved by STUN when NAT is type \textit{full cone}. {\color{red} [reference to NAT types]}. ICE uses STUN when it's possible and TURN otherwise.
 
+When connection is established, either direct or indirect (via TURN servers), WebRTC cames to simplify how audio and video are transmited. 
+
 \begin{thebibliography}{9}
 
 

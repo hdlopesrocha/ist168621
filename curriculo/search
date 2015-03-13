@@ -1,0 +1,1167 @@
+Loaded plugins: langpacks
+============================== N/S matched: fonts ==============================
+carterone-fonts.noarch : CarterOne fonts released by Vernon Adams
+fontmatrix.x86_64 : A fonts manager
+wqy-bitmap-fonts.noarch : WenQuanYi Bitmap Chinese Fonts
+aajohan-comfortaa-fonts.noarch : Modern style true type font
+adf-gillius-fonts.noarch : Gillius ADF sans-serif typeface family
+adobe-source-code-pro-fonts.noarch : A set of mono-spaced OpenType fonts
+                                   : designed for coding environments
+adobe-source-sans-pro-fonts.noarch : A set of OpenType fonts designed for user
+                                   : interfaces
+astloch-fonts.noarch : Astloch fonts released by Dan Rhatigan
+baekmuk-bdf-fonts.noarch : Korean bitmap fonts
+beteckna-fonts.noarch : Beteckna sans-serif fonts
+cf-sorts-mill-goudy-fonts.noarch : Goudy Oldstyle and Italic fonts
+cjkuni-uming-fonts.noarch : Chinese Unicode TrueType font in Ming face
+ecolier-court-fonts.noarch : Schoolchildren cursive fonts
+fonts-KOI8-R.noarch : Russian and Ukrainian language fonts for the X Window
+                    : System.
+fonts-tweak-tool.i686 : Tool for customizing fonts per language
+gfs-bodoni-fonts.noarch : GFS Bodoni fonts
+gfs-didot-fonts.noarch : GFS Didot fonts
+gfs-ignacio-fonts.noarch : A majuscule Greek font
+ghostscript-fonts.noarch : Fonts for the Ghostscript PostScript interpreter
+google-android-emoji-fonts.noarch : Android Emoji font released by Google
+google-roboto-fonts.noarch : Google Roboto fonts
+hanazono-fonts.noarch : Japanese Mincho-typeface TrueType font
+ipa-ex-gothic-fonts.noarch : Japanese Gothic-typeface OpenType font by IPA
+jsmath-fonts.noarch : A collection of Math symbol fonts
+kanotf-fonts.noarch : OpenType Kannada fonts
+kranky-fonts.noarch : Kranky fonts
+levien-inconsolata-fonts.noarch : Inconsolata fonts
+levien-museum-fonts.noarch : Based on historical metal Centaur fonts
+linux-libertine-fonts.noarch : Linux Libertine Open Fonts
+lklug-fonts.noarch : Fonts for Sinhala language
+lohit-nepali-fonts.noarch : Free TrueType fonts for Nepali language
+mnmlicons-fonts.noarch : Perkins Less Web Framework webfonts
+motoya-lmaru-fonts.noarch : Japanese Round Gothic-typeface TrueType fonts by
+                          : MOTOYA Co,LTD
+nhn-nanum-gothic-coding-fonts.noarch : Nanum Gothic Coding family of Korean
+                                     : TrueType fonts
+nhn-nanum-gothic-light-fonts.noarch : Nanum Gothic Light family of Korean
+                                    : TrueType fonts
+ns-bola-fonts.noarch : Chunky Geometric Fonts
+ns-tiza-chalk-fonts.noarch : Chalky slab-serif fonts
+oflb-roadstencil-fonts.noarch : Roadstencil Fonts
+oldstandard-sfd-fonts.noarch : Old Standard True-Type Fonts
+paktype-ajrak-fonts.noarch : Fonts for Arabic from PakType
+paktype-naqsh-fonts.noarch : Fonts for Arabic from PakType
+paktype-naskh-basic-fonts.noarch : Fonts for Arabic, Farsi, Urdu and Sindhi from
+                                 : PakType
+paktype-tehreer-fonts.noarch : Fonts for Arabic from PakType
+pcaro-hermit-fonts.noarch : Hermit monospace fonts
+senamirmir-washra-fonts.noarch : Fonts for the Geʼez (Ethiopic) script
+serafettin-cartoon-fonts.noarch : Sans-serif Cartoon Fonts
+shadowsintolight-fonts.noarch : Shadows Into Light fonts by Kimberly Geswein
+sil-abyssinica-fonts.noarch : SIL Abyssinica fonts
+sil-doulos-fonts.noarch : Doulos SIL fonts
+sil-gentium-fonts.noarch : SIL Gentium fonts
+stix-fonts.noarch : Scientific and engineering fonts
+taipeifonts.noarch : Traditional Chinese Bitmap fonts
+tex-fonts-hebrew.noarch : Culmus Hebrew fonts support for LaTeX
+tlomt-sniglet-fonts.noarch : A rounded, sans-serif font useful for headlines
+ucs-miscfixed-fonts.noarch : Selected set of bitmap fonts
+ukij-tuz-fonts.noarch : Uyghur Computer Science Association (UKIJ) Unicode fonts
+wqy-microhei-fonts.noarch : Compact Chinese fonts derived from Droid
+yanone-kaffeesatz-fonts.noarch : Yanone Kaffeesatz decorative fonts
+abattis-cantarell-fonts.noarch : Cantarell, a Humanist sans-serif font family
+adf-accanthis-fonts.noarch : A “modernized” garaldic serif typeface, “Galliard”
+                           : alternative
+adf-accanthis-fonts-common.noarch : Common files of adf-accanthis-fonts
+adf-tribun-fonts.noarch : A newsprint-like serif typeface
+adobe-source-han-sans-twhk-fonts.noarch : Adobe OpenType Pan-CJK font family for
+                                        : Traditional Chinese
+aldusleaf-crimson-text-fonts.noarch : A latin font for the production of
+                                    : technical books and papers
+allgeyer-fonts-common.noarch : Common files for MusiSync and MusiQwik fonts
+                             : (documentation...)
+amiri-fonts-common.noarch : Common files for amiri-fonts
+amiri-quran-fonts.noarch : Quran type of Amiri fonts
+apa-new-athena-unicode-fonts.noarch : New Athena Unicode is a libre/open
+                                    : multilingual font
+apanov-edrip-fonts.noarch : A decorative contrast sans-serif font
+apanov-heuristica-fonts.noarch : A serif latin & cyrillic font
+apx-fonts.noarch : Fonts for the game apx
+artwiz-aleczapka-fonts.noarch : Very small futuristic font family
+artwiz-aleczapka-fonts-common.noarch : Common files for Artwiz Aleczapka fonts
+                                     : (documentation...)
+artwiz-aleczapka-glisp-fonts.noarch : Glisp fonts in Artwiz family
+baekmuk-ttf-fonts-common.noarch : Common files for Korean Baekmuk TrueType fonts
+baekmuk-ttf-fonts-ghostscript.noarch : Ghostscript files for Korean Baekmuk
+                                     : TrueType fonts
+beteckna-fonts-common.noarch : Common files of beteckna-fonts
+beteckna-lower-case-fonts.noarch : Beteckna lower case sfd fonts
+beteckna-small-caps-fonts.noarch : Beteckna small caps sfd fonts
+bitmap-console-fonts.noarch : Selected set of bitmap fonts
+bitmap-fangsongti-fonts.noarch : Selected CJK bitmap fonts for Anaconda
+bitmap-fixed-fonts.noarch : Selected set of bitmap fonts
+bitmap-lucida-typewriter-fonts.noarch : Selected CJK bitmap fonts for Anaconda
+bitstream-vera-sans-fonts.noarch : Variable-width sans-serif Bitstream Vera
+                                 : fonts
+bitstream-vera-sans-mono-fonts.noarch : Monospace sans-serif Bitstream Vera
+                                      : fonts
+bitstream-vera-serif-fonts.noarch : Variable-width serif Bitstream Vera fonts
+bpg-algeti-fonts.noarch : Algeti Family of BPG Georgian Fonts
+bpg-chveulebrivi-fonts.noarch : Chveulebrivi family of BPG Georgian fonts
+bpg-classic-fonts.noarch : Classic family of BPG Georgian fonts
+bpg-courier-fonts.noarch : Courier family of BPG Georgian fonts
+bpg-courier-s-fonts.noarch : Courier S family of BPG Georgian fonts
+bpg-dedaena-block-fonts.noarch : DedaEna Block family of BPG Georgian fonts
+bpg-elite-fonts.noarch : Elite family of BPG Georgian fonts
+bpg-excelsior-caps-fonts.noarch : Excelsior Caps family of BPG Georgian fonts
+bpg-excelsior-condenced-fonts.noarch : Excelsior Condenced family of BPG
+                                     : Georgian fonts
+bpg-excelsior-fonts.noarch : Excelsior family of BPG Georgian fonts
+bpg-fonts-common.noarch : Common files for BPG Georgian fonts (documentation...)
+bpg-glaho-fonts.noarch : Glaho family of BPG Georgian fonts
+bpg-gorda-fonts.noarch : Gorda family of BPG Georgian fonts
+bpg-ingiri-fonts.noarch : Ingiri family of BPG Georgian fonts
+bpg-irubaqidze-fonts.noarch : Irubaqidze family of BPG Georgian fonts
+bpg-mikhail-stephan-fonts.noarch : Mikhail Stephan family of BPG Georgian fonts
+bpg-mrgvlovani-caps-fonts.noarch : Mrgvlovani Caps family of BPG Georgian fonts
+bpg-mrgvlovani-fonts.noarch : Mrgvlovani family of BPG Georgian fonts
+bpg-nateli-caps-fonts.noarch : Nateli Caps family of BPG Georgian fonts
+bpg-nateli-condenced-fonts.noarch : Nateli Condenced family of BPG Georgian
+                                  : fonts
+bpg-nateli-fonts.noarch : Nateli family of BPG Georgian fonts
+bpg-nino-medium-cond-fonts.noarch : Nino Medium Cond family of BPG Georgian
+                                  : fonts
+bpg-nino-medium-fonts.noarch : Nino Medium family of BPG Georgian fonts
+bpg-sans-fonts.noarch : Sans family of BPG Georgian fonts
+bpg-sans-medium-fonts.noarch : Sans Medium family of BPG Georgian fonts
+bpg-sans-modern-fonts.noarch : Sans Modern family of BPG Georgian fonts
+bpg-sans-regular-fonts.noarch : Sans Regular family of BPG Georgian fonts
+bpg-serif-fonts.noarch : Serif family of BPG Georgian fonts
+bpg-serif-modern-fonts.noarch : Serif Modern family of BPG Georgian fonts
+bpg-ucnobi-fonts.noarch : Ucnobi family of BPG Georgian fonts
+campivisivi-titillium-fonts.noarch : Sans-serif typeface designed inside Campi
+                                   : Visivi's Type Design course
+cf-bonveno-fonts.noarch : A fun font by Barry Schwartz
+chisholm-to-be-continued-fonts.noarch : Decorative Sans Serif Font
+cjkuni-ukai-fonts.noarch : Chinese Unicode TrueType font in Kai face
+conakry-fonts.noarch : N'Ko font by Michael Everson
+ctan-cm-lgc-fonts-common.noarch : CM-LGC Type 1 fonts, common files
+                                : (documentation…)
+ctan-cm-lgc-roman-fonts.noarch : CM-LGC Type 1 fonts, serif font faces
+ctan-cm-lgc-sans-fonts.noarch : CM-LGC Type 1 fonts, sans-serif font faces
+ctan-cm-lgc-typewriter-fonts.noarch : CM-LGC Type 1 fonts, typewriter font faces
+ctan-kerkis-calligraphic-fonts.noarch : Kerkis Calligraphic Type1 fonts
+ctan-kerkis-fonts-common.noarch : Kerkis Type 1 fonts, common files
+                                : (documentation…)
+ctan-kerkis-sans-fonts.noarch : KerkisSans Type1 fonts
+ctan-kerkis-serif-fonts.noarch : Kerkis serif Type1 fonts
+culmus-aharoni-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-caladings-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-david-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-drugulin-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-ellinia-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-fonts-common.noarch : Common files of culmus-fonts
+culmus-frank-ruehl-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-hadasim-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-keteryg-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-miriam-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-miriam-mono-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-nachlieli-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-shofar-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-simple-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-stamashkenaz-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-stamsefarad-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+culmus-yehuda-clm-fonts.noarch : Fonts for Hebrew from Culmus project
+darkgarden-fonts.noarch : Dark Garden is a decorative outline font of unusual
+                        : shape
+denemo-emmentaler-fonts.noarch : Denemo emmentaler fonts
+denemo-feta-fonts.noarch : Denemo feta fonts
+denemo-fonts-common.noarch : Denemo fonts common dir
+denemo-music-fonts.noarch : Denemo Denemo fonts
+drehatlas-warender-bibliothek-fonts.noarch : A Latin typeface that is
+                                           : decorative, surreal, and hairy
+drehatlas-xaporho-fonts.noarch : A Latin typeface that is sharp and angular
+dustin-dustismo-fonts-common.noarch : Common files for dustin-dustismo-fonts
+dustin-dustismo-sans-fonts.noarch : General purpos sans-serif fonts
+ecolier-court-lignes-fonts.noarch : Schoolchildren cursive fonts with lines
+ekmukta-fonts.noarch : A Unicode compliant mono-linear typeface
+fontawesome-fonts.noarch : Iconic font set
+fontdump.noarch : Dump the CSS and different formats of fonts for Google Fonts
+fonts-KOI8-R-100dpi.noarch : KOI8-R fonts in 100 dpi resolution for the X Window
+                           : System.
+fonts-KOI8-R-75dpi.noarch : A set of 75 dpi Russian and Ukrainian language fonts
+                          : for X.
+fonts-tweak-tool.x86_64 : Tool for customizing fonts per language
+fonttools.x86_64 : A tool to convert True/OpenType fonts to XML and back
+gargi-fonts.noarch : A Devanagari font
+gdouros-aegean-fonts.noarch : A font for ancient scripts in the greater Aegean
+                            : vicinity
+gdouros-aegyptus-fonts.noarch : A font for Egyptian hieroglyphs
+gdouros-alexander-fonts.noarch : A Greek typeface inspired by Alexander Wilson
+gdouros-analecta-fonts.noarch : An ecclesiastic scripts font
+gdouros-musica-fonts.noarch : A font for musical symbols
+gfs-ambrosia-fonts.noarch : GFS Ambrosia majuscule Greek font
+gfs-artemisia-fonts.noarch : GFS Artemisia fonts
+gfs-baskerville-fonts.noarch : GFS Baskerville Greek font
+gfs-bodoni-classic-fonts.noarch : GFS Bodoni Classic oblique Greek font
+gfs-decker-fonts.noarch : A 19th century Greek typeface
+gfs-eustace-fonts.noarch : GFS Eustace majuscule Greek font
+gfs-fleischman-fonts.noarch : GFS Fleischman majuscule Greek font
+gfs-gazis-fonts.noarch : An 18th century Greek typeface
+gfs-goschen-fonts.noarch : A 19th century Greek typeface
+gfs-jackson-fonts.noarch : GFS Jackson majuscule Greek font
+gfs-neohellenic-fonts.noarch : A 20th century Greek typeface
+gfs-nicefore-fonts.noarch : GFS Nicefore majuscule Greek font
+gfs-olga-fonts.noarch : GFS Olga experimental oblique font
+gfs-philostratos-fonts.noarch : A revival of the “Griechische Antiqua” Greek
+                              : typeface
+gfs-porson-fonts.noarch : GFS Porson Greek font
+gfs-pyrsos-fonts.noarch : A 20th century italic Greek typeface
+gfs-solomos-fonts.noarch : GFS Solomos oblique Greek font
+gfs-theokritos-fonts.noarch : GFS Theokritos decorative font
+glyphicons-halflings-fonts.noarch : Precisely prepared monochromatic icons and
+                                  : symbols
+google-croscore-arimo-fonts.noarch : The croscore Arimo family fonts
+google-croscore-cousine-fonts.noarch : The croscore Cousine family fonts
+google-croscore-fonts-common.noarch : Common files of google-croscore-fonts
+google-croscore-symbolneu-fonts.noarch : The croscore Symbol Neu family fonts
+google-croscore-tinos-fonts.noarch : The croscore Tinos family fonts
+google-crosextra-caladea-fonts.noarch : Serif font metric-compatible with
+                                      : Cambria font
+google-crosextra-carlito-fonts.noarch : Sans-serif font metric-compatible with
+                                      : Calibri font
+google-noto-fonts-common.noarch : Common files for Noto fonts
+google-noto-sans-devanagari-fonts.noarch : Free Devanagari script sans-serif
+                                         : fonts
+google-noto-sans-devanagari-ui-fonts.noarch : Free Devanagari script sans-serif
+                                            : fonts for UI
+google-noto-sans-ethiopic-fonts.noarch : Free Ethiopic script sans-serif fonts
+google-noto-sans-georgian-fonts.noarch : Free Georgian script sans-serif fonts
+google-noto-sans-gujarati-fonts.noarch : Free Non Hinted Gujarati script sans
+                                       : fonts
+google-noto-sans-gujarati-ui-fonts.noarch : Free Non Hinted Gujarati script sans
+                                          : UI fonts
+google-noto-sans-gurmukhi-ui-fonts.noarch : Free sans-serif UI fonts for
+                                          : Gurmukhi script
+google-noto-sans-hanunno-fonts.noarch : Free Non Hinted Hanunno script sans
+                                      : fonts
+google-noto-sans-hebrew-fonts.noarch : Free Hebrew script sans-serif fonts
+google-noto-sans-inscriptional-parthian-fonts.noarch : Free sans-serif fonts for
+     ...: Inscriptional Parthian script
+google-noto-sans-javanese-fonts.noarch : Free sans-serif fonts for Javanese
+                                       : script
+google-noto-sans-kannada-ui-fonts.noarch : Free Non Hinted Kannada script sans
+                                         : fonts
+google-noto-sans-khmer-ui-fonts.noarch : Free Khmer script sans-serif fonts for
+                                       : UI
+google-noto-sans-lao-ui-fonts.noarch : Free Lao script sans-serif fonts for UI
+google-noto-sans-lepcha-fonts.noarch : Free sans-serif fonts for Lepcha script
+google-noto-sans-limbu-fonts.noarch : Free sans-serif fonts for Limbu script
+google-noto-sans-linearb-fonts.noarch : Free sans-serif fonts for Linearb script
+google-noto-sans-lisu-fonts.noarch : Free Lisu script sans-serif fonts for UI
+google-noto-sans-lycian-fonts.noarch : Free Lycian script sans-serif fonts for
+                                     : UI
+google-noto-sans-lydian-fonts.noarch : Free Lydian script sans-serif fonts for
+                                     : UI
+google-noto-sans-malayalam-fonts.noarch : Free Malayalam script sans-serif fonts
+google-noto-sans-malayalam-ui-fonts.noarch : Free Malayalam script sans-serif
+                                           : fonts for UI
+google-noto-sans-mandaic-fonts.noarch : Free Mandaic script sans-serif fonts
+google-noto-sans-meeteimayek-fonts.noarch : Free Meetei Mayek script sans-serif
+                                          : fonts
+google-noto-sans-mongolian-fonts.noarch : Free sans-serif fonts for Mongolian
+                                        : script
+google-noto-sans-myanmar-fonts.noarch : Free sans-serif UI fonts for Myanmar
+                                      : script
+google-noto-sans-myanmar-ui-fonts.noarch : Free sans-serif UI fonts for Myanmar
+                                         : script
+google-noto-sans-new-tai-lue-fonts.noarch : Free sans-serif fonts for Tai Lue
+                                          : script
+google-noto-sans-nko-fonts.noarch : Free NKo script sans-serif fonts
+google-noto-sans-ogham-fonts.noarch : Free sans-serif fonts for Ogham script
+google-noto-sans-ol-chiki-fonts.noarch : Free sans-serif fonts for Ol Chiki
+                                       : script
+google-noto-sans-old-italic-fonts.noarch : Free sans-serif fonts for Old Italic
+                                         : script
+google-noto-sans-old-persian-fonts.noarch : Free sans-serif fonts for Old
+                                          : Persian script
+google-noto-sans-old-south-arabian-fonts.noarch : Free Old South Arabian script
+                                                : sans-serif fonts
+google-noto-sans-old-turkic-fonts.noarch : Free Old Turkic script sans-serif
+                                         : fonts
+google-noto-sans-osmanya-fonts.noarch : Free Osmanya script sans-serif fonts
+google-noto-sans-phags-pa-fonts.noarch : Free sans-serif fonts for Phags Pa
+                                       : script
+google-noto-sans-phoenician-fonts.noarch : Free Phoenician script sans-serif
+                                         : fonts
+google-noto-sans-rejang-fonts.noarch : Free sans-serif fonts for Rejang script
+google-noto-sans-runic-fonts.noarch : Free sans-serif fonts for Runic script
+google-noto-sans-samaritan-fonts.noarch : Free sans-serif fonts for Samaritan
+                                        : script
+google-noto-sans-saurashtra-fonts.noarch : Free sans-serif fonts for Saurashtra
+                                         : script
+google-noto-sans-shavian-fonts.noarch : Free Shavian script sans-serif fonts
+google-noto-sans-sinhala-fonts.noarch : Free sans-serif fonts for Sinhala script
+google-noto-sans-sundanese-fonts.noarch : Free sans-serif fonts for Sundanese
+                                        : script
+google-noto-sans-syloti-nagri-fonts.noarch : Free sans-serif fonts for Syloti
+                                           : Nagri script
+google-noto-sans-symbols-fonts.noarch : Free Symbols script sans-serif fonts
+google-noto-sans-syriac-eastern-fonts.noarch : Free sans-serif fonts for Syriac
+                                             : Eastern script
+google-noto-sans-syriac-estrangela-fonts.noarch : Free sans-serif fonts for
+                                                : Syriac Estrangela script
+google-noto-sans-syriac-western-fonts.noarch : Free sans-serif fonts for Syriac
+                                             : Western script
+google-noto-sans-tagalog-fonts.noarch : Free tagalog script sans-serif fonts
+google-noto-sans-tagbanwa-fonts.noarch : Free sans-serif fonts for Tagbanwa
+                                       : script
+google-noto-sans-tai-le-fonts.noarch : Free sans-serif fonts for Tai Le script
+google-noto-sans-tai-tham-fonts.noarch : Free Tai Tham script sans-serif fonts
+google-noto-sans-tai-viet-fonts.noarch : Free Non Hinted Tai Viet script sans
+                                       : fonts
+google-noto-sans-tamil-ui-fonts.noarch : Free Tamil script sans-serif fonts for
+                                       : UI
+google-noto-sans-telugu-ui-fonts.noarch : Free Non Hinted Telugu script sans
+                                        : fonts
+google-noto-sans-thai-ui-fonts.noarch : Free Thai script sans-serif fonts for UI
+google-noto-sans-tifinagh-fonts.noarch : Free sans-serif fonts for Tifinagh
+                                       : script
+google-noto-sans-ui-fonts.noarch : Free sans-serif Latin script fonts for UI
+google-noto-sans-yi-fonts.noarch : Free sans-serif fonts for Yi script
+google-noto-serif-armenian-fonts.noarch : Free Armenian script serif fonts
+google-noto-serif-fonts.noarch : Free Latin script serif fonts
+google-noto-serif-georgian-fonts.noarch : Free Georgian script serif fonts
+google-noto-serif-lao-fonts.noarch : Free Lao script serif fonts
+google-noto-serif-thai-fonts.noarch : Free Thai script serif fonts
+google-roboto-condensed-fonts.noarch : Google Roboto condensed fonts
+grimmer-proggy-tinysz-fonts.noarch : Proggy Tiny with slashed zero programming
+                                   : font
+gubbi-fonts.noarch : Free Kannada Opentype serif font
+gust-antykwa-torunska-fonts.noarch : Two-element typeface for typesetting of
+                                   : small prints
+hiran-perizia-fonts.noarch : English asymmetric font
+ht-alegreya-fonts.noarch : A Serif typeface originally intended for literature
+impallari-lobster-fonts.noarch : Hand written font with various ligatures for
+                               : better connecting of letters
+ipa-ex-mincho-fonts.noarch : Japanese Mincho-typeface OpenType font by IPA
+ipa-gothic-fonts.noarch : Japanese Gothic-typeface OpenType font by IPA
+ipa-pmincho-fonts.noarch : Japanese Proportional Mincho-typeface OpenType font
+                         : by IPA
+iso8859-2-100dpi-fonts.noarch : A set of 100dpi Central European language fonts
+                              : for X
+iso8859-2-75dpi-fonts.noarch : A set of 75dpi Central European language fonts
+                             : for X
+iso8859-2-fonts-common.noarch : Common files of iso8859-2-fonts
+iso8859-2-misc-fonts.noarch : A set of misc Central European language fonts for
+                            : X
+japanese-bitmap-fonts.noarch : Free Japanese Bitmap fonts
+jisksp16-1990-fonts.noarch : 16x16 JIS X 0212:1990 Bitmap font
+kacst-art-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-book-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-decorative-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-digital-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-farsi-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-fonts-common.noarch : Common files for kacst-fonts
+kacst-letter-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-naskh-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-office-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-one-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-pen-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-poster-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-qurn-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-screen-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-title-fonts.noarch : Fonts for arabic from arabeyes project
+kacst-titlel-fonts.noarch : Fonts for arabic from arabeyes project
+kalapi-fonts.noarch : OpenType sanserif font for Gujarati script
+khmeros-fonts-common.noarch : Common files of khmeros-fonts
+khmeros-handwritten-fonts.noarch : Freehand and fasthand fonts
+khmeros-muol-fonts.noarch : Muol fonts - normal, light and Pali
+knm-new-fixed-fonts.noarch : 12x12 JIS X 0208 Bitmap fonts
+labelleaurore-fonts.noarch : La Belle Aurore font by Kimberly Geswein
+labiryntowy-fonts.noarch : Artificial font consisting of vertical and horizontal
+                         : bars
+larabie-decorative-fonts.noarch : Larabie TrueType Decorative Fonts
+larabie-fonts-common.noarch : Common files for larabie-fonts
+larabie-straight-fonts.noarch : Larabie TrueType Straight Fonts
+larabie-uncommon-fonts.noarch : Larabie TrueType Uncommon Fonts
+lato-fonts.noarch : A sanserif typeface family
+layla-basic-arabic-fonts.noarch : Basic Arabic font - Part of the Layla fonts
+                                : collection
+layla-boxer-fonts.noarch : Arabic Boxer font - Part of the Layla fonts
+                         : collection
+layla-fonts-common.noarch : Common files for the Layla fonts package collection
+layla-koufi-fonts.noarch : Arabic Koufi font - Part of the Layla fonts
+                         : collection
+layla-ruqaa-fonts.noarch : Arabic Ruqaa font - Part of the Layla fonts
+                         : collection
+layla-thuluth-fonts.noarch : Arabic Thuluth font - Part of the Layla fonts
+                           : collection
+libdockapp-fonts.x86_64 : Fonts provided with libdockapp
+liberation-mono-fonts.noarch : Monospace fonts to replace commonly used
+                             : Microsoft Courier New
+liberation-narrow-fonts.noarch : Sans-serif Narrow fonts to replace commonly
+                               : used Microsoft Arial Narrow
+liberation-sans-fonts.noarch : Sans-serif fonts to replace commonly used
+                             : Microsoft Arial
+liberation-serif-fonts.noarch : Serif fonts to replace commonly used Microsoft
+                              : Times New Roman
+libfonts.noarch : TrueType Font Layouting
+libfonts-javadoc.noarch : Javadoc for libfonts
+librecad-fonts.noarch : Fonts in LibreCAD (lff) format
+lilypond-century-schoolbook-l-fonts.noarch : Lilypond Century Schoolbook L fonts
+lilypond-emmentaler-fonts.noarch : Lilypond emmentaler fonts
+lilypond-fonts-common.noarch : Lilypond fonts common dir
+linux-libertine-biolinum-fonts.noarch : Sans-serif fonts from Linux Libertine
+                                      : Open Fonts
+linux-libertine-fonts-common.noarch : Common files for Linux Libertine Open
+                                    : Fonts
+lohit-assamese-fonts.noarch : Free Assamese font
+lohit-bengali-fonts.noarch : Free Bengali script font
+lohit-devanagari-fonts.noarch : Free Devanagari Script Font
+lohit-gujarati-fonts.noarch : Free Gujarati font
+lohit-gurmukhi-fonts.noarch : Free Gurmukhi truetype font for Punjabi language
+lohit-kannada-fonts.noarch : Free Kannada font
+lohit-malayalam-fonts.noarch : Free Malayalam font
+lohit-marathi-fonts.noarch : Free truetype font for Marathi language
+lohit-odia-fonts.noarch : Free truetype font for Odia language
+lohit-tamil-classical-fonts.noarch : Free Tamil Classical sans-serif font
+lohit-tamil-fonts.noarch : Free truetype font for Tamil language
+lohit-telugu-fonts.noarch : Free Telugu font
+lyx-fonts.noarch : Lyx/MathML fonts
+madan-fonts.noarch : Font for Nepali language
+manchu-fonts.noarch : A Manchu OpenType (TrueType-flavored) font
+mathjax-ams-fonts.noarch : Fonts used by MathJax to display math in the browser
+mathjax-caligraphic-fonts.noarch : Fonts used by MathJax to display math in the
+                                 : browser
+mathjax-fraktur-fonts.noarch : Fonts used by MathJax to display math in the
+                             : browser
+mathjax-main-fonts.noarch : Fonts used by MathJax to display math in the browser
+mathjax-math-fonts.noarch : Fonts used by MathJax to display math in the browser
+mathjax-sansserif-fonts.noarch : Fonts used by MathJax to display math in the
+                               : browser
+mathjax-script-fonts.noarch : Fonts used by MathJax to display math in the
+                            : browser
+mathjax-size1-fonts.noarch : Fonts used by MathJax to display math in the
+                           : browser
+mathjax-size2-fonts.noarch : Fonts used by MathJax to display math in the
+                           : browser
+mathjax-size3-fonts.noarch : Fonts used by MathJax to display math in the
+                           : browser
+mathjax-size4-fonts.noarch : Fonts used by MathJax to display math in the
+                           : browser
+mathjax-typewriter-fonts.noarch : Fonts used by MathJax to display math in the
+                                : browser
+mathjax-winchrome-fonts.noarch : Fonts used by MathJax to display math in the
+                               : browser
+mathjax-winie6-fonts.noarch : Fonts used by MathJax to display math in the
+                            : browser
+mftrace.x86_64 : Utility for converting TeX bitmap fonts to Type 1 or TrueType
+               : fonts
+mgopen-fonts-common.noarch : Truetype greek fonts, common files (documentation…)
+mgopen-fonts-compat.noarch : Truetype greek fonts, compatibility package
+monofett-fonts.noarch : Monofett font released by Vernon Adams
+motoya-lcedar-fonts.noarch : Japanese Gothic-typeface TrueType fonts by MOTOYA
+                           : Co,LTD
+moyogo-molengo-fonts.noarch : A Latin typeface for documents
+mscore-fonts.noarch : MuseScore fonts
+msimonson-anonymouspro-fonts.noarch : A coding-friendly monospace font
+nafees-nastaleeq-fonts.noarch : Nafees nastaleeq font for writing Urdu in the
+                              : Nastaleeq script
+nafees-pakistani-naskh-fonts.noarch : Nafees pakistani naskh font for writing
+                                    : Urdu in the Naskh script
+nafees-pakistani-web-naskh-fonts.noarch : Nafees pakistani web naskh font for
+                                        : writing Urdu
+nafees-riqa-fonts.noarch : Nafees riqa font for writing Urdu in the Riqa script
+nafees-tehreer-naskh-fonts.noarch : Nafees tehreer naskh font for writing Urdu
+                                  : in the Naskh script
+nafees-web-naskh-fonts.noarch : Nafees Web font for writing Urdu in the Naskh
+                              : script
+naver-nanum-barun-gothic-fonts.noarch : Nanum fonts Barun Gothic font faces
+naver-nanum-barun-pen-fonts.noarch : Nanum fonts Barun Pen font faces
+naver-nanum-brush-fonts.noarch : Nanum fonts Brush font faces
+naver-nanum-fonts-common.noarch : Common files of naver-nanum-fonts
+naver-nanum-gothic-fonts.noarch : Nanum fonts Gothic font faces
+naver-nanum-myeongjo-fonts.noarch : Nanum fonts Myeongjo font faces
+naver-nanum-pen-fonts.noarch : Nanum fonts Pen font faces
+nethack-bitmap-fonts.noarch : Bitmap fonts for Nethack
+nethack-bitmap-fonts-core.noarch : X11 core fonts configuration for
+                                 : nethack-bitmap
+oflb-brett-fonts.noarch : A handwriting font
+oflb-goudy-bookletter-1911-fonts.noarch : Clean serif font based on Kennerly Old
+                                        : Style
+oflb-icelandic-fonts.noarch : Icelandic Magical Staves
+oflb-notcouriersans-fonts.noarch : NotCourier Sans is a re-interpretation of
+                                 : Nimbus Mono
+oflb-riordonfancy-fonts.noarch : A stylized font
+oflb-smonohand-fonts.noarch : A handwritten monospace font
+oflb-sportrop-fonts.noarch : A multiline decorative font
+open-sans-fonts.noarch : Open Sans is a humanist sans-serif typeface designed by
+                       : Steve Matteson
+openerp7-httpd-fonts-access.noarch : Apache configuration to allow fonts access
+otf2bdf.x86_64 : Generate BDF bitmap fonts from OpenType outline fonts
+overpass-fonts.noarch : Typeface based on the U.S. interstate highway road
+                      : signage type system
+oxygen-fonts.noarch : Oxygen fonts created by the KDE Community
+oxygen-fonts-devel.noarch : Development files for oxygen-fonts
+pagul-fonts.noarch : Font for Saurashtra script
+paratype-pt-mono-fonts.noarch : A pan-Cyrillic monospace typeface
+paratype-pt-sans-fonts.noarch : A pan-Cyrillic typeface
+phetsarath-fonts.noarch : The font for the Lao language
+php-tcpdf-dejavu-lgc-sans-fonts.noarch : DejaVu LGC sans-serif fonts for tcpdf
+php-tcpdf-dejavu-lgc-sans-mono-fonts.noarch : DejaVu LGC mono-spaced fonts for
+                                            : tcpdf
+php-tcpdf-dejavu-lgc-serif-fonts.noarch : DejaVu LGC serif fonts for tcpdf
+php-tcpdf-dejavu-sans-fonts.noarch : DejaVu sans-serif fonts for tcpdf
+php-tcpdf-dejavu-sans-mono-fonts.noarch : DejaVu mono-spaced fonts for tcpdf
+php-tcpdf-dejavu-serif-fonts.noarch : DejaVu serif fonts for tcpdf
+php-tcpdf-gnu-free-mono-fonts.noarch : GNU FreeFonts mono-spaced for tcpdf
+php-tcpdf-gnu-free-sans-fonts.noarch : GNU FreeFonts sans-serif for tcpdf
+php-tcpdf-gnu-free-serif-fonts.noarch : GNU FreeFonts serif for tcpdf
+python-matplotlib-data-fonts.noarch : Fonts used by python-matplotlib
+reeniebeanie-fonts.noarch : Reenie Beanie font by James Grieshaber
+rosegarden4-feta-fonts.noarch : Rosegarden feta fonts
+rosegarden4-parmesan-fonts.noarch : Rosegarden parmesan fonts
+saab-fonts.noarch : Free Punjabi Unicode OpenType Font
+samyak-devanagari-fonts.noarch : Open Type Fonts for Devanagari script
+samyak-fonts-common.noarch : Common files for samyak-fonts
+samyak-gujarati-fonts.noarch : Open Type Fonts for Gujarati script
+samyak-malayalam-fonts.noarch : Open Type Fonts for Malayalam script
+samyak-odia-fonts.noarch : Open Type Fonts for Odia script
+samyak-tamil-fonts.noarch : Open Type Fonts for Tamil script
+sarai-fonts.noarch : Free Sarai Hindi Truetype Font
+sazanami-fonts-common.noarch : Common files for Sazanami Japanese TrueType fonts
+scholarsfonts-cardo-fonts.noarch : A font for scholarly use in classical and
+                                 : medieval languages
+senamirmir-washra-fonts-common.noarch : Common files of senamirmir-washra-fonts
+sil-andika-fonts.noarch : A font for literacy and beginning readers
+sil-charis-compact-fonts.noarch : A version of Charis SIL with tighter line
+                                : spacing
+sil-charis-fonts.noarch : A serif smart font similar to Bitstream Charter
+sil-gentium-alt-fonts.noarch : SIL GentiumAlt fonts
+sil-gentium-basic-fonts.noarch : SIL Gentium Basic font family
+sil-gentium-fonts-common.noarch : Common files of SIL Gentium fonts
+sil-lateef-fonts.noarch : An Arabic script unicode font
+sil-mingzat-fonts.noarch : A font for Lepcha script
+sil-padauk-fonts.noarch : A font for Burmese and the Myanmar script
+sil-scheherazade-fonts.noarch : An Arabic script unicode font
+silkscreen-fonts-common.noarch : Common files for Silkscreen fonts
+                               : (documentation...)
+sj-fonts-common.noarch : Common files for sj-fonts
+smc-anjalioldlipi-fonts.noarch : Open Type Fonts for Malayalam script
+smc-dyuthi-fonts.noarch : Open Type Fonts for Malayalam script
+smc-fonts-common.noarch : Common files for smc-fonts
+smc-kalyani-fonts.noarch : Open Type Fonts for Malayalam script
+smc-meera-fonts.noarch : Open Type Fonts for Malayalam script
+smc-rachana-fonts.noarch : Open Type Fonts for Malayalam script
+smc-raghumalayalam-fonts.noarch : Open Type Fonts for Malayalam script
+smc-suruma-fonts.noarch : Open Type Fonts for Malayalam script
+specialelite-fonts.noarch : Special Elite font by Brian J. Bonislawsky
+stix-math-fonts.noarch : Scientific and engineering fonts, PUA glyphs
+tabish-eeyek-fonts.noarch : Font for Meetei Mayek script
+tangerine-fonts.noarch : Tangerine is a calligraphy font inspired by many italic
+                       : chancery hands
+terminus-fonts.noarch : Clean fixed width font
+texlive-Type1fonts-doc.noarch : Documentation for Type1fonts
+texlive-accfonts.noarch : Utilities to derive new fonts from existing ones
+texlive-accfonts-bin.noarch : Binaries for accfonts
+texlive-accfonts-doc.noarch : Documentation for accfonts
+texlive-amsfonts.noarch : TeX fonts from the American Mathematical Society
+texlive-amsfonts-doc.noarch : Documentation for amsfonts
+texlive-anyfontsize-doc.noarch : Documentation for anyfontsize
+texlive-bartel-chess-fonts.noarch : A set of fonts supporting chess diagrams
+texlive-bartel-chess-fonts-doc.noarch : Documentation for bartel-chess-fonts
+texlive-cbfonts.noarch : Complete set of Greek fonts
+texlive-cbfonts-doc.noarch : Documentation for cbfonts
+texlive-cbfonts-fd.noarch : LaTeX font description files for the CB Greek fonts
+texlive-cbfonts-fd-doc.noarch : Documentation for cbfonts-fd
+texlive-ccfonts.noarch : Support for Concrete text and math fonts in LaTeX
+texlive-ccfonts-doc.noarch : Documentation for ccfonts
+texlive-collection-fontsextra.noarch : Additional fonts
+texlive-collection-fontsrecommended.noarch : Recommended fonts
+texlive-concmath-fonts.noarch : Concrete mathematics fonts
+texlive-concmath-fonts-doc.noarch : Documentation for concmath-fonts
+texlive-context-simplefonts-doc.noarch : Documentation for context-simplefonts
+texlive-fonts-tlwg.noarch : Thai fonts for LaTeX from TLWG
+texlive-fonts-tlwg-doc.noarch : Documentation for fonts-tlwg
+texlive-fontspec-doc.noarch : Documentation for fontspec
+texlive-knuthotherfonts.noarch : knuthotherfonts package
+texlive-kpfonts.noarch : A complete set of fonts for text and mathematics
+texlive-kpfonts-doc.noarch : Documentation for kpfonts
+texlive-latex-fonts.noarch : A collection of fonts used in LaTeX distributions
+texlive-latex-fonts-doc.noarch : Documentation for latex-fonts
+texlive-lxfonts.noarch : Set of slide fonts based on CM
+texlive-lxfonts-doc.noarch : Documentation for lxfonts
+texlive-pxfonts.noarch : Palatino-like fonts in support of mathematics
+texlive-pxfonts-doc.noarch : Documentation for pxfonts
+texlive-sansmathfonts-doc.noarch : Documentation for sansmathfonts
+texlive-sauterfonts.noarch : Use sauter fonts in LaTeX
+texlive-sauterfonts-doc.noarch : Documentation for sauterfonts
+texlive-tpslifonts.noarch : A LaTeX package for configuring presentation fonts
+texlive-tpslifonts-doc.noarch : Documentation for tpslifonts
+texlive-txfonts.noarch : Times-like fonts in support of mathematics
+texlive-txfonts-doc.noarch : Documentation for txfonts
+texlive-txfontsb.noarch : Extensions to txfonts, using GNU Freefont
+texlive-txfontsb-doc.noarch : Documentation for txfontsb
+texlive-yfonts.noarch : Support for old German fonts
+texlive-yfonts-doc.noarch : Documentation for yfonts
+texmacs-fedora-fonts.noarch : Fonts for TeXmacs
+thai-arundina-sans-fonts.noarch : Variable-width sans-serif Thai Arundina fonts
+thai-arundina-sans-mono-fonts.noarch : Monospace sans-serif Thai Arundina fonts
+thai-arundina-serif-fonts.noarch : Variable-width serif Thai Arundina fonts
+thai-scalable-fonts-common.noarch : Common files of thai-scalable-fonts
+thai-scalable-garuda-fonts.noarch : Thai Garuda fonts
+thai-scalable-kinnari-fonts.noarch : Thai Kinnari fonts
+thai-scalable-loma-fonts.noarch : Thai Loma fonts
+thai-scalable-norasi-fonts.noarch : Thai Norasi fonts
+thai-scalable-purisa-fonts.noarch : Thai Purisa fonts
+thai-scalable-sawasdee-fonts.noarch : Thai Sawasdee fonts
+thai-scalable-tlwgmono-fonts.noarch : Thai TlwgMono fonts
+thai-scalable-tlwgtypewriter-fonts.noarch : Thai TlwgTypewriter fonts
+thai-scalable-tlwgtypist-fonts.noarch : Thai TlwgTypist fonts
+thai-scalable-tlwgtypo-fonts.noarch : Thai TlwgTypo fonts
+thai-scalable-umpush-fonts.noarch : Thai Umpush fonts
+thai-scalable-waree-fonts.noarch : Thai Waree fonts
+tiresias-fonts-common.noarch : Common files for Tiresias fonts
+                             : (documentation...)
+tiresias-info-fonts.noarch : Specialized fonts for info terminals for the
+                           : visually impaired
+tiresias-info-z-fonts.noarch : Specialized fonts for info terminals for the
+                             : visually impaired
+tiresias-key-v2-fonts.noarch : Specialized fonts for labeling keycaps for the
+                             : visually impaired
+tiresias-pc-fonts.noarch : Specialized fonts for use on PCs for the visually
+                         : impaired
+tiresias-pc-z-fonts.noarch : Specialized fonts for use on PCs for the visually
+                           : impaired
+tiresias-sign-fonts.noarch : Specialized fonts for preparing signs for the
+                           : visually impaired
+tiresias-sign-z-fonts.noarch : Specialized fonts for preparing signs for the
+                             : visually impaired
+tlomt-junction-fonts.noarch : A humanist sans serif font
+tlomt-league-gothic-fonts.noarch : A sans serif gothic typeface
+tlomt-orbitron-fonts.noarch : Geometric sans-serif typeface
+ttembed.x86_64 : Remove embedding limitations from TrueType fonts
+ttmkfdir.x86_64 : Utility to create fonts.scale files for truetype fonts
+tulrich-tuffy-fonts.noarch : Generic sans font
+typemade-josefinsansstd-light-fonts.noarch : A latin font that is geometric,
+                                           : elegant, and kind of vintage
+ubuntu-title-fonts.noarch : A titling decorative font to create the lettering of
+                          : the Ubuntu logo
+un-core-batang-fonts.noarch : Un Core fonts - UnBatang
+un-core-dinaru-fonts.noarch : Un Core fonts - UnDinaru
+un-core-dotum-fonts.noarch : Un Core fonts - UnDotum
+un-core-fonts-common.noarch : Common files of Un Core fonts
+un-core-graphic-fonts.noarch : Un Core fonts - UnGraphic
+un-core-gungseo-fonts.noarch : Un Core fonts - UnGungseo
+un-core-pilgi-fonts.noarch : Un Core fonts - UnPilgi
+un-extra-bom-fonts.noarch : Un Extra fonts - UnBom
+un-extra-jamobatang-fonts.noarch : Un Extra fonts - UnJamoBatang
+un-extra-jamodotum-fonts.noarch : Un Extra fonts - UnJamoDotum
+un-extra-jamonovel-fonts.noarch : Un Extra fonts - UnJamoNovel
+un-extra-jamosora-fonts.noarch : Un Extra fonts - UnJamoSora
+un-extra-pen-fonts.noarch : Un Extra fonts - UnPen
+un-extra-penheulim-fonts.noarch : Un Extra fonts - UnPenheulim
+un-extra-pilgia-fonts.noarch : Un Extra fonts - UnPilgia
+un-extra-shinmun-fonts.noarch : Un Extra fonts - UnShinmun
+un-extra-taza-fonts.noarch : Un Extra fonts - UnTaza
+un-extra-vada-fonts.noarch : Un Extra fonts - UnVada
+un-extra-yetgul-fonts.noarch : Un Extra fonts - UnYetgul
+unifrakturmaguntia-fonts.noarch : Font that provide a Fraktur typeface that may
+                                : be embedded on websites
+urw-fonts.noarch : Free versions of the 35 standard PostScript fonts.
+vdrsymbol-fonts.noarch : VDR symbol fonts
+vemana2000-fonts.noarch : Unicode compliant OpenType font for Telugu
+vlgothic-fonts.noarch : Japanese TrueType font
+vollkorn-fonts.noarch : A serif Latin font with good readability
+vt323-fonts.noarch : VT323 font by Peter Hull
+wallpoet-fonts.noarch : Wallpoet font by Lars Berggren
+woff.x86_64 : Encoding and Decoding for Web Open Font Format(Woff)
+woffTools.noarch : Tool for manipulating and examining WOFF files
+wqy-unibit-fonts.noarch : WenQuanYi Unibit Bitmap Font
+wqy-zenhei-fonts.noarch : WenQuanYi Zen Hei CJK Font
+xorg-x11-fonts-100dpi.noarch : A set of 100dpi resolution fonts for the X Window
+                             : System
+xorg-x11-fonts-75dpi.noarch : A set of 75dpi resolution fonts for the X Window
+                            : System
+xorg-x11-fonts-ISO8859-1-100dpi.noarch : A set of 100dpi ISO-8859-1 fonts for X
+xorg-x11-fonts-ISO8859-1-75dpi.noarch : A set of 75dpi ISO-8859-1 fonts for X
+xorg-x11-fonts-ISO8859-14-100dpi.noarch : ISO8859-14-100dpi fonts
+xorg-x11-fonts-ISO8859-14-75dpi.noarch : ISO8859-14-75dpi fonts
+xorg-x11-fonts-ISO8859-15-100dpi.noarch : ISO8859-15-100dpi fonts
+xorg-x11-fonts-ISO8859-15-75dpi.noarch : ISO8859-15-75dpi fonts
+xorg-x11-fonts-ISO8859-2-100dpi.noarch : A set of 100dpi Central European
+                                       : language fonts for X
+xorg-x11-fonts-ISO8859-2-75dpi.noarch : A set of 75dpi Central European language
+                                      : fonts for X
+xorg-x11-fonts-ISO8859-9-100dpi.noarch : ISO8859-9-100dpi fonts
+xorg-x11-fonts-ISO8859-9-75dpi.noarch : ISO8859-9-75dpi fonts
+xorg-x11-fonts-Type1.noarch : Type1 fonts provided by the X Window System
+xorg-x11-fonts-cyrillic.noarch : Cyrillic fonts for X
+xorg-x11-fonts-ethiopic.noarch : Ethiopic fonts
+xorg-x11-fonts-misc.noarch : misc bitmap fonts for the X Window System
+zvbi-fonts.noarch : Fonts from zvbi converted to X11
+PackageKit-gtk3-module.i686 : Install fonts automatically using PackageKit
+PackageKit-gtk3-module.x86_64 : Install fonts automatically using PackageKit
+adf-accanthis-2-fonts.noarch : A “modernized” garaldic serif, “Horley old style”
+                             : alternative
+adf-accanthis-3-fonts.noarch : A “modernized” garaldic serif typeface
+adf-gillius-2-fonts.noarch : Gillius ADF No2 sans-serif typeface family
+adf-gillius-fonts-common.noarch : Common files of adf-gillius
+adobe-source-han-sans-cn-fonts.noarch : Adobe OpenType Pan-CJK font family for
+                                      : Simplified Chinese
+alef-fonts.noarch : A free multi-lingual font designed for screens
+allgeyer-musiqwik-fonts.noarch : A musical notation font family intended for
+                               : writing lines of actual music
+allgeyer-musisync-fonts.noarch : A musical notation font family that provides
+                               : general musical decorations
+almas-mongolian-title-fonts.noarch : Mongolian Title font
+amiri-fonts.noarch : A classical Arabic font in Naskh style
+artwiz-aleczapka-anorexia-fonts.noarch : Anorexia font in Artwiz family
+artwiz-aleczapka-aqui-fonts.noarch : Aqui font in Artwiz family
+artwiz-aleczapka-cure-fonts.noarch : Cure font in Artwiz family
+artwiz-aleczapka-drift-fonts.noarch : Drift font in Artwiz family
+artwiz-aleczapka-edges-fonts.noarch : Edges font in Artwiz family
+artwiz-aleczapka-fkp-fonts.noarch : Fkp font in Artwiz family
+artwiz-aleczapka-gelly-fonts.noarch : Gelly font in Artwiz family
+artwiz-aleczapka-kates-fonts.noarch : Kates font in Artwiz family
+artwiz-aleczapka-lime-fonts.noarch : Lime font in Artwiz family
+artwiz-aleczapka-mints-mild-fonts.noarch : Mints Mild font in Artwiz family
+artwiz-aleczapka-mints-strong-fonts.noarch : Mints Strong font in Artwiz family
+artwiz-aleczapka-nu-fonts.noarch : Nu font in Artwiz family
+artwiz-aleczapka-smoothansi-fonts.noarch : Smoothansi font in Artwiz family
+artwiz-aleczapka-snap-fonts.noarch : Snap font in Artwiz family
+baekmuk-ttf-batang-fonts.noarch : Korean Baekmuk TrueType Batang typeface
+baekmuk-ttf-dotum-fonts.noarch : Korean Baekmuk TrueType Dotum typeface
+baekmuk-ttf-gulim-fonts.noarch : Korean Baekmuk TrueType Gulim typeface
+baekmuk-ttf-hline-fonts.noarch : Korean Baekmuk TrueType Headline typeface
+bicon-fonts.noarch : Font Files for BiCon
+bitmap-fonts-compat.noarch : Compatibility files of bitmap-font families
+bitstream-vera-fonts-common.noarch : Common files of the Bitstream Vera font set
+bpg-dejavu-sans-fonts.noarch : DejaVu Sans with BPG Georgian changes
+cave9-mutante-fonts.noarch : Mutante font used by the HUD in cave9 game
+cdac-sakal-marathi-fonts.noarch : Marathi language font from CDAC
+chisholm-letterslaughing-fonts.noarch : Letters Laughing is a decorative/LED
+                                      : sans-serif font
+cyreal-wireone-fonts.noarch : Wire One font by Alexei Vanyashin and Gayaneh
+                            : Bagdasaryan
+dejavu-fonts-common.noarch : Common files for the Dejavu font set
+dejavu-lgc-sans-fonts.noarch : Variable-width sans-serif font faces,
+                             : Latin-Greek-Cyrillic subset
+dejavu-lgc-sans-mono-fonts.noarch : Monospace sans-serif font faces,
+                                  : Latin-Greek-Cyrillic subset
+dejavu-lgc-serif-fonts.noarch : Variable-width serif font faces,
+                              : Latin-Greek-Cyrillic subset
+dejavu-sans-fonts.noarch : Variable-width sans-serif font faces
+dejavu-sans-mono-fonts.noarch : Monospace sans-serif font faces
+dejavu-serif-fonts.noarch : Variable-width serif font faces
+drehatlas-widelands-fonts.noarch : A Latin typeface inspired by feudal
+                                 : calligraphy
+dustin-domestic-manners-fonts.noarch : Handwriting font by Dustin Norlander
+dustin-dustismo-roman-fonts.noarch : General purpose serif font
+ecolier-court-fonts-common.noarch : Common files of the Écolier Court font set
+entypo-fonts.noarch : Pictogram Suite font
+extremetuxracer-common.noarch : Common files for Extreme Tux Racer and its fonts
+extremetuxracer-papercuts-fonts.noarch : PaperCuts 2.0 font
+extremetuxracer-papercuts-outline-fonts.noarch : PaperCuts Outline 2.0 font
+fntsample.x86_64 : A program for making font samples that show Unicode coverage
+                 : of the font
+font-manager.x86_64 : A font management application for the GNOME desktop
+                    : environment
+fontawesome-fonts-web.noarch : Web files for fontawesome
+fontik.x86_64 : A Configuration Tool for Font-wise, User-set Fontconfig Rules
+fontpackages-tools.noarch : Tools used to check fonts and font packages
+fonts-blender.noarch : International blender mono space font
+freecol-imperator-fonts.noarch : Gothic font
+freecol-shadowedblack-fonts.noarch : Gothic font with drop shadows
+gdouros-akkadian-fonts.noarch : A font for Sumero-Akkadian cuneiform
+gdouros-symbola-fonts.noarch : A symbol font
+gdouros-symbola-fonts-doc.noarch : Glyph table for gdouros-symbola font
+gfs-complutum-fonts.noarch : GFS Complutum Greek font
+gfs-didot-classic-fonts.noarch : GFS Didot Classic Greek font
+gfs-garaldus-fonts.noarch : GFS Garaldus majuscule Greek font
+ghostscript-chinese.noarch : Ghostscript Chinese fonts configuration files
+ghostscript-chinese-zh_CN.noarch : Ghostscript Simplified Chinese fonts
+                                 : configuration files
+ghostscript-chinese-zh_TW.noarch : Ghostscript Traditional Chinese fonts
+                                 : configuration files
+glyphtracer.noarch : Program for creating fonts from images
+gnome-font-viewer.x86_64 : Utility for previewing fonts for GNOME
+gnu-free-fonts-common.noarch : Common files for freefont (documentation…)
+gnu-free-mono-fonts.noarch : GNU FreeFont Monospaced Font
+gnu-free-sans-fonts.noarch : GNU FreeFont Sans-Serif Font
+gnu-free-serif-fonts.noarch : GNU FreeFont Serif Font
+google-droid-kufi-fonts.noarch : A kufi Arabic titling typeface designed to
+                               : complement Droid Sans
+google-droid-sans-fonts.noarch : A humanist sans serif typeface
+google-droid-sans-mono-fonts.noarch : A humanist monospace sans serif typeface
+google-droid-serif-fonts.noarch : A contemporary serif typeface
+google-noto-kufi-arabic-fonts.noarch : Kufi Arabic font
+google-noto-naskh-arabic-fonts.noarch : Naskh Arabic font
+google-noto-naskh-arabic-ui-fonts.noarch : Naskh Arabic UI font
+google-noto-sans-armenian-fonts.noarch : Sans Armenian font
+google-noto-sans-avestan-fonts.noarch : Sans Avestan font
+google-noto-sans-balinese-fonts.noarch : Sans Balinese font
+google-noto-sans-bamum-fonts.noarch : Sans Bamum font
+google-noto-sans-batak-fonts.noarch : Sans Batak font
+google-noto-sans-bengali-fonts.noarch : Sans Bengali font
+google-noto-sans-bengali-ui-fonts.noarch : Sans Bengali UI font
+google-noto-sans-brahmi-fonts.noarch : Sans Brahmi font
+google-noto-sans-buginese-fonts.noarch : Sans Buginese font
+google-noto-sans-buhid-fonts.noarch : Sans Buhid font
+google-noto-sans-canadian-aboriginal-fonts.noarch : Sans Canadian Aboriginal
+                                                  : font
+google-noto-sans-carian-fonts.noarch : Sans Carian font
+google-noto-sans-cham-fonts.noarch : Sans Cham font
+google-noto-sans-cherokee-fonts.noarch : Sans Cherokee font
+google-noto-sans-cjk-fonts.noarch : Sans CJK font
+google-noto-sans-coptic-fonts.noarch : Sans Coptic font
+google-noto-sans-cuneiform-fonts.noarch : Sans Cuneiform font
+google-noto-sans-cypriot-fonts.noarch : Sans Cypriot font
+google-noto-sans-deseret-fonts.noarch : Sans Deseret font
+google-noto-sans-egyptian-hieroglyphs-fonts.noarch : Sans Egyptian Hieroglyphs
+                                                   : font
+google-noto-sans-fonts.noarch : Sans font
+google-noto-sans-glagolitic-fonts.noarch : Sans Glagolitic font
+google-noto-sans-gothic-fonts.noarch : Sans Gothic font
+google-noto-sans-gurmukhi-fonts.noarch : Sans Gurmukhi font
+google-noto-sans-hanunoo-fonts.noarch : Sans Hanunoo font
+google-noto-sans-imperial-aramaic-fonts.noarch : Sans Imperial Aramaic font
+google-noto-sans-inscriptional-pahlavi-fonts.noarch : Sans Inscriptional Pahlavi
+                                                    : font
+google-noto-sans-japanese-fonts.noarch : Sans Japanese font
+google-noto-sans-kaithi-fonts.noarch : Sans Kaithi font
+google-noto-sans-kannada-fonts.noarch : Sans Kannada font
+google-noto-sans-kayah-li-fonts.noarch : Sans Kayah Li font
+google-noto-sans-kharoshthi-fonts.noarch : Sans Kharoshthi font
+google-noto-sans-khmer-fonts.noarch : Sans Khmer font
+google-noto-sans-korean-fonts.noarch : Sans Korean font
+google-noto-sans-lao-fonts.noarch : Sans Lao font
+google-noto-sans-linear-b-fonts.noarch : Sans Linear B font
+google-noto-sans-meetei-mayek-fonts.noarch : Sans Meetei Mayek font
+google-noto-sans-simplified-chinese-fonts.noarch : Sans Simplified Chinese font
+google-noto-sans-tamil-fonts.noarch : Sans Tamil font
+google-noto-sans-telugu-fonts.noarch : Sans Telugu font
+google-noto-sans-thaana-fonts.noarch : Sans Thaana font
+google-noto-sans-thai-fonts.noarch : Sans Thai font
+google-noto-sans-traditional-chinese-fonts.noarch : Sans Traditional Chinese
+                                                  : font
+google-noto-sans-ugaritic-fonts.noarch : Sans Ugaritic font
+google-noto-sans-vai-fonts.noarch : Sans Vai font
+google-noto-serif-khmer-fonts.noarch : Serif Khmer font
+google-roboto-common.noarch : Common files for Google Roboto fonts
+ht-alegreya-smallcaps-fonts.noarch : SmallCaps variant of the Alegreya font
+                                   : family
+inkboy-fonts.noarch : A clean and usable latin fantasy font
+ipa-mincho-fonts.noarch : Japanese Mincho-typeface OpenType font by IPA
+ipa-pgothic-fonts.noarch : Japanese Proportional Gothic-typeface OpenType font
+                         : by IPA
+jomolhari-fonts.noarch : Jomolhari a Bhutanese style font for Tibetan and
+                       : Dzongkha
+kanjistrokeorders-fonts.noarch : Font to view stroke order diagrams for Kanji,
+                               : Kana and etc
+khmeros-base-fonts.noarch : Base KhmerOS font
+khmeros-battambang-fonts.noarch : Battambang font
+khmeros-bokor-fonts.noarch : Bokor font
+khmeros-metal-chrieng-fonts.noarch : Metal Chrieng font
+khmeros-siemreap-fonts.noarch : Siemreap font
+kurdit-unikurd-web-fonts.noarch : A widely used Kurdish font for Arabic-like
+                                : scripts and Latin
+libeasyfc.i686 : Easy configuration generator interface for fontconfig
+liberation-fonts-common.noarch : Shared common files of Liberation font families
+libreoffice-opensymbol-fonts.noarch : LibreOffice dingbats font
+mgopen-canonica-fonts.noarch : Truetype variable-stroke-width serif font faces
+mgopen-cosmetica-fonts.noarch : Truetype variable-stroke-width sans serif font
+                              : faces
+mgopen-modata-fonts.noarch : Truetype fixed-stroke-width sans serif font faces
+mgopen-moderna-fonts.noarch : Truetype fixed-stroke-width sans serif font faces
+mona-bitmap-fonts.noarch : Bitmap Japanese font for text arts
+mona-sazanami-fonts.noarch : True Type Japanese font for text arts based on
+                           : Sazanami
+mona-vlgothic-fonts.noarch : True Type Japanese font for text arts based on
+                           : VLGothic
+mozilla-fira-fonts-common.noarch : Common files for Mozilla's Fira font set
+mozilla-fira-mono-fonts.noarch : Monospaced version of Mozilla's Fira font
+mozilla-fira-sans-fonts.noarch : Sans-serif version of Mozilla's Fira font
+mph-2b-damase-fonts.noarch : Free font encoding many non-Latin scripts
+mplus-1c-fonts.noarch : M+ C is optimized to be proportioned and has two
+                      : variations
+mplus-1m-fonts.noarch : M+ M emphasize the balance of natural letterform and
+                      : high legibility
+mplus-1mn-fonts.noarch : M+ M emphasize the balance of natural letterform and
+                       : high legibility
+mplus-1p-fonts.noarch : M+ P is aimed as sophisticated and relaxed design
+mplus-2c-fonts.noarch : M+ C is optimized to be proportioned and has two
+                      : variations
+mplus-2m-fonts.noarch : M+ M emphasize the balance of natural letterform and
+                      : high legibility
+mplus-2p-fonts.noarch : M+ P is aimed as sophisticated and relaxed design
+mplus-fonts-common.noarch : Mplus, common files (documentation…)
+myanmar3-unicode-fonts.noarch : Myanmar3 unicode font
+nafees-naskh-fonts.noarch : Nafees naskh font for writing Urdu in the Naskh
+                          : script with full aerab support
+navilu-fonts.noarch : Free Kannada opentype sans-serif font
+nodejs-ttembed-js.noarch : Set embedding level of TrueType fonts module for
+                         : Node.js
+oflb-asana-math-fonts.noarch : An OpenType font with a MATH table
+oflb-dignas-handwriting-fonts.noarch : Handwriting font
+oflb-prociono-fonts.noarch : A text roman with standard and discretionary
+                           : ligatures, class-based kerning
+opendyslexic-fonts.noarch : Font designed for dyslexics and high readability
+oxygen-fonts-common.noarch : Common files for Oxygen font
+oxygen-mono-fonts.noarch : Oxygen Monospaced Font
+oxygen-sans-fonts.noarch : Oxygen Sans-Serif Font
+paratype-pt-sans-caption-fonts.noarch : A pan-Cyrillic typeface (caption forms
+                                      : for small text)
+paratype-pt-serif-caption-fonts.noarch : A pan-Cyrillic typeface (caption forms
+                                       : for small text)
+paratype-pt-serif-fonts.noarch : A pan-Cyrillic typeface
+perl-GDTextUtil.noarch : Text utilities for use with GD
+php-pear-Text-Figlet.noarch : Render text using FIGlet fonts
+pothana2000-fonts.noarch : Unicode compliant OpenType font for Telugu
+sazanami-gothic-fonts.noarch : Sazanami Gothic Japanese TrueType font
+sazanami-mincho-fonts.noarch : Sazanami Mincho Japanese TrueType font
+senamirmir-washra-fantuwua-fonts.noarch : A font for the Geʼez (Ethiopic) script
+senamirmir-washra-hiwua-fonts.noarch : A font for the Geʼez (Ethiopic) script
+senamirmir-washra-jiret-fonts.noarch : A font for the Geʼez (Ethiopic) script
+senamirmir-washra-tint-fonts.noarch : A font for the Geʼez (Ethiopic) script
+senamirmir-washra-wookianos-fonts.noarch : A font for the Geʼez (Ethiopic)
+                                         : script
+senamirmir-washra-yebse-fonts.noarch : A font for the Geʼez (Ethiopic) script
+senamirmir-washra-yigezu-bisrat-goffer-fonts.noarch : A decorative font for the
+                                                    : Geʼez (Ethiopic) script
+senamirmir-washra-yigezu-bisrat-gothic-fonts.noarch : A decorative font for the
+                                                    : Geʼez (Ethiopic) script
+senamirmir-washra-zelan-fonts.noarch : A font for the Geʼez (Ethiopic) script
+sfntly.noarch : A Library for Using, Editing, and Creating SFNT-based Fonts
+sil-gentium-basic-book-fonts.noarch : SIL Gentium Book Basic font family
+sil-gentium-basic-fonts-common.noarch : Common files of sil-gentium-basic
+sil-nuosu-fonts.noarch : The Nuosu SIL Font
+sil-padauk-book-fonts.noarch : A font for Burmese and the Myanmar script
+silkscreen-expanded-fonts.noarch : Expanded Silkscreen font family
+silkscreen-fonts.noarch : Silkscreen four member type family
+sj-delphine-fonts.noarch : Handwriting font
+sj-stevehand-fonts.noarch : Handwriting font
+t1utils.x86_64 : Collection of Type 1 and 2 font manipulation utilities
+terminus-fonts-console.noarch : Clean fixed width font (console version)
+texlive-accanthis.noarch : Accanthis fonts, with LaTeX support
+texlive-ae.noarch : Virtual fonts for T1 encoded CMR-fonts
+texlive-aeguill.noarch : Add several kinds of guillemets to the ae fonts
+texlive-alegreya.noarch : Alegreya fonts with LaTeX support
+texlive-allrunes.noarch : Fonts and LaTeX package for almost all runes
+texlive-anonymouspro.noarch : Use AnonymousPro fonts with LaTeX
+texlive-anyfontsize.noarch : Select any font size in LaTeX
+texlive-arabtex.noarch : Macros and fonts for typesetting Arabic
+texlive-aramaic-serto.noarch : Fonts and LaTeX for Syriac written in Serto
+texlive-archaic.noarch : A collection of archaic fonts
+texlive-arev.noarch : Fonts and LaTeX support files for Arev Sans
+texlive-aurical.noarch : Calligraphic fonts for use with LaTeX in T1 encoding
+texlive-b1encoding.noarch : LaTeX encoding tools for Bookhands fonts
+texlive-barcodes.noarch : Fonts for making barcodes
+texlive-baskervald.noarch : Baskervald ADF fonts collection with TeX/LaTeX
+                          : support
+texlive-bbm.noarch : "Blackboard-style" cm fonts
+texlive-bbm-macros.noarch : LaTeX support for "blackboard-style" cm fonts
+texlive-belleek.noarch : Free replacement for basic MathTime fonts
+texlive-bera.noarch : Bera fonts
+texlive-berenisadf.noarch : Berenis ADF fonts and TeX/LaTeX support
+texlive-beton.noarch : Use Concrete fonts
+texlive-bgreek.noarch : Using Beccari's fonts in betacode for classical Greek
+texlive-blacklettert1.noarch : T1-encoded versions of Haralambous old German
+                             : fonts
+texlive-bold-extra.noarch : Use bold small caps and typewriter fonts
+texlive-bookhands.noarch : A collection of book-hand fonts
+texlive-boondox.noarch : Mathematical alphabets derived from the STIX fonts
+texlive-carolmin-ps.noarch : Adobe Type 1 format of Carolingian Minuscule fonts
+texlive-cbcoptic.noarch : Coptic fonts and LaTeX macros for general usage and
+                        : for philology
+texlive-cc-pl.noarch : Polish extension of Computer Concrete fonts
+texlive-cfr-lm.noarch : Enhanced support for the Latin Modern fonts
+texlive-charter.noarch : Charter fonts
+texlive-chess.noarch : Fonts for typesetting chess boards
+texlive-chessfss.noarch : A package to handle chess fonts
+texlive-cinzel.noarch : LaTeX support for Cinzel and Cinzel Decorative fonts
+texlive-cm.noarch : Computer Modern fonts
+texlive-cm-lgc.noarch : Type 1 CM-based fonts for Latin, Greek and Cyrillic
+texlive-cm-super.noarch : CM-Super family of fonts
+texlive-cmbright.noarch : Computer Modern Bright fonts
+texlive-cmcyr.noarch : Computer Modern fonts with cyrillic extensions
+texlive-cmsd.noarch : Interfaces to the CM Sans Serif Bold fonts
+texlive-concmath.noarch : Concrete Math fonts
+texlive-concrete.noarch : Concrete Roman fonts
+texlive-context-simplefonts.noarch : Simplified font usage for ConTeXt
+texlive-context-typescripts.noarch : Small modules to load various fonts for use
+                                   : in ConTeXt
+texlive-cs.noarch : Czech/Slovak-tuned Computer Modern fonts
+texlive-cyrillic.noarch : Support for Cyrillic fonts in LaTeX
+texlive-dejavu.noarch : LaTeX support for the DejaVu fonts
+texlive-dingbat.noarch : Two dingbat symbol fonts
+texlive-duerer.noarch : Computer Duerer fonts
+texlive-duerer-latex.noarch : LaTeX support for the Duerer fonts
+texlive-ebgaramond.noarch : LaTeX support for EBGaramond fonts
+texlive-ec.noarch : Computer modern fonts in T1 and TS1 encodings
+texlive-ecc.noarch : Sources for the European Concrete fonts
+texlive-eco.noarch : Oldstyle numerals using EC fonts
+texlive-electrum.noarch : Electrum ADF fonts collection
+texlive-elvish.noarch : Fonts for typesetting Tolkien Elvish scripts
+texlive-ethiop.noarch : LaTeX macros and fonts for typesetting Amharic
+texlive-ethiop-t1.noarch : Type 1 versions of Amharic fonts
+texlive-euler.noarch : Use AMS Euler fonts for math
+texlive-eulervm.noarch : Euler virtual math fonts
+texlive-fandol.noarch : Four basic fonts for Chinese typesetting
+texlive-fc.noarch : Fonts for African languages
+texlive-feynmf.noarch : Macros and fonts for creating Feynman (and other)
+                      : diagrams
+texlive-figbas.noarch : Mini-fonts for figured-bass notation in music
+texlive-font-change.noarch : Macros to Change Text and Math fonts in plain TeX
+texlive-fontch.noarch : Changing fonts, sizes and encodings in Plain TeX
+texlive-fontinst.noarch : Help with installing fonts for TeX and LaTeX
+texlive-fontname.noarch : Scheme for naming fonts in TeX
+texlive-fontools.noarch : Tools to simplify using fonts (especially TT/OTF ones)
+texlive-fontspec.noarch : Advanced font selection in XeLaTeX and LuaLaTeX
+texlive-fontwrap.noarch : Bind fonts to specific unicode blocks
+texlive-fourier.noarch : Using Utopia fonts in LaTeX documents
+texlive-fouriernc.noarch : Use New Century Schoolbook text with Fourier maths
+                         : fonts
+texlive-fpl.noarch : SC and OsF fonts for URW Palladio L
+texlive-frcursive.noarch : French cursive hand fonts
+texlive-fundus-cyr.noarch : Support for Washington University Cyrillic fonts
+texlive-gentium-tug.noarch : Gentium fonts (in two formats) and support files
+texlive-gillcm.noarch : Alternative unslanted italic Computer Modern fonts
+texlive-gillius.noarch : Gillius fonts with LaTeX support
+texlive-go.noarch : Fonts and macros for typesetting go games
+texlive-gothic.noarch : A collection of old German-style fonts
+texlive-greektex.noarch : Fonts for typesetting Greek/English documents
+texlive-gsftopk.noarch : Convert "ghostscript fonts" to PK files
+texlive-hfbright.noarch : The hfbright fonts
+texlive-hfoldsty.noarch : Old style numerals with EC fonts
+texlive-ibygrk.noarch : Fonts and macros to typeset ancient Greek
+texlive-initials.noarch : Adobe Type 1 decorative initial fonts
+texlive-ipaex.noarch : IPA and IPAex fonts from Information-technology Promotion
+                     : Agency, Japan
+texlive-ipaex-type1.noarch : IPAex fonts converted to Type-1 format Unicode
+                           : subfonts
+texlive-jamtimes.noarch : Expanded Times Roman fonts
+texlive-jfontmaps.noarch : Font maps and configuration tools for Japanese fonts
+texlive-kdgreek.noarch : Greek fonts and macros
+texlive-lcyw.noarch : Make Classic Cyrillic CM fonts accessible in LaTeX
+texlive-levy.noarch : Fonts for typesetting classical greek
+texlive-lgreek.noarch : LaTeX macros for using Silvio Levy's Greek fonts
+texlive-lh.noarch : Cyrillic fonts that support LaTeX standard encodings
+texlive-libertine.noarch : Use of Linux Libertine and Biolinum fonts with LaTeX
+texlive-librebaskerville.noarch : LaTeX support for the Libre Baskerville family
+                                : of fonts
+texlive-librecaslon.noarch : Libre Caslon fonts, with LaTeX support
+texlive-libris.noarch : Libris ADF fonts, with LaTeX support
+texlive-lineara.noarch : Linear A script fonts
+texlive-lm.noarch : Latin modern fonts in outline formats
+texlive-lm-math.noarch : OpenType maths fonts for Latin Modern
+texlive-lobster2.noarch : Lobster Two fonts, with support for all LaTeX engines
+texlive-mathabx-type1.noarch : Outline version of the mathabx fonts
+texlive-mathdesign.noarch : Mathematical fonts to fit with particular text fonts
+texlive-mathpazo.noarch : Fonts to typeset mathematics to match Palatino
+texlive-mathspec.noarch : Specify arbitrary fonts for mathematics in XeTeX
+texlive-mdsymbol.noarch : Symbol fonts to match Adobe Myriad Pro
+texlive-merriweather.noarch : Merriweather and MerriweatherSans fonts, with
+                            : LaTeX support
+texlive-metafont.noarch : A system for specifying fonts
+texlive-mf2pt1.noarch : Produce PostScript Type 1 fonts from Metafont source
+texlive-mflogo.noarch : LaTeX support for Metafont logo fonts
+texlive-mfnfss.noarch : Packages to typeset oldgerman and pandora fonts in LaTeX
+texlive-musixtex-fnts.noarch : Fonts used by MusixTeX
+texlive-mxedruli.noarch : A pair of fonts for different Georgian alphabets
+texlive-nanumtype1.noarch : Type1 subfonts of Nanum Korean fonts
+texlive-newpx.noarch : Alternative uses of the PX fonts, with improved metrics
+texlive-newtx.noarch : Alternative uses of the TX fonts, with improved metrics
+texlive-nkarta.noarch : A "new" version of the karta cartographic fonts
+texlive-obnov.noarch : Obyknovennaya Novaya fonts
+texlive-ocr-b.noarch : Fonts for OCR-B
+texlive-ocr-b-outline.noarch : OCR-B fonts in Type 1 and OpenType
+texlive-ocr-latex.noarch : LaTeX support for ocr fonts
+texlive-ogham.noarch : Fonts for typesetting Ogham script
+texlive-pacioli.noarch : Fonts designed by Fra Luca de Pacioli in 1497
+texlive-paratype.noarch : LaTeX support for free fonts by ParaType
+texlive-pb-diagram.noarch : A commutative diagram package using LAMSTeX or
+                          : Xy-pic fonts
+texlive-persian-modern.noarch : The "Persian Modern" family of fonts
+texlive-phonetic.noarch : MetaFont Phonetic fonts, based on Computer Modern
+texlive-pkfix.noarch : Replace pk fonts in PostScript with Type 1 fonts
+texlive-pl.noarch : Polish extension of CM fonts in Type 1 format
+texlive-playfair.noarch : Playfair Display fonts with LaTeX support
+texlive-polski.noarch : Typeset Polish documents with LaTeX and Polish fonts
+texlive-poltawski.noarch : Antykwa Poltawskiego Family of Fonts
+texlive-pslatex.noarch : Use PostScript fonts by default
+texlive-psnfss.noarch : Font support for common PostScript fonts
+texlive-punk-latex.noarch : LaTeX support for punk fonts
+texlive-pxgreeks.noarch : Shape selection for PX fonts Greek letters
+texlive-pxtxalfa.noarch : Virtual maths alphabets based on pxfonts and txfonts
+texlive-quattrocento.noarch : LaTeX support for Quattrocento and Quattrocento
+                            : Sans fonts
+texlive-romande.noarch : Romande ADF fonts and LaTeX support
+texlive-sansmathfonts.noarch : Correct placement of accents in sans-serif maths
+texlive-sauter.noarch : Wide range of design sizes for CM fonts
+texlive-skak.noarch : Fonts and macros for typesetting chess games
+texlive-skaknew.noarch : The skak chess fonts redone in Adobe Type 1
+texlive-slantsc.noarch : Access different-shaped small-caps fonts
+texlive-stix.noarch : OpenType Unicode maths fonts
+texlive-tengwarscript.noarch : LaTeX support for using Tengwar fonts
+texlive-tex-gyre.noarch : TeX Fonts extending freely available URW fonts
+texlive-tex-gyre-math.noarch : Maths fonts to match tex-gyre text fonts
+texlive-tipa.noarch : Fonts and macros for IPA phonetics characters
+texlive-trajan.noarch : Fonts from the Trajan column in Rome
+texlive-txgreeks.noarch : Shape selection for TX fonts Greek letters
+texlive-typeface.noarch : Select a balanced set of fonts
+texlive-ucharclasses.noarch : Switch fonts in XeTeX according to what is being
+                            : processed
+texlive-uhc.noarch : Fonts for the Korean language
+texlive-umtypewriter.noarch : Fonts to typeset with the xgreek package
+texlive-utopia.noarch : Adobe Utopia fonts
+texlive-venturisadf.noarch : Venturis ADF fonts collection
+texlive-wasy.noarch : The wasy fonts (Waldi symbol fonts)
+texlive-wasysym.noarch : LaTeX support file to use the WASY2 fonts
+texlive-wnri.noarch : Ridgeway's fonts
+texlive-wnri-latex.noarch : LaTeX support for wnri fonts
+texlive-wsuipa.noarch : International Phonetic Alphabet fonts
+texlive-xcharter.noarch : Extension of Bitstream Charter fonts
+texlive-yannisgr.noarch : Greek fonts by Yannis Haralambous
+texlive-yhmath.noarch : Extended maths fonts for LaTeX
+texlive-zhmetrics.noarch : TFM subfont files for using Chinese fonts in 8-bit
+                         : TeX
+texlive-zlmtt.noarch : Use Latin Modern Typewriter fonts
+thai-arundina-fonts-common.noarch : Common files of the Thai Arundina font set
+tharlon-fonts.noarch : The Myanmar font which is designed by Ngwe Tun
+thibault-essays1743-fonts.noarch : Thibault.org Montaigne's Essays typeface font
+thibault-fonts-common.noarch : Common files for thibault (documentation…)
+thibault-isabella-fonts.noarch : Thibault.org Isabella Breviary calligraphic
+                               : font
+thibault-rockets-fonts.noarch : Thibault.org font, vaguely space themed
+thibault-staypuft-fonts.noarch : Thibault.org font, rounded and marshmellowy
+tibetan-machine-uni-fonts.noarch : Tibetan Machine Uni font for Tibetan,
+                                 : Dzongkha and Ladakhi
+tiresias-lp-fonts.noarch : Specialized font for large print publications
+trabajo-fonts.noarch : Latin Serif font that supports Shavian alphabet
+ttfautohint.x86_64 : Automated hinting utility for TrueType fonts
+ttname.noarch : CLI font metadata editor
+tuladha-jejeg-fonts.noarch : Unicode font for Javanese script
+un-extra-fonts-common.noarch : Common files for the Un Extra font set
+unifont-fonts.noarch : Unicode font with a glyph for every visible BMP code
+                     : point
+vlgothic-p-fonts.noarch : Proportional Japanese TrueType font
+wine-arial-fonts.noarch : Wine Arial font family
+wine-courier-fonts.noarch : Wine Courier font family
+wine-fixedsys-fonts.noarch : Wine Fixedsys font family
+wine-fonts.noarch : Wine font files
+wine-marlett-fonts.noarch : Wine Marlett font family
+wine-ms-sans-serif-fonts.noarch : Wine MS Sans Serif font family
+wine-small-fonts.noarch : Wine Small font family
+wine-symbol-fonts.noarch : Wine Symbol font family
+wine-system-fonts.noarch : Wine System font family
+wine-tahoma-fonts.noarch : Wine Tahoma font family
+wine-tahoma-fonts-system.noarch : Wine Tahoma font family system integration
+wine-wingdings-fonts.noarch : Wine Wingdings font family
+wine-wingdings-fonts-system.noarch : Wine Wingdings font family system
+                                   : integration
+woodardworks-laconic-fonts.noarch : An artistic and minimal sans-serif font
+                                  : family
+woodardworks-laconic-shadow-fonts.noarch : A shadowed version of the Laconic
+                                         : sans-serif font family
+xorg-x11-font-utils.x86_64 : X.Org X11 font utilities
+yanone-tagesschrift-fonts.noarch : A serif decorative latin font
+
+  Name and summary matches only, use "search all" for everything.
