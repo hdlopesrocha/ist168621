@@ -85,12 +85,29 @@ On the other hand, TURN uses public servers to redirect traffic between private 
 
 When connection is established, either direct or indirect (via TURN servers), WebRTC cames to simplify how audio and video are transmited. 
 
+\section{Hypemedia}
+
+Although video and audio is almost standardized, WebRTC allows us to enrich web communications by overlaying multiple elements such as buttons, text and more complex user interfaces.
+
+In the past, multiple formats were proposed to deal with hypermedia.
+
+HyVAL\cite{hyval} was proposed for modeling composition of video. The definition of a format must be done with carefoul. When a format estabilished for a document, it is expected that a parser knows how to convert text into behaviour, formats like XML are quite limitative, they cannot reproduce actions that were not previously implemented.
+
+Our solution to overcome format limitation is to take advantage of languages like javascript, like any webpage, user interface elements are defined by html tags, more complex actions like animations can be easily implemented via CSS and javascript, without ever defining a new standard for structured hypermedia.
+
+By using this already solidified web technologies, it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of an hypercall. Another example would be a colaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only video, audio and text.
+
+
+In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it whant to be contacted. 
+
+Consider this case study, say that Alice whants to call Bob. Alice starts a WebRTC connection with Bob, at this point Alice doesn't know how the communication will proceed. Bob created a personal web page where he defined how he whants to be contacted. Alice downloads Bob's personal webpage and finds what kind of interactions could be done, for instance she knows that she can contact Bob via video streaming or can browse past videos. While Bob is connected, he can add links on videos, organise its content and enable different plugins for communication.
+
 \begin{thebibliography}{9}
 
 
 \bibitem{ipv4} Next Generation Internet: IPv4 Address Exhaustion, Mitigation Strategies and Implications for the U.S. - An IEEE-USA White Paper - 2009
 \bibitem{natvoip} How NAT-Compatible Are VoIP Applications? Ying-Dar Lin, Chien-Chao Tseng, Cheng-Yuan Ho, and Yu-Hsien Wu, National Chiao Tung University
-
+\bibitem{hyval} A Structured Document Model for Authoring Video-based Hypermedia
 
 \end{thebibliography}
 
