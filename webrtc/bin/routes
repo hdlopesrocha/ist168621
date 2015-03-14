@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /sample                     controllers.Application.sample()
+GET     /add/:ip                    controllers.Application.add(ip : String)
 
 
 # Map static resources from the /public folder to the /assets URL path
