@@ -19,6 +19,11 @@ public class Application extends Controller {
         return ok(views.html.sample.render());
     }
 
+    public static Result smil() {
+      return ok(views.html.smil.render());
+  }
+
+    
     public static Result add(String ip){
     	 ips.add(ip);
     	 return ok();

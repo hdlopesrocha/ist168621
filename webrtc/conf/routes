@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /sample                     controllers.Application.sample()
+GET     /smil                     controllers.Application.smil()
 GET     /add/:ip                    controllers.Application.add(ip : String)
 
 
