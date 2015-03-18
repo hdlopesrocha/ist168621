@@ -85,23 +85,34 @@ On the other hand, TURN uses public servers to redirect traffic between private 
 
 When connection is established, either direct or indirect (via TURN servers), WebRTC cames to simplify how audio and video are transmited. 
 
-\section{Hypemedia}
+\section{Hypermedia}
+
+  Since the early days of video technology, one of the problems that raised with it consisted on how to add more information onto it without generating multiple versions. The need to translate movies, raised the problem wether is apropriate to change the original video or audio. For example subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
+ 
+  Amongst multiple formats for subtitles, SAMI, SRT and SUB are used by video players. Although those formats have styling available, they are limited to text. 
+
+  SMIL was introduced to describe temporal behaviour of multimedia, for instance, it could be used to overlay subtitles on films. With SMIL it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a diferent audio, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+
+  In order to create a multimedia rich hypercall, SMIL fits our goals, but it lacks on browser compatibility. Ambulant was one of the SMIL players that were developed for browsers, although this player implements most of SMIL 3.0 specifications, it needs to be installed on browsers as a plugin.
+
+  SmilingWeb attempts to implement SMIL 3.0 with javascript, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their sheduler engine loads the SMIL file only once, which could raise problems when leading with SMIL changes in real time.  
+
+  SVG is a format that implements part of SMIL {\color{red} [which version and functionalities?]}
 
 Although video and audio is almost standardized, WebRTC allows us to enrich web communications by overlaying multiple elements such as buttons, text and more complex user interfaces.
 
-In the past, multiple formats were proposed to deal with hypermedia.
-
-HyVAL\cite{hyval} was proposed for modeling composition of video. The definition of a format must be done with carefoul. When a format estabilished for a document, it is expected that a parser knows how to convert text into behaviour, formats like XML are quite limitative, they cannot reproduce actions that were not previously implemented.
-
-Our solution to overcome format limitation is to take advantage of languages like javascript, like any webpage, user interface elements are defined by html tags, more complex actions like animations can be easily implemented via CSS and javascript, without ever defining a new standard for structured hypermedia.
+Our solution to overcome format limitation is to take advantage of languages like javascript, like any webpage, user interface elements are defined by html tags, more complex actions like animations can be easily implemented via CSS and javascript.
 
 By using this already solidified web technologies, it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of an hypercall. Another example would be a colaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only video, audio and text.
 
-
 In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it whant to be contacted. 
 
-Consider this case study, say that Alice whants to call Bob. Alice starts a WebRTC connection with Bob, at this point Alice doesn't know how the communication will proceed. Bob created a personal web page where he defined how he whants to be contacted. Alice downloads Bob's personal webpage and finds what kind of interactions could be done, for instance she knows that she can contact Bob via video streaming or can browse past videos. While Bob is connected, he can add links on videos, organise its content and enable different plugins for communication.
+\subsection{Trash}
 
+{\color{red} 
+
+Consider this case study, say that Alice whants to call Bob. Alice starts a WebRTC connection with Bob, at this point Alice doesn't know how the communication will proceed. Bob created a personal web page where he defined how he whants to be contacted. Alice downloads Bob's personal webpage and finds what kind of interactions could be done, for instance she knows that she can contact Bob via video streaming or can browse past videos. While Bob is connected, he can add links on videos, organise its content and enable different plugins for communication.
+}
 \begin{thebibliography}{9}
 
 
