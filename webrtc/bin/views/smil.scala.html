@@ -1,30 +1,69 @@
 @() @template {
+
+
 <div class="jumbotron">
 
-	<svg width="300px" height="100px">
-      <rect x="0" y="0" width="20" height="20" fill="blue"
-			stroke="black" stroke-width="1">
-        <animateMotion
-			path="M 250,80 H 50 Q 30,80 30,50 Q 30,20 50,20 H 250 Q 280,20,280,50 Q 280,80,250,80Z"
-			dur="3s" repeatCount="indefinite" rotate="auto">
-      </rect>
-    </svg>
-	<seq> <img id="a" dur="6s" begin="2s"
-		src="/assets/images/favicon.png" /> </seq>
+	<svg>
+  <rect width="128px" height="128px" fill="green"
+			xlink:href="/assets/images/tux.png">
+  
+  <animate id="anim1" attributeName="fill" to="blue" dur="1s"
+			begin="0s;anim2.end" repeatCount="1" fill="freeze" />
+  <animate id="anim2" attributeName="fill" to="green" dur="1s"
+			begin="anim1.end" repeatCount="1" fill="freeze" onend="count()" />
+  
+  </rect>
+</svg>
+	<h3 id="counter">0</h3>
 
-	<smil>
-		<body>
-			<seq repeatCount="indefinite"> <img
-				src="/assets/images/green.png" dur="3s" /> <img
-				src="/assets/images/blue.png" dur="3s" /> </seq>
-		<video src="/assets/video.mp4" width="400" height="300"
-			autoplay="autoplay" clipBegin="3s" begin="3s"></video>
-	</body>
-		
-		
-	</smil>
-
+	<div class="btn btn-default" onclick="change()">Change Green to
+		Red</div>
 
 </div>
 
+
+
+<script>
+	var counter = 0;
+	var counter2 = 0;
+
+	function change() {
+		$("#anim2").attr("to", "red");
+	}
+
+	function count() {
+		++counter;
+		$("#counter").text(counter);
+	}
+
+	function count2() {
+		++counter2;
+		$("#counter2").text(counter2);
+		var my_video = document.getElementById("my_video");
+
+		my_video.play();
+
+	}
+
+	function enter(e) {
+		if (e.keyCode == 13) {
+			var my_video = document.getElementById("my_video");
+		
+			my_video.playbackRate = $("#speed").val();
+		}
+
+	}
+</script>
+
+<video id="my_video" autoplay controls width="512px" height="512px"
+	onended="count2();">
+	<source src="/assets/video.mp4" type="video/mp4">
+</video>
+<h3 id="counter2">0</h3>
+<input type="text" id ="speed" onkeydown="enter(event)" />
+
+
+
+
 }
+
