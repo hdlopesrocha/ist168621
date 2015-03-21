@@ -1,18 +1,25 @@
 \documentclass{llncs}
 \RequirePackage[english]{babel} % Se fizerem o texto em ingles
-%\usepackage[portuguese]{babel}   
+\usepackage[english]{babel}   
 \usepackage[latin1]{inputenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
 
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{graphicx}  % allows for indexgeneration
 \usepackage{subfig}  % allows for indexgeneration
 \usepackage{color}  % allows for indexgeneration
+\usepackage{url}
+\usepackage{hyperref}
+
 
 \begin{document}
 \pagestyle{plain}
 \mainmatter              % start of the contributions
 
-\title{Normas para a realização do relatório de projecto}
+\title{Conversas Hiperligadas: Novo Paradigma de Comunicação e Colaboração, potenciado pela Tecnologia WebRTC}
 \author{%
 	Henrique Lopes Rocha \\
 	email1: henrique.rocha@ist.utl.pt \\
@@ -41,7 +48,7 @@ When connection is established, either in a direct or indirect way (via TURN ser
 
 \section{\color{red}Hypermedia}
 
-  Since the early days of video technology, one of the problems that raised with it consisted of how to add more information onto it without generating multiple versions. Some implementations like \cite{embedded} added hypermedia information to empty space present on MPEG frames, the MPEG coder and decoder were changed in order to handle hypermedia content.
+  Since the early days of video technology, one of the problems that raised with it consisted of how to add more information onto it without generating multiple versions. Some implementations like \cite{embedded} added hypermedia information to empty space present on MPEG frames in order to provide interactive television, the MPEG coder and decoder were changed in order to handle hypermedia content.
 
   The need to translate movies, raised the problem whether it is apropriate to change the original video or audio. For example subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
  
@@ -53,11 +60,13 @@ When connection is established, either in a direct or indirect way (via TURN ser
 
   Detail-on-demand is a subset o hypervideo that allow us to obtain aditional information about something that apears along the video, like obtaining information about a painting that appears in a particular segment. Hyper-Hitchcock\cite{hitchcock} is an editor and player of detail-on-demand video.
 
-  HyVAL\cite{hyval} was proposed for modeling composition and interaction of video with XML, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
+  In order to navigate through a dynamic video, one must be aware of time synchronization and the multiple time flows, it's important that all time, causality and behavior rules are well defined.
+ 
+  HyVAL\cite{hyval} is an XML based language that was proposed for modeling composition, synchronization and interaction of video, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
 
-  SMIL was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With SMIL it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+  SMIL\cite{smil} was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With SMIL it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
 
-  In order to create a multimedia rich hypercall, SMIL fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of SMIL 3.0 specifications, it needs to be installed on browsers as a plugin.
+  In order to create a multimedia rich hypercall, SMIL fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of SMIL 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
 
   SmillingWeb \cite{smillingweb} attempts to implement SMIL 3.0 with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the SMIL file only once, which could raise problems when leading with SMIL changes in real time.  
 
@@ -65,13 +74,15 @@ When connection is established, either in a direct or indirect way (via TURN ser
 
   Video functionalities are already embedded in HTML5, like SVG it is also possible to bind javascript functions for different kinds of events over videos.
 
-  By using techonologies that relies only on web standards (CSS, HTML5, Javascript, SVG), it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only video, audio and text, but also complex user interfaces.
+  By using techonologies that relies only on web standards (CSS, HTML5, Javascript, SVG), it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
 
-  In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted.
+  In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
 
   In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.
 
-
+  \subsubsection{Local Storage}
+  \subsubsection{Video Recording}
+  \subsubsection{Video Playback - Past and Present}
 
 \subsection{Context}   % English
 \subsection{Problem Statement / Solution Statement} % English
