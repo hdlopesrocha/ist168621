@@ -51,19 +51,31 @@
 		
 			my_video.playbackRate = $("#speed").val();
 		}
+	}
 
+	
+	function jump() {
+		var my_video = document.getElementById("my_video");
+		my_video.currentTime = 20;
 	}
 </script>
 
 <video id="my_video" autoplay controls width="512px" height="512px"
 	onended="count2();">
-	<source src="/assets/video.mp4" type="video/mp4">
+	<source src="/assets/video.webm" type="video/webm" codecs="vp8, vorbis">
 </video>
 <h3 id="counter2">0</h3>
-<input type="text" id ="speed" onkeydown="enter(event)" />
+<input type="text" id="speed" onkeydown="enter(event)" />
+<div class="btn btn-default" onclick="jump()">Jump to 20s</div>
 
 
 
+<div width="200" height="200">
+  <t:seq t:repeatDur="indefinite">
 
+    <img src="/assets/images/green.png" t:dur="2" t:timeAction="display">
+    <img src="/assets/images/blue.png" t:dur="2" t:timeAction="display">
+  </t:seq>
+</div>
 }
 

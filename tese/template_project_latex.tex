@@ -1,0 +1,104 @@
+\documentclass{llncs}
+\RequirePackage[english]{babel} % Se fizerem o texto em ingles
+%\usepackage[portuguese]{babel}   
+\usepackage[latin1]{inputenc}
+
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{graphicx}  % allows for indexgeneration
+\usepackage{subfig}  % allows for indexgeneration
+\usepackage{color}  % allows for indexgeneration
+
+\begin{document}
+\pagestyle{plain}
+\mainmatter              % start of the contributions
+
+\title{Normas para a realização do relatório de projecto}
+\author{%
+	Henrique Lopes Rocha \\
+	email1: henrique.rocha@ist.utl.pt \\
+}
+\institute{Instituto Superior Técnico}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+    In here put your abstract. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+\keywords{keyworkd1, keyworkd2, keyworkd3}
+\end{abstract}
+
+\section{Introduction}
+The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. IPv4 limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same IP address but different port, this technique is also know as Network Address Translation (NAT).
+
+Initially NAT offered an alternative for address exhaustion and a false sensation of better security, asymmetric NAT became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that IP disponibilizes is also small compared to our current needs, worse than that, NAT also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
+
+Applications based on multimedia and file sharing were one of the most strained by NAT. Those kind applications require real time communication in order to achieve the best performance. STUN and TURN \cite{natvoip} servers are a possible solution to overpass NAT, although, none of those can establish direct connections on multiple level NATs.
+
+Most of client-server applications aren't affected by NAT when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
+
+On the other hand, TURN uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by STUN when NAT is a type \textit{full cone}. {\color{red} [reference to NAT types]}. ICE uses STUN when it's possible and TURN otherwise.
+
+When connection is established, either in a direct or indirect way (via TURN servers), WebRTC cames to simplify how audio and video are transmited. 
+
+\section{Hypermedia}
+
+  Since the early days of video technology, one of the problems that raised with it consisted of how to add more information onto it without generating multiple versions. Some implementations like \cite{embedded} added hypermedia information to empty space present on MPEG frames, the MPEG coder and decoder were changed in order to handle hypermedia content.
+
+  The need to translate movies, raised the problem whether it is apropriate to change the original video or audio. For example subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
+ 
+  Amongst multiple formats for subtitles, SAMI, SRT and SUB are used by video players that support them. Although those formats have styling available, they are quite limited to text. 
+
+  Hypervideo is a kind of video that contains links to any kind of hypermedia, including itself to another point in time. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific point in time. 
+
+  HyperCafe \cite{hypercafe} was an experimental project to expose hypervideo concepts that consisted in switching between conversations inside a cafe. 
+
+  Detail-on-demand is a subset o hypervideo that allow us to obtain aditional information about something that apears along the video, like obtaining information about a painting that appears in a particular segment. Hyper-Hitchcock\cite{hitchcock} is an editor and player of detail-on-demand video.
+
+  HyVAL\cite{hyval} was proposed for modeling composition and interaction of video with XML, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
+
+  SMIL was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With SMIL it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+
+  In order to create a multimedia rich hypercall, SMIL fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of SMIL 3.0 specifications, it needs to be installed on browsers as a plugin.
+
+  SmillingWeb \cite{smillingweb} attempts to implement SMIL 3.0 with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the SMIL file only once, which could raise problems when leading with SMIL changes in real time.  
+
+  SVG is a format that incorporates the animation feature of SMIL. Currently SVG allow us to add movement and animate attributes of elements. When embedded on HTML, it allows dynamic changes to inner content in real time, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
+
+  Video functionalities are already embedded in HTML5, like SVG it is also possible to bind javascript functions for different kinds of events over videos.
+
+  By using techonologies that relies only on web standards (CSS, HTML5, Javascript, SVG), it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only video, audio and text, but also complex user interfaces.
+
+  In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted.
+
+  In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.
+
+
+
+\subsection{Context}   % English
+
+
+\subsection{Problem Statement / Solution Statement} % English
+\subsection{Thesis Contributions} % English
+
+\subsection{Article Structure} % English
+
+\section{Arquitectura da solução}
+
+\subsection{Methodology} % Section
+
+\subsection{Planned Schedule} % English
+Nesta secção devem apresentar uma calendarização esperadas das vossas actividades.
+
+
+\section{Conclusions} % English
+
+
+\subsection{Summary} % English
+Neste secção deve-se fazer o resumo do trabalho efectuado, retomando a ideia, as contribuições definidas e a forma como estas se materializaram
+
+\section{Conclusions} % English
+Nesta secção devem ser retiradas conclusões do trabalho realizado, em face dos resultados obtidos \cite{exemplo}.
+
+\bibliographystyle{splncs03}
+\bibliography{references}
+
+\end{document}
