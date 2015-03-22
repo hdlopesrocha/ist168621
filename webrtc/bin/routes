@@ -8,6 +8,9 @@ GET     /sample                     controllers.Application.sample()
 GET     /smil                     controllers.Application.smil()
 GET     /add/:ip                    controllers.Application.add(ip : String)
 
+POST		/rest/add										controllers.Rest.addAddress()
+GET			/rest/get										controllers.Rest.getAddresses()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
