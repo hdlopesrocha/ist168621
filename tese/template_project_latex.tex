@@ -44,7 +44,29 @@ Most of client-server applications aren't affected by NAT when the servers are p
 
 On the other hand, TURN uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by STUN when NAT is a type \textit{full cone}. {\color{red} [reference to NAT types]}. ICE uses STUN when it's possible and TURN otherwise.
 
-When connection is established, either in a direct or indirect way (via TURN servers), WebRTC cames to simplify how audio and video are transmited. 
+When connection is established, either in a direct or indirect way (via TURN servers), WebRTC cames to simplify how audio and video are transmited.
+
+Compared to Skype, WebRTC allows web browser real time communications without installing any aditional application or plugin.
+
+\section{\color{red}Signaling}
+
+  WebRTC doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using SIP, XMPP, WebSockets, Socket.io or by implementing a custom protocol.
+
+  %https://bloggeek.me/siganling-protocol-webrtc/
+  {\color{red}[SIP]}
+
+  SIP is a signaling method, it allows web browsers to have audio, video and SMS capabilities like mobile phones. For instance, it's possible to interoperate with SIP, mobile and fixed phones.
+
+  SIP is used in VoIP applications duo its compatibility with PSTN. Service providers are disponibilizing access to their SIP infrastrucures through WebSockets. Frameworks like JSSip or sipML5 are used on client side to encode SIP messages, making SIP accessible to web based applications. 
+
+  {\color{red}[XMPP]}
+
+  HTTP works on a request followed by a server response. Sometimes it's required that some informations are obtained in real time, as we saw, some NAT's don't suport callbacks from servers, one technique to overcome this problem is polling.
+
+  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Simple polling wastes network bandwith and energy. Long polling consists on making the server wait until there is fresh information or expiring after some time. Long polling returns answers faster than simple polling.
+
+  XMPP's bi-directional communication is achieved through BOSH, which basically consists on long polling.
+
 
 \section{\color{red}Hypermedia}
 
@@ -74,18 +96,7 @@ When connection is established, either in a direct or indirect way (via TURN ser
 
   By using techonologies that relies only on web standards (CSS, HTML5, Javascript, SVG), it's possible to raise communications to a new level. For example, with API's like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
 
-  {\color{red}[What's signaling?]}
-
-  WebRTC doesn't implement signaling, one could choose using between standard protocols like SIP and XMPP or a custom one. 
-
-  %https://bloggeek.me/siganling-protocol-webrtc/
-
-  {\color{red}[http, polling and long polling]}
-
-  {\color{red}[SIP]}
-
-  {\color{red}[XMPP]}
-
+  
   In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
 
   In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.
