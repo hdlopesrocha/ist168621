@@ -30,5 +30,12 @@ public class Rest extends Controller {
     }
     
 
+    public static Result register(){
+    	
+    	
+    	
+    	return ok();
+    }
+    
     
 }

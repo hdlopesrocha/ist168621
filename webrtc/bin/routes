@@ -4,12 +4,21 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+POST    /login		                	controllers.Application.login()
+GET    	/register                 	controllers.Application.getRegister()
+POST    /register                 	controllers.Application.postRegister()
+GET    	/logout		                	controllers.Application.logout()
+
+
+
 GET     /sample                     controllers.Application.sample()
 GET     /smil                     controllers.Application.smil()
 GET     /add/:ip                    controllers.Application.add(ip : String)
 
 POST		/rest/add										controllers.Rest.addAddress()
 GET			/rest/get										controllers.Rest.getAddresses()
+
+POST		/rest/register							controllers.Rest.register()
 
 
 # Map static resources from the /public folder to the /assets URL path
