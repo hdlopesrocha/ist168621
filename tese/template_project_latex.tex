@@ -39,6 +39,8 @@
 \newacro{SRT}{SubRip Text}
 \newacro{SAMI}{Synchronized Accessible Media Interchange}
 \newacro{SDP}{Session Description Protocol}
+\newacro{WebRTC}{Web Real-Time Communication}
+\newacro{PSTN}{Public Switched Telephone Network}
 
 \overfullrule=2cm
 
@@ -62,7 +64,7 @@
 \end{abstract}
 
 \section{Introduction}
-The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. IPv4 limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same \ac{IP} address but different port, this technique is also known as \ac{NAT}.
+The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. \ac{IPv4} limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same \ac{IP} address but different port, this technique is also known as \ac{NAT}.
 
 Initially \ac{NAT} offered an alternative for address exhaustion and a false sensation of better security, asymmetric \ac{NAT} became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that \ac{IP} disponibilizes is also small compared to our current needs, worse than that, \ac{NAT} also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
 
@@ -72,30 +74,42 @@ Most of client-server applications aren't affected by \ac{NAT} when the servers 
 
 On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. {\color{red} [reference to \ac{NAT} types]}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
 
-When connection is established, either in a direct or indirect way (via \ac{TURN} servers), WebRTC cames to simplify how audio and video are transmited.
+When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited.
 
-Compared to Skype, WebRTC allows web browser real time communications without installing any aditional application or plugin.
+Compared to Skype, \ac{WebRTC} allows web browser real time communications without installing any aditional application or plugin.
 
 \section{\color{red}Signaling}
+  
+  Signaling is the most important proccess for applications to exchange connection information about peers and servers, their capabilities and metadata.
 
-  WebRTC doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
+  \ac{WebRTC} doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
 
-  WebRTC uses \ac{SDP} to define peer connection properties, types of supported media, codecs, protocols used and network information.
+  \ac{WebRTC} uses \ac{SDP} to define peer connection properties, types of supported media, codecs, protocols used and network information.
+
+  One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
+
+  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Simple polling wastes network bandwith and energy. Long polling consists on making the server wait until there is fresh information or expiring after some time. Long polling returns answers faster than simple polling. Both with simple polling and long polling, requests are sent with \ac{HTTP} headers, which are data overkill, specialy for small messages.
+
+  {\color{blue}Comparison of the WebSocket protocol with the traditional method like Polling and HTTP long Polling shows the benefits it offers in terms of latency and network utilization. }
+
+  {\color{blue}With polling, the browser sends HTTP requests at regular intervals and immediately receives a response. This technique was the first attempt for the browser to deliver real-time information. Obviously, it looks like a good solution if the exact interval of message delivery is known, because you can synchronize the client request to occur only when information is available on the server. However, real-time data is often not that predictable, making unnecessary requests inevitable and as a result, many connections are opened and closed needlessly in low-message-rate situations.}
+
+  {\color{blue}With long-polling, the browser sends a request to the server and the server keeps the request open for a set period. If a notification is received within that period, a response containing the message is sent to the client. If a notification is not received within the set time period, the server sends a response to terminate the open request. It is important to understand, however, that when you have a high message volume, long-polling does not provide any substantial performance improvements over traditional polling. Here with long polling server doesn't send empty response it holds the request until the message is available or timeout expires.}
+
+  {\color{blue}The WebSocket protocol provides full-duplex, bidirectional communication channel that operates through a single socket over the web and can help build scalable real time web application. Once the connection is upgraded to WebSocket, messages can flow from the server to the browser the moment they arrive.}
+
+   {\color{red}[BOSH/COMET]}
 
   %https://bloggeek.me/siganling-protocol-webrtc/
   {\color{red}[SIP]}
 
-  \ac{SIP} can be used as a signaling method, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate with \ac{SIP}, mobile and fixed phones.
+  \ac{SIP} can be used as a signaling method, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP}, mobile and fixed phones.
 
-  \ac{SIP} is used in \ac{VoIP} applications duo its compatibility with PSTN. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like JSSip or sipML5 are used on client side to encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like jsSIP, QoffeeSIP and sipML5 are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications universe. 
 
   {\color{red}[XMPP]}
 
-  \ac{HTTP} works on a request followed by a server response. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
-
-  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Simple polling wastes network bandwith and energy. Long polling consists on making the server wait until there is fresh information or expiring after some time. Long polling returns answers faster than simple polling.
-
-  \ac{XMPP}s bi-directional communication is achieved through \ac{BOSH}, which basically consists on long polling.
+  \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH}, which basically consists on long polling.
 
 \section{\color{red}Hypermedia}
 
@@ -125,16 +139,14 @@ Compared to Skype, WebRTC allows web browser real time communications without in
 
   By using techonologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, Javascript and \ac{SVG}, it's possible to raise communications to a new level. For example, with \ac{API}s like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
 
-  
   In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
 
   In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.
 
-  {\color{yellow}
-  Collaboration is the basis for joint value creation. With increasing complexity of tasks to conduct in business, science, and administration, efficient team collaboration has become a crucial success factor.
+  {\color{blue} Collaboration is the basis for joint value creation. With increasing complexity of tasks to conduct in business, science, and administration, efficient team collaboration has become a crucial success factor.}
 
-  Software tools for collaboration typically support the exchange of data and centralized storage of information, for instance in shared workspaces. Only in recent years, technology became available allowing real-time collaboration via the web-browser. This enables team partners to edit a document concurrently and let others see changes instantly.
-  }
+  {\color{blue}Software tools for collaboration typically support the exchange of data and centralized storage of information, for instance in shared workspaces. Only in recent years, technology became available allowing real-time collaboration via the web-browser. This enables team partners to edit a document concurrently and let others see changes instantly.}
+  
 
   {\color{red}[Local Storage]}
 
