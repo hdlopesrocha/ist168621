@@ -15,33 +15,33 @@
 \usepackage{hyperref}
 
 \usepackage{acronym}
-\newacro{TMN}{This Means Nothing}
-\newacro{VoIP}{Voice Over IP}
-\newacro{NAT}{Network Address Translation}
-\newacro{ICE}{Interactive Connectivity Establishment}
-\newacro{STUN}{Session Traversal Utilities for NAT}
-\newacro{TURN}{Traversal Using Relays around NAT}
-\newacro{SMIL}{Synchronized Multimedia Integration Language}
-\newacro{XML}{eXtensible Markup Language}
-\newacro{HTML}{HyperText Markup Language}
-\newacro{SIP}{Session Initiation Protocol}
-\newacro{SVG}{Scalable Vector Graphics}
-\newacro{HTTP}{Hypertext Transfer Protocol}
 \newacro{API}{Application Programming Interface}
+\newacro{BOSH}{Bidirectional-streams Over Synchronous HTTP}
 \newacro{CSS}{Cascading Style Sheets}
+\newacro{HTML}{HyperText Markup Language}
+\newacro{HTTP}{Hypertext Transfer Protocol}
+\newacro{ICE}{Interactive Connectivity Establishment}
 \newacro{IPv4}{Internet Protocol Version 4}
 \newacro{IPv6}{Internet Protocol Version 6}
 \newacro{IP}{Internet Protocol}
-\newacro{XMPP}{Extensible Messaging and Presence Protocol}
-\newacro{SMS}{Short Message Service}
-\newacro{BOSH}{Bidirectional-streams Over Synchronous HTTP}
 \newacro{MPEG}{Moving Picture Experts Group}
-\newacro{SRT}{SubRip Text}
+\newacro{NAT}{Network Address Translation}
+\newacro{PSTN}{Public Switched Telephone Network}
 \newacro{SAMI}{Synchronized Accessible Media Interchange}
 \newacro{SDP}{Session Description Protocol}
+\newacro{SIP}{Session Initiation Protocol}
+\newacro{SMIL}{Synchronized Multimedia Integration Language}
+\newacro{SMS}{Short Message Service}
+\newacro{SRT}{SubRip Text}
+\newacro{STUN}{Session Traversal Utilities for NAT}
+\newacro{SVG}{Scalable Vector Graphics}
+\newacro{TCP}{Transmission Control Protocol}
+\newacro{TMN}{This Means Nothing}
+\newacro{TURN}{Traversal Using Relays around NAT}
+\newacro{VoIP}{Voice Over IP}
 \newacro{WebRTC}{Web Real-Time Communication}
-\newacro{PSTN}{Public Switched Telephone Network}
-
+\newacro{XML}{eXtensible Markup Language}
+\newacro{XMPP}{Extensible Messaging and Presence Protocol}
 \overfullrule=2cm
 
 
@@ -88,17 +88,13 @@ Compared to Skype, \ac{WebRTC} allows web browser real time communications witho
 
   One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
 
-  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Simple polling wastes network bandwith and energy. Long polling consists on making the server wait until there is fresh information or expiring after some time. Long polling returns answers faster than simple polling. Both with simple polling and long polling, requests are sent with \ac{HTTP} headers, which are data overkill, specialy for small messages.
+  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Because real time communications are unpredictable, if the time between periodic requests is short, most of time the server will return empty results wasting network bandwith and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive later.
 
-  {\color{blue}Comparison of the WebSocket protocol with the traditional method like Polling and HTTP long Polling shows the benefits it offers in terms of latency and network utilization. }
+  A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which are data overkill, specialy for small messages.
 
-  {\color{blue}With polling, the browser sends HTTP requests at regular intervals and immediately receives a response. This technique was the first attempt for the browser to deliver real-time information. Obviously, it looks like a good solution if the exact interval of message delivery is known, because you can synchronize the client request to occur only when information is available on the server. However, real-time data is often not that predictable, making unnecessary requests inevitable and as a result, many connections are opened and closed needlessly in low-message-rate situations.}
+  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage.
 
-  {\color{blue}With long-polling, the browser sends a request to the server and the server keeps the request open for a set period. If a notification is received within that period, a response containing the message is sent to the client. If a notification is not received within the set time period, the server sends a response to terminate the open request. It is important to understand, however, that when you have a high message volume, long-polling does not provide any substantial performance improvements over traditional polling. Here with long polling server doesn't send empty response it holds the request until the message is available or timeout expires.}
-
-  {\color{blue}The WebSocket protocol provides full-duplex, bidirectional communication channel that operates through a single socket over the web and can help build scalable real time web application. Once the connection is upgraded to WebSocket, messages can flow from the server to the browser the moment they arrive.}
-
-   {\color{red}[BOSH/COMET]}
+  \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
 
   %https://bloggeek.me/siganling-protocol-webrtc/
   {\color{red}[SIP]}
