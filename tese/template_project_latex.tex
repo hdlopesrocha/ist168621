@@ -92,18 +92,20 @@ Compared to Skype, \ac{WebRTC} allows web browser real time communications witho
 
   A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which are data overkill, specialy for small messages.
 
-  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage.
+  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io} and \textit{SockJS} uses \ac{HTTP} when there is no support for WebSockets. 
 
   \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
 
-  %https://bloggeek.me/siganling-protocol-webrtc/
-  {\color{red}[SIP]}
+  {\color{blue} \ac{SIP} is a communications protocol for signaling and controlling multimedia communication sessions. The most common applications of SIP are in Internet telephony for voice and video calls, as well as instant messaging all over \ac{IP} networks.}
 
-  \ac{SIP} can be used as a signaling method, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP}, mobile and fixed phones.
+  \ac{SIP} with WebSockets can be used as a signaling method, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP}, mobile and fixed phones.
 
-  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like jsSIP, QoffeeSIP and sipML5 are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications universe. 
+  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like \textit{jsSIP}, \textit{QoffeeSIP} and \textit{sipML5} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications universe. 
 
-  {\color{red}[XMPP]}
+  {\color{red}[Jitsi]}
+
+  {\color{blue} \ac{XMPP} is an open technology for real-time communication, which powers a wide range of applications including instant messaging, presence, multi-party chat, voice and video calls, collaboration, lightweight middleware, content syndication, and generalized routing of XML data. The technology pages provide more information about the various XMPP "building blocks". Several books about Jabber/XMPP technologies are available, as well.}
+
 
   \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH}, which basically consists on long polling.
 
