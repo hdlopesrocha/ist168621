@@ -10,11 +10,11 @@ Signaling is the most important proccess for applications to exchange connection
 
   A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, specialy for small messages.
 
-  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
+  The WebSocket protocol (rfc6455\footnote{\url{http://tools.ietf.org/html/rfc6455}}) provides bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
 
   \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
 
-  \ac{SIP} is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls applications over \ac{IP} networks.
+  \ac{SIP} (rfc3261\footnote{\url{http://tools.ietf.org/html/rfc3261}}) is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls applications over \ac{IP} networks.
 
   The work group \ac{SIMPLE} proposed the creation of \ac{SIP} extensions, namely presence information (rfc5263\footnote{\url{http://tools.ietf.org/html/rfc5263}}) and instant messaging (rfc3428\footnote{\url{http://tools.ietf.org/html/rfc3428}}).
 
@@ -28,4 +28,5 @@ Signaling is the most important proccess for applications to exchange connection
 
   \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH} (XEP-0206\footnote{\url{http://xmpp.org/extensions/xep-0206.html}}), which basically consists on long polling. This kind of communication is also possible through WebSockets (rfc7395\footnote{\url{http://tools.ietf.org/html/rfc7395}}).
 
-  Amongst multiple XMPP servers softwares are: ejabberd\footnote{\url{http://jabberd.im/}}, Metronome\footnote{\url{http://lightwitch.org/metronome}}, Openfire\footnote{\url{http://igniterealtime.org/projects/openfire/}} and Prosody\footnote{\url{http://prosody.im/}}. Ejabberd is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}. 
+  Amongst multiple XMPP servers softwares are: ejabberd\footnote{\url{http://jabberd.im/}}, Metronome\footnote{\url{http://lightwitch.org/metronome}}, Openfire\footnote{\url{http://igniterealtime.org/projects/openfire/}} and Prosody\footnote{\url{http://prosody.im/}}. Ejabberd is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
+
