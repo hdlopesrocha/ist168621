@@ -1,0 +1,31 @@
+Signaling is the most important proccess for applications to exchange connection information about peers and servers, their capabilities and metadata.
+
+  \ac{WebRTC} doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
+
+  \ac{WebRTC} uses \ac{SDP} to define peer connection properties, types of supported media, codecs, protocols used and network information.
+
+  One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
+
+  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Because real time communications are unpredictable, if the time between periodic requests is short, most of time the server will return empty results wasting network bandwith and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive later.
+
+  A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, specialy for small messages.
+
+  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
+
+  \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
+
+  \ac{SIP} is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls applications over \ac{IP} networks.
+
+  The work group \ac{SIMPLE} proposed the creation of \ac{SIP} extensions, namely presence information (rfc5263\footnote{\url{http://tools.ietf.org/html/rfc5263}}) and instant messaging (rfc3428\footnote{\url{http://tools.ietf.org/html/rfc3428}}).
+
+  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like \textit{jsSIP}\footnote{\url{http://jssip.net/}}, \textit{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \textit{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+
+  \ac{SIP} with WebSockets can be used as a signaling method for WebRTC applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP} networks, mobile and fixed phones.
+
+  \ac{XMPP} was initially developed for instant messaging (Jabber\footnote{\url{http://jabber.org/}}). It is nowadays an open technology for real-time communications. 
+
+  \ac{XMPP} messages are \ac{XML} based, which are attractive for applications that need structured messages and rich hypermedia. \ac{XMPP} advantage is the addition of extensions, for example XEP-0096\footnote{\url{http://xmpp.org/extensions/xep-0096.html}}, which adds file transfer capabilities between two entities and XEP-0045\footnote{\url{http://xmpp.org/extensions/xep-0045.html}} which enables multi-user chat.
+
+  \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH} (XEP-0206\footnote{\url{http://xmpp.org/extensions/xep-0206.html}}), which basically consists on long polling. This kind of communication is also possible through WebSockets (rfc7395\footnote{\url{http://tools.ietf.org/html/rfc7395}}).
+
+  Amongst multiple XMPP servers softwares are: ejabberd\footnote{\url{http://jabberd.im/}}, Metronome\footnote{\url{http://lightwitch.org/metronome}}, Openfire\footnote{\url{http://igniterealtime.org/projects/openfire/}} and Prosody\footnote{\url{http://prosody.im/}}. Ejabberd is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}. 

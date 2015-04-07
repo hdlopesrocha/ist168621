@@ -1,0 +1,13 @@
+The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. \ac{IPv4} limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same \ac{IP} address but different port, this technique is also known as \ac{NAT}.
+
+Initially \ac{NAT} offered an alternative for address exhaustion and a false sensation of better security, asymmetric \ac{NAT} became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that \ac{IP} disponibilizes is also small compared to our current needs, worse than that, \ac{NAT} also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
+
+Applications based on multimedia and file sharing were one of the most strained by \ac{NAT}. Those kind applications require real time communication in order to achieve the best performance. \ac{STUN} and \ac{TURN} \cite{natvoip} servers are a possible solution to overpass \ac{NAT}, although, none of those can establish direct connections on multiple level \ac{NAT}s.
+
+Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
+
+On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. {\color{red} [reference to \ac{NAT} types]}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
+
+When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited.
+
+Compared to Skype, \ac{WebRTC} allows web browser real time communications without installing any aditional application or plugin.

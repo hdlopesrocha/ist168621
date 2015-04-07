@@ -1,0 +1,30 @@
+
+  Since the early days of video technology, one of the problems that raised with it consisted of how to add more information onto it without generating multiple versions. Some implementations like \cite{embedded} added hypermedia information to empty space present on \ac{MPEG} frames in order to provide interactive television, the \ac{MPEG} coder and decoder were changed in order to handle hypermedia content.
+
+  The need to translate movies, raised the problem whether it is apropriate to change the original video or audio. For example subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
+ 
+  Amongst multiple formats for subtitles, \ac{SAMI}, and \ac{SRT} are used by video players that support them. Although those formats have styling available, they are quite limited to text. 
+
+  Hypervideo is a kind of video that contains links to any kind of hypermedia, including links to skip part of it. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific point in time. HyperCafe \cite{hypercafe} was an experimental project to expose hypervideo concepts that consisted on an interactive film by switching between conversations inside a cafe.
+
+  Detail-on-demand is a subset o hypervideo that allow us to obtain aditional information about something that apears along the video, like obtaining information about a painting that appears in a particular segment. Hyper-Hitchcock\cite{hitchcock} is an editor and player of detail-on-demand video.
+
+  In order to navigate through a dynamic video, one must be aware of time synchronization and the multiple time flows, it's important that all time, causality and behavior rules are well defined.
+ 
+  HyVAL\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of video, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
+
+  \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+
+  In order to create a multimedia rich hypercall, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
+
+  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+
+  \ac{SVG} is a format that incorporates the animation feature of \ac{SMIL}. Currently \ac{SVG} allow us to add movement and animate attributes of elements. When embedded on \ac{HTML}, it allows dynamic changes to inner content in real time, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
+
+  Video functionalities are already embedded in \ac{HTML}5, like \ac{SVG} it is also possible to bind javascript functions for different kinds of events over videos.
+
+  By using techonologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, Javascript and \ac{SVG}, it's possible to raise communications to a new level. For example, with \ac{API}s like WebGL\footnote{\url{http://khronos.org/webgl/}}, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
+
+  In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
+
+  In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.

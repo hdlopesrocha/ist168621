@@ -67,96 +67,13 @@
 \end{abstract}
 
 \section{Introduction}
-The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. \ac{IPv4} limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same \ac{IP} address but different port, this technique is also known as \ac{NAT}.
-
-Initially \ac{NAT} offered an alternative for address exhaustion and a false sensation of better security, asymmetric \ac{NAT} became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that \ac{IP} disponibilizes is also small compared to our current needs, worse than that, \ac{NAT} also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
-
-Applications based on multimedia and file sharing were one of the most strained by \ac{NAT}. Those kind applications require real time communication in order to achieve the best performance. \ac{STUN} and \ac{TURN} \cite{natvoip} servers are a possible solution to overpass \ac{NAT}, although, none of those can establish direct connections on multiple level \ac{NAT}s.
-
-Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
-
-On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. {\color{red} [reference to \ac{NAT} types]}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
-
-When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited.
-
-Compared to Skype, \ac{WebRTC} allows web browser real time communications without installing any aditional application or plugin.
-
+  \input{section01.tex}
 \section{\color{red}Signaling}
-  
-  Signaling is the most important proccess for applications to exchange connection information about peers and servers, their capabilities and metadata.
-
-  \ac{WebRTC} doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
-
-  \ac{WebRTC} uses \ac{SDP} to define peer connection properties, types of supported media, codecs, protocols used and network information.
-
-  One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
-
-  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Because real time communications are unpredictable, if the time between periodic requests is short, most of time the server will return empty results wasting network bandwith and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive later.
-
-  A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, specialy for small messages.
-
-  WebSockets provide bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
-
-  \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
-
-  \ac{SIP} is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls applications over \ac{IP} networks.
-
-  The work group \ac{SIMPLE} proposed the creation of \ac{SIP} extensions, namely presence information (rfc5263\footnote{\url{http://tools.ietf.org/html/rfc5263}}) and instant messaging (rfc3428\footnote{\url{http://tools.ietf.org/html/rfc3428}}).
-
-  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like \textit{jsSIP}\footnote{\url{http://jssip.net/}}, \textit{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \textit{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications universe. 
-
-  \ac{SIP} with WebSockets can be used as a signaling method for WebRTC applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP} networks, mobile and fixed phones.
-
-  \ac{XMPP} was initially developed for instant messaging (Jabber\footnote{\url{http://jabber.org/}}). It is nowadays an open technology for real-time communications. 
-
-  \ac{XMPP} messages are \ac{XML} based, which are attractive for applications that need structured messages and rich hypermedia. \ac{XMPP} advantage is the addition of extensions, for example XEP-0096\footnote{\url{http://xmpp.org/extensions/xep-0096.html}}, which adds file transfer capabilities between two entities and XEP-0045\footnote{\url{http://xmpp.org/extensions/xep-0045.html}} which enables multi-user chat.
-
-  \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH} (XEP-0206\footnote{\url{http://xmpp.org/extensions/xep-0206.html}}), which basically consists on long polling. This kind of communication is also possible through WebSockets (rfc7395\footnote{\url{http://tools.ietf.org/html/rfc7395}}).
-
-  Amongst multiple XMPP servers softwares are: ejabberd\footnote{\url{http://jabberd.im/}}, Metronome\footnote{\url{http://lightwitch.org/metronome}}, Openfire\footnote{\url{http://igniterealtime.org/projects/openfire/}} and Prosody\footnote{\url{http://prosody.im/}}. Ejabberd is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}. 
-
+  \input{section02.tex}
 \section{\color{red}Hypermedia}
-
-  Since the early days of video technology, one of the problems that raised with it consisted of how to add more information onto it without generating multiple versions. Some implementations like \cite{embedded} added hypermedia information to empty space present on \ac{MPEG} frames in order to provide interactive television, the \ac{MPEG} coder and decoder were changed in order to handle hypermedia content.
-
-  The need to translate movies, raised the problem whether it is apropriate to change the original video or audio. For example subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
- 
-  Amongst multiple formats for subtitles, \ac{SAMI}, and \ac{SRT} are used by video players that support them. Although those formats have styling available, they are quite limited to text. 
-
-  Hypervideo is a kind of video that contains links to any kind of hypermedia, including links to skip part of it. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific point in time. HyperCafe \cite{hypercafe} was an experimental project to expose hypervideo concepts that consisted on an interactive film by switching between conversations inside a cafe.
-
-  Detail-on-demand is a subset o hypervideo that allow us to obtain aditional information about something that apears along the video, like obtaining information about a painting that appears in a particular segment. Hyper-Hitchcock\cite{hitchcock} is an editor and player of detail-on-demand video.
-
-  In order to navigate through a dynamic video, one must be aware of time synchronization and the multiple time flows, it's important that all time, causality and behavior rules are well defined.
- 
-  HyVAL\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of video, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
-
-  \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
-
-  In order to create a multimedia rich hypercall, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
-
-  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
-
-  \ac{SVG} is a format that incorporates the animation feature of \ac{SMIL}. Currently \ac{SVG} allow us to add movement and animate attributes of elements. When embedded on \ac{HTML}, it allows dynamic changes to inner content in real time, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
-
-  Video functionalities are already embedded in \ac{HTML}5, like \ac{SVG} it is also possible to bind javascript functions for different kinds of events over videos.
-
-  By using techonologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, Javascript and \ac{SVG}, it's possible to raise communications to a new level. For example, with \ac{API}s like WebGL, it is now possible to manipulate a three dimensional environment in the context of a hypercall. Another example would be a collaborative spreadsheet using WebRTC. With this, hypercalls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
-
-  In this project our goal is to enrich hypercalls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
-
-  In order to give users a personalized communication channel, each user must have a personal web page where its available plugins could be downloaded from other peers, after that they can talk in the same language whatever it is.
-
-  {\color{blue} Collaboration is the basis for joint value creation. With increasing complexity of tasks to conduct in business, science, and administration, efficient team collaboration has become a crucial success factor.}
-
-  {\color{blue}Software tools for collaboration typically support the exchange of data and centralized storage of information, for instance in shared workspaces. Only in recent years, technology became available allowing real-time collaboration via the web-browser. This enables team partners to edit a document concurrently and let others see changes instantly.}
-  
-
-  {\color{red}[Local Storage]}
-
-  {\color{red}[Video Recording]}
-
-  {\color{red}[Video Playback - Past and Present]}
+  \input{section03.tex}
+\section{\color{red}Applications}
+  \input{section04.tex}
 
 \subsection{Context}   % English
 \subsection{Problem Statement / Solution Statement} % English
