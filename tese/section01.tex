@@ -1,12 +1,24 @@
 The need to build a global comunications network in an era when almost nobody had access to it, caused that some protocols weren't suitable for a huge increase on the amount of publicly known users. \ac{IPv4} limits the number of public addresses in such a way that today is scarse \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible to redirect messages to members of its group through their private addresses, each member of the private network is identified publicly by the same \ac{IP} address but different port, this technique is also known as \ac{NAT}.
 
-Initially \ac{NAT} offered an alternative for address exhaustion and a false sensation of better security, asymmetric \ac{NAT} became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that \ac{IP} disponibilizes is also small compared to our current needs, worse than that, \ac{NAT} also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
+Initially \ac{NAT} offered an alternative for address exhaustion and a minimal sensation of security. There are four types of \ac{NAT}, "Full Cone NAT", "Restricted Cone NAT", "Port Restricted Cone NAT", "Symmetric NAT".
+
+Full Cone \ac{NAT} maps public each \ac{IP} address and port to a private \ac{IP} address and port, any external host can communicate with private hosts throught their mapped public address and port. This represents the least restrictive type of \ac{NAT} and as we will later, the unique type of \ac{NAT} that enables real time communications from point to point.
+
+Restricted Cone \ac{NAT} requires that a private client must first send a message to an external host before it can receive messages from the same host. With this type of \ac{NAT}, the private client can be contacted from any port of the same external host.
+
+Port Restricted Cone \ac{NAT} works in the same way as Restricted Cone \ac{NAT} but only allows communications from the same external host's IP address and port, ignoring all messages from other applications within the same external host.
+
+Symmetric NAT maps different ports for each connection, as we will see later, this represents a problem on real time communications.
+
+Asymmetric \ac{NAT} became a vulgar configuration on the web. As a direct result, problems started to appear, the amount of ports that \ac{IP} disponibilizes is also small compared to our current needs, worse than that, \ac{NAT} also difficult end-to-end communication, forcing most of applications that follows this model to be implemented ineffectively.
 
 Applications based on multimedia and file sharing were one of the most strained by \ac{NAT}. Those kind applications require real time communication in order to achieve the best performance. \ac{STUN} and \ac{TURN} \cite{natvoip} servers are a possible solution to overpass \ac{NAT}, although, none of those can establish direct connections on multiple level \ac{NAT}s.
 
-Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
+\ac{STUN} servers are quite simple, they receive requests from \ac{NAT}ed clients, the source address of a request is the public address that \ac{NAT} mapped to the client, \ac{STUN} servers will reply the mapped public address to the client, so it knows its public \ac{IP} address and port. Because Symmetric \ac{NAT} changes \ac{IP} port for each different connection, \ac{STUN} servers will reply the \ac{IP} address and port of their connection, which will be useless to clients connections, that's why Symmetric \ac{NAT} represents a problem for real time communications.   
 
-On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. {\color{red} [reference to \ac{NAT} types]}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
+On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
+
+Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
 
 When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited.
 

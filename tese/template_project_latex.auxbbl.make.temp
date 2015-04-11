@@ -3,18 +3,18 @@
 \@writefile{toc}{\authcount {1}}
 \@writefile{toc}{\contentsline {author}{Henrique Lopes Rocha \unskip \ \ignorespaces  email1: henrique.rocha@ist.utl.pt \unskip \ \ignorespaces  }{1}{chapter.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}\color  {red}Signaling}{2}{section.1.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}\color  {red}Hypermedia}{4}{section.1.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}\color  {red}Signaling}{3}{section.1.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}\color  {red}Hypermedia}{5}{section.1.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}\color  {red}Applications}{6}{section.1.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{6}{section.1.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{6}{section.1.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Context}{6}{subsection.1.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Problem Statement / Solution Statement}{6}{subsection.1.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Thesis Contributions}{6}{subsection.1.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Article Structure}{6}{subsection.1.4.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Methodology}{6}{subsection.1.4.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Planned Schedule}{6}{subsection.1.4.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{6}{subsection.1.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{7}{section.1.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{7}{section.1.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Context}{7}{subsection.1.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Problem Statement / Solution Statement}{7}{subsection.1.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Thesis Contributions}{7}{subsection.1.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Article Structure}{7}{subsection.1.4.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Methodology}{7}{subsection.1.4.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Planned Schedule}{7}{subsection.1.4.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{7}{subsection.1.5.1}}
 \@writefile{toc}{\contentsline {title}{Conversas Hiperligadas: Novo Paradigma de Comunica\c c\~ao e Colabora\c c\~ao, potenciado pela Tecnologia WebRTC}{1}{chapter.1}}
 \@writefile{toc}{\select@language{english}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
@@ -38,8 +38,24 @@
 \acronymused{IP}
 \acronymused{IP}
 \acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
 \acronymused{MPEG}
 \acronymused{MPEG}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
 \acronymused{NAT}
 \acronymused{NAT}
 \acronymused{NAT}
@@ -77,6 +93,9 @@
 \acronymused{SMIL}
 \acronymused{SMS}
 \acronymused{SRT}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
 \acronymused{STUN}
 \acronymused{STUN}
 \acronymused{STUN}
