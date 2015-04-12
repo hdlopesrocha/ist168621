@@ -13,7 +13,43 @@
  
   HyVAL\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of video, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
 
-  \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia, for instance, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+  \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
+
+  \ac{SMIL} is \ac{XML} based and defines twelve modules: \textit{Animation}, \textit{Content Control}, \textit{Layout}, \textit{Linking}, \textit{Media Objects}, \textit{SmilText}, \textit{Metainformation}, \textit{Structure}, \textit{Timing}, \textit{Time Manipulations}, \textit{State} and \textit{Transitions}.
+
+\begin{itemize}
+
+  \item \textbf{Animation} module contains elements and attributes that define a time based mechanism for composing the effects of animations. For example, this module can changes on \ac{XML} or \ac{CSS} attributes like colour and dimensions.  
+
+  \item \textbf{Content Control} module contains elements and attributes that provide optimized alternatives for content delivery. For example, it could be used to change audio language in function of user's nationality, for videos with multiple audio channels.
+
+  \item \textbf{Layout} module contains elements and attributes for colouring and positioning media content, another layout mechanisms are also possible, such as \ac{CSS}.
+
+  \item \textbf{Linking} module contains elements and attributes for navigatonal hyperlinking. Navigation can be triggered by events or user interaction.
+
+  \item \textbf{Media Object} module contains elements and attributes for referencing rendering behaviour of external multimedia or control objects.
+
+  \item \textbf{SmilText} module contains elements and attributes that defines and controls timed text. For example this module could be used to create labels and captions.
+
+  \item \textbf{Metainformation} module contains elements and attributes that allows describing the \ac{SMIL} document. For example, this module could be used to define a movie details such as category, director, writters and cast.
+
+  \item \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \textit{head} element that contains non temporal behaviour information defined by  \textit{Metainformation}, \textit{Layout} and \textit{Content Control} modules. This module also defines defines the \textit{body} element, where all temporal related module information is contained.
+
+  \item \textbf{Timing} module is the most important module on \ac{SMIL} specification, because of its complexity, it is divided into seventeen submodules for coordination and synchroniztion of media over time. The three main elements are \textit{seq}, \textit{excl} and \textit{par}, respectively, they play child elements in sequence, one at a time and all at the same time. 
+
+  \item \textbf{Time Manipulations} module adds time behaviour attributes to \ac{SMIL} elements, such as speed, rate or time.
+
+  \item \textbf{State} module defines attributes that defines the state of \ac{SMIL} elements, such as element visibility, current element time, amount of repeated loops, playing state and many others.
+
+  \item \textbf{Transitions} module defines attributes and elements that defines transitions across multiple \ac{SMIL} elements according to \textit{Timing} module.
+
+\end{itemize}
+
+{\color{blue} The Document Object Model (DOM) is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML, and XML documents.[1] The nodes of every document are organized in a tree structure, called the DOM tree. Objects in the DOM tree may be addressed and manipulated by using methods on the objects. The public interface of a DOM is specified in its application programming interface (API).}
+
+{\color{blue} Broadly defined, the SMIL DOM is an Application Programming Interface (API) for SMIL documents and XML/HTML documents that integrate SMIL functionality.  It defines the logical structure of documents and the way a document is accessed and manipulated.  This is described more completely in "What is the Document Object Model".}
+
+  \ac{SMIL} components are used for integrating timing into XHTML and into SVG.
 
   In order to create a multimedia rich hypercall, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
 

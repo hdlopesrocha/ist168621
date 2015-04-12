@@ -1,8 +1,8 @@
 Signaling is the most important proccess for applications to exchange connection information about peers and servers, their capabilities and metadata.
 
-  \ac{WebRTC} doesn't implement signaling, different applications may need different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
+  \ac{WebRTC} doesn't implement signaling, different applications may require different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
 
-  \ac{WebRTC} uses \ac{SDP} to define peer connection properties, types of supported media, codecs, protocols used and network information.
+  \ac{WebRTC} uses \ac{SDP} (rfc4566\footnote{\url{http://tools.ietf.org/html/rfc4566}}) to define peer connection properties such as types of supported media, codecs, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
 
   One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
 

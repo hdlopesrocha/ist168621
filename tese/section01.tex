@@ -16,12 +16,10 @@ Applications based on multimedia and file sharing were one of the most strained 
 
 \ac{STUN} servers are quite simple, they receive requests from \ac{NAT}ed clients, the source address of a request is the public address that \ac{NAT} mapped to the client, \ac{STUN} servers will reply the mapped public address to the client, so it knows its public \ac{IP} address and port. Because Symmetric \ac{NAT} changes \ac{IP} port for each different connection, \ac{STUN} servers will reply the \ac{IP} address and port of their connection, which will be useless to clients connections, that's why Symmetric \ac{NAT} represents a problem for real time communications.   
 
-On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a P2P network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
+On the other hand, \ac{TURN} uses public servers to redirect traffic between private endpoints, it may use a \ac{P2P} network relay to find the best peer but, after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \textit{full cone}. \ac{ICE} uses \ac{STUN} when it's possible and \ac{TURN} otherwise.
 
 Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly this type of communication requires a more expensive infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of video communication makes this kind of model unsuitable.
 
-When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited.
+When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited through web browsers.
 
-{\color{blue}Skype is a stand-alone application which is compatible with all major operating systems (Windows, Linux, MacOS) and mobile operating systems (Android, iOS, Windows). This enables voice, IM and video communication. It's main advantage is that it has a huge installation base (approx 299 million users).}
-
-Compared to Skype, \ac{WebRTC} is an open source technology that allows web browser real time communications without installing any aditional application or plugin.
+Skype is an application that allows video, voice and instant messaging communication, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} is an open source technology that allows web browser real time communications without installing any aditional application or plugin.
