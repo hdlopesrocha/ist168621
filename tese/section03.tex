@@ -11,7 +11,9 @@
 
   In order to navigate through a dynamic video, one must be aware of time synchronization and the multiple time flows, it's important that all time, causality and behavior rules are well defined.
  
-  HyVAL\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of video, the structure of HyVAL is derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. This approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure.
+  HyVAL\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of hypermedia. HyVAL defines defines video structure, internal video and external media objects. 
+
+  HyVAL video structure objects defines a structure derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically, this approach is quite limitative if we want to apply hypervideo concepts to videos that don't follow this structure. External media objects are linked by primary video, those objects can represent other videos, images, text, animation and sound.
 
   \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyperlinks, amongst multiple other functionalities.
 
@@ -45,17 +47,21 @@
 
 \end{itemize}
 
-{\color{blue} The Document Object Model (DOM) is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML, and XML documents.[1] The nodes of every document are organized in a tree structure, called the DOM tree. Objects in the DOM tree may be addressed and manipulated by using methods on the objects. The public interface of a DOM is specified in its application programming interface (API).}
+The \ac{DOM} is a standard \ac{API} that allows easy management of documents that are organized in a tree structure, by providing \ac{CRUD} operations over its elements and their attributes. \ac{DOM} makes it easy to interoperate between imperative and declarative programming languages.
+  
+Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowing \ac{CRUD} operations over \ac{SMIL} documents is an important feature for extending \ac{SMIL} capabilities, for example for creating non-linear animations and triggering external events like \textit{javascript} functions.  
 
-{\color{blue} Broadly defined, the SMIL DOM is an Application Programming Interface (API) for SMIL documents and XML/HTML documents that integrate SMIL functionality.  It defines the logical structure of documents and the way a document is accessed and manipulated.  This is described more completely in "What is the Document Object Model".}
-
-  \ac{SMIL} components are used for integrating timing into XHTML and into SVG.
+  \ac{SMIL}'s modules are used to synchronize and animate \ac{XHTML} and \ac{SVG} elements.
 
   In order to create a multimedia rich hypercall, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
 
-  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+{\color{red} [more on smilling web would be nice]}
 
-  \ac{SVG} is a format that incorporates the animation feature of \ac{SMIL}. Currently \ac{SVG} allow us to add movement and animate attributes of elements. When embedded on \ac{HTML}, it allows dynamic changes to inner content in real time, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
+  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 cross platform video player with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+
+{\color{red} [flash is a must reference]}
+
+  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently \ac{SVG} allows to add movement and animate attributes of elements. When embedded on \ac{HTML}, it allows dynamic changes to inner content in real time through \ac{DOM} \ac{API}, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
 
   Video functionalities are already embedded in \ac{HTML}5, like \ac{SVG} it is also possible to bind javascript functions for different kinds of events over videos.
 
