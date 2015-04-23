@@ -5,16 +5,16 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}\color  {red}Signaling}{3}{section.1.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}\color  {red}Hypermedia}{5}{section.1.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}\color  {red}Applications}{8}{section.1.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{8}{section.1.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{8}{section.1.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Context}{8}{subsection.1.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Problem Statement / Solution Statement}{8}{subsection.1.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Thesis Contributions}{8}{subsection.1.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Article Structure}{8}{subsection.1.4.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Methodology}{8}{subsection.1.4.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Planned Schedule}{8}{subsection.1.4.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{8}{subsection.1.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}\color  {red}Applications}{9}{section.1.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{9}{section.1.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{9}{section.1.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Context}{9}{subsection.1.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Problem Statement / Solution Statement}{9}{subsection.1.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Thesis Contributions}{9}{subsection.1.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Article Structure}{9}{subsection.1.4.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Methodology}{9}{subsection.1.4.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Planned Schedule}{9}{subsection.1.4.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{9}{subsection.1.5.1}}
 \@writefile{toc}{\contentsline {title}{Comunica\c c\~oes Hiperligadas: Novo Paradigma de Comunica\c c\~ao e Colabora\c c\~ao, potenciado pela Tecnologia WebRTC}{1}{chapter.1}}
 \@writefile{toc}{\select@language{english}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
@@ -25,19 +25,29 @@
 \acronymused{API}
 \acronymused{BOSH}
 \acronymused{BOSH}
+\acronymused{CPU}
 \acronymused{CRUD}
 \acronymused{CRUD}
 \acronymused{CSS}
 \acronymused{CSS}
 \acronymused{CSS}
+\acronymused{CSS}
 \acronymused{DOM}
 \acronymused{DOM}
 \acronymused{DOM}
 \acronymused{DOM}
 \acronymused{DOM}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
 \acronymused{HTML}
 \acronymused{HTML}
 \acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTTP}
 \acronymused{HTTP}
 \acronymused{HTTP}
 \acronymused{HTTP}
@@ -79,9 +89,15 @@
 \acronymused{NAT}
 \acronymused{NAT}
 \acronymused{NAT}
+\acronymused{NAT}
 \acronymused{P2P}
 \acronymused{PSTN}
 \acronymused{RFC}
+\acronymused{RTMFP}
+\acronymused{RTMFP}
+\acronymused{RTMP}
+\acronymused{RTMP}
+\acronymused{RTMP}
 \acronymused{SAMI}
 \acronymused{SDP}
 \acronymused{SDP}
@@ -125,20 +141,27 @@
 \acronymused{STUN}
 \acronymused{STUN}
 \acronymused{STUN}
+\acronymused{STUN}
 \acronymused{SVG}
 \acronymused{SVG}
 \acronymused{SVG}
 \acronymused{SVG}
 \acronymused{SVG}
+\acronymused{TCP}
 \acronymused{TURN}
 \acronymused{TURN}
 \acronymused{TURN}
 \acronymused{TURN}
+\acronymused{TURN}
+\acronymused{UDP}
 \acronymused{VoIP}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{XAML}
 \acronymused{XEP}
 \acronymused{XHTML}
 \acronymused{XML}
@@ -155,6 +178,7 @@
 \bibstyle{splncs03}
 \citation{ambulant}
 \citation{embedded}
+\citation{flashvideo}
 \citation{hitchcock}
 \citation{hypercafe}
 \citation{hyval}
@@ -182,9 +206,11 @@
 \select@language{english}
 \undonewlabel{acro:API}
 \undonewlabel{acro:BOSH}
+\undonewlabel{acro:CPU}
 \undonewlabel{acro:CRUD}
 \undonewlabel{acro:CSS}
 \undonewlabel{acro:DOM}
+\undonewlabel{acro:FMS}
 \undonewlabel{acro:HTML}
 \undonewlabel{acro:HTTP}
 \undonewlabel{acro:ICE}
@@ -195,6 +221,8 @@
 \undonewlabel{acro:P2P}
 \undonewlabel{acro:PSTN}
 \undonewlabel{acro:RFC}
+\undonewlabel{acro:RTMFP}
+\undonewlabel{acro:RTMP}
 \undonewlabel{acro:SAMI}
 \undonewlabel{acro:SDP}
 \undonewlabel{acro:SIMPLE}
@@ -204,9 +232,12 @@
 \undonewlabel{acro:SRT}
 \undonewlabel{acro:STUN}
 \undonewlabel{acro:SVG}
+\undonewlabel{acro:TCP}
 \undonewlabel{acro:TURN}
+\undonewlabel{acro:UDP}
 \undonewlabel{acro:VoIP}
 \undonewlabel{acro:WebRTC}
+\undonewlabel{acro:XAML}
 \undonewlabel{acro:XEP}
 \undonewlabel{acro:XHTML}
 \undonewlabel{acro:XML}
