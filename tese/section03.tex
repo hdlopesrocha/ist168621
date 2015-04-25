@@ -57,15 +57,15 @@ Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowi
 
   \ac{HTML} is a markup language based on \ac{XML} that is used for creating web pages. \ac{HTML} alone is a very poor language when we are focused on visual appealing and interactive web pages. Languages like \ac{CSS} and Javascript are tipically combined to \ac{HTML} for improving the interaction and appearance of a web page. 
 
-  \ac{CSS} idea is to separate the structure of an \ac{XML} document from its appearance. \ac{CSS} defines styles for \ac{XML} tags based on their name, class or identifier, besides static styling it supports animations and transitions leading to a more dynamic content.
+  \ac{CSS} idea is to separate the structure of an \ac{XML} document from its appearance. \ac{CSS} defines styles for \ac{XML} tags based on their name, class, identifier or position, besides static styling it also supports animations and transitions leading to a more dynamic content.
 
-  \textit{Javascript} is an imperative object oriented language based on ECMAScript. It is used mainly on client-side and executed by a web browser. Javascript has it own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of a pre-installed plugin.
+  \textit{Javascript} is an imperative object oriented language based on ECMAScript. It is used mainly on client-side and executed by a web browser. Javascript has it own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of pre-installed plugins.
 
   \textit{Javascript} has compatibility issues amongst different web browsers, leading to different behaviours. To solve that problem, there are libraries written in javascript, namely \textit{jQuery}, that implements the same funcionality for multiple browsers, solving most of incompatibility issues.
 
-{\color{red} [more on smilling web would be nice]}
-
   SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 cross platform video player with javascript and \textit{jQuery}, which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+
+{\color{red} [more on smilling web would be nice]}
 
   With the emergence of \ac{HTML}5, tags like \textit{video}, \textit{audio} and \textit{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \textit{canvas} that allows to draw graphics with javascript on a rectangle within a web page.
 
