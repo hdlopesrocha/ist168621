@@ -55,11 +55,21 @@ Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowi
 
   In order to create a multimedia rich hypercall, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plugin.
 
+  \ac{HTML} is a markup language based on \ac{XML} that is used for creating web pages. \ac{HTML} alone is a very poor language when we are focused on visual appealing and interactive web pages. Languages like \ac{CSS} and Javascript are tipically combined to \ac{HTML} for improving the interaction and appearance of a web page. 
+
+  \ac{CSS} idea is to separate the structure of an \ac{XML} document from its appearance. \ac{CSS} defines styles for \ac{XML} tags based on their name, class or identifier, besides static styling it supports animations and transitions leading to a more dynamic content.
+
+  \textit{Javascript} is an imperative object oriented language based on ECMAScript. It is used mainly on client-side and executed by a web browser. Javascript has it own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of a pre-installed plugin.
+
+  \textit{Javascript} has compatibility issues amongst different web browsers, leading to different behaviours. To solve that problem, there are libraries written in javascript, namely \textit{jQuery}, that implements the same funcionality for multiple browsers, solving most of incompatibility issues.
+
 {\color{red} [more on smilling web would be nice]}
 
-  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 cross platform video player with javascript and jQuery, which doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 cross platform video player with javascript and \textit{jQuery}, which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
 
-  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently \ac{SVG} allows to add movement and animate attributes of elements. When embedded on \ac{HTML}, it allows dynamic changes to inner content in real time through \ac{DOM} \ac{API}, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
+  With the emergence of \ac{HTML}5, tags like \textit{video}, \textit{audio} and \textit{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \textit{canvas} that allows to draw graphics with javascript on a rectangle within a web page.
+
+  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently \ac{SVG} allows to add movement and animate attributes of elements. When embedded on \ac{HTML}5, it allows dynamic changes to inner content in real time through \ac{DOM} \ac{API}, besides that, it also allows to call javascript functions on events such as animation end, mouse over and mouse click.
 
 {\color{red} [svg is more than this]}
 
@@ -73,7 +83,7 @@ Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowi
 
   \ac{FMS} can stream video and audio to one or more subscribers by sending a separate copy for each subscriber. With \ac{RTMFP} is possbile to stream video between flash players, allowing a publisher breaking a stream into pieces that can be cooperatively distributed in a P2P mesh, \ac{RTMFP} uses \ac{UDP} to speed packet delivery, although is not reliable, it is well suited for video streaming, like \ac{WebRTC} flash players also need to apply techninques like \ac{STUN} and \ac{TURN} for \ac{NAT} traversal.
 
-  Although \ac{HTML}5, javascript, \ac{CSS} and \ac{WebRTC} are implementing some functionalities of flash, it doesn't mean that flash will be replaced, instead of that both technologies can used to develop rich internet applications. It is also important to note that \ac{HTML}5 is more compatible with mobile devices than adobe flash.
+  Although \ac{HTML}5, javascript, \ac{CSS} and \ac{WebRTC} are implementing some functionalities of flash, it doesn't mean that flash will be replaced, instead of that both technologies can be used to develop rich internet applications. It is also important to note that \ac{HTML}5 is more compatible with mobile devices than adobe flash. 
 
   Like Flash, Microsoft Silverlight is a cross browser plugin and platform that is used to develop rich internet applications. It supports vector graphics, animation and video. Compared to flash, which uses ActionScript, Silverlight applications can use languages like C\#, VisualBasic and \ac{XAML}. Silverlight uses a technique called Smooth Streaming from IIS Media Service that consists on delivering video in real time with adjusted quality in function of bandwidth changing and \ac{CPU} usage.
 
