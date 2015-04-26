@@ -24,6 +24,17 @@ When connection is established, either in a direct or indirect way (via \ac{TURN
 
 \ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser real time communications without installing any aditional application or plugin.
 
+\ac{WebRTC} defines three main \ac{API}s: GetUserMedia, PeerConnection and DataChannel. 
+
+\begin{itemize}
+  \item \textbf{GetUserMedia} allows from the browser to access to camera, microphone and device screen. 
+
+  \item \textbf{PeerConnection} aquires connection data and negotiates with peers.
+
+  \item \textbf{DataChannel} allows to send whatever type of data to other peers.
+\end{itemize}
+
+
 \ac{WebRTC} uses \ac{UDP} for transporting data, which provides lower latencies than \ac{TCP}, but is not reliable and packet order and integrity are not assured. \ac{SCTP} and \ac{SRTP} are used for streaming data, providing a mechanism for congestion control and partial reliable delivery over \ac{UDP}. All transferred audio, data,  and video must be encrypted with \ac{DTLS} which provides the same security guarantess as \ac{TLS}. 
 
 Skype is an application that allows video, voice and instant messaging communication over proprietary protocols, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} applications don't need to be pre-installed.
