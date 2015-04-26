@@ -63,9 +63,13 @@ Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowi
 
   \textit{Javascript} has compatibility issues amongst different web browsers, leading to different behaviours. To solve that problem, there are libraries written in javascript, namely \textit{jQuery}, that implements the same funcionality for multiple browsers, solving most of incompatibility issues.
 
-  SmillingWeb \cite{smillingweb} attempts to implement \ac{SMIL} 3.0 cross platform video player with javascript and \textit{jQuery}, which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. But SmillingWeb isn't fully implemented yet and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes in real time.  
+  SmillingWeb \cite{smillingweb} attempts to implement a cross platform multimedia player designed for \ac{SMIL} 3.0 presentations with \textit{JavaScript} and \textit{jQuery} which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. 
 
-{\color{red} [more on smilling web would be nice]}
+  SmillingWeb already takes advantage of \ac{HTML}5 and \ac{CSS}3, they take into account unsuportted web browsers though Modernizr\footnote{modernizr url}, a simple JavaScript library that may require plugins if new features aren't supported.  
+
+  But SmillingWeb just implements a subset of \ac{SMIL} 3.0 and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes due to real time communications.
+
+  Another problem with SmillingWeb is pre-loading and playing elements at the correct interval of time, which is not always possible due to low latency netwoks leading to experience pauses during playback.
 
   With the emergence of \ac{HTML}5, tags like \textit{video}, \textit{audio} and \textit{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \textit{canvas} that allows to draw graphics with javascript on a rectangle within a web page.
 

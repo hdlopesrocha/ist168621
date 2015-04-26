@@ -22,4 +22,10 @@ Most of client-server applications aren't affected by \ac{NAT} when the servers 
 
 When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} cames to simplify how audio and video are transmited through web browsers.
 
-Skype is an application that allows video, voice and instant messaging communication, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} is an open source technology that allows web browser real time communications without installing any aditional application or plugin.
+\ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser real time communications without installing any aditional application or plugin.
+
+\ac{WebRTC} uses \ac{UDP} for transporting data, which provides lower latencies than \ac{TCP}, but is not reliable and packet order and integrity are not assured. \ac{SCTP} and \ac{SRTP} are used for streaming data, providing a mechanism for congestion control and partial reliable delivery over \ac{UDP}. All transferred audio, data,  and video must be encrypted with \ac{DTLS} which provides the same security guarantess as \ac{TLS}. 
+
+Skype is an application that allows video, voice and instant messaging communication over proprietary protocols, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} applications don't need to be pre-installed.
+
+Google Hangouts is video conference web application, in the past in order to use hangouts on a web browser a plugin was needed to be installed, nowadays hangouts is using \ac{WebRTC}.
