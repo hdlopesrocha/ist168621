@@ -54,7 +54,7 @@ export LC_ALL		?= C
 #
 # If you specify sources here, all other files with the same suffix
 # will be treated as if they were _include_ files.
-onlysources.tex		?= template_project_latex.tex 			# TODO - Adapt this according to your tex filename
+onlysources.tex		?= project.tex 			# TODO - Adapt this according to your tex filename
 #onlysources.tex.sh	?=
 #onlysources.tex.pl	?=
 #onlysources.tex.py	?=

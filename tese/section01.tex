@@ -34,8 +34,7 @@ When connection is established, either in a direct or indirect way (via \ac{TURN
   \item \textbf{DataChannel} allows to send whatever type of data to other peers.
 \end{itemize}
 
-
-\ac{WebRTC} uses \ac{UDP} for transporting data, which provides lower latencies than \ac{TCP}, but is not reliable and packet order and integrity are not assured. \ac{SCTP} and \ac{SRTP} are used for streaming data, providing a mechanism for congestion control and partial reliable delivery over \ac{UDP}. All transferred audio, data,  and video must be encrypted with \ac{DTLS} which provides the same security guarantess as \ac{TLS}. 
+\ac{WebRTC} uses \ac{UDP} for transporting data, which provides lower latencies than \ac{TCP}, but is not reliable and packet order and integrity are not assured. \ac{SCTP} and \ac{SRTP} are used for streaming data, providing a mechanism for congestion control and partial reliable delivery over \ac{UDP}. All transferred audio, data and video must be encrypted with \ac{DTLS} which provides the same security guarantess as \ac{TLS}. 
 
 Skype is an application that allows video, voice and instant messaging communication over proprietary protocols, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} applications don't need to be pre-installed.
 

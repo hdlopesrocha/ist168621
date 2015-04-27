@@ -5,7 +5,11 @@
 
   If, for instance, one whants to rewind a real time video, recordings will be needed from who is streaming the video. 
 
-  {\color{red}[Video Recording]}
+  \ac{RTP}\footnote{rfc3550} is used for streaming audio and video over \ac{IP}, the multimedia content is transported on the payload of \ac{RTP} messages, \ac{RTP} contains headers for payload indentification. \ac{RTP} is independent from its payload type, allowing to transport any kind of encoded multimedia. A sequence number is used for sorting received packets.
+
+  \ac{RTP} allows to change its requirements and add extensions to it with profiles, one of the most used is the \ac{RTP} profile for audio and video \footnote{rfc3551} which lists the payload encodings and compression algorithms. This profile also assigns a name to each encoding which may be used other protocols like \ac{SDP}.
+
+  \ac{RTP} recorders are independent of payload encoding, they don't decode \ac{RTP} packets, they record packets instead, allowing to record all video and audio formats.
 
   {\color{red}[Video Playback - Past and Present]}
 
