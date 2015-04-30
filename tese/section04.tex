@@ -1,13 +1,15 @@
 
-  Real time collaboration applications have become a huge help on team tasks, providing a great boost on business, research and investigation velocity. Technologies like this are appearing along this days, but they couln't be possible years ago because technology was limited or unavailable. Although todays technology is limited on some aspects, we are doing progress in order to improve the web ecosystem, by creating standards and migrating to newer technologies.
+ 	Real time collaboration applications have become a huge help on team tasks, providing a great boost on business, research and investigation velocity. Technologies like this are appearing along this days, but they couln't be possible years ago because technology was limited or unavailable. Although todays technology is limited on some aspects, we are doing progress in order to improve the web ecosystem, by creating standards and migrating to newer technologies.
 
-  Our first concern on real time collaboration applications, besides the communication itself, is the data storage and representation. Because most browsers are recommended to limit local storage to at least five megabytes per origin, storing multimedia content is not a viable solution.
+ 	Our first concern on real time collaboration applications, besides the communication itself, is the data storage and representation. Because most browsers are recommended to limit local storage to at least five megabytes per origin, storing multimedia content is not a viable solution.
 
-  If, for instance, one whants to rewind a real time video, recordings will be needed from who is streaming the video. 
+	If, for instance, one whants to rewind a real time video, recordings will be needed from who is streaming the video. 
 
   \ac{RTP}\footnote{rfc3550} is used for streaming audio and video over \ac{IP}, the multimedia content is transported on the payload of \ac{RTP} messages, \ac{RTP} contains headers for payload indentification. \ac{RTP} is independent from its payload type, allowing to transport any kind of encoded multimedia. A sequence number is used for sorting received packets.
 
   \ac{RTP} allows to change its requirements and add extensions to it with profiles, one of the most used is the \ac{RTP} profile for audio and video \footnote{rfc3551} which lists the payload encodings and compression algorithms. This profile also assigns a name to each encoding which may be used other protocols like \ac{SDP}.
+
+  {\color{red}[DTLS and SRTP]}
 
   \ac{RTP} recorders are independent of payload encoding, they don't decode \ac{RTP} packets, they record packets instead, allowing to record all video and audio formats.
 
@@ -40,6 +42,13 @@
 
   \cite{interactive_stream} proposed an \ac{RTP} profile for real-time transmission of interactive media. This new profile reuses much of video and audio profile implementation, integrating the interactive component.
 	
+	Multiparty video calls can be achieved on \ac{WebRTC} by streaming video from each participant to all the other participants. Although this works, the bigger a conference room is, the bigger is the bandwidth used to stream video to all participants within the conference room.
+
+	Jitsi Video Bridge \footnote{jitsi VB} receives one stream from every participant on a conference, either from a jitsi client or a \ac{WebRTC} application, and redirects it to all the other conference participants, reducing the amount of data that each peer sends. Although all the participants need to download all the streams from Jitsi Video Bridge Server, typically download rates are much bigger than upload rates, making this solution more feasible.
+
+	Jitsi Video Bridge uses \ac{XMPP} as a signaling protocol and its colibri extension (XEP-0340) to reserve channels for video transmission. Although this choice for signalling protocol, Jitsi Video Bridge also supports \ac{SIP} and \ac{Jingle}.
+
+
   {\color{red}[Model View Controller (Suited for interactive RTP)]}
 
 
