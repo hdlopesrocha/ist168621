@@ -36,6 +36,12 @@ When connection is established, either in a direct or indirect way (via \ac{TURN
 
 \ac{WebRTC} uses \ac{UDP} for transporting data, which provides lower latencies than \ac{TCP}, but is not reliable and packet order and integrity are not assured. \ac{SCTP} and \ac{SRTP} are used for streaming data, providing a mechanism for congestion control and partial reliable delivery over \ac{UDP}. All transferred audio, data and video must be encrypted with \ac{DTLS} which provides the same security guarantess as \ac{TLS}. 
 
+\ac{TLS} doesn't support independent record decryption, for that it requires a reliable transport channel, tipically \ac{TCP}. The decryption of a record depends on the previous record, which for unreliable transport protocols like \ac{UDP} may represent a problem, either due to packet loss or different receival order.
+
+\ac{DTLS} is similar to \ac{TLS} but on top of \ac{UDP}, the main difference is the inclusion of a sequence number per packet that is used for packet re-ordering on receival and protects from duplicated packets. If a packet sequence number is less then the expected sequence number, the packet is discarded. If a packet sequence number is greater than the expected sequence number, the packet may be enqueued or discarded. By knowing the sequence of messages that are sent and received in \ac{TLS}, timers are used for packet retransmission avoiding ackowledgement messages.
+
+\ac{WebRTC}'s \textit{Data Channel} is built on top of \ac{SCTP}, which is secured by \ac{DTLS}. A \textit{Data Channel} has one incoming stream and one outgoing stream, providing bidirectional communication. Each data channel direction can be tweaked for reliable or unreliable transmission, the same can be done for order delivery. A priority can also be defined for improving the quality of service for a particular stream compared to another.
+
 Skype is an application that allows video, voice and instant messaging communication over proprietary protocols, its main strength is the amount of users that are using it nowadays. But compared to Skype, \ac{WebRTC} applications don't need to be pre-installed.
 
 Google Hangouts is video conference web application, in the past in order to use hangouts on a web browser a plugin was needed to be installed, nowadays hangouts is using \ac{WebRTC}.
