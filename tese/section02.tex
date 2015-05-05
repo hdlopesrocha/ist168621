@@ -1,28 +1,31 @@
-\textbf{\color{red}==================================}
 
-Signaling is the most important proccess for applications to exchange connection information about peers and servers, their capabilities and metadata.
+  Signaling is the most important process for applications to exchange connection information about peers and servers, their capabilities and meta-data.
 
-  \ac{WebRTC} doesn't implement signaling, different applications may require different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, WebSockets, Socket.io or by implementing a custom protocol.
+  \ac{WebRTC} doesn't implement signaling, different applications may require different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, \textit{WebSockets}, \textit{Socket.io} or by implementing a custom protocol.
 
   \ac{WebRTC} uses \ac{SDP} (rfc4566\footnote{\url{http://tools.ietf.org/html/rfc4566}}) to define peer connection properties such as types of supported media, codecs, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
 
   One of signaling requisites is bi-directional communication over \ac{HTTP}. \ac{HTTP} works on a request followed by a server response, by other words, follows a unidirectional communication. Sometimes it's required that some informations are obtained in real time, as we saw, some \ac{NAT}'s don't suport callbacks from servers, one technique to overcome this problem is polling.
 
-  Polling consists on sending periodic messages that the server responds imediately with empty content or fresh information. Because real time communications are unpredictable, if the time between periodic requests is short, most of time the server will return empty results wasting network bandwith and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive later.
+  Polling consists on sending periodic messages that the server responds immediately with empty content or fresh information. Real time communications are unpredictable, if the time between periodic requests is short, most of the time the server will return empty results wasting network bandwidth and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive later.
 
-  A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the receival, the client makes another request. This results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, specialy for small messages.
+  A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the message receipt, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, especially for short messages.
 
-  The WebSocket protocol (rfc6455\footnote{\url{http://tools.ietf.org/html/rfc6455}}) provides bidirectional communications trough a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be avalailable on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
+  The WebSocket protocol (rfc6455\footnote{\url{http://tools.ietf.org/html/rfc6455}}) provides bidirectional communications over a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to websocket type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
 
-  \ac{BOSH} is a technique based on long polling, that uses two socket connections and allow sending client messages to server while a previous request is holded.
+  \ac{BOSH} is a technique based on long polling that uses two socket connections and allow sending client messages to server while a previous request is held.
 
-  \ac{SIP} (rfc3261\footnote{\url{http://tools.ietf.org/html/rfc3261}}) is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls applications over \ac{IP} networks.
+{\color{magenta} [BOSH, you can do it!]}
 
-  The work group \ac{SIMPLE} proposed the creation of \ac{SIP} extensions, namely presence information (rfc5263\footnote{\url{http://tools.ietf.org/html/rfc5263}}) and instant messaging (rfc3428\footnote{\url{http://tools.ietf.org/html/rfc3428}}).
+  \ac{SIP} (rfc3261\footnote{\url{http://tools.ietf.org/html/rfc3261}}) is protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice call's applications over \ac{IP} networks.
 
-  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers are disponibilizing access to their \ac{SIP} infrastrucures through WebSockets. Frameworks like \textit{jsSIP}\footnote{\url{http://jssip.net/}}, \textit{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \textit{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+  The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}} proposed the creation of \ac{SIP} extensions, namely presence information (rfc5263\footnote{\url{http://tools.ietf.org/html/rfc5263}}) and instant messaging (rfc3428\footnote{\url{http://tools.ietf.org/html/rfc3428}}).
 
-  \ac{SIP} with WebSockets can be used as a signaling method for WebRTC applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to interoperate web communications with \ac{SIP} networks, mobile and fixed phones.
+  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers making their \ac{SIP} infrastructures available through WebSockets. Frameworks like \textit{jsSIP}\footnote{\url{http://jssip.net/}}, \textit{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \textit{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+
+  \ac{SIP} with \textit{WebSockets} can be used as a signaling method for \ac{WebRTC} applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to inter-operate web communications with \ac{SIP} networks, mobile and fixed phones.
+
+\textbf{\color{red}==================================}
 
   \ac{XMPP} was initially developed for instant messaging (Jabber\footnote{\url{http://jabber.org/}}). It is nowadays an open technology for real-time communications. 
 
