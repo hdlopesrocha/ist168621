@@ -41,7 +41,10 @@
 
   Amongst multiple XMPP server solutions are: \textit{ejabberd}\footnote{\url{http://jabberd.im/}}, \textit{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \textit{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \textit{Prosody}\footnote{\url{http://prosody.im/}}. \textit{Ejabberd} is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
 
-\textbf{\color{red}==================================}
+  A more interesting approach for signaling would be \ac{SigOfly}\cite{sigofly} which allows inter-domain real-time communications. \ac{SigOfly} achieves inter-domain communication by making use of the \textit{Identity Providers} of each peer. 
 
-  {\color{red}[Sig-o-fly]}
+  The caller entity downloads a page with all the code need, also known as messaging stub, to communicate with the called party, this code contains an implementation of the signaling protocol used in order to communicate to the called peer. If the called party domain is being overused it is possible to switch the caller and called parties role, after that the called entity downloads the stub code from the caller domain instead.
+
+  \ac{SigOfly} is an approach very flexible because participants on a video call are not tied to just one type o signaling implementation. Another important aspect of  \ac{SigOfly} is the ability to perform multi-party conversations either through a \textit{Mesh Topology} or a \textit{Multipoint Control Unit}.
+
 
