@@ -7,19 +7,19 @@
  
   Amongst multiple formats for subtitles, \ac{SAMI}, and \ac{SRT} are used by video players that support them. Although those formats have styling available, they are quite limited to text. 
 
-  Hyper-video is a kind of video that contains links to any kind of hypermedia, including links to skip part of it. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific time. \textit{HyperCafe} \cite{hypercafe} was an experimental project to expose hyper-video concepts that consisted on an interactive film by switching between conversations inside a cafe.
+  Hyper-video is a kind of video that contains links to any kind of hypermedia, including links to skip part of it. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific time. \emph{HyperCafe} \cite{hypercafe} was an experimental project to expose hyper-video concepts that consisted on an interactive film by switching between conversations inside a cafe.
  
-  Detail-on-demand is a subset of hyper-video that allow us to obtain additional information about something that appears along the video, like obtaining information about a painting that appears in a particular segment. \textit{Hyper-Hitchcock}\cite{hitchcock} is an editor and player of detail-on-demand video.
+  Detail-on-demand is a subset of hyper-video that allow us to obtain additional information about something that appears along the video, like obtaining information about a painting that appears in a particular segment. \emph{Hyper-Hitchcock}\cite{hitchcock} is an editor and player of detail-on-demand video.
 
   In order to navigate through a dynamic video, one must be aware of time synchronization and the multiple time flows, it's important that all time, causality and behavior rules are well defined.
  
-  \textit{HyVAL}\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of hypermedia. HyVAL defines defines video structure, internal video and external media objects. 
+  \emph{HyVAL}\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of hypermedia. HyVAL defines defines video structure, internal video and external media objects. 
 
-  \textit{HyVAL}'s video structure object defines a structure derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically, this approach is quite restrictive if we want to apply hyper-video concepts to videos that don't follow this structure. External media objects are linked by primary video, those objects can represent other videos, images, text, animation and sound.
+  \emph{HyVAL}'s video structure object defines a structure derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically, this approach is quite restrictive if we want to apply hyper-video concepts to videos that don't follow this structure. External media objects are linked by primary video, those objects can represent other videos, images, text, animation and sound.
 
   \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. With \ac{SMIL} it's possible to synchronize multiple sections of video, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyper-links, amongst multiple other features.
 
-  \ac{SMIL} is an \ac{XML} based language that defines twelve modules: \textit{Animation}, \textit{Content Control}, \textit{Layout}, \textit{Linking}, \textit{Media Objects}, \textit{SmilText}, \textit{Metainformation}, \textit{Structure}, \textit{Timing}, \textit{Time Manipulations}, \textit{State} and \textit{Transitions}.
+  \ac{SMIL} is an \ac{XML} based language that defines twelve modules: \emph{Animation}, \emph{Content Control}, \emph{Layout}, \emph{Linking}, \emph{Media Objects}, \emph{SmilText}, \emph{Metainformation}, \emph{Structure}, \emph{Timing}, \emph{Time Manipulations}, \emph{State} and \emph{Transitions}.
 
 
 \begin{itemize}
@@ -39,62 +39,62 @@
 
   \item \textbf{Metainformation} module contains elements and attributes that allows describing the \ac{SMIL} document. For example, this module could be used to define a movie details such as category, director, writers and cast.
 
-  \item \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \textit{head} element that contains non temporal behavior information defined by  \textit{Metainformation}, \textit{Layout} and \textit{Content Control} modules. This module also defines defines the \textit{body} element, where all temporal related module information is contained.
+  \item \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \emph{head} element that contains non temporal behavior information defined by  \emph{Metainformation}, \emph{Layout} and \emph{Content Control} modules. This module also defines defines the \emph{body} element, where all temporal related module information is contained.
 
-  \item \textbf{Timing} module is the most important module on \ac{SMIL} specification, due to its complexity, it is divided into seventeen sub-modules for coordination and synchronization of media over time. The three main elements are \textit{seq}, \textit{excl} and \textit{par}, respectively, they play child elements in sequence, one at a time and all at the same time. 
+  \item \textbf{Timing} module is the most important module on \ac{SMIL} specification, due to its complexity, it is divided into seventeen sub-modules for coordination and synchronization of media over time. The three main elements are \emph{seq}, \emph{excl} and \emph{par}, respectively, they play child elements in sequence, one at a time and all at the same time. 
 
   \item \textbf{Time Manipulations} module adds time behavior attributes to \ac{SMIL} elements, such as speed, rate or time.
 
   \item \textbf{State} module defines attributes that defines the state of \ac{SMIL} elements, such as element visibility, current element time, amount of repeated loops, playing state and many others.
 
-  \item \textbf{Transitions} module defines attributes and elements for transitions across multiple \ac{SMIL} elements according to \textit{Timing} module.
+  \item \textbf{Transitions} module defines attributes and elements for transitions across multiple \ac{SMIL} elements according to \emph{Timing} module.
 
 \end{itemize}
 
 The \ac{DOM} is a standard \ac{API} that allows easy management of documents that are organized in a tree structure, by providing \ac{CRUD} operations over its elements and their attributes. \ac{DOM} makes it easy to inter-operate between imperative and declarative programming languages.
   
-Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowing \ac{CRUD} operations over \ac{SMIL} documents is an important feature for extending \ac{SMIL} capabilities, for example for creating non-linear animations and triggering external events like \textit{JavaScript} functions.  
+Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowing \ac{CRUD} operations over \ac{SMIL} documents is an important feature for extending \ac{SMIL} capabilities, for example for creating non-linear animations and triggering external events like \emph{JavaScript} functions.  
 
 
   \ac{SMIL}'s modules are used to synchronize and animate \ac{XHTML} and \ac{SVG} elements.
 
   In order to create a multimedia rich hyper-call, \ac{SMIL} fits our goals, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plug-in.
 
-  \ac{HTML} is a markup language based on \ac{XML} that is used for creating web pages. \ac{HTML} alone is a very poor language when we are focused on visual appealing and interactive web pages. Languages like \ac{CSS} and \textit{JavaScript} are typically combined to \ac{HTML} for improving the interaction and appearance of a web page. 
+  \ac{HTML} is a markup language based on \ac{XML} that is used for creating web pages. \ac{HTML} alone is a very poor language when we are focused on visual appealing and interactive web pages. Languages like \ac{CSS} and \emph{JavaScript} are typically combined to \ac{HTML} for improving the interaction and appearance of a web page. 
 
   \ac{CSS} idea is to separate the structure of an \ac{XML} document from its appearance. \ac{CSS} defines styles for \ac{XML} tags based on their name, class, identifier or position, besides static styling \ac{CSS} also supports animation and transitions leading to a more dynamic content.
 
-  \textit{JavaScript} is an imperative object-oriented language based on \textit{ECMAScript}. It is used mainly on client-side and executed by a web browser. \textit{JavaScript} has its own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of pre-installed plug-ins.
+  \emph{JavaScript} is an imperative object-oriented language based on \emph{ECMAScript}. It is used mainly on client-side and executed by a web browser. \emph{JavaScript} has its own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of pre-installed plug-ins.
 
-  \textit{JavaScript} has compatibility issues amongst different web browsers, leading to different behaviors. To solve that problem, there are libraries written in \textit{JavasSript}, namely \textit{jQuery} which implements the same functionality for multiple browsers, solving most of incompatibility issues.
+  \emph{JavaScript} has compatibility issues amongst different web browsers, leading to different behaviors. To solve that problem, there are libraries written in \emph{JavasSript}, namely \emph{jQuery} which implements the same functionality for multiple browsers, solving most of incompatibility issues.
 
-  SmillingWeb \cite{smillingweb} attempts to implement a cross platform multimedia player designed for \ac{SMIL} 3.0 presentations with \textit{JavaScript} and \textit{jQuery} which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. 
+  SmillingWeb \cite{smillingweb} attempts to implement a cross platform multimedia player designed for \ac{SMIL} 3.0 presentations with \emph{JavaScript} and \emph{jQuery} which, unlike \cite{ambulant}, doesn't need to be installed and shouldn't have incompatibility issues. 
 
-  SmillingWeb already takes advantage of \ac{HTML}5 and \ac{CSS}3, they take into account unsupported web browsers though \textit{Modernizr}\footnote{\url{http://modernizr.com/}}, a simple \textit{JavaScript} library that may require plug-ins if new features aren't supported.  
+  SmillingWeb already takes advantage of \ac{HTML}5 and \ac{CSS}3, they take into account unsupported web browsers though \emph{Modernizr}\footnote{\url{http://modernizr.com/}}, a simple \emph{JavaScript} library that may require plug-ins if new features aren't supported.  
 
   But SmillingWeb just implements a subset of \ac{SMIL} 3.0 and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when leading with \ac{SMIL} changes due to real time communications.
 
   Another problem with SmillingWeb is pre-loading and playing elements at the correct interval of time, which is not always possible due to low latency networks leading to experience pauses during playback.
 
-  With the emergence of \ac{HTML}5, tags like \textit{video}, \textit{audio} and \textit{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \textit{canvas} that allows to draw graphics with \textit{JavaScript} on a rectangle within a web page.
+  With the emergence of \ac{HTML}5, tags like \emph{video}, \emph{audio} and \emph{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \emph{canvas} that allows to draw graphics with \emph{JavaScript} on a rectangle within a web page.
 
-  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently, \ac{SVG} allows to add movement and animate attributes of elements. When embedded on \ac{HTML}5, it allows dynamic changes to inner content in real-time through \ac{DOM} \ac{API}, besides that, it also allows to call \textit{JavaScript} functions on events such as animation end, mouse over and mouse click.
+  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently, \ac{SVG} allows to add movement and animate attributes of elements. When embedded on \ac{HTML}5, it allows dynamic changes to inner content in real-time through \ac{DOM} \ac{API}, besides that, it also allows to call \emph{JavaScript} functions on events such as animation end, mouse over and mouse click.
 
-  Video and audio features are already possible with \ac{HTML}5, like \ac{SVG} it is also possible to bind \textit{JavaScript} functions for different kinds of events over video and audio elements.
+  Video and audio features are already possible with \ac{HTML}5, like \ac{SVG} it is also possible to bind \emph{JavaScript} functions for different kinds of events over video and audio elements.
 
-  Back in 1995, \textit{flash}\footnote{\url{http://www.adobe.com/products/flash.html}} was developed for web-based animations, introducing video support in 2002, \textit{flash} started to grow after that. Concurrency players, at that time, were focused on playing video and audio, \textit{flash} had vector graphics and they were focused on streaming \textit{on-demand} video across multiple platforms. \textit{VP6} was their choice on video codecs, optimizing for half of video size for the same quality and providing adjusted video quality based on \textit{Internet} connection latency. 
+  Back in 1995, \emph{flash}\footnote{\url{http://www.adobe.com/products/flash.html}} was developed for web-based animations, introducing video support in 2002, \emph{flash} started to grow after that. Concurrency players, at that time, were focused on playing video and audio, \emph{flash} had vector graphics and they were focused on streaming \emph{on-demand} video across multiple platforms. \emph{VP6} was their choice on video codecs, optimizing for half of video size for the same quality and providing adjusted video quality based on \emph{Internet} connection latency. 
 
-  \textit{Adobe Flash} was the most widely used applications for reproducing live broadcast and recorded video \cite{flashvideo}, it supports progressive video download using \ac{HTTP} and streaming using \ac{RTMP}. 
+  \emph{Adobe Flash} was the most widely used applications for reproducing live broadcast and recorded video \cite{flashvideo}, it supports progressive video download using \ac{HTTP} and streaming using \ac{RTMP}. 
 
   \ac{RTMP} is a \ac{TCP} based protocol used to streaming audio, video and data between \ac{FMS} and flash player. A bidirectional connection is established between the two to in order allow real time communications. A flash player can stream a webcam video to \ac{FMS} according to \ac{RTMP} and another flash player can request a video stream to \ac{FMS} that can be pre-recorded stream, live stream or data. Multiple \ac{FMS} servers can be chained together in order to increase capacity and handle more streams simultaneously.
 
   \ac{FMS} can stream video and audio to one or more subscribers by sending a separate copy for each subscriber. With \ac{RTMFP} is possible to stream video between flash players, allowing a publisher breaking a stream into pieces that can be cooperatively distributed in a P2P mesh, \ac{RTMFP} uses \ac{UDP} to speed packet delivery, although is not reliable, it is well suited for video streaming, like \ac{WebRTC} flash players also need to apply techniques like \ac{STUN} and \ac{TURN} for \ac{NAT} traversal.
 
-  Although \ac{HTML}5, \textit{JavaScript}, \ac{CSS} and \ac{WebRTC} are implementing some features of flash, it doesn't mean that flash will be replaced, instead of that both technologies can be used to develop rich \textit{Internet} applications. It is also important to note that \ac{HTML}5 is more compatible with mobile devices than adobe flash. 
+  Although \ac{HTML}5, \emph{JavaScript}, \ac{CSS} and \ac{WebRTC} are implementing some features of flash, it doesn't mean that flash will be replaced, instead of that both technologies can be used to develop rich \emph{Internet} applications. It is also important to note that \ac{HTML}5 is more compatible with mobile devices than adobe flash. 
 
-  Like \textit{Flash}, \textit{Microsoft Silverlight}\footnote{\url{http://www.microsoft.com/silverlight/}} is a cross browser plug-in and platform that is used to develop rich \textit{Internet} applications. It supports vector graphics, animation and video. Compared to flash, which uses \textit{ActionScript}, \textit{Silverlight} applications can use languages like C\#, \textit{VisualBasic} and \ac{XAML}. \textit{Silverlight} uses a technique called \textit{Smooth Streaming} from \textit{IIS Media Service} that consists on delivering video in real-time with adjusted quality in function of bandwidth changing and \ac{CPU} usage.
+  Like \emph{Flash}, \emph{Microsoft Silverlight}\footnote{\url{http://www.microsoft.com/silverlight/}} is a cross browser plug-in and platform that is used to develop rich \emph{Internet} applications. It supports vector graphics, animation and video. Compared to flash, which uses \emph{ActionScript}, \emph{Silverlight} applications can use languages like C\#, \emph{VisualBasic} and \ac{XAML}. \emph{Silverlight} uses a technique called \emph{Smooth Streaming} from \emph{IIS Media Service} that consists on delivering video in real-time with adjusted quality in function of bandwidth changing and \ac{CPU} usage.
 
-  Using technologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, \textit{JavaScript} and \ac{SVG}, will make possible to raise communications to a new level. For example, with \ac{API}s like WebGL\footnote{\url{http://khronos.org/webgl/}}, it is now possible to manipulate a three dimensional environment in the context of a hyper-call. Another example would be a collaborative spreadsheet using \ac{WebRTC}. With this, hyper-calls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
+  Using technologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, \emph{JavaScript} and \ac{SVG}, will make possible to raise communications to a new level. For example, with \ac{API}s like WebGL\footnote{\url{http://khronos.org/webgl/}}, it is now possible to manipulate a three dimensional environment in the context of a hyper-call. Another example would be a collaborative spreadsheet using \ac{WebRTC}. With this, hyper-calls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
 
   In this project our goal is to enrich hyper-calls with no limits, every user should be free to choose how it wants to be contacted and it wants to share its contents.
 

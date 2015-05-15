@@ -3,7 +3,7 @@
 
   Signaling is the most important process for applications to exchange connection information about peers and servers, their capabilities and meta-data.
 
-  \ac{WebRTC} doesn't implement signaling, different applications may require different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, \textit{WebSockets}, \textit{Socket.io} or by implementing a custom protocol.
+  \ac{WebRTC} doesn't implement signaling, different applications may require different protocols, there is no single answer that fits all problems. Amongst multiple options, signaling can be done by using \ac{SIP}, \ac{XMPP}, \emph{WebSockets}, \emph{Socket.io} or by implementing a custom protocol.
 
   \ac{WebRTC} uses \ac{SDP} \cite{rfc4566} to define peer connection properties such as types of supported media, codecs, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
 
@@ -13,7 +13,7 @@
 
   A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the message receipt, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, especially for short messages.
 
-  The WebSocket protocol \cite{rfc6455} provides bidirectional communications over a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to \textit{WebSocket} type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \textit{socket.io}\footnote{\url{http://socket.io/}} and \textit{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
+  The WebSocket protocol \cite{rfc6455} provides bidirectional communications over a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
 
   \ac{BOSH}\cite{xep0124} is a technique based on long polling that uses two socket connections and allow sending client messages to server while a previous request is held.
 
@@ -29,9 +29,9 @@
 
   The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}} proposed the creation of \ac{SIP} extensions, namely presence information \cite{rfc5263} and instant messaging \cite{rfc3428}.
 
-  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers making their \ac{SIP} infrastructures available through WebSockets. Frameworks like \textit{jsSIP}\footnote{\url{http://jssip.net/}}, \textit{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \textit{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+  \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with \ac{PSTN}. Service providers making their \ac{SIP} infrastructures available through WebSockets. Frameworks like \emph{jsSIP}\footnote{\url{http://jssip.net/}}, \emph{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \emph{sipML5}\footnote{\url{http://sipml5.org/}} are used on client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
 
-  \ac{SIP} with \textit{WebSockets} can be used as a signaling method for \ac{WebRTC} applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to inter-operate web communications with \ac{SIP} networks, mobile and fixed phones.
+  \ac{SIP} with \emph{WebSockets} can be used as a signaling method for \ac{WebRTC} applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to inter-operate web communications with \ac{SIP} networks, mobile and fixed phones.
 
   \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
 
@@ -39,12 +39,12 @@
 
   \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH} \cite{xep0206}, which basically consists on long polling. This kind of communication is also possible through WebSockets \cite{rfc7395}.
 
-  Amongst multiple XMPP server solutions are: \textit{ejabberd}\footnote{\url{http://jabberd.im/}}, \textit{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \textit{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \textit{Prosody}\footnote{\url{http://prosody.im/}}. \textit{Ejabberd} is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
+  Amongst multiple XMPP server solutions are: \emph{ejabberd}\footnote{\url{http://jabberd.im/}}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \emph{Prosody}\footnote{\url{http://prosody.im/}}. \emph{Ejabberd} is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
 
-  A more interesting approach for signaling would be \ac{SigOfly}\cite{sigofly} which allows inter-domain real-time communications. \ac{SigOfly} achieves inter-domain communication by making use of the \textit{Identity Providers} of each peer. 
+  A more interesting approach for signaling would be \ac{SigOfly}\cite{sigofly} which allows inter-domain real-time communications. \ac{SigOfly} achieves inter-domain communication by making use of the \emph{Identity Providers} of each peer. 
 
   The caller entity downloads a page with all the code need, also known as messaging stub, to communicate with the called party, this code contains an implementation of the signaling protocol used in order to communicate to the called peer. If the called party domain is being overused it is possible to switch the caller and called parties role, after that the called entity downloads the stub code from the caller domain instead.
 
-  \ac{SigOfly} is an approach very flexible because participants on a video call are not tied to just one type o signaling implementation. Another important aspect of  \ac{SigOfly} is the ability to perform multi-party conversations either through a \textit{Mesh Topology} or a \textit{Multipoint Control Unit}.
+  \ac{SigOfly} is an approach very flexible because participants on a video call are not tied to just one type o signaling implementation. Another important aspect of  \ac{SigOfly} is the ability to perform multi-party conversations either through a \emph{Mesh Topology} or a \emph{Multipoint Control Unit}.
 
 

@@ -99,6 +99,8 @@
 \acronymused{IP}
 \acronymused{IP}
 \acronymused{IP}
+\acronymused{JSON}
+\acronymused{JSON}
 \acronymused{MPEG}
 \acronymused{MPEG}
 \acronymused{NAT}
@@ -125,6 +127,11 @@
 \acronymused{NAT}
 \acronymused{NAT}
 \acronymused{NAT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
 \acronymused{P2P}
 \acronymused{PSTN}
 \acronymused{RFC}
@@ -259,6 +266,7 @@
 \acronymused{WebRTC}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
+\acronymused{WebRTC}
 \acronymused{WebVTT}
 \acronymused{XAML}
 \acronymused{XEP}
@@ -289,6 +297,7 @@
 \citation{interactive_record}
 \citation{interactive_stream}
 \citation{ipv4}
+\citation{jupiter}
 \citation{natvoip}
 \citation{rfc3261}
 \citation{rfc3428}
@@ -340,8 +349,10 @@
 \undonewlabel{acro:ICE}
 \undonewlabel{acro:IPv4}
 \undonewlabel{acro:IP}
+\undonewlabel{acro:JSON}
 \undonewlabel{acro:MPEG}
 \undonewlabel{acro:NAT}
+\undonewlabel{acro:OT}
 \undonewlabel{acro:P2P}
 \undonewlabel{acro:PSTN}
 \undonewlabel{acro:RFC}
