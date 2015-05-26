@@ -1,14 +1,13 @@
 \documentclass{llncs}
 \RequirePackage[english]{babel} % Se fizerem o texto em ingles
 \usepackage[english]{babel}   
-\usepackage[latin1]{inputenc}
-%\usepackage[utf8x]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
 \usepackage{makeidx}  % allows for indexgeneration
-\usepackage{graphicx}  % allows for indexgeneration
 \usepackage{subfig}  % allows for indexgeneration
 \usepackage{color}  % allows for indexgeneration
 \usepackage{url}
@@ -16,6 +15,10 @@
 \usepackage{float}
 \usepackage{mathtools}
 \usepackage{acronym}
+\usepackage{pgfgantt}
+\usepackage{adjustbox}
+\usepackage{rotating}
+\usepackage[graphicx]{realboxes}
 \definecolor{fade}{rgb}{0.8,0.8,0.8}
 
 
@@ -77,47 +80,92 @@
 %\overfullrule=2cm
 
 
+
+\newganttchartelement*{mymilestone}{
+mymilestone/.style={
+shape=isosceles triangle,
+inner sep=0pt,
+draw=cyan,
+top color=white,
+bottom color=cyan!50
+},
+mymilestone incomplete/.style={
+/pgfgantt/mymilestone,
+draw=yellow,
+bottom color=yellow!50
+},
+mymilestone label font=\slshape,
+mymilestone left shift=0pt,
+mymilestone right shift=0pt
+}
+
+\newgantttimeslotformat{stardate}{%
+\def\decomposestardate##1.##2\relax{%
+\def\stardateyear{##1}\def\stardateday{##2}%
+}%
+\decomposestardate#1\relax%
+\pgfcalendardatetojulian{\stardateyear-01-01}{#2}%
+\advance#2 by-1\relax%
+\advance#2 by\stardateday\relax%
+}
+
+
+
 \begin{document}
 \pagestyle{plain}
 \mainmatter              % start of the contributions
 
-\title{Comunica��es Hiperligadas: Novo Paradigma de Comunica��o e Colabora��o, potenciado pela Tecnologia WebRTC}
+\title{Comunicações Hiperligadas: Novo Paradigma de Comunicação e Colaboração, potenciado pela Tecnologia WebRTC}
 \author{%
 	Henrique Lopes Rocha \\
 	email1: henrique.rocha@ist.utl.pt \\
 }
-\institute{Instituto Superior T�cnico}
+\institute{Instituto Superior Técnico}
 
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-    In here put your abstract. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
 \keywords{keyworkd1, keyworkd2, keyworkd3}
 \end{abstract}
 
 \section{Introduction}
-	In here put your introduction. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. 
+  \input{intro.tex}
 
-\section{State of the art}
+\section{Related Work}
   \input{state01.tex}
   \input{state02.tex}
   \input{state03.tex}
   \input{state04.tex}
 
-\section{Proposed Architecture}
+\section{Proposed Architecture} % English
   \input{arch01.tex}
 
+\section{Methodology} % Section
 
-%\subsection{Context}   % English
-%\subsection{Problem Statement / Solution Statement} % English
-%\subsection{Thesis Contributions} % English
-%\subsection{Article Structure} % English
-% \section{Proposed Architecture} % English
-%\subsection{Methodology} % Section
-%\subsection{Planned Schedule} % English
-%\section{Conclusions} % English
-%\subsection{Summary} % English
-%\section{Conclusions} % English
+
+
+		\input{method.tex}
+
+
+
+	\subsection{Planned Schedule} % English
+		\input{schd01.tex}
+
+\section{Conclusions} % English
+
+
+\subsection{Summary} % English
+Neste secção deve-se fazer o resumo do trabalho efectuado, retomando a ideia, as contribuições definidas e a forma como estas se materializaram
+
+\subsection{Conclusions} % English
+Nesta secção devem ser retiradas conclusões do trabalho realizado, em face dos resultados obtidos \cite{exemplo}.
+
+
 \bibliographystyle{splncs03}
 \bibliography{references}
 

@@ -1,0 +1,64 @@
+\tikzset{every picture/.style={xscale=0.51,yscale=0.51,transform shape}}
+
+
+
+
+\begin{ganttchart}[vgrid, hgrid]{1}{36}
+\gantttitle{2015}{28}
+\gantttitle{2016}{8} \\
+\gantttitle{Jun}{4}
+\gantttitle{Jul}{4}
+\gantttitle{Aug}{4}
+\gantttitle{Sep}{4}
+\gantttitle{Oct}{4}
+\gantttitle{Nov}{4}
+\gantttitle{Dec}{4}
+\gantttitle{Jan}{4}
+\gantttitle{Feb}{4} \\
+\gantttitlelist{1,...,36}{1}\\
+%First Group
+\ganttgroup{Thesis}{1}{10} \\
+\ganttbar{Task 1}{2}{3} \\
+\ganttbar{Task 2}{4}{10} \\
+\ganttbar{Task 3}{9}{12}\\
+%\ganttlink{elem0}{elem1}
+\ganttgroup{Resume}{1}{10} \\
+
+%\ganttmilestone{Milestone 1}{11}
+%Second Group
+\ganttgroup{Implementation}{1}{1}\ganttgroup{}{4}{8}\ganttgroup{}{11}{26}\ganttgroup{}{29}{30} \\
+\ganttbar{ICE configuration}{1}{1} \\
+\ganttbar{XMPP configuration}{1}{1} \\
+%\ganttlink{elem4}{elem5}
+%\ganttmilestone{Milestone 1}{11}
+%Third Group
+\ganttbar{WebRTC basics}{4}{4} \\
+\ganttbar{Video \& Audio Communication}{4}{5} \\
+\ganttbar{Non-Interactive Record \& Playback}{6}{8} \\
+\ganttbar{Interactive Record \& Playback}{11}{14}\\
+\ganttmilestone{First Prototype}{18}\\
+\ganttbar{Collaborative Environment}{15}{18}\\
+\ganttmilestone{Second Prototype}{22} \\
+\ganttbar{Interface Improvement I}{19}{22} \\
+\ganttbar{Usability Tests I}{23}{23} \\
+\ganttmilestone{Third Prototype}{25} \\
+\ganttbar{Interface Improvement II}{24}{25} \\
+\ganttbar{Usability Tests II}{26}{26} \\
+\ganttbar{Performance Tests}{29}{30} \\
+\ganttbar{Performance Improvements}{30}{30} \\
+\ganttmilestone{Final Prototype}{30}
+
+%\ganttlink{elem8}{elem9}
+
+\ganttlink{elem1}{elem2}
+\ganttlink{elem2}{elem3}
+\ganttlink{elem9}{elem11}
+\ganttlink{elem10}{elem11}
+\ganttlink[link type=F-S]{elem12}{elem13}
+\ganttlink{elem13}{elem14}
+\ganttlink[link type=F-S]{elem14}{elem16}
+\ganttlink[link type=F-S]{elem16}{elem18}
+\ganttlink[link type=F-S]{elem18}{elem19}
+\ganttlink[link type=F-S]{elem19}{elem21}
+\ganttlink[link type=F-S]{elem21}{elem22}
+\end{ganttchart}
