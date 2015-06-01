@@ -1,28 +1,30 @@
 \subsection{Context}   % English
 Since the early days of Human History, we tried to communicate over far locations, from smoke signals to letters delivered by messengers. Real-time communications were limited or even nonexistent. Despite all the efforts made to improve communications, written communication could never replace face to face communication.
-	With the advent of the telephone network, communications have taken a very important step for us to feel more connected with whom we communicate. Still, only the human voice was not enough, and the invention of cameras and consequent video digitization were a huge step for real-time communications.
+With the advent of the telephone network, communications have taken a very important step for us to feel more connected with whom we communicate. Still, only the human voice was not enough, and the invention of cameras and consequent video digitization were a huge step for real-time communications.
 
- 	Although nothing replaces the physical contact with a person while we communicate, we are at a time where we can do more than just  visual and verbal communication.
 	In the past, handwritten documents were limited to a writer per page at a time. Writing a book collaboratively was a difficult task due to synchronism between writers.
-
 	Today, we can achieve more, it is possible to write a document collaboratively, correct spelling mistakes without wasting paper, restructure text at any moment, add a video to a newspaper article and more. Although much of what was said seems banal nowadays, none of this was possible before the computer's invention. 
 
+	As \cite{geddes} states, \say{No computer in our lifetimes will ever rival a human voice’s capacity to conveying rich and complex social and emotional meaning} , although nothing replace the physical contact with a person while we communicate, we are at a time when we can do more than just a visual and verbal communication, hypermedia can be added to video and voice in order to extend its value. The concept of structured voice and video synchronized with hypermedia is called hypervoice.
+        %RP a citação do geddes faz sentido? Parece estar a falar de voz gerada por computador e não de video conferencia onde o que ouvimos são outras pessoas!
+        
 \subsection{Problem Statement} % English
 
-	As communications technologies appeared, we adapted the way we communicate. This project aims to re-create how we communicate and make it a process more natural and easy to learn. 
-%RP objectivo demasiado ambicioso.
-        
-	For multiple reasons, some people tend to forget what they ear or see, either due to health problems or lack of sleep,
-       %RP acho que toda a gente se esquece eventualmente. Pode não lhe parecer importante na altura. Não é preciso estar doente!
-        a real-time system is not appropriate for people with short term memory loss, an application that provides a way to remember our past communications would be a strong tool for not only to catch what we lost but also to enhance our knowledge.
-        %RP estes dois ultimos pontos são melhores. Não fales em pessoas com problemas de memoria mas em termos de lidar com grandes quantidades de informação, realizarmos comunicações em grupo (ainda nãofalaste diss) e nem sempre ser possível estar presente.
+	As communications technologies appeared, we adapted the way we communicate. This project don't aims to replace the current video and audio communications, but to enrich them with hyper-media content and make them a more natural and easy to learn process. 
+
+	For multiple reasons, we often need to repeat or postpone some of our tasks, some people tend to forget what they ear or see, either due to health problems or lack of sleep.
+               %RP acho que toda a gente se esquece eventualmente. Pode não lhe parecer importante na altura. Não é preciso estar doente!
+        A real-time system is not appropriate for people with short term memory loss, an application that provides a way to remember our past communications would be a strong tool for not only to catch what we lost but also to enhance our knowledge.
+%RP estes dois ultimos pontos são melhores. Não fales em pessoas com problemas de memoria mas em termos de lidar com grandes quantidades de informação, realizarmos comunicações em grupo (ainda nãofalaste diss) e nem sempre ser possível estar presente.
+        Real-time communication applications can make a difference on business, education and health sectors by providing tools to understand how we learn and work together.
         %RP também há outros mercados, como online learning, projectos de longa duração que vão evoluindo e onde é preciso revisitar o que aconteceu antes. Fins histórios. Necessidade de manter registos devido a requisitos legais/registar história.
 
-	This project aims to extend audio, text and video communications in order to create more rich and collaborative interfaces, better content organization and time handling. All of these resorting only to standard technologies like \ac{WebRTC} any additional plug-in is avoidable, \emph{JavaScript} libraries will be preferred as they can be downloaded on the fly.  
-        %RP esta última frase está confusa.
+	This project aims to extend audio, text and video communications in order to create rich and collaborative interfaces with better content organization and time handling. All of these with help of only standard technologies like \ac{WebRTC}, any additional plug-in is avoidable, \emph{JavaScript} libraries will be preferred as they can be downloaded on the fly.  
+
+                %RP esta última frase está confusa.
 
         %Estás muito parco nos objectivos do projecto. Acho que falta dizer que é um sistema para complementar/subsitutir actuais sistemas de comunicação audio/video real-time, adicionando-lhe a capacidade de: adicionar conteúdo posteriomente (e.g. anotações) por forma a aumentar o seu valor; permitir acesso posterior (mesmo que apenas 5 minutos depois para quem chega atrasado); permitir navegar na comunicação (hypermedia, saltos, fast-forward, rewind).
-        
+
 \subsection{Thesis Goals} % English
 
 A web application with an easy to learn user interface will be developed to accomplish solving our problem. Our application, unnamed yet, is targeted at web browsers that are compatible with JavaScript, \ac{WebRTC}, \ac{HTML}5 and \ac{CSS}3.
@@ -34,13 +36,13 @@ A web application with an easy to learn user interface will be developed to acco
 \subsection{Document Structure} % English
 This document is structured as follows. Section \ref{related} presents the related work.
 
-%, which is divided into five subsections. 
 %	Section \ref{early} describes the problems that real-time communications face on nowadays internet, namely the \ac{IPv4} address exhaustion and the client server model constraints. 
 %	Section \ref{rtc} describes the \ac{WebRTC} technology and the protocols needed to implement our project. 
-%	Section \ref{signaling} addresses the signaling component which is not defined on \ac{WebRTC} specifications. The fourth subsection presents the evolution of multimedia content until the hypermedia, its capabilities, synchronization mechanisms and interactivity. 
+%	Section \ref{signaling} addresses the signaling component of chat applications, which is not defined on \ac{WebRTC} specifications. 
+%	Section \ref{hypermedia} presents the evolution of multimedia content until the hypermedia, its capabilities, synchronization mechanisms and interactivity. 
 %	Section \ref{collab} explores streaming protocols for non-interactive multimedia and how to introduce the interactive component, another important aspects are the ability to control the time flux of a stream and collaborative application development.
 %RP este detalhe sobre a estrutura da sec. do estado da arte vai para o início dessa secção.
-
+        
 	In Section \ref{arch}, we propose an architecture for an Web Application that fulfills the goals of this thesis, including all the need infrastructure and software.
 	Section \ref{meth} describes our work methodology and our plan for implementing and validating our proposed architecture.
 	Section \ref{concl} presents the summary and conclusions of our work.
