@@ -13,7 +13,7 @@
 
   A technique called long polling consists on making the server hold the request until there is fresh information or expiring after some time, after the message receipt, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which adds data overhead, especially for short messages.
 
-  The WebSocket protocol \cite{rfc6455} provides bidirectional communications over a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
+  The WebSocket protocol \cite{rfc6455} allows bidirectional communications over a full-duplex socket channel. WebSocket handshake phase specifies an \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, the remainder messages are done without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}} uses \ac{HTTP} when there is no support for WebSockets. 
 
   \ac{BOSH}\cite{xep0124} is a technique based on long polling that uses two socket connections and allow sending client messages to server while a previous request is held.
 
@@ -39,9 +39,9 @@
 
   \ac{XMPP}'s bi-directional communication is achieved through \ac{BOSH} \cite{xep0206}, which basically consists on long polling. This kind of communication is also possible through WebSockets \cite{rfc7395}.
 
-  Amongst multiple XMPP server solutions are: \emph{ejabberd}\footnote{\url{http://jabberd.im/}}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \emph{Prosody}\footnote{\url{http://prosody.im/}}. \emph{Ejabberd} is the one that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
+  Today, multiple XMPP server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \emph{Prosody}\footnote{\url{http://prosody.im/}}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
 
-  A more interesting approach for signaling would be \ac{SigOfly}\cite{sigofly} which allows inter-domain real-time communications. \ac{SigOfly} achieves inter-domain communication by making use of the \emph{Identity Providers} of each peer. 
+  Another interesting approach for signaling would be \ac{SigOfly} \cite{sigofly} which allows inter-domain real-time communications. \ac{SigOfly} provides inter-domain communication by making use of the \emph{Identity Providers} of each peer. 
 
   The caller entity downloads a page with all the code need, also known as messaging stub, to communicate with the called party, this code contains an implementation of the signaling protocol used in order to communicate to the called peer. If the called party domain is being overused it is possible to switch the caller and called parties role, after that the called entity downloads the stub code from the caller domain instead.
 

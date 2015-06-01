@@ -2,9 +2,9 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces WebRTC protocol Stack\relax }}{5}{figure.caption.14}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Overview of transport protocols\relax }}{6}{figure.caption.21}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Media Types\relax }}{15}{figure.caption.55}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Project Modules\relax }}{17}{figure.caption.58}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces System Architecture\relax }}{18}{figure.caption.59}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces App Architecture\relax }}{19}{figure.caption.60}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces System Modules\relax }}{18}{figure.caption.60}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces System Architecture\relax }}{18}{figure.caption.61}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces App Architecture\relax }}{19}{figure.caption.62}}
 \@writefile{lof}{\select@language{english}}
 \@writefile{lot}{\select@language{english}}
 \@writefile{toc}{\authcount {1}}
@@ -13,22 +13,22 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.1.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Proposed Architecture}{17}{section.1.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Methodology}{19}{section.1.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{20}{section.1.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{21}{section.1.5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Context}{1}{subsection.1.1.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Problem Statement}{2}{subsection.1.1.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Thesis Goals}{2}{subsection.1.1.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Document Structure}{2}{subsection.1.1.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Early days of the Internet and its remaining flaws}{3}{subsection.1.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Real time communications}{4}{subsection.1.2.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Signaling, meet and get to know}{6}{subsection.1.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Real time communications}{5}{subsection.1.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Signaling, meet and get to know}{7}{subsection.1.2.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Hypermedia, more than words, more than images}{9}{subsection.1.2.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Extending collaboration tools with time manipulation}{13}{subsection.1.2.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Extending collaboration tools with time manipulation}{14}{subsection.1.2.5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Modules}{17}{subsection.1.3.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Implementation Proposal}{18}{subsection.1.3.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Methodology Evaluation}{19}{subsection.1.4.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Planned Schedule}{20}{subsection.1.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{20}{subsection.1.5.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Conclusions}{20}{subsection.1.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Summary}{21}{subsection.1.5.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Conclusions}{21}{subsection.1.5.2}}
 \@writefile{toc}{\contentsline {title}{Hyper-linked Communications: WebRTC enabled asynchronous collaboration}{1}{chapter.1}}
 \@writefile{toc}{\select@language{english}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
@@ -125,6 +125,8 @@
 \acronymused{JSON}
 \acronymused{MPEG}
 \acronymused{MPEG}
+\acronymused{MVC}
+\acronymused{MVC}
 \acronymused{NAT}
 \acronymused{NAT}
 \acronymused{NAT}
@@ -186,6 +188,7 @@
 \acronymused{RTP}
 \acronymused{RTP}
 \acronymused{RTP}
+\acronymused{RTSP}
 \acronymused{SAMI}
 \acronymused{SCTP}
 \acronymused{SCTP}
@@ -327,10 +330,12 @@
 \citation{embedded}
 \citation{exemplo}
 \citation{flashvideo}
+\citation{geddes}
 \citation{hitchcock}
 \citation{hypercafe}
 \citation{hyval}
 \citation{interactive_record}
+\citation{interactive_stream}
 \citation{interactive_stream}
 \citation{ipv4}
 \citation{jupiter}
@@ -389,6 +394,7 @@
 \undonewlabel{acro:IP}
 \undonewlabel{acro:JSON}
 \undonewlabel{acro:MPEG}
+\undonewlabel{acro:MVC}
 \undonewlabel{acro:NAT}
 \undonewlabel{acro:OT}
 \undonewlabel{acro:P2P}
@@ -398,6 +404,7 @@
 \undonewlabel{acro:RTMFP}
 \undonewlabel{acro:RTMP}
 \undonewlabel{acro:RTP}
+\undonewlabel{acro:RTSP}
 \undonewlabel{acro:SAMI}
 \undonewlabel{acro:SCTP}
 \undonewlabel{acro:SDP}

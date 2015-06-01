@@ -30,7 +30,7 @@ Real time collaboration applications have become a huge help on team tasks, prov
 
 	For example, an image is non-interactive and discrete, for instance, a video is continuous and non-interactive. A simple collaborative editor with just text is interactive and discrete. An animation that changes in function of user behavior is interactive and continuous.
 
-	Streaming protocols like \ac {RTP} were designed for continuous and non-interactive media types, such as audio and video. Discrete and non-interactive media don't need to be streamed through \ac{RTP} because they don't change with. For example, if an image appears in a specific time interval, just the \ac{HTML} or \emph{JavaScript} that will reference the image must be streamed, the image itself is then transferred through \ac{HTTP}.
+	Streaming protocols like \ac {RTP} and \ac{RTSP} were designed for continuous and non-interactive media types, such as audio and video. Discrete and non-interactive media don't need to be streamed through \ac{RTP} because they don't change with. For example, if an image appears in a specific time interval, just the \ac{HTML} or \emph{JavaScript} that will reference the image must be streamed, the image itself is then transferred through \ac{HTTP}.
 
 	In order to play any kind of stream, a player for interactive stream is needed for downloading an environment, decoding the \ac{RTP} payload to determine the state and display it to the user. Streaming interactive media like the combination of \ac{HTML}, \ac{CSS} and JavaScript require more than interpreting the code, a streamed user interface may contain an internal state that is not shown on code.
 
@@ -47,11 +47,11 @@ Real time collaboration applications have become a huge help on team tasks, prov
 
 	In order to synchronize an interactive application state amongst participants, the needed objects to synchronize must be serializable and sent to other participants.
 
-  {\color{fade}[Model View Controller (Suited for interactive RTP)]}
+	\cite{interactive_stream} concluded that the ability to extract the objects state in order to synchronize them and the ability intercept events in order to control remote objects, are realized using the \ac{MVC} concept. This concept separates three components within an application. The \emph{Model} represents the information itself. The \emph{View} component shows the \emph{Model} to the user in a suitable and interactive way. The \emph{Controller} represents an action from the user to the \emph {Model}. 
 
-	With such an interactive \ac{RTP} recorder it is then possible to record, play, fast forward, fast rewind, stop and jump to random positions.
+	Using \ac{MVC} concept will make possible to implement an interactive \ac{RTP} application that records, play, fast forward, fast rewind, stop and jump to random positions.
 
-  \cite{interactive_stream} proposed an \ac{RTP} profile for real-time transmission of interactive media. This new profile reuses much of video and audio profile implementation, integrating the interactive component.   \cite{interactive_record} explained how to record interactive video with this new profile.
+  \cite{interactive_stream} also proposed an \ac{RTP} profile for real-time transmission of interactive media. This new profile reuses much of video and audio profile implementation, integrating the interactive component. \cite{interactive_record} explained how to record interactive video with this new profile.
 	
 	Multi-party video calls can be achieved on \ac{WebRTC} by streaming video from each participant to all the other participants. Although this works, the bigger a conference room is, the bigger is the bandwidth used to stream video to all participants within the conference room.
 
