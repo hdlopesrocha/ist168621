@@ -5,6 +5,9 @@ The requirements for our web application are:
 \begin{itemize}
  \item Text, Audio and Video communication using \ac{WebRTC}.
  \item Enrich communications by overlaying multiple media types.
+ \item Create annotations over video and voice content.
+ \item Search and navigate through annotations.
+ \item Structure presentation of the content.
  \item Ability to perform tasks on real-time collaborative environment.
  \item Ability to record and playback interactive multimedia.
  \item File sharing and collaborative edition.
@@ -15,7 +18,7 @@ The requirements for our web application are:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/archs.png}
+	\includegraphics[width=0.6\textwidth]{figures/archs.png}
 	\caption{System Modules}
         \label{fig:modules}
 \end{figure}
@@ -27,6 +30,8 @@ Figure~\ref{fig:modules} presents the structure of our system which is divided i
 Clients can discover chat rooms and other clients by querying the signaling server, they can create rooms for multi-party communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{DataChannel}, namely for audio, video and text communication.
 
 Chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is formed by the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a list of clients or can be accessed by clients that have a link for that chat room.
+
+Each room will be associated to multiple Media-Types, interactive and non-interactive, discrete and continuous. This media types can be structured with chains of events. Some components of the user interface may not be synchronized to all participants, for example an help or suggestion window.  
 
  %RP não queres falar da comunicação com outros peers?
  %RP há conversas p2p ou todos os clientes ligam ao stream server? Acho que podes dar mais detalhes nesta fase
@@ -40,8 +45,8 @@ The infrastructure is composed by: Ice Server, Web Server, Stream Server, Signal
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/arch.png}
-	\caption{System Architecture}
+	\includegraphics[width=0.6\textwidth]{figures/arch.png}
+	\caption{System Infrastructure}
 \end{figure}
 
 Although the core infrastructure is important and crucial for the implementation of our web application, there is no preference for a specific software running on the web server. An important requirement for the Web Server is the WebSockets support, The \emph{LAMP} stack was considered, although the chosen technology for web development is the \emph{Play Framework} with \emph{Java}, which has a more evident separation between \emph{Model}, \emph{View} and \emph{Controller} components.
@@ -58,17 +63,18 @@ On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} wi
 	\centering
 	\includegraphics[width=0.95\textwidth]{figures/apparch.png}
 	\caption{App Architecture}
+	        \label{fig:apparch}
+
 \end{figure}
 %RP apresentar figura
-
-\emph{Modernizr} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
+Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies. \emph{Modernizr} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
 The \emph{Strophe} library will be essential to communicate with the \ac{XMPP} server.
 %RP era este o sentido da frase? Ou entre cliente e servidor apenas?
 
 
-\emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not provide object storage giving us the ability to choose how to store collaborative objects.
+\emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not provide object storage giving us the ability to choose how to store collaborative objects. We assume that \emph{JavaScript} objects are enough for implementing our application but \emph{TogetherJS} provides the flexibility to change our storage model.
 %RP relê a frase. É mesmo isto que queres dizer? ``does not implement''
 
-The synchronization between multimedia elements will be performed trough \emph{JavasSript} events.
+The synchronization between multimedia elements will be performed trough chains of \emph{JavasSript} events, other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
 %RP já não vais usar smil? Como fazes a sincronização. Explica, sff.
