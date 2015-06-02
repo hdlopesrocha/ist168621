@@ -28,7 +28,7 @@ As soon as it receives the reply, the client makes another request. Long polling
 
 The WebSocket protocol allows bidirectional communications over a full-duplex socket channel \cite{rfc6455}.
 %RP coloca as citações no final da frase. Pode haver excepções onde a citação apenas cobre parte da frase ou precisas de colocar várias a dizer coisas diferentes.
-WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, but the remainder messages are exchanged without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}} fall back to using \ac{HTTP} when there is no support for WebSockets. 
+WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, but the remainder messages are exchanged without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}(accessed June 1, 2015).} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}(accessed June 1, 2015).} fall back to using \ac{HTTP} when there is no support for WebSockets. 
 
   \ac{BOSH}\cite{xep0124} is a technique based on long polling that uses two socket connections and allows sending client messages to the server while a previous request is held.
   The \ac{BOSH} specification assumes that a connection manager is implemented to handle \ac{HTTP} connections. This connection manager is basically a translator from \ac{HTTP} to raw message so that the server may be implemented as if this communication is performed over \ac{TCP}.
@@ -39,22 +39,22 @@ WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \e
 
   \ac{SIP} \cite{rfc3261} is a protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as a signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice call's applications over \ac{IP} networks.
 
-  The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}} proposed the creation of \ac{SIP} extensions, namely presence information \cite{rfc5263} and instant messaging \cite{rfc3428}.
+  The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}(accessed June 1, 2015).} proposed the creation of \ac{SIP} extensions, namely presence information \cite{rfc5263} and instant messaging \cite{rfc3428}.
 
   \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with the \ac{PSTN}.
   Service providers are making their \ac{SIP} infrastructures available through WebSockets.
 %RP a frase anterior é estranha
-  Frameworks like \emph{jsSIP}\footnote{\url{http://jssip.net/}}, \emph{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}} and \emph{sipML5}\footnote{\url{http://sipml5.org/}} are used on the client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
+  Frameworks like \emph{jsSIP}\footnote{\url{http://jssip.net/}(accessed June 1, 2015).}, \emph{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}(accessed June 1, 2015).} and \emph{sipML5}\footnote{\url{http://sipml5.org/}} are used on the client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
 %RP quando usas footnotes para indicar sites deves acrescentar ``last accessed (data)''. Isto é importante pois os sites são documentos efémeros que podem dizer uma coisa diferente mais tarde.
   \ac{SIP} with \emph{WebSockets} can be used as a signaling method for \ac{WebRTC} applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to inter-operate web communications with \ac{SIP} networks, mobile and fixed phones.
 
-  \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
+  \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
   \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \cite{xep0096}, which adds file transfer capabilities between two entities and \cite{xep0045} which enables multi-user chat.
   \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH} \cite{xep0206}.
   %RP falta um `` bi-directional communication OVER HTTP is achieved through''?
   %RP BOSH já foi explicado antes pelo que não vale a pena voltar a falar em long-pooling
   This kind of communication is also possible through WebSockets \cite{rfc7395}.
-  Today, multiple XMPP server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}} and \emph{Prosody}\footnote{\url{http://prosody.im/}}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}}.
+  Today, multiple XMPP server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}(accessed June 1, 2015).}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}(accessed June 1, 2015).}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}(accessed June 1, 2015).} and \emph{Prosody}\footnote{\url{http://prosody.im/}(accessed June 1, 2015).}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}(accessed June 1, 2015).}.
   %RP fazes muitos paragrafos. Um paragrafo por tecnologia é normalmente suficiente se não forem muito grandes.
   
   Another interesting approach for signaling would be \ac{SigOfly} which allows inter-domain real-time communications, while abstracting the protocol used~\cite{sigofly}.
