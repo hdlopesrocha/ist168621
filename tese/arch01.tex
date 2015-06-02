@@ -3,15 +3,15 @@ Taking into account the goals of this project and all the technology presented s
 The requirements for our web application are:
 
 \begin{itemize}
-\item Enrich calls with any kind of multimedia in real-time.
-  %RP any kind não é demasiado ambicioso?
+ \item Text, Audio and Video communication using \ac{WebRTC}.
+ \item Enrich communications by overlaying multiple media types.
  \item Ability to perform tasks on real-time collaborative environment.
  \item Ability to record and playback interactive multimedia.
+ \item File sharing and collaborative edition.
 \end{itemize}
 
 %RP ainda não detalhaste as funcionalidades que queres incluir na aplicação. Até aqui tem sido tudo muito vago. convém agora datalhares as funcioalidades que vais implementar.
 \subsection{Modules}
-	Our system is divided into five modules.
 
 \begin{figure}[H]
 	\centering
@@ -20,8 +20,14 @@ The requirements for our web application are:
         \label{fig:modules}
 \end{figure}
 %RP as figuras têm de ser apresentadas. Figure~\ref{fig:modules} presents ...
+Figure~\ref{fig:modules} presents the structure of our system which is divided into five modules. 
 
- The Web Server sends Web Pages, containing the other modules information, to the client, after this, the client contacts all the other modules. The ICE server will be used for \ac{NAT} traversal. The Stream Server will be used to record streams for further playback. The signaling server will be responsible for user and calls management. The web server will provide libraries to the client in order to interact with the other modules.  
+ The Web Server sends Web Pages, containing the other modules information, to the client, after this, the client contacts all the other modules. The \ac{ICE} server will be used for \ac{NAT} traversal. The Stream Server will be used to record streams for further playback. The signaling server will be responsible for user and calls management and presence information. The web server will provide libraries to the client in order to interact with the other modules.
+
+Clients can discover chat rooms and other clients by querying the signaling server, they can create rooms for multi-party communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{DataChannel}, namely for audio, video and text communication.
+
+Chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is formed by the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a list of clients or can be accessed by clients that have a link for that chat room.
+
  %RP não queres falar da comunicação com outros peers?
  %RP há conversas p2p ou todos os clientes ligam ao stream server? Acho que podes dar mais detalhes nesta fase
 
@@ -57,9 +63,12 @@ On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} wi
 
 \emph{Modernizr} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
-The \emph{Strophe} library will be essential to communicate with the \ac{XMPP} server and other clients.
+The \emph{Strophe} library will be essential to communicate with the \ac{XMPP} server.
 %RP era este o sentido da frase? Ou entre cliente e servidor apenas?
-\emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not implement object storage making the object storage implementation free.
+
+
+\emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not provide object storage giving us the ability to choose how to store collaborative objects.
 %RP relê a frase. É mesmo isto que queres dizer? ``does not implement''
 
+The synchronization between multimedia elements will be performed trough \emph{JavasSript} events.
 %RP já não vais usar smil? Como fazes a sincronização. Explica, sff.
