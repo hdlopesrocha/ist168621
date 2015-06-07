@@ -1,0 +1,67 @@
+\beamer@endinputifotherversion {3.33pt}
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\slideentry {0}{0}{2}{2/3}{}{0}}
+\headcommand {\beamer@framepages {2}{3}}
+\headcommand {\partentry {1}{1}}
+\headcommand {\beamer@partpages {1}{3}}
+\headcommand {\beamer@sectionpages {1}{3}}
+\headcommand {\beamer@subsectionpages {1}{3}}
+\headcommand {\sectionentry {1}{Introduction}{4}{Introduction}{1}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{1}{1}{4}{Context}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{1}{2}{4}{Problem Statement}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{1}{3}{4}{Thesis Goals}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\sectionentry {2}{Related Work}{4}{Related Work}{1}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{2}{1}{4}{Early days of the Internet and its remaining flaws}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{2}{2}{4}{Real time communications}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{2}{3}{4}{Signaling: meet and get to know}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{2}{4}{4}{Hypermedia: more than words, more than images}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {1}{2}{5}{4}{Extending collaboration tools with time manipulation}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\partentry {2}{2}}
+\headcommand {\beamer@partpages {4}{3}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\sectionentry {3}{Proposed Architecture}{4}{Proposed Architecture}{2}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {2}{3}{1}{4}{Modules}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\beamer@subsectionentry {2}{3}{2}{4}{Implementation Proposal}}\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\sectionentry {4}{Methodology}{4}{Methodology}{2}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\sectionentry {5}{Conclusions}{4}{Conclusions}{2}}
+\headcommand {\beamer@sectionpages {4}{3}}
+\headcommand {\beamer@subsectionpages {4}{3}}
+\headcommand {\slideentry {5}{0}{1}{4/4}{}{2}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\slideentry {5}{0}{2}{5/5}{}{2}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {5}{0}{3}{6/6}{}{2}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {5}{0}{4}{7/7}{}{2}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {5}{0}{5}{8/8}{}{2}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {5}{0}{6}{9/9}{}{2}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\slideentry {5}{0}{7}{10/10}{}{2}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {5}{0}{8}{11/11}{}{2}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\slideentry {5}{0}{9}{12/12}{}{2}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {5}{0}{10}{13/13}{}{2}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\slideentry {5}{0}{11}{14/14}{}{2}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\beamer@partpages {4}{14}}
+\headcommand {\beamer@subsectionpages {4}{14}}
+\headcommand {\beamer@sectionpages {4}{14}}
+\headcommand {\beamer@documentpages {14}}
+\headcommand {\def \inserttotalframenumber {14}}

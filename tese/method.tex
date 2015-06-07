@@ -1,20 +1,16 @@
 %RP falta introdução à secção a explicar o que vai ser discutido aqui.
-
 %RP texto que está nos 3 parágrafos seugintes ficava bem no planned schedule. Talvez esse fique melhor antes do evaluation methodology.
-
-The most important task in order to implement our project is the infrastructure, without it our project wouldn't work. The basic infrastructure will be our first concern, namely the Web Server configuration, ICE and signaling servers. 
-
-The Web development can only start after the basic infrastructure configuration. When leading with streams, the infrastructure will be complemented with stream servers.
-
-There will be four prototypes, the first one should implement most of streaming and collaborative functionalities. The second prototype will have the same functionalities but a more friendly user interface which will be tested and reviewed by potential users. The third prototype will be an improvement based on the users feedback. In the final prototype we will improve our system performance. 
-
+This section presents how we plan to implement and test our solution.
 
 \subsection{Evaluation Methodology} % Section
+	Our solution will be evaluated with several experiments, either qualitative and quantitative. 
 
-Our web application will be tested with real users, performance benchmarks and unit tests.
+Our web application will be tested with real users by asking them to perform some tasks, count the respective spent time and note their difficulties. After these tests, it will be suggested to users to fill out questionnaires. 
 
+The results of user tests be used to improve the following prototype iterations, it is expected to notice both qualitative and quantitative improvements.
 
 %RP elaborar o tipo de testes que vais fazer com os utilizadores: pedir para fazer tarefas e cronometrar o tempo que demoram. preencher questionários, decobrirem sozinhos como fazer algo, fazer após explicações, etc.
 
 %RP detalhar os testes de desempenho de que falas.
-The system in general will be validated with benchmarks such as analyzing its behavior and delays by growing the amount of users and data.
+ 
+The system in general will be validated with benchmarks that will focus on application delay when performing heavy tasks such as sharing a file and editing it in collaboration with other users. The amount of users will gradually increase in order to understand how much the performance degrades. 
