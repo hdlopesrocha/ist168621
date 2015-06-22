@@ -1,0 +1,18 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Context}{5}{0}{1}
+\beamer@subsectionintoc {1}{2}{Problem Statement}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{Thesis Goals}{8}{0}{1}
+\beamer@sectionintoc {2}{Related Work}{9}{0}{2}
+\beamer@subsectionintoc {2}{1}{Early days of the Internet}{11}{0}{2}
+\beamer@subsectionintoc {2}{2}{Real-Time communications}{12}{0}{2}
+\beamer@subsectionintoc {2}{3}{Signaling}{14}{0}{2}
+\beamer@subsectionintoc {2}{4}{Hypermedia}{15}{0}{2}
+\beamer@subsectionintoc {2}{5}{Collaboration \& Time manipulation}{18}{0}{2}
+\beamer@sectionintoc {3}{Proposed Architecture}{19}{0}{3}
+\beamer@subsectionintoc {3}{1}{Modules}{21}{0}{3}
+\beamer@subsectionintoc {3}{2}{Implementation Proposal}{22}{0}{3}
+\beamer@sectionintoc {4}{Methodology}{24}{0}{4}
+\beamer@subsectionintoc {4}{1}{Evaluation}{25}{0}{4}
+\beamer@subsectionintoc {4}{2}{Planned Schedule}{27}{0}{4}
+\beamer@sectionintoc {5}{Conclusions}{28}{0}{5}

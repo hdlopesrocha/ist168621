@@ -1,82 +1,34 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer Presentation
-% LaTeX Template
-% Version 1.0 (10/11/12)
+
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
+%        LOADING DOCUMENT
 %
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
+\documentclass[compress]{beamer}
+\usetheme{sthlm}
 
-\documentclass[t]{beamer}
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+%        LOADING BEAMER PACKAGES
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-\mode<presentation> {
-
-% The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
-
-%\usetheme{default}
-%\usetheme{AnnArbor}
-%\usetheme{Antibes}
-%\usetheme{Bergen}
-%\usetheme{Berkeley}
-%\usetheme{Berlin}	% *
-%\usetheme{Boadilla}
-%\usetheme{CambridgeUS}
-%\usetheme{Copenhagen}	
-%\usetheme{Darmstadt}
-%\usetheme{Dresden}
-%\usetheme{Frankfurt}
-%\usetheme{Goettingen}	% SO right
-%\usetheme{Hannover}		% SO left
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}		
-%\usetheme{Madrid}
-%\usetheme{Malmoe}
-%\usetheme{Marburg}
-%\usetheme{Montpellier}
-%\usetheme{PaloAlto}
-%\usetheme{Pittsburgh}	% simple
-%\usetheme{Rochester}
-%\usetheme{Singapore}
-%\usetheme{Szeged}
-\usetheme{Warsaw}		% p2p
-
-% As well as themes, the Beamer class has a number of color themes
-% for any slide theme. Uncomment each of these in turn to see how it
-% changes the colors of your current slide theme.
-
-%\usecolortheme{albatross}
-%\usecolortheme{beaver}
-%\usecolortheme{beetle}
-%\usecolortheme{crane}
-%\usecolortheme{dolphin}
-%\usecolortheme{dove}
-%\usecolortheme{fly}
-%\usecolortheme{lily}
-%\usecolortheme{orchid}
-%\usecolortheme{rose}
-%\usecolortheme{seagull}
-%\usecolortheme{seahorse}
-%\usecolortheme{whale}
-\usecolortheme{wolverine}
-%\usecolortheme{spruce}
-
-
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
-
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+\usepackage{
+booktabs,
+datetime,
+dtklogos,
+graphicx,
+multicol,
+pgfplots,
+ragged2e,
+tabularx,
+tikz,
+wasysym
 }
+
+\pgfplotsset{compat=1.8}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath}
+
 \usepackage[utf8x]{inputenc}
 
 \usepackage{multicol}
@@ -85,12 +37,57 @@
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
-% LOGO
+\usepackage{listings}
+\lstset{ %
+language=[LaTeX]TeX,
+basicstyle=\normalsize\ttfamily,
+keywordstyle=,
+numbers=left,
+numberstyle=\tiny\ttfamily,
+stepnumber=1,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+breaklines=true,
+frame=tb,
+framerule=0.5pt,
+tabsize=4,
+framexleftmargin=0.5em,
+framexrightmargin=0.5em,
+xleftmargin=0.5em,
+xrightmargin=0.5em
+}
 
-\beamertemplatenavigationsymbolsempty
-\setbeamertemplate{footline}[frame number]
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+%        LOADING TIKZ LIBRARIES
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+\usetikzlibrary{
+backgrounds,
+mindmap
+}
+
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+%        BEAMER OPTIONS
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+\setbeameroption{show notes}
+
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+%        BEAMER COMMANDS
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+%
+%	PRESENTATION INFORMATION
+%
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 \usepackage{tikz}
 \usepackage{pgf}
+
+
+
 \logo{\includegraphics[height=1.5cm]{logo.pdf}}
 \newcommand{\nologo}{\setbeamertemplate{logo}{}}
 
@@ -99,8 +96,9 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Hyper-linked Communications]{Hyper-linked Communications: WebRTC enabled
-asynchronous collaboration} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title{Hyper-linked Communications} 
+\subtitle{WebRTC enabled asynchronous collaboration}
+
 
 \author{Henrique Rocha} % Your name
 \institute[IST] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -114,9 +112,9 @@ Universidade de Lisboa \\ % Your institution for the title page
 
 \begin{document}
 {
-%\nologo
+\nologo
 \begin{frame}
-\titlepage % Print the title page as the first slide
+\maketitle % Print the title page as the first slide
 \small
 Advisor: Ricardo Pereira
 
@@ -164,13 +162,33 @@ Co-Advisor: Paulo Chainho
 		\vfill
 
 		An application that provides a way to remember our past communications would be a strong tool.
+		
 		\end{frame}
+
+
+  		\begin{frame}[c]
+		\frametitle{Problem Statement: Use case}
+		A teacher record and streams an interactive class, some students participate in real-time others may participate later.
+		\vfill
+		The teacher adds information to its class (create tags, add links, overlay images ...).
+		\vfill
+		Students can answer to quizzes.
+		\end{frame}
+
+
+
+		
+	
 
 	\subsection{Thesis Goals} % English
   		\begin{frame}[c]
 		\frametitle{Thesis Goals}
 		Development of an application that applies the hypermedia concepts.
 
+		\vfill
+		
+		Record and playback interactive video.
+		
 		\vfill
 
 		Use only standard technologies like JavaScript, WebRTC, HTML5 and CSS3.
@@ -186,11 +204,11 @@ Co-Advisor: Paulo Chainho
 
 \end{frame}
 
-	\subsection{Early days of the Internet and its remaining flaws}\label{early}
+	\subsection{Early days of the Internet}\label{early}
 
 
   		\begin{frame}[c]
-		\frametitle{Early days of the Internet and its remaining flaws}
+		\frametitle{Early days of the Internet}
 		\begin{itemize}
 		\item IPv4 Address Exhaustion
 		\vfill
@@ -222,21 +240,24 @@ Co-Advisor: Paulo Chainho
 
 		WebRTC (Web Real-Time Communications)
 
-		\begin{flushright}
-			\vspace*{-2\baselineskip}
-			\includegraphics[width=0.2\textwidth]{figures/webrtc.png}
-		\end{flushright}
+		\begin{itemize}
+		\item MediaStream	
+		\item DataChannel
+		\item RTCPeerConnection
+		\end{itemize}
 
-		\begin{figure}[H]
-			\vspace*{-2\baselineskip}
-			\includegraphics[width=\textwidth]{figures/webrtc_stack2.png}
-			\caption{WebRTC protocol Stack}
-		\end{figure}
+		\begin{flushright}
+
+			\vspace*{-5\baselineskip}
+			\includegraphics[width=0.2\textwidth]{figures/webrtc.png}
+			\includegraphics[width=0.2\textwidth]{figures/space.png}
+		\end{flushright}
+		
 		\end{frame}
 
 
 
-	\subsection{Signaling: meet and get to know}
+	\subsection{Signaling}
   		\begin{frame}[c]
 		\frametitle{Signaling: meet and get to know}
 		\begin{itemize}
@@ -252,7 +273,7 @@ Co-Advisor: Paulo Chainho
 
 
 
-	\subsection{Hypermedia: more than words, more than images}
+	\subsection{Hypermedia}
   		\begin{frame}[c]
 		\frametitle{Hypermedia: more than words, more than images}
 		\begin{itemize}
@@ -270,8 +291,7 @@ Co-Advisor: Paulo Chainho
 		\end{frame}
 
 
-	\subsection{Hypermedia: more than words, more than images}
-  		\begin{frame}[c]
+		\begin{frame}[c]
 		\frametitle{Hypermedia: more than words, more than images}
 		\begin{itemize}		
 		\item \textbf{Languages:} HyVAL \& SMIL
@@ -291,12 +311,15 @@ Co-Advisor: Paulo Chainho
 		\frametitle{Web-Browser plug-ins}
 		\begin{figure}
 			\includegraphics[height=0.3\textheight]{figures/flash.jpg}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
+			\includegraphics[height=0.3\textheight]{figures/java.jpg}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
 			\includegraphics[height=0.3\textheight]{figures/silverlight.png}
 		\end{figure}
 		\end{frame}
 
 
-	\subsection{Extending collaboration tools with time manipulation}
+	\subsection{Collaboration \& Time manipulation}
   		\begin{frame}[c]
 		\frametitle{Extending collaboration tools with time manipulation}
 		\begin{itemize}
@@ -409,7 +432,7 @@ Qualitative and quantitative evaluation.
 \centering
 		\frametitle{Planned Schedule}
 
-\tikzset{every picture/.style={xscale=0.3,yscale=0.28,transform shape}}
+\tikzset{every picture/.style={xscale=0.35,yscale=0.28,transform shape}}
 
 \begin{ganttchart}[vgrid, hgrid]{1}{36}
 \gantttitle{2015}{28}
@@ -486,7 +509,7 @@ Qualitative and quantitative evaluation.
 \item New usage scenarios for communication and collaboration applications.
 		\vfill
 
-\item Enrich communications using hypermedia concepts.
+\item Enrich communications using hypermedia concepts. Record, playback and collaboration features.
 		\vfill
 
 \item Prototype implementation and testing.

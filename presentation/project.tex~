@@ -68,8 +68,8 @@
 %\usecolortheme{seagull}
 %\usecolortheme{seahorse}
 %\usecolortheme{whale}
-\usecolortheme{wolverine}
-%\usecolortheme{spruce}
+%\usecolortheme{wolverine}
+\usecolortheme{spruce}
 
 
 %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
