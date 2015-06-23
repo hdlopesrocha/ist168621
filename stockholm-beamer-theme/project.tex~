@@ -229,9 +229,11 @@ Co-Advisor: Paulo Chainho
 		\begin{frame}[c]
 		\frametitle{Real-Time communications}
 		\begin{figure}
-			\includegraphics[width=0.2\textwidth]{figures/skype.png}
-			\includegraphics[width=0.2\textwidth]{figures/hangouts.png}
-			\includegraphics[width=0.2\textwidth]{figures/jitsi.png}
+			\includegraphics[height=0.2\textwidth]{figures/skype.png}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
+			\includegraphics[height=0.2\textwidth]{figures/hangouts.png}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
+			\includegraphics[height=0.2\textwidth]{figures/jitsi.png}
 		\end{figure}
 		\end{frame}
 
@@ -285,7 +287,7 @@ Co-Advisor: Paulo Chainho
 		
 		\begin{figure}
 			\includegraphics[height=0.4\textheight]{figures/hypercafe.png}
-						\includegraphics[height=0.1\textheight]{figures/space.png}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
 			\includegraphics[height=0.4\textheight]{figures/hitchcock.png}
 		\end{figure}
 		\end{frame}
@@ -301,7 +303,7 @@ Co-Advisor: Paulo Chainho
 		
 			\begin{figure}
 			\includegraphics[height=0.4\textheight]{figures/hyval.png}
-									\includegraphics[height=0.1\textheight]{figures/space.png}
+			\includegraphics[height=0.1\textheight]{figures/space.png}
 			\includegraphics[height=0.4\textheight]{figures/smil.png}
 		\end{figure}
 		\end{frame}
