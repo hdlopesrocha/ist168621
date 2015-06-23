@@ -218,6 +218,12 @@ Co-Advisor: Paulo Chainho
 		\vfill
 		\item STUN + TURN = ICE
 		\end{itemize}
+		\begin{flushright}
+
+			\vspace*{-8\baselineskip}
+			\includegraphics[width=0.55\textwidth]{figures/ice.png}
+		\end{flushright}
+		
 		\end{frame}
 
 
@@ -324,17 +330,25 @@ Co-Advisor: Paulo Chainho
 	\subsection{Collaboration \& Time manipulation}
   		\begin{frame}[c]
 		\frametitle{Extending collaboration tools with time manipulation}
+		
+		\begin{figure}
+			\includegraphics[height=0.3\textheight]{figures/media_types.png}
+			\caption{Media Types}
+		\end{figure}
+		\end{frame}
+
+
+
+  		\begin{frame}[c]
+		\frametitle{Extending collaboration tools with time manipulation}
 		\begin{itemize}
-		\item Streaming and Recording
-		\vfill
-		\item Media Types
+		\item Streaming and Recording (RTP, SRTP)
 		\vfill
 		\item Recording and Streaming Interactive Media
 		\vfill
-		\item Collaborative Environment
+		\item Collaborative Environment (TogetherJS)
 		\end{itemize}
 		\end{frame}
-
 
 %\subsubsection{Streaming and Recording}\label{recstream}
 %\subsubsection{Media Types}\label{mediatype}
