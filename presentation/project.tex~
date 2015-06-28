@@ -68,8 +68,8 @@
 %\usecolortheme{seagull}
 %\usecolortheme{seahorse}
 %\usecolortheme{whale}
-%\usecolortheme{wolverine}
-\usecolortheme{spruce}
+\usecolortheme{wolverine}
+%\usecolortheme{spruce}
 
 
 %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
@@ -200,6 +200,11 @@ Co-Advisor: Paulo Chainho
 		\vfill
 		\item STUN + TURN = ICE
 		\end{itemize}
+			\begin{flushright}
+			\vspace*{-2\baselineskip}
+			\includegraphics[width=0.2\textwidth]{figures/webrtc.png}
+		\end{flushright}
+		
 		\end{frame}
 
 

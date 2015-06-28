@@ -4,7 +4,7 @@
 	<!DOCTYPE html> 
 *@
 <html lang="en"><head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -14,14 +14,42 @@
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/assets/css/sticky-footer.css" rel="stylesheet">
     <link href="/assets/css/jumbotron.css" rel="stylesheet">
-        <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/bootstrap.js"></script>  
+    <script src="/assets/js/strophe.js"></script>
+	<script src="/assets/js/strophe.register.js"></script>
+	<script src="/assets/js/my_xmpp.js"></script>
+    
+    <script>
+		var BOSH_SERVICE = 'http://192.168.1.107:5280/http-bind';
+		var connection = null;
+		
+		function log(msg) {
+		    $('#log').append('<div class="msg"></div>').append(document.createTextNode(msg));
+		}
+		
+		function rawInput(data){
+		    log('RECV: ' + data);
+		}
+		
+		function rawOutput(data){
+		    log('SENT: ' + data);
+		}
+	
+		$(document).ready(function () {
+		    connection = new Strophe.Connection(BOSH_SERVICE);
+		    connection.rawInput = rawInput;
+		    connection.rawOutput = rawOutput;    
+		});		
+	</script>
   </head>
 
   <body>
-
-		@nav()
+	@nav()
     @content
+    
+    <div id="log"></div>
+    
 	<footer class="footer">
       <div class="container">
         <p class="text-muted">Place sticky footer content here.</p>

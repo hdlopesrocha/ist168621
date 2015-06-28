@@ -13,23 +13,44 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			@if(session.get("user")==null){
-			<form class="navbar-form navbar-right" action="/login" method="POST">
-				<div class="form-group">
-					<input placeholder="Username" name="user" class="form-control"
-						type="text">
-				</div>
-				<div class="form-group">
-					<input placeholder="Password" name="pass" class="form-control"
-						type="password">
-				</div>
-				<button type="submit" class="btn btn-success">Sign in</button>
-			</form>
+				<form class="navbar-form navbar-right" action="/login" method="POST" id="login-form">
+					<div class="form-group">
+						<input placeholder="Username" name="username" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<input placeholder="Password" name="password" class="form-control" type="password">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+				</form>
 			}else {
-			<div class="navbar-form navbar-right">
-				<a type="submit" class="btn btn-success" href="/logout">Logout</a>
-			</div>
+				<div class="navbar-form navbar-right">
+					<a type="submit" class="btn btn-success" href="/logout">Logout</a>
+				</div>
 			}
 		</div>
 		<!--/.navbar-collapse -->
 	</div>
+
+	<script type="text/javascript">
+		$("#login-form").submit(function( event ) {
+			event.preventDefault();
+			var username = this.elements["username"].value;
+			var password = this.elements["password"].value;
+			
+			var connected = function(){
+				alert("connected!");
+			}
+			
+			var fail = function(){
+				alert("fail!");
+			}
+			
+			
+			xmpp_login(connection,username,password,connected,fail);
+			
+		});
+	
+	</script>
+
 </nav>
+

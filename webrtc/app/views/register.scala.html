@@ -1,9 +1,22 @@
 @() @template {
 
+
+<style>
+.msg{
+	border: 1px solid black;
+}
+
+
+</style>
+
+
+
+
 <div class="jumbotron">
 	<div class="container">
 
 		<div class="row">
+
 			<div class="col-md-6 portfolio-item">
 				<h3>
 					<a href="#">Hyper Connected Calls</a>
@@ -16,25 +29,25 @@
 				<h3>
 					<a href="#">Register</a>
 				</h3>
-				<form class="form-horizontal" role="form" action="/register" method="POST">
+				<form class="form-horizontal" role="form" action="/register" method="POST" id="register-form">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="email">Username:</label>
 						<div class="col-sm-10">
-							<input type="email" name="user" class="form-control" id="email"
+							<input type="text" name="username" class="form-control" id="email"
 								placeholder="Enter username">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd">Password:</label>
 						<div class="col-sm-10">
-							<input type="password" name="pass" class="form-control" id="pwd"
+							<input type="password" name="password" class="form-control" id="pwd"
 								placeholder="Enter password">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="pwd">Confirm:</label>
 						<div class="col-sm-10">
-							<input type="password" name="pass2" class="form-control" id="pwd"
+							<input type="password" name="password2" class="form-control" id="pwd"
 								placeholder="Enter password">
 						</div>
 					</div>
@@ -44,6 +57,38 @@
 						</div>
 					</div>
 				</form>
+				
+				
+				<script type="text/javascript">
+					$("#register-form").submit(function( event ) {
+						event.preventDefault();
+						var username = this.elements["username"].value;
+						var password = this.elements["password"].value;
+						var password2 = this.elements["password2"].value;
+						
+						var registered = function(){
+							alert("registered!");
+						}
+						
+						var conflict = function(){
+							alert("conflict!");
+						}
+						
+						var notacceptable = function(){
+							alert("notacceptable!");
+						}
+						
+						
+						if(password==password2){
+							xmpp_register(connection,username,password,registered,conflict,notacceptable);
+						}
+						else {
+							alert("different passwords!");
+						}
+						
+					});
+				
+				</script>
 			</div>
 		</div>
 	</div>

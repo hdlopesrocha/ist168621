@@ -1,0 +1,22 @@
+http://192.168.1.107:5280/admin/server/ejabberd/node/ejabberd@localhost/modules/
+
+antes:
+[{welcome_message,
+  [{subject,
+    <<87, 101, 108, 99, 111, 109, 101,
+      33>>},
+   {body,
+    <<72, 105, 46, 10, 87, 101, 108, 99,
+      111, 109, 101, 32, 116, 111, 32,
+      116, 104, 105, 115, 32, 88, 77,
+      80, 80, 32, 115, 101, 114, 118,
+      101, 114, 46>>}]},
+ {ip_access, trusted_network},
+ {access, register}]
+ 
+depois:
+[
+  {access, register, [{allow, all}]}.
+  {registration_timeout, infinity}
+]
+
