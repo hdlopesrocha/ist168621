@@ -2,22 +2,57 @@
 
 <html>
 	<head>
-	
+		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
+		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
 	</head>
 	<body>
 		<h3>Login</h3>
-		<form>
+		<form id="login-form">
 			Email:<input type="text" name="email"/><br>
 			Password:<input type="password" name="password"><br>
 			<input type="submit"/>
 		</form>
 		<h3>Register</h3>
-		<form>
+		<form id="register-form">
 			Email:<input type="text" name="email"/> <br>
-			Password:<input type="password" name="password"/><br> 
+			Password:<input type="password" name="password1"/><br> 
 			Confirm Password:<input type="password" name="password2"/><br>
 			Photo:<input type="file" name="photo"/> <br>
 			<input type="submit"/>
 		</form>
+		<script>
+			$( document ).ready(function() {
+				$( "#login-form" ).submit(function( event ) {
+					var email = this.elements["email"].value;
+					var password = this.elements["password"].value;
+					var success = function(){
+						document.location = "/";
+					} 
+					var error = function(){
+						alert("fail");
+					} 
+					Signaling.login(email,password,success,error);
+					event.preventDefault();
+				});
+				
+				$( "#register-form" ).submit(function( event ) {
+					var email = this.elements["email"].value;
+					var password1 = this.elements["password1"].value;
+					var password2 = this.elements["password2"].value;
+					var photo = null;
+					var success = function(){
+						alert("success");
+					} 
+					var error = function(){
+						alert("fail");
+					} 
+					Signaling.register(email,password1,password2,photo,success,error);
+					event.preventDefault();
+				});
+			});
+		
+		</script>
+		
+		
 	</body>
 </html>
