@@ -1,4 +1,19 @@
-function xmpp_register(connection,username,password,registered,conflict,notacceptable){
+var BOSH_SERVICE = 'http://192.168.56.101:5280/http-bind';
+var connection = null;
+
+function log(msg) {
+    $('#log').append('<div class="msg"></div>').append(document.createTextNode(msg));
+}
+
+function rawInput(data){
+    log('RECV: ' + data);
+}
+
+function rawOutput(data){
+    log('SENT: ' + data);
+}
+
+function xmpp_register(username,password,registered,conflict,notacceptable){
 	if(!username || !password){
 		notacceptable();
 	}
@@ -24,7 +39,7 @@ function xmpp_register(connection,username,password,registered,conflict,notaccep
 }
 
 
-function xmpp_login(connection,username,password,connected,fail){
+function xmpp_login(username,password,connected,fail){
 	if(!username || !password){
 		fail();
 	}
@@ -34,6 +49,7 @@ function xmpp_login(connection,username,password,connected,fail){
 		    	fail();
 		    } else if (status === Strophe.Status.CONNECTED) {
 		    	connected();
+			    localStorage.connection = connection;
 		    	console.log(connection);
 		    }
 		}
@@ -42,3 +58,12 @@ function xmpp_login(connection,username,password,connected,fail){
 }
 
 
+function xmpp_connect(){
+	//var cookieJid = $.cookie("jid");
+	//var cookieSid = $.cookie("sid");
+	//var cookieRid = $.cookie("rid");
+    connection = new Strophe.Connection(BOSH_SERVICE);
+    connection.rawInput = rawInput;
+    connection.rawOutput = rawOutput;
+	
+}
