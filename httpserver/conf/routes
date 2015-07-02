@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 
 
+GET     /api/user/search	        controllers.Rest.search()
 GET     /api/user	                controllers.Rest.listUsers()
 POST    /api/user	                controllers.Rest.updateUser()
 POST    /api/password	            controllers.Rest.changePassword()

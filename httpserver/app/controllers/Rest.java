@@ -13,6 +13,7 @@ import exceptions.ConflictException;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import models.KeyValueFile;
+import models.User;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -25,6 +26,7 @@ import services.GetUserPhotoService;
 import services.GetUserProfileService;
 import services.ListUsersService;
 import services.RegisterUserService;
+import services.SearchUserService;
 import services.UpdateUserService;
 
 public class Rest extends Controller {
@@ -238,6 +240,27 @@ public class Rest extends Controller {
 
 	}
 
+	public Result search() {
+		String query = request().queryString().get("s")[0];
+		
+		try {
+			List<User> res = new SearchUserService(session("email"), query).execute();
+			JSONArray array = new JSONArray();
+			for(User u : res){
+				array.put(u.getEmail());
+			}
+			return ok(array.toString());
+			
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ok("[]");
+	}
+
+	
+	
 	public Result logout() {
 		session().clear();
 		return ok();

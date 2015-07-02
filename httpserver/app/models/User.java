@@ -2,14 +2,17 @@ package models;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import services.Service;
-
 import com.mongodb.client.FindIterable;
+
+import services.Service;
 
 public class User {
 	private String email, hash, salt, token;
@@ -31,15 +34,10 @@ public class User {
 		doc.put("public", publicProperties);
 		doc.put("private", privateProperties);
 		
-
 		if(id!=null)
 			Service.users.deleteOne(new Document("_id",id));
 			
 		Service.users.insertOne(doc);
-		
-		
-		
-		
 		id = doc.getObjectId("_id");
 
 	}
@@ -87,6 +85,18 @@ public class User {
 		return doc != null ? load(doc) : null;
 	}
 
+	public static List<User> search(String query) {
+		Pattern regex = Pattern.compile(query);		
+		Document doc = new Document("email", regex);
+		FindIterable<Document> iter = Service.users.find(doc);
+		Iterator<Document> i = iter.iterator();
+		List<User> ret = new ArrayList<User>();
+		while(i.hasNext()){
+			ret.add(User.load(i.next()));
+		}
+		return ret;
+	}
+	
 
 	public static User findById(ObjectId id) {
 		Document doc = new Document("_id", id);
