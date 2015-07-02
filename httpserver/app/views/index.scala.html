@@ -1,7 +1,20 @@
-@(message: String)
+@()
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
-
-}
+<html>
+	<head>
+		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
+		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
+	</head>
+	<body>
+		<button id="logout-button">Logout</button>
+		<script>
+			$( document ).ready(function() {
+				$("#logout-button").click(function(){
+					Signaling.logout(function(){
+						document.location = "/";
+					})
+				});		
+			});
+		</script>
+	</body>
+</html>

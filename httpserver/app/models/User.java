@@ -12,7 +12,7 @@ import services.Service;
 import com.mongodb.client.FindIterable;
 
 public class User {
-	private String email, name, hash, salt, token;
+	private String email, hash, salt, token;
 	private ObjectId id = null;
 	private List<String> permissions;
 	private Document publicProperties= new Document(); 
@@ -24,7 +24,6 @@ public class User {
 			doc.put("_id", id);
 
 		doc.put("email", email);
-		doc.put("name", name);
 		doc.put("hash", hash);
 		doc.put("salt", salt);
 		doc.put("token", token);
@@ -45,8 +44,6 @@ public class User {
 
 	}
 
-
-
 	public Document getPrivateProperties() {
 		return privateProperties;
 	}
@@ -58,14 +55,12 @@ public class User {
 	}
 
 
-
 	@SuppressWarnings("unchecked")
 	private static User load(Document doc) {
 		User user = new User();
 		user.setId(doc.getObjectId("_id"));
 
 		user.setEmail(doc.getString("email"));
-		user.setName(doc.getString("name"));
 		user.setHash(doc.getString("hash"));
 		user.setSalt(doc.getString("salt"));
 		user.setToken(doc.getString("token"));
@@ -111,9 +106,8 @@ public class User {
 
 	}
 
-	public User(String email, String name, String password,
+	public User(String email, String password,
 			Document properties, List<String> permissions) {
-		this.name = name;
 		this.email = email;
 		this.publicProperties =  properties;
 		setPassword(password);
@@ -180,13 +174,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Sha1.

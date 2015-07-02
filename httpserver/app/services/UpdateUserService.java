@@ -36,12 +36,6 @@ public class UpdateUserService extends Service<Void> {
 	@Override
 	public Void dispatch() {
 		
-		if(info.has("name")){
-			this.user.setName(info.getString("name"));
-			info.remove("name");		
-		}
-		
-
 		Document properties = Document.parse(info.toString());
 
 		

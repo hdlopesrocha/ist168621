@@ -1,7 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -146,18 +150,22 @@ public class Rest extends Controller {
 		JSONObject info = new JSONObject(form.get("json")[0]);
 
 		String email = info.getString("email");
-		String name = info.getString("name");
+		
 		String password = info.getString("password");
 
 		info.remove("email");
-		info.remove("name");
 		info.remove("password");
 
-		FilePart photo = multipart.getFile("photo");
-
-		RegisterUserService service = new RegisterUserService(email, name,
-				password, info, new KeyValueFile("photo", photo.getFilename(),
-						photo.getFile()));
+		
+		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+		for (FilePart fp :multipart.getFiles()){
+			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+			files.add(kvf);
+		}
+		
+		
+		RegisterUserService service = new RegisterUserService(email, 
+				password, info, files);
 		try {
 			String ret = service.execute();
 			session("email", email);
@@ -230,6 +238,64 @@ public class Rest extends Controller {
 
 	}
 
+	public Result logout() {
+		session().clear();
+		return ok();
+	}
 	
+	public Result register2() {
+
+		MultipartFormData multipart = request().body().asMultipartFormData();
+		Map<String, String[]> form = multipart.asFormUrlEncoded();
+
+		String email = form.get("email")[0];
+	
+		String password = form.get("password")[0];
+
+		JSONObject info = new JSONObject();
+		for (Entry<String, String[]> s : form.entrySet()) {
+			if (!s.getKey().equals("email")
+					&& !s.getKey().equals("password")
+					&& !s.getKey().equals("password2")) {
+				String [] value = s.getValue();
+				if(value.length == 1){
+					info.put(s.getKey(), value[0]);					
+				}
+				else if(value.length > 1){
+					JSONArray array = new JSONArray();
+					for(int i=0; i < value.length ; ++i){
+						array.put(value[i]);
+					}
+
+					info.put(s.getKey(), array);	
+				}
+			}
+
+		}
+
+		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+		for (FilePart fp :multipart.getFiles()){
+			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+			files.add(kvf);
+		}
+		
+
+		RegisterUserService service = new RegisterUserService(email,
+				password, info, files);
+		try {
+			String ret = service.execute();
+			// session("email", email);
+			return ok(ret);
+		} catch (ConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Rest.status(409);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return unauthorized();
+		}
+
+	}	
 
 }

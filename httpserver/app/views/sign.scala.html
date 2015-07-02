@@ -15,7 +15,8 @@
 		<h3>Register</h3>
 		<form id="register-form">
 			Email:<input type="text" name="email"/> <br>
-			Password:<input type="password" name="password1"/><br> 
+			Name:<input type="text" name="name"/> <br>
+			Password:<input type="password" name="password"/><br> 
 			Confirm Password:<input type="password" name="password2"/><br>
 			Photo:<input type="file" name="photo"/> <br>
 			<input type="submit"/>
@@ -35,19 +36,29 @@
 					event.preventDefault();
 				});
 				
-				$( "#register-form" ).submit(function( event ) {
-					var email = this.elements["email"].value;
-					var password1 = this.elements["password1"].value;
-					var password2 = this.elements["password2"].value;
-					var photo = null;
+				$( "#register-form" ).submit(function( event ) {					
+					//grab all form data  
 					var success = function(){
 						alert("success");
 					} 
 					var error = function(){
 						alert("fail");
 					} 
-					Signaling.register(email,password1,password2,photo,success,error);
+	
+					
+					
+					var email = this.elements["email"].value;
+					var password1 = this.elements["password"].value;
+					var password2 = this.elements["password2"].value;
+					var photo = this.elements["photo"].files[0];
+					var name = this.elements["name"].value;
+					var formData = new FormData();
+					formData.append("name",name);
+					formData.append("photo",photo);
+					
+					Signaling.register(email,password1,password2,formData,success,error);
 					event.preventDefault();
+
 				});
 			});
 		

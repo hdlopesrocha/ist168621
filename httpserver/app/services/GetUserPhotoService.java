@@ -38,10 +38,7 @@ public class GetUserPhotoService extends Service<String> {
 	public boolean canExecute() {
 		if(callerEmail==null)
 			return false;
-		
 		this.caller = User.findByEmail(callerEmail);
-	
-
 		return caller!=null;
 	}
 

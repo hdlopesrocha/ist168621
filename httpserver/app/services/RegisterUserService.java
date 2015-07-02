@@ -20,22 +20,21 @@ import exceptions.ServiceException;
 public class RegisterUserService extends Service<String> {
 
 	private User user;
-	private KeyValueFile photo;
-	private String email,password, name;
+	private List<KeyValueFile> files;
+	private String email,password;
 	private Document properties;
 	private List<String> permissions = new ArrayList<String>();
 	
-	public RegisterUserService(final String email, final String name,final String password,  final JSONObject properties, KeyValueFile  photo) {
+	public RegisterUserService(final String email, final String password,  final JSONObject properties, List<KeyValueFile>  files) {
 		this.user = User.findByEmail(email);	
 		
 		
 		this.properties = Document.parse(properties.toString());
-		this.photo = photo;
+		this.files = files;
 		this.email = email;
 		this.password = password;
 		
 		
-		this.name = name;
 	}
 	
 	public RegisterUserService addPermission(String permission) {
@@ -55,21 +54,20 @@ public class RegisterUserService extends Service<String> {
 			throw new ConflictException();
 		}
 		
-		String photoUrl = "";
 		
-
-		if(photo!=null){
-			UploadFileService service = new UploadFileService(photo,email);
+		for(KeyValueFile kvf : files){
+			UploadFileService service = new UploadFileService(kvf,email);
+			String photoUrl = "";
 			try {
 				photoUrl = service.execute();
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		properties.put("photo", photoUrl);
+			properties.put(kvf.getKey(), photoUrl);
 		
-		User newUser = new User(email, name, password, properties, permissions);
+		}
+		User newUser = new User(email, password, properties, permissions);
 
 			
 		String token = getRandomString(32);

@@ -30,7 +30,6 @@ public class GetUserProfileService extends Service<String> {
 	@Override
 	public String dispatch() {
 		JSONObject properties = new JSONObject(user.getPublicProperties().toJson());
-		properties.put("name", user.getName());
 		properties.put("email", user.getEmail());
 		return properties.toString();
 	}

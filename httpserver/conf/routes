@@ -11,8 +11,8 @@ POST    /api/user	                controllers.Rest.updateUser()
 POST    /api/password	            controllers.Rest.changePassword()
 GET		/api/user/:user_id			controllers.Rest.getUser(user_id : String)
 POST	/api/auth					controllers.Rest.auth()
-POST	/api/register				controllers.Rest.register()
-
+POST	/api/register				controllers.Rest.register2()
+GET		/api/logout					controllers.Rest.logout()
 
 GET		/photo/*id					controllers.Rest.getPhoto(id : String)
 GET		/file/*id					controllers.Rest.getFile(id : String)

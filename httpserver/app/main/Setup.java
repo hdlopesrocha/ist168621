@@ -1,24 +1,26 @@
 package main;
+
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 import exceptions.ServiceException;
+import models.KeyValueFile;
 import services.AuthenticateUserService;
 import services.GetUserProfileService;
 import services.ListUsersService;
 import services.RegisterUserService;
 import services.Service;
 
-
 public class Setup {
-	
-	public static void main(String [] args){
+
+	public static void main(String[] args) {
 		Service.init();
-		
+
 		if (Service.users.count() == 0) {
 			try {
-				RegisterUserService regService = new RegisterUserService(
-						"admin", "Administrator", "admin",
-						new JSONObject("{'test':'123'}"), null);
+				RegisterUserService regService = new RegisterUserService("admin", "admin",
+						new JSONObject("{'test':'123'}"), new ArrayList<KeyValueFile>());
 				regService.addPermission("ADMIN");
 				regService.execute();
 
@@ -26,11 +28,9 @@ public class Setup {
 				e.printStackTrace();
 			}
 
-
 		}
 
-		AuthenticateUserService auth = new AuthenticateUserService(
-				"admin", "admin");
+		AuthenticateUserService auth = new AuthenticateUserService("admin", "admin");
 		try {
 			if (auth.execute()) {
 				System.out.println("AUTH OK!");
@@ -50,8 +50,7 @@ public class Setup {
 			e.printStackTrace();
 		}
 
-		GetUserProfileService details = new GetUserProfileService("admin",
-				"admin");
+		GetUserProfileService details = new GetUserProfileService("admin", "admin");
 		try {
 			System.out.println(details.execute());
 		} catch (ServiceException e) {
@@ -59,7 +58,6 @@ public class Setup {
 			e.printStackTrace();
 		}
 
-		
 	}
 
 }
