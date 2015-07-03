@@ -13,6 +13,7 @@ import exceptions.ConflictException;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import models.KeyValueFile;
+import models.Relation;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -21,6 +22,7 @@ import play.mvc.Result;
 import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
+import services.CreateRelationService;
 import services.DownloadFileService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
@@ -59,6 +61,22 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
+	public Result addRelation(String email){
+		if(session("email")!=null){
+			CreateRelationService service = new CreateRelationService(session("email"), email);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("OK");
+		}
+		return forbidden();
+		
+	}
+	
+	
 	public Result changePassword() {
 		Map<String, String[]> info = request().body().asFormUrlEncoded();
 		String oldPassword = info.get("oldPassword")[0];
@@ -99,7 +117,7 @@ public class Rest extends Controller {
 
 	}
 
-	public Result auth() {
+	public Result login() {
 		try {
 
 			Map<String, String[]> map = request().body().asFormUrlEncoded();
@@ -244,10 +262,27 @@ public class Rest extends Controller {
 		String query = request().queryString().get("s")[0];
 		
 		try {
+			User me = User.findByEmail(session("email"));
+			
 			List<User> res = new SearchUserService(session("email"), query).execute();
 			JSONArray array = new JSONArray();
 			for(User u : res){
-				array.put(u.getEmail());
+				if(!u.getId().equals(me.getId())){				
+					JSONObject obj = new JSONObject();
+					obj.put("email", u.getEmail());
+					Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
+					
+					if(rel==null){
+						rel = Relation.findByEndpoint(u.getId(), me.getId());
+					}
+					if(rel==null){
+						obj.put("state", Relation.NONE);
+					}
+					else {
+						obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
+					}
+					array.put(obj);
+				}
 			}
 			return ok(array.toString());
 			

@@ -3,7 +3,7 @@ var Signaling = (function(){
 	this.login = function(email,password,success,error){
 		$.ajax({
 			type : "post",
-			url : "/api/auth",
+			url : "/api/user/login",
 			data : "email="+email+"&password="+password,
 			contentType : "application/x-www-form-urlencoded",
 			processData : false,
@@ -25,7 +25,7 @@ var Signaling = (function(){
 		
 		$.ajax({   
 		    type: "POST",
-		    url: "/api/register",
+		    url: "/api/user/register",
 		    data: formData,
 	        encType: "multipart/form-data",
 		    contentType: false,
@@ -43,7 +43,19 @@ var Signaling = (function(){
 	}
 	
 	this.logout = function(success){
-		$.get( "/api/logout", function( data ) {
+		$.get( "/api/user/logout", function( data ) {
+			success();
+		});
+	}
+	
+	this.search = function(query,result){
+		$.get( "/api/user/search?s="+query, function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+	
+	this.addRelation = function(userId, success){
+		$.get( "/api/relation/add/"+userId, function( data ) {
 			success();
 		});
 	}

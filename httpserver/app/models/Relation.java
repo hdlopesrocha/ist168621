@@ -11,10 +11,15 @@ import com.mongodb.client.FindIterable;
 
 import services.Service;
 
-public class Relationship {
-	private static final short CLOSED = 0;
-	private static final short WAITING = 1;
-	private static final short OPEN = 2;
+public class Relation {
+	
+	
+	public static final short NONE = 0;	// no existing relationship
+	public static final short WAITING = 1;	// waiting for endpoint answer
+	public static final short CLOSED = 2;	// endpoint didn't accepted or blocked
+	public static final short OPEN = 3;	// endpoint accepted 
+	
+	// in order to have a successful relationship both endPoint states must be OPEN
 
 	private int fromState, toState;
 	private ObjectId from = null, to = null, id = null;
@@ -46,16 +51,16 @@ public class Relationship {
 		doc.put("ts", toState);
 
 		if (id != null)
-			Service.relation.deleteOne(new Document("_id", id));
+			Service.relations.deleteOne(new Document("_id", id));
 
-		Service.relation.insertOne(doc);
+		Service.relations.insertOne(doc);
 
 		id = doc.getObjectId("_id");
 
 	}
 
-	private static Relationship load(Document doc) {
-		Relationship user = new Relationship();
+	private static Relation load(Document doc) {
+		Relation user = new Relation();
 		user.setId(doc.getObjectId("_id"));
 		user.setFrom(doc.getObjectId("fi"));
 		user.setTo(doc.getObjectId("ti"));
@@ -89,33 +94,33 @@ public class Relationship {
 		this.id = id;
 	}
 
-	public static Relationship findByEndpoint(ObjectId a, ObjectId b) {
+	public static Relation findByEndpoint(ObjectId a, ObjectId b) {
 		Document doc = new Document("fi", a).append("ti", b);
-		FindIterable<Document> iter = Service.relation.find(doc);
+		FindIterable<Document> iter = Service.relations.find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
 
-	public static List<Relationship> listFrom(ObjectId ep) {
+	public static List<Relation> listFrom(ObjectId ep) {
 		Document doc = new Document("fi", ep);
-		FindIterable<Document> iter = Service.relation.find(doc);
+		FindIterable<Document> iter = Service.relations.find(doc);
 		doc = iter.first();
 
 		Iterator<Document> i = iter.iterator();
-		List<Relationship> ret = new ArrayList<Relationship>();
+		List<Relation> ret = new ArrayList<Relation>();
 		while (i.hasNext()) {
 			ret.add(load(i.next()));
 		}
 		return ret;
 	}
 
-	public static List<Relationship> listTo(ObjectId ep) {
+	public static List<Relation> listTo(ObjectId ep) {
 		Document doc = new Document("ti", ep);
-		FindIterable<Document> iter = Service.relation.find(doc);
+		FindIterable<Document> iter = Service.relations.find(doc);
 		doc = iter.first();
 
 		Iterator<Document> i = iter.iterator();
-		List<Relationship> ret = new ArrayList<Relationship>();
+		List<Relation> ret = new ArrayList<Relation>();
 		while (i.hasNext()) {
 			ret.add(load(i.next()));
 		}
@@ -125,26 +130,26 @@ public class Relationship {
 
 
 	
-	public static Relationship findById(ObjectId id) {
+	public static Relation findById(ObjectId id) {
 		Document doc = new Document("_id", id);
-		FindIterable<Document> iter = Service.relation.find(doc);
+		FindIterable<Document> iter = Service.relations.find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
 
-	public Relationship() {
+	public Relation() {
 	}
 
-	public Relationship(ObjectId fi, ObjectId ti) {
-		this.fromState = CLOSED;
-		this.toState = CLOSED;
+	public Relation(ObjectId fi, ObjectId ti) {
+		this.fromState = NONE;
+		this.toState = NONE;
 
 		this.to = ti;
 		this.from = fi;
 
 	}
 
-	public Relationship(int fs, ObjectId fi, ObjectId ti, int ts) {
+	public Relation(int fs, ObjectId fi, ObjectId ti, int ts) {
 		this.fromState = fs;
 		this.toState = ts;
 		this.to = ti;

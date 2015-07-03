@@ -32,7 +32,7 @@ public abstract class Service<T> {
 	private static Random random = new Random();
 	protected static MongoClient client;
 	protected static MongoDatabase database;
-	public static MongoCollection<Document> users,relation;
+	public static MongoCollection<Document> users,relations;
 	protected static GridFS files;
 
 	@SuppressWarnings("deprecation")
@@ -41,7 +41,7 @@ public abstract class Service<T> {
 		database = client.getDatabase("webrtc");
 		files = new GridFS(client.getDB("files"));
 		users = database.getCollection("users");
-		relation = database.getCollection("relation");
+		relations = database.getCollection("relation");
 	}
 
 	/**

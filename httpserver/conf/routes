@@ -7,13 +7,18 @@ GET     /                           controllers.Application.index()
 
 
 GET     /api/user/search	        controllers.Rest.search()
-GET     /api/user	                controllers.Rest.listUsers()
-POST    /api/user	                controllers.Rest.updateUser()
-POST    /api/password	            controllers.Rest.changePassword()
-GET		/api/user/:user_id			controllers.Rest.getUser(user_id : String)
-POST	/api/auth					controllers.Rest.auth()
-POST	/api/register				controllers.Rest.register2()
-GET		/api/logout					controllers.Rest.logout()
+GET     /api/user/list              controllers.Rest.listUsers()
+POST    /api/user/update            controllers.Rest.updateUser()
+POST    /api/user/password	        controllers.Rest.changePassword()
+GET		/api/user/get/:user_id		controllers.Rest.getUser(user_id : String)
+POST	/api/user/login				controllers.Rest.login()
+POST	/api/user/register			controllers.Rest.register2()
+GET		/api/user/logout			controllers.Rest.logout()
+
+GET     /api/relation/add/:user_id      controllers.Rest.addRelation(user_id : String)
+
+
+
 
 GET		/photo/*id					controllers.Rest.getPhoto(id : String)
 GET		/file/*id					controllers.Rest.getFile(id : String)
