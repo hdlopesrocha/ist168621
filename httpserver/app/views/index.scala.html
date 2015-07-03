@@ -7,13 +7,13 @@
 	</head>
 	<body>
 		<button id="logout-button">Logout</button>		
-		<button id="refresh-button">Refresh</button><br>
-		
-		Search:<input type="text" onchange="user_search(this.value)"/><br>
-		
-		<ul id="search-users">
-		
-		</ul>
+		<button id="refresh-button">Refresh</button>
+		&nbsp;Search:<input type="text" onchange="user_search(this.value)"/>
+		<h3>Search Result</h3>
+		<ul id="search-users"></ul>
+		<h3>Friend Requests</h3>
+		<ul id="friend-requests"></ul>
+
 		<script>
 			$( document ).ready(function() {
 				$("#logout-button").click(function(){
