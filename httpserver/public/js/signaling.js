@@ -53,6 +53,24 @@ var Signaling = (function(){
 			result(JSON.parse(data));
 		});
 	}
+
+	this.relations = function(result){
+		$.get( "/api/relation/list", function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+	
+	this.requests = function(result){
+		$.get( "/api/relation/requests", function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+
+	this.rejectRelation = function(userId, success){
+		$.get( "/api/relation/del/"+userId, function( data ) {
+			success();
+		});
+	}
 	
 	this.addRelation = function(userId, success){
 		$.get( "/api/relation/add/"+userId, function( data ) {

@@ -15,9 +15,10 @@ POST	/api/user/login				controllers.Rest.login()
 POST	/api/user/register			controllers.Rest.register2()
 GET		/api/user/logout			controllers.Rest.logout()
 
-GET     /api/relation/add/:user_id      controllers.Rest.addRelation(user_id : String)
-
-
+GET     /api/relation/del/:user_id	controllers.Rest.denyRelation(user_id : String)
+GET     /api/relation/add/:user_id	controllers.Rest.acceptRelation(user_id : String)
+GET     /api/relation/requests		controllers.Rest.listRelationRequests()
+GET     /api/relation/list			controllers.Rest.listRelations()
 
 
 GET		/photo/*id					controllers.Rest.getPhoto(id : String)

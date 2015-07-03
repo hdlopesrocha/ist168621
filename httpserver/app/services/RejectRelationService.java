@@ -7,12 +7,11 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class CreateRelationService extends Service<Void> {
+public class RejectRelationService extends Service<Void> {
 
-	private User from,to;
+	private User from, to;
 
-	
-	public CreateRelationService(String from, String to) {
+	public RejectRelationService(String from, String to) {
 		this.from = User.findByEmail(from);
 		this.to = User.findByEmail(to);
 	}
@@ -25,17 +24,13 @@ public class CreateRelationService extends Service<Void> {
 	@Override
 	public Void dispatch() {
 		Relation rel = Relation.findByEndpoint(from.getId(), to.getId());
-		if(rel==null){
-			rel =  Relation.findByEndpoint(to.getId(), from.getId());
-			if(rel==null){
-				rel = new Relation(true, from.getId(), to.getId(), false);	
-			} else {
-				rel.setToState(true);				
-			}
-		}else {
-			rel.setFromState(true);				
+		if (rel == null) {
+			rel = Relation.findByEndpoint(to.getId(), from.getId());
 		}
-		rel.save();
+
+		if (rel != null) {
+			rel.delete();
+		}
 		return null;
 	}
 
@@ -46,7 +41,7 @@ public class CreateRelationService extends Service<Void> {
 	 */
 	@Override
 	public boolean canExecute() {
-		return from!=null && to!=null;
+		return from != null && to != null;
 	}
 
 }

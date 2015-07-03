@@ -14,29 +14,26 @@ import services.Service;
 public class Relation {
 	
 	
-	public static final short NONE = 0;	// no existing relationship
-	public static final short WAITING = 1;	// waiting for endpoint answer
-	public static final short CLOSED = 2;	// endpoint didn't accepted or blocked
-	public static final short OPEN = 3;	// endpoint accepted 
-	
-	// in order to have a successful relationship both endPoint states must be OPEN
 
-	private int fromState, toState;
+	
+	// in order to have a successful relationship both endPoint states must be true
+
+	private boolean fromState, toState;
 	private ObjectId from = null, to = null, id = null;
 
-	public int getFromState() {
+	public boolean getFromState() {
 		return fromState;
 	}
 
-	public void setFromState(int fromState) {
+	public void setFromState(boolean fromState) {
 		this.fromState = fromState;
 	}
 
-	public int getToState() {
+	public boolean getToState() {
 		return toState;
 	}
 
-	public void setToState(int toState) {
+	public void setToState(boolean toState) {
 		this.toState = toState;
 	}
 
@@ -64,8 +61,8 @@ public class Relation {
 		user.setId(doc.getObjectId("_id"));
 		user.setFrom(doc.getObjectId("fi"));
 		user.setTo(doc.getObjectId("ti"));
-		user.setFromState(doc.getInteger("fs"));
-		user.setToState(doc.getInteger("ts"));
+		user.setFromState(doc.getBoolean("fs"));
+		user.setToState(doc.getBoolean("ts"));
 
 		return user;
 	}
@@ -141,19 +138,24 @@ public class Relation {
 	}
 
 	public Relation(ObjectId fi, ObjectId ti) {
-		this.fromState = NONE;
-		this.toState = NONE;
+		this.fromState = false;
+		this.toState = false;
 
 		this.to = ti;
 		this.from = fi;
 
 	}
 
-	public Relation(int fs, ObjectId fi, ObjectId ti, int ts) {
+	public Relation(boolean fs, ObjectId fi, ObjectId ti, boolean ts) {
 		this.fromState = fs;
 		this.toState = ts;
 		this.to = ti;
 		this.from = fi;
+	}
+
+	public void delete() {
+		if (id != null)
+			Service.relations.deleteOne(new Document("_id", id));		
 	}
 
 }

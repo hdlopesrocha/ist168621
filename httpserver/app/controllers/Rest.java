@@ -26,8 +26,11 @@ import services.CreateRelationService;
 import services.DownloadFileService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
+import services.ListRelationRequestsService;
+import services.ListRelationsService;
 import services.ListUsersService;
 import services.RegisterUserService;
+import services.RejectRelationService;
 import services.SearchUserService;
 import services.UpdateUserService;
 
@@ -61,7 +64,21 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
-	public Result addRelation(String email){
+	public Result denyRelation(String email){
+		if(session("email")!=null){
+			RejectRelationService service = new RejectRelationService(session("email"), email);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("OK");
+		}
+		return forbidden();
+	}
+	
+	public Result acceptRelation(String email){
 		if(session("email")!=null){
 			CreateRelationService service = new CreateRelationService(session("email"), email);
 			try {
@@ -73,7 +90,48 @@ public class Rest extends Controller {
 			return ok("OK");
 		}
 		return forbidden();
-		
+	}
+	
+	public Result listRelations(){
+		if(session("email")!=null){
+			ListRelationsService service = new ListRelationsService(session("email"));
+			try {
+				JSONArray array = new JSONArray();
+				List<User> res = service.execute();
+				for(User user : res){
+					JSONObject obj = new JSONObject();
+					obj.put("email", user.getEmail());
+					array.put(obj);
+				}
+				return ok(array.toString());
+				
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return forbidden();
+	}
+	
+	public Result listRelationRequests(){
+		if(session("email")!=null){
+			ListRelationRequestsService service = new ListRelationRequestsService(session("email"));
+			try {
+				JSONArray array = new JSONArray();
+				List<User> res = service.execute();
+				for(User user : res){
+					JSONObject obj = new JSONObject();
+					obj.put("email", user.getEmail());
+					array.put(obj);
+				}
+				return ok(array.toString());
+				
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return forbidden();
 	}
 	
 	
@@ -275,10 +333,8 @@ public class Rest extends Controller {
 					if(rel==null){
 						rel = Relation.findByEndpoint(u.getId(), me.getId());
 					}
-					if(rel==null){
-						obj.put("state", Relation.NONE);
-					}
-					else {
+				
+					if(rel!=null){
 						obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
 					}
 					array.put(obj);
