@@ -39,7 +39,6 @@ public class User {
 		else
 			Service.users.updateOne(new Document("_id", id), doc);
 				
-		Service.users.insertOne(doc);
 		id = doc.getObjectId("_id");
 
 	}
@@ -59,7 +58,6 @@ public class User {
 	private static User load(Document doc) {
 		User user = new User();
 		user.setId(doc.getObjectId("_id"));
-
 		user.setEmail(doc.getString("email"));
 		user.setHash(doc.getString("hash"));
 		user.setSalt(doc.getString("salt"));
