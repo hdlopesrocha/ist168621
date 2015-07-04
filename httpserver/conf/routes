@@ -3,32 +3,33 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET     /group/:groupId             controllers.Application.group(groupId : String)
+GET     /                           	controllers.Application.index()
+GET     /group/:groupId             	controllers.Application.group(groupId : String)
 
-GET     /api/user/search	        controllers.Rest.search()
-GET     /api/user/list              controllers.Rest.listUsers()
-POST    /api/user/update            controllers.Rest.updateUser()
-POST    /api/user/password	        controllers.Rest.changePassword()
-GET		/api/user/get/:user_id		controllers.Rest.getUser(user_id : String)
-POST	/api/user/login				controllers.Rest.login()
-POST	/api/user/register			controllers.Rest.register2()
-GET		/api/user/logout			controllers.Rest.logout()
+GET     /api/user/search	        	controllers.Rest.search()
+GET     /api/user/list              	controllers.Rest.listUsers()
+POST    /api/user/update            	controllers.Rest.updateUser()
+POST    /api/user/password	        	controllers.Rest.changePassword()
+GET		/api/user/get/:user_id			controllers.Rest.getUser(user_id : String)
+POST	/api/user/login					controllers.Rest.login()
+POST	/api/user/register				controllers.Rest.register2()
+GET		/api/user/logout				controllers.Rest.logout()
 
-GET     /api/relation/del/:user_id	controllers.Rest.denyRelation(user_id : String)
-GET     /api/relation/add/:user_id	controllers.Rest.acceptRelation(user_id : String)
-GET     /api/relation/requests		controllers.Rest.listRelationRequests()
-GET     /api/relation/list			controllers.Rest.listRelations()
+GET     /api/relation/del/:user_id		controllers.Rest.denyRelation(user_id : String)
+GET     /api/relation/add/:user_id		controllers.Rest.acceptRelation(user_id : String)
+GET     /api/relation/requests			controllers.Rest.listRelationRequests()
+GET     /api/relation/list				controllers.Rest.listRelations()
 
-GET		/api/group/create			controllers.Rest.createGroup()
-GET		/api/group/list				controllers.Rest.listGroups()
-GET		/api/group/members/:groupId	controllers.Rest.listGroupMembers(groupId : String)
+GET		/api/group/create				controllers.Rest.createGroup()
+GET		/api/group/list					controllers.Rest.listGroups()
+GET		/api/group/members/:groupId		controllers.Rest.listGroupMembers(groupId : String)
+GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(groupId : String)
 
 
 
-GET		/photo/*id					controllers.Rest.getPhoto(id : String)
-GET		/file/*id					controllers.Rest.getFile(id : String)
+GET		/photo/*id						controllers.Rest.getPhoto(id : String)
+GET		/file/*id						controllers.Rest.getFile(id : String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               	controllers.Assets.versioned(path="/public", file: Asset)
 

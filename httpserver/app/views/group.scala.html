@@ -10,6 +10,12 @@
 		<button id="home-button">Home</button>
 		<button id="refresh-button">Refresh</button>
 		<h1>@groupName</h1>
+		
+		<h3>Add Members</h3>
+		&nbsp;Search:<input type="text" onchange="candidate_search(this.value)"/>
+		<ul id="candidate-list"></ul>
+		
+		
 		<h3>Members List</h3>
 		<ul id="member-list"></ul>
 		
@@ -36,7 +42,17 @@
 				
 				
 			});
-		
+			function candidate_search(query){
+				var result = function(array){
+					var html = "";
+					for(var i  in array){
+					//	var add_button = "<button onclick='user_add(\""+array[i].email+"\")'>add</button>";
+						html += "<li>"+array[i].email+"</li>";
+					}
+					$("#candidate-list").html(html);	
+				}
+				Signaling.searchGroupCandidates("@groupId",query,result);
+			}
 		</script>
 	</body>
 </html>

@@ -72,6 +72,24 @@ public class User {
 		return user;
 	}
 
+	public List<User> getRelations(){
+		List<User> ans = new ArrayList<User>();
+		for(Relation rel : Relation.listFrom(getId())){
+			if(rel.getToState()){
+				User u = User.findById(rel.getTo());
+				ans.add(u);	
+			}
+		}
+		for(Relation rel : Relation.listTo(getId())){
+			if(rel.getFromState()){
+				User u = User.findById(rel.getFrom());
+				ans.add(u);		
+			}
+		}
+		return ans;
+	}
+	
+	
 	public ObjectId getId() {
 		return id;
 	}

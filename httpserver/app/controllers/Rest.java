@@ -35,6 +35,7 @@ import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
 import services.RegisterUserService;
+import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.UpdateUserService;
 
@@ -105,6 +106,32 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
+	
+	public Result searchGroupCandidates(String groupId){
+		if(session("email")!=null){
+			String query = request().queryString().get("s")[0];
+			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("email"),groupId,query);
+			try {
+				List<User> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for(User g : ans){
+					JSONObject obj = new JSONObject();
+					obj.put("id", g.getId());
+					obj.put("email", g.getEmail());
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
+	}
+	
+	
+	
 	public Result listGroupMembers(String groupId){
 		if(session("email")!=null){
 			ListGroupMembersService service = new ListGroupMembersService(session("email"),groupId);

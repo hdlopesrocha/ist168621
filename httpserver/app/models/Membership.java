@@ -75,6 +75,14 @@ public class Membership {
 		}
 		return ans;
 	}
+
+	public static Membership findByUserGroup(ObjectId uid, ObjectId gid) {
+		Document doc = new Document("gid", gid).append("uid", uid);
+		FindIterable<Document> iter = Service.memberships.find(doc);
+		doc = iter.first();
+		return doc != null ? load(doc) : null;
+	}
+
 	
 	public static List<Membership> listByGroup(ObjectId id) {
 		Document doc = new Document("gid", id);

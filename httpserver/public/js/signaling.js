@@ -48,6 +48,13 @@ var Signaling = (function(){
 		});
 	}
 	
+	this.searchGroupCandidates = function(groupId,query,result){
+		$.get( "/api/group/candidates/"+groupId+"?s="+query, function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+
+
 	this.search = function(query,result){
 		$.get( "/api/user/search?s="+query, function( data ) {
 			result(JSON.parse(data));
