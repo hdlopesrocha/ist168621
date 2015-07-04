@@ -22,16 +22,15 @@ public class Membership {
 		Document doc = new Document();
 		if (id != null)
 			doc.put("_id", id);
-
 		doc.put("gid", groupId);
 		doc.put("uid", userId);
-		if (id != null)
-			Service.memberships.deleteOne(new Document("_id", id));
-
-		Service.memberships.insertOne(doc);
-
+		
+		if (id == null)
+			Service.memberships.insertOne(doc);
+		else
+			Service.memberships.updateOne(new Document("_id", id), doc);
+		
 		id = doc.getObjectId("_id");
-
 	}
 
 	public ObjectId getGroupId() {

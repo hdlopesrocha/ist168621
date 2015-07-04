@@ -1,0 +1,30 @@
+@(groupId : String, groupName : String)
+
+<html>
+	<head>
+		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
+		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
+	</head>
+	<body>
+		<button id="logout-button">Logout</button>		
+		<button id="home-button">Home</button>
+		<button id="refresh-button">Refresh</button>
+		<h1>@groupName</h1>
+		<script>
+			$( document ).ready(function() {
+				$("#logout-button").click(function(){
+					Signaling.logout(function(){
+						document.location = document.location;
+					})
+				});	
+				$("#refresh-button").click(function(){
+					document.location = document.location;
+				});
+				$("#home-button").click(function(){
+					document.location = "/";
+				});
+			});
+		
+		</script>
+	</body>
+</html>

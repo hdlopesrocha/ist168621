@@ -29,11 +29,11 @@ public class Group {
 			doc.put("_id", id);
 
 		doc.put("name", name);
-		if (id != null)
-			Service.groups.deleteOne(new Document("_id", id));
-
-		Service.groups.insertOne(doc);
-
+		if (id == null)
+			Service.groups.insertOne(doc);
+		else
+			Service.groups.updateOne(new Document("_id", id), doc);
+				
 		id = doc.getObjectId("_id");
 
 	}
@@ -64,7 +64,7 @@ public class Group {
 	}
 
 	public Group(String name) {
-	
+		this.name = name;
 	}
 
 	public void delete() {

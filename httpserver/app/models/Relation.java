@@ -47,11 +47,11 @@ public class Relation {
 		doc.put("fs", fromState);
 		doc.put("ts", toState);
 
-		if (id != null)
-			Service.relations.deleteOne(new Document("_id", id));
-
-		Service.relations.insertOne(doc);
-
+		if (id == null)
+			Service.relations.insertOne(doc);
+		else
+			Service.relations.updateOne(new Document("_id", id), doc);
+		
 		id = doc.getObjectId("_id");
 
 	}

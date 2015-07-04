@@ -54,13 +54,13 @@ var Signaling = (function(){
 		});
 	}
 
-	this.relations = function(result){
+	this.listRelations = function(result){
 		$.get( "/api/relation/list", function( data ) {
 			result(JSON.parse(data));
 		});
 	}
 	
-	this.requests = function(result){
+	this.listRequests = function(result){
 		$.get( "/api/relation/requests", function( data ) {
 			result(JSON.parse(data));
 		});
@@ -75,6 +75,18 @@ var Signaling = (function(){
 	this.addRelation = function(userId, success){
 		$.get( "/api/relation/add/"+userId, function( data ) {
 			success();
+		});
+	}
+	
+	this.createGroup = function(name,success){
+		$.get( "/api/group/create?n="+name, function( data ) {
+			success();			
+		});
+	}
+	
+	this.listGroups = function(result){
+		$.get( "/api/group/list", function( data ) {
+			result(JSON.parse(data));
 		});
 	}
 	

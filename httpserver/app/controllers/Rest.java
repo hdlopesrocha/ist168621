@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import exceptions.ConflictException;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
+import models.Group;
 import models.KeyValueFile;
 import models.Relation;
 import models.User;
@@ -22,15 +23,17 @@ import play.mvc.Result;
 import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
+import services.CreateGroupService;
 import services.CreateRelationService;
+import services.DenyRelationService;
 import services.DownloadFileService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
+import services.ListGroupsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
 import services.RegisterUserService;
-import services.DenyRelationService;
 import services.SearchUserService;
 import services.UpdateUserService;
 
@@ -67,6 +70,47 @@ public class Rest extends Controller {
 	public Result denyRelation(String email){
 		if(session("email")!=null){
 			DenyRelationService service = new DenyRelationService(session("email"), email);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("OK");
+		}
+		return forbidden();
+	}
+
+	
+	public Result listGroups(){
+		if(session("email")!=null){
+			ListGroupsService service = new ListGroupsService(session("email"));
+			try {
+				List<Group> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for(Group g : ans){
+					JSONObject obj = new JSONObject();
+					obj.put("id", g.getId());
+					obj.put("name", g.getName());
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
+	}
+	
+	public Result createGroup(){
+		
+		
+		if(session("email")!=null){
+			Map<String, String[]> qs = request().queryString();
+			String name = qs.get("n")[0];
+			CreateGroupService service = new CreateGroupService(session("email"), name);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -172,7 +216,6 @@ public class Rest extends Controller {
 			e.printStackTrace();
 		}
 		return unauthorized();
-
 	}
 
 	public Result login() {

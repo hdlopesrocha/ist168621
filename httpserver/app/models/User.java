@@ -34,9 +34,11 @@ public class User {
 		doc.put("public", publicProperties);
 		doc.put("private", privateProperties);
 		
-		if(id!=null)
-			Service.users.deleteOne(new Document("_id",id));
-			
+		if (id == null)
+			Service.users.insertOne(doc);
+		else
+			Service.users.updateOne(new Document("_id", id), doc);
+				
 		Service.users.insertOne(doc);
 		id = doc.getObjectId("_id");
 
