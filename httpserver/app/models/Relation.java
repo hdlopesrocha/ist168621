@@ -50,7 +50,7 @@ public class Relation {
 		if (id == null)
 			Service.relations.insertOne(doc);
 		else
-			Service.relations.updateOne(new Document("_id", id), doc);
+			Service.relations.replaceOne(new Document("_id", id), doc);
 		
 		id = doc.getObjectId("_id");
 

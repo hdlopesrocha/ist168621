@@ -32,7 +32,7 @@ public class Group {
 		if (id == null)
 			Service.groups.insertOne(doc);
 		else
-			Service.groups.updateOne(new Document("_id", id), doc);
+			Service.groups.replaceOne(new Document("_id", id), doc);
 				
 		id = doc.getObjectId("_id");
 

@@ -28,7 +28,7 @@ public class Membership {
 		if (id == null)
 			Service.memberships.insertOne(doc);
 		else
-			Service.memberships.updateOne(new Document("_id", id), doc);
+			Service.memberships.replaceOne(new Document("_id", id), doc);
 		
 		id = doc.getObjectId("_id");
 	}

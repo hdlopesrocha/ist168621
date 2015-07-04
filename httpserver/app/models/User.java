@@ -37,7 +37,7 @@ public class User {
 		if (id == null)
 			Service.users.insertOne(doc);
 		else
-			Service.users.updateOne(new Document("_id", id), doc);
+			Service.users.replaceOne(new Document("_id", id), doc);
 				
 		id = doc.getObjectId("_id");
 
