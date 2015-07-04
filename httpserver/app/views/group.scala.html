@@ -10,6 +10,9 @@
 		<button id="home-button">Home</button>
 		<button id="refresh-button">Refresh</button>
 		<h1>@groupName</h1>
+		<h3>Members List</h3>
+		<ul id="member-list"></ul>
+		
 		<script>
 			$( document ).ready(function() {
 				$("#logout-button").click(function(){
@@ -23,6 +26,15 @@
 				$("#home-button").click(function(){
 					document.location = "/";
 				});
+				Signaling.listGroupMembers("@groupId", function(array){
+					var html = "";
+					for(var i  in array){
+						html += "<li>"+array[i].email+"</li>";
+					}
+					$("#member-list").html(html);
+				});
+				
+				
 			});
 		
 		</script>

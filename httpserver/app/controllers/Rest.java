@@ -29,6 +29,7 @@ import services.DenyRelationService;
 import services.DownloadFileService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
+import services.ListGroupMembersService;
 import services.ListGroupsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
@@ -103,6 +104,29 @@ public class Rest extends Controller {
 		}
 		return forbidden();
 	}
+
+	public Result listGroupMembers(String groupId){
+		if(session("email")!=null){
+			ListGroupMembersService service = new ListGroupMembersService(session("email"),groupId);
+			try {
+				List<User> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for(User g : ans){
+					JSONObject obj = new JSONObject();
+					obj.put("id", g.getId());
+					obj.put("email", g.getEmail());
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
+	}
+	
 	
 	public Result createGroup(){
 		

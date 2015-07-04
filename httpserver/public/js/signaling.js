@@ -90,5 +90,12 @@ var Signaling = (function(){
 		});
 	}
 	
+	this.listGroupMembers = function(groupId,result){
+		$.get( "/api/group/members/"+groupId, function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+	
+	
 	return this;
 })();

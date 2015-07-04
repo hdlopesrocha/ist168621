@@ -22,6 +22,8 @@ GET     /api/relation/list			controllers.Rest.listRelations()
 
 GET		/api/group/create			controllers.Rest.createGroup()
 GET		/api/group/list				controllers.Rest.listGroups()
+GET		/api/group/members/:groupId	controllers.Rest.listGroupMembers(groupId : String)
+
 
 
 GET		/photo/*id					controllers.Rest.getPhoto(id : String)
