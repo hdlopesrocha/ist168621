@@ -30,7 +30,7 @@ import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
 import services.RegisterUserService;
-import services.RejectRelationService;
+import services.DenyRelationService;
 import services.SearchUserService;
 import services.UpdateUserService;
 
@@ -66,7 +66,7 @@ public class Rest extends Controller {
 
 	public Result denyRelation(String email){
 		if(session("email")!=null){
-			RejectRelationService service = new RejectRelationService(session("email"), email);
+			DenyRelationService service = new DenyRelationService(session("email"), email);
 			try {
 				service.execute();
 			} catch (ServiceException e) {

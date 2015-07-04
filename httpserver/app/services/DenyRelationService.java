@@ -7,11 +7,11 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class RejectRelationService extends Service<Void> {
+public class DenyRelationService extends Service<Void> {
 
 	private User from, to;
 
-	public RejectRelationService(String from, String to) {
+	public DenyRelationService(String from, String to) {
 		this.from = User.findByEmail(from);
 		this.to = User.findByEmail(to);
 	}
