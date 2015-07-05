@@ -33,17 +33,12 @@ public class SearchGroupCandidatesService extends Service<List<User>> {
 	 */
 	@Override
 	public List<User> dispatch() {
-		System.out.println("SearchGroupCandidatesService:" + query);
-
 		List<User> ans = new ArrayList<User>();
 		for (User u : user.getRelations()) {
-			System.out.println("\t" + u.getEmail());
 			if (u.getEmail().contains(query) && Membership.findByUserGroup(u.getId(), group.getId()) == null) {
 				ans.add(u);
 			}
-
 		}
-
 		return ans;
 	}
 
