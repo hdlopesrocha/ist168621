@@ -24,6 +24,9 @@ GET		/api/group/create				controllers.Rest.createGroup()
 GET		/api/group/list					controllers.Rest.listGroups()
 GET		/api/group/members/:groupId		controllers.Rest.listGroupMembers(groupId : String)
 GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(groupId : String)
+GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
+GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
+
 
 
 

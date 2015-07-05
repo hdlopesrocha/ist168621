@@ -20,6 +20,7 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import services.AddGroupMemberService;
 import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
@@ -35,6 +36,7 @@ import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
 import services.RegisterUserService;
+import services.RemoveGroupMemberService;
 import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.UpdateUserService;
@@ -126,6 +128,33 @@ public class Rest extends Controller {
 				e.printStackTrace();
 			}
 			return ok("[]");
+		}
+		return forbidden();
+	}
+
+	
+	public Result addGroupMember(String groupId, String memberId){
+		if(session("email")!=null){
+			AddGroupMemberService service = new AddGroupMemberService(session("email"),groupId,memberId);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			return ok("OK");
+		}
+		return forbidden();
+	}
+	
+	public Result removeGroupMember(String groupId, String memberId){
+		if(session("email")!=null){
+			RemoveGroupMemberService service = new RemoveGroupMemberService(session("email"),groupId,memberId);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			return ok("OK");
 		}
 		return forbidden();
 	}

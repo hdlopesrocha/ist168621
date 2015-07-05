@@ -54,7 +54,19 @@ var Signaling = (function(){
 		});
 	}
 
-
+	this.addUserGroup = function(gid,uid,success){
+		$.get( "/api/group/add/"+gid+"/"+uid, function( data ) {
+			success();
+		});
+	}
+	
+	this.removeUserGroup = function(gid,uid,success){
+		$.get( "/api/group/del/"+gid+"/"+uid, function( data ) {
+			success();
+		});
+	}
+	
+	
 	this.search = function(query,result){
 		$.get( "/api/user/search?s="+query, function( data ) {
 			result(JSON.parse(data));

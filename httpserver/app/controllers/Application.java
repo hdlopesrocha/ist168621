@@ -20,13 +20,13 @@ public class Application extends Controller {
     }
 
     public Result group(String groupId) {
-    	
-    	
-    	
     	if(session("email")!=null){
     		ObjectId oid = new ObjectId(groupId);
-    		Group group = Group.findById(oid); 		
-    		return ok(views.html.group.render(groupId,group.getName()));
+    		Group group = Group.findById(oid);
+    		if(group!=null)
+    			return ok(views.html.group.render(groupId,group.getName()));
+    		else
+    			return redirect("/");
     	} else {
     		return ok(views.html.sign.render());
     		
