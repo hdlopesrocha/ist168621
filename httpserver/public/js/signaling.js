@@ -1,4 +1,22 @@
 var Signaling = (function(){
+
+	this.postSdp = function(gid,token,sdp,success,error){
+		$.ajax({
+			type : "post",
+			url : "/api/group/sdp/"+gid+"/"+token,
+			data : sdp,
+			contentType : "text/plain",
+			processData : false,
+			cache : false,
+			async : true,
+			error : function(e) {
+				error();
+			},
+			success : function(data) {
+				success();
+			}
+		});
+	}
 	
 	this.login = function(email,password,success,error){
 		$.ajax({
@@ -96,6 +114,14 @@ var Signaling = (function(){
 			success();
 		});
 	}
+	
+	
+	this.getSdp = function(membershipId,result){
+		$.get( "/api/group/sdp/"+membershipId, function( data ) {
+			result(JSON.parse(data));
+		});
+	}
+	
 	
 	this.createGroup = function(name,success){
 		$.get( "/api/group/create?n="+name, function( data ) {

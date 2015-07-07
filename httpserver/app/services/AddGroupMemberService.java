@@ -45,9 +45,7 @@ public class AddGroupMemberService extends Service<Void> {
 		if(ret){
 			return Membership.findByUserGroup(user.getId(), group.getId()) !=null;			
 		}
-		
 		return false;
-		
 	}
 
 }

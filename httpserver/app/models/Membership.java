@@ -16,14 +16,17 @@ public class Membership {
 	
 
 	private ObjectId id = null, groupId = null,userId = null;
-
+	private Document properties = new Document();
 	
+
 	public void save() {
 		Document doc = new Document();
 		if (id != null)
 			doc.put("_id", id);
 		doc.put("gid", groupId);
 		doc.put("uid", userId);
+		doc.put("prop", properties);
+		
 		
 		if (id == null)
 			Service.memberships.insertOne(doc);
@@ -31,6 +34,14 @@ public class Membership {
 			Service.memberships.replaceOne(new Document("_id", id), doc);
 		
 		id = doc.getObjectId("_id");
+	}
+
+	public Document getProperties() {
+		return properties;
+	}
+	
+	public void setProperties(Document properties) {
+		this.properties = properties;
 	}
 
 	public ObjectId getGroupId() {
@@ -54,6 +65,8 @@ public class Membership {
 		user.setId(doc.getObjectId("_id"));
 		user.setUserId(doc.getObjectId("uid"));
 		user.setGroupId(doc.getObjectId("gid"));
+		if(doc.containsKey("prop"))
+			user.setProperties((Document)doc.get("prop"));
 		return user;
 	}
 

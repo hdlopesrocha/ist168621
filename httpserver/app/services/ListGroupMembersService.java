@@ -5,6 +5,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import models.Group;
+import models.KeyValuePair;
 import models.Membership;
 import models.User;
 
@@ -12,7 +13,7 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class ListGroupMembersService extends Service<List<User>> {
+public class ListGroupMembersService extends Service<List<KeyValuePair<Membership,User>>> {
 
 	private User user;
 	private Group group;
@@ -28,10 +29,10 @@ public class ListGroupMembersService extends Service<List<User>> {
 	 * @see services.Service#dispatch()
 	 */
 	@Override
-	public List<User> dispatch() {
-		List<User> ans = new ArrayList<User>();
+	public List<KeyValuePair<Membership,User>> dispatch() {
+		List<KeyValuePair<Membership,User>> ans = new ArrayList<KeyValuePair<Membership,User>>();
 		for(Membership m : Membership.listByGroup(group.getId())){
-			ans.add(User.findById(m.getUserId()));
+			ans.add(new KeyValuePair<Membership, User>(m, User.findById(m.getUserId())));
 		}
 		return ans;
 	}

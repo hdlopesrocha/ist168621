@@ -27,7 +27,8 @@ GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(group
 GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
 GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
 
-
+POST 	/api/group/sdp/:gid/:token		controllers.Rest.postSdp(gid : String, token : String)
+GET 	/api/group/sdp/:membershipId	controllers.Rest.getSdp(membershipId : String)
 
 
 GET		/photo/*id						controllers.Rest.getPhoto(id : String)

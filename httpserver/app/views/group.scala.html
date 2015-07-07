@@ -3,7 +3,8 @@
 <html>
 	<head>
 		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
-		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
+		<script type="text/javascript" src="/assets/js/signaling.js"></script>
+		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 	</head>
 	<body>
 		<button id="logout-button">Logout</button>		
@@ -21,6 +22,31 @@
 		
 		<script>
 			$( document ).ready(function() {
+				
+				function makeToken()
+				{
+				    var text = "";
+				    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+				    for( var i=0; i < 20; i++ )
+				        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+				    return text;
+				}
+				
+				var token = makeToken();
+				
+				webrtc_init(function(icecand){
+					var sdp = JSON.stringify(icecand);
+					var success = function(){
+						console.log(sdp);
+					};
+					var error = function(){
+						alert("error");
+					};
+					Signaling.postSdp("@groupId",token,sdp,success,error);					
+				});
+				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
 						document.location = document.location;
@@ -36,15 +62,22 @@
 					var html = "";
 					for(var i  in array){
 						var del_button = "<button onclick='del_user_group(\""+array[i].id+"\")'>remove</button>";
+						var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
 
-						html += "<li>"+array[i].email+del_button+"</li>";
+						
+						html += "<li>"+array[i].email+del_button+sdp_button+"</li>";
 					}
 					$("#member-list").html(html);
 				});
-				
-				
 			});
 
+			function get_sdp(membershipId){
+				var result = function(array){
+					alert(JSON.stringify(array));
+				}
+				Signaling.getSdp(membershipId,result);
+			}
+			
 			function del_user_group(uid){
 				var success = function(){
 					document.location = document.location;
@@ -75,6 +108,17 @@
 				};
 				Signaling.searchGroupCandidates("@groupId",query,result);
 			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		</script>
 	</body>
 </html>
