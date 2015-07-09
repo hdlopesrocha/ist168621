@@ -63,8 +63,6 @@
 					for(var i  in array){
 						var del_button = "<button onclick='del_user_group(\""+array[i].id+"\")'>remove</button>";
 						var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
-
-						
 						html += "<li>"+array[i].email+del_button+sdp_button+"</li>";
 					}
 					$("#member-list").html(html);
@@ -84,7 +82,6 @@
 				};
 				
 				Signaling.removeUserGroup("@groupId",uid,success);
-				
 			}
 
 			
@@ -94,7 +91,6 @@
 				};
 				
 				Signaling.addUserGroup("@groupId",uid,success);
-				
 			}
 			
 			function candidate_search(query){

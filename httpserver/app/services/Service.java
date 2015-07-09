@@ -13,6 +13,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.CreateCollectionOptions;
 import com.mongodb.gridfs.GridFS;
 
 import exceptions.ServiceException;
@@ -32,9 +33,10 @@ public abstract class Service<T> {
 	private static Random random = new Random();
 	protected static MongoClient client;
 	protected static MongoDatabase database;
-	public static MongoCollection<Document> users,relations,groups,memberships;
+	public static MongoCollection<Document> users,relations,groups,memberships,pubsub;
 	protected static GridFS files;
-
+	 static long lastOid = 0l;
+		
 	@SuppressWarnings("deprecation")
 	public static void init() {
 		client = new MongoClient(ServerAddress.defaultHost());
@@ -44,6 +46,89 @@ public abstract class Service<T> {
 		relations = database.getCollection("relations");
 		groups = database.getCollection("groups");
 		memberships = database.getCollection("memberships");
+		pubsub = database.getCollection("pubsub");
+		
+		
+		if(pubsub.count()==0){
+			System.out.println("init pubsub");
+			CreateCollectionOptions options = new CreateCollectionOptions();
+			options.capped(true);
+			options.sizeInBytes(20971520);
+			database.createCollection("pubsub", options);
+			pubsub = database.getCollection("pubsub");
+		
+
+			final Document doc = new Document("ts",lastOid).append("key", "xpto");
+			pubsub.insertOne(doc);
+		
+		}/*
+		else {
+			for(Document doc : pubsub.find()){
+				Long ts =doc.getLong("ts");
+				if(ts>lastOid)
+					lastOid = ts;
+			}
+		}
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				System.out.println("wait > " +lastOid);
+	            final Document query = new Document("ts", new Document("$gt", lastOid)).append("key", "xpto");
+	            
+				MongoCursor<Document> cursor = pubsub.find(query).sort(new Document("$natural", 1)).cursorType(CursorType.TailableAwait).noCursorTimeout(true).iterator();
+				Document doc = cursor.next();
+				System.out.println("ok! " + doc.getString("msg"));
+			}
+		}).start();
+		
+		
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				final Document doc = new Document("ts", lastOid+1).append("msg", "hello").append("key", "xpto");
+				pubsub.insertOne(doc);
+				
+			}
+		}).start();
+		*/
+
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(10000);
+					new PublishService("xxx", new Document("msg","hello world!")).execute();
+				} catch (InterruptedException | ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+
+		
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+					try {
+						Document doc = new SubscribeService("xxx",0l).execute();
+						System.out.println(doc.toJson());
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}).start();
+		
 	}
 
 	/**

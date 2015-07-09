@@ -14,13 +14,13 @@ var configuration = {
 		}
 	]
 }
-
-var pc = null;
+var dataChannel;
+var peerConnection = null;
 
 function webrtc_init(icecand) {
-	pc = new RTCPeerConnection(configuration);
+	peerConnection = new RTCPeerConnection(configuration,  {optional: [{RtpDataChannels: true}]});
 
-	pc.onicecandidate = function (e) {
+	peerConnection.onicecandidate = function (e) {
 //	    alert("onicecandidate");
 		// candidate exists in e.candidate
 	    if (e.candidate) 
@@ -28,24 +28,46 @@ function webrtc_init(icecand) {
 	   		//send("icecandidate", JSON.stringify(e.candidate));
 	};
 	
-	pc.onnegotiationneeded = function(){
+	peerConnection.onnegotiationneeded = function(){
 //	    alert("onnegotiationneeded");
 	}
 		
 	 // once remote stream arrives, show it in the remote video element
-	pc.onaddstream = function (evt) {
+	peerConnection.onaddstream = function (evt) {
 		 alert("onaddstream");		
 		 // remoteView.src = URL.createObjectURL(evt.stream);
 	};
 	
-	var channel = pc.createDataChannel("sendDataChannel", {reliable: false});
+	dataChannel = peerConnection.createDataChannel("sendDataChannel", {reliable: false});
+	dataChannel.onmessage = function(e){console.log("DC message:" +e.data);};
+	dataChannel.onopen = function(){console.log("------ DATACHANNEL OPENED ------");};
+	dataChannel.onclose = function(){console.log("------- DC closed! -------")};
+	dataChannel.onerror = function(){console.log("DC ERROR!!!")};
+
+	var sdpConstraints = {'mandatory':
+	  {
+	    'OfferToReceiveAudio': false,
+	    'OfferToReceiveVideo': false
+	  }
+	};
+
+	peerConnection.createOffer(function (sdp) {
+	    peerConnection.setLocalDescription(sdp);
+//	    sendNegotiation("offer", sdp);
+	    console.log("------ SEND OFFER ------");
+	}, null, sdpConstraints);
+
 	
-	pc.createOffer(
-		function (offer) {
-//			alert("createOffer");		
-	        pc.setLocalDescription(offer);
-	    }, function (e) { }
-	);
+	function processIce(iceCandidate){
+		  peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate));
+		}
+
+	function processAnswer(answer){
+		  peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+		  console.log("------ PROCESSED ANSWER ------");
+		};
+
 	
-	console.log(pc);
+
+	
 }

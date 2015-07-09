@@ -157,12 +157,12 @@ public class Rest extends Controller {
 			try {
 				List<Document> sdps = service.execute();
 				JSONArray array = new JSONArray();
-				for(Document doc : sdps){
+				for (Document doc : sdps) {
 					JSONObject obj = new JSONObject(doc.toJson());
 					array.put(obj);
 				}
 				return ok(array.toString());
-			
+
 			} catch (ServiceException e) {
 				e.printStackTrace();
 			}
@@ -203,12 +203,15 @@ public class Rest extends Controller {
 				List<KeyValuePair<Membership, User>> ans = service.execute();
 				JSONArray array = new JSONArray();
 				for (KeyValuePair<Membership, User> kvp : ans) {
-					JSONObject obj = new JSONObject();
-					obj.put("id", kvp.getKey().getUserId());
-					obj.put("email", kvp.getValue().getEmail());
-					obj.put("mid", kvp.getKey().getId());
+					if (!kvp.getValue().getEmail().equals(session("email"))) {
+						JSONObject obj = new JSONObject();
 
-					array.put(obj);
+						obj.put("id", kvp.getKey().getUserId());
+						obj.put("email", kvp.getValue().getEmail());
+						obj.put("mid", kvp.getKey().getId());
+
+						array.put(obj);
+					}
 				}
 				return ok(array.toString());
 			} catch (ServiceException e) {
