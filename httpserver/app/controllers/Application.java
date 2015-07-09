@@ -19,6 +19,12 @@ public class Application extends Controller {
     	
     }
 
+    
+    
+    public Result pubsub() {
+    	return ok(views.html.pubsub.render());
+    }
+    
     public Result group(String groupId) {
     	if(session("email")!=null){
     		ObjectId oid = new ObjectId(groupId);

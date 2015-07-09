@@ -107,7 +107,7 @@ public abstract class Service<T> {
 			public void run() {
 				try {
 					Thread.sleep(10000);
-					new PublishService("xxx", new Document("msg","hello world!")).execute();
+					new PublishService("xxx", "{'msg':'hello world!'").execute();
 				} catch (InterruptedException | ServiceException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

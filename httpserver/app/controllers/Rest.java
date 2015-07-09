@@ -41,11 +41,14 @@ import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
 import services.PostSdpService;
+import services.PublishService;
 import services.RegisterUserService;
 import services.RemoveGroupMemberService;
 import services.SearchGroupCandidatesService;
 import services.SearchUserService;
+import services.SubscribeService;
 import services.UpdateUserService;
+import views.html.defaultpages.error;
 
 public class Rest extends Controller {
 
@@ -321,6 +324,35 @@ public class Rest extends Controller {
 		return unauthorized();
 	}
 
+	public Result publish(String key){
+		String body = request().body().asText();
+		PublishService service = new PublishService(key,body);
+		try {
+			service.execute();
+			return ok("OK");
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return badRequest();
+	}
+	
+	public Result subscribe(String key, Long ts){
+		SubscribeService service = new SubscribeService(key, ts);
+		try {
+			Document doc = service.execute();
+			JSONObject obj = new JSONObject();
+			obj.put("ts",doc.getLong("ts"));
+			obj.put("data",doc.getString("data"));
+			obj.put("key",doc.getString("key"));
+			return ok(obj.toString());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return badRequest();
+	}
+	
 	public Result getUser(String userId) {
 		try {
 			return ok(new GetUserProfileService(session("email"), userId).execute());

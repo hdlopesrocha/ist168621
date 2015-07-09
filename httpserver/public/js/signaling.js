@@ -141,6 +141,31 @@ var Signaling = (function(){
 		});
 	}
 	
+	this.publish = function(key,doc,success,error){
+
+		$.ajax({
+			type : "post",
+			url : "/api/pubsub/"+key,
+			data : doc,
+			contentType : "text/plain",
+			processData : false,
+			cache : false,
+			async : true,
+			error : function(e) {
+				error();
+			},
+			success : function(data) {
+				success();
+			}
+		});
+	}
+	
+	this.subscribe = function(key,ts,result){
+		$.get( "/api/pubsub/"+key+"/"+ts, function( data ) {
+			result(data);
+		});
+	}
+	
 	
 	return this;
 })();

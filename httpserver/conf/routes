@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           	controllers.Application.index()
+GET     /pubsub                         controllers.Application.pubsub()
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
 
 GET     /api/user/search	        	controllers.Rest.search()
@@ -29,6 +30,9 @@ GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, 
 
 POST 	/api/group/sdp/:gid/:token		controllers.Rest.postSdp(gid : String, token : String)
 GET 	/api/group/sdp/:membershipId	controllers.Rest.getSdp(membershipId : String)
+
+POST 	/api/pubsub/:key				controllers.Rest.publish(key : String)
+GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)
 
 
 GET		/photo/*id						controllers.Rest.getPhoto(id : String)

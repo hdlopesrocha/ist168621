@@ -14,11 +14,11 @@ import models.User;
 public class PublishService extends Service<Void> {
 
 	private String key;
-	private Document doc;
+	private String data;
 
-	public PublishService(String key, Document doc) {
+	public PublishService(String key, String data) {
 		this.key = key;
-		this.doc = doc;
+		this.data = data;
 	}
 
 	/*
@@ -34,8 +34,11 @@ public class PublishService extends Service<Void> {
 			ts = first.getLong("ts") + 1;
 		}
 
+		Document doc = new Document();
 		doc.append("ts", ts);
 		doc.append("key", key);
+		doc.append("data", data);
+		
 		pubsub.insertOne(doc);
 		return null;
 	}
