@@ -55,7 +55,7 @@ function webrtc_init(icecand) {
 	    peerConnection.setLocalDescription(sdp);
 //	    sendNegotiation("offer", sdp);
 	    console.log("------ SEND OFFER ------");
-	}, null, sdpConstraints);
+	}, function(){}, sdpConstraints);
 
 	
 	function processIce(iceCandidate){

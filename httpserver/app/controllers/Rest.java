@@ -136,11 +136,11 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
+//	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
 
 	public Result postSdp(String groupId, String token) {
 		if (session("email") != null) {
-			synchronized (MONGODB_SDP_LOCK) {
+	//		synchronized (MONGODB_SDP_LOCK) {
 				String sdpjson = request().body().asText();
 				PostSdpService service = new PostSdpService(session("email"), groupId, token, sdpjson);
 				try {
@@ -148,7 +148,7 @@ public class Rest extends Controller {
 				} catch (ServiceException e) {
 					e.printStackTrace();
 				}
-			}
+		//	}
 			return ok("OK");
 		}
 		return forbidden();
