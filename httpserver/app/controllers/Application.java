@@ -34,10 +34,9 @@ public class Application extends Controller {
     		User user = User.findByEmail(session("email"));
     		
     		if(group!=null && user!=null){
-    			
     			Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
     			if(membership!=null){
-    				return ok(views.html.group.render(groupId,group.getName(), membership.getId().toString()));
+    				return ok(views.html.group.render(groupId,group.getName()));
     			}
     		}
     		
