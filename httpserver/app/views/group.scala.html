@@ -48,14 +48,14 @@
 					var data = JSON.stringify(sdp);
 					
 					Signaling.publish("@groupId",token,data,success,error);					
-					console.log("publish[@membershipId,"+data+"]");
-					
-					console.log("subscribe[@groupId]");
-					Signaling.subscribe("@groupId",0,function(result){
-						alert(result);
-					});	
+					console.log("publish[@groupId,"+data+"]");
 					
 				});
+				
+				console.log("subscribe[@groupId]");
+				Signaling.subscribe("@groupId",0,function(result){
+					alert(result);
+				});	
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
