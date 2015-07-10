@@ -22,23 +22,39 @@
 		
 		<script>
 			$( document ).ready(function() {
+				function makeToken()
+				{
+				    var text = "";
+				    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				    for( var i=0; i < 20; i++ )
+				        text += possible.charAt(Math.floor(Math.random() * possible.length));
+				    return text;
+				}
 				
+				var token = makeToken();
 				var ice_candidates = [];				
 				
 				webrtc_init(function(icecand){
-					ice_candidates.push(icecand);
-					var sdp = JSON.stringify(icecand);
+				
+				},function(sdp){
 					var success = function(){
 						console.log(sdp);
 					};
 					var error = function(){
 						alert("error");
 					};
-				
-					var data = JSON.stringify(ice_candidates);
-					Signaling.publish("@membershipId",data,success,error);					
-
+					
+					ice_candidates.push(sdp);
+					var data = JSON.stringify(sdp);
+					
+					Signaling.publish("@groupId",token,data,success,error);					
 					console.log("publish[@membershipId,"+data+"]");
+					
+					console.log("subscribe[@groupId]");
+					Signaling.subscribe("@groupId",0,function(result){
+						alert(result);
+					});	
+					
 				});
 				
 				$("#logout-button").click(function(){
@@ -60,23 +76,10 @@
 						var del_button = "<button onclick='del_user_group(\""+array[i].id+"\")'>remove</button>";
 						//var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
 						html += "<li>"+array[i].email+del_button+"</li>";
-
-						subscribe_member(array[i].mid,0);
 					}
 					$("#member-list").html(html);
 				});
 			});
-
-			function subscribe_member(membership,ts){
-				console.log("subscribe["+membership+","+ts+"]");
-				Signaling.subscribe(membership,ts,function(result){
-					alert(result);
-					ts = JSON.parse(result).ts;
-					subscribe_member(membership,ts);
-				});	
-			}
-			
-			
 			
 			function del_user_group(uid){
 				var success = function(){

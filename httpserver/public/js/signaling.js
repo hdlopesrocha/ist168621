@@ -141,11 +141,11 @@ var Signaling = (function(){
 		});
 	}
 	
-	this.publish = function(key,doc,success,error){
+	this.publish = function(key,token,doc,success,error){
 
 		$.ajax({
 			type : "post",
-			url : "/api/pubsub/"+key,
+			url : "/api/pubsub/"+key+"/"+token,
 			data : doc,
 			contentType : "text/plain",
 			processData : false,
@@ -163,6 +163,8 @@ var Signaling = (function(){
 	this.subscribe = function(key,ts,result){
 		$.get( "/api/pubsub/"+key+"/"+ts, function( data ) {
 			result(data);
+			ts = JSON.parse(data).ts;
+			Signaling.subscribe(key,ts,result);
 		});
 	}
 	

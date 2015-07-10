@@ -48,7 +48,6 @@ import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.SubscribeService;
 import services.UpdateUserService;
-import views.html.defaultpages.error;
 
 public class Rest extends Controller {
 
@@ -136,41 +135,47 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-//	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
+	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
 
-	public Result postSdp(String groupId, String token) {
+	public Result publish(String groupId, String token) {
 		if (session("email") != null) {
-	//		synchronized (MONGODB_SDP_LOCK) {
+			synchronized (MONGODB_SDP_LOCK) {
 				String sdpjson = request().body().asText();
-				PostSdpService service = new PostSdpService(session("email"), groupId, token, sdpjson);
 				try {
+					PostSdpService service = new PostSdpService(session("email"), groupId, token, sdpjson);
 					service.execute();
+					PublishService service2 = new PublishService(groupId, "");
+					service2.execute();
+					return ok("OK");
 				} catch (ServiceException e) {
 					e.printStackTrace();
 				}
-		//	}
-			return ok("OK");
+			}
+			return badRequest();
 		}
 		return forbidden();
+
 	}
 
-	public Result getSdp(String membershipId) {
-		if (session("email") != null) {
-			GetSdpService service = new GetSdpService(session("email"), membershipId);
-			try {
-				List<Document> sdps = service.execute();
-				JSONArray array = new JSONArray();
-				for (Document doc : sdps) {
-					JSONObject obj = new JSONObject(doc.toJson());
-					array.put(obj);
-				}
-				return ok(array.toString());
-
-			} catch (ServiceException e) {
-				e.printStackTrace();
+	public Result subscribe(String groupId, Long ts) {
+		SubscribeService service = new SubscribeService(groupId, ts);
+		try {
+			Document doc = service.execute();
+			JSONObject obj = new JSONObject();
+			obj.put("ts", doc.getLong("ts"));
+			JSONObject data = new JSONObject();
+			List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
+			for (Membership member : members) {
+				data.put(member.getId().toString(), new JSONObject(member.getProperties().toJson()));
 			}
+			obj.put("data", data);
+			obj.put("key", doc.getString("key"));
+			return ok(obj.toString());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return forbidden();
+		return badRequest();
 	}
 
 	public Result addGroupMember(String groupId, String memberId) {
@@ -324,35 +329,6 @@ public class Rest extends Controller {
 		return unauthorized();
 	}
 
-	public Result publish(String key){
-		String body = request().body().asText();
-		PublishService service = new PublishService(key,body);
-		try {
-			service.execute();
-			return ok("OK");
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return badRequest();
-	}
-	
-	public Result subscribe(String key, Long ts){
-		SubscribeService service = new SubscribeService(key, ts);
-		try {
-			Document doc = service.execute();
-			JSONObject obj = new JSONObject();
-			obj.put("ts",doc.getLong("ts"));
-			obj.put("data",doc.getString("data"));
-			obj.put("key",doc.getString("key"));
-			return ok(obj.toString());
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return badRequest();
-	}
-	
 	public Result getUser(String userId) {
 		try {
 			return ok(new GetUserProfileService(session("email"), userId).execute());

@@ -17,7 +17,7 @@ var configuration = {
 var dataChannel;
 var peerConnection = null;
 
-function webrtc_init(icecand) {
+function webrtc_init(icecand,sdpoffer) {
 	peerConnection = new RTCPeerConnection(configuration,  {optional: [{RtpDataChannels: true}]});
 
 	peerConnection.onicecandidate = function (e) {
@@ -53,7 +53,9 @@ function webrtc_init(icecand) {
 
 	peerConnection.createOffer(function (sdp) {
 	    peerConnection.setLocalDescription(sdp);
-//	    sendNegotiation("offer", sdp);
+	   
+	    sdpoffer(sdp);
+	    //	    sendNegotiation("offer", sdp);
 	    console.log("------ SEND OFFER ------");
 	}, function(){}, sdpConstraints);
 
