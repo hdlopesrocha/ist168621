@@ -15,8 +15,8 @@ public class AddGroupMemberService extends Service<Void> {
 	private User user, member;
 	private Group group;
 
-	public AddGroupMemberService(String email, String groupId, String member) {
-		this.user = User.findByEmail(email);
+	public AddGroupMemberService(String uid, String groupId, String member) {
+		this.user = User.findById(new ObjectId(uid));
 		this.group = Group.findById(new ObjectId(groupId));
 		this.member = User.findById(new ObjectId(member));
 	}

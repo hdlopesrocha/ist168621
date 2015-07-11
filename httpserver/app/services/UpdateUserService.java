@@ -4,6 +4,7 @@ import models.KeyValueFile;
 import models.User;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import exceptions.ServiceException;
@@ -19,9 +20,9 @@ public class UpdateUserService extends Service<Void> {
 	private User user;
 	private KeyValueFile photo;
 	
-	public UpdateUserService(final String email,final JSONObject info, KeyValueFile  photo) {
+	public UpdateUserService(final String uid,final JSONObject info, KeyValueFile  photo) {
 
-		this.user = email!=null? User.findByEmail(email):null;
+		this.user = uid!=null? User.findById(new ObjectId(uid)):null;
 		
 		this.info = info;
 		

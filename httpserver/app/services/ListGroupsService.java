@@ -2,6 +2,8 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import models.Group;
 import models.Membership;
 import models.User;
@@ -14,8 +16,8 @@ public class ListGroupsService extends Service<List<Group>> {
 
 	private User user;
 	
-	public ListGroupsService(String email) {
-		this.user = User.findByEmail(email);
+	public ListGroupsService(String uid) {
+		this.user = User.findById(new ObjectId(uid));
 	}
 
 	/*

@@ -18,8 +18,8 @@ public class GetSdpService extends Service<List<Document>> {
 	private User user;
 	private Membership membership;
 	
-	public GetSdpService(String email, String membershipId) {
-		this.user = User.findByEmail(email);
+	public GetSdpService(String uid, String membershipId) {
+		this.user = User.findById(new ObjectId(uid));
 		this.membership = Membership.findById(new ObjectId(membershipId));
 	
 	}

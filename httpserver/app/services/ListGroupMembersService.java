@@ -18,8 +18,8 @@ public class ListGroupMembersService extends Service<List<KeyValuePair<Membershi
 	private User user;
 	private Group group;
 	
-	public ListGroupMembersService(String email,String groupId) {
-		this.user = User.findByEmail(email);
+	public ListGroupMembersService(String uid,String groupId) {
+		this.user = User.findById(new ObjectId(uid));
 		this.group = Group.findById(new ObjectId(groupId));
 	}
 

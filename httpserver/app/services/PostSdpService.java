@@ -18,8 +18,8 @@ public class PostSdpService extends Service<Void> {
 	private Membership membership;
 	private String sdpjson, token;
 
-	public PostSdpService(String email, String groupId, String token, String sdpjson) {
-		this.user = User.findByEmail(email);
+	public PostSdpService(String uid, String groupId, String token, String sdpjson) {
+		this.user = User.findById(new ObjectId(uid));
 		this.membership = Membership.findByUserGroup(user.getId(), new ObjectId(groupId));
 		this.sdpjson = sdpjson;
 		this.token = token;

@@ -34,8 +34,8 @@
 				Signaling.listRequests(function(array){
 					var html = "";
 					for(var i  in array){
-						var add_button = "<button onclick='user_add(\""+array[i].email+"\")'>accept</button>";
-						var del_button = "<button onclick='user_del(\""+array[i].email+"\")'>deny</button>";
+						var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>accept</button>";
+						var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";
 						
 						html += "<li>"+array[i].email+add_button+del_button+"</li>";
 					}
@@ -44,7 +44,7 @@
 				Signaling.listRelations(function(array){
 					var html = "";
 					for(var i  in array){
-						var del_button = "<button onclick='user_del(\""+array[i].email+"\")'>deny</button>";						
+						var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";						
 						html += "<li>"+array[i].email+del_button+"</li>";
 					}
 					$("#friend-list").html(html);
@@ -84,7 +84,7 @@
 				var result = function(array){
 					var html = "";
 					for(var i  in array){
-						var add_button = "<button onclick='user_add(\""+array[i].email+"\")'>add</button>";
+						var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>add</button>";
 						html += "<li>"+array[i].email+(array[i].state==undefined?add_button:"")+"</li>";
 					}
 					$("#search-users").html(html);	

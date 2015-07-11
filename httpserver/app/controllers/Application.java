@@ -12,7 +12,7 @@ import play.mvc.*;
 public class Application extends Controller {
 
     public Result index() {
-    	if(session("email")!=null){
+    	if(session("uid")!=null){
     		return ok(views.html.index.render());
     	} else {
     		return ok(views.html.sign.render());
@@ -28,10 +28,10 @@ public class Application extends Controller {
     }
     
     public Result group(String groupId) {
-    	if(session("email")!=null){
+    	if(session("uid")!=null){
     		ObjectId oid = new ObjectId(groupId);
     		Group group = Group.findById(oid);
-    		User user = User.findByEmail(session("email"));
+    		User user = User.findById(new ObjectId(session("uid")));
     		
     		if(group!=null && user!=null){
     			Membership membership = Membership.findByUserGroup(user.getId(), group.getId());

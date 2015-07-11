@@ -42,6 +42,10 @@ public class AuthenticateTokenService extends Service<Boolean> {
 		return this.user.getToken();
 	}
 
+	public String getUserId(){
+		return this.user.getId().toString();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -13,13 +13,17 @@ import exceptions.ServiceException;
 public class GetUserProfileService extends Service<String> {
 
 	private User user, caller;
-	private String callerEmail;
-	private String userEmail;
 
 	
-	public GetUserProfileService(String email, String user) {
-		this.callerEmail = email;
-		this.userEmail = user;
+	public GetUserProfileService(String callerId, String userId) {
+		this.caller = User.findByEmail(callerId);
+		if(caller!=null && callerId.equals(userId)){
+			this.user = this.caller;
+		}
+		else {
+			this.user = User.findByEmail(userId);
+		}
+		
 	}
 
 	/*
@@ -41,20 +45,13 @@ public class GetUserProfileService extends Service<String> {
 	 */
 	@Override
 	public boolean canExecute() {
-		if(callerEmail==null || userEmail==null)
+		if(caller==null || user==null)
 			return false;
 		
-		this.caller = User.findByEmail(callerEmail);
-		if(caller!=null && callerEmail.equals(userEmail)){
-			this.user = this.caller;
-		}
-		else {
-			this.user = User.findByEmail(userEmail);
-		}
 		
 
 		try {
-			return new HasPermissionService(callerEmail,"ADMIN").execute();
+			return new HasPermissionService(caller.getId().toString(),"ADMIN").execute();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

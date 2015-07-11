@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import exceptions.ServiceException;
@@ -14,12 +15,11 @@ import models.User;
 public class SearchUserService extends Service<List<User>> {
 
 	private User caller;
-	private String callerEmail;
 	private String query;
 
 	
-	public SearchUserService(String email, String query) {
-		this.callerEmail = email;
+	public SearchUserService(String uid, String query) {
+		this.caller = User.findById(new ObjectId(uid));
 		this.query = query;
 	}
 
@@ -40,11 +40,6 @@ public class SearchUserService extends Service<List<User>> {
 	 */
 	@Override
 	public boolean canExecute() {
-		if(callerEmail==null)
-			return false;
-		
-		this.caller = User.findByEmail(callerEmail);
-
 		return caller!=null;
 	}
 

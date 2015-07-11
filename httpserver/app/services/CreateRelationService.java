@@ -1,5 +1,7 @@
 package services;
 
+import org.bson.types.ObjectId;
+
 import models.Relation;
 import models.User;
 
@@ -13,8 +15,8 @@ public class CreateRelationService extends Service<Void> {
 
 	
 	public CreateRelationService(String from, String to) {
-		this.from = User.findByEmail(from);
-		this.to = User.findByEmail(to);
+		this.from = User.findById(new ObjectId(from));
+		this.to = User.findById(new ObjectId(to));
 	}
 
 	/*

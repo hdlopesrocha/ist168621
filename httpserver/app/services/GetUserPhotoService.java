@@ -1,6 +1,7 @@
 package services;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import models.User;
 
@@ -11,11 +12,10 @@ import models.User;
 public class GetUserPhotoService extends Service<String> {
 
 	private User caller;
-	private String callerEmail;
 
 	
-	public GetUserPhotoService(String email) {
-		this.callerEmail = email;
+	public GetUserPhotoService(String uid) {
+		this.caller = User.findById(new ObjectId(uid));
 	}
 
 	/*
@@ -36,9 +36,6 @@ public class GetUserPhotoService extends Service<String> {
 	 */
 	@Override
 	public boolean canExecute() {
-		if(callerEmail==null)
-			return false;
-		this.caller = User.findByEmail(callerEmail);
 		return caller!=null;
 	}
 

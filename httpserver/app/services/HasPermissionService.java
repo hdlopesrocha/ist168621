@@ -1,5 +1,7 @@
 package services;
 
+import org.bson.types.ObjectId;
+
 import models.User;
 
 
@@ -16,8 +18,8 @@ public class HasPermissionService extends Service<Boolean> {
 
 	
 	
-	public HasPermissionService(final String email,final String perm) {		
-		this.user = email!=null? User.findByEmail(email):null;
+	public HasPermissionService(final String uid,final String perm) {		
+		this.user = uid!=null? User.findById(new ObjectId(uid)):null;
 		this.perm = perm;
 	}
 

@@ -32,7 +32,6 @@ import services.CreateGroupService;
 import services.CreateRelationService;
 import services.DenyRelationService;
 import services.DownloadFileService;
-import services.GetSdpService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
 import services.ListGroupMembersService;
@@ -58,7 +57,7 @@ public class Rest extends Controller {
 
 			FilePart photo = multipart.getFile("photo");
 
-			UpdateUserService service = new UpdateUserService(session("email"), info,
+			UpdateUserService service = new UpdateUserService(session("uid"), info,
 					new KeyValueFile("photo", photo.getFilename(), photo.getFile()));
 
 			service.execute();
@@ -77,8 +76,8 @@ public class Rest extends Controller {
 	}
 
 	public Result denyRelation(String email) {
-		if (session("email") != null) {
-			DenyRelationService service = new DenyRelationService(session("email"), email);
+		if (session("uid") != null) {
+			DenyRelationService service = new DenyRelationService(session("uid"), email);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -91,8 +90,8 @@ public class Rest extends Controller {
 	}
 
 	public Result listGroups() {
-		if (session("email") != null) {
-			ListGroupsService service = new ListGroupsService(session("email"));
+		if (session("uid") != null) {
+			ListGroupsService service = new ListGroupsService(session("uid"));
 			try {
 				List<Group> ans = service.execute();
 				JSONArray array = new JSONArray();
@@ -113,16 +112,16 @@ public class Rest extends Controller {
 	}
 
 	public Result searchGroupCandidates(String groupId) {
-		if (session("email") != null) {
+		if (session("uid") != null) {
 			String query = request().queryString().get("s")[0];
-			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("email"), groupId, query);
+			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
 			try {
 				List<User> ans = service.execute();
 				JSONArray array = new JSONArray();
-				for (User g : ans) {
+				for (User u : ans) {
 					JSONObject obj = new JSONObject();
-					obj.put("id", g.getId());
-					obj.put("email", g.getEmail());
+					obj.put("uid", u.getId());
+					obj.put("email", u.getEmail());
 					array.put(obj);
 				}
 				return ok(array.toString());
@@ -138,11 +137,11 @@ public class Rest extends Controller {
 	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
 
 	public Result publish(String groupId, String token) {
-		if (session("email") != null) {
+		if (session("uid") != null) {
 			synchronized (MONGODB_SDP_LOCK) {
 				String sdpjson = request().body().asText();
 				try {
-					PostSdpService service = new PostSdpService(session("email"), groupId, token, sdpjson);
+					PostSdpService service = new PostSdpService(session("uid"), groupId, token, sdpjson);
 					service.execute();
 					PublishService service2 = new PublishService(groupId, "");
 					service2.execute();
@@ -179,8 +178,8 @@ public class Rest extends Controller {
 	}
 
 	public Result addGroupMember(String groupId, String memberId) {
-		if (session("email") != null) {
-			AddGroupMemberService service = new AddGroupMemberService(session("email"), groupId, memberId);
+		if (session("uid") != null) {
+			AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -192,8 +191,8 @@ public class Rest extends Controller {
 	}
 
 	public Result removeGroupMember(String groupId, String memberId) {
-		if (session("email") != null) {
-			RemoveGroupMemberService service = new RemoveGroupMemberService(session("email"), groupId, memberId);
+		if (session("uid") != null) {
+			RemoveGroupMemberService service = new RemoveGroupMemberService(session("uid"), groupId, memberId);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -205,16 +204,16 @@ public class Rest extends Controller {
 	}
 
 	public Result listGroupMembers(String groupId) {
-		if (session("email") != null) {
-			ListGroupMembersService service = new ListGroupMembersService(session("email"), groupId);
+		if (session("uid") != null) {
+			ListGroupMembersService service = new ListGroupMembersService(session("uid"), groupId);
 			try {
 				List<KeyValuePair<Membership, User>> ans = service.execute();
 				JSONArray array = new JSONArray();
 				for (KeyValuePair<Membership, User> kvp : ans) {
-					if (!kvp.getValue().getEmail().equals(session("email"))) {
+					if (!kvp.getValue().getEmail().equals(session("uid"))) {
 						JSONObject obj = new JSONObject();
 
-						obj.put("id", kvp.getKey().getUserId());
+						obj.put("uid", kvp.getKey().getUserId());
 						obj.put("email", kvp.getValue().getEmail());
 						obj.put("mid", kvp.getKey().getId());
 
@@ -232,10 +231,10 @@ public class Rest extends Controller {
 	}
 
 	public Result createGroup() {
-		if (session("email") != null) {
+		if (session("uid") != null) {
 			Map<String, String[]> qs = request().queryString();
 			String name = qs.get("n")[0];
-			CreateGroupService service = new CreateGroupService(session("email"), name);
+			CreateGroupService service = new CreateGroupService(session("uid"), name);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -247,9 +246,9 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	public Result acceptRelation(String email) {
-		if (session("email") != null) {
-			CreateRelationService service = new CreateRelationService(session("email"), email);
+	public Result acceptRelation(String uid) {
+		if (session("uid") != null) {
+			CreateRelationService service = new CreateRelationService(session("uid"), uid);
 			try {
 				service.execute();
 			} catch (ServiceException e) {
@@ -262,14 +261,15 @@ public class Rest extends Controller {
 	}
 
 	public Result listRelations() {
-		if (session("email") != null) {
-			ListRelationsService service = new ListRelationsService(session("email"));
+		if (session("uid") != null) {
+			ListRelationsService service = new ListRelationsService(session("uid"));
 			try {
 				JSONArray array = new JSONArray();
 				List<User> res = service.execute();
 				for (User user : res) {
 					JSONObject obj = new JSONObject();
 					obj.put("email", user.getEmail());
+					obj.put("uid", user.getId().toString());
 					array.put(obj);
 				}
 				return ok(array.toString());
@@ -283,14 +283,15 @@ public class Rest extends Controller {
 	}
 
 	public Result listRelationRequests() {
-		if (session("email") != null) {
-			ListRelationRequestsService service = new ListRelationRequestsService(session("email"));
+		if (session("uid") != null) {
+			ListRelationRequestsService service = new ListRelationRequestsService(session("uid"));
 			try {
 				JSONArray array = new JSONArray();
 				List<User> res = service.execute();
 				for (User user : res) {
 					JSONObject obj = new JSONObject();
 					obj.put("email", user.getEmail());
+					obj.put("uid", user.getId().toString());
 					array.put(obj);
 				}
 				return ok(array.toString());
@@ -308,7 +309,7 @@ public class Rest extends Controller {
 		String oldPassword = info.get("oldPassword")[0];
 		String password1 = info.get("newPassword")[0];
 
-		ChangeUserPasswordService service = new ChangeUserPasswordService(session("email"), oldPassword, password1);
+		ChangeUserPasswordService service = new ChangeUserPasswordService(session("uid"), oldPassword, password1);
 		try {
 			service.execute();
 			return ok();
@@ -321,7 +322,7 @@ public class Rest extends Controller {
 
 	public Result listUsers() {
 		try {
-			return ok(new ListUsersService(session("email")).execute());
+			return ok(new ListUsersService(session("uid")).execute());
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -331,7 +332,7 @@ public class Rest extends Controller {
 
 	public Result getUser(String userId) {
 		try {
-			return ok(new GetUserProfileService(session("email"), userId).execute());
+			return ok(new GetUserProfileService(session("uid"), userId).execute());
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -349,7 +350,7 @@ public class Rest extends Controller {
 				AuthenticateTokenService service = new AuthenticateTokenService(token);
 				if (service.execute()) {
 					session("email", service.getEmail());
-
+					session("uid",service.getUserId());
 					return ok(service.getToken());
 				} else {
 					if (service.userExists())
@@ -366,6 +367,7 @@ public class Rest extends Controller {
 				if (service.execute()) {
 
 					session("email", email);
+					session("uid",service.getUserId());
 					return ok(service.getToken());
 				} else {
 					return unauthorized();
@@ -478,20 +480,20 @@ public class Rest extends Controller {
 		String query = request().queryString().get("s")[0];
 
 		try {
-			User me = User.findByEmail(session("email"));
+			User me = User.findById(new ObjectId(session("uid")));
 
-			List<User> res = new SearchUserService(session("email"), query).execute();
+			List<User> res = new SearchUserService(session("uid"), query).execute();
 			JSONArray array = new JSONArray();
 			for (User u : res) {
 				if (!u.getId().equals(me.getId())) {
 					JSONObject obj = new JSONObject();
 					obj.put("email", u.getEmail());
+					obj.put("uid", u.getId().toString());
 					Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
 
 					if (rel == null) {
 						rel = Relation.findByEndpoint(u.getId(), me.getId());
 					}
-
 					if (rel != null) {
 						obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
 					}

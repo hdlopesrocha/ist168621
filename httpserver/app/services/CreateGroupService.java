@@ -1,8 +1,9 @@
 package services;
 
+import org.bson.types.ObjectId;
+
 import models.Group;
 import models.Membership;
-import models.Relation;
 import models.User;
 
 // TODO: Auto-generated Javadoc
@@ -14,8 +15,8 @@ public class CreateGroupService extends Service<Void> {
 	private User user;
 	private String name;
 	
-	public CreateGroupService(String email,String name) {
-		this.user = User.findByEmail(email);
+	public CreateGroupService(String uid,String name) {
+		this.user = User.findById(new ObjectId(uid));
 		this.name = name;
 	}
 

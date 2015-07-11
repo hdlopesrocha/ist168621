@@ -3,6 +3,8 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import models.Relation;
 import models.User;
 
@@ -13,11 +15,10 @@ import models.User;
 public class ListRelationsService extends Service<List<User>> {
 
 	private User caller;
-	private String callerEmail;
 
 	
-	public ListRelationsService(String email) {
-		this.callerEmail = email;
+	public ListRelationsService(String uid) {
+		this.caller = User.findById(new ObjectId(uid));
 
 	}
 
@@ -49,11 +50,6 @@ public class ListRelationsService extends Service<List<User>> {
 	 */
 	@Override
 	public boolean canExecute() {
-		if(callerEmail==null)
-			return false;
-		
-		this.caller = User.findByEmail(callerEmail);
-
 		return caller!=null;
 	}
 

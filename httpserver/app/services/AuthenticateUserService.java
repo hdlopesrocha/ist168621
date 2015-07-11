@@ -35,7 +35,10 @@ public class AuthenticateUserService extends Service<Boolean> {
 		// TODO Auto-generated method stub
 		return token;
 	}
-
+	public String getUserId(){
+		return this.user.getId().toString();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
