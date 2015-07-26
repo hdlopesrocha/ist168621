@@ -38,7 +38,9 @@
 				
 				},function(sdp){
 					var success = function(){
-						console.log(sdp);
+						console.log(JSON.stringify(sdp));
+						Signaling.publish("sdp:@groupId",function(){},function(){});					
+						console.log("publish[@groupId]");
 					};
 					var error = function(){
 						alert("error");
@@ -47,14 +49,18 @@
 					ice_candidates.push(sdp);
 					var data = JSON.stringify(sdp);
 					
-					Signaling.publish("@groupId",token,data,success,error);					
-					console.log("publish[@groupId,"+data+"]");
+					Signaling.postSdp("@groupId",token,data,success,error);
+
+					
+					
 					
 				});
 				
 				console.log("subscribe[@groupId]");
-				Signaling.subscribe("@groupId",0,function(result){
-					alert(result);
+				Signaling.subscribe("sdp:@groupId",function(result){
+					Signaling.listGroupMembersProperties("@groupId", function(array){
+						console.log(JSON.stringify(array));
+					});
 				});	
 				
 				$("#logout-button").click(function(){

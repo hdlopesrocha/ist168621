@@ -17,7 +17,7 @@ import exceptions.ServiceException;
 /**
  * The Class AuthenticateUserService.
  */
-public class RegisterUserService extends Service<String> {
+public class RegisterUserService extends Service<User> {
 
 	private User user;
 	private List<KeyValueFile> files;
@@ -49,7 +49,7 @@ public class RegisterUserService extends Service<String> {
 	 * @see services.Service#dispatch()
 	 */
 	@Override
-	public synchronized String dispatch() throws ServiceException {
+	public synchronized User dispatch() throws ServiceException {
 		if(user!=null){
 			throw new ConflictException();
 		}
@@ -79,7 +79,7 @@ public class RegisterUserService extends Service<String> {
 		newUser.setToken(token);
 		newUser.save();
 
-		return newUser.getToken();
+		return newUser;
 	}
 
 	/*

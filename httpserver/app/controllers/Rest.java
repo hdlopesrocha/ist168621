@@ -50,201 +50,7 @@ import services.UpdateUserService;
 
 public class Rest extends Controller {
 
-	public Result updateUser() {
-		try {
-			MultipartFormData multipart = request().body().asMultipartFormData();
-			JSONObject info = new JSONObject(multipart.asFormUrlEncoded().get("json")[0]);
-
-			FilePart photo = multipart.getFile("photo");
-
-			UpdateUserService service = new UpdateUserService(session("uid"), info,
-					new KeyValueFile("photo", photo.getFilename(), photo.getFile()));
-
-			service.execute();
-			return ok();
-
-		} catch (UnauthorizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return unauthorized();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		return badRequest();
-	}
-
-	public Result denyRelation(String email) {
-		if (session("uid") != null) {
-			DenyRelationService service = new DenyRelationService(session("uid"), email);
-			try {
-				service.execute();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("OK");
-		}
-		return forbidden();
-	}
-
-	public Result listGroups() {
-		if (session("uid") != null) {
-			ListGroupsService service = new ListGroupsService(session("uid"));
-			try {
-				List<Group> ans = service.execute();
-				JSONArray array = new JSONArray();
-				for (Group g : ans) {
-					JSONObject obj = new JSONObject();
-					obj.put("id", g.getId());
-					obj.put("name", g.getName());
-					array.put(obj);
-				}
-				return ok(array.toString());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("[]");
-		}
-		return forbidden();
-	}
-
-	public Result searchGroupCandidates(String groupId) {
-		if (session("uid") != null) {
-			String query = request().queryString().get("s")[0];
-			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
-			try {
-				List<User> ans = service.execute();
-				JSONArray array = new JSONArray();
-				for (User u : ans) {
-					JSONObject obj = new JSONObject();
-					obj.put("uid", u.getId());
-					obj.put("email", u.getEmail());
-					array.put(obj);
-				}
-				return ok(array.toString());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("[]");
-		}
-		return forbidden();
-	}
-
 	private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
-
-	public Result publish(String groupId, String token) {
-		if (session("uid") != null) {
-			synchronized (MONGODB_SDP_LOCK) {
-				String sdpjson = request().body().asText();
-				try {
-					PostSdpService service = new PostSdpService(session("uid"), groupId, token, sdpjson);
-					service.execute();
-					PublishService service2 = new PublishService(groupId, "");
-					service2.execute();
-					return ok("OK");
-				} catch (ServiceException e) {
-					e.printStackTrace();
-				}
-			}
-			return badRequest();
-		}
-		return forbidden();
-
-	}
-
-	public Result subscribe(String groupId, Long ts) {
-		SubscribeService service = new SubscribeService(groupId, ts);
-		try {
-			Document doc = service.execute();
-			JSONObject obj = new JSONObject();
-			obj.put("ts", doc.getLong("ts"));
-			JSONObject data = new JSONObject();
-			List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
-			for (Membership member : members) {
-				data.put(member.getId().toString(), new JSONObject(member.getProperties().toJson()));
-			}
-			obj.put("data", data);
-			obj.put("key", doc.getString("key"));
-			return ok(obj.toString());
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return badRequest();
-	}
-
-	public Result addGroupMember(String groupId, String memberId) {
-		if (session("uid") != null) {
-			AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
-			try {
-				service.execute();
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
-			return ok("OK");
-		}
-		return forbidden();
-	}
-
-	public Result removeGroupMember(String groupId, String memberId) {
-		if (session("uid") != null) {
-			RemoveGroupMemberService service = new RemoveGroupMemberService(session("uid"), groupId, memberId);
-			try {
-				service.execute();
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
-			return ok("OK");
-		}
-		return forbidden();
-	}
-
-	public Result listGroupMembers(String groupId) {
-		if (session("uid") != null) {
-			ListGroupMembersService service = new ListGroupMembersService(session("uid"), groupId);
-			try {
-				List<KeyValuePair<Membership, User>> ans = service.execute();
-				JSONArray array = new JSONArray();
-				for (KeyValuePair<Membership, User> kvp : ans) {
-					if (!kvp.getValue().getEmail().equals(session("uid"))) {
-						JSONObject obj = new JSONObject();
-
-						obj.put("uid", kvp.getKey().getUserId());
-						obj.put("email", kvp.getValue().getEmail());
-						obj.put("mid", kvp.getKey().getId());
-
-						array.put(obj);
-					}
-				}
-				return ok(array.toString());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("[]");
-		}
-		return forbidden();
-	}
-
-	public Result createGroup() {
-		if (session("uid") != null) {
-			Map<String, String[]> qs = request().queryString();
-			String name = qs.get("n")[0];
-			CreateGroupService service = new CreateGroupService(session("uid"), name);
-			try {
-				service.execute();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("OK");
-		}
-		return forbidden();
-	}
 
 	public Result acceptRelation(String uid) {
 		if (session("uid") != null) {
@@ -260,46 +66,15 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	public Result listRelations() {
+	public Result addGroupMember(String groupId, String memberId) {
 		if (session("uid") != null) {
-			ListRelationsService service = new ListRelationsService(session("uid"));
+			AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
 			try {
-				JSONArray array = new JSONArray();
-				List<User> res = service.execute();
-				for (User user : res) {
-					JSONObject obj = new JSONObject();
-					obj.put("email", user.getEmail());
-					obj.put("uid", user.getId().toString());
-					array.put(obj);
-				}
-				return ok(array.toString());
-
+				service.execute();
 			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		return forbidden();
-	}
-
-	public Result listRelationRequests() {
-		if (session("uid") != null) {
-			ListRelationRequestsService service = new ListRelationRequestsService(session("uid"));
-			try {
-				JSONArray array = new JSONArray();
-				List<User> res = service.execute();
-				for (User user : res) {
-					JSONObject obj = new JSONObject();
-					obj.put("email", user.getEmail());
-					obj.put("uid", user.getId().toString());
-					array.put(obj);
-				}
-				return ok(array.toString());
-
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			return ok("OK");
 		}
 		return forbidden();
 	}
@@ -320,105 +95,34 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
-	public Result listUsers() {
-		try {
-			return ok(new ListUsersService(session("uid")).execute());
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return unauthorized();
-	}
-
-	public Result getUser(String userId) {
-		try {
-			return ok(new GetUserProfileService(session("uid"), userId).execute());
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return unauthorized();
-	}
-
-	public Result login() {
-		try {
-
-			Map<String, String[]> map = request().body().asFormUrlEncoded();
-			if (map.containsKey("token")) {
-				String token = map.get("token")[0];
-
-				AuthenticateTokenService service = new AuthenticateTokenService(token);
-				if (service.execute()) {
-					session("email", service.getEmail());
-					session("uid",service.getUserId());
-					return ok(service.getToken());
-				} else {
-					if (service.userExists())
-						return Rest.status(409);
-					else
-						return unauthorized();
-				}
-			} else if (map.containsKey("email") && map.containsKey("password")) {
-				String email = map.get("email")[0];
-
-				String password = map.get("password")[0];
-
-				AuthenticateUserService service = new AuthenticateUserService(email, password);
-				if (service.execute()) {
-
-					session("email", email);
-					session("uid",service.getUserId());
-					return ok(service.getToken());
-				} else {
-					return unauthorized();
-				}
-
+	public Result createGroup() {
+		if (session("uid") != null) {
+			Map<String, String[]> qs = request().queryString();
+			String name = qs.get("n")[0];
+			CreateGroupService service = new CreateGroupService(session("uid"), name);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (UnauthorizedException e) {
-			return unauthorized();
-		} catch (ServiceException e) {
-			return badRequest();
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return badRequest();
+			return ok("OK");
 		}
-		return badRequest();
+		return forbidden();
 	}
-
-	public Result register() {
-		MultipartFormData multipart = request().body().asMultipartFormData();
-		Map<String, String[]> form = multipart.asFormUrlEncoded();
-
-		JSONObject info = new JSONObject(form.get("json")[0]);
-
-		String email = info.getString("email");
-
-		String password = info.getString("password");
-
-		info.remove("email");
-		info.remove("password");
-
-		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
-		for (FilePart fp : multipart.getFiles()) {
-			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-			files.add(kvf);
+	
+	public Result denyRelation(String email) {
+		if (session("uid") != null) {
+			DenyRelationService service = new DenyRelationService(session("uid"), email);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("OK");
 		}
-
-		RegisterUserService service = new RegisterUserService(email, password, info, files);
-		try {
-			String ret = service.execute();
-			session("email", email);
-			return ok(ret);
-		} catch (ConflictException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Rest.status(409);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return unauthorized();
-		}
-
+		return forbidden();
 	}
 
 	/**
@@ -461,6 +165,8 @@ public class Rest extends Controller {
 		return notFound();
 	}
 
+	
+
 	public Result getPhoto(String email) {
 		if (email != null && email.length() > 0) {
 
@@ -474,6 +180,299 @@ public class Rest extends Controller {
 		}
 		return notFound();
 
+	}
+
+	
+
+	public Result getUser(String userId) {
+		try {
+			return ok(new GetUserProfileService(session("uid"), userId).execute());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return unauthorized();
+	}
+
+	public Result listGroupMembers(String groupId) {
+		if (session("uid") != null) {
+			ListGroupMembersService service = new ListGroupMembersService(session("uid"), groupId);
+			try {
+				List<KeyValuePair<Membership, User>> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for (KeyValuePair<Membership, User> kvp : ans) {
+					JSONObject obj = new JSONObject();
+
+					obj.put("uid", kvp.getKey().getUserId());
+					obj.put("email", kvp.getValue().getEmail());
+					obj.put("mid", kvp.getKey().getId());
+
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
+	}
+
+	public Result listGroupMembersProperties(String groupId) {
+		JSONObject obj = new JSONObject();
+		List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
+		for (Membership member : members) {
+			obj.put(member.getId().toString(), new JSONObject(member.getProperties().toJson()));
+		}
+		return ok(obj.toString());
+	}
+
+	public Result listGroups() {
+		if (session("uid") != null) {
+			ListGroupsService service = new ListGroupsService(session("uid"));
+			try {
+				List<Group> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for (Group g : ans) {
+					JSONObject obj = new JSONObject();
+					obj.put("id", g.getId());
+					obj.put("name", g.getName());
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
+	}
+
+	public Result listRelationRequests() {
+		if (session("uid") != null) {
+			ListRelationRequestsService service = new ListRelationRequestsService(session("uid"));
+			try {
+				JSONArray array = new JSONArray();
+				List<User> res = service.execute();
+				for (User user : res) {
+					JSONObject obj = new JSONObject();
+					obj.put("email", user.getEmail());
+					obj.put("uid", user.getId().toString());
+					array.put(obj);
+				}
+				return ok(array.toString());
+
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return forbidden();
+	}
+
+	public Result listRelations() {
+		if (session("uid") != null) {
+			ListRelationsService service = new ListRelationsService(session("uid"));
+			try {
+				JSONArray array = new JSONArray();
+				List<User> res = service.execute();
+				for (User user : res) {
+					JSONObject obj = new JSONObject();
+					obj.put("email", user.getEmail());
+					obj.put("uid", user.getId().toString());
+					array.put(obj);
+				}
+				return ok(array.toString());
+
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return forbidden();
+	}
+
+	public Result listUsers() {
+		try {
+			return ok(new ListUsersService(session("uid")).execute());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return unauthorized();
+	}
+
+	public Result login() {
+		try {
+
+			Map<String, String[]> map = request().body().asFormUrlEncoded();
+			if (map.containsKey("token")) {
+				String token = map.get("token")[0];
+
+				AuthenticateTokenService service = new AuthenticateTokenService(token);
+				if (service.execute()) {
+					session("email", service.getEmail());
+					session("uid", service.getUserId());
+					return ok(service.getToken());
+				} else {
+					if (service.userExists())
+						return Rest.status(409);
+					else
+						return unauthorized();
+				}
+			} else if (map.containsKey("email") && map.containsKey("password")) {
+				String email = map.get("email")[0];
+
+				String password = map.get("password")[0];
+
+				AuthenticateUserService service = new AuthenticateUserService(email, password);
+				if (service.execute()) {
+
+					session("email", email);
+					session("uid", service.getUserId());
+					return ok(service.getToken());
+				} else {
+					return unauthorized();
+				}
+
+			}
+		} catch (UnauthorizedException e) {
+			return unauthorized();
+		} catch (ServiceException e) {
+			return badRequest();
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return badRequest();
+		}
+		return badRequest();
+	}
+
+	public Result logout() {
+		session().clear();
+		return ok();
+	}
+
+	public Result postSdp(String groupId, String token) {
+		if (session("uid") != null) {
+			synchronized (MONGODB_SDP_LOCK) {
+				String sdpjson = request().body().asText();
+				try {
+					PostSdpService service = new PostSdpService(session("uid"), groupId, token, sdpjson);
+					service.execute();
+					return ok("OK");
+				} catch (ServiceException e) {
+					e.printStackTrace();
+				}
+			}
+			return badRequest();
+		}
+		return forbidden();
+	}
+
+	public Result publish(String groupId) throws ServiceException {
+		PublishService service2 = new PublishService(groupId);
+		service2.execute();
+		return ok("OK");
+
+	}
+
+	public Result register() {
+		MultipartFormData multipart = request().body().asMultipartFormData();
+		Map<String, String[]> form = multipart.asFormUrlEncoded();
+
+		JSONObject info = new JSONObject(form.get("json")[0]);
+
+		String email = info.getString("email");
+
+		String password = info.getString("password");
+
+		info.remove("email");
+		info.remove("password");
+
+		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+		for (FilePart fp : multipart.getFiles()) {
+			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+			files.add(kvf);
+		}
+
+		RegisterUserService service = new RegisterUserService(email, password, info, files);
+		try {
+			User ret = service.execute();
+			session("email", email);
+			return ok(ret.getToken());
+		} catch (ConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Rest.status(409);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return unauthorized();
+		}
+
+	}
+
+	public Result register2() {
+
+		MultipartFormData multipart = request().body().asMultipartFormData();
+		Map<String, String[]> form = multipart.asFormUrlEncoded();
+
+		String email = form.get("email")[0];
+
+		String password = form.get("password")[0];
+
+		JSONObject info = new JSONObject();
+		for (Entry<String, String[]> s : form.entrySet()) {
+			if (!s.getKey().equals("email") && !s.getKey().equals("password") && !s.getKey().equals("password2")) {
+				String[] value = s.getValue();
+				if (value.length == 1) {
+					info.put(s.getKey(), value[0]);
+				} else if (value.length > 1) {
+					JSONArray array = new JSONArray();
+					for (int i = 0; i < value.length; ++i) {
+						array.put(value[i]);
+					}
+					info.put(s.getKey(), array);
+				}
+			}
+		}
+
+		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+		for (FilePart fp : multipart.getFiles()) {
+			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+			files.add(kvf);
+		}
+
+		RegisterUserService service = new RegisterUserService(email, password, info, files);
+		try {
+			User ret = service.execute();
+			// session("email", email);
+			return ok(ret.getToken());
+		} catch (ConflictException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Rest.status(409);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return unauthorized();
+		}
+
+	}
+
+	public Result removeGroupMember(String groupId, String memberId) {
+		if (session("uid") != null) {
+			RemoveGroupMemberService service = new RemoveGroupMemberService(session("uid"), groupId, memberId);
+			try {
+				service.execute();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			return ok("OK");
+		}
+		return forbidden();
 	}
 
 	public Result search() {
@@ -510,59 +509,65 @@ public class Rest extends Controller {
 		return ok("[]");
 	}
 
-	public Result logout() {
-		session().clear();
-		return ok();
+	public Result searchGroupCandidates(String groupId) {
+		if (session("uid") != null) {
+			String query = request().queryString().get("s")[0];
+			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
+			try {
+				List<User> ans = service.execute();
+				JSONArray array = new JSONArray();
+				for (User u : ans) {
+					JSONObject obj = new JSONObject();
+					obj.put("uid", u.getId());
+					obj.put("email", u.getEmail());
+					array.put(obj);
+				}
+				return ok(array.toString());
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return ok("[]");
+		}
+		return forbidden();
 	}
 
-	public Result register2() {
+	public Result subscribe(String groupId, Long ts) throws ServiceException {
+		SubscribeService service = new SubscribeService(groupId, ts);
 
-		MultipartFormData multipart = request().body().asMultipartFormData();
-		Map<String, String[]> form = multipart.asFormUrlEncoded();
+		Document doc = service.execute();
+		if (doc == null || !doc.containsKey("ts")) {
+			return ok("");
+		}
+		return ok(new JSONObject().put("ts", doc.getLong("ts")).toString());
+	}
 
-		String email = form.get("email")[0];
-
-		String password = form.get("password")[0];
-
-		JSONObject info = new JSONObject();
-		for (Entry<String, String[]> s : form.entrySet()) {
-			if (!s.getKey().equals("email") && !s.getKey().equals("password") && !s.getKey().equals("password2")) {
-				String[] value = s.getValue();
-				if (value.length == 1) {
-					info.put(s.getKey(), value[0]);
-				} else if (value.length > 1) {
-					JSONArray array = new JSONArray();
-					for (int i = 0; i < value.length; ++i) {
-						array.put(value[i]);
-					}
-
-					info.put(s.getKey(), array);
-				}
+	public Result updateUser() {
+		try {
+			MultipartFormData multipart = request().body().asMultipartFormData();
+			Map<String, String[]> form = multipart.asFormUrlEncoded();
+			JSONObject info = new JSONObject(form.get("json")[0]);
+			List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+			for (FilePart fp : multipart.getFiles()) {
+				KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+				files.add(kvf);
 			}
 
-		}
+			UpdateUserService service = new UpdateUserService(session("uid"), info, files);
 
-		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
-		for (FilePart fp : multipart.getFiles()) {
-			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-			files.add(kvf);
-		}
+			service.execute();
+			return ok();
 
-		RegisterUserService service = new RegisterUserService(email, password, info, files);
-		try {
-			String ret = service.execute();
-			// session("email", email);
-			return ok(ret);
-		} catch (ConflictException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Rest.status(409);
-		} catch (ServiceException e) {
+		} catch (UnauthorizedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return unauthorized();
-		}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
+		}
+		return badRequest();
 	}
 
 }

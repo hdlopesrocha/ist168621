@@ -10,7 +10,7 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class CreateGroupService extends Service<Void> {
+public class CreateGroupService extends Service<Group> {
 
 	private User user;
 	private String name;
@@ -26,12 +26,12 @@ public class CreateGroupService extends Service<Void> {
 	 * @see services.Service#dispatch()
 	 */
 	@Override
-	public Void dispatch() {
+	public Group dispatch() {
 		Group group =new Group(name);
 		group.save();
 		Membership membership = new Membership(user.getId(),group.getId());
 		membership.save();
-		return null;
+		return group;
 	}
 
 	/*

@@ -140,13 +140,20 @@ var Signaling = (function(){
 			result(JSON.parse(data));
 		});
 	}
+
+	this.listGroupMembersProperties = function(groupId,result){
+		$.get( "/api/group/properties/"+groupId, function( data ) {
+			result(JSON.parse(data));
+		});
+	}
 	
-	this.publish = function(key,token,doc,success,error){
+	
+	this.publish = function(key,success,error){
 
 		$.ajax({
 			type : "post",
-			url : "/api/pubsub/"+key+"/"+token,
-			data : doc,
+			url : "/api/pubsub/"+key,
+			data : "",
 			contentType : "text/plain",
 			processData : false,
 			cache : false,
@@ -160,13 +167,28 @@ var Signaling = (function(){
 		});
 	}
 	
-	this.subscribe = function(key,ts,result){
+	function subscribeCycle(key,ts,result){
 		$.get( "/api/pubsub/"+key+"/"+ts, function( data ) {
-			result(data);
-			ts = JSON.parse(data).ts;
-			Signaling.subscribe(key,ts,result);
-		});
+			if(data.length!=0){			
+				result(data);
+				ts = JSON.parse(data).ts;
+			}else {
+				// server timed-out
+			}
+			subscribeCycle(key,ts,result);
+		}).fail(function(){
+			console.log("subscribe "+ key+" error!");
+			// try again later
+			setTimeout(function(){
+				subscribeCycle(key,ts,result);
+			},10000);
+		});		
 	}
+	
+	this.subscribe = function(key,result){
+		subscribeCycle(key,-1,result);
+	}
+
 	
 	
 	return this;

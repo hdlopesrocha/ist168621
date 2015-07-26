@@ -13,7 +13,7 @@ import exceptions.ServiceException;
 public class Global extends GlobalSettings {
 
 	static {
-		Service.init();
+		Service.init("webrtc");
 		System.out.println(Service.getCurrentTime());
 	//	Setup.main(null);
 	}

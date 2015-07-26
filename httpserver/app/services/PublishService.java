@@ -1,11 +1,8 @@
 package services;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
-import models.Group;
-import models.Membership;
-import models.User;
+import models.PubSub;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,11 +11,9 @@ import models.User;
 public class PublishService extends Service<Void> {
 
 	private String key;
-	private String data;
-
-	public PublishService(String key, String data) {
+	
+	public PublishService(String key) {
 		this.key = key;
-		this.data = data;
 	}
 
 	/*
@@ -28,21 +23,30 @@ public class PublishService extends Service<Void> {
 	 */
 	@Override
 	public Void dispatch() {
-		Document first = pubsub.find(new Document("key", key) ).sort(new Document("$natural", -1)).first();
-		long ts = 1;
-		if (first != null) {
-			ts = first.getLong("ts") + 1;
-		}
+	
 
 		Document doc = new Document();
-		doc.append("ts", ts);
+		doc.append("ts", generateTs());
 		doc.append("key", key);
-		doc.append("data", data);
 		
-		pubsub.insertOne(doc);
+		PubSub.getCollection().insertOne(doc);
 		return null;
 	}
 
+	private Long generateTs(){
+		
+		Document find = PubSub.getKeyCollection().find(new Document("key",key)).first();
+		if(find!=null){
+			Document doc = PubSub.getKeyCollection().findOneAndUpdate(new Document("key",key),new Document("$inc", new Document("ts",1)));
+			return doc.getLong("ts")+1;
+		}
+		else {
+			PubSub.getKeyCollection().insertOne(new Document("key",key).append("ts", 0l));
+			return 0l;
+		}
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -50,7 +54,6 @@ public class PublishService extends Service<Void> {
 	 */
 	@Override
 	public boolean canExecute() {
-
 		return true;
 	}
 

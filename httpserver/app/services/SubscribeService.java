@@ -1,15 +1,14 @@
 package services;
 
+import java.util.concurrent.TimeUnit;
+
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import com.mongodb.CursorType;
-import com.mongodb.client.FindIterable;
+import com.mongodb.MongoExecutionTimeoutException;
 import com.mongodb.client.MongoCursor;
 
-import models.Group;
-import models.Membership;
-import models.User;
+import models.PubSub;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -18,7 +17,7 @@ import models.User;
 public class SubscribeService extends Service<Document> {
 
 	private String key;
-	private Long ts;
+	private long ts;
 
 	public SubscribeService(String key, Long ts) {
 		this.key = key;
@@ -32,18 +31,25 @@ public class SubscribeService extends Service<Document> {
 	 */
 	@Override
 	public Document dispatch() {
-		if(ts.equals(0l)){
-			Document first = pubsub.find(new Document("key", key)).sort(new Document("$natural", -1)).first();
-			if (first != null) {
-				ts = first.getLong("ts") - 1;
+		if(ts == -1l){
+			Document find = PubSub.getKeyCollection().find(new Document("key",key)).first();
+			if(find!=null){
+				return find;
 			}
 		}
 
 		final Document query = new Document("ts", new Document("$gt", ts)).append("key", key);
-		MongoCursor<Document> cursor = pubsub.find(query).sort(new Document("$natural", 1))
-				.cursorType(CursorType.TailableAwait).noCursorTimeout(true).iterator();
-
-		return cursor.next();
+		MongoCursor<Document> cursor = PubSub.getCollection().find(query).sort(new Document("$natural", 1)).cursorType(CursorType.TailableAwait).maxTime(10, TimeUnit.SECONDS).iterator();
+		try {
+			System.out.println("\tsub wait ts > "+ts);
+			Document doc= cursor.next();
+			System.out.println("\tsub return");
+			return doc;
+		}
+		catch(MongoExecutionTimeoutException e){
+			System.out.println("\tsub timeout key = "+key);
+			return null;
+		}
 	}
 
 	/*
@@ -53,7 +59,6 @@ public class SubscribeService extends Service<Document> {
 	 */
 	@Override
 	public boolean canExecute() {
-
 		return true;
 	}
 
