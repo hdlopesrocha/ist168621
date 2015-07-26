@@ -29,6 +29,7 @@ GET		/api/group/properties/:groupId	controllers.Rest.listGroupMembersProperties(
 GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
 GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
 POST 	/api/group/sdp/:key/:token		controllers.Rest.postSdp(key : String, token : String)
+POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String, token : String)
 
 POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
 GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)

@@ -1,4 +1,4 @@
-@(groupId : String, groupName : String)
+@(groupId : String, groupName : String, userId : String)
 
 <html>
 	<head>
@@ -33,9 +33,24 @@
 				
 				var token = makeToken();
 				var ice_candidates = [];				
+				var sdp_list = [];				
+
 				
 				webrtc_init(function(icecand){
-				
+					
+					var success = function(){
+					//	alert("success");
+					};
+					var error = function(){
+						alert("error");
+					};
+					
+					ice_candidates.push(icecand);
+					var data = JSON.stringify(icecand);
+					
+					Signaling.postIceCandidate("@groupId",token,data,success,error);
+
+						
 				},function(sdp){
 					var success = function(){
 						console.log(JSON.stringify(sdp));
@@ -46,7 +61,7 @@
 						alert("error");
 					};
 					
-					ice_candidates.push(sdp);
+					sdp_list.push(sdp);
 					var data = JSON.stringify(sdp);
 					
 					Signaling.postSdp("@groupId",token,data,success,error);
@@ -59,7 +74,22 @@
 				console.log("subscribe[@groupId]");
 				Signaling.subscribe("sdp:@groupId",function(result){
 					Signaling.listGroupMembersProperties("@groupId", function(array){
-						console.log(JSON.stringify(array));
+						console.log("=========================");		
+						for(var uid  in  array){
+							if("@userId" != uid){
+								
+								var userInfo = array[uid];
+								for(var i in userInfo.ices){
+									var userIce = userInfo.ices[i];
+									webrtc_ice_candidate(userIce);
+								}
+								for(var i in userInfo.sdps){
+									var userSdp = userInfo.sdps[i];
+									webrtc_remote_description(userSdp);
+								}
+							}
+							
+						}
 					});
 				});	
 				
@@ -115,16 +145,6 @@
 				};
 				Signaling.searchGroupCandidates("@groupId",query,result);
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 		</script>
 	</body>

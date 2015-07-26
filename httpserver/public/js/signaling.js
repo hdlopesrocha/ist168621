@@ -1,5 +1,24 @@
 var Signaling = (function(){
 
+	this.postIceCandidate = function(gid,token,sdp,success,error){
+		$.ajax({
+			type : "post",
+			url : "/api/group/ice/"+gid+"/"+token,
+			data : sdp,
+			contentType : "text/plain",
+			processData : false,
+			cache : false,
+			async : true,
+			error : function(e) {
+				error();
+			},
+			success : function(data) {
+				success();
+			}
+		});
+	}
+	
+	
 	this.postSdp = function(gid,token,sdp,success,error){
 		$.ajax({
 			type : "post",

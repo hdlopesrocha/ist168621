@@ -36,7 +36,7 @@ public class Application extends Controller {
     		if(group!=null && user!=null){
     			Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
     			if(membership!=null){
-    				return ok(views.html.group.render(groupId,group.getName()));
+    				return ok(views.html.group.render(groupId,group.getName(),session("uid"))) ;
     			}
     		}
     		

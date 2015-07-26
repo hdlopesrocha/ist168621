@@ -39,6 +39,7 @@ import services.ListGroupsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
+import services.PostIceCandidateService;
 import services.PostSdpService;
 import services.PublishService;
 import services.RegisterUserService;
@@ -223,7 +224,7 @@ public class Rest extends Controller {
 		JSONObject obj = new JSONObject();
 		List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
 		for (Membership member : members) {
-			obj.put(member.getId().toString(), new JSONObject(member.getProperties().toJson()));
+			obj.put(member.getUserId().toString(), new JSONObject(member.getProperties().toJson()));
 		}
 		return ok(obj.toString());
 	}
@@ -354,12 +355,29 @@ public class Rest extends Controller {
 		return ok();
 	}
 
+	public Result postIceCandidate(String groupId, String token) {
+		if (session("uid") != null) {
+			synchronized (MONGODB_SDP_LOCK) {
+				String data = request().body().asText();
+				try {
+					PostIceCandidateService service = new PostIceCandidateService(session("uid"), groupId, token, data);
+					service.execute();
+					return ok("OK");
+				} catch (ServiceException e) {
+					e.printStackTrace();
+				}
+			}
+			return badRequest();
+		}
+		return forbidden();
+	}
+	
 	public Result postSdp(String groupId, String token) {
 		if (session("uid") != null) {
 			synchronized (MONGODB_SDP_LOCK) {
-				String sdpjson = request().body().asText();
+				String data = request().body().asText();
 				try {
-					PostSdpService service = new PostSdpService(session("uid"), groupId, token, sdpjson);
+					PostSdpService service = new PostSdpService(session("uid"), groupId, token, data);
 					service.execute();
 					return ok("OK");
 				} catch (ServiceException e) {

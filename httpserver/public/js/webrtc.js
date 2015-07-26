@@ -1,6 +1,6 @@
 var RTCPeerConnection = window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-var IceCandidate = window.mozRTCIceCandidate || window.RTCIceCandidate;
-var SessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
+var RTCIceCandidate = window.mozRTCIceCandidate || window.RTCIceCandidate;
+var RTCSessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
 navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 			
 			
@@ -25,7 +25,6 @@ function webrtc_init(icecand,sdpoffer) {
 		// candidate exists in e.candidate
 	    if (e.candidate) 
 		    icecand(e.candidate);
-	   		//send("icecandidate", JSON.stringify(e.candidate));
 	};
 	
 	peerConnection.onnegotiationneeded = function(){
@@ -58,18 +57,17 @@ function webrtc_init(icecand,sdpoffer) {
 	    //	    sendNegotiation("offer", sdp);
 	    console.log("------ SEND OFFER ------");
 	}, function(){}, sdpConstraints);
-
-	
-	function processIce(iceCandidate){
-		  peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate));
-		}
-
-	function processAnswer(answer){
-		  peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
-		  console.log("------ PROCESSED ANSWER ------");
-		};
-
-	
-
 	
 }
+
+function webrtc_ice_candidate(iceCandidate){
+	console.log("webrtc_ice_candidate");
+	console.log(iceCandidate);
+	peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate));
+}
+
+function webrtc_remote_description(answer){
+	console.log("webrtc_remote_description");
+	console.log(answer)
+	peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+};

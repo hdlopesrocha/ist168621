@@ -12,13 +12,13 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class PostSdpService extends Service<Void> {
+public class PostIceCandidateService extends Service<Void> {
 
 	private User user;
 	private Membership membership;
 	private String sdpjson, token;
 
-	public PostSdpService(String uid, String groupId, String token, String sdpjson) {
+	public PostIceCandidateService(String uid, String groupId, String token, String sdpjson) {
 		this.user = User.findById(new ObjectId(uid));
 		this.membership = Membership.findByUserGroup(user.getId(), new ObjectId(groupId));
 		this.sdpjson = sdpjson;
@@ -36,15 +36,15 @@ public class PostSdpService extends Service<Void> {
 		Document obj = Document.parse(sdpjson);
 		Document doc = membership.getProperties();
 
-		ArrayList<Object> list = (ArrayList<Object>) doc.get("sdps");
-		String mtoken = doc.getString("stoken");
+		ArrayList<Object> list = (ArrayList<Object>) doc.get("ices");
+		String mtoken = doc.getString("itoken");
 
 		if (list == null || (token != null && !token.equals(mtoken))) {
 			list = new ArrayList<Object>();
 		}
 		list.add(obj);
-		doc.put("stoken", token);
-		doc.put("sdps", list);
+		doc.put("itoken", token);
+		doc.put("ices", list);
 		membership.save();
 
 	
