@@ -17,18 +17,36 @@ var configuration = {
 var dataChannel;
 var peerConnection = null;
 
-function webrtc_init(icecand,sdpoffer) {
+
+function webrtc_init(sdpoffer) {
 	peerConnection = new RTCPeerConnection(configuration,  {optional: [{RtpDataChannels: true}]});
 
+	
+
+	function webrtc_create_offer(){
+		var sdpConstraints = {
+			    'OfferToReceiveAudio': false,
+			    'OfferToReceiveVideo': false
+			};
+		
+		peerConnection.createOffer(function (sdp) {
+		    peerConnection.setLocalDescription(sdp);
+		    sdpoffer(sdp);
+		    console.log("------ SEND OFFER ------");
+		}, function(){}, sdpConstraints);	
+	}
+
+	
 	peerConnection.onicecandidate = function (e) {
-//	    alert("onicecandidate");
-		// candidate exists in e.candidate
-	    if (e.candidate) 
-		    icecand(e.candidate);
+		console.log("onicecandidate");
+	    if (e.candidate) {
+	    	peerConnection.addIceCandidate(e.candidate);
+	    	webrtc_create_offer();
+	    }
 	};
 	
 	peerConnection.onnegotiationneeded = function(){
-//	    alert("onnegotiationneeded");
+		console.log("onnegotiationneeded");
 	}
 		
 	 // once remote stream arrives, show it in the remote video element
@@ -43,31 +61,12 @@ function webrtc_init(icecand,sdpoffer) {
 	dataChannel.onclose = function(){console.log("------- DC closed! -------")};
 	dataChannel.onerror = function(){console.log("DC ERROR!!!")};
 
-	var sdpConstraints = {'mandatory':
-	  {
-	    'OfferToReceiveAudio': false,
-	    'OfferToReceiveVideo': false
-	  }
-	};
+	webrtc_create_offer();
 
-	peerConnection.createOffer(function (sdp) {
-	    peerConnection.setLocalDescription(sdp);
-	   
-	    sdpoffer(sdp);
-	    //	    sendNegotiation("offer", sdp);
-	    console.log("------ SEND OFFER ------");
-	}, function(){}, sdpConstraints);
-	
-}
-
-function webrtc_ice_candidate(iceCandidate){
-	console.log("webrtc_ice_candidate");
-	console.log(iceCandidate);
-	peerConnection.addIceCandidate(new RTCIceCandidate(iceCandidate));
 }
 
 function webrtc_remote_description(answer){
-	console.log("webrtc_remote_description");
+	console.log("setRemoteDescription");
 	console.log(answer)
 	peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
 };

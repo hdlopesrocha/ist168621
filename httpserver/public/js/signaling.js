@@ -19,10 +19,10 @@ var Signaling = (function(){
 	}
 	
 	
-	this.postSdp = function(gid,token,sdp,success,error){
+	this.postSdp = function(gid,sdp,success,error){
 		$.ajax({
 			type : "post",
-			url : "/api/group/sdp/"+gid+"/"+token,
+			url : "/api/group/sdp/"+gid,
 			data : sdp,
 			contentType : "text/plain",
 			processData : false,

@@ -372,12 +372,12 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 	
-	public Result postSdp(String groupId, String token) {
+	public Result postSdp(String groupId) {
 		if (session("uid") != null) {
 			synchronized (MONGODB_SDP_LOCK) {
 				String data = request().body().asText();
 				try {
-					PostSdpService service = new PostSdpService(session("uid"), groupId, token, data);
+					PostSdpService service = new PostSdpService(session("uid"), groupId, data);
 					service.execute();
 					return ok("OK");
 				} catch (ServiceException e) {

@@ -1,7 +1,5 @@
 package services;
 
-import java.util.ArrayList;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -16,13 +14,12 @@ public class PostSdpService extends Service<Void> {
 
 	private User user;
 	private Membership membership;
-	private String sdpjson, token;
+	private String data;
 
-	public PostSdpService(String uid, String groupId, String token, String sdpjson) {
+	public PostSdpService(String uid, String groupId, String data) {
 		this.user = User.findById(new ObjectId(uid));
 		this.membership = Membership.findByUserGroup(user.getId(), new ObjectId(groupId));
-		this.sdpjson = sdpjson;
-		this.token = token;
+		this.data = data;
 	}
 
 	/*
@@ -33,18 +30,9 @@ public class PostSdpService extends Service<Void> {
 	@Override
 	public Void dispatch() {
 
-		Document obj = Document.parse(sdpjson);
+		Document obj = Document.parse(data);
 		Document doc = membership.getProperties();
-
-		ArrayList<Object> list = (ArrayList<Object>) doc.get("sdps");
-		String mtoken = doc.getString("stoken");
-
-		if (list == null || (token != null && !token.equals(mtoken))) {
-			list = new ArrayList<Object>();
-		}
-		list.add(obj);
-		doc.put("stoken", token);
-		doc.put("sdps", list);
+		doc.put("sdp", obj);
 		membership.save();
 
 	

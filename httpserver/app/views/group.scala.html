@@ -36,22 +36,7 @@
 				var sdp_list = [];				
 
 				
-				webrtc_init(function(icecand){
-					
-					var success = function(){
-					//	alert("success");
-					};
-					var error = function(){
-						alert("error");
-					};
-					
-					ice_candidates.push(icecand);
-					var data = JSON.stringify(icecand);
-					
-					Signaling.postIceCandidate("@groupId",token,data,success,error);
-
-						
-				},function(sdp){
+				webrtc_init(function(sdp){
 					var success = function(){
 						console.log(JSON.stringify(sdp));
 						Signaling.publish("sdp:@groupId",function(){},function(){});					
@@ -64,7 +49,7 @@
 					sdp_list.push(sdp);
 					var data = JSON.stringify(sdp);
 					
-					Signaling.postSdp("@groupId",token,data,success,error);
+					Signaling.postSdp("@groupId",data,success,error);
 
 					
 					
@@ -79,10 +64,10 @@
 							if("@userId" != uid){
 								
 								var userInfo = array[uid];
-								for(var i in userInfo.ices){
+								/*for(var i in userInfo.ices){
 									var userIce = userInfo.ices[i];
 									webrtc_ice_candidate(userIce);
-								}
+								}*/
 								for(var i in userInfo.sdps){
 									var userSdp = userInfo.sdps[i];
 									webrtc_remote_description(userSdp);
