@@ -31,8 +31,7 @@ public class RoomManager {
 
 	private final Logger log = LoggerFactory.getLogger(RoomManager.class);
 
-	@Autowired
-	private KurentoClient kurento;
+
 
 	private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
@@ -48,7 +47,7 @@ public class RoomManager {
 
 		if (room == null) {
 			log.debug("Room {} not existent. Will create now!", roomName);
-			room = new Room(roomName, kurento.createMediaPipeline());
+			room = new Room(roomName, Global.kurento.createMediaPipeline());
 			rooms.put(roomName, room);
 		}
 		log.debug("Room {} found!", roomName);

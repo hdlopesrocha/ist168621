@@ -13,8 +13,8 @@ import org.kurento.client.KurentoClient;
 
 public class Global extends GlobalSettings {
 
-	final static KurentoClient kurento = KurentoClient.create("ws://146.193.224.82:8888/kurento");
-
+	public final static KurentoClient kurento = KurentoClient.create("ws://146.193.224.82:8888/kurento");
+	public final static RoomManager manager = new RoomManager();
 	
 	static {
 		Service.init("webrtc");

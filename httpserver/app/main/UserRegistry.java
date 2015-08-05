@@ -16,8 +16,6 @@ package main;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.web.socket.WebSocketSession;
-
 /**
  * Map of users registered in the system. This class has a concurrent hash map
  * to store users, using its name as key in the map.
@@ -34,7 +32,7 @@ public class UserRegistry {
 
 	public void register(UserSession user) {
 		usersByName.put(user.getName(), user);
-		usersBySessionId.put(user.getSession().getId(), user);
+		usersBySessionId.put(user.getSession().getUid(), user);
 	}
 
 	public UserSession getByName(String name) {
@@ -42,7 +40,7 @@ public class UserRegistry {
 	}
 
 	public UserSession getBySession(WebSocketSession session) {
-		return usersBySessionId.get(session.getId());
+		return usersBySessionId.get(session.getUid());
 	}
 
 	public boolean exists(String name) {
@@ -52,7 +50,7 @@ public class UserRegistry {
 	public UserSession removeBySession(WebSocketSession session) {
 		final UserSession user = getBySession(session);
 		usersByName.remove(user.getName());
-		usersBySessionId.remove(session.getId());
+		usersBySessionId.remove(session.getUid());
 		return user;
 	}
 
