@@ -2,6 +2,7 @@ package services;
 
 import org.bson.types.ObjectId;
 
+import main.Global;
 import models.Group;
 import models.Membership;
 import models.User;
@@ -31,6 +32,8 @@ public class CreateGroupService extends Service<Group> {
 		group.save();
 		Membership membership = new Membership(user.getId(),group.getId());
 		membership.save();
+		Global.manager.getRoom(membership.getId().toString());
+
 		return group;
 	}
 
