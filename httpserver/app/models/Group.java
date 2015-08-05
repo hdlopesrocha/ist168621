@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -70,6 +73,15 @@ public class Group {
 	public void delete() {
 		if (id != null)
 			Service.groups.deleteOne(new Document("_id", id));		
+	}
+
+	public static List<Group> listAll() {
+		FindIterable<Document> iter = Service.groups.find(new Document());
+		List<Group> ret = new ArrayList<Group>();
+		for(Document doc : iter){
+			ret.add(load(doc));
+		}
+		return ret;
 	}
 
 }

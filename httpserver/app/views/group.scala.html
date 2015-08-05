@@ -21,7 +21,36 @@
 		<ul id="member-list"></ul>
 		
 		<script>
+		
+		function wsurl(s) {
+		    var l = window.location;
+		    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
+		}
+		
+		
 			$( document ).ready(function() {
+			
+				 if ("WebSocket" in window) {
+		        	 console.log("subscribe WS");
+		        	 var path = wsurl("/ws/room/@groupId");
+		        	 console.log(path);
+					 var ws = new WebSocket(path);
+		
+					 ws.onmessage = function (evt) {
+						 console.log(" + " + evt.data);
+		             };
+		             
+		             ws.onclose = function()
+		             { 
+		            	 console.log("Connection is closed...");
+		             };
+					 
+		         }
+						
+				
+				
+				
+				
 				function makeToken()
 				{
 				    var text = "";
@@ -130,6 +159,10 @@
 				};
 				Signaling.searchGroupCandidates("@groupId",query,result);
 			}
+
+			
+			
+			
 			
 		</script>
 	</body>

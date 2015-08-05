@@ -1,6 +1,11 @@
 package main;
 
+import java.util.List;
+
+import org.kurento.client.KurentoClient;
+
 import exceptions.ServiceException;
+import models.Group;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -9,7 +14,6 @@ import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 import play.mvc.Results;
 import services.Service;
-import org.kurento.client.KurentoClient;
 
 public class Global extends GlobalSettings {
 
@@ -20,6 +24,11 @@ public class Global extends GlobalSettings {
 		Service.init("webrtc");
 		System.out.println(Service.getCurrentTime());
 	//	Setup.main(null);
+		
+		List<Group> allGroups = Group.listAll();
+		for(Group g : allGroups){
+			manager.getRoom(g.getId().toString());
+		}
 	}
 
 	@Override
