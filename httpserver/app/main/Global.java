@@ -1,5 +1,6 @@
 package main;
 
+import exceptions.ServiceException;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -8,10 +9,13 @@ import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 import play.mvc.Results;
 import services.Service;
-import exceptions.ServiceException;
+import org.kurento.client.KurentoClient;
 
 public class Global extends GlobalSettings {
 
+	final static KurentoClient kurento = KurentoClient.create("ws://146.193.224.82:8888/kurento");
+
+	
 	static {
 		Service.init("webrtc");
 		System.out.println(Service.getCurrentTime());

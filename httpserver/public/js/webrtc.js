@@ -2,8 +2,7 @@ var RTCPeerConnection = window.mozRTCPeerConnection || window.webkitRTCPeerConne
 var RTCIceCandidate = window.mozRTCIceCandidate || window.RTCIceCandidate;
 var RTCSessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
 navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-			
-			
+
 var configuration = {
 	iceServers: [
 		{
@@ -14,59 +13,58 @@ var configuration = {
 		}
 	]
 }
-var dataChannel;
-var peerConnection = null;
 
+var dc = null;
+var pc = null;
 
 function webrtc_init(sdpoffer) {
-	peerConnection = new RTCPeerConnection(configuration,  {optional: [{RtpDataChannels: true}]});
+	pc = new RTCPeerConnection(configuration,  {optional: [{RtpDataChannels: true}]});
 
+	pc.oniceconnectionstatechange = function() {
+		console.log("oniceconnectionstatechange");
+		console.log(pc.iceConnectionState);
+	};
 	
-
-	function webrtc_create_offer(){
-		var sdpConstraints = {
-			    'OfferToReceiveAudio': false,
-			    'OfferToReceiveVideo': false
-			};
-		
-		peerConnection.createOffer(function (sdp) {
-		    peerConnection.setLocalDescription(sdp);
-		    sdpoffer(sdp);
-		    console.log("------ SEND OFFER ------");
-		}, function(){}, sdpConstraints);	
-	}
-
-	
-	peerConnection.onicecandidate = function (e) {
+	pc.onicecandidate = function (e) {
 		console.log("onicecandidate");
 	    if (e.candidate) {
-	    	peerConnection.addIceCandidate(e.candidate);
-	    	webrtc_create_offer();
+	    	pc.addIceCandidate(e.candidate);
 	    }
 	};
 	
-	peerConnection.onnegotiationneeded = function(){
+	pc.onnegotiationneeded = function(){
 		console.log("onnegotiationneeded");
 	}
 		
-	 // once remote stream arrives, show it in the remote video element
-	peerConnection.onaddstream = function (evt) {
-		 alert("onaddstream");		
-		 // remoteView.src = URL.createObjectURL(evt.stream);
+	// once remote stream arrives, show it in the remote video element
+	pc.onaddstream = function (evt) {
+       alert("onaddstream");		
+       // remoteView.src = URL.createObjectURL(evt.stream);
 	};
 	
-	dataChannel = peerConnection.createDataChannel("sendDataChannel", {reliable: false});
-	dataChannel.onmessage = function(e){console.log("DC message:" +e.data);};
-	dataChannel.onopen = function(){console.log("------ DATACHANNEL OPENED ------");};
-	dataChannel.onclose = function(){console.log("------- DC closed! -------")};
-	dataChannel.onerror = function(){console.log("DC ERROR!!!")};
+	dc = pc.createDataChannel("sendDataChannel", {reliable: false});
+	dc.onmessage = function(e){console.log("DC message:" +e.data);};
+	dc.onopen = function(){console.log("------ DATACHANNEL OPENED ------");};
+	dc.onclose = function(){console.log("------- DC closed! -------")};
+	dc.onerror = function(){console.log("DC ERROR!!!")};
 
-	webrtc_create_offer();
-
+	var sdpConstraints = {
+	    'OfferToReceiveAudio': false,
+	    'OfferToReceiveVideo': false
+	};
+	/*
+	pc.createOffer(function (sdp) {
+	    pc.setLocalDescription(sdp);
+	    sdpoffer(sdp);
+	    console.log("------ SEND OFFER ------");
+	},  function(){}, sdpConstraints);	
+	*/
 }
 
 function webrtc_remote_description(answer){
+	/*
 	console.log("setRemoteDescription");
 	console.log(answer)
-	peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+	pc.setRemoteDescription(new RTCSessionDescription(answer));
+	*/
 };
