@@ -21,6 +21,7 @@
 		<ul id="member-list"></ul>
 		
 		<script>
+		var ws = null;
 		
 		function wsurl(s) {
 		    var l = window.location;
@@ -34,14 +35,23 @@
 		        	 console.log("subscribe WS");
 		        	 var path = wsurl("/ws/room/@groupId");
 		        	 console.log(path);
-					 var ws = new WebSocket(path);
+					 ws = new WebSocket(path);
 		
+					 ws.onerror = function(){
+		            	 console.log("Error!");
+
+					 };
+					 
 					 ws.onmessage = function (evt) {
 						 console.log(" + " + evt.data);
 		             };
 		             
-		             ws.onclose = function()
-		             { 
+		             ws.onopen = function(){
+		            	 console.log("Connected!");
+
+		             };
+		             
+		             ws.onclose = function() { 
 		            	 console.log("Connection is closed...");
 		             };
 					 

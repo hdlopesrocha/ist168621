@@ -55,7 +55,7 @@ public class Room implements Closeable {
 	public Room(String roomName, MediaPipeline pipeline) {
 		this.name = roomName;
 		this.pipeline = pipeline;
-		log.info("ROOM {} has been created", roomName);
+		System.out.println("ROOM "+roomName+" has been created");
 	}
 
 	@PreDestroy
@@ -65,11 +65,14 @@ public class Room implements Closeable {
 
 	public UserSession join(String userName, WebSocketSession session)
 			throws IOException {
-		log.info("ROOM {}: adding participant {}", name, userName);
+		System.out.println("ROOM "+name+": adding participant "+ userName);
 		final UserSession participant = new UserSession(userName, this.name,
 				session, this.pipeline);
+		System.out.println(userName + " joining " + getName());
 		joinRoom(participant);
 		participants.put(participant.getName(), participant);
+		System.out.println("send participant names");
+
 		sendParticipantNames(participant);
 		return participant;
 	}
