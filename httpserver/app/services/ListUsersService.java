@@ -1,12 +1,12 @@
 package services;
 
-import models.User;
-
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.mongodb.client.FindIterable;
+
+import models.User;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,15 +27,8 @@ public class ListUsersService extends Service<String> {
 	 */
 	@Override
 	public String dispatch() {
-		FindIterable<Document> iter = users.find();
-		
-		
-		
-		
-
+		FindIterable<Document> iter = User.getCollection().find();
 		JSONArray array = new JSONArray();
-		
-		
 		
 		for (Document doc : iter ) {
 			JSONObject inc = new JSONObject();

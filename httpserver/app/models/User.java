@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
@@ -20,6 +21,15 @@ public class User {
 	private List<String> permissions;
 	private Document publicProperties= new Document(); 
 	private Document privateProperties = new Document();
+	public static MongoCollection<Document> collection;
+	
+	
+	public static MongoCollection<Document> getCollection(){
+		if(collection==null)
+			collection = Service.getDatabase().getCollection("users");
+		return collection;
+			
+	}
 
 	public void save() {
 		Document doc = new Document();
@@ -35,9 +45,9 @@ public class User {
 		doc.put("private", privateProperties);
 		
 		if (id == null)
-			Service.users.insertOne(doc);
+			getCollection().insertOne(doc);
 		else
-			Service.users.replaceOne(new Document("_id", id), doc);
+			getCollection().replaceOne(new Document("_id", id), doc);
 				
 		id = doc.getObjectId("_id");
 
@@ -98,7 +108,7 @@ public class User {
 
 	public static User findByEmail(String email) {
 		Document doc = new Document("email", email);
-		FindIterable<Document> iter = Service.users.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
@@ -106,7 +116,7 @@ public class User {
 	public static List<User> search(String query) {
 		Pattern regex = Pattern.compile(query);		
 		Document doc = new Document("email", regex);
-		FindIterable<Document> iter = Service.users.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		Iterator<Document> i = iter.iterator();
 		List<User> ret = new ArrayList<User>();
 		while(i.hasNext()){
@@ -118,14 +128,14 @@ public class User {
 
 	public static User findById(ObjectId id) {
 		Document doc = new Document("_id", id);
-		FindIterable<Document> iter = Service.users.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
 	
 	public static User findByToken(String token) {
 		Document doc = new Document("token", token);
-		FindIterable<Document> iter = Service.users.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}

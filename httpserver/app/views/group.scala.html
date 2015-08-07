@@ -4,6 +4,7 @@
 	<head>
 		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
 		<script type="text/javascript" src="/assets/js/signaling.js"></script>
+		<script type="text/javascript" src="/assets/js/kurento.js"></script>
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 	</head>
 	<body>
@@ -19,103 +20,46 @@
 		
 		<h3>Members List</h3>
 		<ul id="member-list"></ul>
+	
+		<h3>Online Members</h3>
+		<ul id="online-members"></ul>
 		
 		<script>
-		var ws = null;
-		
-		function wsurl(s) {
-		    var l = window.location;
-		    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
-		}
-		
+			var participants = {};
 		
 			$( document ).ready(function() {
 			
-				 if ("WebSocket" in window) {
-		        	 console.log("subscribe WS");
-		        	 var path = wsurl("/ws/room/@groupId");
-		        	 console.log(path);
-					 ws = new WebSocket(path);
-		
-					 ws.onerror = function(){
-		            	 console.log("Error!");
-
-					 };
-					 
-					 ws.onmessage = function (evt) {
-						 console.log(" + " + evt.data);
-		             };
-		             
-		             ws.onopen = function(){
-		            	 console.log("Connected!");
-
-		             };
-		             
-		             ws.onclose = function() { 
-		            	 console.log("Connection is closed...");
-		             };
-					 
-		         }
-						
-				
-				
-				
-				
-				function makeToken()
-				{
-				    var text = "";
-				    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-				    for( var i=0; i < 20; i++ )
-				        text += possible.charAt(Math.floor(Math.random() * possible.length));
-				    return text;
+				var kready = function(){				
+					Kurento.joinRoom("@groupId");
 				}
 				
-				var token = makeToken();
-				var ice_candidates = [];				
-				var sdp_list = [];				
-
-				
-				webrtc_init(function(sdp){
-					var success = function(){
-						console.log(JSON.stringify(sdp));
-						Signaling.publish("sdp:@groupId",function(){},function(){});					
-						console.log("publish[@groupId]");
-					};
-					var error = function(){
-						alert("error");
-					};
+				var kparticipants = function(data){
+					$("#online-members").html("");
+					participants = data;
 					
-					sdp_list.push(sdp);
-					var data = JSON.stringify(sdp);
-					
-					Signaling.postSdp("@groupId",data,success,error);
-
-					
-					
-					
-				});
-				
-				console.log("subscribe[@groupId]");
-				Signaling.subscribe("sdp:@groupId",function(result){
-					Signaling.listGroupMembersProperties("@groupId", function(array){
-						console.log("=========================");		
-						for(var uid  in  array){
-							if("@userId" != uid){
-								
-								var userInfo = array[uid];
-								/*for(var i in userInfo.ices){
-									var userIce = userInfo.ices[i];
-									webrtc_ice_candidate(userIce);
-								}*/
-								for(var i in userInfo.sdps){
-									var userSdp = userInfo.sdps[i];
-									webrtc_remote_description(userSdp);
-								}
-							}
+					for(var uid in data){
+						
+						$("#online-members").append("<li>"+data[uid]+"</li>");
 							
+					}
+				}
+		
+				
+				var knewparticipant = function(data){
+					for(var uid in data){
+						if(!participants[uid]){
+							$("#online-members").append("<li>"+data[uid]+"</li>");
+							participants[uid] = data[uid];
 						}
-					});
-				});	
+					}
+				}
+				
+				
+				
+				Kurento.init("@groupId",kready,kparticipants,knewparticipant);
+				
+				
+				
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
@@ -128,6 +72,7 @@
 				$("#home-button").click(function(){
 					document.location = "/";
 				});
+				
 				Signaling.listGroupMembers("@groupId", function(array){
 					var html = "";
 					for(var i  in array){
@@ -139,6 +84,7 @@
 					}
 					$("#member-list").html(html);
 				});
+				
 			});
 			
 			function del_user_group(uid){

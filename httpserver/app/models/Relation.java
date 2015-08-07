@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
@@ -37,6 +38,16 @@ public class Relation {
 		this.toState = toState;
 	}
 
+	
+	public static MongoCollection<Document> collection;
+	
+	
+	public static MongoCollection<Document> getCollection(){
+		if(collection==null)
+			collection = Service.getDatabase().getCollection("relations");
+		return collection;		
+	}
+	
 	public void save() {
 		Document doc = new Document();
 		if (id != null)
@@ -48,9 +59,9 @@ public class Relation {
 		doc.put("ts", toState);
 
 		if (id == null)
-			Service.relations.insertOne(doc);
+			getCollection().insertOne(doc);
 		else
-			Service.relations.replaceOne(new Document("_id", id), doc);
+			getCollection().replaceOne(new Document("_id", id), doc);
 		
 		id = doc.getObjectId("_id");
 
@@ -93,14 +104,14 @@ public class Relation {
 
 	public static Relation findByEndpoint(ObjectId a, ObjectId b) {
 		Document doc = new Document("fi", a).append("ti", b);
-		FindIterable<Document> iter = Service.relations.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
 
 	public static List<Relation> listFrom(ObjectId ep) {
 		Document doc = new Document("fi", ep);
-		FindIterable<Document> iter = Service.relations.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 
 		Iterator<Document> i = iter.iterator();
@@ -113,7 +124,7 @@ public class Relation {
 
 	public static List<Relation> listTo(ObjectId ep) {
 		Document doc = new Document("ti", ep);
-		FindIterable<Document> iter = Service.relations.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 
 		Iterator<Document> i = iter.iterator();
@@ -129,7 +140,7 @@ public class Relation {
 	
 	public static Relation findById(ObjectId id) {
 		Document doc = new Document("_id", id);
-		FindIterable<Document> iter = Service.relations.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
@@ -155,7 +166,7 @@ public class Relation {
 
 	public void delete() {
 		if (id != null)
-			Service.relations.deleteOne(new Document("_id", id));		
+			getCollection().deleteOne(new Document("_id", id));		
 	}
 
 }

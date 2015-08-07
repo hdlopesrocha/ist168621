@@ -41,13 +41,8 @@ public abstract class Service<T> {
 	public static void init(String dbname){
 		DB_NAME = dbname;
 		db = null;
-		database = null;
-		
+		database = null;		
 		files = new GridFS(getDB());
-		users = getDatabase().getCollection("users");
-		relations = getDatabase().getCollection("relations");
-		groups = getDatabase().getCollection("groups");
-		memberships = getDatabase().getCollection("memberships");
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -70,7 +65,6 @@ public abstract class Service<T> {
 	private static Random random = new Random();
 	protected static MongoClient client;
 	protected static MongoDatabase database;
-	public static MongoCollection<Document> users,relations,groups,memberships;
 	protected static GridFS files;
 	static long lastOid = 0l;
 		

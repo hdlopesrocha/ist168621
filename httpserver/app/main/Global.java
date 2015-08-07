@@ -1,12 +1,8 @@
 package main;
 
-import java.util.List;
-
 import org.kurento.client.KurentoClient;
-import org.kurento.client.MediaPipeline;
 
 import exceptions.ServiceException;
-import models.Group;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -18,25 +14,15 @@ import services.Service;
 
 public class Global extends GlobalSettings {
 
-	public final static KurentoClient kurento = KurentoClient.create("ws://enter4ward.dtdns.net:8888/kurento");
-	public final static RoomManager manager = new RoomManager();
-	
+	public final static KurentoClient kurento;
+	public final static RoomManager manager;
 	static {
 		Service.init("webrtc");
 		System.out.println(Service.getCurrentTime());
 	//	Setup.main(null);
 	
-
-		// release previously created pipelines
-		for(MediaPipeline mp : kurento.getServerManager().getPipelines()) {
-			mp.release();
-		}
-		
-		List<Group> allGroups = Group.listAll();
-		for(Group g : allGroups){
-			manager.getRoom(g.getId().toString());
-		}
-		
+		kurento = KurentoClient.create("ws://enter4ward.dtdns.net:8888/kurento");
+		manager = new RoomManager(kurento);
 
 	}
 

@@ -7,6 +7,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
@@ -24,7 +25,14 @@ public class Group {
 
 	private String name = null;
 	private ObjectId id = null;
-
+	public static MongoCollection<Document> collection;
+	
+	
+	public static MongoCollection<Document> getCollection(){
+		if(collection==null)
+			collection = Service.getDatabase().getCollection("groups");
+		return collection;		
+	}
 	
 	public void save() {
 		Document doc = new Document();
@@ -33,9 +41,9 @@ public class Group {
 
 		doc.put("name", name);
 		if (id == null)
-			Service.groups.insertOne(doc);
+			getCollection().insertOne(doc);
 		else
-			Service.groups.replaceOne(new Document("_id", id), doc);
+			getCollection().replaceOne(new Document("_id", id), doc);
 				
 		id = doc.getObjectId("_id");
 
@@ -58,7 +66,7 @@ public class Group {
 	
 	public static Group findById(ObjectId id) {
 		Document doc = new Document("_id", id);
-		FindIterable<Document> iter = Service.groups.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
@@ -72,11 +80,11 @@ public class Group {
 
 	public void delete() {
 		if (id != null)
-			Service.groups.deleteOne(new Document("_id", id));		
+			getCollection().deleteOne(new Document("_id", id));		
 	}
 
 	public static List<Group> listAll() {
-		FindIterable<Document> iter = Service.groups.find(new Document());
+		FindIterable<Document> iter = getCollection().find(new Document());
 		List<Group> ret = new ArrayList<Group>();
 		for(Document doc : iter){
 			ret.add(load(doc));

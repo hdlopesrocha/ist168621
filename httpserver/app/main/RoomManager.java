@@ -15,13 +15,17 @@
 package main;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.bson.types.ObjectId;
 import org.kurento.client.KurentoClient;
+import org.kurento.client.MediaPipeline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import models.Group;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -29,9 +33,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class RoomManager {
 
-	private final Logger log = LoggerFactory.getLogger(RoomManager.class);
 
-
+	
+	
+	public RoomManager (KurentoClient kurento){
+		for(MediaPipeline mp : kurento.getServerManager().getPipelines()) {
+			System.out.println("Loaded: " + mp.getId() + " | " +mp.getName());
+			rooms.put(mp.getName(), new Room(mp));
+		}	
+	}
 
 	private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
@@ -41,16 +51,19 @@ public class RoomManager {
 	 * @return the room if it was already created, or a new one if it is the
 	 *         first time this room is accessed
 	 */
-	public Room getRoom(String roomName) {
-		log.debug("Searching for room {}", roomName);
-		Room room = rooms.get(roomName);
-
-		if (room == null) {
-			log.debug("Room {} not existent. Will create now!", roomName);
-			room = new Room(roomName, Global.kurento.createMediaPipeline());
-			rooms.put(roomName, room);
+	public Room getRoom(String groupId) {
+		Group group = Group.findById(new ObjectId(groupId));
+		if(group==null){
+			return null;
 		}
-		log.debug("Room {} found!", roomName);
+		
+		Room room = rooms.get(groupId);
+		if (room == null) {
+			MediaPipeline mp = Global.kurento.createMediaPipeline();
+			mp.setName( groupId );
+			room = new Room(mp);
+			rooms.put(groupId, room);
+		}
 		return room;
 	}
 
@@ -61,9 +74,8 @@ public class RoomManager {
 	 * @throws IOException
 	 */
 	public void removeRoom(Room room) {
-		this.rooms.remove(room.getName());
+		this.rooms.remove(room.getId());
 		room.close();
-		log.info("Room {} removed and closed", room.getName());
 	}
 
 }

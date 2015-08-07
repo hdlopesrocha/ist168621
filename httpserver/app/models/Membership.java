@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
@@ -19,6 +20,16 @@ public class Membership {
 	private Document properties = new Document();
 	
 
+	public static MongoCollection<Document> collection;
+	
+	
+	public static MongoCollection<Document> getCollection(){
+		if(collection==null)
+			collection = Service.getDatabase().getCollection("memberships");
+		return collection;		
+	}
+	
+	
 	public void save() {
 		Document doc = new Document();
 		if (id != null)
@@ -29,9 +40,9 @@ public class Membership {
 		
 		
 		if (id == null)
-			Service.memberships.insertOne(doc);
+			getCollection().insertOne(doc);
 		else
-			Service.memberships.replaceOne(new Document("_id", id), doc);
+			getCollection().replaceOne(new Document("_id", id), doc);
 		
 		id = doc.getObjectId("_id");
 	}
@@ -80,7 +91,7 @@ public class Membership {
 	
 	public static List<Membership> listByUser(ObjectId id) {
 		Document doc = new Document("uid", id);
-		FindIterable<Document> iter = Service.memberships.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		Iterator<Document> i = iter.iterator();
 		List<Membership> ans = new ArrayList<Membership>();
 		while(i.hasNext()){
@@ -91,7 +102,7 @@ public class Membership {
 
 	public static Membership findByUserGroup(ObjectId uid, ObjectId gid) {
 		Document doc = new Document("gid", gid).append("uid", uid);
-		FindIterable<Document> iter = Service.memberships.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
@@ -99,7 +110,7 @@ public class Membership {
 	
 	public static List<Membership> listByGroup(ObjectId id) {
 		Document doc = new Document("gid", id);
-		FindIterable<Document> iter = Service.memberships.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		Iterator<Document> i = iter.iterator();
 		List<Membership> ans = new ArrayList<Membership>();
 		while(i.hasNext()){
@@ -110,7 +121,7 @@ public class Membership {
 	
 	public static Membership findById(ObjectId id) {
 		Document doc = new Document("_id", id);
-		FindIterable<Document> iter = Service.memberships.find(doc);
+		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
@@ -125,7 +136,7 @@ public class Membership {
 
 	public void delete() {
 		if (id != null)
-			Service.memberships.deleteOne(new Document("_id", id));		
+			getCollection().deleteOne(new Document("_id", id));		
 	}
 
 }
