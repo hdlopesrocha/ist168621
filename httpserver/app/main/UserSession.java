@@ -61,6 +61,8 @@ public class UserSession implements Closeable {
 		this.uid = uid;
 		this.groupId = roomName;
 		this.outgoingMedia = new WebRtcEndpoint.Builder(pipeline).build();
+		outgoingMedia.setStunServerAddress("173.194.67.127");
+		outgoingMedia.setStunServerPort(19302);
 		outgoingMedia.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 			@Override
@@ -83,9 +85,8 @@ public class UserSession implements Closeable {
 				}
 			}
 		});				
-
-		outgoingMedia.setStunServerAddress("173.194.67.127");
-		outgoingMedia.setStunServerPort(19302);
+		
+	
 		outgoingMedia.generateOffer(new Continuation<String>() {
 
 			@Override
