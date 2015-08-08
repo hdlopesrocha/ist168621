@@ -15,15 +15,12 @@
 package main;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bson.types.ObjectId;
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import models.Group;
 
@@ -37,9 +34,10 @@ public class RoomManager {
 	
 	
 	public RoomManager (KurentoClient kurento){
-		for(MediaPipeline mp : kurento.getServerManager().getPipelines()) {
-			System.out.println("Loaded: " + mp.getId() + " | " +mp.getName());
-			rooms.put(mp.getName(), new Room(mp));
+		for(MediaPipeline mediaPipeline : kurento.getServerManager().getPipelines()) {
+			System.out.println("Loaded: " + mediaPipeline.getId() + " | " +mediaPipeline.getName());
+			rooms.put(mediaPipeline.getName(), new Room(mediaPipeline));
+			
 		}	
 	}
 

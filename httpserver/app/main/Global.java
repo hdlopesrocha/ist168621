@@ -24,6 +24,7 @@ public class Global extends GlobalSettings {
 		kurento = KurentoClient.create("ws://enter4ward.dtdns.net:8888/kurento");
 		manager = new RoomManager(kurento);
 
+		
 	}
 
 	@Override

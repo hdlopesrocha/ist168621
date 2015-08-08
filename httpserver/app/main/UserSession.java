@@ -61,29 +61,82 @@ public class UserSession implements Closeable {
 		this.uid = uid;
 		this.groupId = roomName;
 		this.outgoingMedia = new WebRtcEndpoint.Builder(pipeline).build();
+		outgoingMedia.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
-		this.outgoingMedia
-				.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
-					@Override
-					public void onEvent(OnIceCandidateEvent event) {
-						JsonObject response = new JsonObject();
-						response.addProperty("id", "iceCandidate");
-						response.addProperty("name", uid);
-						response.add("candidate",
-								JsonUtils.toJsonObject(event.getCandidate()));
-						try {
-							synchronized (this) {
-								sendMessage(response
-										.toString());
-							}
-						} catch (Exception e) {
-							log.debug(e.getMessage());
-						}
+			@Override
+			public void onEvent(OnIceCandidateEvent event) {
+				JsonObject response = new JsonObject();
+				response.addProperty("id", "iceCandidate");
+				response.addProperty("name", uid);
+				response.add("candidate",
+						JsonUtils.toJsonObject(event.getCandidate()));
+				try {
+					synchronized (this) {
+						System.out.println(response
+								.toString());
+						
+						sendMessage(response
+								.toString());
 					}
-				});
+				} catch (Exception e) {
+					log.debug(e.getMessage());
+				}
+			}
+		});				
+
+		outgoingMedia.setStunServerAddress("173.194.67.127");
+		outgoingMedia.setStunServerPort(19302);
+		outgoingMedia.generateOffer(new Continuation<String>() {
+
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				// TODO Auto-generated method stub
+				arg0.printStackTrace();
+			}
+
+			@Override
+			public void onSuccess(String arg0) throws Exception {
+				// TODO Auto-generated method stub
+				System.out.println(arg0);
+				
+			}
+		});
+		
+		/*outgoingMedia.getRemoteSessionDescriptor(new Continuation<String>() {
+
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				// TODO Auto-generated method stub
+				arg0.printStackTrace();
+			}
+
+			@Override
+			public void onSuccess(String arg0) throws Exception {
+				System.out.println(arg0);		// TODO Auto-generated method stub
+				
+			}
+		});
+		*/
+
+	
 	}
 
+	private static Continuation<Void> cont =new Continuation<Void>() {
+
+		@Override
+		public void onError(Throwable arg0) throws Exception {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void arg0) throws Exception {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+
+	
 	public WebRtcEndpoint getOutgoingWebRtcPeer() {
 		return outgoingMedia;
 	}

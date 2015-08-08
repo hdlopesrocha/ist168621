@@ -107,8 +107,14 @@ var Kurento = (function(){
 	this.createPeerConnection = function(video){
 		Kurento.pc = new RTCPeerConnection(configuration);
 		
+		Kurento.pc.onicecandidate = function(event) {
+		    if (event.candidate) {
+		    	console.log(event);
+		    }
+		}		
 		
 		function gotDescription(desc){	
+			console.log(desc);
 			Kurento.pc.setLocalDescription(desc);			
 		}
 		    
@@ -117,12 +123,7 @@ var Kurento = (function(){
 			Kurento.pc.addStream(stream);			
 			Kurento.pc.createOffer(gotDescription, logError);
 		}, logError);
-		
-		Kurento.pc.onicecandidate = function(event) {
-		    if (event.candidate) {
-		    	console.log(event);
-		    }
-		}
+
 
 	};
 	

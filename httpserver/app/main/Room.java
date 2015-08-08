@@ -44,12 +44,11 @@ public class Room implements Closeable {
 	private final Logger log = LoggerFactory.getLogger(Room.class);
 
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
-	private final MediaPipeline pipeline;
+	private final MediaPipeline mediaPipeline;
 
-
-	public Room(MediaPipeline pipeline) {
-		this.pipeline = pipeline;
-		System.out.println("ROOM "+pipeline.getName()+" has been created");
+	public Room(MediaPipeline mediaPipeline) {
+		this.mediaPipeline = mediaPipeline;
+		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");
 	}
 
 	@PreDestroy
@@ -57,11 +56,15 @@ public class Room implements Closeable {
 		this.close();
 	}
 
+	
 	public UserSession join(String uid,WebSocket.In<String> in,
 			WebSocket.Out<String> out )
 			throws IOException {
-		System.out.println(uid + " joining " + pipeline.getName());
-		final UserSession participant = new UserSession(uid, pipeline.getName(), this.pipeline,in ,out);
+	
+
+			
+		System.out.println(uid + " joining " + mediaPipeline.getName());
+		final UserSession participant = new UserSession(uid, mediaPipeline.getName(), this.mediaPipeline,in ,out);
 		joinRoom(participant);
 		participants.put(participant.getUid(), participant);
 		System.out.println("send participant names");
@@ -70,7 +73,7 @@ public class Room implements Closeable {
 	}
 
 	public void leave(UserSession user) throws IOException {
-		log.debug("PARTICIPANT {}: Leaving room {}", user.getUid(), pipeline.getName());
+		log.debug("PARTICIPANT {}: Leaving room {}", user.getUid(), mediaPipeline.getName());
 		this.removeParticipant(user.getUid());
 		user.close();
 	}
@@ -123,7 +126,7 @@ public class Room implements Closeable {
 		if (!unnotifiedParticipants.isEmpty()) {
 			log.debug(
 					"ROOM {}: The users {} could not be notified that {} left the room",
-					pipeline.getName(), unnotifiedParticipants, uid);
+					mediaPipeline.getName(), unnotifiedParticipants, uid);
 		}
 
 	}
@@ -167,30 +170,30 @@ public class Room implements Closeable {
 				user.close();
 			} catch (IOException e) {
 				log.debug("ROOM {}: Could not invoke close on participant {}",
-						pipeline.getName(), user.getUid(), e);
+						mediaPipeline.getName(), user.getUid(), e);
 			}
 		}
 
 		participants.clear();
 
-		pipeline.release(new Continuation<Void>() {
+		mediaPipeline.release(new Continuation<Void>() {
 
 			@Override
 			public void onSuccess(Void result) throws Exception {
-				log.trace("ROOM {}: Released Pipeline", pipeline.getName());
+				log.trace("ROOM {}: Released Pipeline", mediaPipeline.getName());
 			}
 
 			@Override
 			public void onError(Throwable cause) throws Exception {
-				log.warn("PARTICIPANT {}: Could not release Pipeline",pipeline.getName());
+				log.warn("PARTICIPANT {}: Could not release Pipeline",mediaPipeline.getName());
 			}
 		});
 
-		log.debug("Room {} closed", pipeline.getName());
+		log.debug("Room {} closed", mediaPipeline.getName());
 	}
 
 	public String getId() {
-		return pipeline.getName();
+		return mediaPipeline.getName();
 	}
 
 }
