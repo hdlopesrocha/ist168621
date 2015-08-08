@@ -3,7 +3,9 @@
 <html>
 	<head>
 		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
+		<script type="text/javascript" src="/assets/js/adapter.js"></script>	
 		<script type="text/javascript" src="/assets/js/signaling.js"></script>
+		<script type="text/javascript" src="/assets/js/participant.js"></script>
 		<script type="text/javascript" src="/assets/js/kurento.js"></script>
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 	</head>
@@ -21,9 +23,19 @@
 		<h3>Members List</h3>
 		<ul id="member-list"></ul>
 	
+		<h3>My Video</h3>
+		<div class="col-md-5">
+			<video id="myvideo" autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>
+		</div>
+		
+		
+		
+		
 		<h3>Online Members</h3>
 		<ul id="online-members"></ul>
 		
+		<h3>Test</h3>
+		<div id="participants"></div>
 		<script>
 			var participants = {};
 		
@@ -36,14 +48,10 @@
 				var kparticipants = function(data){
 					$("#online-members").html("");
 					participants = data;
-					
 					for(var uid in data){
-						
 						$("#online-members").append("<li>"+data[uid]+"</li>");
-							
 					}
 				}
-		
 				
 				var knewparticipant = function(data){
 					for(var uid in data){
@@ -54,12 +62,7 @@
 					}
 				}
 				
-				
-				
-				Kurento.init("@groupId",kready,kparticipants,knewparticipant);
-				
-				
-				
+				Kurento.init("@userId","@groupId",kready,kparticipants,knewparticipant);
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
@@ -84,6 +87,10 @@
 					}
 					$("#member-list").html(html);
 				});
+	
+				var myvideo = document.getElementById("myvideo");
+				
+				Kurento.createPeerConnection(myvideo);
 				
 			});
 			

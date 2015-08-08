@@ -1,4 +1,4 @@
-function onExistingParticipants(msg) {
+function onExistingParticipants(msg, uid) {
 	var constraints = {
 		audio : true,
 		video : {
@@ -10,7 +10,6 @@ function onExistingParticipants(msg) {
 		}
 	};
 
-
 }
 
 
@@ -21,8 +20,12 @@ function onNewParticipant(msg) {
 }
 
 
-var Kurento = (function(){
 
+
+
+
+var Kurento = (function(){
+	
 	function wsurl(s) {
 	    var l = window.location;
 	    return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
@@ -32,7 +35,7 @@ var Kurento = (function(){
 		
 	
 	
-	this.init = function(groupId,ready,participants, newparticipant){
+	this.init = function(uid,groupId,ready,participants, newparticipant){
 
 		 if ("WebSocket" in window) {
 			 var path = wsurl("/ws/room/"+groupId);
@@ -49,7 +52,7 @@ var Kurento = (function(){
 					switch (obj.id) {
 						case 'existingParticipants':
 							participants(obj.data);
-							onExistingParticipants(obj);
+							onExistingParticipants(obj,uid);
 							break;
 						case 'newParticipantArrived':
 							newparticipant(obj.data);
@@ -88,6 +91,40 @@ var Kurento = (function(){
 		ws.send(JSON.stringify(data));
 	}
 	
+	
+	this.pc = null;
+
+	var configuration = {
+		iceServers: [{urls: "stun:stun.l.google.com:19302"},{urls: "stun:23.21.150.121"}]
+	}
+
+	var local_constraints = { "audio": true, "video": true };
+	
+	function logError(err){
+		console.log(err);
+	}
+	
+	this.createPeerConnection = function(video){
+		Kurento.pc = new RTCPeerConnection(configuration);
+		
+		
+		function gotDescription(desc){	
+			Kurento.pc.setLocalDescription(desc);			
+		}
+		    
+		navigator.getUserMedia(local_constraints, function (stream) {
+			video.src = URL.createObjectURL(stream);
+			Kurento.pc.addStream(stream);			
+			Kurento.pc.createOffer(gotDescription, logError);
+		}, logError);
+		
+		Kurento.pc.onicecandidate = function(event) {
+		    if (event.candidate) {
+		    	console.log(event);
+		    }
+		}
+
+	};
 	
 	
 	return this;
