@@ -71,13 +71,14 @@ public class UserSession implements Closeable {
 		outEndPoint.setStunServerPort(19302);
 		outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
+			
+			
 			@Override
 			public void onEvent(OnIceCandidateEvent event) {
 				JsonObject response = new JsonObject();
 				response.addProperty("id", "iceCandidate");
 				response.addProperty("name", uid);
-				response.add("candidate",
-						JsonUtils.toJsonObject(event.getCandidate()));
+				response.add("candidate",JsonUtils.toJsonObject(event.getCandidate()));
 				try {
 					synchronized (this) {
 						System.out.println(response

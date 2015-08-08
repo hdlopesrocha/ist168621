@@ -33,10 +33,58 @@ var Kurento = (function(){
 	
 	var ws = null;
 		
-	
-	
-	this.init = function(uid,groupId,ready,participants, newparticipant){
+	this.pc = null;
 
+	var configuration = {
+		iceServers: [{urls: "stun:stun.l.google.com:19302"},{urls: "stun:23.21.150.121"}]
+	}
+
+	var local_constraints = { "audio": true, "video": true };
+	
+	function logError(err){
+		console.log(err);
+	}
+		
+
+	
+	this.joinRoom = function(roomName){
+		var data = {
+				id:"joinRoom",
+				name:roomName
+		};
+		ws.send(JSON.stringify(data));
+	}
+	
+	
+	this.init = function(video,uid,groupId,ready,participants, newparticipant){
+
+		Kurento.pc = new RTCPeerConnection(configuration);
+		
+		Kurento.pc.onicecandidate = function(event) {
+		    if (event.candidate) {
+		    	console.log("======================");
+		    	console.log(event);
+		    }
+		}		
+		
+		function gotDescription(desc){	
+			console.log(desc);
+			Kurento.pc.setLocalDescription(desc);			
+		}
+		    
+		navigator.getUserMedia(local_constraints, function (stream) {
+			video.src = URL.createObjectURL(stream);
+			Kurento.pc.addStream(stream);			
+			Kurento.pc.createOffer(function gotDescription(desc){	
+		    	console.log(";;;;;;;;;;;;;;;;;;;;;;");
+
+				console.log(desc);
+				Kurento.pc.setLocalDescription(desc);			
+			}, logError);
+		}, logError);
+
+		
+		
 		 if ("WebSocket" in window) {
 			 var path = wsurl("/ws/room/"+groupId);
 			 ws = new WebSocket(path);
@@ -47,7 +95,7 @@ var Kurento = (function(){
 			 };
 			 
 			 ws.onmessage = function (message) {
-					console.info('Received message: ' + message.data);
+//					console.info('Received message: ' + message.data);
 					var obj = JSON.parse(message.data);
 					switch (obj.id) {
 						case 'existingParticipants':
@@ -58,7 +106,12 @@ var Kurento = (function(){
 							newparticipant(obj.data);
 							onNewParticipant(obj);
 							break;
+						case 'iceCandidate':
+							console.log(obj);
+							Kurento.pc.addIceCandidate(obj.candidate,logError);
+							break;
 						default:
+							console.info('Unknown message: ' + message.data);
 							break;
 					}
 			 
@@ -82,51 +135,8 @@ var Kurento = (function(){
         }
 				
 	}
-	
-	this.joinRoom = function(roomName){
-		var data = {
-				id:"joinRoom",
-				name:roomName
-		};
-		ws.send(JSON.stringify(data));
-	}
-	
-	
-	this.pc = null;
-
-	var configuration = {
-		iceServers: [{urls: "stun:stun.l.google.com:19302"},{urls: "stun:23.21.150.121"}]
-	}
-
-	var local_constraints = { "audio": true, "video": true };
-	
-	function logError(err){
-		console.log(err);
-	}
-	
-	this.createPeerConnection = function(video){
-		Kurento.pc = new RTCPeerConnection(configuration);
-		
-		Kurento.pc.onicecandidate = function(event) {
-		    if (event.candidate) {
-		    	console.log(event);
-		    }
-		}		
-		
-		function gotDescription(desc){	
-			console.log(desc);
-			Kurento.pc.setLocalDescription(desc);			
-		}
-		    
-		navigator.getUserMedia(local_constraints, function (stream) {
-			video.src = URL.createObjectURL(stream);
-			Kurento.pc.addStream(stream);			
-			Kurento.pc.createOffer(gotDescription, logError);
-		}, logError);
 
 
-	};
-	
 	
 	return this;
 })();

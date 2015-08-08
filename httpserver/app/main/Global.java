@@ -21,7 +21,7 @@ public class Global extends GlobalSettings {
 		System.out.println(Service.getCurrentTime());
 	//	Setup.main(null);
 	
-		kurento = KurentoClient.create("ws://localhost:8888/kurento");
+		kurento = KurentoClient.create("ws://enter4ward.dtdns.net:8888/kurento");
 		manager = new RoomManager(kurento);
 
 		

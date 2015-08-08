@@ -61,8 +61,9 @@
 						}
 					}
 				}
-				
-				Kurento.init("@userId","@groupId",kready,kparticipants,knewparticipant);
+
+				var myvideo = document.getElementById("myvideo");
+				Kurento.init(myvideo,"@userId","@groupId",kready,kparticipants,knewparticipant);
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
@@ -88,9 +89,6 @@
 					$("#member-list").html(html);
 				});
 	
-				var myvideo = document.getElementById("myvideo");
-				
-				Kurento.createPeerConnection(myvideo);
 				
 			});
 			
