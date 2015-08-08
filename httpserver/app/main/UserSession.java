@@ -50,7 +50,7 @@ public class UserSession implements Closeable {
 	private WebSocket.In<String> in;
 	private WebSocket.Out<String> out;
 	private final String groupId;
-	private final WebRtcEndpoint outgoingMedia;
+	private final WebRtcEndpoint outEndPoint,inEndPoint=null;
 	private final ConcurrentMap<String, WebRtcEndpoint> incomingMedia = new ConcurrentHashMap<>();
 
 	public UserSession(final String uid, String roomName, MediaPipeline pipeline,WebSocket.In<String> in,
@@ -60,10 +60,16 @@ public class UserSession implements Closeable {
 		this.pipeline = pipeline;
 		this.uid = uid;
 		this.groupId = roomName;
-		this.outgoingMedia = new WebRtcEndpoint.Builder(pipeline).build();
-		outgoingMedia.setStunServerAddress("173.194.67.127");
-		outgoingMedia.setStunServerPort(19302);
-		outgoingMedia.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
+	//	this.inEndPoint = new WebRtcEndpoint.Builder(pipeline).build();
+		this.outEndPoint = new WebRtcEndpoint.Builder(pipeline).build();
+		
+	//	this.inEndPoint.connect(outEndPoint);
+	//	this.outEndPoint.connect(inEndPoint);
+		
+		
+		outEndPoint.setStunServerAddress("173.194.67.127");
+		outEndPoint.setStunServerPort(19302);
+		outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 			@Override
 			public void onEvent(OnIceCandidateEvent event) {
@@ -87,7 +93,7 @@ public class UserSession implements Closeable {
 		});				
 		
 	
-		outgoingMedia.generateOffer(new Continuation<String>() {
+		outEndPoint.generateOffer(new Continuation<String>() {
 
 			@Override
 			public void onError(Throwable arg0) throws Exception {
@@ -99,9 +105,11 @@ public class UserSession implements Closeable {
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
 				System.out.println(arg0);
+				outEndPoint.gatherCandidates();
 				
 			}
 		});
+		
 		
 		/*outgoingMedia.getRemoteSessionDescriptor(new Continuation<String>() {
 
@@ -139,7 +147,7 @@ public class UserSession implements Closeable {
 
 	
 	public WebRtcEndpoint getOutgoingWebRtcPeer() {
-		return outgoingMedia;
+		return outEndPoint;
 	}
 
 	/**
@@ -200,7 +208,7 @@ public class UserSession implements Closeable {
 	private WebRtcEndpoint getEndpointForUser(final UserSession sender) {
 		if (sender.getUid().equals(uid)) {
 			log.debug("PARTICIPANT {}: configuring loopback", this.uid);
-			return outgoingMedia;
+			return outEndPoint;
 		}
 
 		log.debug("PARTICIPANT {}: receiving video from {}", this.uid,
@@ -307,7 +315,7 @@ public class UserSession implements Closeable {
 			});
 		}
 
-		outgoingMedia.release(new Continuation<Void>() {
+		outEndPoint.release(new Continuation<Void>() {
 
 			@Override
 			public void onSuccess(Void result) throws Exception {
@@ -332,7 +340,7 @@ public class UserSession implements Closeable {
 
 	public void addCandidate(IceCandidate e, String name) {
 		if (this.uid.compareTo(name) == 0) {
-			outgoingMedia.addIceCandidate(e);
+			outEndPoint.addIceCandidate(e);
 		} else {
 			WebRtcEndpoint webRtc = incomingMedia.get(name);
 			if (webRtc != null) {
