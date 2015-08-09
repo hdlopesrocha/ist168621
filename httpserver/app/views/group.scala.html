@@ -44,26 +44,23 @@
 				var kready = function(){				
 					Kurento.joinRoom("@groupId");
 				}
-				
-				var kparticipants = function(data){
-					$("#online-members").html("");
-					participants = data;
-					for(var uid in data){
-						$("#online-members").append("<li>"+data[uid]+"</li>");
+								
+				var kparticipants = function(userId, email){
+					if(!participants[userId]){
+						$("#online-members").append("<li>"+email+"</li>");
+						participants[userId] = email;						
 					}
 				}
 				
-				var knewparticipant = function(data){
-					for(var uid in data){
-						if(!participants[uid]){
-							$("#online-members").append("<li>"+data[uid]+"</li>");
-							participants[uid] = data[uid];
-						}
-					}
+				var kvideo = function(userId){
+					var newVideoId = "video"+userId;
+					$("#participants").append("<video id='"+userId+"' autoplay width='240px' height='180px' poster='/assets/images/webrtc.png'></video>");
+					return document.getElementById(newVideoId);
 				}
-
+				
+			
 				var myvideo = document.getElementById("myvideo");
-				Kurento.init(myvideo,"@userId","@groupId",kready,kparticipants,knewparticipant);
+				Kurento.init(myvideo,"@userId","@groupId",kready,kparticipants,kvideo);
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){

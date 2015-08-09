@@ -28,11 +28,11 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Continuation;
 import org.kurento.client.MediaPipeline;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.kurento.client.WebRtcEndpoint;
 
 import com.google.gson.JsonObject;
 
+import models.Group;
 import models.User;
 import play.mvc.WebSocket;
 
@@ -41,13 +41,14 @@ import play.mvc.WebSocket;
  * @since 4.3.1
  */
 public class Room implements Closeable {
-	private final Logger log = LoggerFactory.getLogger(Room.class);
 
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
 	private final MediaPipeline mediaPipeline;
-
+	private final Group group;
+	
 	public Room(MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
+		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");
 	}
 
@@ -56,56 +57,36 @@ public class Room implements Closeable {
 		this.close();
 	}
 
+	public String getGroupId() {
+		return group.getId().toString();
+	}
+
+	public WebRtcEndpoint createWebRtcEndPoint(){
+		return new WebRtcEndpoint.Builder(mediaPipeline).build();
+	}
 	
-	public UserSession join(String uid,WebSocket.In<String> in,
-			WebSocket.Out<String> out )
+	
+	public UserSession join(User user,	WebSocket.Out<String> out )
 			throws IOException {
 	
-
-			
-		System.out.println(uid + " joining " + mediaPipeline.getName());
-		final UserSession participant = new UserSession(uid, mediaPipeline.getName(), this.mediaPipeline,in ,out);
-		joinRoom(participant);
-		participants.put(participant.getUid(), participant);
-		System.out.println("send participant names");
+		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
+		final UserSession participant = new UserSession(user, this, out);
+		final JSONObject data = new JSONObject().put(user.getId().toString(),user.getEmail());
+		final JSONObject msg = new JSONObject().put("id", "newParticipantArrived").put("data", data);
+		for (final UserSession session : participants.values()) {
+			session.sendMessage(msg.toString());
+		}		
+		participants.put(participant.getUserId(), participant);
 		sendParticipantNames(participant);
 		return participant;
 	}
 
 	public void leave(UserSession user) throws IOException {
-		log.debug("PARTICIPANT {}: Leaving room {}", user.getUid(), mediaPipeline.getName());
-		this.removeParticipant(user.getUid());
+		this.removeParticipant(user.getUserId());
 		user.close();
 	}
 
-	/**
-	 * @param participant
-	 * @throws IOException
-	 */
-	private Collection<String> joinRoom(UserSession participant)
-			throws IOException {
-		JSONObject data = new JSONObject();
-		
-		User user = User.findById(new ObjectId(participant.getUid()));
 
-		
-		data.put(user.getId().toString(),user.getEmail());
-
-		final JSONObject msg = new JSONObject();
-		msg.put("id", "newParticipantArrived");
-		msg.put("data", data);
-
-		final List<String> participantsList = new ArrayList<>(participants
-				.values().size());
-	
-
-		for (final UserSession session : participants.values()) {
-			session.sendMessage(msg.toString());
-			participantsList.add(session.getUid());
-		}
-
-		return participantsList;
-	}
 
 	private void removeParticipant(String uid) throws IOException {
 		participants.remove(uid);
@@ -119,23 +100,21 @@ public class Room implements Closeable {
 				participant.cancelVideoFrom(uid);
 				participant.sendMessage(participantLeftJson);
 			} catch (final IOException e) {
-				unnotifiedParticipants.add(participant.getUid());
+				unnotifiedParticipants.add(participant.getUserId());
 			}
 		}
 
 		if (!unnotifiedParticipants.isEmpty()) {
-			log.debug(
-					"ROOM {}: The users {} could not be notified that {} left the room",
-					mediaPipeline.getName(), unnotifiedParticipants, uid);
+
 		}
 
 	}
 
-	public void sendParticipantNames(UserSession session) throws IOException {
+	private void sendParticipantNames(UserSession session) throws IOException {
 
 		final JSONObject data = new JSONObject();
 		for (final UserSession participant : this.getParticipants()) {
-			User user = User.findById(new ObjectId(participant.getUid()));
+			User user = User.findById(new ObjectId(participant.getUserId()));
 			
 			//if (!participant.equals(user)) {
 			data.put(user.getId().toString(),user.getEmail());
@@ -169,31 +148,24 @@ public class Room implements Closeable {
 			try {
 				user.close();
 			} catch (IOException e) {
-				log.debug("ROOM {}: Could not invoke close on participant {}",
-						mediaPipeline.getName(), user.getUid(), e);
+				e.printStackTrace();
 			}
 		}
-
 		participants.clear();
-
 		mediaPipeline.release(new Continuation<Void>() {
 
 			@Override
 			public void onSuccess(Void result) throws Exception {
-				log.trace("ROOM {}: Released Pipeline", mediaPipeline.getName());
 			}
 
 			@Override
 			public void onError(Throwable cause) throws Exception {
-				log.warn("PARTICIPANT {}: Could not release Pipeline",mediaPipeline.getName());
 			}
 		});
-
-		log.debug("Room {} closed", mediaPipeline.getName());
 	}
 
 	public String getId() {
-		return mediaPipeline.getName();
+		return group.getId().toString();
 	}
 
 }

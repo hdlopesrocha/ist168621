@@ -2,11 +2,13 @@ package controllers;
 
 import java.io.IOException;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import main.Global;
 import main.Room;
 import main.UserSession;
+import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
@@ -21,10 +23,11 @@ public class WSController extends Controller {
 		return new WebSocket<String>() {
 			public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
 				Room room = Global.manager.getRoom(groupId);
+				User user = User.findById(new ObjectId(uid));
 				try {
 					if (room != null) {
 						// Join room
-						final UserSession usession = room.join(uid,in,out);
+						final UserSession usession = room.join(user,out);
 
 						// When the socket is closed.
 						in.onClose(new Callback0() {
