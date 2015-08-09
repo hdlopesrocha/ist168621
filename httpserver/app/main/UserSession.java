@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.json.JSONObject;
+import org.kurento.client.AudioCaps;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -53,7 +55,7 @@ public class UserSession implements Closeable {
 
 		// this.inEndPoint.connect(outEndPoint);
 		// this.outEndPoint.connect(inEndPoint);
-
+		
 		outEndPoint.setStunServerAddress("173.194.67.127");
 		outEndPoint.setStunServerPort(19302);
 		outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
@@ -75,6 +77,7 @@ public class UserSession implements Closeable {
 				}
 			}
 		});
+		
 
 		outEndPoint.generateOffer(new Continuation<String>() {
 
@@ -87,9 +90,20 @@ public class UserSession implements Closeable {
 			@Override
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
-				System.out.println(arg0);
+				JSONObject response = new JSONObject();
+				response.put("id", "sessionDescription");
+				response.put("userId", user.getId().toString());
+				response.put("sdp", arg0);
+				response.put("type", "offer");
+				try {
+					synchronized (this) {
+						System.out.println(response.toString());
+						sendMessage(response.toString());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
 				outEndPoint.gatherCandidates();
-
 			}
 		});
 	}
