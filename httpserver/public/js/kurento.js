@@ -61,12 +61,6 @@ var Kurento = (function() {
 			}
 		}
 
-		Kurento.pc.onaddstream = function(stream){
-			console.log("Local Stream Added!");
-		}
-		
-		
-
 		navigator.getUserMedia(local_constraints, function(stream) {
 			video.src = URL.createObjectURL(stream);
 			Kurento.pc.addStream(stream);

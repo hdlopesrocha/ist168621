@@ -161,7 +161,10 @@ public class UserSession implements Closeable {
 		WebRtcEndpoint incoming = inEndPoints.get(sender.getUserId());
 		if (incoming == null) {
 			incoming = room.createWebRtcEndPoint();
+			incoming.connect(outEndPoint);
+			outEndPoint.connect(incoming);
 
+			
 			incoming.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 				@Override
