@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.json.JSONObject;
-import org.kurento.client.AudioCaps;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -50,9 +49,9 @@ public class UserSession implements Closeable {
 		this.out = out;
 		this.user = user;
 		this.room = room;
-		// this.inEndPoint = new WebRtcEndpoint.Builder(pipeline).build();
-		this.outEndPoint =room.createWebRtcEndPoint();
 
+		// XXX [ICE_01] XXX
+		this.outEndPoint =room.createWebRtcEndPoint();
 		// this.inEndPoint.connect(outEndPoint);
 		// this.outEndPoint.connect(inEndPoint);
 		
@@ -61,51 +60,20 @@ public class UserSession implements Closeable {
 		outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 			@Override
-			public void onEvent(OnIceCandidateEvent event) {
-				JsonObject response = new JsonObject();
-				response.addProperty("id", "iceCandidate");
-				response.addProperty("userId", user.getId().toString());
-				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+			public void onEvent(OnIceCandidateEvent arg0) {
 				try {
 					synchronized (this) {
-						System.out.println(response.toString());
-
-						sendMessage(response.toString());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-
-		outEndPoint.generateOffer(new Continuation<String>() {
-
-			@Override
-			public void onError(Throwable arg0) throws Exception {
-				// TODO Auto-generated method stub
-				arg0.printStackTrace();
-			}
-
-			@Override
-			public void onSuccess(String arg0) throws Exception {
-				// TODO Auto-generated method stub
-				JSONObject response = new JSONObject();
-				response.put("id", "sessionDescription");
-				response.put("userId", user.getId().toString());
-				response.put("sdp", arg0);
-				response.put("type", "offer");
-				try {
-					synchronized (this) {
-						System.out.println(response.toString());
-						sendMessage(response.toString());
+						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+						System.out.println(JsonUtils.toJsonObject(arg0.getCandidate()));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
-				outEndPoint.gatherCandidates();
 			}
 		});
+		
+		
+		
 	}
 
 	public WebRtcEndpoint getOutgoingWebRtcPeer() {
@@ -140,11 +108,11 @@ public class UserSession implements Closeable {
 	public void receiveVideoFrom(UserSession sender, String sdpOffer) throws IOException {
 
 		final String ipSdpAnswer = this.getEndpointForUser(sender).processOffer(sdpOffer);
-		final JsonObject scParams = new JsonObject();
-		scParams.addProperty("id", "receiveVideoAnswer");
-		scParams.addProperty("name", sender.getUserId());
-		scParams.addProperty("sdpAnswer", ipSdpAnswer);
-		this.sendMessage(scParams);
+		final JSONObject scParams = new JSONObject();
+		scParams.put("id", "receiveVideoAnswer");
+		scParams.put("name", sender.getUserId());
+		scParams.put("sdpAnswer", ipSdpAnswer);
+		this.sendMessage(scParams.toString());
 		this.getEndpointForUser(sender).gatherCandidates();
 	}
 
@@ -175,6 +143,8 @@ public class UserSession implements Closeable {
 					response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 					try {
 						synchronized (this) {
+							System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+							System.out.println(response.toString());
 							sendMessage(response.toString());
 						}
 					} catch (Exception e) {
@@ -220,11 +190,7 @@ public class UserSession implements Closeable {
 		outEndPoint.release();
 	}
 
-	public void sendMessage(JsonObject message) throws IOException {
-		synchronized (this) {
-			sendMessage(message.toString());
-		}
-	}
+
 
 	public void addCandidate(IceCandidate e, String name) {
 		if (getUserId().compareTo(name) == 0) {

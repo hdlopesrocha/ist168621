@@ -6,7 +6,9 @@
 		<script type="text/javascript" src="/assets/js/adapter.js"></script>	
 		<script type="text/javascript" src="/assets/js/signaling.js"></script>
 		<script type="text/javascript" src="/assets/js/participant.js"></script>
-		<script type="text/javascript" src="/assets/js/kurento.js"></script>
+		<script type="text/javascript" src="/assets/js/kurento_main.js"></script>
+		<script type="text/javascript" src="/assets/js/kurento_sender.js"></script>
+		<script type="text/javascript" src="/assets/js/kurento_receiver.js"></script>
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 	</head>
 	<body>
@@ -40,11 +42,6 @@
 			var participants = {};
 		
 			$( document ).ready(function() {
-			
-				var kready = function(){				
-					Kurento.joinRoom("@groupId");
-				}
-								
 				var kparticipants = function(userId, email){
 					if(!participants[userId]){
 						$("#online-members").append("<li>"+email+"</li>");
@@ -52,6 +49,16 @@
 					}
 				}
 				
+				
+				var myvideo = document.getElementById("myvideo");
+				
+				Kurento.start("@groupId", function(){
+					KurentoSender.start(myvideo);
+					KurentoReceiver.start(kparticipants);
+							
+				});
+								
+			
 				var kvideo = function(userId){
 					var newVideoId = "video"+userId;
 					$("#participants").append("<video id='"+newVideoId+"' autoplay width='240px' height='180px' poster='/assets/images/webrtc.png'></video>");
@@ -59,8 +66,7 @@
 				}
 				
 			
-				var myvideo = document.getElementById("myvideo");
-				Kurento.init(myvideo,"@userId","@groupId",kready,kparticipants,kvideo);
+				
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){

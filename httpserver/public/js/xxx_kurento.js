@@ -38,37 +38,13 @@ var Kurento = (function() {
 	}
 
 	this.joinRoom = function(roomName) {
-		var data = {
+		ws.send(JSON.stringify({
 			id : "joinRoom",
 			name : roomName
-		};
-		ws.send(JSON.stringify(data));
+		}));
 	}
 
 	this.init = function(video, uid, groupId, ready, newParticipantsCallback, createVideoCallback) {
-
-		Kurento.pc = new RTCPeerConnection(configuration);
-
-		
-		Kurento.pc.onnegotiationneeded=function(){
-			console.log("Negotiation Needed!");
-		};
-		
-		
-		Kurento.pc.onicecandidate = function(event) {
-			if (event.candidate) {
-			//	console.log(event);
-			}
-		}
-
-		navigator.getUserMedia(local_constraints, function(stream) {
-			video.src = URL.createObjectURL(stream);
-			Kurento.pc.addStream(stream);
-			Kurento.pc.createOffer(function (desc) {
-			//	console.log(desc);
-				Kurento.pc.setLocalDescription(desc);
-			}, logError);
-		}, logError);
 
 		if ("WebSocket" in window) {
 			var path = wsurl("/ws/room/" + groupId);
@@ -78,7 +54,7 @@ var Kurento = (function() {
 				console.log("Error!");
 
 			};
-
+			
 			ws.onmessage = function(message) {
 				//					console.info('Received message: ' + message.data);
 				var obj = JSON.parse(message.data);
@@ -119,7 +95,19 @@ var Kurento = (function() {
 						console.log(sdp)
 					},logError);
 					break;
+				case 'description':
+					var sdp = new RTCSessionDescription(obj.data);
+
+					console.log("description");
+					console.log(sdp);
+					// XXX [CLIENT_OFFER_08] XXX
+					Kurento.pc.setRemoteDescription(sdp, function(){
+						console.log("setRemoteDescription")
+						console.log(sdp)
+					},logError);
+		
 					
+					break;	
 				case 'iceCandidate':
 					var candidate = new RTCIceCandidate(obj.candidate);
 										
@@ -148,6 +136,44 @@ var Kurento = (function() {
 		} else {
 			console.log("no websocket support!");
 		}
+		
+		
+		// XXX [CLIENT_ICE_01] XXX
+		Kurento.pc = new RTCPeerConnection(configuration);
+
+		// XXX [CLIENT_ICE_02] XXX		
+		Kurento.pc.onicecandidate = function(event) {
+			if (event.candidate) {
+				console.log("onicecandidate");
+				console.log(event);
+				// XXX [CLIENT_ICE_03] XXX
+				ws.send(JSON.stringify({
+					id : "iceCandidate",
+					candidate : event.candidate
+				}));
+			}
+		}
+
+		// XXX [CLIENT_OFFER_01] XXX
+		navigator.getUserMedia(local_constraints, function(stream) {
+			video.src = URL.createObjectURL(stream);
+			Kurento.pc.addStream(stream);
+			Kurento.pc.createOffer(function (desc) {
+				console.log("createOffer");
+				console.log(desc);
+				// XXX [CLIENT_OFFER_02] XXX
+				Kurento.pc.setLocalDescription(desc);
+				// XXX [CLIENT_OFFER_03] XXX
+				ws.send(JSON.stringify({
+					id : "description",
+					description : desc
+				}));
+				
+				
+			}, logError);
+		}, logError);
+
+		
 	}
 
 	return this;

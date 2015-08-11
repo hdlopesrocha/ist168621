@@ -92,16 +92,16 @@ public class Room implements Closeable {
 		participants.remove(uid);
 
 		final List<String> unnotifiedParticipants = new ArrayList<>();
-		final JsonObject participantLeftJson = new JsonObject();
-		participantLeftJson.addProperty("id", "participantLeft");
-		participantLeftJson.addProperty("uid", uid);
+		final JSONObject participantLeftJson = new JSONObject();
+		participantLeftJson.put("id", "participantLeft");
+		participantLeftJson.put("uid", uid);
 		for (final UserSession participant : participants.values()) {
-			try {
+			//try {
 				participant.cancelVideoFrom(uid);
-				participant.sendMessage(participantLeftJson);
-			} catch (final IOException e) {
-				unnotifiedParticipants.add(participant.getUserId());
-			}
+				participant.sendMessage(participantLeftJson.toString());
+			//} catch (final IOException e) {
+			//	unnotifiedParticipants.add(participant.getUserId());
+			//}
 		}
 
 		if (!unnotifiedParticipants.isEmpty()) {
