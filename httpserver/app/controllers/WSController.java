@@ -61,39 +61,14 @@ public class WSController extends Controller {
 									String description = args.getJSONObject("data").getString("sdp").toString();
 									System.out.println(description);
 									
-									usession.getOutgoingWebRtcPeer().gatherCandidates(new Continuation<Void>() {
-
-										@Override
-										public void onError(Throwable arg0) throws Exception {
-											// TODO Auto-generated method stub
-											
-										}
-
-										@Override
-										public void onSuccess(Void arg0) throws Exception {
-											// TODO Auto-generated method stub
-											
-										}
-									});
-
+				
 									
-									usession.getOutgoingWebRtcPeer().processOffer(description,new Continuation<String>() {
-										
-										@Override
-										public void onSuccess(String arg0) throws Exception {											
-											// XXX [CLIENT_OFFER_06] XXX
-											JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
-											// XXX [CLIENT_OFFER_07] XXX
-											usession.sendMessage(msg.toString());
-										}
-										
-										@Override
-										public void onError(Throwable arg0) throws Exception {
-											// TODO Auto-generated method stub
-											arg0.printStackTrace();
-										}
-									});
-								
+									String arg0 = usession.getOutgoingWebRtcPeer().processOffer(description);	// XXX [CLIENT_OFFER_06] XXX
+									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
+									// XXX [CLIENT_OFFER_07] XXX
+									usession.sendMessage(msg.toString());
+									usession.getOutgoingWebRtcPeer().gatherCandidates();
+	
 									
 									
 									
@@ -102,7 +77,6 @@ public class WSController extends Controller {
 									// XXX [CLIENT_ICE_04] XXX		
 									JSONObject jCand = args.getJSONObject("candidate");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"), jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									
 									
 									usession.getOutgoingWebRtcPeer().addIceCandidate(candidate,new Continuation<Void>() {
 

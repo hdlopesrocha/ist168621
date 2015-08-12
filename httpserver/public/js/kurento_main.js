@@ -12,12 +12,12 @@ var configuration = {
 }
 
 var local_constraints = {
-		"audio" : false,
+		"audio" : true,
 		"video" : true
 };
 	
 var remote_constraints = { 
-		'OfferToReceiveAudio':false, 
+		'OfferToReceiveAudio':true, 
 		'OfferToReceiveVideo':true 
 };
 

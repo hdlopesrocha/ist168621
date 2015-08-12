@@ -51,7 +51,7 @@
 				
 				
 				var myvideo = document.getElementById("myvideo");
-				
+				myvideo.muted = true;
 				Kurento.start("@groupId", function(){
 					KurentoSender.start(myvideo);
 					KurentoReceiver.start(kparticipants);

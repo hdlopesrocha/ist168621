@@ -20,10 +20,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.json.JSONObject;
+import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.OnIceComponentStateChangedEvent;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -72,8 +75,34 @@ public class UserSession implements Closeable {
 			}
 		});
 		
+		outEndPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
+
+			@Override
+			public void onEvent(ConnectionStateChangedEvent arg0) {
+				System.out.println("ConnectionState: "+ arg0.getNewState().toString());
+				
+			}
+		});
 		
+		outEndPoint.addErrorListener(new EventListener<ErrorEvent>() {
+			
+			@Override
+			public void onEvent(ErrorEvent arg0) {
+				System.out.println("ERRRRRRRRRRRRRROR");
+				System.out.println(arg0.getDescription());
+			}
+		});
+	
 		
+		outEndPoint.addOnIceComponentStateChangedListener(new EventListener<OnIceComponentStateChangedEvent>() {
+
+			@Override
+			public void onEvent(OnIceComponentStateChangedEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("ICE changed !!!!");
+				System.out.println(arg0.getState().toString());
+			}
+		});
 	}
 
 	public WebRtcEndpoint getOutgoingWebRtcPeer() {
@@ -100,21 +129,7 @@ public class UserSession implements Closeable {
 		return room.getGroupId();
 	}
 
-	/**
-	 * @param sender
-	 * @param sdpOffer
-	 * @throws IOException
-	 */
-	public void receiveVideoFrom(UserSession sender, String sdpOffer) throws IOException {
 
-		final String ipSdpAnswer = this.getEndpointForUser(sender).processOffer(sdpOffer);
-		final JSONObject scParams = new JSONObject();
-		scParams.put("id", "receiveVideoAnswer");
-		scParams.put("name", sender.getUserId());
-		scParams.put("sdpAnswer", ipSdpAnswer);
-		this.sendMessage(scParams.toString());
-		this.getEndpointForUser(sender).gatherCandidates();
-	}
 
 	/**
 	 * @param sender
@@ -165,7 +180,7 @@ public class UserSession implements Closeable {
 	 * @param sender
 	 *            the participant
 	 */
-	public void cancelVideoFrom(final UserSession sender) {
+private void cancelVideoFrom(final UserSession sender) {
 		this.cancelVideoFrom(sender.getUserId());
 	}
 
@@ -173,7 +188,7 @@ public class UserSession implements Closeable {
 	 * @param senderName
 	 *            the participant
 	 */
-	public void cancelVideoFrom(final String senderName) {
+	private void cancelVideoFrom(final String senderName) {
 		final WebRtcEndpoint incoming = inEndPoints.remove(senderName);
 
 		incoming.release(EMPTY_CONTINUATION);
@@ -192,7 +207,7 @@ public class UserSession implements Closeable {
 
 
 
-	public void addCandidate(IceCandidate e, String name) {
+	private void addCandidate(IceCandidate e, String name) {
 		if (getUserId().compareTo(name) == 0) {
 			outEndPoint.addIceCandidate(e);
 		} else {

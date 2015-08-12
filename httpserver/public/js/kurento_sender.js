@@ -22,6 +22,7 @@ var KurentoSender = new (function() {
 					id : "iceCandidate",
 					candidate : event.candidate
 				}));
+				console.log(KurentoSender.pc);
 			}
 		}
 
@@ -53,6 +54,7 @@ var KurentoSender = new (function() {
 		var obj = JSON.parse(message.data);
 		switch (obj.id) {
 			case 'description':
+				console.log(obj);
 				var sdp = new RTCSessionDescription(obj);
 
 				console.log("description");
@@ -64,7 +66,8 @@ var KurentoSender = new (function() {
 				},logError);
 	
 				
-				break;	
+				break;
+				
 			default:
 				break;
 		}
