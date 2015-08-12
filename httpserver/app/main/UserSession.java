@@ -66,8 +66,7 @@ public class UserSession implements Closeable {
 			public void onEvent(OnIceCandidateEvent arg0) {
 				try {
 					synchronized (this) {
-						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-						System.out.println(JsonUtils.toJsonObject(arg0.getCandidate()));
+						System.out.println("onIceCandidate: "+JsonUtils.toJsonObject(arg0.getCandidate()));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,34 +74,6 @@ public class UserSession implements Closeable {
 			}
 		});
 		
-		outEndPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
-
-			@Override
-			public void onEvent(ConnectionStateChangedEvent arg0) {
-				System.out.println("ConnectionState: "+ arg0.getNewState().toString());
-				
-			}
-		});
-		
-		outEndPoint.addErrorListener(new EventListener<ErrorEvent>() {
-			
-			@Override
-			public void onEvent(ErrorEvent arg0) {
-				System.out.println("ERRRRRRRRRRRRRROR");
-				System.out.println(arg0.getDescription());
-			}
-		});
-	
-		
-		outEndPoint.addOnIceComponentStateChangedListener(new EventListener<OnIceComponentStateChangedEvent>() {
-
-			@Override
-			public void onEvent(OnIceComponentStateChangedEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("ICE changed !!!!");
-				System.out.println(arg0.getState().toString());
-			}
-		});
 	}
 
 	public WebRtcEndpoint getOutgoingWebRtcPeer() {
