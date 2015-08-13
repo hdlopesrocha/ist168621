@@ -36,6 +36,7 @@ var KurentoSender = new (function() {
 				// XXX [CLIENT_OFFER_03] XXX
 				Kurento.ws.send(JSON.stringify({
 					id : "description",
+					uid:userId,
 					data : desc
 				}));
 				

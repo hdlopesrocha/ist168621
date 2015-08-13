@@ -59,10 +59,6 @@ public class WSController extends Controller {
 									// XXX [CLIENT_OFFER_05] XXX
 									
 									String description = args.getJSONObject("data").getString("sdp").toString();
-									System.out.println(description);
-									
-				
-									
 									String arg0 = usession.getOutgoingWebRtcPeer().processOffer(description);	// XXX [CLIENT_OFFER_06] XXX
 									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 									// XXX [CLIENT_OFFER_07] XXX
