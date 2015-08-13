@@ -30,8 +30,6 @@ import org.kurento.client.Continuation;
 import org.kurento.client.MediaPipeline;
 import org.kurento.client.WebRtcEndpoint;
 
-import com.google.gson.JsonObject;
-
 import models.Group;
 import models.User;
 import play.mvc.WebSocket;
@@ -72,17 +70,17 @@ public class Room implements Closeable {
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
 		final JSONObject data = new JSONObject().put(user.getId().toString(),user.getEmail());
-		final JSONObject msg = new JSONObject().put("id", "newParticipantArrived").put("data", data);
+		final JSONObject msg = new JSONObject().put("id", "participants").put("data", data);
 		for (final UserSession session : participants.values()) {
 			session.sendMessage(msg.toString());
 		}		
-		participants.put(participant.getUserId(), participant);
+		participants.put(participant.getUser().getId().toString(), participant);
 		sendParticipantNames(participant);
 		return participant;
 	}
 
 	public void leave(UserSession user) throws IOException {
-		this.removeParticipant(user.getUserId());
+		this.removeParticipant(user.getUser().getId().toString());
 		user.close();
 	}
 
@@ -114,7 +112,7 @@ public class Room implements Closeable {
 
 		final JSONObject data = new JSONObject();
 		for (final UserSession participant : this.getParticipants()) {
-			User user = User.findById(new ObjectId(participant.getUserId()));
+			User user = participant.getUser();
 			
 			//if (!participant.equals(user)) {
 			data.put(user.getId().toString(),user.getEmail());
@@ -122,7 +120,7 @@ public class Room implements Closeable {
 		}
 
 		final JSONObject msg = new JSONObject();
-		msg.put("id", "existingParticipants");
+		msg.put("id", "participants");
 		msg.put("data", data);
 		session.sendMessage(msg.toString());
 	}

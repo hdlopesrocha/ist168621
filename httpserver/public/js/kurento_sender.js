@@ -6,7 +6,7 @@ var KurentoSender = new (function() {
 	this.pc = null;
 	
 
-	this.start = function(video){
+	this.start = function(userId,video){
 		
 		// XXX [CLIENT_ICE_01] XXX
 		console.log(configuration);
@@ -15,14 +15,12 @@ var KurentoSender = new (function() {
 		// XXX [CLIENT_ICE_02] XXX		
 		KurentoSender.pc.onicecandidate = function(event) {
 			if (event.candidate) {
-				console.log("onicecandidate");
-				console.log(event);
 				// XXX [CLIENT_ICE_03] XXX
 				Kurento.ws.send(JSON.stringify({
 					id : "iceCandidate",
+					uid : userId,
 					candidate : event.candidate
 				}));
-				console.log(KurentoSender.pc);
 			}
 		}
 
@@ -50,12 +48,11 @@ var KurentoSender = new (function() {
 
 	
 
-	this.onmessage = function(message) {
-		var obj = JSON.parse(message.data);
-		switch (obj.id) {
+	this.onmessage = function(id,message) {
+		switch (id) {
 			case 'description':
-				console.log(obj);
-				var sdp = new RTCSessionDescription(obj);
+				console.log(id, message);
+				var sdp = new RTCSessionDescription(message);
 
 				console.log("description");
 				console.log(sdp);

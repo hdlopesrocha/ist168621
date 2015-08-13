@@ -19,14 +19,10 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.json.JSONObject;
-import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
-import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
-import org.kurento.client.OnIceComponentStateChangedEvent;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -80,13 +76,6 @@ public class UserSession implements Closeable {
 		return outEndPoint;
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getUserId() {
-		return user.getId().toString();
-	}
-
 	public void sendMessage(String string) {
 		out.write(string);
 	}
@@ -108,11 +97,11 @@ public class UserSession implements Closeable {
 	 * @return the endpoint used to receive media from a certain user
 	 */
 	private WebRtcEndpoint getEndpointForUser(final UserSession sender) {
-		if (sender.getUserId().equals(getUserId())) {
+		if (sender.getUser().equals(user)) {
 			return outEndPoint;
 		}
-
-		WebRtcEndpoint incoming = inEndPoints.get(sender.getUserId());
+		String senderId = sender.getUser().getId().toString();
+		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
 			incoming = room.createWebRtcEndPoint();
 			incoming.connect(outEndPoint);
@@ -125,7 +114,7 @@ public class UserSession implements Closeable {
 				public void onEvent(OnIceCandidateEvent event) {
 					JsonObject response = new JsonObject();
 					response.addProperty("id", "iceCandidate");
-					response.addProperty("userId", sender.getUserId());
+					response.addProperty("userId", senderId);
 					response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 					try {
 						synchronized (this) {
@@ -139,7 +128,7 @@ public class UserSession implements Closeable {
 				}
 			});
 
-			inEndPoints.put(sender.getUserId(), incoming);
+			inEndPoints.put(senderId, incoming);
 		}
 
 		sender.getOutgoingWebRtcPeer().connect(incoming);
@@ -152,7 +141,7 @@ public class UserSession implements Closeable {
 	 *            the participant
 	 */
 private void cancelVideoFrom(final UserSession sender) {
-		this.cancelVideoFrom(sender.getUserId());
+		this.cancelVideoFrom(sender.getUser().getId().toString());
 	}
 
 	/**
@@ -178,13 +167,13 @@ private void cancelVideoFrom(final UserSession sender) {
 
 
 
-	private void addCandidate(IceCandidate e, String name) {
-		if (getUserId().compareTo(name) == 0) {
-			outEndPoint.addIceCandidate(e);
+	public void addCandidate(IceCandidate candidate, String userId) {
+		if (user.getId().toString().equals(userId)) {
+			outEndPoint.addIceCandidate(candidate);
 		} else {
-			WebRtcEndpoint webRtc = inEndPoints.get(name);
+			WebRtcEndpoint webRtc = inEndPoints.get(userId);
 			if (webRtc != null) {
-				webRtc.addIceCandidate(e);
+				webRtc.addIceCandidate(candidate);
 			}
 		}
 	}
@@ -204,7 +193,7 @@ private void cancelVideoFrom(final UserSession sender) {
 			return false;
 		}
 		UserSession other = (UserSession) obj;
-		boolean eq = getUserId().equals(other.getUserId());
+		boolean eq = user.equals(other.getUser());
 		eq &= getGroupId().equals(other.getGroupId());
 		return eq;
 	}
@@ -217,7 +206,7 @@ private void cancelVideoFrom(final UserSession sender) {
 	@Override
 	public int hashCode() {
 		int result = 1;
-		result = 31 * result + getUserId().hashCode();
+		result = 31 * result + user.getId().hashCode();
 		result = 31 * result + getGroupId().hashCode();
 		return result;
 	}
@@ -232,4 +221,8 @@ private void cancelVideoFrom(final UserSession sender) {
 		public void onError(Throwable cause) throws Exception {
 		}
 	};
+
+	public User getUser() {
+		return user;
+	}
 }

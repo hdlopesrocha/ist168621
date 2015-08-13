@@ -1,81 +1,99 @@
-function onNewParticipants(userId, uid, video) {
 
-}
 
 var KurentoReceiver = new (function() {
 
 	var peerConnections = {};
-
 	var newParticipantsCallback = null; 
-		
-	this.start= function(npcb){
+	var newVideoCallback = null; 
 
+	this.onNewParticipants = function(userId, uid, video) {
+		if(peerConnections[userId]==null){
+			var pc = new RTCPeerConnection(configuration);
+			peerConnections[userId] = pc;
+			
+			// XXX [CLIENT_ICE_02] XXX		
+			pc.onicecandidate = function(event) {
+				if (event.candidate) {
+					// XXX [CLIENT_ICE_03] XXX
+					Kurento.ws.send(JSON.stringify({
+						id : "iceCandidate",
+						uid:userId,
+						candidate : event.candidate
+					}));
+				}
+			}
+		}
+	}
+	
+	
+	this.start= function(npcb,nvcb){
 		newParticipantsCallback = npcb;
+		newVideoCallback = nvcb;
 	};
 		
-	this.onmessage = function(message) {
-			// console.info('Received message: ' + message.data);
-			var obj = JSON.parse(message.data);
-			switch (obj.id) {
-			case 'existingParticipants':
-			case 'newParticipantArrived':
-				for(var userId in obj.data){
-					newParticipantsCallback(userId, obj.data[userId]);
-					onNewParticipants(userId, obj.data[userId]);
-				}
-				break;
-			case 'sessionDescription':
+	this.onmessage = function(id,message) {
+		// console.info('Received message: ' + message.data);
+		switch (id) {
+		case 'participants':
+			console.log(id,message);
+			for(var userId in message.data){
+				var video  = newVideoCallback(userId);
+				newParticipantsCallback(userId, message.data[userId]);
+				KurentoReceiver.onNewParticipants(userId, message.data[userId],video);
+			}
+			break;
+		case 'sessionDescription':
+			
+			if(!peerConnections[message.userId]){
+				var video = createVideoCallback(message.userId);
+				var options = {
+				      remoteVideo: video
+			    }
+				peerConnections[message.userId] = new RTCPeerConnection(configuration);
 				
-				if(!peerConnections[obj.userId]){
-					var video = createVideoCallback(obj.userId);
-					var options = {
-					      remoteVideo: video
-				    }
-					peerConnections[obj.userId] = new RTCPeerConnection(configuration);
-					
-					peerConnections[obj.userId].createOffer(remote_constraints);
+				peerConnections[message.userId].createOffer(remote_constraints);
 
-					peerConnections[obj.userId].onaddstream = function(event) {
-						alert("HE HAVE REMOTE VIDEO!");
-						video.src = URL.createObjectURL(event.stream);
-					};	
-				}
+				peerConnections[message.userId].onaddstream = function(event) {
+					alert("HE HAVE REMOTE VIDEO!");
+					video.src = URL.createObjectURL(event.stream);
+				};	
+			}
 
-				var sdp = new RTCSessionDescription(obj);
-				peerConnections[obj.userId].setRemoteDescription(sdp, function(){
-					peerConnections[obj.userId].createAnswer( function( answer ) {
-						console.log("createAnswer");
-						console.log(answer);
-						peerConnections[obj.userId].setLocalDescription(answer);
-					},logError);
-					
-					console.log("setRemoteDescription")
-					console.log(sdp)
-				},logError);
-				break;
-			/*case 'description':
-				var sdp = new RTCSessionDescription(obj.data);
-
-				console.log("description");
-				console.log(sdp);
-				// XXX [CLIENT_OFFER_08] XXX
-				/*Kurento.pc.setRemoteDescription(sdp, function(){
-					console.log("setRemoteDescription")
-					console.log(sdp)
+			var sdp = new RTCSessionDescription(message);
+			peerConnections[message.userId].setRemoteDescription(sdp, function(){
+				peerConnections[message.userId].createAnswer( function( answer ) {
+					console.log("createAnswer");
+					console.log(answer);
+					peerConnections[message.userId].setLocalDescription(answer);
 				},logError);
 				
-				break;	
-			 */
-			case 'iceCandidate':
-				var candidate = new RTCIceCandidate(obj.candidate);
-									
-				peerConnections[obj.userId].addIceCandidate(candidate, function() {
-					console.log(candidate.candidate);
-				}, logError);
-				
-				break;
-			default:
-				break;
+				console.log("setRemoteDescription")
+				console.log(sdp)
+			},logError);
+			break;
+		/*case 'description':
+			var sdp = new RTCSessionDescription(message.data);
+
+			console.log("description");
+			console.log(sdp);
+			// XXX [CLIENT_OFFER_08] XXX
+			/*Kurento.pc.setRemoteDescription(sdp, function(){
+				console.log("setRemoteDescription")
+				console.log(sdp)
+			},logError);
+			
+			break;	
+		 */
+		case 'iceCandidate':
+			var candidate = new RTCIceCandidate(message.candidate);
+								
+			peerConnections[message.userId].addIceCandidate(candidate, function() {
+				console.log(candidate.candidate);
+			}, logError);
+			
+			break;
+		default:
+			break;
 		}
 	};
 

@@ -76,27 +76,9 @@ public class WSController extends Controller {
 								case "iceCandidate":
 									// XXX [CLIENT_ICE_04] XXX		
 									JSONObject jCand = args.getJSONObject("candidate");
+									String userId = args.getString("uid");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"), jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									
-									usession.getOutgoingWebRtcPeer().addIceCandidate(candidate,new Continuation<Void>() {
-
-										@Override
-										public void onError(Throwable arg0) throws Exception {
-											arg0.printStackTrace();
-										}
-
-										@Override
-										public void onSuccess(Void arg0) throws Exception {
-											System.out.println("Add Client ICE Candidate");
-										}
-									});
-					
-									
-									
-									
-									
-									
-									
+									usession.addCandidate(candidate, userId);	
 									break;
 
 								case "answer": 

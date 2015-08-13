@@ -48,16 +48,6 @@
 						participants[userId] = email;						
 					}
 				}
-				
-				
-				var myvideo = document.getElementById("myvideo");
-				myvideo.muted = true;
-				Kurento.start("@groupId", function(){
-					KurentoSender.start(myvideo);
-					KurentoReceiver.start(kparticipants);
-							
-				});
-								
 			
 				var kvideo = function(userId){
 					var newVideoId = "video"+userId;
@@ -65,6 +55,17 @@
 					return document.getElementById(newVideoId);
 				}
 				
+			
+				
+				var myvideo = document.getElementById("myvideo");
+				myvideo.muted = true;
+				Kurento.start("@groupId", function(){
+					KurentoSender.start("@userId",myvideo);
+					KurentoReceiver.start(kparticipants,kvideo);
+							
+				});
+								
+			
 			
 				
 				

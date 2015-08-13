@@ -41,8 +41,9 @@ var Kurento = new (function() {
 			};
 			
 			Kurento.ws.onmessage = function(message) {
-				KurentoSender.onmessage(message);
-				KurentoReceiver.onmessage(message);
+				var obj = JSON.parse(message.data);
+				KurentoSender.onmessage(obj.id,obj);
+				KurentoReceiver.onmessage(obj.id,obj);
 			};
 
 			Kurento.ws.onopen = function() {

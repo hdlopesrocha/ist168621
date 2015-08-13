@@ -16,6 +16,18 @@ import com.mongodb.client.MongoCollection;
 import services.Service;
 
 public class User {
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof User){
+			return id!=null && id.equals(((User) obj).getId());
+		}
+		
+		
+		return super.equals(obj);
+	}
+
+
+
 	private String email, hash, salt, token;
 	private ObjectId id = null;
 	private List<String> permissions;
