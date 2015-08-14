@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Continuation;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.MediaPipeline;
+import org.kurento.client.WebRtcEndpoint;
 
 import main.Global;
 import main.Room;
@@ -30,7 +30,7 @@ public class WSController extends Controller {
 				try {
 					if (room != null) {
 						// Join room
-						final UserSession usession = room.join(user,out);
+						final UserSession usession = room.join(user, out);
 
 						// When the socket is closed.
 						in.onClose(new Callback0() {
@@ -51,37 +51,54 @@ public class WSController extends Controller {
 								System.out.println("onMessage: " + event);
 								JSONObject args = new JSONObject(event);
 								String id = args.getString("id");
-								String userId = args.has("uid") ? args.getString("uid"):null;									
+								String userId = args.has("uid") ? args.getString("uid") : null;
 
 								switch (id) {
-								
-								
+
 								case "offerToSend":
-									// XXX [CLIENT_OFFER_04] XXX
-									// XXX [CLIENT_OFFER_05] XXX
+								// XXX [CLIENT_OFFER_04] XXX
+								// XXX [CLIENT_OFFER_05] XXX
+								{
+									WebRtcEndpoint endPoint = usession.getEndpoint();
 									JSONObject data = args.getJSONObject("data");
 									String description = data.getString("sdp");
-									String arg0 = usession.getOutgoingWebRtcPeer().processOffer(description);	
+									String arg0 = endPoint.processOffer(description);
 									// XXX [CLIENT_OFFER_06] XXX
-									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
+									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0)
+											.put("type", "answer").put("uid", userId);
 									// XXX [CLIENT_OFFER_07] XXX
 									usession.sendMessage(msg.toString());
-									usession.getOutgoingWebRtcPeer().gatherCandidates();									
-									break;
-									
-								case "offerToRecv":
-									System.out.println("NOT IMPLEMENTED YET!");
-									break;
-								case "iceCandidate":
-									// XXX [CLIENT_ICE_04] XXX		
-									JSONObject jCand = args.getJSONObject("candidate");
-									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"), jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									usession.addCandidate(candidate, userId);	
+									endPoint.gatherCandidates();
+								}
 									break;
 
-								case "answer": 
+								case "offerToRecv":
+								{	UserSession otherSession = room.getParticipant(userId);
+									WebRtcEndpoint endPoint = usession.getEndpoint(otherSession);
+									JSONObject data = args.getJSONObject("data");
+									String description = data.getString("sdp");
+									
+									String arg0 = endPoint.processOffer(description);
+									// XXX [CLIENT_OFFER_06] XXX
+									JSONObject msg = new JSONObject().put("id", "description2").put("sdp", arg0)
+											.put("type", "answer").put("uid", userId);
+									// XXX [CLIENT_OFFER_07] XXX
+									usession.sendMessage(msg.toString());
+									endPoint.gatherCandidates();
+								}
+								break;
+								case "iceCandidate":
+									// XXX [CLIENT_ICE_04] XXX
+									JSONObject jCand = args.getJSONObject("candidate");
+									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
+											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
+									usession.addCandidate(candidate, userId);
+									break;
+
+								case "answer":
 									System.out.println("----------");
-									usession.getOutgoingWebRtcPeer().processAnswer(args.getString("answer"), new Continuation<String>() {
+									usession.getEndpoint().processAnswer(args.getString("answer"),
+											new Continuation<String>() {
 										@Override
 										public void onSuccess(String arg0) throws Exception {
 											// TODO Auto-generated method stub
@@ -89,31 +106,30 @@ public class WSController extends Controller {
 
 											System.out.println(arg0);
 										}
-										
+
 										@Override
 										public void onError(Throwable arg0) throws Exception {
 											// TODO Auto-generated method stub
 											arg0.printStackTrace();
 										}
 									});
-									usession.getOutgoingWebRtcPeer().getRemoteSessionDescriptor(new Continuation<String>() {
-										
+									usession.getEndpoint().getRemoteSessionDescriptor(new Continuation<String>() {
+
 										@Override
 										public void onSuccess(String arg0) throws Exception {
 											// TODO Auto-generated method stub
-											System.out.println("%%%%%%%%%%%%"+arg0);
-											
+											System.out.println("%%%%%%%%%%%%" + arg0);
+
 										}
-										
+
 										@Override
 										public void onError(Throwable arg0) throws Exception {
 											// TODO Auto-generated method stub
-											
+
 										}
-									}
-									);
+									});
 									break;
-									
+
 								default:
 									break;
 								}

@@ -72,9 +72,7 @@ public class UserSession implements Closeable {
 		
 	}
 
-	public WebRtcEndpoint getOutgoingWebRtcPeer() {
-		return outEndPoint;
-	}
+	
 
 	public void sendMessage(String string) {
 		out.write(string);
@@ -89,17 +87,19 @@ public class UserSession implements Closeable {
 		return room.getGroupId();
 	}
 
-
+	public WebRtcEndpoint getEndpoint() {
+		return outEndPoint;
+	}
 
 	/**
 	 * @param sender
 	 *            the user
 	 * @return the endpoint used to receive media from a certain user
 	 */
-	private WebRtcEndpoint getEndpointForUser(final UserSession sender) {
-		if (sender.getUser().equals(user)) {
-			return outEndPoint;
-		}
+	public WebRtcEndpoint getEndpoint(final UserSession sender) {
+		//if (sender.equals(this)) {
+		//	return outEndPoint;
+		//}
 		String senderId = sender.getUser().getId().toString();
 		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
@@ -131,7 +131,7 @@ public class UserSession implements Closeable {
 			inEndPoints.put(senderId, incoming);
 		}
 
-		sender.getOutgoingWebRtcPeer().connect(incoming);
+		sender.getEndpoint().connect(incoming);
 
 		return incoming;
 	}
