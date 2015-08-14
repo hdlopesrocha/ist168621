@@ -44,7 +44,7 @@ public class Room implements Closeable {
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
 	
-	public Room(MediaPipeline mediaPipeline) {
+	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");
@@ -60,11 +60,14 @@ public class Room implements Closeable {
 	}
 
 	public WebRtcEndpoint createWebRtcEndPoint(){
-		return new WebRtcEndpoint.Builder(mediaPipeline).build();
+		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
+		ep.setStunServerAddress("173.194.67.127");
+		ep.setStunServerPort(19302);
+		return ep;
 	}
 	
 	
-	public UserSession join(User user,	WebSocket.Out<String> out )
+	public UserSession join(final User user, final WebSocket.Out<String> out )
 			throws IOException {
 	
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
@@ -80,14 +83,12 @@ public class Room implements Closeable {
 		return participant;
 	}
 
-	public void leave(UserSession user) throws IOException {
+	public void leave(final UserSession user) throws IOException {
 		this.removeParticipant(user.getUser().getId().toString());
 		user.close();
 	}
 
-
-
-	private void removeParticipant(String uid) throws IOException {
+	private void removeParticipant(final String uid) throws IOException {
 		participants.remove(uid);
 
 		final List<String> unnotifiedParticipants = new ArrayList<>();
@@ -102,19 +103,15 @@ public class Room implements Closeable {
 			//	unnotifiedParticipants.add(participant.getUserId());
 			//}
 		}
-
 		if (!unnotifiedParticipants.isEmpty()) {
 
 		}
-
 	}
 
-	private void sendParticipantNames(UserSession session) throws IOException {
-
+	private void sendParticipantNames(final UserSession session) throws IOException {
 		final JSONObject data = new JSONObject();
 		for (final UserSession participant : this.getParticipants()) {
 			User user = participant.getUser();
-			
 			//if (!participant.equals(user)) {
 			data.put(user.getId().toString(),user.getEmail());
 			//}
@@ -137,7 +134,7 @@ public class Room implements Closeable {
 	 * @param name
 	 * @return the participant from this session
 	 */
-	public UserSession getParticipant(String uid) {
+	public UserSession getParticipant(final String uid) {
 		return participants.get(uid);
 	}
 
