@@ -31,12 +31,9 @@ var KurentoReceiver = new (function() {
 				// XXX [CLIENT_OFFER_02] XXX
 
 				pc.setLocalDescription(desc, function() {
-					// XXX [CLIENT_OFFER_03] XXX
-					console.log("XXXXXXXXXXXX");
-					console.log(desc);
-					
+					// XXX [CLIENT_OFFER_03] XXX		
 					Kurento.ws.send(JSON.stringify({
-						id : "description2",
+						id : "offerToRecv",
 						uid:userId,
 						data : JSON.stringify(pc.localDescription)
 					}));

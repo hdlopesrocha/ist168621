@@ -51,28 +51,30 @@ public class WSController extends Controller {
 								System.out.println("onMessage: " + event);
 								JSONObject args = new JSONObject(event);
 								String id = args.getString("id");
+								String userId = args.has("uid") ? args.getString("uid"):null;									
+
 								switch (id) {
 								
 								
-								case "description":
+								case "offerToSend":
 									// XXX [CLIENT_OFFER_04] XXX
 									// XXX [CLIENT_OFFER_05] XXX
-									
-									String description = args.getJSONObject("data").getString("sdp").toString();
-									String arg0 = usession.getOutgoingWebRtcPeer().processOffer(description);	// XXX [CLIENT_OFFER_06] XXX
+									JSONObject data = args.getJSONObject("data");
+									String description = data.getString("sdp");
+									String arg0 = usession.getOutgoingWebRtcPeer().processOffer(description);	
+									// XXX [CLIENT_OFFER_06] XXX
 									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 									// XXX [CLIENT_OFFER_07] XXX
 									usession.sendMessage(msg.toString());
-									usession.getOutgoingWebRtcPeer().gatherCandidates();
-	
+									usession.getOutgoingWebRtcPeer().gatherCandidates();									
+									break;
 									
-									
-									
+								case "offerToRecv":
+									System.out.println("NOT IMPLEMENTED YET!");
 									break;
 								case "iceCandidate":
 									// XXX [CLIENT_ICE_04] XXX		
 									JSONObject jCand = args.getJSONObject("candidate");
-									String userId = args.getString("uid");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"), jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate, userId);	
 									break;

@@ -35,7 +35,7 @@ var KurentoSender = new (function() {
 				KurentoSender.pc.setLocalDescription(desc);
 				// XXX [CLIENT_OFFER_03] XXX
 				Kurento.ws.send(JSON.stringify({
-					id : "description",
+					id : "offerToSend",
 					uid:userId,
 					data : desc
 				}));
