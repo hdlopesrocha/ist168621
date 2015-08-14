@@ -9,8 +9,7 @@ var KurentoSender = new (function() {
 	this.start = function(userId,video){
 		
 		// XXX [CLIENT_ICE_01] XXX
-		console.log(configuration);
-		KurentoSender.pc = new RTCPeerConnection(configuration);
+		KurentoSender.pc = Kurento.createPeerConnection();
 
 		// XXX [CLIENT_ICE_02] XXX		
 		KurentoSender.pc.onicecandidate = function(event) {
@@ -18,7 +17,6 @@ var KurentoSender = new (function() {
 				// XXX [CLIENT_ICE_03] XXX
 				Kurento.ws.send(JSON.stringify({
 					id : "iceCandidate",
-					uid : userId,
 					candidate : event.candidate
 				}));
 			}

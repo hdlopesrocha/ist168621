@@ -4,12 +4,6 @@ function wsurl(s) {
 	return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
 }
 
-var configuration = {
-	iceServers : [ 
-	    {urls : "stun:stun.l.google.com:19302"}, 
-	    {urls : "stun:23.21.150.121"}
-	]
-}
 
 var local_constraints = {
 		"audio" : true,
@@ -27,8 +21,21 @@ function logError(err) {
 }
 
 var Kurento = new (function() {
+	var configuration = 
 
+	
 	this.ws = null;
+
+	this.createPeerConnection = function() {
+		return new RTCPeerConnection({
+			iceServers : [ {
+				urls : "stun:stun.l.google.com:19302"
+			}, {
+				urls : "stun:23.21.150.121"
+			} ]
+		});
+	}
+	
 	
 	this.start = function(groupId, ready) {		
 

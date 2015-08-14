@@ -9,7 +9,7 @@ var KurentoReceiver = new (function() {
 	
 	this.onNewParticipants = function(userId, uid, video) {
 		if(peerConnections[userId]==null){
-			var pc = new RTCPeerConnection(configuration);
+			var pc = Kurento.createPeerConnection();
 			peerConnections[userId] = pc;
 			
 			// XXX [CLIENT_ICE_02] XXX		
@@ -88,22 +88,22 @@ var KurentoReceiver = new (function() {
 			peerConnections[userId].setRemoteDescription(sdp, function(){
 				console.log("setRemoteDescription")
 				console.log(sdp)
+				/*
 				peerConnections[userId].createAnswer( function( answer ) {
 					console.log("createAnswer");
 					console.log(answer);
 					peerConnections[userId].setLocalDescription(answer);
 				},logError);
+				*/
 			},logError);
 			
 			break;	
 		
 		case 'iceCandidate':
-			var candidate = new RTCIceCandidate(message.candidate);
-								
+			var candidate = new RTCIceCandidate(message.candidate);								
 			peerConnections[message.userId].addIceCandidate(candidate, function() {
 				console.log(candidate.candidate);
 			}, logError);
-			
 			break;
 		default:
 			break;

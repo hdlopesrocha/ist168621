@@ -69,12 +69,13 @@ public class Room implements Closeable {
 	
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
+		participants.put(participant.getUser().getId().toString(), participant);
+
 		final JSONObject data = new JSONObject().put(user.getId().toString(),user.getEmail());
 		final JSONObject msg = new JSONObject().put("id", "participants").put("data", data);
 		for (final UserSession session : participants.values()) {
 			session.sendMessage(msg.toString());
 		}		
-		participants.put(participant.getUser().getId().toString(), participant);
 		sendParticipantNames(participant);
 		return participant;
 	}

@@ -168,7 +168,7 @@ private void cancelVideoFrom(final UserSession sender) {
 
 
 	public void addCandidate(IceCandidate candidate, String userId) {
-		if (user.getId().toString().equals(userId)) {
+		if (userId==null) {
 			outEndPoint.addIceCandidate(candidate);
 		} else {
 			WebRtcEndpoint webRtc = inEndPoints.get(userId);
