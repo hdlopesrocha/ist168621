@@ -9,20 +9,9 @@ var KurentoReceiver = new (function() {
 	
 	this.onNewParticipants = function(userId, uid, video) {
 		if(peerConnections[userId]==null){
-			var pc = Kurento.createPeerConnection();
+			var pc = Kurento.createPeerConnection(userId);
 			peerConnections[userId] = pc;
-			
-			// XXX [CLIENT_ICE_02] XXX		
-			pc.onicecandidate = function(event) {
-				if (event.candidate) {
-					// XXX [CLIENT_ICE_03] XXX
-					Kurento.ws.send(JSON.stringify({
-						id : "iceCandidate",
-						uid:userId,
-						candidate : event.candidate
-					}));
-				}
-			}
+	
 			
 			pc.onaddstream = function (e) {
 				console.log(e);

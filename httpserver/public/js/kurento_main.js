@@ -26,14 +26,32 @@ var Kurento = new (function() {
 	
 	this.ws = null;
 
-	this.createPeerConnection = function() {
-		return new RTCPeerConnection({
+	this.createPeerConnection = function(userId) {
+		// XXX [CLIENT_ICE_01] XXX
+		var pc = new RTCPeerConnection({
 			iceServers : [ {
 				urls : "stun:stun.l.google.com:19302"
 			}, {
 				urls : "stun:23.21.150.121"
 			} ]
 		});
+		
+		// XXX [CLIENT_ICE_02] XXX		
+		pc.onicecandidate = function(event) {
+			if (event.candidate) {
+				var msg = {
+					id : "iceCandidate",
+					candidate : event.candidate
+				}
+				if(userId){
+					// null means self
+					msg.uid = userId;
+				}
+				// XXX [CLIENT_ICE_03] XXX
+				Kurento.ws.send(JSON.stringify(msg));
+			}
+		}
+		return pc;
 	}
 	
 	

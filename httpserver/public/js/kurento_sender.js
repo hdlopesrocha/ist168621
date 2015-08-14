@@ -5,22 +5,8 @@ var KurentoSender = new (function() {
 
 	this.pc = null;
 	
-
 	this.start = function(userId,video){
-		
-		// XXX [CLIENT_ICE_01] XXX
-		KurentoSender.pc = Kurento.createPeerConnection();
-
-		// XXX [CLIENT_ICE_02] XXX		
-		KurentoSender.pc.onicecandidate = function(event) {
-			if (event.candidate) {
-				// XXX [CLIENT_ICE_03] XXX
-				Kurento.ws.send(JSON.stringify({
-					id : "iceCandidate",
-					candidate : event.candidate
-				}));
-			}
-		}
+		KurentoSender.pc = Kurento.createPeerConnection(null);
 
 		// XXX [CLIENT_OFFER_01] XXX
 		navigator.getUserMedia(local_constraints, function(stream) {
