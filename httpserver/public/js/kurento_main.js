@@ -44,7 +44,7 @@ var Kurento = new (function() {
 					candidate : event.candidate
 				}
 				if(userId){
-					// null means self
+					// null means itself (peer is sending to MCU)
 					msg.uid = userId;
 				}
 				// XXX [CLIENT_ICE_03] XXX
