@@ -72,14 +72,24 @@ public class Room implements Closeable {
 	
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
-		participants.put(participant.getUser().getId().toString(), participant);
+	
 
-		final JSONObject data = new JSONObject().put(user.getId().toString(),user.getEmail());
-		final JSONObject msg = new JSONObject().put("id", "participants").put("data", data);
+		final JSONObject myData = new JSONObject();
+		final JSONObject otherData = new JSONObject().put(user.getId().toString(),user.getEmail());
+		final JSONObject otherMsg = new JSONObject().put("id", "participants").put("data", otherData);
 		for (final UserSession session : participants.values()) {
-			session.sendMessage(msg.toString());
+			User user = session.getUser();
+			session.sendMessage(otherMsg.toString());
+			myData.put(session.getId().toString(),session.getEmail());
 		}		
-		sendParticipantNames(participant);
+		
+		participants.put(participant.getUser().getId().toString(), participant);
+		myData.put(participant.getId().toString(),participant.getEmail());
+		
+		final JSONObject myMsg = new JSONObject().put("id", "participants").put("data", myData);
+		participant.sendMessage(myMsg.toString());
+
+
 		return participant;
 	}
 
@@ -106,21 +116,6 @@ public class Room implements Closeable {
 		if (!unnotifiedParticipants.isEmpty()) {
 
 		}
-	}
-
-	private void sendParticipantNames(final UserSession session) throws IOException {
-		final JSONObject data = new JSONObject();
-		for (final UserSession participant : this.getParticipants()) {
-			User user = participant.getUser();
-			//if (!participant.equals(user)) {
-			data.put(user.getId().toString(),user.getEmail());
-			//}
-		}
-
-		final JSONObject msg = new JSONObject();
-		msg.put("id", "participants");
-		msg.put("data", data);
-		session.sendMessage(msg.toString());
 	}
 
 	/**
