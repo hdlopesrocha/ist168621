@@ -51,9 +51,7 @@ public class UserSession implements Closeable {
 
 		// XXX [ICE_01] XXX
 		this.outEndPoint =room.createWebRtcEndPoint();
-	
 		this.outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
 			@Override
 			public void onEvent(OnIceCandidateEvent arg0) {
 				try {
@@ -65,7 +63,6 @@ public class UserSession implements Closeable {
 				}				
 			}
 		});
-		
 	}
 
 	
@@ -133,20 +130,11 @@ public class UserSession implements Closeable {
 	}
 
 	/**
-	 * @param sender
-	 *            the participant
-	 */
-	private void cancelVideoFrom(final UserSession sender) {
-		this.cancelVideoFrom(sender.getUser().getId().toString());
-	}
-
-	/**
 	 * @param senderName
 	 *            the participant
 	 */
-	private void cancelVideoFrom(final String senderName) {
-		final WebRtcEndpoint incoming = inEndPoints.remove(senderName);
-
+	private void cancelVideoFrom(final UserSession sender) {
+		final WebRtcEndpoint incoming = inEndPoints.remove(sender.getUser().getId().toString());
 		incoming.release(EMPTY_CONTINUATION);
 	}
 
