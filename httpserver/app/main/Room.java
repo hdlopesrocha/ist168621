@@ -73,7 +73,6 @@ public class Room implements Closeable {
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
 		participants.put(participant.getUser().getId().toString(), participant);
-	
 
 		final JSONObject myData = new JSONObject();
 		final JSONObject otherData = new JSONObject().put(user.getId().toString(),user.getEmail());
@@ -85,21 +84,14 @@ public class Room implements Closeable {
 			User user = session.getUser();
 			myData.put(user.getId().toString(),user.getEmail());
 		}		
-		
-		
 		final JSONObject myMsg = new JSONObject().put("id", "participants").put("data", myData);
 		participant.sendMessage(myMsg.toString());
-
-
 		return participant;
 	}
 
 	public void leave(final UserSession user) throws IOException {
-		this.removeParticipant(user.getUser().getId().toString());
-		user.close();
-	}
+		String uid = user.getUser().getId().toString();
 
-	private void removeParticipant(final String uid) throws IOException {
 		participants.remove(uid);
 
 		final List<String> unnotifiedParticipants = new ArrayList<>();
@@ -107,16 +99,17 @@ public class Room implements Closeable {
 		participantLeftJson.put("id", "participantLeft");
 		participantLeftJson.put("uid", uid);
 		for (final UserSession participant : participants.values()) {
-			//try {
-			//	participant.cancelVideoFrom(uid);
-			//	participant.sendMessage(participantLeftJson.toString());
-			//} catch (final IOException e) {
-			//	unnotifiedParticipants.add(participant.getUserId());
-			//}
+			try {
+				participant.cancelVideoFrom(user);
+				participant.sendMessage(participantLeftJson.toString());
+			} catch (final IOException e) {
+				unnotifiedParticipants.add(participant.getUserId());
+			}
 		}
 		if (!unnotifiedParticipants.isEmpty()) {
 
 		}
+		user.close();
 	}
 
 	/**
