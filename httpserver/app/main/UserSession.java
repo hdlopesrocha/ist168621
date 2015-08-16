@@ -133,7 +133,7 @@ public class UserSession implements Closeable {
 	 * @param senderName
 	 *            the participant
 	 */
-	private void cancelVideoFrom(final UserSession sender) {
+	public void cancelVideoFrom(final UserSession sender) {
 		final WebRtcEndpoint incoming = inEndPoints.remove(sender.getUser().getId().toString());
 		incoming.release(EMPTY_CONTINUATION);
 	}
