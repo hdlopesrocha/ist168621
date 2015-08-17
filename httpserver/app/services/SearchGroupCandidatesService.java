@@ -20,8 +20,8 @@ public class SearchGroupCandidatesService extends Service<List<User>> {
 	private Group group;
 	private String query;
 
-	public SearchGroupCandidatesService(String email, String groupId, String query) {
-		this.user = User.findByEmail(email);
+	public SearchGroupCandidatesService(String userId, String groupId, String query) {
+		this.user = User.findById(new ObjectId(userId));
 		this.group = Group.findById(new ObjectId(groupId));
 		this.query = query;
 	}

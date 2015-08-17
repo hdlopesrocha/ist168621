@@ -15,8 +15,8 @@ public class RemoveGroupMemberService extends Service<Void> {
 	private User user, member;
 	private Group group;
 
-	public RemoveGroupMemberService(String email, String groupId, String memberId) {
-		this.user = User.findByEmail(email);
+	public RemoveGroupMemberService(String callerId, String groupId, String memberId) {
+		this.user = User.findById(new ObjectId(callerId));
 		this.group = Group.findById(new ObjectId(groupId));
 		this.member = User.findById(new ObjectId(memberId));
 	}

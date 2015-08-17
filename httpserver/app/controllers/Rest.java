@@ -69,6 +69,7 @@ public class Rest extends Controller {
 
 	public Result addGroupMember(String groupId, String memberId) {
 		if (session("uid") != null) {
+			System.out.println("ADDMEMBER: "+groupId + " | "+memberId);
 			AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
 			try {
 				service.execute();
@@ -530,13 +531,18 @@ public class Rest extends Controller {
 	public Result searchGroupCandidates(String groupId) {
 		if (session("uid") != null) {
 			String query = request().queryString().get("s")[0];
+
+			System.out.println("SEARCH: "+groupId+" | "+query);
+			
+
+			
 			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
 			try {
 				List<User> ans = service.execute();
 				JSONArray array = new JSONArray();
 				for (User u : ans) {
 					JSONObject obj = new JSONObject();
-					obj.put("uid", u.getId());
+					obj.put("uid", u.getId().toString());
 					obj.put("email", u.getEmail());
 					array.put(obj);
 				}

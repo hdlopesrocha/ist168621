@@ -24,19 +24,16 @@
 		
 		<h3>Members List</h3>
 		<ul id="member-list"></ul>
-	
-		<h3>My Video</h3>
-		<div class="col-md-5">
-			<video id="myvideo" autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>
-		</div>
-		
-		
-		
 		
 		<h3>Online Members</h3>
 		<ul id="online-members"></ul>
-		
-		<h3>Test</h3>
+
+		<h3>Local Video</h3>
+		<div class="col-md-5">
+			<video id="myvideo" autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>
+		</div>
+				
+		<h3>Remote Video</h3>
 		<div id="participants"></div>
 		<script>
 			var participants = {};
@@ -84,9 +81,8 @@
 				Signaling.listGroupMembers("@groupId", function(array){
 					var html = "";
 					for(var i  in array){
-						
-						
-						var del_button = "<button onclick='del_user_group(\""+array[i].id+"\")'>remove</button>";
+						var uid = array[i].uid;
+						var del_button = "<button onclick='del_user_group(\""+uid+"\")'>remove</button>";
 						//var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
 						html += "<li>"+array[i].email+del_button+"</li>";
 					}
@@ -114,10 +110,13 @@
 			}
 			
 			function candidate_search(query){
+				
 				var result = function(array){
 					var html = "";
 					for(var i  in array){
-						var add_button = "<button onclick='add_user_group(\""+array[i].id+"\")'>add</button>";
+						var uid = array[i].uid;
+						
+						var add_button = "<button onclick='add_user_group(\""+uid+"\")'>add</button>";
 						html += "<li>"+array[i].email+add_button+"</li>";
 					}
 					$("#candidate-list").html(html);	
