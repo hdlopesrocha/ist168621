@@ -89,10 +89,12 @@ var KurentoReceiver = new (function() {
 			break;	
 		
 		case 'iceCandidate':
-			var candidate = new RTCIceCandidate(message.candidate);								
-			peerConnections[message.userId].addIceCandidate(candidate, function() {
-				console.log(candidate.candidate);
-			}, logError);
+			if(message.uid){
+				var candidate = new RTCIceCandidate(message.candidate);								
+				peerConnections[message.userId].addIceCandidate(candidate, function() {
+					console.log(candidate.candidate);
+				}, logError);
+			}
 			break;
 		default:
 			break;

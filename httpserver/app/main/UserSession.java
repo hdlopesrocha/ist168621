@@ -51,19 +51,8 @@ public class UserSession implements Closeable {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		this.outEndPoint =room.createWebRtcEndPoint();
-		this.outEndPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-			@Override
-			public void onEvent(OnIceCandidateEvent arg0) {
-				try {
-					synchronized (this) {
-						System.out.println("onIceCandidate: "+JsonUtils.toJsonObject(arg0.getCandidate()));
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
-			}
-		});
+		this.outEndPoint =room.createWebRtcEndPoint(this,null);
+	
 	}
 
 	
@@ -94,30 +83,12 @@ public class UserSession implements Closeable {
 		String senderId = sender.getUser().getId().toString();
 		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
-			incoming = room.createWebRtcEndPoint();
+			incoming = room.createWebRtcEndPoint(this,senderId);
 			incoming.connect(outEndPoint);
 			outEndPoint.connect(incoming);
 
 			
-			incoming.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
-				@Override
-				public void onEvent(OnIceCandidateEvent event) {
-					JsonObject response = new JsonObject();
-					response.addProperty("id", "iceCandidate");
-					response.addProperty("userId", senderId);
-					response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-					try {
-						synchronized (this) {
-							System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-							System.out.println(response.toString());
-							sendMessage(response.toString());
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			
 
 			inEndPoints.put(senderId, incoming);
 		}

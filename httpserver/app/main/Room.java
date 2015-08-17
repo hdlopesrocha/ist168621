@@ -27,8 +27,13 @@ import javax.annotation.PreDestroy;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Continuation;
+import org.kurento.client.EventListener;
 import org.kurento.client.MediaPipeline;
+import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.WebRtcEndpoint;
+import org.kurento.jsonrpc.JsonUtils;
+
+import com.google.gson.JsonObject;
 
 import models.Group;
 import models.User;
@@ -59,10 +64,38 @@ public class Room implements Closeable {
 		return group.getId().toString();
 	}
 
-	public WebRtcEndpoint createWebRtcEndPoint(){
+	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId){
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
+		
+		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
+
+			@Override
+			public void onEvent(OnIceCandidateEvent event) {
+				JsonObject response = new JsonObject();
+				response.addProperty("id", "iceCandidate");
+				if(senderId!=null){
+					response.addProperty("userId", senderId);
+				}
+				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+				try {
+					synchronized (this) {
+						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+						System.out.println(response.toString());
+						session.sendMessage(response.toString());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
 		ep.setStunServerAddress("173.194.67.127");
 		ep.setStunServerPort(19302);
+		
+		
+		
+		
 		return ep;
 	}
 	
