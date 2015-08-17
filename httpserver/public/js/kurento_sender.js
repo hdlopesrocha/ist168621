@@ -49,14 +49,6 @@ var KurentoSender = new (function() {
 	
 				
 				break;
-			case 'iceCandidate':
-				if(!message.uid){
-					var candidate = new RTCIceCandidate(message.candidate);								
-					KurentoSender.pc.addIceCandidate(candidate, function() {
-						console.log(candidate.candidate);
-					}, logError);
-				}
-				break;
 			default:
 				break;
 		}

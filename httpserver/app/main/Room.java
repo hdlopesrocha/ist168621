@@ -74,7 +74,7 @@ public class Room implements Closeable {
 				JsonObject response = new JsonObject();
 				response.addProperty("id", "iceCandidate");
 				if(senderId!=null){
-					response.addProperty("userId", senderId);
+					response.addProperty("uid", senderId);
 				}
 				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 				try {

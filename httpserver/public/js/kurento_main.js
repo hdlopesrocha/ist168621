@@ -20,9 +20,9 @@ function logError(err) {
 	console.log(err);
 }
 
-var Kurento = new (function() {
-	var configuration = 
 
+
+var Kurento = new (function() {
 	
 	this.ws = null;
 
@@ -67,8 +67,25 @@ var Kurento = new (function() {
 			
 			Kurento.ws.onmessage = function(message) {
 				var obj = JSON.parse(message.data);
-				KurentoSender.onmessage(obj.id,obj);
-				KurentoReceiver.onmessage(obj.id,obj);
+				switch(obj.id){
+					case 'iceCandidate':
+						console.log(obj.id,obj);
+						var candidate = new RTCIceCandidate(obj.candidate);
+						if(obj.uid){
+							KurentoReceiver.peerConnections[obj.uid].addIceCandidate(candidate, function() {
+								console.log(candidate);
+							}, logError);
+						}else {
+							KurentoSender.pc.addIceCandidate(candidate, function() {
+								console.log(candidate);
+							}, logError);
+						}
+						break;
+					default:
+						KurentoSender.onmessage(obj.id,obj);
+						KurentoReceiver.onmessage(obj.id,obj);
+						break;					
+				}
 			};
 
 			Kurento.ws.onopen = function() {
