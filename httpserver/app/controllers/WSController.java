@@ -55,79 +55,26 @@ public class WSController extends Controller {
 
 								switch (id) {
 
-								case "offerToSend":
-								// XXX [CLIENT_OFFER_04] XXX
-								// XXX [CLIENT_OFFER_05] XXX
-								{
-									WebRtcEndpoint endPoint = usession.getEndpoint();
+							
+								case "offer":
+								{	
 									JSONObject data = args.getJSONObject("data");
 									String description = data.getString("sdp");
-									String arg0 = endPoint.processOffer(description);
-									// XXX [CLIENT_OFFER_06] XXX
-									JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0)
-											.put("type", "answer").put("uid", userId);
-									// XXX [CLIENT_OFFER_07] XXX
-									usession.sendMessage(msg.toString());
-									endPoint.gatherCandidates();
-								}
-									break;
-
-								case "offerToRecv":
-								{	UserSession otherSession = room.getParticipant(userId);
-									WebRtcEndpoint endPoint = usession.getEndpoint(otherSession);
-									JSONObject data = args.getJSONObject("data");
-									String description = data.getString("sdp");
-									
-									String arg0 = endPoint.processOffer(description);
-									// XXX [CLIENT_OFFER_06] XXX
-									JSONObject msg = new JSONObject().put("id", "description2").put("sdp", arg0)
-											.put("type", "answer").put("uid", userId);
-									// XXX [CLIENT_OFFER_07] XXX
-									usession.sendMessage(msg.toString());
-									endPoint.gatherCandidates();
+									usession.processOffer(description,userId);
 								}
 								break;
 								case "iceCandidate":
-									// XXX [CLIENT_ICE_04] XXX
+								{
 									JSONObject jCand = args.getJSONObject("candidate");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate, userId);
-									break;
-
+								}
+								break;
 								case "answer":
 									System.out.println("----------");
-									usession.getEndpoint().processAnswer(args.getString("answer"),
-											new Continuation<String>() {
-										@Override
-										public void onSuccess(String arg0) throws Exception {
-											// TODO Auto-generated method stub
-											System.out.println("================");
-
-											System.out.println(arg0);
-										}
-
-										@Override
-										public void onError(Throwable arg0) throws Exception {
-											// TODO Auto-generated method stub
-											arg0.printStackTrace();
-										}
-									});
-									usession.getEndpoint().getRemoteSessionDescriptor(new Continuation<String>() {
-
-										@Override
-										public void onSuccess(String arg0) throws Exception {
-											// TODO Auto-generated method stub
-											System.out.println("%%%%%%%%%%%%" + arg0);
-
-										}
-
-										@Override
-										public void onError(Throwable arg0) throws Exception {
-											// TODO Auto-generated method stub
-
-										}
-									});
+									String answer=args.getString("answer");
+									usession.processAnswer(answer, userId);
 									break;
 
 								default:

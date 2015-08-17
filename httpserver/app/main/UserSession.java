@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.json.JSONObject;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -80,9 +81,6 @@ public class UserSession implements Closeable {
 		return room.getGroupId();
 	}
 
-	public WebRtcEndpoint getEndpoint() {
-		return outEndPoint;
-	}
 
 	/**
 	 * @param sender
@@ -90,9 +88,9 @@ public class UserSession implements Closeable {
 	 * @return the endpoint used to receive media from a certain user
 	 */
 	public WebRtcEndpoint getEndpoint(final UserSession sender) {
-		//if (sender.equals(this)) {
-		//	return outEndPoint;
-		//}
+		if (sender == null) {
+			return outEndPoint;
+		}
 		String senderId = sender.getUser().getId().toString();
 		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
@@ -124,7 +122,7 @@ public class UserSession implements Closeable {
 			inEndPoints.put(senderId, incoming);
 		}
 
-		sender.getEndpoint().connect(incoming);
+		sender.getEndpoint(null).connect(incoming);
 
 		return incoming;
 	}
@@ -149,9 +147,34 @@ public class UserSession implements Closeable {
 		outEndPoint.release();
 	}
 
+	
 
+	
+	public void processOffer(String description, String userId) {
+		// XXX [CLIENT_OFFER_04] XXX
+		// XXX [CLIENT_OFFER_05] XXX
+
+		WebRtcEndpoint endPoint = null;
+		if(userId!=null){
+			UserSession otherSession = room.getParticipant(userId);
+			endPoint = getEndpoint(otherSession);
+		}
+		else{
+			endPoint = getEndpoint(null);
+		}
+		
+		String arg0 = endPoint.processOffer(description);
+		// XXX [CLIENT_OFFER_06] XXX
+		JSONObject msg = new JSONObject().put("id", userId==null? "description":"description2").put("sdp", arg0)
+				.put("type", "answer").put("uid", userId);
+		// XXX [CLIENT_OFFER_07] XXX
+		sendMessage(msg.toString());
+		endPoint.gatherCandidates();		
+	}
+	
 
 	public void addCandidate(IceCandidate candidate, String userId) {
+		// XXX [CLIENT_ICE_04] XXX
 		if (userId==null) {
 			outEndPoint.addIceCandidate(candidate);
 		} else {
@@ -209,4 +232,47 @@ public class UserSession implements Closeable {
 	public User getUser() {
 		return user;
 	}
+
+
+
+	public void processAnswer(String answer, String userId) {
+		WebRtcEndpoint endPoint = getEndpoint(null);
+
+		
+		endPoint.processAnswer(answer,
+				new Continuation<String>() {
+			@Override
+			public void onSuccess(String arg0) throws Exception {
+				// TODO Auto-generated method stub
+				System.out.println("================");
+
+				System.out.println(arg0);
+			}
+
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				// TODO Auto-generated method stub
+				arg0.printStackTrace();
+			}
+		});
+		endPoint.getRemoteSessionDescriptor(new Continuation<String>() {
+
+			@Override
+			public void onSuccess(String arg0) throws Exception {
+				// TODO Auto-generated method stub
+				System.out.println("%%%%%%%%%%%%" + arg0);
+
+			}
+
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				// TODO Auto-generated method stub
+
+			}
+		});		
+	}
+
+
+
+
 }
