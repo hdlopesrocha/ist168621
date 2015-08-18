@@ -30,7 +30,7 @@
 
 		<h3>Local Video</h3>
 		<div class="col-md-5">
-			<video id="myvideo" autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>
+			<video id="myvideo" autoplay width="120px" height="90px" poster="/assets/images/webrtc.png"></video>
 		</div>
 				
 		<h3>Remote Video</h3>
@@ -48,7 +48,7 @@
 			
 				var kvideo = function(userId){
 					var newVideoId = "video"+userId;
-					$("#participants").append("<video id='"+newVideoId+"' autoplay width='240px' height='180px' poster='/assets/images/webrtc.png'></video>");
+					$("#participants").append("<video id='"+newVideoId+"' autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
 					return document.getElementById(newVideoId);
 				}
 				
