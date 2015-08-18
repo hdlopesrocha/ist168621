@@ -48,7 +48,7 @@
 			
 				var kvideo = function(userId){
 					var newVideoId = "video"+userId;
-					$("#participants").append("<video id='"+newVideoId+"' autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
+					$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
 					return document.getElementById(newVideoId);
 				}
 				
