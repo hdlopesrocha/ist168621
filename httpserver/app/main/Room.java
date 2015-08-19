@@ -30,6 +30,7 @@ import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.MediaPipeline;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -64,9 +65,20 @@ public class Room implements Closeable {
 		return group.getId().toString();
 	}
 
+	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session){
+		String filepath = "file:///tmp/"+group.getId().toString()+"-"+session.getUser().getId().toString()+".webm";
+		System.out.println("REC: "+ filepath);
+		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
+		rec.record();
+		ep.connect(rec);
+		return rec;
+	}
+	
+	
 	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId){
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
-		
+
+	
 		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 			@Override

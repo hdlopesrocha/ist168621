@@ -51,20 +51,13 @@
 					$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " controls autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
 					return document.getElementById(newVideoId);
 				}
-				
-			
-				
+					
 				var myvideo = document.getElementById("myvideo");
 				myvideo.muted = true;
 				Kurento.start("@groupId", function(){
 					KurentoSender.start("@userId",myvideo);
-					KurentoReceiver.start(kparticipants,kvideo);
-							
+					KurentoReceiver.start(kparticipants,kvideo);			
 				});
-								
-			
-			
-				
 				
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){

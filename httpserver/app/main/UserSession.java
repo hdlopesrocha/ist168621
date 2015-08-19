@@ -24,6 +24,7 @@ import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -43,6 +44,8 @@ public class UserSession implements Closeable {
 	private final User user;
 	private final Room room;
 	private final WebRtcEndpoint outEndPoint;
+	private final RecorderEndpoint recEndPoint;
+	
 	private final ConcurrentMap<String, WebRtcEndpoint> inEndPoints = new ConcurrentHashMap<>();
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
@@ -52,7 +55,8 @@ public class UserSession implements Closeable {
 
 		// XXX [ICE_01] XXX
 		this.outEndPoint =room.createWebRtcEndPoint(this,null);
-	
+		this.recEndPoint = room.recordEndpoint(outEndPoint, this);
+		
 	}
 
 	
