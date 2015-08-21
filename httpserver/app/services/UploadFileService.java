@@ -14,7 +14,6 @@ import com.mongodb.gridfs.GridFSInputFile;
 public class UploadFileService extends Service<String> {
 
 	private KeyValueFile anex;
-	private String uid;
 
 	/**
 	 * Instantiates a new send message service.
@@ -27,9 +26,8 @@ public class UploadFileService extends Service<String> {
 	 *            the content
 	 * @param anex
 	 */
-	public UploadFileService(final KeyValueFile anex, final String uid) {
+	public UploadFileService(final KeyValueFile anex) {
 		this.anex = anex;
-		this.uid = uid;
 	}
 
 	/*
@@ -40,7 +38,7 @@ public class UploadFileService extends Service<String> {
 	@Override
 	public String dispatch() {
 
-		String keyName = uid + "/" + UUID.randomUUID().toString() + "/"
+		String keyName = UUID.randomUUID().toString() + "/"
 				+ anex.getName();
 
 		try {

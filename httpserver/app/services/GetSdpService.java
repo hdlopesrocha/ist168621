@@ -21,7 +21,6 @@ public class GetSdpService extends Service<List<Document>> {
 	public GetSdpService(String uid, String membershipId) {
 		this.user = User.findById(new ObjectId(uid));
 		this.membership = Membership.findById(new ObjectId(membershipId));
-	
 	}
 
 	/*
@@ -32,7 +31,7 @@ public class GetSdpService extends Service<List<Document>> {
 	@Override
 	public List<Document> dispatch() {
 		Document doc = membership.getProperties();
-		List<Object> list = (ArrayList<Object>) doc.get("sdps");
+		List<?> list = (List<?>) doc.get("sdps");
 		if (list == null) {
 			list = new ArrayList<Object>();
 		}

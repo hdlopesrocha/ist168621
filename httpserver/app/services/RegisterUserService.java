@@ -56,7 +56,7 @@ public class RegisterUserService extends Service<User> {
 		
 		
 		for(KeyValueFile kvf : files){
-			UploadFileService service = new UploadFileService(kvf,email);
+			UploadFileService service = new UploadFileService(kvf);
 			String photoUrl = "";
 			try {
 				photoUrl = service.execute();

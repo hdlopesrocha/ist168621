@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.File;
+
 import org.bson.types.ObjectId;
 
 import models.Group;
@@ -21,6 +23,14 @@ public class Application extends Controller {
     	
     }
 
+    public Result stream(String path){
+    	File file = new File(path);
+    	Result res = ok(file);
+    	response().setHeader("Content-type", "video/webm");
+    	
+    	
+    	return res;
+    }
     
     
     public Result pubsub() {

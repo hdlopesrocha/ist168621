@@ -46,6 +46,7 @@ public class UserSession implements Closeable {
 	private final WebRtcEndpoint outEndPoint;
 	private final RecorderEndpoint recEndPoint;
 	
+	
 	private final ConcurrentMap<String, WebRtcEndpoint> inEndPoints = new ConcurrentHashMap<>();
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {

@@ -10,6 +10,11 @@
 		<script type="text/javascript" src="/assets/js/kurento_sender.js"></script>
 		<script type="text/javascript" src="/assets/js/kurento_receiver.js"></script>
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
+		<script type="text/javascript" src="/assets/js/RecordRTC.js"></script>	
+	  	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
+	  	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
+
+
 	</head>
 	<body>
 		<button id="logout-button">Logout</button>		
@@ -35,10 +40,65 @@
 				
 		<h3>Remote Video</h3>
 		<div id="participants"></div>
+		
+		<h3>Recorded Video</h3>
+		<div class="col-md-5">
+			<div id="main" style="width:480px"></div>
+			<video id="rec_video" controls autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>	
+		</div>
+		
+		
+		
 		<script>
 			var participants = {};
-		
+			var rec_videos = [];
+			var timeline = null;
+			// TIMELINE
+		 	var items = new vis.DataSet({
+				type: { start: 'ISODate', end: 'ISODate' }
+			});
+	
+			
 			$( document ).ready(function() {
+				var rec_video = document.getElementById("rec_video");
+				var currentVideoPlaying = 0;
+				rec_video.muted = true;
+				
+				rec_video.addEventListener('ended', function(){
+					++currentVideoPlaying;
+					rec_video.src= rec_videos[currentVideoPlaying];
+					timeline.setSelection(currentVideoPlaying);
+				});
+				
+				
+			  function createTimeline(items) {
+				    var main = document.getElementById('main');
+				    var options = {
+			            stack: false,
+			            align: 'center'
+				     // editable: true,
+				     // clickToUse: true
+				    };
+
+				    var timeline =  new vis.Timeline(main, items, options);
+				    
+				    timeline.on('select', function (properties) {
+				       var sel = properties.items[0];
+				       if(sel!=undefined){
+				    	   	currentVideoPlaying = sel;
+							rec_video.src= rec_videos[currentVideoPlaying];
+				       }
+				      });
+				    
+				    return timeline;
+				}
+
+	  
+				timeline= createTimeline(items);
+
+				
+				
+				
 				var kparticipants = function(userId, email){
 					if(!participants[userId]){
 						$("#online-members").append("<li>"+email+"</li>");
@@ -54,8 +114,36 @@
 					
 				var myvideo = document.getElementById("myvideo");
 				myvideo.muted = true;
+
+				var rec_video_index = 0;
+
+		
+				
+				
+				var onVideoRecorded = function(blob,videoURL,start,end){
+					console.log(start,end,videoURL,blob);
+					rec_videos[rec_video_index] = videoURL;
+					
+					var itemsArray = [];
+					itemsArray.push({id:rec_video_index,content:"&nbsp;",start:start,end:end});
+					items.add(itemsArray);
+					timeline.fit();
+					var now = new Date();
+					now.setSeconds(now.getSeconds() + 10);
+					
+					if(rec_video_index==0){
+						rec_video.src = videoURL;
+						timeline.setSelection(rec_video_index);
+					}
+					
+					timeline.setWindow(rec_video_index==0 ? start:null,now);
+					rec_video_index++;
+				}
+				
+
+				
 				Kurento.start("@groupId", function(){
-					KurentoSender.start("@userId",myvideo);
+					KurentoSender.start("@userId",myvideo,onVideoRecorded);
 					KurentoReceiver.start(kparticipants,kvideo);			
 				});
 				

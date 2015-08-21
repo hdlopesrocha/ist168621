@@ -44,6 +44,7 @@ import services.PostSdpService;
 import services.PublishService;
 import services.RegisterUserService;
 import services.RemoveGroupMemberService;
+import services.SaveRecordingService;
 import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.SubscribeService;
@@ -397,43 +398,8 @@ public class Rest extends Controller {
 
 	}
 
+
 	public Result register() {
-		MultipartFormData multipart = request().body().asMultipartFormData();
-		Map<String, String[]> form = multipart.asFormUrlEncoded();
-
-		JSONObject info = new JSONObject(form.get("json")[0]);
-
-		String email = info.getString("email");
-
-		String password = info.getString("password");
-
-		info.remove("email");
-		info.remove("password");
-
-		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
-		for (FilePart fp : multipart.getFiles()) {
-			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-			files.add(kvf);
-		}
-
-		RegisterUserService service = new RegisterUserService(email, password, info, files);
-		try {
-			User ret = service.execute();
-			session("email", email);
-			return ok(ret.getToken());
-		} catch (ConflictException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Rest.status(409);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return unauthorized();
-		}
-
-	}
-
-	public Result register2() {
 
 		MultipartFormData multipart = request().body().asMultipartFormData();
 		Map<String, String[]> form = multipart.asFormUrlEncoded();
@@ -594,4 +560,34 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
+	public Result saveRecording() {
+		MultipartFormData multipart = request().body().asMultipartFormData();
+		Map<String, String[]> form = multipart.asFormUrlEncoded();
+
+		JSONObject info = new JSONObject(form.get("json")[0]);
+
+		String owner = info.getString("owner");
+		String start = info.getString("start");
+		String end = info.getString("end");
+
+
+		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+		for (FilePart fp : multipart.getFiles()) {
+			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+			files.add(kvf);
+		}
+
+		SaveRecordingService service  =  new SaveRecordingService(files.get(0), owner, start, end);
+		try {
+			service.execute();
+			return ok();
+
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return badRequest();
+
+	}
+	
 }

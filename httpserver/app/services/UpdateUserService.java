@@ -39,7 +39,7 @@ public class UpdateUserService extends Service<Void> {
 	public Void dispatch() {
 		Document properties = Document.parse(info.toString());
 		for(KeyValueFile kvf : files){
-			UploadFileService service = new UploadFileService(kvf,user.getEmail());
+			UploadFileService service = new UploadFileService(kvf);
 			String photoUrl = "";
 			try {
 				photoUrl = service.execute();

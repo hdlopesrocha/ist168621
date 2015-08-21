@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
-import org.kurento.client.Continuation;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.WebRtcEndpoint;
 
 import main.Global;
 import main.Room;

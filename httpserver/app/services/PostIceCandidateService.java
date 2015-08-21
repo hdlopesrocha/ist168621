@@ -1,6 +1,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -36,15 +37,23 @@ public class PostIceCandidateService extends Service<Void> {
 		Document obj = Document.parse(sdpjson);
 		Document doc = membership.getProperties();
 
-		ArrayList<Object> list = (ArrayList<Object>) doc.get("ices");
+		List<?> list = null;
 		String mtoken = doc.getString("itoken");
 
-		if (list == null || (token != null && !token.equals(mtoken))) {
-			list = new ArrayList<Object>();
+		if (token == null || token.equals(mtoken)) {
+			list = (List<?>) doc.get("ices");
 		}
-		list.add(obj);
+		
+		List<Object> ices = new ArrayList<Object>();
+		if(list!=null){
+			for(Object o : list){
+				ices.add(o);
+			}
+		}
+		ices.add(obj);
+		
 		doc.put("itoken", token);
-		doc.put("ices", list);
+		doc.put("ices", ices);
 		membership.save();
 
 	

@@ -30,6 +30,7 @@ import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.MediaPipeline;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
@@ -54,6 +55,9 @@ public class Room implements Closeable {
 		this.mediaPipeline = mediaPipeline;
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");
+		
+		
+		
 	}
 
 	@PreDestroy
@@ -69,6 +73,8 @@ public class Room implements Closeable {
 		String filepath = "file:///tmp/"+group.getId().toString()+"-"+session.getUser().getId().toString()+".webm";
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
+//		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
+
 		rec.record();
 		ep.connect(rec);
 		return rec;

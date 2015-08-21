@@ -6,6 +6,8 @@
 GET     /                           	controllers.Application.index()
 GET     /pubsub                         controllers.Application.pubsub()
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
+GET     /stream/*path	 		       	controllers.Application.stream(path : String)
+
 
 GET     /api/user/search	        	controllers.Rest.search()
 GET     /api/user/list              	controllers.Rest.listUsers()
@@ -13,7 +15,7 @@ POST    /api/user/update            	controllers.Rest.updateUser()
 POST    /api/user/password	        	controllers.Rest.changePassword()
 GET		/api/user/get/:user_id			controllers.Rest.getUser(user_id : String)
 POST	/api/user/login					controllers.Rest.login()
-POST	/api/user/register				controllers.Rest.register2()
+POST	/api/user/register				controllers.Rest.register()
 GET		/api/user/logout				controllers.Rest.logout()
 
 GET     /api/relation/del/:user_id		controllers.Rest.denyRelation(user_id : String)
@@ -30,6 +32,7 @@ GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid
 GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
 POST 	/api/group/sdp/:key				controllers.Rest.postSdp(key : String)
 POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String, token : String)
+POST	/api/group/record				controllers.Rest.saveRecording()
 
 POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
 GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)
