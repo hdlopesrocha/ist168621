@@ -564,12 +564,10 @@ public class Rest extends Controller {
 		MultipartFormData multipart = request().body().asMultipartFormData();
 		Map<String, String[]> form = multipart.asFormUrlEncoded();
 
-		JSONObject info = new JSONObject(form.get("json")[0]);
 
-		String owner = info.getString("owner");
-		String start = info.getString("start");
-		String end = info.getString("end");
-
+		String owner = form.get("owner")[0];
+		String start = form.get("start")[0];
+		String end = form.get("end")[0];
 
 		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
 		for (FilePart fp : multipart.getFiles()) {

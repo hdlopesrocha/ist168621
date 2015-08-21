@@ -29,7 +29,7 @@ import exceptions.UnauthorizedException;
 public abstract class Service<T> {
 	protected static DB db;
 
-	private static String DB_NAME = "bullray";
+	private static String DB_NAME = "webrtc";
 	
 	public static MongoClient getClient() {
 		if (client == null) {

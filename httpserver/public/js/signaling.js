@@ -55,6 +55,31 @@ var Signaling = (function(){
 		});
 	}
 	
+	this.saveRecording = function(owner,start,end, formData, success, error){
+		formData.append("owner",owner);
+		formData.append("start",start);
+		formData.append("end",end);
+		
+		
+		$.ajax({   
+		    type: "POST",
+		    url: "/api/group/record",
+		    data: formData,
+	        encType: "multipart/form-data",
+		    contentType: false,
+	        processData: false,
+	        cache: false,
+	        async : true,
+	        error:function(e){
+		    	error();
+		    },
+		    success:function(){
+				success();
+		    }
+		});
+		
+	}
+	
 	this.register = function(email,password1,password2, formData, success, error){
 		formData.append("email",email);
 		formData.append("password",password1);
