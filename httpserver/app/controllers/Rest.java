@@ -18,6 +18,7 @@ import models.Group;
 import models.KeyValueFile;
 import models.KeyValuePair;
 import models.Membership;
+import models.Recording;
 import models.Relation;
 import models.User;
 import play.mvc.Controller;
@@ -36,6 +37,7 @@ import services.GetUserPhotoService;
 import services.GetUserProfileService;
 import services.ListGroupMembersService;
 import services.ListGroupsService;
+import services.ListRecordingsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
@@ -70,7 +72,7 @@ public class Rest extends Controller {
 
 	public Result addGroupMember(String groupId, String memberId) {
 		if (session("uid") != null) {
-			System.out.println("ADDMEMBER: "+groupId + " | "+memberId);
+			System.out.println("ADDMEMBER: " + groupId + " | " + memberId);
 			AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
 			try {
 				service.execute();
@@ -113,7 +115,7 @@ public class Rest extends Controller {
 		}
 		return forbidden();
 	}
-	
+
 	public Result denyRelation(String email) {
 		if (session("uid") != null) {
 			DenyRelationService service = new DenyRelationService(session("uid"), email);
@@ -168,8 +170,6 @@ public class Rest extends Controller {
 		return notFound();
 	}
 
-	
-
 	public Result getPhoto(String email) {
 		if (email != null && email.length() > 0) {
 
@@ -184,8 +184,6 @@ public class Rest extends Controller {
 		return notFound();
 
 	}
-
-	
 
 	public Result getUser(String userId) {
 		try {
@@ -373,7 +371,7 @@ public class Rest extends Controller {
 		}
 		return forbidden();
 	}
-	
+
 	public Result postSdp(String groupId) {
 		if (session("uid") != null) {
 			synchronized (MONGODB_SDP_LOCK) {
@@ -397,7 +395,6 @@ public class Rest extends Controller {
 		return ok("OK");
 
 	}
-
 
 	public Result register() {
 
@@ -498,10 +495,8 @@ public class Rest extends Controller {
 		if (session("uid") != null) {
 			String query = request().queryString().get("s")[0];
 
-			System.out.println("SEARCH: "+groupId+" | "+query);
-			
+			System.out.println("SEARCH: " + groupId + " | " + query);
 
-			
 			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
 			try {
 				List<User> ans = service.execute();
@@ -560,14 +555,44 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
-	public Result saveRecording() {
+	public Result listRecordings(String groupId, Long sequence) {
+		ListRecordingsService service = new ListRecordingsService(session("uid"), groupId, sequence);
+		try {
+			List<Recording> res = service.execute();
+			JSONArray array = new JSONArray();
+
+			for (Recording rec : res) {
+				JSONObject jObj = new JSONObject();
+			//	jObj.put("id", rec.getId());
+				jObj.put("seq", rec.getSequence());
+				jObj.put("start", rec.getStart());
+				jObj.put("end", rec.getEnd());
+				jObj.put("url", rec.getUrl());
+				jObj.put("uid", rec.getUserId().toString());
+				
+				jObj.put("type", rec.getType());
+				jObj.put("name", rec.getName());
+
+				array.put(jObj);
+			}
+
+			return ok(array.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return badRequest();
+	}
+
+	public Result saveRecording(String groupId) {
 		MultipartFormData multipart = request().body().asMultipartFormData();
 		Map<String, String[]> form = multipart.asFormUrlEncoded();
 
-
-		String owner = form.get("owner")[0];
+		String userId = form.get("uid")[0];
 		String start = form.get("start")[0];
 		String end = form.get("end")[0];
+		String name = form.get("name")[0];
+		String type = form.get("type")[0];
 
 		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
 		for (FilePart fp : multipart.getFiles()) {
@@ -575,9 +600,13 @@ public class Rest extends Controller {
 			files.add(kvf);
 		}
 
-		SaveRecordingService service  =  new SaveRecordingService(files.get(0), owner, start, end);
+		SaveRecordingService saveService = new SaveRecordingService(files.get(0), groupId, userId, start, end, name,
+				type);
+		PublishService publishService = new PublishService("rec:" + groupId);
 		try {
-			service.execute();
+			saveService.execute();
+			publishService.execute();
+			System.out.println("saved recording!");
 			return ok();
 
 		} catch (ServiceException e) {
@@ -587,5 +616,5 @@ public class Rest extends Controller {
 		return badRequest();
 
 	}
-	
+
 }

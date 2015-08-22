@@ -1,5 +1,9 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -10,8 +14,24 @@ import services.Service;
 
 public class Recording {
 	
-	private ObjectId owner;
-	private String start,end;
+	private ObjectId groupId,userId;
+	private String start,end, name, type;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	private String url;
 	private ObjectId id = null;
 	private long sequence;
@@ -30,10 +50,13 @@ public class Recording {
 		if (id != null)
 			doc.put("_id", id);
 
-		doc.put("owner", owner);
+		doc.put("gid", groupId);
+		doc.put("uid", userId);
 		doc.put("start", start);
 		doc.put("end", end);
 		doc.put("url", url);
+		doc.put("name", name);
+		doc.put("type", type);
 		doc.put("seq", sequence);
 		
 		
@@ -54,13 +77,6 @@ public class Recording {
 		this.sequence = sequence;
 	}
 
-	public ObjectId getOwner() {
-		return owner;
-	}
-
-	public void setOwner(ObjectId owner) {
-		this.owner = owner;
-	}
 
 	public String getStart() {
 		return start;
@@ -88,12 +104,16 @@ public class Recording {
 
 	private static Recording load(Document doc) {
 		Recording rec = new Recording();
-		rec.setId(doc.getObjectId("_id"));
-		rec.setEnd(doc.getString("end"));
-		rec.setStart(doc.getString("start"));
-		rec.setOwner(doc.getObjectId("owner"));
-		rec.setUrl(doc.getString("url"));
-		rec.setSequence(doc.getLong("seq"));
+		rec.id = doc.getObjectId("_id");
+		rec.end = doc.getString("end");
+		rec.start = doc.getString("start");
+		rec.name = doc.getString("name");
+		rec.type = doc.getString("type");
+
+		rec.userId = doc.getObjectId("uid");
+		rec.groupId = doc.getObjectId("gid");
+		rec.url = doc.getString("url");
+		rec.sequence = doc.getLong("seq");
 		return rec;
 	}
 
@@ -105,9 +125,21 @@ public class Recording {
 		this.id = id;
 	}
 
-	public static long countByOwner(ObjectId owner){
-		Document doc = new Document("owner", owner);
+	
+	
+	
+	public static long countByGroup(ObjectId owner){
+		Document doc = new Document("gid", owner);
 		return getCollection().count(doc);
+	}
+	
+	public static List<Recording> listByGroup(ObjectId groupId, long sequence){
+		FindIterable<Document> iter = getCollection().find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
+		List<Recording> ret = new ArrayList<Recording>();
+		for(Document doc : iter){
+			ret.add(Recording.load(doc));
+		}
+		return ret;
 	}
 	
 	public static Recording findById(ObjectId id) {
@@ -120,18 +152,25 @@ public class Recording {
 	public Recording() {
 	}
 
-	public Recording(ObjectId owner, String start, String end, String url, long sequence) {
-		this.owner = owner;
+	public Recording(ObjectId groupId,ObjectId userId, String start, String end, String name, String type, String url, long sequence) {
+		this.groupId = groupId;
+		this.userId = userId;
 		this.start = start;
 		this.end = end;
 		this.url = url;
 		this.sequence = sequence;
+		this.name = name;
+		this.type = type;
 	}
 
 	public void delete() {
 		if (id != null){
 			getCollection().deleteOne(new Document("_id", id));
 		}
+	}
+
+	public ObjectId getUserId() {
+		return userId;
 	}
 
 }

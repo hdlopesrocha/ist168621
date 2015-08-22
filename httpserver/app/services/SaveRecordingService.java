@@ -13,8 +13,12 @@ import models.Recording;
 public class SaveRecordingService extends Service<Void> {
 
 	private KeyValueFile anex;
-	private ObjectId owner;
+	private ObjectId groupId;
+	private ObjectId userId;
+
 	private String start;
+	private String name;
+	private String type;
 	private String end;
 	private static Object LOCK = new Object();
 
@@ -29,11 +33,14 @@ public class SaveRecordingService extends Service<Void> {
 	 *            the content
 	 * @param anex
 	 */
-	public SaveRecordingService(final KeyValueFile anex, final String owner,String start, String end) {
+	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId,String start, String end, String name, String type) {
 		this.anex = anex;
-		this.owner = new ObjectId(owner);
+		this.groupId = new ObjectId(groupId);
+		this.userId = new ObjectId(userId);
 		this.start = start;
 		this.end = end;
+		this.name = name;
+		this.type = type;
 	}
 
 	/*
@@ -46,7 +53,9 @@ public class SaveRecordingService extends Service<Void> {
 		UploadFileService uploadService = new UploadFileService(anex);
 		String url = uploadService.execute();
 		synchronized (LOCK) {
-			Recording rec = new Recording(owner, start, end, url,Recording.countByOwner(owner));
+
+			
+			Recording rec = new Recording(groupId,userId, start, end,name,type, url,Recording.countByGroup(groupId));
 			rec.save();
 		}
 		return null;

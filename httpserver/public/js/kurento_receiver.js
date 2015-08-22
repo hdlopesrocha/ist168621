@@ -7,7 +7,7 @@ var KurentoReceiver = new (function() {
 	var newVideoCallback = null; 
 
 	
-	this.onNewParticipants = function(userId, uid, video) {
+	this.onNewParticipants = function(userId, uid) {
 		if(KurentoReceiver.peerConnections[userId]==null){
 			var pc = Kurento.createPeerConnection(userId);
 			KurentoReceiver.peerConnections[userId] = pc;
@@ -15,7 +15,7 @@ var KurentoReceiver = new (function() {
 			
 			pc.onaddstream = function (e) {
 				console.log(e);
-			    video.src = URL.createObjectURL(e.stream);
+				newVideoCallback(userId,URL.createObjectURL(e.stream));
 			};
 			
 			
@@ -48,7 +48,6 @@ var KurentoReceiver = new (function() {
 		newVideoCallback = nvcb;
 	};
 		
-	var videos = {};
 	
 	this.onmessage = function(id,message) {
 		// console.info('Received message: ' + message.data);
@@ -56,16 +55,8 @@ var KurentoReceiver = new (function() {
 		case 'participants':
 			console.log(id,message);
 			for(var userId in message.data){
-				var video = null;
-				if(videos[userId]){
-					video = videos[userId];
-				}
-				else {					
-					video  = newVideoCallback(userId);
-				}
-				
 				newParticipantsCallback(userId, message.data[userId]);
-				KurentoReceiver.onNewParticipants(userId, message.data[userId],video);
+				KurentoReceiver.onNewParticipants(userId, message.data[userId]);
 			}
 			break;
 		case 'description2':

@@ -32,7 +32,11 @@ GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid
 GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
 POST 	/api/group/sdp/:key				controllers.Rest.postSdp(key : String)
 POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String, token : String)
-POST	/api/group/record				controllers.Rest.saveRecording()
+
+
+POST	/api/rec/:gid					controllers.Rest.saveRecording(gid : String)
+GET		/api/rec/:gid/:seq				controllers.Rest.listRecordings(gid : String, seq : Long)
+
 
 POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
 GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)

@@ -55,15 +55,27 @@ var Signaling = (function(){
 		});
 	}
 	
-	this.saveRecording = function(owner,start,end, formData, success, error){
-		formData.append("owner",owner);
+	this.listRecordings = function(){
+		
+	}
+	
+	this.listRecordings = function(gid,seq,success){
+		$.get( "/api/rec/"+gid+"/"+seq, function( data ) {
+			success(JSON.parse(data));
+		});
+	}
+	
+	this.saveRecording = function(gid,uid,start,end,name,type, formData, success, error){
+		formData.append("uid",uid);
 		formData.append("start",start);
 		formData.append("end",end);
+		formData.append("name",name);
+		formData.append("type",type);
 		
 		
 		$.ajax({   
 		    type: "POST",
-		    url: "/api/group/record",
+		    url: "/api/rec/"+gid,
 		    data: formData,
 	        encType: "multipart/form-data",
 		    contentType: false,
@@ -214,8 +226,9 @@ var Signaling = (function(){
 	function subscribeCycle(key,ts,result){
 		$.get( "/api/pubsub/"+key+"/"+ts, function( data ) {
 			if(data.length!=0){			
-				result(data);
-				ts = JSON.parse(data).ts;
+				result();
+				var obj = JSON.parse(data);
+				ts = obj.ts;
 			}else {
 				// server timed-out
 			}

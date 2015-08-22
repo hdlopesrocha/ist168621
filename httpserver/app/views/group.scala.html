@@ -39,40 +39,42 @@
 		</div>
 				
 		<h3>Remote Video</h3>
-		<div id="participants"></div>
+		<button onclick="realTime()">
+			REAL TIME
+		</button>
 		
-		<h3>Recorded Video</h3>
-		<div class="col-md-5">
-			<div id="main" style="width:480px"></div>
-			<video id="rec_video" controls autoplay width="480px" height="360px" poster="/assets/images/webrtc.png"></video>	
-		</div>
+		<div id="main" style="width:480px"></div>
+		<div id="participants"></div>
 		
 		
 		
 		<script>
+			var currentVideoPlaying = 0;
 			var participants = {};
+			var user_streams = {};
+			var user_videos = {};
 			var rec_videos = [];
 			var timeline = null;
+			var myvideo = document.getElementById("myvideo");
+			myvideo.muted = true;
+			var last_sequence = -1;
+			
+			
 			// TIMELINE
 		 	var items = new vis.DataSet({
 				type: { start: 'ISODate', end: 'ISODate' }
 			});
 	
+			function realTime(){
+				user_videos["@userId"].src = user_streams["@userId"];
+			}
+			
 			
 			$( document ).ready(function() {
-				var rec_video = document.getElementById("rec_video");
-				var currentVideoPlaying = 0;
-				rec_video.muted = true;
+		
 				
-				rec_video.addEventListener('ended', function(){
-					++currentVideoPlaying;
-					rec_video.src= rec_videos[currentVideoPlaying];
-					timeline.setSelection(currentVideoPlaying);
-				});
-				
-				
-			  function createTimeline(items) {
-				    var main = document.getElementById('main');
+			  function createTimeline(items,divId) {
+				    var main = document.getElementById(divId);
 				    var options = {
 			            stack: false,
 			            align: 'center'
@@ -82,20 +84,28 @@
 
 				    var timeline =  new vis.Timeline(main, items, options);
 				    
+				    timeline.on('timechanged', function(properties){
+				    	var time = properties.time;
+				    	timeline.setCurrentTime(time);
+				    });
+				    
 				    timeline.on('select', function (properties) {
-				       var sel = properties.items[0];
+				    	var sel = properties.items[0];
+				       
 				       if(sel!=undefined){
 				    	   	currentVideoPlaying = sel;
-							rec_video.src= rec_videos[currentVideoPlaying];
+							user_videos["@userId"].src= rec_videos[currentVideoPlaying];
 				       }
 				      });
+				    
+				    timeline.addCustomTime(new Date(),"time");
+					
 				    
 				    return timeline;
 				}
 
 	  
-				timeline= createTimeline(items);
-
+				timeline= createTimeline(items,"main");
 				
 				
 				
@@ -106,42 +116,72 @@
 					}
 				}
 			
-				var kvideo = function(userId){
+				var kvideo = function(userId, streamUrl){
 					var newVideoId = "video"+userId;
-					$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " controls autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
-					return document.getElementById(newVideoId);
+					$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
+					var video = document.getElementById(newVideoId);
+					video.src=streamUrl;
+					user_videos[userId] = video;
+					user_streams[userId] = streamUrl;
+					
+					
+					video.addEventListener('ended', function(){
+						++currentVideoPlaying;
+						video.src= rec_videos[currentVideoPlaying];
+						timeline.setSelection(currentVideoPlaying);
+					});
+					
+				
+					
+					
+					return video;
 				}
 					
-				var myvideo = document.getElementById("myvideo");
-				myvideo.muted = true;
-
-				var rec_video_index = 0;
-
-		
+	
+				
+				Signaling.subscribe("rec:@groupId",function(){
+					console.log("video recorded!");
+					
+					Signaling.listRecordings("@groupId",last_sequence,function(data){
+						console.log(data);
+						var first = last_sequence==-1;
+						
+						for(var i in  data){
+							var obj = data[i];	
+							if(obj.uid == "@userId"){
+								rec_videos[obj.seq] = "/file/"+obj.url;
+								var itemsArray = [];
+								itemsArray.push({id:obj.seq,content:"&nbsp;",start:obj.start,end:obj.end});
+								items.add(itemsArray);
+							
+								if(obj.seq > last_sequence){
+									last_sequence = obj.seq;
+								}
+							}
+						}
+						if(first){
+							timeline.fit({animation:false});
+						}
+						
+						var now = new Date();
+						now.setSeconds(now.getSeconds() + 10);
+						
+						timeline.setWindow(null,now);
+				
+						
+					});
+				});
 				
 				
 				var onVideoRecorded = function(blob,videoURL,start,end){
 					console.log(start,end,videoURL,blob);
-					rec_videos[rec_video_index] = videoURL;
-					
-					var itemsArray = [];
-					itemsArray.push({id:rec_video_index,content:"&nbsp;",start:start,end:end});
-					items.add(itemsArray);
-					timeline.fit();
-					var now = new Date();
-					now.setSeconds(now.getSeconds() + 10);
-					
-					if(rec_video_index==0){
-						rec_video.src = videoURL;
-						timeline.setSelection(rec_video_index);
-					}
-					
-					timeline.setWindow(rec_video_index==0 ? start:null,now);
-					rec_video_index++;
+				
 					
 					var formData = new FormData();
-					formData.append("video", blob);
-					Signaling.saveRecording("@groupId",start,end,formData,function(){console.log("ok")},function(){console.log("err")});
+					var name = "recording"+"."+blob.type.split('/')[1];
+					var type = blob.type;
+					formData.append("video", blob,name);					
+					Signaling.saveRecording("@groupId","@userId",start.toISOString(),end.toISOString(),name,type,formData,function(){console.log("ok")},function(){console.log("err")});
 					
 					
 					
