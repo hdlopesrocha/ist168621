@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 		<script type="text/javascript" src="/assets/js/RecordRTC.js"></script>	
 	  	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
+	  	<script type="text/javascript" src="/assets/js/timeline.js"></script>
 	  	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
 
@@ -43,9 +44,9 @@
 			REAL TIME
 		</button>
 		
-		<div id="main" style="width:480px"></div>
 		<div id="participants"></div>
 		
+		<div id="timeline"></div>
 		
 		
 		<script>
@@ -72,40 +73,12 @@
 			
 			$( document ).ready(function() {
 		
-				
-			  function createTimeline(items,divId) {
-				    var main = document.getElementById(divId);
-				    var options = {
-			            stack: false,
-			            align: 'center'
-				     // editable: true,
-				     // clickToUse: true
-				    };
-
-				    var timeline =  new vis.Timeline(main, items, options);
-				    
-				    timeline.on('timechanged', function(properties){
-				    	var time = properties.time;
-				    	timeline.setCurrentTime(time);
-				    });
-				    
-				    timeline.on('select', function (properties) {
-				    	var sel = properties.items[0];
-				       
-				       if(sel!=undefined){
-				    	   	currentVideoPlaying = sel;
-							user_videos["@userId"].src= rec_videos[currentVideoPlaying];
-				       }
-				      });
-				    
-				    timeline.addCustomTime(new Date(),"time");
-					
-				    
-				    return timeline;
-				}
-
+			
 	  
-				timeline= createTimeline(items,"main");
+				timeline= createTimeline(items,"timeline",function(selected){
+				   	currentVideoPlaying = selected;
+					user_videos["@userId"].src= rec_videos[currentVideoPlaying];
+				});
 				
 				
 				
@@ -162,13 +135,7 @@
 						if(first){
 							timeline.fit({animation:false});
 						}
-						
-						var now = new Date();
-						now.setSeconds(now.getSeconds() + 10);
-						
-						timeline.setWindow(null,now);
 				
-						
 					});
 				});
 				
