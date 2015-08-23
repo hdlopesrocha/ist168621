@@ -59,6 +59,7 @@
 			var myvideo = document.getElementById("myvideo");
 			myvideo.muted = true;
 			var last_sequence = -1;
+			var current_interval = null;
 			
 			
 			// TIMELINE
@@ -97,20 +98,16 @@
 					user_videos[userId] = video;
 					user_streams[userId] = streamUrl;
 					
-					
 					video.addEventListener('ended', function(){
 						++currentVideoPlaying;
 						video.src= rec_videos[currentVideoPlaying];
 						timeline.setSelection(currentVideoPlaying);
 					});
-					
 				
-					
-					
 					return video;
 				}
 					
-	
+				var rendered_intervals = {};
 				
 				Signaling.subscribe("rec:@groupId",function(){
 					console.log("video recorded!");
@@ -123,10 +120,24 @@
 							var obj = data[i];	
 							if(obj.uid == "@userId"){
 								rec_videos[obj.seq] = "/file/"+obj.url;
-								var itemsArray = [];
-								itemsArray.push({id:obj.seq,content:"&nbsp;",start:obj.start,end:obj.end});
-								items.add(itemsArray);
-							
+								
+								
+								var inter = rendered_intervals[obj.inter];					
+								console.log(obj.inter,inter);
+								var newInter = null;
+								
+								if(!inter){
+									newInter = {id:obj.inter,content:"&nbsp;",start:obj.start,end:obj.end}; 
+								}
+								else {
+									var oldStart = inter.start;
+									console.log(oldStart);
+									items.remove(obj.inter);
+								 	newInter = {id:obj.inter,content:"&nbsp;",start:oldStart,end:obj.end};
+								}
+								items.add(newInter);
+								rendered_intervals[obj.inter] = newInter;
+								
 								if(obj.seq > last_sequence){
 									last_sequence = obj.seq;
 								}
@@ -148,7 +159,8 @@
 					var name = "recording"+"."+blob.type.split('/')[1];
 					var type = blob.type;
 					formData.append("video", blob,name);					
-					Signaling.saveRecording("@groupId","@userId",start.toISOString(),end.toISOString(),name,type,formData,function(){console.log("ok")},function(){console.log("err")});
+					Signaling.saveRecording("@groupId","@userId",current_interval,start.toISOString(),end.toISOString(),
+							name,type,formData,function(data){current_interval = data;},function(){console.log("err")});
 					
 					
 					

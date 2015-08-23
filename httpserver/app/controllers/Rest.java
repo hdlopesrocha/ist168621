@@ -563,13 +563,15 @@ public class Rest extends Controller {
 
 			for (Recording rec : res) {
 				JSONObject jObj = new JSONObject();
-			//	jObj.put("id", rec.getId());
+				// jObj.put("id", rec.getId());
 				jObj.put("seq", rec.getSequence());
 				jObj.put("start", rec.getStart());
 				jObj.put("end", rec.getEnd());
 				jObj.put("url", rec.getUrl());
 				jObj.put("uid", rec.getUserId().toString());
-				
+				if(rec.getInterval()!=null){
+					jObj.put("inter", rec.getInterval().toString());
+				}
 				jObj.put("type", rec.getType());
 				jObj.put("name", rec.getName());
 
@@ -593,6 +595,7 @@ public class Rest extends Controller {
 		String end = form.get("end")[0];
 		String name = form.get("name")[0];
 		String type = form.get("type")[0];
+		String inter = form.containsKey("inter") ? form.get("inter")[0] : null;
 
 		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
 		for (FilePart fp : multipart.getFiles()) {
@@ -601,13 +604,13 @@ public class Rest extends Controller {
 		}
 
 		SaveRecordingService saveService = new SaveRecordingService(files.get(0), groupId, userId, start, end, name,
-				type);
+				type, inter);
 		PublishService publishService = new PublishService("rec:" + groupId);
 		try {
-			saveService.execute();
+			Recording rec = saveService.execute();
 			publishService.execute();
 			System.out.println("saved recording!");
-			return ok();
+			return ok(rec.getInterval().toString());
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block

@@ -5,7 +5,8 @@ function createTimeline(items,divId, selected) {
     var options = {
         stack: false,
         align: 'center',
-        showCurrentTime:false
+        showCurrentTime:false,
+       // editable:true,
      // editable: true,
      // clickToUse: true
     };

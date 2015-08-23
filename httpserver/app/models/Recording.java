@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.bson.Document;
@@ -13,9 +12,10 @@ import com.mongodb.client.MongoCollection;
 import services.Service;
 
 public class Recording {
-	
-	private ObjectId groupId,userId;
-	private String start,end, name, type;
+
+	private ObjectId groupId, userId, interval;
+	private String start, end, name, type;
+
 	public String getName() {
 		return name;
 	}
@@ -35,16 +35,15 @@ public class Recording {
 	private String url;
 	private ObjectId id = null;
 	private long sequence;
-	
+
 	public static MongoCollection<Document> collection;
-	
-	
-	public static MongoCollection<Document> getCollection(){
-		if(collection==null)
+
+	public static MongoCollection<Document> getCollection() {
+		if (collection == null)
 			collection = Service.getDatabase().getCollection("recordings");
-		return collection;		
+		return collection;
 	}
-	
+
 	public void save() {
 		Document doc = new Document();
 		if (id != null)
@@ -56,15 +55,15 @@ public class Recording {
 		doc.put("end", end);
 		doc.put("url", url);
 		doc.put("name", name);
+		doc.put("inter", interval);
 		doc.put("type", type);
 		doc.put("seq", sequence);
-		
-		
+
 		if (id == null)
 			getCollection().insertOne(doc);
 		else
 			getCollection().replaceOne(new Document("_id", id), doc);
-		
+
 		id = doc.getObjectId("_id");
 
 	}
@@ -76,7 +75,6 @@ public class Recording {
 	public void setSequence(long sequence) {
 		this.sequence = sequence;
 	}
-
 
 	public String getStart() {
 		return start;
@@ -109,6 +107,7 @@ public class Recording {
 		rec.start = doc.getString("start");
 		rec.name = doc.getString("name");
 		rec.type = doc.getString("type");
+		rec.interval = doc.getObjectId("inter");
 
 		rec.userId = doc.getObjectId("uid");
 		rec.groupId = doc.getObjectId("gid");
@@ -125,23 +124,21 @@ public class Recording {
 		this.id = id;
 	}
 
-	
-	
-	
-	public static long countByGroup(ObjectId owner){
+	public static long countByGroup(ObjectId owner) {
 		Document doc = new Document("gid", owner);
 		return getCollection().count(doc);
 	}
-	
-	public static List<Recording> listByGroup(ObjectId groupId, long sequence){
-		FindIterable<Document> iter = getCollection().find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
+
+	public static List<Recording> listByGroup(ObjectId groupId, long sequence) {
+		FindIterable<Document> iter = getCollection()
+				.find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
 		List<Recording> ret = new ArrayList<Recording>();
-		for(Document doc : iter){
+		for (Document doc : iter) {
 			ret.add(Recording.load(doc));
 		}
 		return ret;
 	}
-	
+
 	public static Recording findById(ObjectId id) {
 		Document doc = new Document("_id", id);
 		FindIterable<Document> iter = getCollection().find(doc);
@@ -152,7 +149,8 @@ public class Recording {
 	public Recording() {
 	}
 
-	public Recording(ObjectId groupId,ObjectId userId, String start, String end, String name, String type, String url, long sequence) {
+	public Recording(ObjectId groupId, ObjectId userId, String start, String end, String name, String type, String url,
+			long sequence, ObjectId interval) {
 		this.groupId = groupId;
 		this.userId = userId;
 		this.start = start;
@@ -161,10 +159,19 @@ public class Recording {
 		this.sequence = sequence;
 		this.name = name;
 		this.type = type;
+		this.interval = interval;
+	}
+
+	public ObjectId getInterval() {
+		return interval;
+	}
+
+	public void setInterval(ObjectId interval) {
+		this.interval = interval;
 	}
 
 	public void delete() {
-		if (id != null){
+		if (id != null) {
 			getCollection().deleteOne(new Document("_id", id));
 		}
 	}

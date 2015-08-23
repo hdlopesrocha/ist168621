@@ -3,6 +3,7 @@ package services;
 import org.bson.types.ObjectId;
 
 import exceptions.ServiceException;
+import models.Interval;
 import models.KeyValueFile;
 import models.Recording;
 
@@ -10,12 +11,13 @@ import models.Recording;
 /**
  * The Class SendMessageService.
  */
-public class SaveRecordingService extends Service<Void> {
+public class SaveRecordingService extends Service<Recording> {
 
 	private KeyValueFile anex;
 	private ObjectId groupId;
 	private ObjectId userId;
 
+	private ObjectId interval;
 	private String start;
 	private String name;
 	private String type;
@@ -33,10 +35,11 @@ public class SaveRecordingService extends Service<Void> {
 	 *            the content
 	 * @param anex
 	 */
-	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId,String start, String end, String name, String type) {
+	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId,String start, String end, String name, String type, String interval) {
 		this.anex = anex;
 		this.groupId = new ObjectId(groupId);
 		this.userId = new ObjectId(userId);
+		this.interval = interval != null ? new ObjectId(interval) : null;
 		this.start = start;
 		this.end = end;
 		this.name = name;
@@ -49,16 +52,26 @@ public class SaveRecordingService extends Service<Void> {
 	 * @see services.Service#dispatch()
 	 */
 	@Override
-	public Void dispatch() throws ServiceException {
+	public Recording dispatch() throws ServiceException {
 		UploadFileService uploadService = new UploadFileService(anex);
 		String url = uploadService.execute();
 		synchronized (LOCK) {
-
+			Interval inter = null;
+			if(interval==null){
+				inter = new Interval(start,end);
+				inter.save();
+				interval = inter.getId();
+			}else{
+				inter = Interval.findById(interval);
+				inter.setEnd(end);
+				inter.save();
+			}
 			
-			Recording rec = new Recording(groupId,userId, start, end,name,type, url,Recording.countByGroup(groupId));
+			Recording rec = new Recording(groupId,userId, start, end,name,type, url,Recording.countByGroup(groupId),inter.getId());
 			rec.save();
+			return rec;
 		}
-		return null;
+
 	}
 
 	/*

@@ -65,13 +65,15 @@ var Signaling = (function(){
 		});
 	}
 	
-	this.saveRecording = function(gid,uid,start,end,name,type, formData, success, error){
+	this.saveRecording = function(gid,uid,inter,start,end,name,type, formData, success, error){
 		formData.append("uid",uid);
 		formData.append("start",start);
 		formData.append("end",end);
 		formData.append("name",name);
 		formData.append("type",type);
-		
+		if(inter!=null){
+			formData.append("inter",inter);
+		}
 		
 		$.ajax({   
 		    type: "POST",
@@ -85,8 +87,8 @@ var Signaling = (function(){
 	        error:function(e){
 		    	error();
 		    },
-		    success:function(){
-				success();
+		    success:function(data){
+				success(data);
 		    }
 		});
 		
