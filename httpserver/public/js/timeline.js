@@ -13,14 +13,21 @@ function createTimeline(items,divId, selected) {
 
     var timeline =  new vis.Timeline(main, items, options);
 	timeline.addCustomTime(new Date(),"time");
-    
-    timeline.on('rangechange', function(properties){
+  
+	
+	  timeline.on('rangechange', function(properties){
+	    	var start = properties.start;
+	    	var end = properties.end;
+	    	var avg = new Date((start.getTime()+end.getTime())/2);
+
+	    	timeline.removeCustomTime("time");
+	    	timeline.addCustomTime(avg,"time");
+	    });
+	
+    timeline.on('rangechanged', function(properties){
     	var start = properties.start;
     	var end = properties.end;
-    	var avg = new Date((start.getTime()+end.getTime())/2);
-
-    	timeline.removeCustomTime("time");
-    	timeline.addCustomTime(avg,"time");
+    	var avg = new Date((start.getTime()+end.getTime())/2+500);
     	timeline.setCurrentTime(avg);
     });
     
@@ -37,7 +44,7 @@ function createTimeline(items,divId, selected) {
 
 function followerWorker(timeline){
 	var now = timeline.getCurrentTime();
-	timeline.moveTo(now);
+	timeline.moveTo(now,{animation: {duration: 500}});
 	setTimeout(function(){followerWorker(timeline);},1000);
 }
 
