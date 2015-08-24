@@ -1,11 +1,11 @@
-
+var time_offset = 0;
 
 function createTimeline(items,divId, selected) {
     var main = document.getElementById(divId);
     var options = {
         stack: false,
         align: 'center',
-        showCurrentTime:false,
+        showCurrentTime:true,
        // editable:true,
      // editable: true,
      // clickToUse: true
@@ -14,21 +14,23 @@ function createTimeline(items,divId, selected) {
     var timeline =  new vis.Timeline(main, items, options);
 	timeline.addCustomTime(new Date(),"time");
   
-	
-	  timeline.on('rangechange', function(properties){
-	    	var start = properties.start;
-	    	var end = properties.end;
-	    	var avg = new Date((start.getTime()+end.getTime())/2);
-
-	    	timeline.removeCustomTime("time");
-	    	timeline.addCustomTime(avg,"time");
-	    });
-	
-    timeline.on('rangechanged', function(properties){
+	timeline.on('rangechange', function(properties){
     	var start = properties.start;
     	var end = properties.end;
-    	var avg = new Date((start.getTime()+end.getTime())/2+500);
-    	timeline.setCurrentTime(avg);
+    	var avg = new Date((start.getTime()+end.getTime())/2);
+
+    	var customTime = timeline.getCustomTime("time");
+    	timeline.setCustomTime(avg,"time");
+    });
+	
+    timeline.on('rangechanged', function(properties){
+    	if(properties.byUser){
+	    	var start = properties.start;
+	    	var end = properties.end;
+	    	var avg = (start.getTime()+end.getTime())/2;
+	    	
+	    	time_offset = new Date().getTime() - avg;	    	
+    	}
     });
     
     timeline.on('select', function (properties) {
@@ -42,9 +44,10 @@ function createTimeline(items,divId, selected) {
     return timeline;
 }
 
+
 function followerWorker(timeline){
-	var now = timeline.getCurrentTime();
-	timeline.moveTo(now,{animation: {duration: 500}});
+	var now = new Date().getTime()-time_offset;
+	timeline.moveTo(new Date(now),{animation: {duration: 1000,easingFunction: "linear"}});
 	setTimeout(function(){followerWorker(timeline);},1000);
 }
 
