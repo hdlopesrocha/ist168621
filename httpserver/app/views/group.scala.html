@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="/assets/js/webrtc.js"></script>	
 		<script type="text/javascript" src="/assets/js/RecordRTC.js"></script>	
 	  	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
-	  	<script type="text/javascript" src="/assets/js/timeline.js"></script>
+	  	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
 	  	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
 
@@ -74,7 +74,7 @@
 					user_videos[i].src = user_streams[i];
 				}
 		    	timeline.moveTo(new Date());
-		    	time_offset = 0;
+		    	timeline.hyper_offset = 0;
 			}
 			
 			
@@ -108,7 +108,7 @@
 				}
 			
 	  
-				timeline= createTimeline(items,"timeline",function(nowTime){
+				timeline= HyperTimeline.create(items,"timeline",function(nowTime){
 					/*
 				   	currentVideoPlaying = selected;
 					user_videos["@userId"].src= rec_videos[currentVideoPlaying];
