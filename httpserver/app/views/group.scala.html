@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="/assets/js/RecordRTC.js"></script>	
 	  	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
 	  	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
+	  	<script type="text/javascript" src="/assets/js/hyper_preloader.js"></script>
 	  	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
 
@@ -78,6 +79,10 @@
 			}
 			
 			
+			
+			
+			
+			
 			$( document ).ready(function() {
 		
 				var kvideo = function(userId, streamUrl){
@@ -107,37 +112,49 @@
 					}
 				}
 			
-	  
-				timeline= HyperTimeline.create(items,"timeline",function(nowTime){
-					/*
-				   	currentVideoPlaying = selected;
-					user_videos["@userId"].src= rec_videos[currentVideoPlaying];
-				*/
-					$.get("/api/rec/@groupId/"+nowTime.toISOString()+"/20000",function(data){
-						var array = JSON.parse(data);
-						var first ={};
-						
-						for(var i in array){
-							var obj = array[i];
-							if(!first[obj.uid]){
-								var newUrl = "/file/"+obj.url;
-								
-								if(!user_videos[obj.uid]){
-									kvideo(obj.uid,"");
-								}
-								
-								if(user_current[obj.uid]!==newUrl){
-									user_videos[obj.uid].src= newUrl;
-									user_current[obj.uid] = newUrl;
-								}
-								first[obj.uid]=true;
-							}
-							
-							
-						}
-						
-					});
 				
+				var preloader_timer = null;
+				var preloader_running = false;
+				
+				function preloader(){
+					if(!preloader_running){
+						preloader_running = true;
+						$.get("/api/rec/@groupId/"+timeline.getMyTime().toISOString()+"/20000",function(data){
+							var array = JSON.parse(data);
+							
+							for(var i in array){
+								var obj = array[i];
+								var start = new Date(obj.start);
+								var end = new Date(obj.end);
+								var newUrl = "/file/"+obj.url;
+								var srcOrBlob = HyperPreLoader.load(newUrl,obj.type);
+								if(timeline.intersects(start,end) ){	
+									if(!user_videos[obj.uid]){
+										kvideo(obj.uid,"");
+									}
+									
+									if(user_current[obj.uid]!==newUrl){
+										user_videos[obj.uid].src= srcOrBlob;
+										user_current[obj.uid] = newUrl;
+									}
+								}
+							}
+						}).always(function() {
+							preloader_timer = setTimeout(function(){
+							//	console.log("5 SECONDS!!!");
+								preloader_running = false;
+								preloader();
+							},5000);
+						});
+					}
+				}
+						
+				timeline= HyperTimeline.create(items,"timeline",function(){
+				    if(preloader_timer!=null){
+						clearTimeout(preloader_timer);
+						preloader_running = false;
+				    }
+				    preloader();
 				});
 				
 				
@@ -157,11 +174,8 @@
 							if(obj.uid == "@userId"){
 								rec_videos[obj.seq] = "/file/"+obj.url;
 								
-								
 								var inter = rendered_intervals[obj.inter];					
-								console.log(obj.inter,inter);
-								var newInter = null;
-								
+								var newInter = null;								
 								if(!inter){
 									newInter = {id:obj.inter,content:"&nbsp;",start:obj.start,end:obj.end}; 
 								}

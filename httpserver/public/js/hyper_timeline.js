@@ -2,13 +2,12 @@
 
 var HyperTimeline = new (function() {
 
-	function followerWorker(timeline,current){
+	function followerWorker(timeline){
 		var now = new Date().getTime()-timeline.hyper_offset;
 		var nowTime = new Date(now);
-		current(nowTime);
 		
 		timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
-		setTimeout(function(){followerWorker(timeline,current);},1000);
+		setTimeout(function(){followerWorker(timeline);},1000);
 	}
 	
 	
@@ -41,11 +40,20 @@ var HyperTimeline = new (function() {
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	timeline.hyper_offset = new Date().getTime() - avg;
+		    	current();
 	    	}
 	    });
 	    
+	    timeline.intersects = function(start,end){
+	    	var customTime = timeline.getCustomTime("time");
+	    	return start.getTime()<=customTime.getTime() && customTime.getTime() <= end.getTime();
+	    };
+	    
+	    timeline.getMyTime = function(){
+	    	return timeline.getCustomTime("time");
+	    }
 
-		followerWorker(timeline,current);
+		followerWorker(timeline);
 	    return timeline;
 	}
 	
