@@ -1,7 +1,14 @@
 package services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.bson.types.ObjectId;
 
+import exceptions.BadRequestException;
 import exceptions.ServiceException;
 import models.Interval;
 import models.KeyValueFile;
@@ -35,7 +42,8 @@ public class SaveRecordingService extends Service<Recording> {
 	 *            the content
 	 * @param anex
 	 */
-	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId,String start, String end, String name, String type, String interval) {
+	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId, String start,
+			String end, String name, String type, String interval) {
 		this.anex = anex;
 		this.groupId = new ObjectId(groupId);
 		this.userId = new ObjectId(userId);
@@ -57,21 +65,33 @@ public class SaveRecordingService extends Service<Recording> {
 		String url = uploadService.execute();
 		synchronized (LOCK) {
 			Interval inter = null;
-			if(interval==null){
-				inter = new Interval(start,end);
-				inter.save();
-				interval = inter.getId();
-			}else{
-				inter = Interval.findById(interval);
-				inter.setEnd(end);
-				inter.save();
-			}
-			
-			Recording rec = new Recording(groupId,userId, start, end,name,type, url,Recording.countByGroup(groupId),inter.getId());
-			rec.save();
-			return rec;
-		}
+			try {
+				Date dateStart = Recording.FORMAT.parse(start);
+				Date dateEnd = Recording.FORMAT.parse(end);
 
+				if (interval == null) {
+					inter = new Interval(dateStart, dateEnd);
+					inter.save();
+					interval = inter.getId();
+				} else {
+					inter = Interval.findById(interval);
+					inter.setEnd(dateEnd);
+					inter.save();
+				}
+
+				
+				Recording rec = new Recording(groupId, userId, dateStart, dateEnd, name, type, url,
+						Recording.countByGroup(groupId), inter.getId());
+				rec.save();
+				return rec;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new BadRequestException();
+			}
+
+		}
+		
 	}
 
 	/*

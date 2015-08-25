@@ -52,6 +52,8 @@
 		<script>
 			var currentVideoPlaying = 0;
 			var participants = {};
+			
+			var user_current = {};
 			var user_streams = {};
 			var user_videos = {};
 			var rec_videos = [];
@@ -68,20 +70,35 @@
 			});
 	
 			function realTime(){
-				user_videos["@userId"].src = user_streams["@userId"];
+				for(var i in user_videos){
+					user_videos[i].src = user_streams[i];
+				}
+		    	timeline.moveTo(new Date());
+		    	time_offset = 0;
 			}
 			
 			
 			$( document ).ready(function() {
 		
-			
-	  
-				timeline= createTimeline(items,"timeline",function(selected){
-				   	currentVideoPlaying = selected;
-					user_videos["@userId"].src= rec_videos[currentVideoPlaying];
-				});
-				
-				
+				var kvideo = function(userId, streamUrl){
+					var video = user_videos[userId];
+					if(!video){
+					
+						var newVideoId = "video"+userId;
+						$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
+						video = document.getElementById(newVideoId);
+						video.src=streamUrl;
+						user_videos[userId] = video;
+						user_streams[userId] = streamUrl;
+						
+						video.addEventListener('ended', function(){
+						//	++currentVideoPlaying;
+						//	video.src= rec_videos[currentVideoPlaying];
+						//	timeline.setSelection(currentVideoPlaying);
+						});
+					}
+					return video;
+				}
 				
 				var kparticipants = function(userId, email){
 					if(!participants[userId]){
@@ -90,22 +107,43 @@
 					}
 				}
 			
-				var kvideo = function(userId, streamUrl){
-					var newVideoId = "video"+userId;
-					$("#participants").append("<video id='"+newVideoId+"' "+ (userId=="@userId"?"muted":"")+ " autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
-					var video = document.getElementById(newVideoId);
-					video.src=streamUrl;
-					user_videos[userId] = video;
-					user_streams[userId] = streamUrl;
-					
-					video.addEventListener('ended', function(){
-						++currentVideoPlaying;
-						video.src= rec_videos[currentVideoPlaying];
-						timeline.setSelection(currentVideoPlaying);
+	  
+				timeline= createTimeline(items,"timeline",function(nowTime){
+					/*
+				   	currentVideoPlaying = selected;
+					user_videos["@userId"].src= rec_videos[currentVideoPlaying];
+				*/
+					$.get("/api/rec/@groupId/"+nowTime.toISOString()+"/20000",function(data){
+						var array = JSON.parse(data);
+						var first ={};
+						
+						for(var i in array){
+							var obj = array[i];
+							if(!first[obj.uid]){
+								var newUrl = "/file/"+obj.url;
+								
+								if(!user_videos[obj.uid]){
+									kvideo(obj.uid,"");
+								}
+								
+								if(user_current[obj.uid]!==newUrl){
+									user_videos[obj.uid].src= newUrl;
+									user_current[obj.uid] = newUrl;
+								}
+								first[obj.uid]=true;
+							}
+							
+							
+						}
+						
 					});
 				
-					return video;
-				}
+				});
+				
+				
+				
+		
+			
 					
 				var rendered_intervals = {};
 				
@@ -113,9 +151,7 @@
 					console.log("video recorded!");
 					
 					Signaling.listRecordings("@groupId",last_sequence,function(data){
-						console.log(data);
 						var first = last_sequence==-1;
-						
 						for(var i in  data){
 							var obj = data[i];	
 							if(obj.uid == "@userId"){
@@ -196,6 +232,9 @@
 					$("#member-list").html(html);
 				});
 	
+				
+				
+				
 				
 			});
 			

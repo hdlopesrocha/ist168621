@@ -37,6 +37,7 @@ import services.GetUserPhotoService;
 import services.GetUserProfileService;
 import services.ListGroupMembersService;
 import services.ListGroupsService;
+import services.ListRecordingsForTimeService;
 import services.ListRecordingsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
@@ -554,6 +555,40 @@ public class Rest extends Controller {
 		}
 		return badRequest();
 	}
+	
+	
+	public Result listRecordingsForTime(String groupId, String time, Long duration) {
+
+		ListRecordingsForTimeService service = new ListRecordingsForTimeService(session("uid"), groupId, time,duration);
+		try {
+			List<Recording> res = service.execute();
+			JSONArray array = new JSONArray();
+
+			for (Recording rec : res) {
+				JSONObject jObj = new JSONObject();
+				// jObj.put("id", rec.getId());
+				jObj.put("seq", rec.getSequence());
+				jObj.put("start", Recording.FORMAT.format(rec.getStart()));
+				jObj.put("end", Recording.FORMAT.format(rec.getEnd()));
+				jObj.put("url", rec.getUrl());
+				jObj.put("uid", rec.getUserId().toString());
+				if(rec.getInterval()!=null){
+					jObj.put("inter", rec.getInterval().toString());
+				}
+				jObj.put("type", rec.getType());
+				jObj.put("name", rec.getName());
+
+				array.put(jObj);
+			}
+			return ok(array.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return badRequest();
+		
+	}
+	
 
 	public Result listRecordings(String groupId, Long sequence) {
 		ListRecordingsService service = new ListRecordingsService(session("uid"), groupId, sequence);
@@ -565,8 +600,8 @@ public class Rest extends Controller {
 				JSONObject jObj = new JSONObject();
 				// jObj.put("id", rec.getId());
 				jObj.put("seq", rec.getSequence());
-				jObj.put("start", rec.getStart());
-				jObj.put("end", rec.getEnd());
+				jObj.put("start", Recording.FORMAT.format(rec.getStart()));
+				jObj.put("end", Recording.FORMAT.format(rec.getEnd()));
 				jObj.put("url", rec.getUrl());
 				jObj.put("uid", rec.getUserId().toString());
 				if(rec.getInterval()!=null){
@@ -577,7 +612,6 @@ public class Rest extends Controller {
 
 				array.put(jObj);
 			}
-
 			return ok(array.toString());
 
 		} catch (Exception e) {
@@ -593,6 +627,8 @@ public class Rest extends Controller {
 		String userId = form.get("uid")[0];
 		String start = form.get("start")[0];
 		String end = form.get("end")[0];
+		
+		System.out.println("XXX : "+ start + " | " +end);
 		String name = form.get("name")[0];
 		String type = form.get("type")[0];
 		String inter = form.containsKey("inter") ? form.get("inter")[0] : null;

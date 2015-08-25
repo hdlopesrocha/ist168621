@@ -1,7 +1,11 @@
 package models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -12,9 +16,11 @@ import com.mongodb.client.MongoCollection;
 import services.Service;
 
 public class Recording {
+	public static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	private ObjectId groupId, userId, interval;
-	private String start, end, name, type;
+	private Date start, end;
+	private String name, type;
 
 	public String getName() {
 		return name;
@@ -76,19 +82,19 @@ public class Recording {
 		this.sequence = sequence;
 	}
 
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
 
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
 
-	public String getEnd() {
+	public Date getEnd() {
 		return end;
 	}
 
-	public void setEnd(String end) {
+	public void setEnd(Date end) {
 		this.end = end;
 	}
 
@@ -100,11 +106,11 @@ public class Recording {
 		this.url = url;
 	}
 
-	private static Recording load(Document doc) {
+	public static Recording load(Document doc) {
 		Recording rec = new Recording();
 		rec.id = doc.getObjectId("_id");
-		rec.end = doc.getString("end");
-		rec.start = doc.getString("start");
+		rec.end = doc.getDate("end");
+		rec.start = doc.getDate("start");
 		rec.name = doc.getString("name");
 		rec.type = doc.getString("type");
 		rec.interval = doc.getObjectId("inter");
@@ -149,7 +155,7 @@ public class Recording {
 	public Recording() {
 	}
 
-	public Recording(ObjectId groupId, ObjectId userId, String start, String end, String name, String type, String url,
+	public Recording(ObjectId groupId, ObjectId userId, Date start, Date end, String name, String type, String url,
 			long sequence, ObjectId interval) {
 		this.groupId = groupId;
 		this.userId = userId;

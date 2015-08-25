@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
@@ -13,7 +14,7 @@ import services.Service;
 
 public class Interval {
 
-	private String start, end;
+	private Date start, end;
 
 	private ObjectId id = null;
 
@@ -42,19 +43,19 @@ public class Interval {
 
 	}
 
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
 
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
 
-	public String getEnd() {
+	public Date getEnd() {
 		return end;
 	}
 
-	public void setEnd(String end) {
+	public void setEnd(Date end) {
 		this.end = end;
 	}
 
@@ -62,8 +63,8 @@ public class Interval {
 	private static Interval load(Document doc) {
 		Interval rec = new Interval();
 		rec.id = doc.getObjectId("_id");
-		rec.end = doc.getString("end");
-		rec.start = doc.getString("start");
+		rec.end = doc.getDate("end");
+		rec.start = doc.getDate("start");
 		return rec;
 	}
 
@@ -100,7 +101,7 @@ public class Interval {
 	public Interval() {
 	}
 
-	public Interval(String start, String end) {
+	public Interval(Date start, Date end) {
 		this.start = start;
 		this.end = end;
 	}
