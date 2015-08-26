@@ -32,12 +32,11 @@ var KurentoSender = new (function() {
 
 	this.pc = null;
 	
-	this.start = function(userId,video, on_video_recorded){
+	this.start = function(userId, on_video_recorded){
 		KurentoSender.pc = Kurento.createPeerConnection(null);
 
 		// XXX [CLIENT_OFFER_01] XXX
 		navigator.getUserMedia(local_constraints, function(stream) {
-			video.src = URL.createObjectURL(stream);
 			KurentoSender.pc.addStream(stream);
 			KurentoSender.pc.createOffer(function (desc) {
 		
@@ -53,10 +52,6 @@ var KurentoSender = new (function() {
 					data : desc
 				}));
 
-				
-				
-				
-				
 			}, logError);
 		}, logError);
 

@@ -1,72 +1,64 @@
 @()
 
-<html>
-	<head>
-		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
-		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
-	</head>
-	<body>
-		<h3>Login</h3>
-		<form id="login-form">
-			Email:<input type="text" name="email"/><br>
-			Password:<input type="password" name="password"><br>
-			<input type="submit"/>
-		</form>
-		<h3>Register</h3>
-		<form id="register-form">
-			Email:<input type="text" name="email"/> <br>
-			Name:<input type="text" name="name"/> <br>
-			Password:<input type="password" name="password"/><br> 
-			Confirm Password:<input type="password" name="password2"/><br>
-			Photo:<input type="file" name="photo"/> <br>
-			<input type="submit"/>
-		</form>
-		
-		
-		<script>
-			$( document ).ready(function() {
-				$( "#login-form" ).submit(function( event ) {
-					var email = this.elements["email"].value;
-					var password = this.elements["password"].value;
-					var success = function(){
-						document.location = "/";
-					} 
-					var error = function(){
-						alert("fail");
-					} 
-					Signaling.login(email,password,success,error);
-					event.preventDefault();
-				});
-				
-				$( "#register-form" ).submit(function( event ) {					
-					//grab all form data  
-					var success = function(){
-						alert("success");
-					} 
-					var error = function(){
-						alert("fail");
-					} 
+@template(1){
+	<h3>Login</h3>
+	<form id="login-form">
+		Email:<input type="text" name="email"/><br>
+		Password:<input type="password" name="password"><br>
+		<input type="submit"/>
+	</form>
+	<h3>Register</h3>
+	<form id="register-form">
+		Email:<input type="text" name="email"/> <br>
+		Name:<input type="text" name="name"/> <br>
+		Password:<input type="password" name="password"/><br> 
+		Confirm Password:<input type="password" name="password2"/><br>
+		Photo:<input type="file" name="photo"/> <br>
+		<input type="submit"/>
+	</form>
 	
-					
-					
-					var email = this.elements["email"].value;
-					var password1 = this.elements["password"].value;
-					var password2 = this.elements["password2"].value;
-					var photo = this.elements["photo"].files[0];
-					var name = this.elements["name"].value;
-					var formData = new FormData();
-					formData.append("name",name);
-					formData.append("photo",photo);
-					
-					Signaling.register(email,password1,password2,formData,success,error);
-					event.preventDefault();
-
-				});
+	
+	<script>
+		$( document ).ready(function() {
+			$( "#login-form" ).submit(function( event ) {
+				var email = this.elements["email"].value;
+				var password = this.elements["password"].value;
+				var success = function(){
+					document.location = "/";
+				} 
+				var error = function(){
+					alert("fail");
+				} 
+				Signaling.login(email,password,success,error);
+				event.preventDefault();
 			});
-	
 			
-		</script>
+			$( "#register-form" ).submit(function( event ) {					
+				//grab all form data  
+				var success = function(){
+					alert("success");
+				} 
+				var error = function(){
+					alert("fail");
+				} 
+
+				
+				
+				var email = this.elements["email"].value;
+				var password1 = this.elements["password"].value;
+				var password2 = this.elements["password2"].value;
+				var photo = this.elements["photo"].files[0];
+				var name = this.elements["name"].value;
+				var formData = new FormData();
+				formData.append("name",name);
+				formData.append("photo",photo);
+				
+				Signaling.register(email,password1,password2,formData,success,error);
+				event.preventDefault();
+
+			});
+		});
+
 		
-		
-	</body>
-</html>
+	</script>
+}

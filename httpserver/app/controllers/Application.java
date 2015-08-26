@@ -9,6 +9,7 @@ import models.Membership;
 import models.User;
 import play.*;
 import play.mvc.*;
+import play.twirl.api.Html;
 
 
 public class Application extends Controller {
@@ -23,6 +24,10 @@ public class Application extends Controller {
     	
     }
 
+    public Result template(){
+    	return ok(views.html.template.render(0,new Html("")));
+    }
+    
     public Result stream(String path){
     	File file = new File(path);
     	Result res = ok(file);

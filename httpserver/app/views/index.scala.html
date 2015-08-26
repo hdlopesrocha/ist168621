@@ -1,97 +1,87 @@
 @()
 
-<html>
-	<head>
-		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
-		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
-	</head>
-	<body>
-		<button id="logout-button">Logout</button>		
-		<button id="refresh-button">Refresh</button>
-		&nbsp;Search:<input type="text" onchange="user_search(this.value)"/>
-		<h3>Search Result</h3>
-		<ul id="search-users"></ul>
-		<h3>Friend Requests</h3>
-		<ul id="friend-requests"></ul>
-		<h3>Friend List</h3>
-		<ul id="friend-list"></ul>
-		<h3>Create Group</h3>
-		&nbsp;Name:<input type="text" id="group_name"/><button onclick="group_create($('#group_name').val())">Create</button>
-		<h3>Group List</h3>
-		<ul id="group-list"></ul>
-		
-		
-		<script>
-			$( document ).ready(function() {
-				$("#logout-button").click(function(){
-					Signaling.logout(function(){
-						document.location = "/";
-					})
-				});	
-				$("#refresh-button").click(function(){
+@template(1){
+	Search:<input type="text" onchange="user_search(this.value)"/>
+	<h3>Search Result</h3>
+	<ul id="search-users"></ul>
+	<h3>Friend Requests</h3>
+	<ul id="friend-requests"></ul>
+	<h3>Friend List</h3>
+	<ul id="friend-list"></ul>
+	<h3>Create Group</h3>
+	&nbsp;Name:<input type="text" id="group_name"/><button onclick="group_create($('#group_name').val())">Create</button>
+	<h3>Group List</h3>
+	<ul id="group-list"></ul>
+	
+	
+	<script>
+		$( document ).ready(function() {
+			$("#logout-button").click(function(){
+				Signaling.logout(function(){
 					document.location = "/";
-				});
-				Signaling.listRequests(function(array){
-					var html = "";
-					for(var i  in array){
-						var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>accept</button>";
-						var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";
-						
-						html += "<li>"+array[i].email+add_button+del_button+"</li>";
-					}
-					$("#friend-requests").html(html);
-				});
-				Signaling.listRelations(function(array){
-					var html = "";
-					for(var i  in array){
-						var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";						
-						html += "<li>"+array[i].email+del_button+"</li>";
-					}
-					$("#friend-list").html(html);
-				});
-				Signaling.listGroups(function(array){
-					var html = "";
-					for(var i  in array){						
-						html += "<li><a href='/group/"+array[i].id+"'>"+array[i].name+"</a></li>";
-					}
-					$("#group-list").html(html);
-				});
-				
+				})
+			});	
+		
+			Signaling.listRequests(function(array){
+				var html = "";
+				for(var i  in array){
+					var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>accept</button>";
+					var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";
+					
+					html += "<li>"+array[i].email+add_button+del_button+"</li>";
+				}
+				$("#friend-requests").html(html);
+			});
+			Signaling.listRelations(function(array){
+				var html = "";
+				for(var i  in array){
+					var del_button = "<button onclick='user_del(\""+array[i].uid+"\")'>deny</button>";						
+					html += "<li>"+array[i].email+del_button+"</li>";
+				}
+				$("#friend-list").html(html);
+			});
+			Signaling.listGroups(function(array){
+				var html = "";
+				for(var i  in array){						
+					html += "<li><a href='/group/"+array[i].id+"'>"+array[i].name+"</a></li>";
+				}
+				$("#group-list").html(html);
 			});
 			
-			function user_del(userId){
-				var success = function(){
-					document.location = "/";
-				}
-				Signaling.rejectRelation(userId,success);
+		});
+		
+		function user_del(userId){
+			var success = function(){
+				document.location = "/";
 			}
-			
-			function group_create(name){
-				var success = function(){
-					document.location = "/";
-				}
-				Signaling.createGroup(name,success);
+			Signaling.rejectRelation(userId,success);
+		}
+		
+		function group_create(name){
+			var success = function(){
+				document.location = "/";
 			}
-			
-			function user_add(userId){
-				var success = function(){
-					document.location = "/";
-				}
-				Signaling.addRelation(userId,success);
+			Signaling.createGroup(name,success);
+		}
+		
+		function user_add(userId){
+			var success = function(){
+				document.location = "/";
 			}
-			
-			function user_search(query){
-				var result = function(array){
-					var html = "";
-					for(var i  in array){
-						var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>add</button>";
-						html += "<li>"+array[i].email+(array[i].state==undefined?add_button:"")+"</li>";
-					}
-					$("#search-users").html(html);	
+			Signaling.addRelation(userId,success);
+		}
+		
+		function user_search(query){
+			var result = function(array){
+				var html = "";
+				for(var i  in array){
+					var add_button = "<button onclick='user_add(\""+array[i].uid+"\")'>add</button>";
+					html += "<li>"+array[i].email+(array[i].state==undefined?add_button:"")+"</li>";
 				}
-				Signaling.search(query,result);
+				$("#search-users").html(html);	
 			}
-			
-		</script>
-	</body>
-</html>
+			Signaling.search(query,result);
+		}
+		
+	</script>
+}
