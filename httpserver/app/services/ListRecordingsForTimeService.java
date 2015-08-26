@@ -41,6 +41,7 @@ public class ListRecordingsForTimeService extends Service<List<Recording>> {
 	@Override
 	public List<Recording> dispatch() throws BadRequestException {
 		try {
+			System.out.println("\tparsing "+time);
 			Date parsedTime = Recording.FORMAT.parse(time);
 			Date extendedEnd = new Date();
 			extendedEnd.setTime(parsedTime.getTime()+duration);

@@ -17,6 +17,7 @@ var HyperTimeline = new (function() {
 	        stack: false,
 	        align: 'center',
 	        showCurrentTime:true,
+	        selectable:false
 	       // editable:true,
 	     // editable: true,
 	     // clickToUse: true
@@ -46,7 +47,18 @@ var HyperTimeline = new (function() {
 	    
 	    timeline.intersects = function(start,end){
 	    	var customTime = timeline.getCustomTime("time");
-	    	return start.getTime()<=customTime.getTime() && customTime.getTime() <= end.getTime();
+	    	var customMS = customTime.getTime();
+	    	var startMS = start.getTime();
+	    	var endMS = end.getTime();
+	    	
+	    	
+	    	
+	    	var ans = startMS<=customMS && customMS <= endMS;
+	    	if(ans){
+	    		return customMS - startMS;
+	    	}
+	    	
+	    	return null;
 	    };
 	    
 	    timeline.getMyTime = function(){

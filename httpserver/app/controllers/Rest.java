@@ -558,7 +558,7 @@ public class Rest extends Controller {
 	
 	
 	public Result listRecordingsForTime(String groupId, String time, Long duration) {
-
+		System.out.println("listRecordingsForTime("+groupId+","+time+","+duration+")");
 		ListRecordingsForTimeService service = new ListRecordingsForTimeService(session("uid"), groupId, time,duration);
 		try {
 			List<Recording> res = service.execute();

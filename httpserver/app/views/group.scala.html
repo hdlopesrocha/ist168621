@@ -53,7 +53,7 @@
 		<script>
 			var currentVideoPlaying = 0;
 			var participants = {};
-			
+			var real_time = true;
 			var user_current = {};
 			var user_streams = {};
 			var user_videos = {};
@@ -63,7 +63,9 @@
 			myvideo.muted = true;
 			var last_sequence = -1;
 			var current_interval = null;
-			
+			var rendered_intervals = {};
+			var preloader_timer = null;
+			var preloader_running = false;
 			
 			// TIMELINE
 		 	var items = new vis.DataSet({
@@ -71,6 +73,8 @@
 			});
 	
 			function realTime(){
+				real_time = true;
+				
 				for(var i in user_videos){
 					user_videos[i].src = user_streams[i];
 				}
@@ -113,13 +117,14 @@
 				}
 			
 				
-				var preloader_timer = null;
-				var preloader_running = false;
 				
 				function preloader(){
-					if(!preloader_running){
+					if(!preloader_running && !real_time){
 						preloader_running = true;
-						$.get("/api/rec/@groupId/"+timeline.getMyTime().toISOString()+"/20000",function(data){
+						console.log("GET GET GET GET GET GET");
+						
+						$.get("/api/rect/@groupId/"+timeline.getMyTime().toISOString()+"/20000",function(data){
+							
 							var array = JSON.parse(data);
 							
 							for(var i in array){
@@ -128,41 +133,50 @@
 								var end = new Date(obj.end);
 								var newUrl = "/file/"+obj.url;
 								var srcOrBlob = HyperPreLoader.load(newUrl,obj.type);
-								if(timeline.intersects(start,end) ){	
+								var offset = timeline.intersects(start,end);
+								
+								if(offset ){	
+											console.log("CT",offset);
 									if(!user_videos[obj.uid]){
 										kvideo(obj.uid,"");
 									}
 									
 									if(user_current[obj.uid]!==newUrl){
-										user_videos[obj.uid].src= srcOrBlob;
+
+										var video = user_videos[obj.uid];
+										video.src= srcOrBlob;
+										$(video).unbind('loadedmetadata');
+										$(video).on('loadedmetadata', function() {
+											
+											video.currentTime = offset/1000;
+									    }); 
 										user_current[obj.uid] = newUrl;
 									}
 								}
 							}
 						}).always(function() {
-							preloader_timer = setTimeout(function(){
-							//	console.log("5 SECONDS!!!");
-								preloader_running = false;
-								preloader();
-							},5000);
+							preloader_running = false;
+							// waits if not waiting already
+							if(preloader_timer==null){
+								preloader_timer = setTimeout(function(){
+									console.log("5 SECONDS!!!");
+									preloader_timer = null;
+									preloader();
+								},5000);
+							}
 						});
 					}
 				}
 						
 				timeline= HyperTimeline.create(items,"timeline",function(){
-				    if(preloader_timer!=null){
-						clearTimeout(preloader_timer);
-						preloader_running = false;
+					if(preloader_timer!=null){
+				    	clearTimeout(preloader_timer);
+				    	preloader_timer = null;
 				    }
+					real_time = false;
 				    preloader();
 				});
 				
-				
-				
-		
-			
-					
-				var rendered_intervals = {};
 				
 				Signaling.subscribe("rec:@groupId",function(){
 					console.log("video recorded!");
@@ -202,17 +216,14 @@
 				
 				
 				var onVideoRecorded = function(blob,videoURL,start,end){
-					console.log(start,end,videoURL,blob);
-				
 					
+					console.log(start,end,videoURL,blob);
 					var formData = new FormData();
 					var name = "recording"+"."+blob.type.split('/')[1];
 					var type = blob.type;
 					formData.append("video", blob,name);					
 					Signaling.saveRecording("@groupId","@userId",current_interval,start.toISOString(),end.toISOString(),
 							name,type,formData,function(data){current_interval = data;},function(){console.log("err")});
-					
-					
 					
 				}
 				

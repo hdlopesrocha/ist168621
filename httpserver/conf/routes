@@ -35,7 +35,7 @@ POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String
 
 
 POST	/api/rec/:gid					controllers.Rest.saveRecording(gid : String)
-GET		/api/rec/:gid/:time/:dur		controllers.Rest.listRecordingsForTime(gid : String, time : String, dur : Long)
+GET		/api/rect/:gid/:time/:dur		controllers.Rest.listRecordingsForTime(gid : String, time : String, dur : Long)
 GET		/api/rec/:gid/:seq				controllers.Rest.listRecordings(gid : String, seq : Long)
 
 
