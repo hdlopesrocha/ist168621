@@ -3,8 +3,8 @@
 var HyperTimeline = new (function() {
 
 	function followerWorker(timeline){
-		var now = new Date().getTime()-timeline.hyper_offset;
-		var nowTime = new Date(now);
+		var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
+		var nowTime = timeline.getMyTime();
 		
 		timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
 		setTimeout(function(){followerWorker(timeline);},1000);
@@ -62,7 +62,7 @@ var HyperTimeline = new (function() {
 	    };
 	    
 	    timeline.getMyTime = function(){
-	    	return timeline.getCustomTime("time");
+	    	return new Date(new Date().getTime()-timeline.hyper_offset);
 	    }
 
 		followerWorker(timeline);
