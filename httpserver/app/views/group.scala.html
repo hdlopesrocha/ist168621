@@ -81,7 +81,7 @@
 			if (!video) {
 
 				var newVideoId = "video" + userId;
-				$("#participants").append("<video id='" + newVideoId + "' " + (userId == "@userId" ? "muted" : "") + " autoplay width='480px' height='360px' poster='/assets/images/webrtc.png'></video>");
+				$("#participants").append("<video id='" + newVideoId + "' " + (userId == "@userId" ? "muted" : "") + " autoplay width='480px' height='360px'></video>");
 				video = document.getElementById(newVideoId);
 				video.src = streamUrl;
 				user_videos[userId] = video;
