@@ -71,7 +71,7 @@ public class UserSession implements Closeable {
 				}
 			}
 		});
-		
+		/*
 		new Thread(new Runnable() {
 			
 			@Override
@@ -96,7 +96,7 @@ public class UserSession implements Closeable {
 				}
 			}
 		}).start();
-		
+		*/
 	
 		
 		
