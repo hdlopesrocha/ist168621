@@ -65,6 +65,10 @@
 	});
 
 	function realTime() {
+		if (preloader_timer != null) {
+			clearTimeout(preloader_timer);
+			preloader_timer = null;
+		}
 		real_time = true;
 
 		for ( var i in user_videos) {
