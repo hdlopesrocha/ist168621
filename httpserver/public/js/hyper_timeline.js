@@ -55,10 +55,13 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.setRealTime = function(){
-	    	if(!timeline.real_time){
-				timeline.real_time = true;
-				timeline.moveTo(new Date());
-				timeline.hyper_offset = 0;
+	    	var wasRealtime = timeline.real_time;
+	    		
+			timeline.real_time = true;
+			timeline.moveTo(new Date());
+			timeline.hyper_offset = 0;
+	    	
+	    	if(!wasRealtime){
 				realtime();
 	    	}
 	    };
