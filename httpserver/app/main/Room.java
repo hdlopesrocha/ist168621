@@ -27,8 +27,10 @@ import org.json.JSONObject;
 import org.kurento.client.Continuation;
 import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EventListener;
+import org.kurento.client.HttpEndpoint;
 import org.kurento.client.MediaPipeline;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
@@ -72,17 +74,24 @@ public class Room implements Closeable {
 		String filepath = "file:///tmp/"+group.getId().toString()+"-"+session.getUser().getId().toString()+"-"+sequence+".webm";
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
-		//PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
+		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
+		
 		
 		rec.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
 
 			@Override
 			public void onEvent(ElementDisconnectedEvent arg0) {
-				// TODO Auto-generated method stub
 				System.out.println("STOP: "+ filepath);
 			}
 		});
 		
+System.out.println("---------------------------");
+		System.out.println(player.getUri());
+		System.out.println(player.getGstreamerDot());
+System.out.println("---------------------------");
+		
+
+
 		
 		rec.record();
 		ep.connect(rec);
