@@ -55,10 +55,12 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.setRealTime = function(){
-			timeline.real_time = true;
-			timeline.moveTo(new Date());
-			timeline.hyper_offset = 0;
-			realtime();
+	    	if(!timeline.real_time){
+				timeline.real_time = true;
+				timeline.moveTo(new Date());
+				timeline.hyper_offset = 0;
+				realtime();
+	    	}
 	    };
 	    
 	    timeline.intersects = function(start,end){
