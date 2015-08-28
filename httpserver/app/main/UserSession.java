@@ -20,6 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.json.JSONObject;
+import org.kurento.client.ConnectionState;
+import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -44,9 +46,10 @@ public class UserSession implements Closeable {
 	private final User user;
 	private final Room room;
 	private final WebRtcEndpoint outEndPoint;
-	private final RecorderEndpoint recEndPoint;
+	private RecorderEndpoint recEndPoint;
 	
-	
+	private Long sequence=0l;
+	private boolean recording = true;
 	private final ConcurrentMap<String, WebRtcEndpoint> inEndPoints = new ConcurrentHashMap<>();
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
@@ -56,7 +59,46 @@ public class UserSession implements Closeable {
 
 		// XXX [ICE_01] XXX
 		this.outEndPoint =room.createWebRtcEndPoint(this,null);
-		this.recEndPoint = room.recordEndpoint(outEndPoint, this);
+		
+		this.outEndPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
+
+			@Override
+			public void onEvent(ConnectionStateChangedEvent arg0) {
+				// TODO Auto-generated method stub
+				if(arg0.getOldState().equals(ConnectionState.CONNECTED) &&
+						arg0.getNewState().equals(ConnectionState.DISCONNECTED)){
+					recording = false;
+				}
+			}
+		});
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				UserSession session = UserSession.this;
+				while(recording){
+					// TODO Auto-generated method stub
+					if(session.recEndPoint!=null){
+						session.recEndPoint.stop();
+						session.recEndPoint.disconnect(outEndPoint);
+						session.recEndPoint.release();
+					}
+					
+					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence);
+					++sequence;
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+		
+	
+		
 		
 	}
 
