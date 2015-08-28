@@ -71,7 +71,7 @@ public class UserSession implements Closeable {
 				}
 			}
 		});
-		/*
+		
 		new Thread(new Runnable() {
 			
 			@Override
@@ -80,8 +80,8 @@ public class UserSession implements Closeable {
 				while(recording){
 					// TODO Auto-generated method stub
 					if(session.recEndPoint!=null){
-						session.recEndPoint.stop();
-						session.recEndPoint.disconnect(outEndPoint);
+					//	session.recEndPoint.stop();
+					//	session.recEndPoint.disconnect(outEndPoint);
 						session.recEndPoint.release();
 					}
 					
@@ -96,7 +96,7 @@ public class UserSession implements Closeable {
 				}
 			}
 		}).start();
-		*/
+		
 	
 		
 		
