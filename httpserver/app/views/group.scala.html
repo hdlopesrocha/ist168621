@@ -44,7 +44,6 @@
 <script>
 	var currentVideoPlaying = 0;
 	var participants = {};
-	var real_time = true;
 	var user_current = {};
 	var user_streams = {};
 	var user_videos = {};
@@ -69,13 +68,11 @@
 			clearTimeout(preloader_timer);
 			preloader_timer = null;
 		}
-		real_time = true;
 
 		for ( var i in user_videos) {
 			user_videos[i].src = user_streams[i];
 		}
-		timeline.moveTo(new Date());
-		timeline.hyper_offset = 0;
+		timeline.setRealTime();
 	}
 
 	$(document).ready(function() {
@@ -108,7 +105,7 @@
 		}
 
 		function preloader() {
-			if (!preloader_running && !real_time) {
+			if (!preloader_running && !timeline.real_time) {
 				preloader_running = true;
 
 				$.get("/api/rect/@groupId/"+ timeline.getMyTime().toISOString()	+ "/20000", function(data) {
@@ -158,7 +155,6 @@
 				clearTimeout(preloader_timer);
 				preloader_timer = null;
 			}
-			real_time = false;
 			preloader();
 		});
 

@@ -10,6 +10,8 @@ var HyperTimeline = new (function() {
 		setTimeout(function(){followerWorker(timeline);},1000);
 	}
 	
+	this.real_time = true;
+
 	
 	this.create = function(items,divId, current) {
 	    var main = document.getElementById(divId);
@@ -41,9 +43,17 @@ var HyperTimeline = new (function() {
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	timeline.hyper_offset = new Date().getTime() - avg;
+				timeline.real_time =  timeline.hyper_offset < 0 ;
 		    	current();
 	    	}
 	    });
+	    
+	    
+	    timeline.setRealTime = function(){
+			timeline.real_time = true;
+			timeline.moveTo(new Date());
+			timeline.hyper_offset = 0;
+	    };
 	    
 	    timeline.intersects = function(start,end){
 	    	var customTime = timeline.getCustomTime("time");
