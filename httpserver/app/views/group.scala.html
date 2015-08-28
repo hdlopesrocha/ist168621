@@ -35,7 +35,6 @@
 	<div class="col-sm-12">
 		<div class="panel panel-default">
 			<h3>Remote Video</h3>
-			<button onclick="realTime()">REAL TIME</button>
 			<div id="participants"></div>
 			<div id="timeline"></div>
 		</div>
@@ -63,17 +62,7 @@
 		}
 	});
 
-	function realTime() {
-		if (preloader_timer != null) {
-			clearTimeout(preloader_timer);
-			preloader_timer = null;
-		}
 
-		for ( var i in user_videos) {
-			user_videos[i].src = user_streams[i];
-		}
-		timeline.setRealTime();
-	}
 
 	$(document).ready(function() {
 		
@@ -156,6 +145,16 @@
 				preloader_timer = null;
 			}
 			preloader();
+		}, function() {
+			if (preloader_timer != null) {
+				clearTimeout(preloader_timer);
+				preloader_timer = null;
+			}
+
+			for ( var i in user_videos) {
+				user_videos[i].src = user_streams[i];
+			}
+			timeline.setRealTime();
 		});
 
 		Signaling.subscribe("rec:@groupId",function() {

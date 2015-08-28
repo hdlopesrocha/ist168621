@@ -13,7 +13,7 @@ var HyperTimeline = new (function() {
 	this.real_time = true;
 
 	
-	this.create = function(items,divId, current) {
+	this.create = function(items,divId, current, realtime) {
 	    var main = document.getElementById(divId);
 	    var options = {
 	        stack: false,
@@ -58,6 +58,7 @@ var HyperTimeline = new (function() {
 			timeline.real_time = true;
 			timeline.moveTo(new Date());
 			timeline.hyper_offset = 0;
+			realtime();
 	    };
 	    
 	    timeline.intersects = function(start,end){
