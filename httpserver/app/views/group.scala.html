@@ -154,7 +154,6 @@
 			for ( var i in user_videos) {
 				user_videos[i].src = user_streams[i];
 			}
-			timeline.setRealTime();
 		});
 
 		Signaling.subscribe("rec:@groupId",function() {
