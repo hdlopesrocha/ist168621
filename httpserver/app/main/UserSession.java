@@ -330,6 +330,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				
 				WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
 				if (ep != null) {
+					System.out.println("SET PLAYER TO " + session.getUser().getEmail());
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
 					ep.connect(player);
 				}
