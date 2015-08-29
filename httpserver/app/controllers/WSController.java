@@ -76,10 +76,13 @@ public class WSController extends Controller {
 									usession.processAnswer(answer, userId);
 									break;
 								case "realtime":
+									System.out.println("REALTIME");
 									usession.setRealtime();
 
 									break;
 								case "historic":
+									System.out.println("HISTORIC");
+
 									usession.setHistoric(args.getString("time"));
 									break;
 
