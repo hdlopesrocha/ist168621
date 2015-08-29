@@ -83,7 +83,7 @@ public class WSController extends Controller {
 								case "historic":
 									System.out.println("HISTORIC");
 
-									usession.setHistoric(args.getString("time"));
+									usession.setHistoric(args.getLong("offset"));
 									break;
 
 								default:

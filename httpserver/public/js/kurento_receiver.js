@@ -14,11 +14,11 @@ var KurentoReceiver = new (function() {
 		}));
 	}
 	
-	this.receiveHistoric = function(userId,time){
+	this.receiveHistoric = function(userId,offset){
 		Kurento.ws.send(JSON.stringify({
 			id : "historic",
 			uid:userId,
-			time:time
+			offset:offset
 		}));
 	}
 	

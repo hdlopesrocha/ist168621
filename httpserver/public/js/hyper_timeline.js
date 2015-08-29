@@ -56,7 +56,7 @@ var HyperTimeline = new (function() {
 				}
 				else {
 					timeline.real_time = false ;
-					current(new Date(avg));
+					current(timeline.hyper_offset);
 				}
 	    	}
 	    });
