@@ -52,6 +52,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebSocket.Out<String> out;
 	private final User user;
 	private final Room room;
+	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
 	private RecorderEndpoint recEndPoint;
 
@@ -338,6 +339,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setHistoric(long offset) {
+		realTime = false;
 		try {
 			Date currentTime = new Date(new Date().getTime()-offset);
 			
@@ -358,7 +360,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						public void onEvent(EndOfStreamEvent arg0) {
 							// TODO Auto-generated method stub
 							System.out.println("END OF STREAM");
-							setHistoric(offset);
+							if(!realTime){
+								setHistoric(offset);
+							}
 						}
 					});
 					player.play();				
@@ -373,6 +377,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setRealtime() {
+		realTime = true;
 		System.out.println("0 - setRealtime");
 
 		for (UserSession session : room.getParticipants()) {
