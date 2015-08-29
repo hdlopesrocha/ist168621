@@ -17,6 +17,7 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -37,9 +38,14 @@ import org.kurento.jsonrpc.JsonUtils;
 
 import com.google.gson.JsonObject;
 
+import main.UserSession;
 import models.Group;
+import models.Interval;
+import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
+import services.PublishService;
+import services.SaveRecordingService;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -70,17 +76,25 @@ public class Room implements Closeable {
 	}
 
 	
-	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence){
-		String filepath = "file:///var/www/html/"+group.getId().toString()+"-"+session.getUser().getId().toString()+"-"+sequence+".webm";
+	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence, Interval interval){
+		String filename = group.getId().toString()+"-"+session.getUser().getId().toString()+"-"+sequence+".webm";
+		String filepath = "file:///var/www/html/"+filename;
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
 		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
-		
+		Date begin = new Date();
 		
 		rec.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
 
 			@Override
 			public void onEvent(ElementDisconnectedEvent arg0) {
+				Date end = new Date();
+
+				SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),Recording.FORMAT.format(begin),Recording.FORMAT.format(end),filename,"video/webm",interval.getId().toString());
+				Recording rec = srs.execute();
+				PublishService publishService = new PublishService("rec:" + getGroupId());
+
+				
 				System.out.println("STOP: "+ filepath);
 			}
 		});

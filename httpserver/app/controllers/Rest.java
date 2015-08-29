@@ -639,7 +639,7 @@ public class Rest extends Controller {
 			files.add(kvf);
 		}
 
-		SaveRecordingService saveService = new SaveRecordingService(files.get(0), groupId, userId, start, end, name,
+		SaveRecordingService saveService = new SaveRecordingService(files.get(0),null, groupId, userId, start, end, name,
 				type, inter);
 		PublishService publishService = new PublishService("rec:" + groupId);
 		try {

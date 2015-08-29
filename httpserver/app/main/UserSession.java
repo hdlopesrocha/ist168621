@@ -32,6 +32,7 @@ import org.kurento.jsonrpc.JsonUtils;
 
 import com.google.gson.JsonObject;
 
+import models.Interval;
 import models.User;
 import play.mvc.WebSocket;
 
@@ -71,6 +72,8 @@ public class UserSession implements Closeable {
 				}
 			}
 		});
+		
+		new Interval().save();
 		
 		new Thread(new Runnable() {
 			
@@ -133,9 +136,6 @@ public class UserSession implements Closeable {
 			incoming = room.createWebRtcEndPoint(this,senderId);
 			incoming.connect(outEndPoint);
 			outEndPoint.connect(incoming);
-
-			
-			
 
 			inEndPoints.put(senderId, incoming);
 		}

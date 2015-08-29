@@ -1,46 +1,16 @@
-function startRecording(stream,on_video_recorded){
-	var options = {
-	   type: 'video'
-	};
-	var recordRTC = RecordRTC(stream, options);
-	recordRTC.startRecording();
 
-	var startD = new Date();
-	
-	setTimeout(function(){ 
-		stopRecording(stream,recordRTC,on_video_recorded,startD); 
-	}, 10000);
-	
-	
-}
-
-function stopRecording(stream,recordRTC,on_video_recorded,startD){
-	recordRTC.stopRecording(function(videoURL) {
-
-		var endD = new Date();
-		var recordedBlob = recordRTC.getBlob();
-		on_video_recorded(recordedBlob,videoURL,startD,endD);
-
-	    recordRTC.getDataURL(function(dataURL) { });
-	    startRecording(stream,on_video_recorded);
-	});
-	
-	
-}
 
 var KurentoSender = new (function() {
 
 	this.pc = null;
 	
-	this.start = function(userId, on_video_recorded){
+	this.start = function(userId){
 		KurentoSender.pc = Kurento.createPeerConnection(null);
 
 		// XXX [CLIENT_OFFER_01] XXX
 		navigator.getUserMedia(local_constraints, function(stream) {
 			KurentoSender.pc.addStream(stream);
-			KurentoSender.pc.createOffer(function (desc) {
-		
-				startRecording(stream,on_video_recorded);
+			KurentoSender.pc.createOffer(function (desc) {		
 				console.log("createOffer");
 				console.log(desc);
 				// XXX [CLIENT_OFFER_02] XXX
