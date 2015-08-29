@@ -125,42 +125,6 @@ public class Room implements Closeable {
 		return dotm;
 	}
 	
-	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId){
-		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
-
-	
-		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
-			@Override
-			public void onEvent(OnIceCandidateEvent event) {
-				JsonObject response = new JsonObject();
-				response.addProperty("id", "iceCandidate");
-				if(senderId!=null){
-					response.addProperty("uid", senderId);
-				}
-				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-				try {
-					synchronized (this) {
-						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-						System.out.println(response.toString());
-						session.sendMessage(response.toString());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-		
-		
-		ep.setStunServerAddress("173.194.67.127");
-		ep.setStunServerPort(19302);
-		
-		
-		
-		
-		return ep;
-	}
 	
 	
 	public UserSession join(final User user, final WebSocket.Out<String> out )
@@ -244,6 +208,10 @@ public class Room implements Closeable {
 
 	public String getId() {
 		return group.getId().toString();
+	}
+
+	public MediaPipeline getMediaPipeline() {
+		return mediaPipeline;
 	}
 
 }
