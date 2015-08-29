@@ -46,7 +46,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebSocket.Out<String> out;
 	private final User user;
 	private final Room room;
-	private WebRtcEndpoint outgoingEndPoint;
+	private WebRtcEndpoint outgoing;
 	private RecorderEndpoint recEndPoint;
 
 	private Long sequence = 0l;
@@ -59,9 +59,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		this.outgoingEndPoint = getEndpoint(null);
+		this.outgoing = getEndpoint(null);
 
-		this.outgoingEndPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
+		this.outgoing.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
 			public void onEvent(ConnectionStateChangedEvent arg0) {
@@ -85,11 +85,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					// TODO Auto-generated method stub
 					if (session.recEndPoint != null) {
 						// session.recEndPoint.stop();
-						session.recEndPoint.disconnect(outgoingEndPoint);
+						session.recEndPoint.disconnect(outgoing);
 						session.recEndPoint.release();
 					}
 
-					session.recEndPoint = room.recordEndpoint(outgoingEndPoint, session, sequence, interval);
+					session.recEndPoint = room.recordEndpoint(outgoing, session, sequence, interval);
 					++sequence;
 					try {
 						Thread.sleep(10000);
@@ -155,23 +155,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 */
 	private WebRtcEndpoint getEndpoint(final UserSession sender) {
 		if (sender == null) {
-			if (outgoingEndPoint == null) {
-				outgoingEndPoint = createWebRtcEndPoint(null);
+			if (outgoing == null) {
+				outgoing = createWebRtcEndPoint(null);
 			}
-			return outgoingEndPoint;
+			return outgoing;
 		} else {
 			String senderId = sender.getUser().getId().toString();
 			WebRtcEndpoint incoming = inEndPoints.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
 			}
-			incoming.connect(outgoingEndPoint);
-			outgoingEndPoint.connect(incoming);
 			inEndPoints.put(senderId, incoming);
 
 			
 			sender.getEndpoint(null).connect(incoming);
-
+			outgoing.connect(getEndpoint(this));
+			
 			return incoming;
 		}
 	}
@@ -193,7 +192,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			ep.release(EMPTY_CONTINUATION);
 		}
 
-		outgoingEndPoint.release();
+		outgoing.release();
 	}
 
 	public void processOffer(String description, String userId) {
@@ -220,7 +219,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void addCandidate(IceCandidate candidate, String userId) {
 		// XXX [CLIENT_ICE_04] XXX
 		if (userId == null) {
-			outgoingEndPoint.addIceCandidate(candidate);
+			outgoing.addIceCandidate(candidate);
 		} else {
 			WebRtcEndpoint webRtc = inEndPoints.get(userId);
 			if (webRtc != null) {
