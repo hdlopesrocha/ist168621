@@ -93,7 +93,7 @@ public class Room implements Closeable {
 				try {
 					Date end = new Date();
 	
-					SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),Recording.FORMAT.format(begin),Recording.FORMAT.format(end),filename,"video/webm",interval.getId().toString());
+					SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),begin,end,filename,"video/webm",interval.getId().toString());
 					Recording rec = srs.execute();
 					PublishService publishService = new PublishService("rec:" + getGroupId());
 					publishService.execute();
