@@ -77,13 +77,22 @@ public class WSController extends Controller {
 									break;
 								case "realtime":
 									System.out.println("REALTIME");
-									usession.setRealtime();
+									new Thread(new Runnable() {										
+										@Override
+										public void run() {
+											usession.setRealtime();
+										}
+									}).start();
 
 									break;
 								case "historic":
 									System.out.println("HISTORIC");
-
-									usession.setHistoric(args.getLong("offset"));
+									new Thread(new Runnable() {										
+										@Override
+										public void run() {
+											usession.setHistoric(args.getLong("offset"));
+										}
+									}).start();
 									break;
 
 								default:
