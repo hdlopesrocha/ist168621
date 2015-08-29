@@ -233,7 +233,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			UserSession sender = room.getParticipant(userId);
 			incoming = getEndpoint(sender);
 			incoming.connect(outgoing);
-			outgoing.connect(incoming);
+			//outgoing.connect(incoming);
 			sender.outgoing.connect(incoming);
 		} else {
 			incoming = getEndpoint(null);
