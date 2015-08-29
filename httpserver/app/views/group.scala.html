@@ -7,10 +7,8 @@
 <script type="text/javascript" src="/assets/js/kurento_sender.js"></script>
 <script type="text/javascript" src="/assets/js/kurento_receiver.js"></script>
 <script type="text/javascript" src="/assets/js/webrtc.js"></script>
-<!-- <script type="text/javascript" src="/assets/js/RecordRTC.js"></script> -->
 <script type="text/javascript" src="/assets/timeline/vis.js"></script>
 <script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
-<script type="text/javascript" src="/assets/js/hyper_preloader.js"></script>
 <link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
 <h1>@groupName</h1>
@@ -51,8 +49,6 @@
 	var last_sequence = -1;
 	var current_interval = null;
 	var rendered_intervals = {};
-	var preloader_timer = null;
-	var preloader_running = false;
 
 	// TIMELINE
 	var items = new vis.DataSet({
@@ -93,68 +89,18 @@
 			}
 		}
 
-		function preloader() {
-			if (!preloader_running && !timeline.real_time) {
-				preloader_running = true;
+	
+		timeline = HyperTimeline.create(items, "timeline",
+			function(time) {
+				console.log("HISTORIC",time);
+				// current request
+			}, 
+			function() {
 
-				$.get("/api/rect/@groupId/"+ timeline.getMyTime().toISOString()	+ "/20000", function(data) {
-					var array = JSON.parse(data);
-
-					for ( var i in array) {
-						var obj = array[i];
-						var start = new Date(obj.start);
-						var end = new Date(obj.end);
-						var newUrl = obj.url;
-						var srcOrBlob = HyperPreLoader.load(newUrl, obj.type);
-						var offset = timeline.intersects(start,	end);
-
-						if (offset) {
-							if (!user_videos[obj.uid]) {
-								kvideo(obj.uid,	"");
-							}
-
-							if (user_current[obj.uid] !== newUrl) {
-
-								var video = user_videos[obj.uid];
-								video.src = srcOrBlob;
-								$(video).unbind('loadedmetadata');
-								$(video).on('loadedmetadata',function() {
-									video.currentTime = offset / 1000;
-								});
-								user_current[obj.uid] = newUrl;
-							}
-						}
-					}
-				}).always(function() {
-					preloader_running = false;
-					// waits if not waiting already
-					if (preloader_timer == null) {
-						preloader_timer = setTimeout(function() {
-							console.log("5 SECONDS!!!");
-							preloader_timer = null;
-							preloader();
-						}, 5000);
-					}
-				});
+				console.log("REALTIME",time);
+				// realtime request
 			}
-		}
-
-		timeline = HyperTimeline.create(items, "timeline",function() {
-			if (preloader_timer != null) {
-				clearTimeout(preloader_timer);
-				preloader_timer = null;
-			}
-			preloader();
-		}, function() {
-			if (preloader_timer != null) {
-				clearTimeout(preloader_timer);
-				preloader_timer = null;
-			}
-
-			for ( var i in user_videos) {
-				user_videos[i].src = user_streams[i];
-			}
-		});
+		);
 
 		Signaling.subscribe("rec:@groupId",function() {
 			console.log("video recorded!");

@@ -44,27 +44,24 @@ var HyperTimeline = new (function() {
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	timeline.hyper_offset = new Date().getTime() - avg;
 				if (timeline.hyper_offset < 0){
-					timeline.setRealTime();
+					var wasRealtime = timeline.real_time;
+		    		
+					timeline.real_time = true;
+					timeline.moveTo(new Date());
+					timeline.hyper_offset = 0;
+			    	
+			    	if(!wasRealtime){
+						realtime();
+			    	}
 				}
 				else {
 					timeline.real_time = false ;
+					current(new Date(avg));
 				}
-		    	current();
 	    	}
 	    });
 	    
 	    
-	    timeline.setRealTime = function(){
-	    	var wasRealtime = timeline.real_time;
-	    		
-			timeline.real_time = true;
-			timeline.moveTo(new Date());
-			timeline.hyper_offset = 0;
-	    	
-	    	if(!wasRealtime){
-				realtime();
-	    	}
-	    };
 	    
 	    timeline.intersects = function(start,end){
 	    	var customTime = timeline.getCustomTime("time");

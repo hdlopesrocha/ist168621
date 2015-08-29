@@ -1,14 +1,18 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.kurento.client.IceCandidate;
 
 import main.Global;
 import main.Room;
 import main.UserSession;
+import models.Recording;
 import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
@@ -53,26 +57,30 @@ public class WSController extends Controller {
 
 								switch (id) {
 
-							
-								case "offer":
-								{	
+								case "offer": {
 									JSONObject data = args.getJSONObject("data");
 									String description = data.getString("sdp");
-									usession.processOffer(description,userId);
+									usession.processOffer(description, userId);
 								}
-								break;
-								case "iceCandidate":
-								{
+									break;
+								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate, userId);
 								}
-								break;
+									break;
 								case "answer":
 									System.out.println("----------");
-									String answer=args.getString("answer");
+									String answer = args.getString("answer");
 									usession.processAnswer(answer, userId);
+									break;
+								case "realtime":
+									usession.setRealtime();
+
+									break;
+								case "historic":
+									usession.setHistoric(args.getString("time"));
 									break;
 
 								default:
