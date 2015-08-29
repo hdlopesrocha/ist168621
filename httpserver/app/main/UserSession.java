@@ -92,7 +92,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					// TODO Auto-generated method stub
 					if (session.recEndPoint != null) {
 						session.recEndPoint.stop();
-						session.recEndPoint.disconnect(outgoing);
+						outgoing.disconnect(session.recEndPoint);
+						
 					}
 
 					session.recEndPoint = room.recordEndpoint(outgoing, session, sequence, interval);
