@@ -76,17 +76,22 @@
 				participants[userId] = email;
 			}
 		}
+		
+		
 
 	
 		timeline = HyperTimeline.create(items, "timeline",
 			function(time) {
 				console.log("HISTORIC",time);
 				// current request
+				KurentoReceiver.receiveHistoric("@userId",time);
 			}, 
 			function() {
 		
 				console.log("REALTIME");
 				// realtime request
+				KurentoReceiver.receiveRealtime("@userId");
+
 			}
 		);
 

@@ -7,6 +7,21 @@ var KurentoReceiver = new (function() {
 	var newVideoCallback = null; 
 
 	
+	this.receiveRealtime = function(userId){
+		Kurento.ws.send(JSON.stringify({
+			id : "realtime",
+			uid:userId
+		}));
+	}
+	
+	this.receiveHistoric = function(userId,time){
+		Kurento.ws.send(JSON.stringify({
+			id : "historic",
+			uid:userId,
+			time:time
+		}));
+	}
+	
 	this.onNewParticipants = function(userId, uid) {
 		if(KurentoReceiver.peerConnections[userId]==null){
 			var pc = Kurento.createPeerConnection(userId);
