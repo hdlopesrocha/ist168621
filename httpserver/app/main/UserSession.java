@@ -337,6 +337,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
 					//ep.connect(player);
 					player.connect(ep);
+					player.play();
 				}
 			}
 		} catch (ServiceException e) {
