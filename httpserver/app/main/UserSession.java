@@ -56,7 +56,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private Long sequence = 0l;
 	private boolean recording = true;
-	private final ConcurrentMap<String, WebRtcEndpoint> inEndPoints = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, WebRtcEndpoint> incomings = new ConcurrentHashMap<String, WebRtcEndpoint>();
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -164,14 +164,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 *            the participant
 	 */
 	public void cancelVideoFrom(final UserSession sender) {
-		final WebRtcEndpoint incoming = inEndPoints.remove(sender.getUser().getId().toString());
+		final WebRtcEndpoint incoming = incomings.remove(sender.getUser().getId().toString());
 		incoming.release(EMPTY_CONTINUATION);
 	}
 
 	@Override
 	public void close() throws IOException {
-		for (final String remoteParticipantName : inEndPoints.keySet()) {
-			final WebRtcEndpoint ep = this.inEndPoints.get(remoteParticipantName);
+		for (final String remoteParticipantName : incomings.keySet()) {
+			final WebRtcEndpoint ep = this.incomings.get(remoteParticipantName);
 
 			ep.release(EMPTY_CONTINUATION);
 		}
@@ -193,10 +193,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		} else {
 			
 			String senderId = sender.getUser().getId().toString();			
-			WebRtcEndpoint incoming = inEndPoints.get(senderId);
+			WebRtcEndpoint incoming = incomings.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
-				inEndPoints.put(senderId, incoming);
+				incoming.connect(outgoing);
+				outgoing.connect(incoming);
+				incomings.put(senderId, incoming);
 			}
 			return incoming;
 		}
@@ -232,11 +234,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (userId != null) {
 			UserSession sender = room.getParticipant(userId);
 			incoming = getEndpoint(sender);
-			//incoming.connect(outgoing);
-			//outgoing.connect(incoming);
+		
 			sender.outgoing.connect(incoming);
 		} else {
-			incoming = getEndpoint(null);
+			incoming = outgoing;
 		}
 		
 		
@@ -256,7 +257,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (userId == null) {
 			outgoing.addIceCandidate(candidate);
 		} else {
-			WebRtcEndpoint webRtc = inEndPoints.get(userId);
+			WebRtcEndpoint webRtc = incomings.get(userId);
 			if (webRtc != null) {
 				webRtc.addIceCandidate(candidate);
 			}
