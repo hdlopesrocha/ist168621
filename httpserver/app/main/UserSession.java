@@ -348,16 +348,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setRealtime() {
 		System.out.println("0 - setRealtime");
-		/*
+		
 		for (UserSession session : room.getParticipants()) {
 			System.out.println("1 - participant");
 			WebRtcEndpoint ep = getEndpoint(session);
 			if (ep != null) {
 				System.out.println("2 - connect");
-			//	ep.connect(session.outgoing);
-				session.outgoing.connect(ep);
+				session.getEndpoint(null).connect(ep);
 			}
-		}*/
+		}
 	}
 
 }
