@@ -91,9 +91,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				while (recording) {
 					// TODO Auto-generated method stub
 					if (session.recEndPoint != null) {
-						session.recEndPoint.stop();
-						outgoing.disconnect(session.recEndPoint);
-						
+						session.recEndPoint.release();
 					}
 
 					session.recEndPoint = room.recordEndpoint(outgoing, session, sequence, interval);
