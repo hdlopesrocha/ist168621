@@ -20,7 +20,7 @@ public class Recording {
     
 	static {
 		TimeZone tz = TimeZone.getTimeZone("UTC");
-		FORMAT = new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss.SSS'Z'");
+		FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		FORMAT.setTimeZone(tz);
 	}
 

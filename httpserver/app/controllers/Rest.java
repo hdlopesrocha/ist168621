@@ -1,6 +1,8 @@
 package controllers;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -620,13 +622,13 @@ public class Rest extends Controller {
 		return badRequest();
 	}
 
-	public Result saveRecording(String groupId) {
+	public Result saveRecording(String groupId) throws ParseException {
 		MultipartFormData multipart = request().body().asMultipartFormData();
 		Map<String, String[]> form = multipart.asFormUrlEncoded();
 
 		String userId = form.get("uid")[0];
-		String start = form.get("start")[0];
-		String end = form.get("end")[0];
+		Date start = Recording.FORMAT.parse(form.get("start")[0]);
+		Date end = Recording.FORMAT.parse(form.get("end")[0]);
 		
 		System.out.println("XXX : "+ start + " | " +end);
 		String name = form.get("name")[0];
