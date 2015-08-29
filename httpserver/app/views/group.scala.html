@@ -82,7 +82,7 @@
 	
 		timeline = HyperTimeline.create(items, "timeline",
 			function(offset) {
-				console.log("HISTORIC",time);
+				console.log("HISTORIC",offset);
 				// current request
 				KurentoReceiver.receiveHistoric("@userId",offset);
 			}, 
