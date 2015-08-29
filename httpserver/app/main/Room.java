@@ -26,6 +26,7 @@ import javax.annotation.PreDestroy;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Continuation;
+import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HttpEndpoint;
@@ -77,6 +78,9 @@ public class Room implements Closeable {
 	}
 
 	
+	
+	
+	
 	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence, Interval interval){
 		String filename = interval.getId().toString()+"-"+sequence+".webm";
 		String filepath = "file:///var/www/html/"+filename;
@@ -104,12 +108,7 @@ public class Room implements Closeable {
 				}
 			}
 		});
-		
-System.out.println("---------------------------");
-		System.out.println(player.getUri());
-		System.out.println(player.getGstreamerDot());
-System.out.println("---------------------------");
-		
+
 
 
 		
@@ -118,6 +117,13 @@ System.out.println("---------------------------");
 		return rec;
 	}
 	
+	public DispatcherOneToMany createDispatcher(UserSession session){
+
+		DispatcherOneToMany dotm = new  DispatcherOneToMany.Builder(mediaPipeline).build();
+		//dotm.setSource(session.getEndpoint(null));
+		
+		return dotm;
+	}
 	
 	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId){
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
