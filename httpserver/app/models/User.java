@@ -15,7 +15,7 @@ import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
-public class User {
+public class User implements Comparable<User> {
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof User){
@@ -265,6 +265,11 @@ public class User {
 			e.printStackTrace();
 		}
 		return "";
+	}
+
+	@Override
+	public int compareTo(User o) {
+		return id.compareTo(o.id);
 	}
 
 

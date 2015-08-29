@@ -29,18 +29,12 @@ import org.kurento.client.Continuation;
 import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EventListener;
-import org.kurento.client.HttpEndpoint;
 import org.kurento.client.MediaPipeline;
-import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
-import org.kurento.jsonrpc.JsonUtils;
-
-import com.google.gson.JsonObject;
 
 import exceptions.ServiceException;
-import main.UserSession;
 import models.Group;
 import models.Interval;
 import models.Recording;

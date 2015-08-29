@@ -41,7 +41,7 @@ import play.mvc.WebSocket;
  * @author Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
  */
-public class UserSession implements Closeable {
+public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private final WebSocket.Out<String> out;
 	private final User user;
@@ -169,6 +169,7 @@ public class UserSession implements Closeable {
 			outgoingEndPoint.connect(incoming);
 			inEndPoints.put(senderId, incoming);
 
+			
 			sender.getEndpoint(null).connect(incoming);
 
 			return incoming;
@@ -228,38 +229,7 @@ public class UserSession implements Closeable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
 
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || !(obj instanceof UserSession)) {
-			return false;
-		}
-		UserSession other = (UserSession) obj;
-		boolean eq = user.equals(other.getUser());
-		eq &= getGroupId().equals(other.getGroupId());
-		return eq;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		int result = 1;
-		result = 31 * result + user.getId().hashCode();
-		result = 31 * result + getGroupId().hashCode();
-		return result;
-	}
 
 	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {
 
@@ -311,4 +281,43 @@ public class UserSession implements Closeable {
 		});
 	}
 
+	@Override
+	public int compareTo(UserSession o) {
+		return getUser().compareTo(o.getUser());
+	}
+
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || !(obj instanceof UserSession)) {
+			return false;
+		}
+		UserSession other = (UserSession) obj;
+		boolean eq = user.equals(other.getUser());
+		eq &= getGroupId().equals(other.getGroupId());
+		return eq;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = 1;
+		result = 31 * result + user.getId().hashCode();
+		result = 31 * result + getGroupId().hashCode();
+		return result;
+	}
+	
 }
