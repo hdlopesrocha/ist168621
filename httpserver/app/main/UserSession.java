@@ -153,7 +153,7 @@ public class UserSession implements Closeable {
 	 *            the user
 	 * @return the endpoint used to receive media from a certain user
 	 */
-	public WebRtcEndpoint getEndpoint(final UserSession sender) {
+	private WebRtcEndpoint getEndpoint(final UserSession sender) {
 		if (sender == null) {
 			if (outgoingEndPoint == null) {
 				outgoingEndPoint = createWebRtcEndPoint(null);
