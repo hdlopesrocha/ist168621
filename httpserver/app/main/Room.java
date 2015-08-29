@@ -73,34 +73,10 @@ public class Room implements Closeable {
 	
 	
 	
-	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence, Interval interval){
-		String filename = interval.getId().toString()+"-"+sequence+".webm";
-		String filepath = "file:///tmp/"+filename;
+	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, String filepath){
+
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
-		Date begin = new Date();	
-		
-		rec.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
-
-			@Override
-			public void onEvent(ElementDisconnectedEvent arg0) {
-				try {
-					Date end = new Date();
-	
-					SaveRecordingService srs =new SaveRecordingService(null,filepath,getGroupId(), session.getUser().getId().toString(),begin,end,filename,"video/webm",interval.getId().toString());
-					Recording rec = srs.execute();
-					PublishService publishService = new PublishService("rec:" + getGroupId());
-					publishService.execute();
-					
-					System.out.println("STOP: "+ filepath);
-				}catch(ServiceException e){
-					e.printStackTrace();
-				}
-			}
-		});
-
-
-
 		
 		rec.record();
 		ep.connect(rec);

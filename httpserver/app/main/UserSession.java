@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -41,6 +42,8 @@ import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.GetCurrentRecordingService;
+import services.PublishService;
+import services.SaveRecordingService;
 
 /**
  * 
@@ -89,19 +92,46 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void run() {
 				UserSession session = UserSession.this;
 				while (recording) {
-					// TODO Auto-generated method stub
-					if (session.recEndPoint != null) {
-						session.recEndPoint.release();
-					}
-
-					session.recEndPoint = room.recordEndpoint(outgoing, session, sequence, interval);
-					++sequence;
+					
+					String filename = interval.getId().toString()+"-"+sequence+".webm";
+					String filepath = "file:///tmp/"+filename;
+					session.recEndPoint = room.recordEndpoint(outgoing, session, filepath);
+					
+					Date begin = new Date();	
+					
+		
 					try {
 						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					session.recEndPoint.stop();
+					
+					
+					try {
+						Date end = new Date();
+		
+						SaveRecordingService srs =new SaveRecordingService(null,filepath,getGroupId(), session.getUser().getId().toString(),begin,end,filename,"video/webm",interval.getId().toString());
+						Recording rec = srs.execute();
+						PublishService publishService = new PublishService("rec:" + getGroupId());
+						publishService.execute();
+						
+						System.out.println("STOP: "+ filepath);
+					}catch(ServiceException e){
+						e.printStackTrace();
+					}
+					
+					
+					
+					session.recEndPoint.disconnect(outgoing);
+					session.recEndPoint.release();
+
+					
+					
+					
+					++sequence;
 				}
 			}
 		}).start();
