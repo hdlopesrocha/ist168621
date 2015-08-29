@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
-import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
@@ -124,7 +123,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					}
 
 					session.recEndPoint.disconnect(outgoing);
-					session.recEndPoint.release();
 
 					++sequence;
 				}
