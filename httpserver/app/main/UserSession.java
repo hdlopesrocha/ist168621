@@ -165,16 +165,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 			return outgoing;
 		} else {
-			String senderId = sender.getUser().getId().toString();
+			
+			String senderId = sender.getUser().getId().toString();			
 			WebRtcEndpoint incoming = inEndPoints.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
+				inEndPoints.put(senderId, incoming);
 			}
-			inEndPoints.put(senderId, incoming);
-			incoming.connect(outgoing);
-			// outgoing.connect(incoming);
-			sender.getEndpoint(null).connect(incoming);
-
 			return incoming;
 		}
 	}
@@ -203,21 +200,27 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 
-		WebRtcEndpoint endPoint = null;
+		WebRtcEndpoint incoming = null;
 		if (userId != null) {
 			UserSession otherSession = room.getParticipant(userId);
-			endPoint = getEndpoint(otherSession);
+			incoming = getEndpoint(otherSession);
+			incoming.connect(outgoing);
+			otherSession.getEndpoint(null).connect(incoming);
+		
 		} else {
-			endPoint = getEndpoint(null);
+			incoming = getEndpoint(null);
 		}
+		
+		
+		
 
-		String arg0 = endPoint.processOffer(description);
+		String arg0 = incoming.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
 		JSONObject msg = new JSONObject().put("id", userId == null ? "description" : "description2").put("sdp", arg0)
 				.put("type", "answer").put("uid", userId);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
-		endPoint.gatherCandidates();
+		incoming.gatherCandidates();
 	}
 
 	public void addCandidate(IceCandidate candidate, String userId) {
@@ -328,7 +331,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			for (Recording rec : service.execute()) {
 				UserSession session = room.getParticipant(rec.getUserId().toString());
 				
-				WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
+				WebRtcEndpoint ep = getEndpoint(session);
 				if (ep != null) {
 					System.out.println("SET PLAYER TO " + session.getUser().getEmail());
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
@@ -344,7 +347,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setRealtime() {
 		for (UserSession session : room.getParticipants()) {
-			WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
+			WebRtcEndpoint ep = getEndpoint(session);
 			if (ep != null) {
 				session.outgoing.connect(ep);
 			}
