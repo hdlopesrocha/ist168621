@@ -38,6 +38,7 @@ import org.kurento.jsonrpc.JsonUtils;
 
 import com.google.gson.JsonObject;
 
+import exceptions.ServiceException;
 import main.UserSession;
 import models.Group;
 import models.Interval;
@@ -88,14 +89,18 @@ public class Room implements Closeable {
 
 			@Override
 			public void onEvent(ElementDisconnectedEvent arg0) {
-				Date end = new Date();
-
-				SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),Recording.FORMAT.format(begin),Recording.FORMAT.format(end),filename,"video/webm",interval.getId().toString());
-				Recording rec = srs.execute();
-				PublishService publishService = new PublishService("rec:" + getGroupId());
-
-				
-				System.out.println("STOP: "+ filepath);
+				try {
+					Date end = new Date();
+	
+					SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),Recording.FORMAT.format(begin),Recording.FORMAT.format(end),filename,"video/webm",interval.getId().toString());
+					Recording rec = srs.execute();
+					PublishService publishService = new PublishService("rec:" + getGroupId());
+					publishService.execute();
+					
+					System.out.println("STOP: "+ filepath);
+				}catch(ServiceException e){
+					e.printStackTrace();
+				}
 			}
 		});
 		
