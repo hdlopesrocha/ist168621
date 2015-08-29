@@ -370,10 +370,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	public void setRealtime() {
