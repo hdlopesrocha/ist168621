@@ -346,7 +346,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		for (UserSession session : room.getParticipants()) {
 			WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
 			if (ep != null) {
-				ep.connect(session.outgoing);
+				session.outgoing.connect(ep);
 			}
 		}
 	}
