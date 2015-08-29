@@ -165,11 +165,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
 			}
+			incoming.connect(outgoing);
+			//outgoing.connect(incoming);
 			inEndPoints.put(senderId, incoming);
 
 			
 			sender.getEndpoint(null).connect(incoming);
-			outgoing.connect(getEndpoint(this));
+			
 			
 			return incoming;
 		}
