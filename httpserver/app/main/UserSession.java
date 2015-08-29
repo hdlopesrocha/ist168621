@@ -16,7 +16,8 @@ package main;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.List;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -39,7 +40,7 @@ import models.Interval;
 import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
-import services.ListRecordingsForTimeService;
+import services.GetCurrentRecordingService;
 
 /**
  * 
@@ -153,12 +154,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return room.getGroupId();
 	}
 
-	
-
-
-	
-
-
 	/**
 	 * @param senderName
 	 *            the participant
@@ -178,7 +173,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		outgoing.release();
 	}
-	
+
 	/**
 	 * @param sender
 	 *            the user
@@ -191,8 +186,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 			return outgoing;
 		} else {
-			
-			String senderId = sender.getUser().getId().toString();			
+
+			String senderId = sender.getUser().getId().toString();
 			WebRtcEndpoint incoming = incomings.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
@@ -201,27 +196,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			return incoming;
 		}
 	}
-	
+
 	/*
-
-	public WebRtcEndpoint getEndpoint(final UserSession sender) {
-		if (sender == null) {
-			return outEndPoint;
-		}
-		String senderId = sender.getUser().getId().toString();
-		WebRtcEndpoint incoming = inEndPoints.get(senderId);
-		if (incoming == null) {
-			incoming = room.createWebRtcEndPoint(this,senderId);
-#			incoming.connect(outEndPoint);
-			outEndPoint.connect(incoming);
-
-			inEndPoints.put(senderId, incoming);
-		}
-
-		sender.getEndpoint(null).connect(incoming);
-
-		return incoming;
-	}
+	 * 
+	 * public WebRtcEndpoint getEndpoint(final UserSession sender) { if (sender
+	 * == null) { return outEndPoint; } String senderId =
+	 * sender.getUser().getId().toString(); WebRtcEndpoint incoming =
+	 * inEndPoints.get(senderId); if (incoming == null) { incoming =
+	 * room.createWebRtcEndPoint(this,senderId); #
+	 * incoming.connect(outEndPoint); outEndPoint.connect(incoming);
+	 * 
+	 * inEndPoints.put(senderId, incoming); }
+	 * 
+	 * sender.getEndpoint(null).connect(incoming);
+	 * 
+	 * return incoming; }
 	 */
 
 	public void processOffer(String description, String userId) {
@@ -233,14 +222,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			UserSession sender = room.getParticipant(userId);
 			incoming = getEndpoint(sender);
 			incoming.connect(outgoing);
-			//outgoing.connect(incoming);
+			// outgoing.connect(incoming);
 			sender.outgoing.connect(incoming);
 		} else {
 			incoming = outgoing;
 		}
-		
-		
-		
 
 		String arg0 = incoming.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
@@ -352,23 +338,29 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setHistoric(String time) {
-		ListRecordingsForTimeService service = new ListRecordingsForTimeService(user.getId().toString(),
-				room.getGroupId(), time, 11000l);
 		try {
+			Date currentTime = Recording.FORMAT.parse(time);
+			
+			for(UserSession session : room.getParticipants()){
+				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+						room.getGroupId(),session.getUser().getId().toString(), currentTime);
+				Recording rec = service.execute();
 
-			for (Recording rec : service.execute()) {
-				UserSession session = room.getParticipant(rec.getUserId().toString());
-				
 				WebRtcEndpoint ep = getEndpoint(session);
 				if (ep != null) {
 					System.out.println("SET PLAYER TO " + session.getUser().getEmail());
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-					//ep.connect(player);
+					// ep.connect(player);
 					player.connect(ep);
 					player.play();
 				}
+				
 			}
+			
 		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -376,7 +368,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setRealtime() {
 		System.out.println("0 - setRealtime");
-		
+
 		for (UserSession session : room.getParticipants()) {
 			System.out.println("1 - participant");
 			WebRtcEndpoint ep = getEndpoint(session);
