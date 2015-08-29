@@ -352,7 +352,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
 					// ep.connect(player);
 					player.connect(ep);
-					player.play();
 					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 						@Override
@@ -362,7 +361,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							setHistoric(offset);
 						}
 					});
-				
+					player.play();				
 				}
 				
 			}
