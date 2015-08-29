@@ -74,12 +74,14 @@ public class UserSession implements Closeable {
 			}
 		});
 		
+		final Interval interval = new Interval();
+		interval.save();
+		
 		this.outEndPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				final Interval interval = new Interval();
-				interval.save();
+		
 				
 				new Thread(new Runnable() {
 					
