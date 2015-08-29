@@ -30,7 +30,6 @@ import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.MediaPipeline;
-import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
@@ -56,12 +55,11 @@ public class Room implements Closeable {
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
-		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");
-		
-		
-		
+		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
 
+	
+	
 	@PreDestroy
 	private void shutdown() {
 		this.close();
@@ -77,13 +75,10 @@ public class Room implements Closeable {
 	
 	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence, Interval interval){
 		String filename = interval.getId().toString()+"-"+sequence+".webm";
-		String filepath = "file:///var/www/html/"+filename;
+		String filepath = "file:///tmp/"+filename;
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
-		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
-		Date begin = new Date();
-	
-		
+		Date begin = new Date();	
 		rec.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
 
 			@Override
@@ -91,7 +86,7 @@ public class Room implements Closeable {
 				try {
 					Date end = new Date();
 	
-					SaveRecordingService srs =new SaveRecordingService(null,"http://2n113.ddns.net:3080/"+filename,getGroupId(), session.getUser().getId().toString(),begin,end,filename,"video/webm",interval.getId().toString());
+					SaveRecordingService srs =new SaveRecordingService(null,filepath,getGroupId(), session.getUser().getId().toString(),begin,end,filename,"video/webm",interval.getId().toString());
 					Recording rec = srs.execute();
 					PublishService publishService = new PublishService("rec:" + getGroupId());
 					publishService.execute();

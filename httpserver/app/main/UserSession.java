@@ -16,6 +16,7 @@ package main;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -26,15 +27,19 @@ import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
 import com.google.gson.JsonObject;
 
+import exceptions.ServiceException;
 import models.Interval;
+import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
+import services.ListRecordingsForTimeService;
 
 /**
  * 
@@ -167,10 +172,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 			inEndPoints.put(senderId, incoming);
 			incoming.connect(outgoing);
-			//outgoing.connect(incoming);
+			// outgoing.connect(incoming);
 			sender.getEndpoint(null).connect(incoming);
-			
-			
+
 			return incoming;
 		}
 	}
@@ -228,8 +232,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
-
-
 	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {
 
 		@Override
@@ -285,7 +287,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return getUser().compareTo(o.getUser());
 	}
 
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -318,5 +319,34 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		result = 31 * result + getGroupId().hashCode();
 		return result;
 	}
-	
+
+	public void setHistoric(String time) {
+		ListRecordingsForTimeService service = new ListRecordingsForTimeService(user.getId().toString(),
+				room.getGroupId(), time, 11000l);
+		try {
+
+			for (Recording rec : service.execute()) {
+				UserSession session = room.getParticipant(rec.getUserId().toString());
+				
+				WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
+				if (ep != null) {
+					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
+					ep.connect(player);
+				}
+			}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void setRealtime() {
+		for (UserSession session : room.getParticipants()) {
+			WebRtcEndpoint ep = inEndPoints.get(session.getUser().getId().toString());
+			if (ep != null) {
+				ep.connect(session.outgoing);
+			}
+		}
+	}
+
 }
