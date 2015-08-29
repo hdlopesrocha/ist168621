@@ -84,6 +84,7 @@ public class Room implements Closeable {
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
 		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
 		Date begin = new Date();
+	
 		
 		rec.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
 
