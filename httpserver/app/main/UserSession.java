@@ -23,16 +23,13 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.ElementConnectedEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.MediaSessionStartedEvent;
-import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
-import org.kurento.jsonrpc.JsonUtils;
 
-import com.google.gson.JsonObject;
-
+import main.Room;
 import models.Interval;
 import models.User;
 import play.mvc.WebSocket;
@@ -74,15 +71,15 @@ public class UserSession implements Closeable {
 			}
 		});
 		
+		
 		final Interval interval = new Interval();
 		interval.save();
 		
-		this.outEndPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+		this.outEndPoint.addElementConnectedListener(new EventListener<ElementConnectedEvent>() {
 
 			@Override
-			public void onEvent(MediaSessionStartedEvent arg0) {
-		
-				
+			public void onEvent(ElementConnectedEvent arg0) {
+
 				new Thread(new Runnable() {
 					
 					@Override
@@ -106,11 +103,13 @@ public class UserSession implements Closeable {
 							}
 						}
 					}
-				}).start();				
+				}).start();	
+								
 			}
 		});
+
 		
-		
+
 		
 	
 		
