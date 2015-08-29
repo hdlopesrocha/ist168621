@@ -28,7 +28,7 @@ var HyperTimeline = new (function() {
 	    var timeline =  new vis.Timeline(main, items, options);
 	    timeline.hyper_offset = 0;
 		timeline.addCustomTime(new Date(),"time");
-	  /*
+	  
 		timeline.on('rangechange', function(properties){
 	    	var start = properties.start;
 	    	var end = properties.end;
@@ -36,19 +36,12 @@ var HyperTimeline = new (function() {
 	    	var customTime = timeline.getCustomTime("time");
 	    	timeline.setCustomTime(avg,"time");
 	    });
-		*/
+		
 	    timeline.on('rangechanged', function(properties){
 	    	if(properties.byUser){
 		    	var start = properties.start;
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
-		    	
-		    	// rangechange
-		    	{
-			    	var customTime = timeline.getCustomTime("time");
-			    	timeline.setCustomTime(avg,"time");
-	    		}
-		    	
 		    	timeline.hyper_offset = new Date().getTime() - avg;
 				if (timeline.hyper_offset < 0){
 					timeline.setRealTime();
