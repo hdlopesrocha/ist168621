@@ -332,7 +332,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				if (ep != null) {
 					System.out.println("SET PLAYER TO " + session.getUser().getEmail());
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-					ep.connect(player);
+					//ep.connect(player);
+					player.connect(ep);
 				}
 			}
 		} catch (ServiceException e) {
