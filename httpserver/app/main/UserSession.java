@@ -91,9 +91,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				while (recording) {
 					// TODO Auto-generated method stub
 					if (session.recEndPoint != null) {
-						// session.recEndPoint.stop();
+						session.recEndPoint.stop();
 						session.recEndPoint.disconnect(outgoing);
-						session.recEndPoint.release();
 					}
 
 					session.recEndPoint = room.recordEndpoint(outgoing, session, sequence, interval);
@@ -198,21 +197,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
-	/*
-	 * 
-	 * public WebRtcEndpoint getEndpoint(final UserSession sender) { if (sender
-	 * == null) { return outEndPoint; } String senderId =
-	 * sender.getUser().getId().toString(); WebRtcEndpoint incoming =
-	 * inEndPoints.get(senderId); if (incoming == null) { incoming =
-	 * room.createWebRtcEndPoint(this,senderId); #
-	 * incoming.connect(outEndPoint); outEndPoint.connect(incoming);
-	 * 
-	 * inEndPoints.put(senderId, incoming); }
-	 * 
-	 * sender.getEndpoint(null).connect(incoming);
-	 * 
-	 * return incoming; }
-	 */
+
 
 	public void processOffer(String description, String userId) {
 		// XXX [CLIENT_OFFER_04] XXX
