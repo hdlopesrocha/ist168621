@@ -104,7 +104,7 @@
 						var obj = array[i];
 						var start = new Date(obj.start);
 						var end = new Date(obj.end);
-						var newUrl = "/file/" + obj.url;
+						var newUrl = obj.url;
 						var srcOrBlob = HyperPreLoader.load(newUrl, obj.type);
 						var offset = timeline.intersects(start,	end);
 
