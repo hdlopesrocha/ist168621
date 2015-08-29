@@ -23,13 +23,16 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
-import org.kurento.client.ElementConnectedEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
+import org.kurento.client.MediaSessionStartedEvent;
+import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
+import org.kurento.jsonrpc.JsonUtils;
 
-import main.Room;
+import com.google.gson.JsonObject;
+
 import models.Interval;
 import models.User;
 import play.mvc.WebSocket;
@@ -70,46 +73,37 @@ public class UserSession implements Closeable {
 				}
 			}
 		});
-		
+	
 		
 		final Interval interval = new Interval();
 		interval.save();
 		
-		this.outEndPoint.addElementConnectedListener(new EventListener<ElementConnectedEvent>() {
 
+		new Thread(new Runnable() {
+			
 			@Override
-			public void onEvent(ElementConnectedEvent arg0) {
-
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						UserSession session = UserSession.this;
-						while(recording){
-							// TODO Auto-generated method stub
-							if(session.recEndPoint!=null){
-							//	session.recEndPoint.stop();
-								session.recEndPoint.disconnect(outEndPoint);
-								session.recEndPoint.release();
-							}
-							
-							session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
-							++sequence;
-							try {
-								Thread.sleep(10000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
+			public void run() {
+				UserSession session = UserSession.this;
+				while(recording){
+					// TODO Auto-generated method stub
+					if(session.recEndPoint!=null){
+					//	session.recEndPoint.stop();
+						session.recEndPoint.disconnect(outEndPoint);
+						session.recEndPoint.release();
 					}
-				}).start();	
-								
+					
+					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
+					++sequence;
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
-		});
-
+		}).start();	
 		
-
 		
 	
 		
