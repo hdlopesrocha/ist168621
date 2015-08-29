@@ -73,7 +73,8 @@ public class UserSession implements Closeable {
 			}
 		});
 		
-		new Interval().save();
+		final Interval interval = new Interval();
+		interval.save();
 		
 		new Thread(new Runnable() {
 			
@@ -88,7 +89,7 @@ public class UserSession implements Closeable {
 						session.recEndPoint.release();
 					}
 					
-					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence);
+					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
 					++sequence;
 					try {
 						Thread.sleep(10000);
