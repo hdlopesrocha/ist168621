@@ -29,9 +29,6 @@ import models.Group;
  * @since 4.3.1
  */
 public class RoomManager {
-
-
-	
 	
 	public RoomManager (KurentoClient kurento){
 		for(MediaPipeline mediaPipeline : kurento.getServerManager().getPipelines()) {
