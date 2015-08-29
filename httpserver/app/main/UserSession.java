@@ -25,6 +25,7 @@ import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
+import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
@@ -73,33 +74,41 @@ public class UserSession implements Closeable {
 			}
 		});
 		
-		final Interval interval = new Interval();
-		interval.save();
-		
-		new Thread(new Runnable() {
-			
+		this.outEndPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+
 			@Override
-			public void run() {
-				UserSession session = UserSession.this;
-				while(recording){
-					// TODO Auto-generated method stub
-					if(session.recEndPoint!=null){
-					//	session.recEndPoint.stop();
-						session.recEndPoint.disconnect(outEndPoint);
-						session.recEndPoint.release();
-					}
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				final Interval interval = new Interval();
+				interval.save();
+				
+				new Thread(new Runnable() {
 					
-					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
-					++sequence;
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					@Override
+					public void run() {
+						UserSession session = UserSession.this;
+						while(recording){
+							// TODO Auto-generated method stub
+							if(session.recEndPoint!=null){
+							//	session.recEndPoint.stop();
+								session.recEndPoint.disconnect(outEndPoint);
+								session.recEndPoint.release();
+							}
+							
+							session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
+							++sequence;
+							try {
+								Thread.sleep(10000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 					}
-				}
+				}).start();				
 			}
-		}).start();
+		});
+		
+		
 		
 	
 		
