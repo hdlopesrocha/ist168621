@@ -164,7 +164,7 @@
 				for ( var i in data) {
 					var obj = data[i];
 					if (obj.uid == "@userId") {
-						rec_videos[obj.seq] = "/file/"+ obj.url;
+						rec_videos[obj.seq] =  obj.url;
 						var inter = rendered_intervals[obj.inter];
 						var newInter = null;
 						if (!inter) {
@@ -200,24 +200,10 @@
 			});
 		});
 
-		var onVideoRecorded = function(blob, videoURL, start,end) {
-			console.log(start, end, videoURL, blob);
-			var formData = new FormData();
-			var name = "recording" + "." + blob.type.split('/')[1];
-			var type = blob.type;
-			formData.append("video", blob, name);
-			Signaling.saveRecording("@groupId", "@userId",current_interval, start.toISOString(), end.toISOString(), name, type,	formData, 
-				function(data) {
-					current_interval = data;
-				}, 
-				function() {
-					console.log("err")
-				}
-			);
-		}
+
 
 		Kurento.start("@groupId", function() {
-			KurentoSender.start("@userId", onVideoRecorded);
+			KurentoSender.start("@userId");
 			KurentoReceiver.start(kparticipants, kvideo);
 		});
 

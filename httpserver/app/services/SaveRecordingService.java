@@ -25,6 +25,7 @@ public class SaveRecordingService extends Service<Recording> {
 	private String start;
 	private String name;
 	private String type;
+	private String url;
 	private String end;
 	private static Object LOCK = new Object();
 
@@ -39,7 +40,7 @@ public class SaveRecordingService extends Service<Recording> {
 	 *            the content
 	 * @param anex
 	 */
-	public SaveRecordingService(final KeyValueFile anex, final String groupId, final String userId, String start,
+	public SaveRecordingService(final KeyValueFile anex, final String url, final String groupId, final String userId, String start,
 			String end, String name, String type, String interval) {
 		this.anex = anex;
 		this.groupId = new ObjectId(groupId);
@@ -49,6 +50,7 @@ public class SaveRecordingService extends Service<Recording> {
 		this.end = end;
 		this.name = name;
 		this.type = type;
+		this.url = url;
 	}
 
 	/*
@@ -58,8 +60,10 @@ public class SaveRecordingService extends Service<Recording> {
 	 */
 	@Override
 	public Recording dispatch() throws ServiceException {
-		UploadFileService uploadService = new UploadFileService(anex);
-		String url = uploadService.execute();
+		if(url==null){
+			UploadFileService uploadService = new UploadFileService(anex);
+			url = uploadService.execute();
+		}
 		synchronized (LOCK) {
 			Interval inter = null;
 			try {
@@ -72,13 +76,15 @@ public class SaveRecordingService extends Service<Recording> {
 					interval = inter.getId();
 				} else {
 					inter = Interval.findById(interval);
+					if(inter.getStart()==null){
+						inter.setStart(dateStart);
+					}
 					inter.setEnd(dateEnd);
 					inter.save();
 				}
 
 				
-				Recording rec = new Recording(groupId, userId, dateStart, dateEnd, name, type, url,
-						Recording.countByGroup(groupId), inter.getId());
+				Recording rec = new Recording(groupId, userId, dateStart, dateEnd, name, type, url,	Recording.countByGroup(groupId), inter.getId());
 				rec.save();
 				return rec;
 			} catch (ParseException e) {
