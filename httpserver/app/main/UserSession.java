@@ -196,8 +196,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			WebRtcEndpoint incoming = incomings.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
-				incoming.connect(outgoing);
-				outgoing.connect(incoming);
 				incomings.put(senderId, incoming);
 			}
 			return incoming;
@@ -234,7 +232,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (userId != null) {
 			UserSession sender = room.getParticipant(userId);
 			incoming = getEndpoint(sender);
-		
+			incoming.connect(outgoing);
+			outgoing.connect(incoming);
 			sender.outgoing.connect(incoming);
 		} else {
 			incoming = outgoing;
