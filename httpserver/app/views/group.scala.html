@@ -97,6 +97,10 @@
 			}, 
 			function() {
 
+				for ( var i in user_videos) {
+					user_videos[i].src = user_streams[i];
+				}
+				
 				console.log("REALTIME");
 				// realtime request
 			}
