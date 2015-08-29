@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaSessionStartedEvent;
@@ -139,13 +140,12 @@ public class UserSession implements Closeable {
 		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
 			incoming = room.createWebRtcEndPoint(this,senderId);
-			incoming.connect(outEndPoint);
-			outEndPoint.connect(incoming);
-
-			inEndPoints.put(senderId, incoming);
 		}
+		//incoming.connect(outEndPoint);
+		outEndPoint.connect(incoming);
+		inEndPoints.put(senderId, incoming);
 
-		sender.getEndpoint(null).connect(incoming);
+		//sender.getEndpoint(null).connect(incoming);
 
 		return incoming;
 	}
