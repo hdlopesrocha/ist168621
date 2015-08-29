@@ -338,9 +338,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public void setHistoric(String time) {
+	public void setHistoric(long offset) {
 		try {
-			Date currentTime = Recording.FORMAT.parse(time);
+			Date currentTime = new Date(new Date().getTime()-offset);
 			
 			for(UserSession session : room.getParticipants()){
 				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
