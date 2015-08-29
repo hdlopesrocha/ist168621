@@ -39,12 +39,8 @@
 	</div>
 
 <script>
-	var currentVideoPlaying = 0;
 	var participants = {};
-	var user_current = {};
-	var user_streams = {};
 	var user_videos = {};
-	var rec_videos = [];
 	var timeline = null;
 	var last_sequence = -1;
 	var current_interval = null;
@@ -71,12 +67,10 @@
 				video = document.getElementById(newVideoId);
 				video.src = streamUrl;
 				user_videos[userId] = video;
-				user_streams[userId] = streamUrl;
 
 				video.addEventListener('ended', function() {
-					//	++currentVideoPlaying;
-					//	video.src= rec_videos[currentVideoPlaying];
-					//	timeline.setSelection(currentVideoPlaying);
+	
+					
 				});
 			}
 			return video;
@@ -96,11 +90,7 @@
 				// current request
 			}, 
 			function() {
-
-				for ( var i in user_videos) {
-					user_videos[i].src = user_streams[i];
-				}
-				
+		
 				console.log("REALTIME");
 				// realtime request
 			}
@@ -114,7 +104,6 @@
 				for ( var i in data) {
 					var obj = data[i];
 					if (obj.uid == "@userId") {
-						rec_videos[obj.seq] =  obj.url;
 						var inter = rendered_intervals[obj.inter];
 						var newInter = null;
 						if (!inter) {
