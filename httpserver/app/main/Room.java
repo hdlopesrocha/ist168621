@@ -119,7 +119,7 @@ System.out.println("---------------------------");
 	}
 	
 	
-	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId){
+	public WebRtcEndpoint createWebRtcEndPoint(UserSession session, String senderId,IncomingVideoHandler inc){
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(mediaPipeline).build();
 
 	
@@ -142,6 +142,9 @@ System.out.println("---------------------------");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				if(inc!=null)
+					inc.onIncomingVideo();
 			}
 		});
 		

@@ -33,6 +33,7 @@ import org.kurento.jsonrpc.JsonUtils;
 
 import com.google.gson.JsonObject;
 
+import main.IncomingVideoHandler;
 import models.Interval;
 import models.User;
 import play.mvc.WebSocket;
@@ -58,9 +59,45 @@ public class UserSession implements Closeable {
 		this.out = out;
 		this.user = user;
 		this.room = room;
-
+		
+		final Interval interval = new Interval();
+		interval.save();
+		
+		
 		// XXX [ICE_01] XXX
-		this.outEndPoint =room.createWebRtcEndPoint(this,null);
+		this.outEndPoint =room.createWebRtcEndPoint(this,null, new IncomingVideoHandler() {
+			
+			@Override
+			public void onIncomingVideo() {
+				
+
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						UserSession session = UserSession.this;
+						while(recording){
+							// TODO Auto-generated method stub
+							if(session.recEndPoint!=null){
+							//	session.recEndPoint.stop();
+								session.recEndPoint.disconnect(outEndPoint);
+								session.recEndPoint.release();
+							}
+							
+							session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
+							++sequence;
+							try {
+								Thread.sleep(10000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}).start();					
+				
+			}
+		});
 		
 		this.outEndPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
@@ -75,34 +112,7 @@ public class UserSession implements Closeable {
 		});
 	
 		
-		final Interval interval = new Interval();
-		interval.save();
-		
 
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				UserSession session = UserSession.this;
-				while(recording){
-					// TODO Auto-generated method stub
-					if(session.recEndPoint!=null){
-					//	session.recEndPoint.stop();
-						session.recEndPoint.disconnect(outEndPoint);
-						session.recEndPoint.release();
-					}
-					
-					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
-					++sequence;
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();	
 		
 		
 	
@@ -138,7 +148,7 @@ public class UserSession implements Closeable {
 		String senderId = sender.getUser().getId().toString();
 		WebRtcEndpoint incoming = inEndPoints.get(senderId);
 		if (incoming == null) {
-			incoming = room.createWebRtcEndPoint(this,senderId);
+			incoming = room.createWebRtcEndPoint(this,senderId,null);
 			incoming.connect(outEndPoint);
 			outEndPoint.connect(incoming);
 
