@@ -145,7 +145,7 @@ public class UserSession implements Closeable {
 		outEndPoint.connect(incoming);
 		inEndPoints.put(senderId, incoming);
 
-		//sender.getEndpoint(null).connect(incoming);
+		sender.getEndpoint(null).connect(incoming);
 
 		return incoming;
 	}
