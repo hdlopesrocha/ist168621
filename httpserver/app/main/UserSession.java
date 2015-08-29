@@ -85,7 +85,7 @@ public class UserSession implements Closeable {
 					// TODO Auto-generated method stub
 					if(session.recEndPoint!=null){
 					//	session.recEndPoint.stop();
-					//	session.recEndPoint.disconnect(outEndPoint);
+						session.recEndPoint.disconnect(outEndPoint);
 						session.recEndPoint.release();
 					}
 					
