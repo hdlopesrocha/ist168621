@@ -89,7 +89,7 @@ public class UserSession implements Closeable {
 					if(session.recEndPoint!=null){
 					//	session.recEndPoint.stop();
 						session.recEndPoint.disconnect(outEndPoint);
-						session.recEndPoint.release();
+					//	session.recEndPoint.release();
 					}
 					
 					session.recEndPoint = room.recordEndpoint(outEndPoint, session,sequence,interval);
