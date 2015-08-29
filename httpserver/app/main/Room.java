@@ -71,7 +71,7 @@ public class Room implements Closeable {
 
 	
 	public RecorderEndpoint recordEndpoint(WebRtcEndpoint ep, UserSession session, Long sequence){
-		String filepath = "file:///tmp/"+group.getId().toString()+"-"+session.getUser().getId().toString()+"-"+sequence+".webm";
+		String filepath = "file:///var/www/html/"+group.getId().toString()+"-"+session.getUser().getId().toString()+"-"+sequence+".webm";
 		System.out.println("REC: "+ filepath);
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
 		PlayerEndpoint player = new PlayerEndpoint.Builder(mediaPipeline, filepath).build();
