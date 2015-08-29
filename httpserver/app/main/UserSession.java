@@ -153,6 +153,32 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return room.getGroupId();
 	}
 
+	
+
+
+	
+
+
+	/**
+	 * @param senderName
+	 *            the participant
+	 */
+	public void cancelVideoFrom(final UserSession sender) {
+		final WebRtcEndpoint incoming = inEndPoints.remove(sender.getUser().getId().toString());
+		incoming.release(EMPTY_CONTINUATION);
+	}
+
+	@Override
+	public void close() throws IOException {
+		for (final String remoteParticipantName : inEndPoints.keySet()) {
+			final WebRtcEndpoint ep = this.inEndPoints.get(remoteParticipantName);
+
+			ep.release(EMPTY_CONTINUATION);
+		}
+
+		outgoing.release();
+	}
+	
 	/**
 	 * @param sender
 	 *            the user
@@ -175,26 +201,28 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			return incoming;
 		}
 	}
+	
+	/*
 
-	/**
-	 * @param senderName
-	 *            the participant
-	 */
-	public void cancelVideoFrom(final UserSession sender) {
-		final WebRtcEndpoint incoming = inEndPoints.remove(sender.getUser().getId().toString());
-		incoming.release(EMPTY_CONTINUATION);
-	}
+	public WebRtcEndpoint getEndpoint(final UserSession sender) {
+		if (sender == null) {
+			return outEndPoint;
+		}
+		String senderId = sender.getUser().getId().toString();
+		WebRtcEndpoint incoming = inEndPoints.get(senderId);
+		if (incoming == null) {
+			incoming = room.createWebRtcEndPoint(this,senderId);
+#			incoming.connect(outEndPoint);
+			outEndPoint.connect(incoming);
 
-	@Override
-	public void close() throws IOException {
-		for (final String remoteParticipantName : inEndPoints.keySet()) {
-			final WebRtcEndpoint ep = this.inEndPoints.get(remoteParticipantName);
-
-			ep.release(EMPTY_CONTINUATION);
+			inEndPoints.put(senderId, incoming);
 		}
 
-		outgoing.release();
+		sender.getEndpoint(null).connect(incoming);
+
+		return incoming;
 	}
+	 */
 
 	public void processOffer(String description, String userId) {
 		// XXX [CLIENT_OFFER_04] XXX
@@ -202,11 +230,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		WebRtcEndpoint incoming = null;
 		if (userId != null) {
-			UserSession otherSession = room.getParticipant(userId);
-			incoming = getEndpoint(otherSession);
+			UserSession sender = room.getParticipant(userId);
+			incoming = getEndpoint(sender);
 			incoming.connect(outgoing);
-			otherSession.getEndpoint(null).connect(incoming);
-		
+			outgoing.connect(incoming);
+			sender.outgoing.connect(incoming);
 		} else {
 			incoming = getEndpoint(null);
 		}
