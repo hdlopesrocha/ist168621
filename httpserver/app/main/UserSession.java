@@ -357,21 +357,29 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				WebRtcEndpoint ep = getEndpoint(session);
 				if (ep != null) {
 					System.out.println("SET PLAYER TO " + session.getUser().getEmail());
-					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-					// ep.connect(player);
-					player.connect(ep);
-					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+					System.out.println("TIME: " + currentTime.toString());
 
-						@Override
-						public void onEvent(EndOfStreamEvent arg0) {
-							// TODO Auto-generated method stub
-							System.out.println("END OF STREAM");
-							if (!realTime) {
-								setHistoric(offset);
+					if (rec != null) {
+						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+								.build();
+						// ep.connect(player);
+						player.connect(ep);
+						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+
+							@Override
+							public void onEvent(EndOfStreamEvent arg0) {
+								// TODO Auto-generated method stub
+								System.out.println("END OF STREAM");
+								if (!realTime) {
+									setHistoric(offset);
+								}
 							}
-						}
-					});
-					player.play();
+						});
+						player.play();
+					}
+					else {
+						System.out.println("No video here!");
+					}
 				}
 
 			} catch (ServiceException e) {
