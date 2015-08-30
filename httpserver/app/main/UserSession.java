@@ -342,7 +342,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public void setHistoric() {
+	public void setHistoric(long offset) {
+		playOffset = offset;
 		if (realTime) {
 			realTime = false;
 
