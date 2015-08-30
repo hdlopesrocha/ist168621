@@ -343,7 +343,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public void setHistoric(long offset) {
+	public synchronized void setHistoric(long offset) {
 		realTime = false;
 
 		Date currentTime = new Date(new Date().getTime() - offset);
@@ -388,19 +388,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							}
 						});
 						player.connect(ep);
-						player.play(new Continuation<Void>() {
-							
-							@Override
-							public void onSuccess(Void arg0) throws Exception {
-								System.out.println("PLAY OK!");
-							}
-							
-							@Override
-							public void onError(Throwable arg0) throws Exception {
-								System.out.println("PLAY ERROR! "+ arg0.getMessage());
-											
-							}
-						});
+						player.play();
 					} else {
 						System.out.println("No video here!");
 					}
