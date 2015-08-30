@@ -363,6 +363,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 						
+						
 					      player.addErrorListener(new EventListener<ErrorEvent>() {
 					         @Override
 					         public void onEvent(ErrorEvent event) {

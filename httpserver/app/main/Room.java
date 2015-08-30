@@ -17,7 +17,6 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -27,20 +26,15 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Continuation;
 import org.kurento.client.DispatcherOneToMany;
-import org.kurento.client.ElementDisconnectedEvent;
+import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.MediaPipeline;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
-import exceptions.ServiceException;
 import models.Group;
-import models.Interval;
-import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
-import services.PublishService;
-import services.SaveRecordingService;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -54,6 +48,18 @@ public class Room implements Closeable {
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
+		
+
+		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
+
+			@Override
+			public void onEvent(ErrorEvent arg0) {
+
+				System.out.println("PIPELINE ERROR");
+				System.out.println(arg0.getDescription());
+			}
+		});
+		
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
