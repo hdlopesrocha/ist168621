@@ -366,6 +366,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					      player.addErrorListener(new EventListener<ErrorEvent>() {
 					         @Override
 					         public void onEvent(ErrorEvent event) {
+					        	 
+					        	 System.out.println("player.addErrorListener");
 				        		if (!realTime) {
 									setHistoric(offset);
 								}
@@ -376,6 +378,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 							@Override
 							public void onEvent(EndOfStreamEvent arg0) {
+					        	 System.out.println("player.addEndOfStreamListener");
+
 								if (!realTime) {
 									setHistoric(offset);
 								}
