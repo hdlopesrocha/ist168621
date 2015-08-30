@@ -89,13 +89,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			@Override
 			public void run() {
+				Date begin = new Date();
+
 				while (recording) {
 
 					String filename = interval.getId().toString() + "-" + sequence + ".webm";
 					String filepath = "file:///rec/" + filename;
 					recorder = room.recordEndpoint(outgoing, UserSession.this, filepath);
 
-					Date begin = new Date();
 
 					try {
 						Thread.sleep(5000);
@@ -108,7 +109,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					try {
 						Date end = new Date();
-
+						
 						SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
 								getUser().getId().toString(), begin, end, filename, "video/webm",
 								interval.getId().toString());
@@ -117,6 +118,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						publishService.execute();
 
 						System.out.println("STOP: " + filepath);
+						// continuous parts (although not true)
+						begin = end;
 					} catch (ServiceException e) {
 						e.printStackTrace();
 					}
