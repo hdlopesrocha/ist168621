@@ -89,12 +89,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			@Override
 			public void run() {
-				UserSession session = UserSession.this;
 				while (recording) {
 
 					String filename = interval.getId().toString() + "-" + sequence + ".webm";
 					String filepath = "file:///rec/" + filename;
-					session.recEndPoint = room.recordEndpoint(outgoing, session, filepath);
+					recEndPoint = room.recordEndpoint(outgoing, UserSession.this, filepath);
 
 					Date begin = new Date();
 
@@ -105,13 +104,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						e.printStackTrace();
 					}
 
-					session.recEndPoint.stop();
+					recEndPoint.stop();
 
 					try {
 						Date end = new Date();
 
 						SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
-								session.getUser().getId().toString(), begin, end, filename, "video/webm",
+								getUser().getId().toString(), begin, end, filename, "video/webm",
 								interval.getId().toString());
 						Recording rec = srs.execute();
 						PublishService publishService = new PublishService("rec:" + getGroupId());
@@ -122,8 +121,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						e.printStackTrace();
 					}
 
-					outgoing.disconnect(session.recEndPoint);
-
+					outgoing.disconnect(recEndPoint);
+					recEndPoint.release();
 					++sequence;
 				}
 			}
@@ -369,6 +368,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							@Override
 							public void onEvent(EndOfStreamEvent arg0) {
 								// TODO Auto-generated method stub
+								player.release();
 								System.out.println("END OF STREAM");
 								if (!realTime) {
 									setHistoric(offset);
