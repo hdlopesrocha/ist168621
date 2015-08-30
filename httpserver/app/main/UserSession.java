@@ -93,7 +93,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				while (recording) {
 
 					String filename = interval.getId().toString() + "-" + sequence + ".webm";
-					String filepath = "file:///tmp/" + filename;
+					String filepath = "file:///rec/" + filename;
 					session.recEndPoint = room.recordEndpoint(outgoing, session, filepath);
 
 					Date begin = new Date();
