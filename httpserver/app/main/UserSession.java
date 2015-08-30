@@ -388,7 +388,19 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							}
 						});
 						player.connect(ep);
-						player.play();
+						player.play(new Continuation<Void>() {
+							
+							@Override
+							public void onSuccess(Void arg0) throws Exception {
+								System.out.println("PLAY OK!");
+							}
+							
+							@Override
+							public void onError(Throwable arg0) throws Exception {
+								System.out.println("PLAY ERROR! "+ arg0.getMessage());
+											
+							}
+						});
 					} else {
 						System.out.println("No video here!");
 					}
