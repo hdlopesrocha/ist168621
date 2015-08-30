@@ -361,8 +361,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
-						ep.connect(player);
-						//player.connect(ep);
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 							@Override
@@ -377,22 +375,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 							}
 						});
-						player.play(new Continuation<Void>() {
-
-							@Override
-							public void onError(Throwable arg0) throws Exception {
-								// TODO Auto-generated method stub
-								arg0.printStackTrace();
-							}
-
-							@Override
-							public void onSuccess(Void arg0) throws Exception {
-								// TODO Auto-generated method stub
-								System.out.println("PLAY OK!");
-							}
-						});
-					}
-					else {
+						player.connect(ep);
+						player.play();
+					} else {
 						System.out.println("No video here!");
 					}
 				}
