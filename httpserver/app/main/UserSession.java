@@ -25,6 +25,7 @@ import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EndOfStreamEvent;
+import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
@@ -361,18 +362,24 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
+						
+					      player.addErrorListener(new EventListener<ErrorEvent>() {
+					         @Override
+					         public void onEvent(ErrorEvent event) {
+				        		if (!realTime) {
+									setHistoric(offset);
+								}
+					         }
+					      });
+						
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 							@Override
 							public void onEvent(EndOfStreamEvent arg0) {
-								// TODO Auto-generated method stub
-								System.out.println("END OF STREAM 1");
 								if (!realTime) {
 									setHistoric(offset);
 								}
 								player.release();
-								System.out.println("END OF STREAM 2");
-
 							}
 						});
 						player.connect(ep);
