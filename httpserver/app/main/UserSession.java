@@ -98,7 +98,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					Date begin = new Date();
 
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -377,7 +377,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					}
 				}
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
