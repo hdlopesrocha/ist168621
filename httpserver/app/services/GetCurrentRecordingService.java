@@ -39,7 +39,7 @@ public class GetCurrentRecordingService extends Service<Recording> {
 	public Recording dispatch() throws BadRequestException {
 
 		FindIterable<Document> iter = Recording.getCollection().find(new Document("gid", groupId).append("uid", userId)
-				.append("end", new Document("$gt", time)).append("start", new Document("$lt", time)));
+				.append("end", new Document("$ge", time)).append("start", new Document("$lt", time)));
 		
 		Document first = iter.first();
 		
