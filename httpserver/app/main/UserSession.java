@@ -122,8 +122,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						e.printStackTrace();
 					}
 
-					//outgoing.disconnect(recEndPoint);
-					//recEndPoint.release();
+					// outgoing.disconnect(recEndPoint);
+					// recEndPoint.release();
 					++sequence;
 				}
 			}
@@ -348,58 +348,42 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		Date currentTime = new Date(new Date().getTime() - offset);
 
-		for (UserSession session : room.getParticipants()) {
-			try {
-				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-						room.getGroupId(), session.getUser().getId().toString(), currentTime);
-				Recording rec = service.execute();
+		while (!realTime) {
+			for (UserSession session : room.getParticipants()) {
+				try {
+					GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+							room.getGroupId(), session.getUser().getId().toString(), currentTime);
+					Recording rec = service.execute();
 
-				WebRtcEndpoint ep = getEndpoint(session);
-				if (ep != null) {
-					
-					if (rec != null) {
-						System.out.println("PLAY:" + rec.getUrl());
+					WebRtcEndpoint ep = getEndpoint(session);
+					if (ep != null) {
 
-						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
-								.build();
-						
-						
-					      player.addErrorListener(new EventListener<ErrorEvent>() {
-					         @Override
-					         public void onEvent(ErrorEvent event) {
-					        	 
-					        	 System.out.println("player.addErrorListener");
-				        		if (!realTime) {
-									setHistoric(offset);
-								}
-					         }
-					      });
-						
-						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+						if (rec != null) {
+							System.out.println("PLAY:" + rec.getUrl());
 
-							@Override
-							public void onEvent(EndOfStreamEvent arg0) {
-					        	 System.out.println("player.addEndOfStreamListener");
+							PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+									.build();
 
-								if (!realTime) {
-									setHistoric(offset);
-								}
-								player.release();
-							}
-						});
-						player.connect(ep);
-						player.play();
-					} else {
-						System.out.println("No video here!");
+							player.connect(ep);
+							player.play();
+						} else {
+							System.out.println("No video here!");
+						}
 					}
-				}
 
-			} catch (ServiceException e) {
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
-
 	}
 
 	public void setRealtime() {
