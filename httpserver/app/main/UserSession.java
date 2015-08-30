@@ -369,10 +369,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							public void onEvent(EndOfStreamEvent arg0) {
 								// TODO Auto-generated method stub
 								System.out.println("END OF STREAM 1");
-								player.release();
 								if (!realTime) {
 									setHistoric(offset);
 								}
+								player.release();
 								System.out.println("END OF STREAM 2");
 
 							}
