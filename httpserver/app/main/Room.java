@@ -79,7 +79,8 @@ public class Room implements Closeable {
 		RecorderEndpoint rec = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
 		
 		rec.record();
-		ep.connect(rec);
+		//ep.connect(rec);
+		rec.connect(ep);
 		return rec;
 	}
 	
