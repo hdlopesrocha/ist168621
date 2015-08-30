@@ -121,7 +121,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						e.printStackTrace();
 					}
 
-					outgoing.disconnect(recEndPoint);
+					//outgoing.disconnect(recEndPoint);
 					recEndPoint.release();
 					++sequence;
 				}
