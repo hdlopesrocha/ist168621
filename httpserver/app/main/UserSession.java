@@ -24,8 +24,6 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
-import org.kurento.client.EndOfStreamEvent;
-import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
@@ -58,6 +56,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
 	private RecorderEndpoint recorder;
+	private long playOffset = 0l;
 
 	private Long sequence = 0l;
 	private boolean recording = true;
@@ -343,46 +342,47 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public synchronized void setHistoric(long offset) {
-		realTime = false;
+	public void setHistoric() {
+		if (realTime) {
+			realTime = false;
 
-		Date currentTime = new Date(new Date().getTime() - offset);
+			while (!realTime) {
+				Date currentTime = new Date(new Date().getTime() - playOffset);
+				for (UserSession session : room.getParticipants()) {
+					try {
+						GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+								room.getGroupId(), session.getUser().getId().toString(), currentTime);
+						Recording rec = service.execute();
 
-		while (!realTime) {
-			for (UserSession session : room.getParticipants()) {
-				try {
-					GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-							room.getGroupId(), session.getUser().getId().toString(), currentTime);
-					Recording rec = service.execute();
+						WebRtcEndpoint ep = getEndpoint(session);
+						if (ep != null) {
 
-					WebRtcEndpoint ep = getEndpoint(session);
-					if (ep != null) {
+							if (rec != null) {
+								System.out.println("PLAY:" + rec.getUrl());
 
-						if (rec != null) {
-							System.out.println("PLAY:" + rec.getUrl());
+								PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(),
+										rec.getUrl()).build();
 
-							PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
-									.build();
-
-							player.connect(ep);
-							player.play();
-						} else {
-							System.out.println("No video here!");
+								player.connect(ep);
+								player.play();
+							} else {
+								System.out.println("No video here!");
+							}
 						}
-					}
 
-				} catch (ServiceException e) {
+					} catch (ServiceException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 			}
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 	}
 
