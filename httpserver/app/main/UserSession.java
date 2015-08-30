@@ -56,7 +56,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Room room;
 	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
-	private RecorderEndpoint recEndPoint;
+	private RecorderEndpoint recorder;
 
 	private Long sequence = 0l;
 	private boolean recording = true;
@@ -93,7 +93,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					String filename = interval.getId().toString() + "-" + sequence + ".webm";
 					String filepath = "file:///rec/" + filename;
-					recEndPoint = room.recordEndpoint(outgoing, UserSession.this, filepath);
+					recorder = room.recordEndpoint(outgoing, UserSession.this, filepath);
 
 					Date begin = new Date();
 
@@ -104,7 +104,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						e.printStackTrace();
 					}
 
-					recEndPoint.stop();
+					recorder.stop();
 
 					try {
 						Date end = new Date();
@@ -361,8 +361,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
-						// ep.connect(player);
-						player.connect(ep);
+						ep.connect(player);
+						//player.connect(ep);
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 							@Override
