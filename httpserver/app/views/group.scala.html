@@ -162,9 +162,11 @@
 				//var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
 				html += "<li><i id='state"+uid+"' class='fa fa-circle-o'></i> " + array[i].email	+ del_button + "</li>";
 				
-				var circular = "<div class='circular' style='background-image:url("+ (array[i].photo? "/file/"+array[i].photo : "/assets/images/default.png")+")'></div>";
+				var circular = array[i].photo? "<div class='circular' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
 				
-				$("#footer-row").append(circular);				
+				circular += '<div class="circular" style="background-image:url(/assets/images/default.png)"></div>';
+				
+				$("#footer-row").append("<div>"+circular+"</div>");				
 			}
 			$("#member-list").html(html);
 		});
