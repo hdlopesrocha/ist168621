@@ -210,7 +210,7 @@ public class Rest extends Controller {
 					obj.put("uid", kvp.getKey().getUserId());
 					obj.put("email", kvp.getValue().getEmail());
 					obj.put("mid", kvp.getKey().getId());
-					Document props = kvp.getKey().getProperties();
+					Document props = kvp.getValue().getPublicProperties();
 					if(props.containsKey("photo")){
 						obj.put("photo", props.getString("photo"));
 					}
