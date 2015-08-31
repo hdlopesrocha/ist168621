@@ -23,15 +23,24 @@
 	</head>
 	<body>
 		<style>
-		input {
-		    color: black;
-		}
-		footer {
-    position: fixed;
-    height: 100px;
-    bottom: 0;
-    width: 100%;
-}
+			.circular {
+				width: 300px;
+				height: 300px;
+				border-radius: 150px;
+				-webkit-border-radius: 150px;
+				-moz-border-radius: 150px;
+				background-repeat: no-repeat;
+			}
+		
+			input {
+			    color: black;
+			}
+			footer {
+			    position: fixed;
+			    height: 100px;
+			    bottom: 0;
+			    width: 100%;
+			}
 		</style>
 	
 		<div class="page-container">
@@ -107,7 +116,7 @@
 			<footer>
 				<!--footer-->
 				<div class="container">
-					<div class="row">
+					<div id="footer-row" class="row">
 		
 					</div>
 					<!--/row-->
