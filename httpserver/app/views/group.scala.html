@@ -162,7 +162,7 @@
 				//var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
 				html += "<li><i id='state"+uid+"' class='fa fa-circle-o'></i> " + array[i].email	+ del_button + "</li>";
 				
-				var circular = "<div class='circular' style='background-image:url("+array[i].photo+")'></div>";
+				var circular = "<div class='circular' style='background-image:url("+ (array[i].photo? "/file/"+array[i].photo : "/assets/default_profile")+")'></div>";
 				
 				$("#footer-row").append(circular);				
 			}
