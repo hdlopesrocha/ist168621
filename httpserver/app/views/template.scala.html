@@ -23,14 +23,26 @@
 	</head>
 	<body>
 		<style>
+			.circular-wrap {
+			    display: inline-block;
+			    width: 128px;
+			    height: 128px;
+			}
+
+			.circular, .circular-back {
+			    width: 128px;
+			    height: 128px;
+			    display: block;
+			    border-radius: 64px;
+			    background-image: url("/assets/images/default_user.png");
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			    background-position: center center;
+			    position: absolute;
+			}
+		
 			.circular {
-				 background-size: cover;				
-				 width: 100px;
-				height: 100px;
-				border-radius: 50px;
-				-webkit-border-radius: 50px;
-				-moz-border-radius: 50px;
-				background-repeat: no-repeat;
+				z-index: 999;
 			}
 		
 			input {
