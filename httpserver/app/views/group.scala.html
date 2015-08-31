@@ -164,9 +164,8 @@
 				
 				var circular = array[i].photo? "<div class='circular' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
 				
-				circular += '<div class="circular-back" style="background-image:url(/assets/images/default.png)"></div>';
 				
-				$("#footer-row").append("<div class='circular-wrap'>"+circular+"</div>");				
+				$("#footer-row").append("<div class='circular-wrap'>"+circular+"<div class='circular-back'></div></div>");				
 			}
 			$("#member-list").html(html);
 		});
