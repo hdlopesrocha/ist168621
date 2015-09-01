@@ -30,7 +30,7 @@ var KurentoReceiver = new (function() {
 			
 			pc.onaddstream = function (e) {
 				console.log(e);
-				newVideoCallback(userId,URL.createObjectURL(e.stream));
+				newVideoCallback(URL.createObjectURL(e.stream));
 			};
 			
 			
