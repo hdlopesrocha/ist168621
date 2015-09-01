@@ -26,6 +26,23 @@ var Kurento = new (function() {
 	
 	this.ws = null;
 
+	
+	this.receiveRealtime = function(userId){
+		Kurento.ws.send(JSON.stringify({
+			id : "realtime",
+			uid:userId
+		}));
+	}
+	
+	this.receiveHistoric = function(userId,offset){
+		Kurento.ws.send(JSON.stringify({
+			id : "historic",
+			uid:userId,
+			offset:offset
+		}));
+	}
+	
+	
 	this.createPeerConnection = function(userId) {
 		// XXX [CLIENT_ICE_01] XXX
 		var pc = new RTCPeerConnection({
