@@ -4,7 +4,6 @@
 <script type="text/javascript" src="/assets/js/signaling.js"></script>
 <script type="text/javascript" src="/assets/js/participant.js"></script>
 <script type="text/javascript" src="/assets/js/kurento_main.js"></script>
-<script type="text/javascript" src="/assets/js/kurento_sender.js"></script>
 <script type="text/javascript" src="/assets/js/kurento_receiver.js"></script>
 <script type="text/javascript" src="/assets/js/webrtc.js"></script>
 <script type="text/javascript" src="/assets/timeline/vis.js"></script>
@@ -129,10 +128,7 @@
 
 
 
-		Kurento.start("@groupId", function() {
-			KurentoSender.start("@userId");
-			KurentoReceiver.start(kparticipants, kvideo);
-		});
+		Kurento.start("@groupId", kparticipants, kvideo);
 
 		$("#refresh-button").click(function() {
 			document.location = document.location;
