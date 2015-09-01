@@ -78,16 +78,7 @@ public class Room implements Closeable {
 	
 	
 	
-	
-	public RecorderEndpoint recordEndpoint(WebRtcEndpoint endPoint, UserSession session, String filepath){
 
-		System.out.println("REC: "+ filepath);
-		RecorderEndpoint recorder = new RecorderEndpoint.Builder(mediaPipeline,filepath).build();
-		
-		recorder.record();
-		endPoint.connect(recorder);
-		return recorder;
-	}
 	
 	public DispatcherOneToMany createDispatcher(UserSession session){
 
