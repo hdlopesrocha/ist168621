@@ -73,7 +73,7 @@
 
 		var kparticipants = function(userId, email) {
 			if (!participants[userId]) {
-				$("#state"+userId).attr('class', "fa fa-circle" );				
+				$("#state"+userId).attr('class', "circular circular-online" );				
 				participants[userId] = email;
 			}
 		}
@@ -160,12 +160,12 @@
 				var uid = array[i].uid;
 				var del_button = "<button onclick='del_user_group(\""+ uid+ "\")'>remove</button>";
 				//var sdp_button = "<button onclick='get_sdp(\""+array[i].mid+"\")'>sdp</button>";
-				html += "<li><i id='state"+uid+"' class='fa fa-circle-o'></i> " + array[i].email	+ del_button + "</li>";
+				html += "<li><i class='fa fa-circle-o'></i> " + array[i].email	+ del_button + "</li>";
 				
 				var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
 				
 				
-				$("#footer-row").append("<div class='circular circular-wrap'>"+circular+"<div class='circular circular-online'></div></div>");				
+				$("#footer-row").append("<div class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-online'></div></div>");				
 			}
 			$("#member-list").html(html);
 		});
