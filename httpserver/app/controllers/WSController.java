@@ -1,18 +1,14 @@
 package controllers;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Date;
 
 import org.bson.types.ObjectId;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.kurento.client.IceCandidate;
 
 import main.Global;
 import main.Room;
 import main.UserSession;
-import models.Recording;
 import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
