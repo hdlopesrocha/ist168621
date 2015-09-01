@@ -150,12 +150,19 @@
 			for ( var i in array) {
 				var uid = array[i].uid;
 				var del_button = "onclick='del_user_group(\""+ uid+ "\")'";
+				var onclick = 'onclick=\'select_user("'+uid+'")\'';
+				
 				var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
-				$("#footer-row").append("<div class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
+				$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
 			}
 		});
 	});
 
+	function select_user(userId){
+		selected_user = userId;
+	}
+	
+	
 	function del_user_group(uid) {
 		var success = function() {
 			document.location = document.location;
