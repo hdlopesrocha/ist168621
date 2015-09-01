@@ -52,7 +52,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final User user;
 	private final Room room;
 	private boolean realTime = true;
-	private WebRtcEndpoint outgoing;
+	private WebRtcEndpoint endPoint;
 
 	private RecorderEndpoint recorder;
 	private long playOffset = 0l;
@@ -67,11 +67,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		outgoing = createWebRtcEndPoint();
-		outgoing.connect(outgoing);
+		endPoint = createWebRtcEndPoint();
+		endPoint.connect(endPoint);
 
 		
-		this.outgoing.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
+		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
 			public void onEvent(ConnectionStateChangedEvent arg0) {
@@ -96,7 +96,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					String filename = interval.getId().toString() + "-" + sequence + ".webm";
 					String filepath = "file:///rec/" + filename;
-					recorder = room.recordEndpoint(outgoing, UserSession.this, filepath);
+					recorder = recordEndpoint(endPoint, filepath);
 
 					try {
 						Thread.sleep(10000);
@@ -133,6 +133,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
+	
+	
+	public RecorderEndpoint recordEndpoint(WebRtcEndpoint endPoint, String filepath){
+
+		System.out.println("REC: "+ filepath);
+		RecorderEndpoint recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(),filepath).build();
+		
+		recorder.record();
+		endPoint.connect(recorder);
+		return recorder;
+	}
+	
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 
@@ -181,14 +193,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 *            the participant
 	 */
 	public void cancelVideoFrom(final UserSession sender) {
-		outgoing.release();
+		endPoint.release();
 	}
 
 	@Override
 	public void close() throws IOException {
 
 
-		outgoing.release();
+		endPoint.release();
 	}
 
 	public void processOffer(String description) {
@@ -196,18 +208,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_05] XXX
 
 
-		String arg0 = outgoing.processOffer(description);
+		String arg0 = endPoint.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
 		JSONObject msg = new JSONObject().put("id",  "description" ).put("sdp", arg0)
 				.put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
-		outgoing.gatherCandidates();
+		endPoint.gatherCandidates();
 	}
 
 	public void addCandidate(IceCandidate candidate) {
 		// XXX [CLIENT_ICE_04] XXX
-		outgoing.addIceCandidate(candidate);
+		endPoint.addIceCandidate(candidate);
 		
 	}
 
@@ -228,7 +240,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void processAnswer(String answer) {
 
-		outgoing.processAnswer(answer, new Continuation<String>() {
+		endPoint.processAnswer(answer, new Continuation<String>() {
 			@Override
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
@@ -243,7 +255,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				arg0.printStackTrace();
 			}
 		});
-		outgoing.getRemoteSessionDescriptor(new Continuation<String>() {
+		endPoint.getRemoteSessionDescriptor(new Continuation<String>() {
 
 			@Override
 			public void onSuccess(String arg0) throws Exception {
@@ -320,7 +332,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
-						player.connect(outgoing);
+						player.connect(endPoint);
 						player.play();
 					} else {
 						System.out.println("No video here!");
@@ -344,7 +356,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.outgoing.connect(outgoing);
+		session.endPoint.connect(endPoint);
 	}
 
 }
