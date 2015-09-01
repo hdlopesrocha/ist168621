@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bson.types.ObjectId;
+import org.kurento.client.Dispatcher;
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;
 
@@ -31,6 +32,7 @@ import models.Group;
 public class RoomManager {
 	
 	public RoomManager (KurentoClient kurento){
+	//	Dispatcher disp = new Dispatcher.Builder()
 		for(MediaPipeline mediaPipeline : kurento.getServerManager().getPipelines()) {
 			System.out.println("Loaded: " + mediaPipeline.getId() + " | " +mediaPipeline.getName());
 			rooms.put(mediaPipeline.getName(), new Room(mediaPipeline));
