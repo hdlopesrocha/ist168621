@@ -156,10 +156,9 @@
 
 		Signaling.listGroupMembers("@groupId",function(array) {
 			for ( var i in array) {
-				var uid = array[i].uid;				
+				var uid = array[i].uid;
+				var del_button = "onclick='del_user_group(\""+ uid+ "\")'";
 				var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
-	
-				
 				$("#footer-row").append("<div class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
 			}
 		});
