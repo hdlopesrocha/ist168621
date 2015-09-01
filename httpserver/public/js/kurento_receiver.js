@@ -2,7 +2,7 @@
 
 var KurentoReceiver = new (function() {
 
-	this.peerConnections = {};
+	this.peerConnection=null;
 	var newParticipantsCallback = null; 
 	var newVideoCallback = null; 
 
@@ -23,9 +23,9 @@ var KurentoReceiver = new (function() {
 	}
 	
 	this.onNewParticipants = function(userId, uid) {
-		if(KurentoReceiver.peerConnections[userId]==null){
+		if(KurentoReceiver.peerConnection==null){
 			var pc = Kurento.createPeerConnection(userId);
-			KurentoReceiver.peerConnections[userId] = pc;
+			KurentoReceiver.peerConnection = pc;
 	
 			
 			pc.onaddstream = function (e) {
@@ -80,7 +80,7 @@ var KurentoReceiver = new (function() {
 			console.log("description2");
 			console.log(sdp);
 			// XXX [CLIENT_OFFER_08] XXX
-			KurentoReceiver.peerConnections[userId].setRemoteDescription(sdp, function(){
+			KurentoReceiver.peerConnection.setRemoteDescription(sdp, function(){
 				console.log("setRemoteDescription")
 				console.log(sdp)
 				/*
