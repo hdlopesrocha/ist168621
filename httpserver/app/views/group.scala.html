@@ -37,6 +37,8 @@
 	var user_videos = {};
 	var timeline = null;
 	var last_sequence = -1;
+	var current_offset=0;
+	var real_time = true;
 	var current_interval = null;
 	var rendered_intervals = {};
 
@@ -72,7 +74,9 @@
 			function(offset) {
 				console.log("HISTORIC",offset);
 				// current request
-				Kurento.receiveHistoric(selected_user,offset);
+				current_offset = offset;
+				Kurento.receiveHistoric(selected_user,current_offset);
+				real_time = false;
 			}, 
 			function() {
 		
@@ -80,6 +84,7 @@
 				// realtime request
 				Kurento.receiveRealtime(selected_user);
 
+				real_time = true;
 			}
 		);
 
@@ -153,6 +158,13 @@
 	function select_user(userId){
 		alert(userId);
 		selected_user = userId;
+		
+		if(real_time){			
+			Kurento.receiveRealtime(selected_user);
+		}else {
+			Kurento.receiveHistoric(selected_user,offset);
+		}
+		
 	}
 	
 	
