@@ -70,7 +70,7 @@ var KurentoReceiver = new (function() {
 		case 'participants':
 			console.log(id,message);
 			for(var userId in message.data){
-				newParticipantsCallback(message.data[userId]);
+				newParticipantsCallback(userId, message.data[userId]);
 				KurentoReceiver.onNewParticipants(userId, message.data[userId]);
 			}
 			break;
