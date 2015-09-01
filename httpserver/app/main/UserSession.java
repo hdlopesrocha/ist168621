@@ -56,8 +56,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Room room;
 	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
+	private WebRtcEndpoint incoming;
+	
 	private RecorderEndpoint recorder;
 	private long playOffset = 0l;
+	private String playUser = "";
 
 	private Long sequence = 0l;
 	private boolean recording = true;
@@ -98,7 +101,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					String filepath = "file:///rec/" + filename;
 					recorder = room.recordEndpoint(outgoing, UserSession.this, filepath);
 
-
 					try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
@@ -110,7 +112,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					try {
 						Date end = new Date();
-						
+
 						SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
 								getUser().getId().toString(), begin, end, filename, "video/webm",
 								interval.getId().toString());
@@ -211,13 +213,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 			return outgoing;
 		} else {
-
 			String senderId = sender.getUser().getId().toString();
 			WebRtcEndpoint incoming = incomings.get(senderId);
 			if (incoming == null) {
 				incoming = createWebRtcEndPoint(senderId);
 				incomings.put(senderId, incoming);
 			}
+		
+			if(sender==this){
+				this.incoming = incoming;
+			}
+			
 			return incoming;
 		}
 	}
@@ -346,60 +352,54 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public void setHistoric(ObjectId userId, long offset) {
+	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
+		playUser = userId;
+
 		if (realTime) {
 			realTime = false;
 
 			while (!realTime) {
 				Date currentTime = new Date(new Date().getTime() - playOffset);
-				for (UserSession session : room.getParticipants()) {
-					try {
-						GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-								room.getGroupId(), session.getUser().getId().toString(), currentTime);
-						Recording rec = service.execute();
-
-						WebRtcEndpoint ep = getEndpoint(session);
-						if (ep != null) {
-
-							if (rec != null) {
-								System.out.println("PLAY:" + rec.getUrl());
-
-								PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(),
-										rec.getUrl()).build();
-
-								player.connect(ep);
-								player.play();
-							} else {
-								System.out.println("No video here!");
-							}
-						}
-
-					} catch (ServiceException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				UserSession session = room.getParticipant(playUser);
 				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
+					GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+							room.getGroupId(), session.getUser().getId().toString(), currentTime);
+					Recording rec = service.execute();
+
+					if (rec != null) {
+						System.out.println("PLAY:" + rec.getUrl());
+
+						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+								.build();
+
+						player.connect(incoming);
+						player.play();
+					} else {
+						System.out.println("No video here!");
+					}
+
+				} catch (ServiceException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 
-	public void setRealtime(ObjectId userId) {
+	public void setRealtime(String userId) {
+		playUser = userId;
 		if (!realTime) {
 			realTime = true;
-			for (UserSession session : room.getParticipants()) {
-				WebRtcEndpoint ep = getEndpoint(session);
-				if (ep != null) {
-					session.getEndpoint(null).connect(ep);
-				}
-			}
+			UserSession session = room.getParticipant(playUser);
+			session.outgoing.connect(incoming);
 		}
 	}
 
