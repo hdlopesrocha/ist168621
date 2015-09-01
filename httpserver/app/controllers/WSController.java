@@ -80,7 +80,7 @@ public class WSController extends Controller {
 									new Thread(new Runnable() {										
 										@Override
 										public void run() {
-											usession.setRealtime();
+											usession.setRealtime(new ObjectId(userId));
 										}
 									}).start();
 
@@ -90,7 +90,7 @@ public class WSController extends Controller {
 									new Thread(new Runnable() {										
 										@Override
 										public void run() {
-											usession.setHistoric(args.getLong("offset"));
+											usession.setHistoric(new ObjectId(userId),args.getLong("offset"));
 										}
 									}).start();
 									break;

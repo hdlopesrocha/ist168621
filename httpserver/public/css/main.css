@@ -1,0 +1,58 @@
+
+#footer-row > .circular-wrap {
+	margin-top: -50px;
+}
+
+#footer-row > .circular-wrap:not(:first-child){
+
+	margin-left: 25px;
+}
+
+.circular-wrap {
+    display: inline-block;
+    background-image: url("/assets/images/default.png");
+
+}
+
+.circular {
+	text-align:right;
+	font-size: 20px;
+	color:red;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.circular-top {
+	z-index: 999;
+    display: block;
+    position: absolute;
+}
+
+
+.circular-offline {
+	z-index: 9999;
+  	border: 3px solid #DA5555;
+  	position: absolute;
+}
+.circular-online {
+	z-index: 9999;
+  	border: 3px solid #BADA55;
+  	position: absolute;
+}
+
+
+input {
+    color: black;
+}
+footer {
+	z-index:10;
+	padding-top: -25px;
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+}

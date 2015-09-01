@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
@@ -345,7 +346,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	public void setHistoric(long offset) {
+	public void setHistoric(ObjectId userId, long offset) {
 		playOffset = offset;
 		if (realTime) {
 			realTime = false;
@@ -390,7 +391,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
-	public void setRealtime() {
+	public void setRealtime(ObjectId userId) {
 		if (!realTime) {
 			realTime = true;
 			for (UserSession session : room.getParticipants()) {

@@ -31,6 +31,7 @@
 	</div>
 
 <script>
+	var selected_user =	"@userId";
 	var participants = {};
 	var user_videos = {};
 	var timeline = null;
@@ -76,13 +77,13 @@
 			function(offset) {
 				console.log("HISTORIC",offset);
 				// current request
-				KurentoReceiver.receiveHistoric("@userId",offset);
+				KurentoReceiver.receiveHistoric(selected_user,offset);
 			}, 
 			function() {
 		
 				console.log("REALTIME");
 				// realtime request
-				KurentoReceiver.receiveRealtime("@userId");
+				KurentoReceiver.receiveRealtime(selected_user);
 
 			}
 		);
