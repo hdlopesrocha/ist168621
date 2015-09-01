@@ -17,10 +17,7 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
-import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
@@ -57,14 +54,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
 	private WebRtcEndpoint incoming;
-	
+
 	private RecorderEndpoint recorder;
 	private long playOffset = 0l;
 	private String playUser = "";
 
 	private Long sequence = 0l;
 	private boolean recording = true;
-	private final ConcurrentMap<String, WebRtcEndpoint> incomings = new ConcurrentHashMap<String, WebRtcEndpoint>();
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -72,7 +68,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		this.outgoing = getEndpoint(null);
+		outgoing = createWebRtcEndPoint();
+		incoming = createWebRtcEndPoint();
 
 		this.outgoing.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
@@ -102,7 +99,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					recorder = room.recordEndpoint(outgoing, UserSession.this, filepath);
 
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -136,7 +133,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
-	public WebRtcEndpoint createWebRtcEndPoint(String senderId) {
+	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 
 		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
@@ -145,9 +142,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onEvent(OnIceCandidateEvent event) {
 				JsonObject response = new JsonObject();
 				response.addProperty("id", "iceCandidate");
-				if (senderId != null) {
-					response.addProperty("uid", senderId);
-				}
+
 				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 				try {
 					synchronized (this) {
@@ -186,70 +181,39 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 *            the participant
 	 */
 	public void cancelVideoFrom(final UserSession sender) {
-		final WebRtcEndpoint incoming = incomings.remove(sender.getUser().getId().toString());
 		incoming.release(EMPTY_CONTINUATION);
 	}
 
 	@Override
 	public void close() throws IOException {
-		for (final String remoteParticipantName : incomings.keySet()) {
-			final WebRtcEndpoint ep = this.incomings.get(remoteParticipantName);
 
-			ep.release(EMPTY_CONTINUATION);
-		}
+		incoming.release(EMPTY_CONTINUATION);
 
 		outgoing.release();
-	}
-
-	/**
-	 * @param sender
-	 *            the user
-	 * @return the endpoint used to receive media from a certain user
-	 */
-	private WebRtcEndpoint getEndpoint(final UserSession sender) {
-		if (sender == null) {
-			if (outgoing == null) {
-				outgoing = createWebRtcEndPoint(null);
-			}
-			return outgoing;
-		} else {
-			String senderId = sender.getUser().getId().toString();
-			WebRtcEndpoint incoming = incomings.get(senderId);
-			if (incoming == null) {
-				incoming = createWebRtcEndPoint(senderId);
-				incomings.put(senderId, incoming);
-			}
-		
-			if(sender==this){
-				this.incoming = incoming;
-			}
-			
-			return incoming;
-		}
 	}
 
 	public void processOffer(String description, String userId) {
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 
-		WebRtcEndpoint incoming = null;
+		WebRtcEndpoint ep = null;
 		if (userId != null) {
 			UserSession sender = room.getParticipant(userId);
-			incoming = getEndpoint(sender);
-			incoming.connect(outgoing);
+			ep = incoming;
+			ep.connect(outgoing);
 			// outgoing.connect(incoming);
-			sender.outgoing.connect(incoming);
+			sender.outgoing.connect(ep);
 		} else {
-			incoming = outgoing;
+			ep = outgoing;
 		}
 
-		String arg0 = incoming.processOffer(description);
+		String arg0 = ep.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
 		JSONObject msg = new JSONObject().put("id", userId == null ? "description" : "description2").put("sdp", arg0)
 				.put("type", "answer").put("uid", userId);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
-		incoming.gatherCandidates();
+		ep.gatherCandidates();
 	}
 
 	public void addCandidate(IceCandidate candidate, String userId) {
@@ -257,10 +221,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (userId == null) {
 			outgoing.addIceCandidate(candidate);
 		} else {
-			WebRtcEndpoint webRtc = incomings.get(userId);
-			if (webRtc != null) {
-				webRtc.addIceCandidate(candidate);
-			}
+
+			incoming.addIceCandidate(candidate);
+
 		}
 	}
 
@@ -280,9 +243,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void processAnswer(String answer, String userId) {
-		WebRtcEndpoint endPoint = getEndpoint(null);
 
-		endPoint.processAnswer(answer, new Continuation<String>() {
+		outgoing.processAnswer(answer, new Continuation<String>() {
 			@Override
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
@@ -297,7 +259,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				arg0.printStackTrace();
 			}
 		});
-		endPoint.getRemoteSessionDescriptor(new Continuation<String>() {
+		outgoing.getRemoteSessionDescriptor(new Continuation<String>() {
 
 			@Override
 			public void onSuccess(String arg0) throws Exception {
@@ -356,6 +318,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playOffset = offset;
 		playUser = userId;
 
+		System.out.println("SET HIST "+ userId);
 		if (realTime) {
 			realTime = false;
 
@@ -383,24 +346,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 		}
 	}
 
 	public void setRealtime(String userId) {
 		playUser = userId;
-		if (!realTime) {
-			realTime = true;
-			UserSession session = room.getParticipant(playUser);
-			session.outgoing.connect(incoming);
-		}
+		realTime = true;
+		UserSession session = room.getParticipant(playUser);
+		session.outgoing.connect(incoming);
 	}
 
 }

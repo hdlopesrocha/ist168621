@@ -73,13 +73,13 @@
 			function(offset) {
 				console.log("HISTORIC",offset);
 				// current request
-				KurentoReceiver.receiveHistoric(selected_user,offset);
+				Kurento.receiveHistoric(selected_user,offset);
 			}, 
 			function() {
 		
 				console.log("REALTIME");
 				// realtime request
-				KurentoReceiver.receiveRealtime(selected_user);
+				Kurento.receiveRealtime(selected_user);
 
 			}
 		);
