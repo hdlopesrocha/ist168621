@@ -53,7 +53,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Room room;
 	private boolean realTime = true;
 	private WebRtcEndpoint outgoing;
-	private WebRtcEndpoint incoming;
 
 	private RecorderEndpoint recorder;
 	private long playOffset = 0l;
@@ -69,8 +68,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// XXX [ICE_01] XXX
 		outgoing = createWebRtcEndPoint();
-		incoming = createWebRtcEndPoint();
+		outgoing.connect(outgoing);
 
+		
 		this.outgoing.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
@@ -181,50 +181,34 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 *            the participant
 	 */
 	public void cancelVideoFrom(final UserSession sender) {
-		incoming.release(EMPTY_CONTINUATION);
+		outgoing.release();
 	}
 
 	@Override
 	public void close() throws IOException {
 
-		incoming.release(EMPTY_CONTINUATION);
 
 		outgoing.release();
 	}
 
-	public void processOffer(String description, String userId) {
+	public void processOffer(String description) {
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 
-		WebRtcEndpoint ep = null;
-		if (userId != null) {
-			UserSession sender = room.getParticipant(userId);
-			ep = incoming;
-			ep.connect(outgoing);
-			// outgoing.connect(incoming);
-			sender.outgoing.connect(ep);
-		} else {
-			ep = outgoing;
-		}
 
-		String arg0 = ep.processOffer(description);
+		String arg0 = outgoing.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", userId == null ? "description" : "description2").put("sdp", arg0)
-				.put("type", "answer").put("uid", userId);
+		JSONObject msg = new JSONObject().put("id",  "description" ).put("sdp", arg0)
+				.put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
-		ep.gatherCandidates();
+		outgoing.gatherCandidates();
 	}
 
-	public void addCandidate(IceCandidate candidate, String userId) {
+	public void addCandidate(IceCandidate candidate) {
 		// XXX [CLIENT_ICE_04] XXX
-		if (userId == null) {
-			outgoing.addIceCandidate(candidate);
-		} else {
-
-			incoming.addIceCandidate(candidate);
-
-		}
+		outgoing.addIceCandidate(candidate);
+		
 	}
 
 	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {
@@ -242,7 +226,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return user;
 	}
 
-	public void processAnswer(String answer, String userId) {
+	public void processAnswer(String answer) {
 
 		outgoing.processAnswer(answer, new Continuation<String>() {
 			@Override
@@ -336,7 +320,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
-						player.connect(incoming);
+						player.connect(outgoing);
 						player.play();
 					} else {
 						System.out.println("No video here!");
@@ -360,7 +344,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.outgoing.connect(incoming);
+		session.outgoing.connect(outgoing);
 	}
 
 }
