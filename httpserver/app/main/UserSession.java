@@ -265,6 +265,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
+	PlayerEndpoint player;
+	
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
 		playUser = userId;
@@ -284,7 +286,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					if (rec != null) {
 						System.out.println("PLAY:" + rec.getUrl());
 
-						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
 						player.connect(endPoint);
@@ -295,6 +297,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							@Override
 							public void onEvent(EndOfStreamEvent arg0) {
 								// TODO Auto-generated method stub
+							
 								player.disconnect(endPoint);
 
 							}
