@@ -72,33 +72,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
-		endPoint.connect(mixerPort, MediaType.AUDIO,new Continuation<Void>() {
-
-			@Override
-			public void onError(Throwable arg0) throws Exception {
-				System.out.println("MIXER1: "+arg0.getMessage());
-			}
-
-			@Override
-			public void onSuccess(Void arg0) throws Exception {
-				System.out.println("MIXER1 OK!");
-				mixerPort.connect(endPoint, MediaType.AUDIO,new Continuation<Void>() {
-
-					@Override
-					public void onError(Throwable arg0) throws Exception {
-						// TODO Auto-generated method stub
-						System.out.println("MIXER2: "+arg0.getMessage());
-
-					}
-
-					@Override
-					public void onSuccess(Void arg0) throws Exception {
-						System.out.println("MIXER2 OK!");
-						
-					}
-				});				
-			}
-		});
+		endPoint.connect(mixerPort, MediaType.AUDIO);
+		mixerPort.connect(endPoint, MediaType.AUDIO);
 		
 		
 		
@@ -248,21 +223,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				arg0.printStackTrace();
 			}
 		});
-		endPoint.getRemoteSessionDescriptor(new Continuation<String>() {
 
-			@Override
-			public void onSuccess(String arg0) throws Exception {
-				// TODO Auto-generated method stub
-				System.out.println("%%%%%%%%%%%%" + arg0);
-
-			}
-
-			@Override
-			public void onError(Throwable arg0) throws Exception {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	@Override
