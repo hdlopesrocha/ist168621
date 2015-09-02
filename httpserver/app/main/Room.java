@@ -51,6 +51,8 @@ public class Room implements Closeable {
 		this.mediaPipeline = mediaPipeline;
 		this.audioMixer = new Composite.Builder(mediaPipeline).build();
 
+		
+		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
 
 			@Override
