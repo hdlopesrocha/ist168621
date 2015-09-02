@@ -265,6 +265,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
+	class EndOfPlayerListener implements EventListener<EndOfStreamEvent>{
+
+		public PlayerEndpoint player;
+		
+		public EndOfPlayerListener(PlayerEndpoint player) {
+			this.player = player;
+		}
+		
+		@Override
+		public void onEvent(EndOfStreamEvent arg0) {
+			// TODO Auto-generated method stub
+			if (!realTime) {
+				player.release();
+				realTime = true;
+				setHistoric(playUser, playOffset);
+			}			
+		}
+	}
+	
+	
 	
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
@@ -290,19 +310,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 						player.connect(endPoint);
 						player.play();
-						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-
-							@Override
-							public void onEvent(EndOfStreamEvent arg0) {
-								// TODO Auto-generated method stub
-								if (!realTime) {
-							
-									player.release();
-									realTime = true;
-									setHistoric(playUser, playOffset);
-								}
-							}
-						});
+						player.addEndOfStreamListener(new EndOfPlayerListener(player));
 						
 					} else {
 						realTime = true;
