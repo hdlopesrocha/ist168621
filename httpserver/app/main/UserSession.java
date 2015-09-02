@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
@@ -289,7 +290,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						player.connect(endPoint);
 						player.play();
 						
-						
+						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+
+							@Override
+							public void onEvent(EndOfStreamEvent arg0) {
+								// TODO Auto-generated method stub
+								player.disconnect(endPoint);
+
+							}
+						});
 						
 					} else {
 						System.out.println("No video here!");
