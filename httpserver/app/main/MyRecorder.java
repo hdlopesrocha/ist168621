@@ -40,19 +40,8 @@ public class MyRecorder {
 					
 					System.out.println("REC: " + filepath);
 					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
-					
 					endPoint.connect(recorder);
-					
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					
 					recorder.record();
-					
 					
 					try {
 						Thread.sleep(10000);
@@ -63,7 +52,7 @@ public class MyRecorder {
 
 					recorder.stop();
 					Date end = new Date();
-
+					
 					handler.onFileRecorded(begin, end, filepath, filename);
 
 					endPoint.disconnect(recorder);
