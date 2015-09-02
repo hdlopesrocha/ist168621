@@ -78,6 +78,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	//	endPoint.connect(audioMixerPort);
 		
 		
+		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
