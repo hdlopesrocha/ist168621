@@ -273,6 +273,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 		if(player!=null){
 			player.release();
+			realTime = true;
 		}
 		
 		System.out.println("SET HIST " + userId);
