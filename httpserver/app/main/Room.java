@@ -26,10 +26,10 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Composite;
 import org.kurento.client.Continuation;
-import org.kurento.client.Dispatcher;
 import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
+import org.kurento.client.Hub;
 import org.kurento.client.MediaPipeline;
 
 import models.Group;
@@ -45,14 +45,12 @@ public class Room implements Closeable {
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
-	private final Composite audioMixer;
+	private final Hub audioMixer;
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		this.audioMixer = new Composite.Builder(mediaPipeline).build();
-
-		
-		
+			
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
 
 			@Override
@@ -69,8 +67,9 @@ public class Room implements Closeable {
 
 	
 	
-	public Composite getAudioMixer() {
+	public Hub getMixer() {
 		return audioMixer;
+		
 	}
 
 

@@ -26,6 +26,7 @@ import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
+import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.RecorderEndpoint;
@@ -58,7 +59,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private boolean realTime = true;
 	private RecorderEndpoint recorder;	
 	
-	private HubPort audioMixerPort;
+	private HubPort mixerPort;
 	private long playOffset = 0l;
 	private String playUser = "";
 	private Long sequence = 0l;
@@ -73,8 +74,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint = createWebRtcEndPoint();
 		endPoint.connect(endPoint);
 		
-		audioMixerPort = new HubPort.Builder(room.getAudioMixer()).build();
-		endPoint.connect(audioMixerPort);
+		mixerPort = new HubPort.Builder(room.getMixer()).build();
+		// mix only audio
+		endPoint.connect(mixerPort, MediaType.AUDIO);
 		
 		
 		
@@ -370,7 +372,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setMix() {
 		// TODO Auto-generated method stub
-		audioMixerPort.connect(endPoint);
+		mixerPort.connect(endPoint, MediaType.AUDIO);
 		
 	}
 
