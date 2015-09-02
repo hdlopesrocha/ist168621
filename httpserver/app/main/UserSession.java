@@ -298,7 +298,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							public void onEvent(EndOfStreamEvent arg0) {
 								// TODO Auto-generated method stub
 							
-								player.disconnect(endPoint);
+								player.release();
 
 							}
 						});
