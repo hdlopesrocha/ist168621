@@ -67,17 +67,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
-		endPoint.connect(endPoint, MediaType.VIDEO);
 
 		
 
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
-		endPoint.connect(mixerPort, MediaType.AUDIO);
-		mixerPort.connect(endPoint, MediaType.AUDIO);
 		
-		
-		
-
 
 		final Interval interval = new Interval();
 		interval.save();
@@ -98,7 +92,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				}
 			}
 		});
-		recorder.start();
 
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
@@ -215,6 +208,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				System.out.println("================");
 
 				System.out.println(arg0);
+				endPoint.connect(endPoint, MediaType.VIDEO);
+				endPoint.connect(mixerPort, MediaType.AUDIO);
+				mixerPort.connect(endPoint, MediaType.AUDIO);
+				recorder.start();
+
+				
 			}
 
 			@Override
