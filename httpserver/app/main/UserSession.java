@@ -275,7 +275,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (realTime) {
 			realTime = false;
 
-			while (!realTime) {
 				Date currentTime = new Date(new Date().getTime() - playOffset);
 				UserSession session = room.getParticipant(playUser);
 				try {
@@ -297,9 +296,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							@Override
 							public void onEvent(EndOfStreamEvent arg0) {
 								// TODO Auto-generated method stub
+								if (!realTime) {
 							
-								player.release();
-
+									player.release();
+									realTime = true;
+									setHistoric(playUser, playOffset);
+								}
 							}
 						});
 						
@@ -311,13 +313,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 
