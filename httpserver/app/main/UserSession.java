@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
@@ -68,14 +69,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 
-		
-
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
-		
 
 		final Interval interval = new Interval();
 		interval.save();
-		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
+		recorder = new MyRecorder(interval.getId().toString(), endPoint, room, new MyRecorder.RecorderHandler() {
 			@Override
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
 				try {
@@ -106,8 +104,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 	}
-
-
 
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
@@ -176,14 +172,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();
-		
+
 		endPoint.connect(endPoint, MediaType.VIDEO);
 		endPoint.connect(endPoint, MediaType.AUDIO);
-	//	endPoint.connect(mixerPort,MediaType.AUDIO);
-	//	mixerPort.connect(endPoint, MediaType.AUDIO);
+		// endPoint.connect(mixerPort,MediaType.AUDIO);
+		// mixerPort.connect(endPoint, MediaType.AUDIO);
 		recorder.start();
 
-		
 	}
 
 	public void addCandidate(IceCandidate candidate) {
@@ -214,7 +209,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
 				System.out.println("================");
-				System.out.println(arg0);				
+				System.out.println(arg0);
 			}
 
 			@Override
@@ -272,37 +267,42 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		if (realTime) {
 			realTime = false;
 
-			while (!realTime) {
-				Date currentTime = new Date(new Date().getTime() - playOffset);
-				UserSession session = room.getParticipant(playUser);
-				try {
-					GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-							room.getGroupId(), session.getUser().getId().toString(), currentTime);
-					Recording rec = service.execute();
+			Date currentTime = new Date(new Date().getTime() - playOffset);
+			UserSession session = room.getParticipant(playUser);
+			try {
+				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+						room.getGroupId(), session.getUser().getId().toString(), currentTime);
+				Recording rec = service.execute();
 
-					if (rec != null) {
-						System.out.println("PLAY:" + rec.getUrl());
+				if (rec != null) {
+					System.out.println("PLAY:" + rec.getUrl());
 
-						PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
-								.build();
+					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
 
-						player.connect(endPoint);
-						player.play();
-					} else {
-						System.out.println("No video here!");
-					}
+					player.connect(endPoint);
+					player.play();
+					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
-				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						@Override
+						public void onEvent(EndOfStreamEvent arg0) {
+							if (!realTime) {
+								realTime = true;
+								setHistoric(playUser, playOffset);
+								player.release();
+							}
+
+						}
+					});
+
+				} else {
+					System.out.println("No video here!");
 				}
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -310,7 +310,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint,MediaType.VIDEO);
+		session.endPoint.connect(endPoint, MediaType.VIDEO);
 		mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
