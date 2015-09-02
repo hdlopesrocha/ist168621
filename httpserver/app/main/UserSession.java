@@ -77,7 +77,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
 		// mix only audio
 		endPoint.connect(mixerPort, MediaType.AUDIO);
-		
+		mixerPort.connect(endPoint, MediaType.AUDIO);
+
 		
 		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
@@ -372,7 +373,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setMix() {
 		// TODO Auto-generated method stub
-		mixerPort.connect(endPoint);
+		mixerPort.connect(endPoint, MediaType.AUDIO);
 		
 	}
 
