@@ -90,6 +90,15 @@ public class WSController extends Controller {
 										}
 									}).start();
 									break;
+								case "mix":
+									System.out.println("HISTORIC");
+									new Thread(new Runnable() {										
+										@Override
+										public void run() {
+											usession.setMix();
+										}
+									}).start();
+									break;
 
 								default:
 									break;

@@ -32,6 +32,13 @@ var Kurento = new (function() {
 
 	this.ws = null;
 
+
+	this.receiveMix = function(){
+		Kurento.ws.send(JSON.stringify({
+			id : "mix",
+		}));
+	}
+	
 	
 	this.receiveRealtime = function(userId){
 		Kurento.ws.send(JSON.stringify({
