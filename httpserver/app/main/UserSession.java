@@ -68,11 +68,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		endPoint.connect(endPoint, MediaType.VIDEO);
-		
+
 		
 
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
-		endPoint.connect(mixerPort, MediaType.AUDIO);
+		endPoint.connect(mixerPort, MediaType.AUDIO,new Continuation<Void>() {
+
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				
+			}
+
+			@Override
+			public void onSuccess(Void arg0) throws Exception {
+				mixerPort.connect(endPoint, MediaType.AUDIO);				
+			}
+		});
+		
+		
+		
 
 
 		final Interval interval = new Interval();
@@ -328,7 +342,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// TODO Auto-generated method stub
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 		// mix only audio
-		mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
 }
