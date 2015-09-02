@@ -70,10 +70,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.connect(endPoint);
 
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
-		// mix only audio
-
-		endPoint.connect(mixerPort, MediaType.AUDIO);
-		mixerPort.connect(endPoint, MediaType.AUDIO);
+	
 
 		final Interval interval = new Interval();
 		interval.save();
@@ -326,7 +323,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void setMix() {
 		// TODO Auto-generated method stub
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
-
+		// mix only audio
+		endPoint.connect(mixerPort, MediaType.AUDIO);
+		mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
 }
