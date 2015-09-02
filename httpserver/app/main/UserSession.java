@@ -176,6 +176,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();
+		
+		endPoint.connect(endPoint, MediaType.VIDEO);
+		endPoint.connect(mixerPort, MediaType.AUDIO);
+		mixerPort.connect(endPoint, MediaType.AUDIO);
+		recorder.start();
+
+		
 	}
 
 	public void addCandidate(IceCandidate candidate) {
@@ -206,14 +213,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
 				System.out.println("================");
-
-				System.out.println(arg0);
-				endPoint.connect(endPoint, MediaType.VIDEO);
-				endPoint.connect(mixerPort, MediaType.AUDIO);
-				mixerPort.connect(endPoint, MediaType.AUDIO);
-				recorder.start();
-
-				
+				System.out.println(arg0);				
 			}
 
 			@Override
