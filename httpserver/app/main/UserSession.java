@@ -57,7 +57,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final MyRecorder recorder;
 	private final HubPort mixerPort;
 
-	private PlayerEndpoint player;
 	private boolean realTime = true;
 	private long playOffset = 0l;
 	private String playUser = "";
@@ -271,9 +270,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playOffset = offset;
 		playUser = userId;
 		
-		if(player!=null){
-			player.stop();
-		}
 		
 		System.out.println("SET HIST " + userId);
 		if (realTime) {
@@ -289,12 +285,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					if (rec != null) {
 						System.out.println("PLAY:" + rec.getUrl());
 
-						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+						final PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
 						player.connect(endPoint);
 						player.play();
-						
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 							@Override
@@ -303,7 +298,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 								if (!realTime) {
 							
 									player.release();
-									player = null;
 									realTime = true;
 									setHistoric(playUser, playOffset);
 								}
