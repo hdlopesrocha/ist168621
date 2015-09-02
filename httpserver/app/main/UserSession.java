@@ -74,8 +74,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.connect(endPoint);
 		
 		audioMixerPort = new HubPort.Builder(room.getAudioMixer()).build();
-		audioMixerPort.connect(endPoint);
-	//	endPoint.connect(audioMixerPort);
+	//	audioMixerPort.connect(endPoint);
+		endPoint.connect(audioMixerPort);
 		
 		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
