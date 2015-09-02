@@ -24,6 +24,7 @@ import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
+import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
@@ -56,8 +57,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private boolean realTime = true;
 	private RecorderEndpoint recorder;	
-	private WebRtcEndpoint audioMixerEp;
 	
+	private HubPort audioMixerPort;
 	private long playOffset = 0l;
 	private String playUser = "";
 	private Long sequence = 0l;
@@ -71,6 +72,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		endPoint.connect(endPoint);
+		
+		audioMixerPort = new HubPort.Builder(room.getAudioMixer()).build();
+		audioMixerPort.connect(endPoint);
+		endPoint.connect(audioMixerPort);
 		
 		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
