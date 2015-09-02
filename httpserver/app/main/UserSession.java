@@ -178,7 +178,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.gatherCandidates();
 		
 		endPoint.connect(endPoint, MediaType.VIDEO);
-		endPoint.connect(mixerPort, MediaType.AUDIO);
+		endPoint.connect(endPoint, MediaType.AUDIO);
 		mixerPort.connect(endPoint, MediaType.AUDIO);
 		recorder.start();
 

@@ -50,6 +50,7 @@ public class MyRecorder {
 					Date end = new Date();
 
 					handler.onFileRecorded(begin, end, filepath, filename);
+					recorder.release();
 
 					// continuous parts (although not true)
 					begin = end;
