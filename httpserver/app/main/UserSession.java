@@ -23,13 +23,11 @@ import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
-import org.kurento.client.Hub;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
-import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -55,15 +53,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final User user;
 	private final Room room;
 	private final WebRtcEndpoint endPoint;
+	private final MyRecorder recorder;
+	private final HubPort mixerPort;
 
 	private boolean realTime = true;
-	private RecorderEndpoint recorder;	
-	
-	private HubPort mixerPort;
 	private long playOffset = 0l;
 	private String playUser = "";
-	private Long sequence = 0l;
-	private boolean recording = true;
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -73,14 +68,34 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		endPoint.connect(endPoint);
-		
+
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
 		// mix only audio
-		//endPoint.connect(mixerPort, MediaType.AUDIO);
+
+		endPoint.connect(mixerPort, MediaType.AUDIO);
 		mixerPort.connect(endPoint, MediaType.AUDIO);
 
-		
-		
+		final Interval interval = new Interval();
+		interval.save();
+		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
+			@Override
+			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+				try {
+					SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
+							getUser().getId().toString(), begin, end, filename, "video/webm",
+							interval.getId().toString());
+					srs.execute();
+					PublishService publishService = new PublishService("rec:" + getGroupId());
+					publishService.execute();
+
+					System.out.println("STOP: " + filepath);
+				} catch (ServiceException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		recorder.start();
+
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
@@ -88,73 +103,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				// TODO Auto-generated method stub
 				if (arg0.getOldState().equals(ConnectionState.CONNECTED)
 						&& arg0.getNewState().equals(ConnectionState.DISCONNECTED)) {
-					recording = false;
+					recorder.stop();
 				}
 			}
 		});
 
-		final Interval interval = new Interval();
-		interval.save();
-
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				Date begin = new Date();
-
-				while (recording) {
-
-					String filename = interval.getId().toString() + "-" + sequence + ".webm";
-					String filepath = "file:///rec/" + filename;
-					recorder = recordEndpoint(endPoint, filepath);
-
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					recorder.stop();
-
-					try {
-						Date end = new Date();
-
-						SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
-								getUser().getId().toString(), begin, end, filename, "video/webm",
-								interval.getId().toString());
-						Recording rec = srs.execute();
-						PublishService publishService = new PublishService("rec:" + getGroupId());
-						publishService.execute();
-
-						System.out.println("STOP: " + filepath);
-						// continuous parts (although not true)
-						begin = end;
-					} catch (ServiceException e) {
-						e.printStackTrace();
-					}
-
-					// outgoing.disconnect(recEndPoint);
-					// recEndPoint.release();
-					++sequence;
-				}
-			}
-		}).start();
-
 	}
 
-	
-	
-	public RecorderEndpoint recordEndpoint(WebRtcEndpoint endPoint, String filepath){
 
-		System.out.println("REC: "+ filepath);
-		RecorderEndpoint recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(),filepath).build();
-		
-		recorder.record();
-		endPoint.connect(recorder);
-		return recorder;
-	}
-	
+
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 
@@ -209,7 +166,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	@Override
 	public void close() throws IOException {
 
-
 		endPoint.release();
 	}
 
@@ -217,11 +173,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 
-
 		String arg0 = endPoint.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id",  "description" ).put("sdp", arg0)
-				.put("type", "answer");
+		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();
@@ -230,7 +184,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void addCandidate(IceCandidate candidate) {
 		// XXX [CLIENT_ICE_04] XXX
 		endPoint.addIceCandidate(candidate);
-		
+
 	}
 
 	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {
@@ -324,7 +278,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playOffset = offset;
 		playUser = userId;
 
-		System.out.println("SET HIST "+ userId);
+		System.out.println("SET HIST " + userId);
 		if (realTime) {
 			realTime = false;
 
@@ -369,12 +323,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		session.endPoint.connect(endPoint);
 	}
 
-
-
 	public void setMix() {
 		// TODO Auto-generated method stub
-//		mixerPort.connect(endPoint, MediaType.AUDIO);
-		
+		// mixerPort.connect(endPoint, MediaType.AUDIO);
+
 	}
 
 }
