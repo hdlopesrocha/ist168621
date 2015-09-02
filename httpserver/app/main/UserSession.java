@@ -24,6 +24,7 @@ import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EndOfStreamEvent;
+import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
@@ -286,6 +287,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 						@Override
 						public void onEvent(ElementDisconnectedEvent arg0) {
+							System.out.println("DISCONNECTED!");
 							if (!realTime) {
 								realTime = true;
 								setHistoric(playUser, playOffset);
@@ -293,11 +295,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						}
 					});
 					
+					player.addErrorListener(new EventListener<ErrorEvent>() {
+
+						@Override
+						public void onEvent(ErrorEvent arg0) {
+							System.out.println("ERRRROOOORRR!");
+
+							if (!realTime) {
+								realTime = true;
+								setHistoric(playUser, playOffset);
+							}								
+						}
+					});
 					
 					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 						@Override
 						public void onEvent(EndOfStreamEvent arg0) {
+							System.out.println("EOS!");
+
 							if (!realTime) {
 								realTime = true;
 								setHistoric(playUser, playOffset);
