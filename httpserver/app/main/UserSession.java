@@ -57,6 +57,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final MyRecorder recorder;
 	private final HubPort mixerPort;
 
+	private PlayerEndpoint player;
 	private boolean realTime = true;
 	private long playOffset = 0l;
 	private String playUser = "";
@@ -265,26 +266,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
-	class EndOfPlayerListener implements EventListener<EndOfStreamEvent>{
-
-		public PlayerEndpoint player;
-		
-		public EndOfPlayerListener(PlayerEndpoint player) {
-			this.player = player;
-		}
-		
-		@Override
-		public void onEvent(EndOfStreamEvent arg0) {
-			// TODO Auto-generated method stub
-			if (!realTime) {
-				player.release();
-				realTime = true;
-				setHistoric(playUser, playOffset);
-			}			
-		}
-	}
-	
-	
 	
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
@@ -305,12 +286,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					if (rec != null) {
 						System.out.println("PLAY:" + rec.getUrl());
 
-						final PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
 						player.connect(endPoint);
 						player.play();
-						player.addEndOfStreamListener(new EndOfPlayerListener(player));
+						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+
+							@Override
+							public void onEvent(EndOfStreamEvent arg0) {
+								// TODO Auto-generated method stub
+								if (!realTime) {
+							
+									player.release();
+									player = null;
+									realTime = true;
+									setHistoric(playUser, playOffset);
+								}
+							}
+						});
 						
 					} else {
 						realTime = true;
