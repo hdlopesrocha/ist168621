@@ -288,9 +288,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							if (!realTime) {
 								realTime = true;
 								setHistoric(playUser, playOffset);
-								player.release();
 							}
-
 						}
 					});
 
