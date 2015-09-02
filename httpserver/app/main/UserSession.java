@@ -76,11 +76,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			@Override
 			public void onError(Throwable arg0) throws Exception {
-				
+				System.out.println("MIXER: "+arg0.getMessage());
 			}
 
 			@Override
 			public void onSuccess(Void arg0) throws Exception {
+				System.out.println("MIXER OK!");
 				mixerPort.connect(endPoint, MediaType.AUDIO);				
 			}
 		});
