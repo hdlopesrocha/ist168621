@@ -271,6 +271,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playOffset = offset;
 		playUser = userId;
 		
+		if(player!=null){
+			player.release();
+		}
 		
 		System.out.println("SET HIST " + userId);
 		if (realTime) {
