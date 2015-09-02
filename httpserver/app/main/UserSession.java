@@ -23,6 +23,7 @@ import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
 import org.kurento.client.EventListener;
+import org.kurento.client.Hub;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
@@ -51,13 +52,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebSocket.Out<String> out;
 	private final User user;
 	private final Room room;
-	private boolean realTime = true;
-	private WebRtcEndpoint endPoint;
+	private final WebRtcEndpoint endPoint;
 
-	private RecorderEndpoint recorder;
+	private boolean realTime = true;
+	private RecorderEndpoint recorder;	
+	private WebRtcEndpoint audioMixerEp;
+	
 	private long playOffset = 0l;
 	private String playUser = "";
-
 	private Long sequence = 0l;
 	private boolean recording = true;
 
@@ -69,7 +71,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		endPoint.connect(endPoint);
-
+		
 		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
