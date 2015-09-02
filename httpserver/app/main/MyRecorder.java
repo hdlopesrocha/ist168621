@@ -40,8 +40,9 @@ public class MyRecorder {
 					
 					System.out.println("REC: " + filepath);
 					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
-					recorder.record();
+					
 					endPoint.connect(recorder);
+					recorder.record();
 					
 					
 					try {
