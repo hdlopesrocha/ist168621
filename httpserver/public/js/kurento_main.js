@@ -8,8 +8,7 @@ function wsurl(s) {
 var local_constraints = {
 		"audio" : true,
 		"video" : true,
-		'offerToReceiveAudio':true, 
-		'offerToReceiveVideo':true 
+
 };
 	
 var remote_constraints = { 
