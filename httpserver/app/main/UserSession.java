@@ -372,7 +372,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void setMix() {
 		// TODO Auto-generated method stub
-		mixerPort.connect(endPoint, MediaType.AUDIO);
+		mixerPort.connect(endPoint);
 		
 	}
 
