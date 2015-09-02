@@ -279,8 +279,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					PlayerEndpoint player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
 
-					player.connect(endPoint);
 					player.play();
+					player.connect(endPoint);
 					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 						@Override
