@@ -67,7 +67,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
-		endPoint.connect(endPoint);
+		endPoint.connect(endPoint, MediaType.VIDEO);
 		
 		
 
