@@ -37,8 +37,13 @@ public class MyRecorder {
 
 					String filename = name + "-" + sequence + ".webm";
 					String filepath = "file:///rec/" + filename;
-					recorder = recordEndpoint(filepath);
-
+					
+					System.out.println("REC: " + filepath);
+					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
+					recorder.record();
+					endPoint.connect(recorder);
+					
+					
 					try {
 						Thread.sleep(10000);
 					} catch (InterruptedException e) {
@@ -50,6 +55,8 @@ public class MyRecorder {
 					Date end = new Date();
 
 					handler.onFileRecorded(begin, end, filepath, filename);
+
+					endPoint.disconnect(recorder);
 					recorder.release();
 
 					// continuous parts (although not true)
@@ -78,11 +85,4 @@ public class MyRecorder {
 	
 	
 
-	public RecorderEndpoint recordEndpoint(String filepath) {
-		System.out.println("REC: " + filepath);
-		RecorderEndpoint recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
-		recorder.record();
-		endPoint.connect(recorder);
-		return recorder;
-	}
 }
