@@ -42,6 +42,15 @@ public class MyRecorder {
 					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
 					
 					endPoint.connect(recorder);
+					
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
 					recorder.record();
 					
 					
