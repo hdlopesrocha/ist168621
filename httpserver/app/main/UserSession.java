@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.Continuation;
+import org.kurento.client.ElementDisconnectedEvent;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
@@ -281,6 +282,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					player.connect(endPoint);
 					player.play();
+					player.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
+
+						@Override
+						public void onEvent(ElementDisconnectedEvent arg0) {
+							if (!realTime) {
+								realTime = true;
+								setHistoric(playUser, playOffset);
+							}							
+						}
+					});
+					
+					
 					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 						@Override
