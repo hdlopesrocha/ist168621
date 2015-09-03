@@ -28,83 +28,77 @@
 		</style>
 	</head>
 	<body>
-	  <div class="page-container">
+	<div class="page-container">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">HyperCommunications</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Contact</a></li>
 
-	  <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-			<a class="navbar-brand" href="#">HyperCommunications</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Contact</a></li>
-
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-	   				<li><a href="#">About</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">Studies</a></li>
-					<li><a href="#">References</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Press</a></li>
-					<li><a href="#">Contact</a></li>
-					<li><a href="#">Impressum</a></li>
-                </ul>
-              </li>
-              <li id="logout-button"><a>Logout</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
-
-
-
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="true">Dropdown <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">About</a></li>
+								<li><a href="#">Services</a></li>
+								<li><a href="#">Studies</a></li>
+								<li><a href="#">References</a></li>
+								<li><a href="#">Login</a></li>
+								<li><a href="#">Press</a></li>
+								<li><a href="#">Contact</a></li>
+								<li><a href="#">Impressum</a></li>
+							</ul></li>
+						<li id="logout-button"><a>Logout</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+			<!--/.container-fluid -->
+		</nav>
 
 
 		<div class="container-fluid">
-				<div class="row row-offcanvas row-offcanvas-left">
-		
-					     	@content
-						 
-				</div>
-			</div>
-	
-			<footer>
-				<!--footer-->
-				<div class="container" id="footer-row">
-				
-					<!--/row-->
-				</div>
-				<!--/container-->
-			</footer>
+			<div class="row row-offcanvas row-offcanvas-left">@content</div>
 		</div>
-		<script type="text/javascript">
-		function switchTab(id){
-			$( ".tab" ).css( "display", "none" );
-			$(id).css("display", "block");
-		}
-		
-		
-		$( document ).ready(function() {
 
-			$("#logout-button").click(function(){
-				Signaling.logout(function(){
-					document.location = document.location;
-				})
-			});	
-		});		
-		</script>
+		<footer>
+			<!--footer-->
+			<div class="container" id="footer-row">
+
+				<!--/row-->
+			</div>
+			<!--/container-->
+		</footer>
+	</div>
+	<script type="text/javascript">
+			function switchTab(id){
+				$( ".tab" ).css( "display", "none" );
+				$(id).css("display", "block");
+			}
+			
+			
+			$( document ).ready(function() {
 	
+				$("#logout-button").click(function(){
+					Signaling.logout(function(){
+						document.location = document.location;
+					})
+				});	
+			});		
+		</script>	
 	</body>
 </html>
