@@ -1,7 +1,9 @@
 @()
 
 @template(1){
-	<div class="row">		
+
+	<div class="container" data-spy="scroll" data-target="#sidebar-nav">
+
 		Search:<input type="text" onchange="user_search(this.value)"/>
 		<h3>Search Result</h3>
 		<ul id="search-users"></ul>
@@ -13,8 +15,7 @@
 		&nbsp;Name:<input type="text" id="group_name"/><button onclick="group_create($('#group_name').val())">Create</button>
 		<h3>Group List</h3>
 		<ul id="group-list"></ul>
-	</div>
-	
+	</div>	
 	<script>
 		$( document ).ready(function() {
 			$("#logout-button").click(function(){
