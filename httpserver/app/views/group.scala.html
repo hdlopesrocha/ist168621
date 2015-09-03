@@ -32,6 +32,12 @@
 					<ul id="candidate-list"></ul>
 				</div>
 			</div>
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<h3>Members</h3>
+					<div id="members-list"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script>
@@ -161,7 +167,10 @@
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
 					
 					var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
-					$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
+					$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'></div></div>");				
+					$("#members-list").append("<div class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></i></div></div>");				
+
+				
 				}
 			});
 		});
