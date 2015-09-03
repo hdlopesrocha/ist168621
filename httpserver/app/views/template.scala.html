@@ -74,23 +74,9 @@
 
 		<div class="container-fluid">
 				<div class="row row-offcanvas row-offcanvas-left">
-					<div class="col-xs-3 col-sm-2 sidebar-offcanvas" id="sidebar"
-						role="navigation">
-						<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
-							<ul class="nav" id="sidebar-nav">
-								<li><a href="/">Home</a></li>
-								<li><a href="#section1">Section 1</a></li>
-								<!-- <li><a href="#section2">Section 2</a></li>
-								<li><a href="#section3">Section 3</a></li>
-								<li><a href="#">Holo Theme</a></li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
-					     <div class="row">
-							@content
-						</div>
-					</div>
+		
+					     	@content
+						 
 				</div>
 			</div>
 	
@@ -104,6 +90,12 @@
 			</footer>
 		</div>
 		<script type="text/javascript">
+		function switchTab(id){
+			$( ".tab" ).css( "display", "none" );
+			$(id).css("display", "block");
+		}
+		
+		
 		$( document ).ready(function() {
 
 			$("#logout-button").click(function(){

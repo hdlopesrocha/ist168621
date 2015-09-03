@@ -1,205 +1,221 @@
 @(groupId : String, groupName : String, userId : String) @template(1){
-<script type="text/javascript" src="/assets/js/jquery.js"></script>
-<script type="text/javascript" src="/assets/js/adapter.js"></script>
-<script type="text/javascript" src="/assets/js/signaling.js"></script>
-<script type="text/javascript" src="/assets/js/participant.js"></script>
-<script type="text/javascript" src="/assets/js/kurento_main.js"></script>
-<script type="text/javascript" src="/assets/js/webrtc.js"></script>
-<script type="text/javascript" src="/assets/timeline/vis.js"></script>
-<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
-<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
-
-<h1>@groupName</h1>
-
-	<div class="col-sm-6">
-		<div class="panel panel-default">
-			<h3>Add Members</h3>
-			&nbsp;Search:<input type="text"
-				onchange="candidate_search(this.value)" />
-			<ul id="candidate-list"></ul>
-		</div>
-	</div>
-
-	<div class="col-sm-12">
-		<div class="panel panel-default">
-			<h3>Remote Video</h3>
-			<div id="participants">
-				<video id='myvideo' autoplay width='480px' height='360px'></video>
-			</div>
-			<div id="timeline"></div>
-		</div>
-	</div>
-
-<script>
-	var selected_user =	"@userId";
-	var participants = {};
-	var user_videos = {};
-	var timeline = null;
-	var last_sequence = -1;
-	var current_offset=0;
-	var real_time = true;
-	var current_interval = null;
-	var rendered_intervals = {};
-
-	// TIMELINE
-	var items = new vis.DataSet({
-		type : {
-			start : 'ISODate',
-			end : 'ISODate'
-		}
-	});
-
-
-
-	$(document).ready(function() {
-		
-		$("#footer-row").append("<button>mix</button>");				
-
-		
-		
-		var kvideo = function(streamUrl) {
-			var video = document.getElementById("myvideo");
-			video.src = streamUrl;
-			return video;
-		}
-
-		var kparticipants = function(userId, email) {
-			if (!participants[userId]) {
-				$("#state"+userId).attr('class', "circular circular-online" );				
-				participants[userId] = email;
-			}
-		}
-		
-		
-
+	<script type="text/javascript" src="/assets/js/jquery.js"></script>
+	<script type="text/javascript" src="/assets/js/adapter.js"></script>
+	<script type="text/javascript" src="/assets/js/signaling.js"></script>
+	<script type="text/javascript" src="/assets/js/participant.js"></script>
+	<script type="text/javascript" src="/assets/js/kurento_main.js"></script>
+	<script type="text/javascript" src="/assets/js/webrtc.js"></script>
+	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
+	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
+	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 	
-		timeline = HyperTimeline.create(items, "timeline",
-			function(offset) {
-				console.log("HISTORIC",offset);
-				// current request
-				current_offset = offset;
-				Kurento.receiveHistoric(selected_user,current_offset);
-				real_time = false;
-			}, 
-			function() {
-		
-				console.log("REALTIME");
-				// realtime request
-				Kurento.receiveRealtime(selected_user);
-
-				real_time = true;
+	<div class="col-xs-3 col-sm-2 sidebar-offcanvas" id="sidebar"
+				role="navigation">
+		<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+			<ul class="nav" id="sidebar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a onclick="switchTab('#tab0')">Video</a></li>
+				<li><a onclick="switchTab('#tab1')">Members</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+	
+		<h1>@groupName</h1>
+	
+		<div class="row tab" id="tab0">	
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<h3>Remote Video</h3>
+					<div id="participants">
+						<video id='myvideo' autoplay width='480px' height='360px'></video>
+					</div>
+					<div id="timeline"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row tab" id="tab1">
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<h3>Add Members</h3>
+					&nbsp;Search:<input type="text"
+						onchange="candidate_search(this.value)" />
+					<ul id="candidate-list"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var selected_user =	"@userId";
+		var participants = {};
+		var user_videos = {};
+		var timeline = null;
+		var last_sequence = -1;
+		var current_offset=0;
+		var real_time = true;
+		var current_interval = null;
+		var rendered_intervals = {};
+	
+		// TIMELINE
+		var items = new vis.DataSet({
+			type : {
+				start : 'ISODate',
+				end : 'ISODate'
 			}
-		);
-
-		Signaling.subscribe("rec:@groupId",function() {
-			console.log("video recorded!");
-
-			Signaling.listRecordings("@groupId",last_sequence, function(data) {
-				var first = last_sequence == -1;
-				for ( var i in data) {
-					var obj = data[i];
-					if (obj.uid == "@userId") {
-						var inter = rendered_intervals[obj.inter];
-						var newInter = null;
-						if (!inter) {
-							newInter = {
-								id : obj.inter,
-								content : "&nbsp;",
-								start : obj.start,
-								end : obj.end
-							};
-						} else {
-							var oldStart = inter.start;
-							//console.log("oldStart",oldStart);
-							items.remove(obj.inter);
-							newInter = {
-								id : obj.inter,
-								content : "&nbsp;",
-								start : oldStart,
-								end : obj.end
-							};
-						}
-						items.add(newInter);
-						rendered_intervals[obj.inter] = newInter;
-						if (obj.seq > last_sequence) {
-							last_sequence = obj.seq;
+		});
+	
+	
+	
+		$(document).ready(function() {
+			switchTab("#tab0");
+			
+			$("#footer-row").append("<button>mix</button>");				
+	
+			
+			
+			var kvideo = function(streamUrl) {
+				var video = document.getElementById("myvideo");
+				video.src = streamUrl;
+				return video;
+			}
+	
+			var kparticipants = function(userId, email) {
+				if (!participants[userId]) {
+					$("#state"+userId).attr('class', "circular circular-online" );				
+					participants[userId] = email;
+				}
+			}
+			
+			
+	
+		
+			timeline = HyperTimeline.create(items, "timeline",
+				function(offset) {
+					console.log("HISTORIC",offset);
+					// current request
+					current_offset = offset;
+					Kurento.receiveHistoric(selected_user,current_offset);
+					real_time = false;
+				}, 
+				function() {
+			
+					console.log("REALTIME");
+					// realtime request
+					Kurento.receiveRealtime(selected_user);
+	
+					real_time = true;
+				}
+			);
+	
+			Signaling.subscribe("rec:@groupId",function() {
+				console.log("video recorded!");
+	
+				Signaling.listRecordings("@groupId",last_sequence, function(data) {
+					var first = last_sequence == -1;
+					for ( var i in data) {
+						var obj = data[i];
+						if (obj.uid == "@userId") {
+							var inter = rendered_intervals[obj.inter];
+							var newInter = null;
+							if (!inter) {
+								newInter = {
+									id : obj.inter,
+									content : "&nbsp;",
+									start : obj.start,
+									end : obj.end
+								};
+							} else {
+								var oldStart = inter.start;
+								//console.log("oldStart",oldStart);
+								items.remove(obj.inter);
+								newInter = {
+									id : obj.inter,
+									content : "&nbsp;",
+									start : oldStart,
+									end : obj.end
+								};
+							}
+							items.add(newInter);
+							rendered_intervals[obj.inter] = newInter;
+							if (obj.seq > last_sequence) {
+								last_sequence = obj.seq;
+							}
 						}
 					}
-				}
-				if (first) {
-					timeline.fit({
-						animation : false
-					});
+					if (first) {
+						timeline.fit({
+							animation : false
+						});
+					}
+				});
+			});
+	
+	
+	
+			Kurento.start("@groupId", kparticipants, kvideo);
+	
+			$("#refresh-button").click(function() {
+				document.location = document.location;
+			});
+			
+			$("#home-button").click(function() {
+				document.location = "/";
+			});
+	
+			Signaling.listGroupMembers("@groupId",function(array) {
+				for ( var i in array) {
+					var uid = array[i].uid;
+					var del_button = "onclick='del_user_group(\""+ uid+ "\")'";
+					var onclick = 'onclick=\'select_user("'+uid+'")\'';
+					
+					var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
+					$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
 				}
 			});
 		});
-
-
-
-		Kurento.start("@groupId", kparticipants, kvideo);
-
-		$("#refresh-button").click(function() {
-			document.location = document.location;
-		});
-		
-		$("#home-button").click(function() {
-			document.location = "/";
-		});
-
-		Signaling.listGroupMembers("@groupId",function(array) {
-			for ( var i in array) {
-				var uid = array[i].uid;
-				var del_button = "onclick='del_user_group(\""+ uid+ "\")'";
-				var onclick = 'onclick=\'select_user("'+uid+'")\'';
-				
-				var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
-				$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'><i "+del_button+" class='fa fa-times'></div></i></div>");				
-			}
-		});
-	});
-
-	function select_mix(){
-		Kurento.receiveMix();
-	}
 	
-	function select_user(userId){
-		selected_user = userId;
-		
-		if(real_time){			
-			Kurento.receiveRealtime(selected_user);
-		}else {
-			Kurento.receiveHistoric(selected_user,current_offset);
+		function select_mix(){
+			Kurento.receiveMix();
 		}
 		
-	}
-	
-	
-	function del_user_group(uid) {
-		var success = function() {
-			document.location = document.location;
-		};
-		Signaling.removeUserGroup("@groupId", uid, success);
-	}
-
-	function add_user_group(uid) {
-		var success = function() {
-			document.location = document.location;
-		};
-		Signaling.addUserGroup("@groupId", uid, success);
-	}
-
-	function candidate_search(query) {
-
-		var result = function(array) {
-			var html = "";
-			for ( var i in array) {
-				var uid = array[i].uid;
-				var add_button = "<button onclick='add_user_group(\"" + uid	+ "\")'>add</button>";
-				html += "<li>" + array[i].email + add_button + "</li>";
+		function select_user(userId){
+			selected_user = userId;
+			
+			if(real_time){			
+				Kurento.receiveRealtime(selected_user);
+			}else {
+				Kurento.receiveHistoric(selected_user,current_offset);
 			}
-			$("#candidate-list").html(html);
-		};
-		Signaling.searchGroupCandidates("@groupId", query, result);
-	}
-</script>
+			
+		}
+		
+		
+		function del_user_group(uid) {
+			var success = function() {
+				document.location = document.location;
+			};
+			Signaling.removeUserGroup("@groupId", uid, success);
+		}
+	
+		function add_user_group(uid) {
+			var success = function() {
+				document.location = document.location;
+			};
+			Signaling.addUserGroup("@groupId", uid, success);
+		}
+	
+		function candidate_search(query) {
+	
+			var result = function(array) {
+				var html = "";
+				for ( var i in array) {
+					var uid = array[i].uid;
+					var add_button = "<button onclick='add_user_group(\"" + uid	+ "\")'>add</button>";
+					html += "<li>" + array[i].email + add_button + "</li>";
+				}
+				$("#candidate-list").html(html);
+			};
+			Signaling.searchGroupCandidates("@groupId", query, result);
+		}
+	</script>
 }
