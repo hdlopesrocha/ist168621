@@ -10,39 +10,50 @@
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 	
 
-	<div class="container" data-spy="scroll" data-target="#sidebar-nav">
 	
-		<h1>@groupName</h1>
+	<h1>@groupName</h1>
+	<div class="tab" id="tab0">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="container" data-spy="scroll" data-target="#sidebar-nav">
 	
-		<div class="row tab" id="tab0">	
-			<div class="col-sm-12">
-				<div class="panel panel-default">
-					<h3>Remote Video</h3>
-					<video id='myvideo' autoplay width='640px' height='480px' style="margin: 0px auto;display:block;"></video>
-					<div id="timeline"></div>
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+							<h3>Remote Video</h3>
+							<video id='myvideo' autoplay width='640px' height='480px' style="margin: 0px auto;display:block;"></video>
+							<div id="timeline"></div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<footer>
-				<div class="container" id="footer-row"></div>
-			</footer>
 		</div>
-		<div class="row tab" id="tab1">
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<h3>Add Members</h3>
-					&nbsp;Search:<input type="text"
-						onchange="candidate_search(this.value)" />
-					<ul id="candidate-list"></ul>
+		<footer>
+			<div class="container" id="footer-row"></div>
+		</footer>
+	</div>
+
+	<div class="tab" id="tab1">
+		<div class="container-fluid">
+			<div class="row">
+	
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<h3>Add Members</h3>
+						&nbsp;Search:<input type="text"
+							onchange="candidate_search(this.value)" />
+						<ul id="candidate-list"></ul>
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<h3>Members</h3>
-					<div id="members-list"></div>
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<h3>Members</h3>
+						<div id="members-list"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<script>
 		var selected_user =	"@userId";
 		var participants = {};
