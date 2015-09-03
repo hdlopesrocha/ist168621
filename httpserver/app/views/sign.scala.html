@@ -1,25 +1,29 @@
 @()
 
 @template(1){
-	<div class="row">					
-		<h3>Login</h3>
-		<form id="login-form">
-			Email:<input type="text" name="email"/><br>
-			Password:<input type="password" name="password"><br>
-			<input type="submit"/>
-		</form>
-		<h3>Register</h3>
-		<form id="register-form">
-			Email:<input type="text" name="email"/> <br>
-			Name:<input type="text" name="name"/> <br>
-			Password:<input type="password" name="password"/><br> 
-			Confirm Password:<input type="password" name="password2"/><br>
-			Photo:<input type="file" name="photo"/> <br>
-			<input type="submit"/>
-		</form>
+<div class="container-fluid">
+	<div class="row">
+		<div class="container" data-spy="scroll" data-target="#sidebar-nav">
+
+			<h3>Login</h3>
+			<form id="login-form">
+				Email:<input type="text" name="email" /><br> Password:<input
+					type="password" name="password"><br> <input
+					type="submit" />
+			</form>
+			<h3>Register</h3>
+			<form id="register-form">
+				Email:<input type="text" name="email" /> <br> Name:<input
+					type="text" name="name" /> <br> Password:<input
+					type="password" name="password" /><br> Confirm Password:<input
+					type="password" name="password2" /><br> Photo:<input
+					type="file" name="photo" /> <br> <input type="submit" />
+			</form>
+		</div>
 	</div>
-	
-	<script>
+</div>
+
+<script>
 		$( document ).ready(function() {
 			$( "#login-form" ).submit(function( event ) {
 				var email = this.elements["email"].value;
