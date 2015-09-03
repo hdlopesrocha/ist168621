@@ -9,17 +9,8 @@
 	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 	
-	<div class="col-xs-3 col-sm-2 sidebar-offcanvas" id="sidebar"
-				role="navigation">
-		<div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
-			<ul class="nav" id="sidebar-nav">
-				<li><a href="/">Home</a></li>
-				<li><a onclick="switchTab('#tab0')">Video</a></li>
-				<li><a onclick="switchTab('#tab1')">Members</a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+
+	<div class="container" data-spy="scroll" data-target="#sidebar-nav">
 	
 		<h1>@groupName</h1>
 	
@@ -67,6 +58,9 @@
 	
 	
 		$(document).ready(function() {
+			$("#navbar").append("<li><a onclick=\"switchTab('#tab0')\">Video</a></li>");
+			$("#navbar").append("<li><a onclick=\"switchTab('#tab1')\">Members</a></li>");
+			
 			switchTab("#tab0");
 			
 			$("#footer-row").append("<button>mix</button>");				
