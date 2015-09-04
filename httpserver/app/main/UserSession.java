@@ -95,8 +95,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				// TODO Auto-generated method stub
 				PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 				pl.connect(mixerPoint);
-				compositeIn.connect(mixerPoint);
-				compositeOut.connect(mixerPoint);				
+				//compositeIn.connect(mixerPoint);
+				//compositeOut.connect(mixerPoint);				
 				pl.play();
 				System.out.println("Playing 'video.webm' ...");
 				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
