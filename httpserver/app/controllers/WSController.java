@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
@@ -9,6 +10,8 @@ import org.kurento.client.IceCandidate;
 import main.Global;
 import main.Room;
 import main.UserSession;
+import models.Interval;
+import models.Recording;
 import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
@@ -30,6 +33,18 @@ public class WSController extends Controller {
 						// Join room
 						final UserSession usession = room.join(user, out);
 
+						
+						List<Interval> intervals = Interval.listByGroup(new ObjectId(room.getId()));
+						JSONObject msg = new JSONObject().append("id", "rec");
+						for(Interval interval : intervals){
+
+							JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(interval.getStart())).append("end", Recording.FORMAT.format(interval.getEnd()));
+							msg.append(interval.getId().toString(), rec);
+						}
+						room.sendMessage(msg.toString());
+						
+						
+						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
@@ -102,6 +117,7 @@ public class WSController extends Controller {
 										}
 									}).start();
 									break;
+								
 
 								default:
 									break;

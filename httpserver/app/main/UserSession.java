@@ -95,11 +95,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
 							getUser().getId().toString(), begin, end, filename, "video/webm",
 							interval.getId().toString());
-					srs.execute();
-					PublishService publishService = new PublishService("rec:" + getGroupId());
-					publishService.execute();
-
+					srs.execute();					
+					JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(begin)).append("end", Recording.FORMAT.format(end));
+					JSONObject msg = new JSONObject().append("id", "rec").append(interval.getId().toString(), rec);
+					room.sendMessage(msg.toString());
 					System.out.println("STOP: " + filepath);
+					
+					
+					
+					
 				} catch (ServiceException e) {
 					e.printStackTrace();
 				}

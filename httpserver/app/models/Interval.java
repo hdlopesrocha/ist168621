@@ -81,6 +81,16 @@ public class Interval {
 		return getCollection().count(doc);
 	}
 
+	public static List<Interval> listByGroup(ObjectId groupId) {
+		FindIterable<Document> iter = getCollection()
+				.find(new Document("gid", groupId));
+		List<Interval> ret = new ArrayList<Interval>();
+		for (Document doc : iter) {
+			ret.add(Interval.load(doc));
+		}
+		return ret;
+	}
+	
 	public static List<Interval> listByGroup(ObjectId groupId, long sequence) {
 		FindIterable<Document> iter = getCollection()
 				.find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
