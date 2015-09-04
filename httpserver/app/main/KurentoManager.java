@@ -29,9 +29,12 @@ import models.Group;
  * @author Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
  */
-public class RoomManager {
-	
-	public RoomManager (KurentoClient kurento){
+public class KurentoManager {
+	public final KurentoClient kurento;
+
+	public KurentoManager (){
+		kurento = KurentoClient.create("ws://localhost:8888/kurento");
+		
 	//	Dispatcher disp = new Dispatcher.Builder()
 		for(MediaPipeline mediaPipeline : kurento.getServerManager().getPipelines()) {
 			System.out.println("Loaded: " + mediaPipeline.getId() + " | " +mediaPipeline.getName());
