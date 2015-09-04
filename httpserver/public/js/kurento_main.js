@@ -159,6 +159,7 @@ var Kurento = new (function() {
 							console.log(sdp)
 						},logError);
 					case 'rec':
+						console.log("REC", message);
 						var array = [];
 						for (var id in message){							
 							if(id !== 'id'){
