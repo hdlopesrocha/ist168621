@@ -26,7 +26,6 @@ import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
@@ -52,7 +51,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private HubPort compositePort;
+	private HubPort compositePortIn,compositePortOut;
 	private String intervalId = null;
 
 	private PlayerEndpoint player;
@@ -80,7 +79,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 	
-		compositePort = new HubPort.Builder(room.getComposite()).build();
+		compositePortIn = new HubPort.Builder(room.getComposite()).build();
+		compositePortOut = new HubPort.Builder(room.getComposite()).build();
 		
 
 	
@@ -118,9 +118,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					msg.put(interval.getId().toString(), rec);
 
 					room.sendMessage(msg.toString());
-					System.out.println("STOP: " + filepath);
 					
-					
+					System.out.println("REC: " + filepath);
+
 					
 					
 				} catch (ServiceException e) {
@@ -161,8 +161,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 		pl.play();
-		pl.connect(compositePort);
-		compositePort.connect(mixerPoint);
+		pl.connect(compositePortIn);
+		compositePortOut.connect(mixerPoint);
 
 		System.out.println("Playing 'video.webm' ...");
 

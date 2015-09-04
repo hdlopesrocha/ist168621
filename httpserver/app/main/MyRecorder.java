@@ -33,7 +33,6 @@ public class MyRecorder {
 						String filename = name + ".webm";
 						String filepath = "file:///rec/" + filename;
 
-						System.out.println("REC: " + filepath);
 						recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
 						endPoint.connect(recorder);
 						recorder.record();
