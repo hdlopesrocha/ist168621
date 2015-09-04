@@ -86,11 +86,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		endPoint.connect(endPoint);
 		
-		loopTest();
+		//loopTest();
 	
 				
-		//endPoint.connect(compositePort); // this makes the video stop
-
+		endPoint.connect(compositePortIn); // this makes the video stop
+		compositePortIn.connect(mixerPoint);
 
 
 		
