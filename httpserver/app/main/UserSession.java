@@ -18,6 +18,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
@@ -86,7 +87,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		
 
-		final Interval interval = new Interval();
+		final Interval interval = new Interval(new ObjectId( room.getId()));
 		interval.save();
 		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
 			@Override

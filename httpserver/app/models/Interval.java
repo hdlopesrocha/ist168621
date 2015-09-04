@@ -16,7 +16,7 @@ public class Interval {
 
 	private Date start, end;
 
-	private ObjectId id = null;
+	private ObjectId id, gid = null;
 
 	public static MongoCollection<Document> collection;
 
@@ -31,6 +31,7 @@ public class Interval {
 		if (id != null)
 			doc.put("_id", id);
 
+		doc.put("gid", gid);
 		doc.put("start", start);
 		doc.put("end", end);
 
@@ -64,6 +65,7 @@ public class Interval {
 		Interval rec = new Interval();
 		rec.id = doc.getObjectId("_id");
 		rec.end = doc.getDate("end");
+		rec.gid = doc.getObjectId("gid");
 		rec.start = doc.getDate("start");
 		return rec;
 	}
@@ -91,16 +93,6 @@ public class Interval {
 		return ret;
 	}
 	
-	public static List<Interval> listByGroup(ObjectId groupId, long sequence) {
-		FindIterable<Document> iter = getCollection()
-				.find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
-		List<Interval> ret = new ArrayList<Interval>();
-		for (Document doc : iter) {
-			ret.add(Interval.load(doc));
-		}
-		return ret;
-	}
-
 	public static Interval findById(ObjectId id) {
 		Document doc = new Document("_id", id);
 		FindIterable<Document> iter = getCollection().find(doc);
@@ -108,11 +100,18 @@ public class Interval {
 		return doc != null ? load(doc) : null;
 	}
 
-	public Interval() {
+	private Interval() {
+
+	}
+	
+	public Interval(ObjectId gid) {
+		this.gid = gid;
+
 	}
 
-	public Interval(Date start, Date end) {
+	public Interval(ObjectId gid,Date start, Date end) {
 		this.start = start;
+		this.gid = gid;
 		this.end = end;
 	}
 
