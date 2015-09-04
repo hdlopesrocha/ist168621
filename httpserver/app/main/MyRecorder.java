@@ -13,19 +13,12 @@ public class MyRecorder {
 		void onFileRecorded(Date begin, Date end, String filepath, String filename);
 	}
 
-	private String name;
 	private RecorderEndpoint recorder;
-	private WebRtcEndpoint endPoint;
-	private Room room;
-
 	private Object recorderLock = new Object();
 	private Thread recorderThread = null;
 	private Runnable recorderRunnable = null;
 	
 	public MyRecorder(WebRtcEndpoint endPoint, Room room, RecorderHandler handler) {
-		this.name = UUID.randomUUID().toString();
-		this.endPoint = endPoint;
-		this.room = room;
 		
 		this.recorderRunnable = new Runnable() {
 
@@ -34,6 +27,7 @@ public class MyRecorder {
 				Date begin = new Date();
 
 				while (recorderThread!=null) {
+					String name = UUID.randomUUID().toString();
 
 					String filename = name + ".webm";
 					String filepath = "file:///rec/" + filename;
