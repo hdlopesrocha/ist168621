@@ -43,9 +43,10 @@ public class WSController extends Controller {
 							
 							if (start != null && end != null) {
 
-								JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(start))
-										.append("end", Recording.FORMAT.format(end));
-								msg.append(interval.getId().toString(), rec);
+								JSONObject rec = new JSONObject();
+								rec.put("begin", Recording.FORMAT.format(start));
+								rec.put("end", Recording.FORMAT.format(end));
+								msg.put(interval.getId().toString(), rec);
 
 							}
 						}
