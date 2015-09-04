@@ -87,22 +87,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		endPoint.connect(endPoint);
 		
-		endPoint.connect(compositeIn,new Continuation<Void>() {
-			
-			@Override
-			public void onSuccess(Void arg0) throws Exception {
-				// TODO Auto-generated method stub
-				compositeOut.connect(mixerPoint);				
-			}
-			
-			@Override
-			public void onError(Throwable arg0) throws Exception {
-				// TODO Auto-generated method stub
-				System.out.println("CON: "+arg0.getMessage());
-			}
-		});
-		
 
+		compositeOut.connect(mixerPoint);				
 		//endPoint.connect(compositeIn); // this makes the video stop
 
 
