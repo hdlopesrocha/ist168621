@@ -345,7 +345,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		String arg0 = mixerPoint.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
+		JSONObject msg = new JSONObject().put("id", "mixDescription").put("sdp", arg0).put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		mixerPoint.gatherCandidates();
