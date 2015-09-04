@@ -25,6 +25,7 @@ function logError(err) {
 var newParticipantsCallback = null; 
 var newVideoCallback = null; 
 var mixerVideoCallback = null;
+var newRecordingCallback = null;
 
 var Kurento = new (function() {
 	
@@ -86,10 +87,11 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.start = function(groupId,npcb,nvcb,mvcb) {		
+	this.start = function(groupId,npcb,nvcb,mvcb,nrcb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
+		newRecordingCallback = nrcb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -156,6 +158,9 @@ var Kurento = new (function() {
 							console.log("setRemoteDescription")
 							console.log(sdp)
 						},logError);
+					case 'rec':
+						alert("HELLO");
+						break;
 					default:
 						break;					
 				}

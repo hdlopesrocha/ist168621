@@ -65,7 +65,11 @@ public class Room implements Closeable {
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
 
-	
+	public void sendMessage(final String string) {
+		for(UserSession user : participants.values()){
+			user.sendMessage(string);
+		}
+	}	
 	
 	public Hub getComposite() {
 		return composite;
