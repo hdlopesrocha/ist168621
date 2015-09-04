@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -33,18 +34,23 @@ public class WSController extends Controller {
 						// Join room
 						final UserSession usession = room.join(user, out);
 
-						
 						List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
 						JSONObject msg = new JSONObject().append("id", "rec");
-						for(Interval interval : intervals){
+						for (Interval interval : intervals) {
+							Date start = interval.getStart();
+							Date end = interval.getStart();
+							
+							
+							if (start != null && end != null) {
 
-							JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(interval.getStart())).append("end", Recording.FORMAT.format(interval.getEnd()));
-							msg.append(interval.getId().toString(), rec);
+								JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(start))
+										.append("end", Recording.FORMAT.format(end));
+								msg.append(interval.getId().toString(), rec);
+
+							}
 						}
 						room.sendMessage(msg.toString());
-						
-						
-						
+
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
@@ -73,25 +79,25 @@ public class WSController extends Controller {
 									String description = data.getString("sdp");
 									usession.processOffer(description);
 								}
-								break;
+									break;
 								case "mixOffer": {
 									JSONObject data = args.getJSONObject("data");
 									String description = data.getString("sdp");
 									usession.processMixOffer(description);
 								}
-								break;
+									break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
-									String endPoint = args.optString("endPoint",null);
-									
+									String endPoint = args.optString("endPoint", null);
+
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									usession.addCandidate(candidate,endPoint);
+									usession.addCandidate(candidate, endPoint);
 								}
-								break;
+									break;
 								case "realtime":
 									System.out.println("REALTIME");
-									new Thread(new Runnable() {										
+									new Thread(new Runnable() {
 										@Override
 										public void run() {
 											usession.setRealtime(userId);
@@ -101,23 +107,22 @@ public class WSController extends Controller {
 									break;
 								case "historic":
 									System.out.println("HISTORIC");
-									new Thread(new Runnable() {										
+									new Thread(new Runnable() {
 										@Override
 										public void run() {
-											usession.setHistoric(userId,args.getLong("offset"));
+											usession.setHistoric(userId, args.getLong("offset"));
 										}
 									}).start();
 									break;
 								case "mix":
 									System.out.println("HISTORIC");
-									new Thread(new Runnable() {										
+									new Thread(new Runnable() {
 										@Override
 										public void run() {
 											usession.setMix();
 										}
 									}).start();
 									break;
-								
 
 								default:
 									break;
