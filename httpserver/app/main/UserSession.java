@@ -72,7 +72,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
-
+		endPoint.connect(mixerPoint);
+		
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
 
 		final Interval interval = new Interval();
