@@ -53,7 +53,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private final HubPort mixerPortIn, mixerPortOut;
+	private final HubPort compositeIn, compositeOut;
 
 	private PlayerEndpoint player;
 	private boolean realTime = true;
@@ -73,18 +73,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			@Override
 			public void onEvent(ErrorEvent arg0) {
-				System.out.println("ERR:::::::: "+arg0.getDescription());
+				System.out.println("ERROR: "+arg0.getDescription());
 				
 			}
 		});
 
 	
-		mixerPortIn = new HubPort.Builder(room.getMixer()).build();
-		mixerPortOut = new HubPort.Builder(room.getMixer()).build();
-		mixerPortIn.connect(mixerPortOut);
+		compositeIn = new HubPort.Builder(room.getComposite()).build();
+		compositeOut = new HubPort.Builder(room.getComposite()).build();
 
-		endPoint.connect(mixerPortIn);
-		mixerPortOut.connect(mixerPoint);
+		//endPoint.connect(compositeIn); // this makes the video stop
+		compositeOut.connect(mixerPoint);
 
 	
 		
