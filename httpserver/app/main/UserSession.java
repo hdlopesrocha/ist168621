@@ -166,7 +166,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();
 		
-		endPoint.connect(endPoint);
+	//	endPoint.connect(endPoint);
 		recorder.start();
 
 		
