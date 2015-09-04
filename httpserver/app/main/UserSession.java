@@ -86,15 +86,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		endPoint.connect(endPoint);
 		
-		// COMPOSITE (TESTING YET)
-		mixerPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
-
-			@Override
-			public void onEvent(MediaSessionStartedEvent arg0) {
-				loopTest();
-			
-			}
-		});
+		loopTest();
 	
 				
 		//endPoint.connect(compositePort); // this makes the video stop
@@ -156,19 +148,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
 	private void loopTest(){
-		final PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
-		pl.connect(compositePort);
-		compositePort.connect(mixerPoint);		
-		pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+		new Thread(new Runnable() {
+			
 			@Override
-			public void onEvent(EndOfStreamEvent arg0) {
-				pl.release();
-				loopTest();
-			}
-		});
+			public void run() {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				final PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
+				pl.connect(compositePort);
+				compositePort.connect(mixerPoint);		
+				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+					@Override
+					public void onEvent(EndOfStreamEvent arg0) {
+						pl.release();
+						loopTest();
+					}
+				});
 
-		pl.play();
-		System.out.println("Playing 'video.webm' ...");
+				pl.play();
+				System.out.println("Playing 'video.webm' ...");
+				
+			}
+		}).start();
 	}
 
 	public WebRtcEndpoint createWebRtcEndPoint() {
