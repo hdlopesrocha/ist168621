@@ -165,13 +165,17 @@ var Kurento = new (function() {
 				Kurento.pc2 = Kurento.createPeerConnection(null);
 
 				
+				
 				Kurento.pc2.createOffer(function (desc) {
-					console.log("createOfferToReceiveMix");
+					console.log("createOfferToReveiveMix");
 					console.log(desc);
-					Kurento.ws.send(JSON.stringify({
-						id : "mixOffer",
-						data : desc
-					}));
+
+					Kurento.pc2.setLocalDescription(desc, function() {
+						Kurento.ws.send(JSON.stringify({
+							id : "mixOffer",
+							data : Kurento.pc2.localDescription
+						}));
+					}, logError);
 				}, logError,remote_constraints);
 				
 				// XXX [CLIENT_OFFER_01] XXX
