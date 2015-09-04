@@ -55,6 +55,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private final MyRecorder recorder;
 	private final HubPort compositeIn, compositeOut;
+	private Date firstBegin = null;
 
 	private PlayerEndpoint player;
 	private boolean realTime = true;
@@ -89,16 +90,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		final Interval interval = new Interval(new ObjectId( room.getId()));
 		interval.save();
+		
+		
 		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
 			@Override
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+				if(firstBegin == null){
+					firstBegin = begin;
+				}
+				
 				try {
 					SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
 							getUser().getId().toString(), begin, end, filename, "video/webm",
 							interval.getId().toString());
 					srs.execute();					
 					JSONObject rec = new JSONObject();
-					rec.put("begin", Recording.FORMAT.format(interval.getStart()));
+					rec.put("begin", Recording.FORMAT.format(firstBegin));
 					rec.put("end", Recording.FORMAT.format(end));
 					
 					JSONObject msg = new JSONObject();
