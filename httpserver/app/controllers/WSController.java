@@ -58,7 +58,13 @@ public class WSController extends Controller {
 									String description = data.getString("sdp");
 									usession.processOffer(description);
 								}
-									break;
+								break;
+								case "mixOffer": {
+									JSONObject data = args.getJSONObject("data");
+									String description = data.getString("sdp");
+									usession.processMixOffer(description);
+								}
+								break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),

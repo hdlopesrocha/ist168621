@@ -145,6 +145,17 @@ var Kurento = new (function() {
 				}
 			};
 
+			function createOfferToReceiveMix(){
+				Kurento.pc.createOffer(function (desc) {
+					console.log("createOfferToReceiveMix");
+					console.log(desc);
+					Kurento.ws.send(JSON.stringify({
+						id : "mixOffer",
+						data : desc
+					}));
+				}, logError,remote_constraints);
+			}
+			
 			Kurento.ws.onopen = function() {
 				Kurento.pc = Kurento.createPeerConnection(null);
 
