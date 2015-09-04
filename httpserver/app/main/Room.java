@@ -25,7 +25,6 @@ import javax.annotation.PreDestroy;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Composite;
-import org.kurento.client.Continuation;
 import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;

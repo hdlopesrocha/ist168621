@@ -1,7 +1,5 @@
 package main;
 
-import org.kurento.client.KurentoClient;
-
 import exceptions.ServiceException;
 import play.Application;
 import play.GlobalSettings;
