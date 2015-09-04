@@ -87,9 +87,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.connect(endPoint);
 		
 
-		compositeOut.connect(mixerPoint);				
 
-		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+		mixerPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
@@ -97,8 +96,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 				pl.connect(mixerPoint);
 				compositeIn.connect(mixerPoint);
+				compositeOut.connect(mixerPoint);				
 				pl.play();
-				
+				System.out.println("Playing 'video.webm' ...");
 				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
 					@Override
