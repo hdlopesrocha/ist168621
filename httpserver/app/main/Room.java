@@ -45,18 +45,23 @@ public class Room implements Closeable {
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
-	private final Hub composite;
+	private Hub composite;
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		
 		
-		this.composite = new Composite.Builder(mediaPipeline).build();
 		
 		
 		
 		for(MediaObject obj : mediaPipeline.getChilds()){
-			System.out.println("### "+obj.getClass().toString()+ " | "+ obj.toString());
+			if(obj.getName().equals("composite")){
+				this.composite = (Hub) obj;
+			}
+		}
+		if(composite==null){
+			this.composite = new Composite.Builder(mediaPipeline).build();
+			this.composite.setName("composite");
 		}
 		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
