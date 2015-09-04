@@ -67,8 +67,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
+		endPoint.setMaxVideoSendBandwidth(100);
 		mixerPoint = createWebRtcEndPoint();
 		mixerPoint.setMaxVideoSendBandwidth(1);
+
+		
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
 			@Override
