@@ -159,13 +159,13 @@ var Kurento = new (function() {
 							console.log(sdp)
 						},logError);
 					case 'rec':
-						for (var id in message){
+						var array = [];
+						for (var id in message){							
 							if(id !== 'id'){
-								var interval = message[id];
-								newRecordingCallback(id,message.begin,message.end);
-							}
-							
+								array.push({'id':id,start:message.begin,end:message.end});
+							}							
 						}
+						newRecordingCallback(array);
 						
 						
 						

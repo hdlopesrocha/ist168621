@@ -131,30 +131,35 @@
 			}
 			var firstRecording = true;
 			
-			var kinterval = function(id,start,end){
+			var kinterval = function(array){
+				for (var i : array){
+					var id = array[i].id;
+					var start = array[i].start;
+					var end = array[i].end;
+					
+					var inter = rendered_intervals[id];
+					var newInter = null;
+					
+					if(inter){
+						items.remove(id);
+					}
 			
-				var inter = rendered_intervals[id];
-				var newInter = null;
-				
-				if(inter){
-					items.remove(id);
-				}
-		
-				items.add({
-					id : id,
-					content : "&nbsp;",
-					start : start,
-					end : end
-				});
-				rendered_intervals[obj.inter] = newInter;
-				
-			
-				if (firstRecording) {
-					firstRecording = false;
-
-					timeline.fit({
-						animation : false
+					items.add({
+						id : id,
+						content : "&nbsp;",
+						start : begin,
+						end : end
 					});
+					rendered_intervals[obj.inter] = newInter;
+					
+				
+					if (firstRecording) {
+						firstRecording = false;
+	
+						timeline.fit({
+							animation : false
+						});
+					}
 				}
 			}
 			
