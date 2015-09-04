@@ -159,7 +159,15 @@ var Kurento = new (function() {
 							console.log(sdp)
 						},logError);
 					case 'rec':
-						console.log("REC",message);
+						for (var id in message.keys()){
+							if(id !== 'id'){
+								var interval = message[id];
+								console.log("REC",interval);
+								
+							}
+							
+						}
+						
 						
 						
 						break;
