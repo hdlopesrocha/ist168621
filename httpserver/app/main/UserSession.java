@@ -83,7 +83,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositeOut = new HubPort.Builder(room.getComposite()).build();
 
 		//endPoint.connect(compositeIn); // this makes the video stop
-		compositeOut.connect(mixerPoint);
+		//compositeOut.connect(mixerPoint);
 
 	
 		
@@ -170,8 +170,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
-		endPoint.gatherCandidates();
-		
+		endPoint.gatherCandidates();		
 		endPoint.connect(endPoint);
 		recorder.start();
 
