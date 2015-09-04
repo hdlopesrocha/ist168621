@@ -59,7 +59,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private boolean realTime = true;
 	private long playOffset = 0l;
 	private String playUser = "";
-	private PlayerEndpoint pl;
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -88,7 +87,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 		// COMPOSITE (TESTING YET)
 		{
-			pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
+			final PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 			pl.connect(compositePort);
 			compositePort.connect(mixerPoint);		
 			pl.play();
