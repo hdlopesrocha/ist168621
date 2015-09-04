@@ -86,7 +86,7 @@ var Kurento = new (function() {
 	this.start = function(groupId,npcb,nvcb,mvcb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
-		mixerVideoVallback = mvcb;
+		mixerVideoCallback = mvcb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
