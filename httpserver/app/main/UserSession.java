@@ -91,7 +91,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositeOut.connect(mixerPoint);				
 		PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 		pl.connect(compositeIn);
-		compositeOut.connect(mixerPoint);
+		compositeIn.connect(mixerPoint);
 		pl.play();
 		
 		pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
