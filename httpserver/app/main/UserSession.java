@@ -68,6 +68,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
+		endPoint.connect(endPoint);
 
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
@@ -78,15 +79,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
-		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
-
-			@Override
-			public void onEvent(MediaSessionStartedEvent arg0) {
-				System.out.println("[MEDIA STREAM START]");
-				endPoint.connect(compositeIn); // this makes the video stop
-				compositeOut.connect(mixerPoint);				
-			}
-		});
 	
 		compositeIn = new HubPort.Builder(room.getComposite()).build();
 		compositeOut = new HubPort.Builder(room.getComposite()).build();
@@ -115,6 +107,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
+		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+			@Override
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				System.out.println("[MEDIA STREAM START]");
+				//endPoint.connect(compositeIn); // this makes the video stop
+				compositeOut.connect(mixerPoint);
+				recorder.start();
+			}
+		});
+	
+		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
 			@Override
@@ -178,8 +181,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();		
-		endPoint.connect(endPoint);
-		recorder.start();
 
 		
 	}
