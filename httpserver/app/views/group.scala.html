@@ -151,16 +151,16 @@
 						start : start,
 						end : end
 					});
-					rendered_intervals[obj.inter] = newInter;
+					rendered_intervals[id] = newInter;
 					
 				
-					if (firstRecording) {
-						firstRecording = false;
-	
-						timeline.fit({
-							animation : false
-						});
-					}
+				}
+				if (firstRecording) {
+					firstRecording = false;
+
+					timeline.fit({
+						animation : false
+					});
 				}
 			}
 			
