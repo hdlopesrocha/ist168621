@@ -68,7 +68,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
-
+		mixerPoint.setMaxVideoSendBandwidth(1);
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
 			@Override
@@ -80,7 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	
 		compositePort = new HubPort.Builder(room.getComposite()).build();
-
+		
 
 	
 		endPoint.connect(endPoint);
