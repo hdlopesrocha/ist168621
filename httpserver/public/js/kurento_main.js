@@ -162,8 +162,7 @@ var Kurento = new (function() {
 						for (var id in message){
 							if(id !== 'id'){
 								var interval = message[id];
-								console.log("REC",interval);
-								
+								newRecordingCallback(id,message.begin,message.end);
 							}
 							
 						}
