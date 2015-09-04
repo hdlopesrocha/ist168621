@@ -101,7 +101,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					srs.execute();		
 					
 					Interval interval = srs.getInterval();
-					
+					intervalId = interval.getId().toString();
 					
 					JSONObject rec = new JSONObject();
 					rec.put("begin", Recording.FORMAT.format(interval.getStart()));
