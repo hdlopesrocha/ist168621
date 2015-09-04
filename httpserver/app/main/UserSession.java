@@ -158,7 +158,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.gatherCandidates();
 		
 		endPoint.connect(endPoint);
-		endPoint.connect(mixerPort);
+		//endPoint.connect(mixerPort);
 		mixerPort.connect(mixerPoint);
 		recorder.start();
 
