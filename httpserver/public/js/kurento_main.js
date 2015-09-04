@@ -136,7 +136,7 @@ var Kurento = new (function() {
 						console.log("description2");
 						console.log(sdp);
 						// XXX [CLIENT_OFFER_08] XXX
-						mixerSdp.pc.setRemoteDescription(sdp, function(){
+						Kurento.pc.setRemoteDescription(sdp, function(){
 							console.log("setRemoteDescription")
 							console.log(sdp)
 						},logError);
