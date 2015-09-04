@@ -35,7 +35,8 @@ public class WSController extends Controller {
 						final UserSession usession = room.join(user, out);
 
 						List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
-						JSONObject msg = new JSONObject().append("id", "rec");
+						JSONObject msg = new JSONObject();
+						msg.put("id", "rec");
 						for (Interval interval : intervals) {
 							Date start = interval.getStart();
 							Date end = interval.getStart();
