@@ -159,7 +159,9 @@ var Kurento = new (function() {
 							console.log(sdp)
 						},logError);
 					case 'rec':
-						alert("HELLO");
+						console.log("REC",message);
+						
+						
 						break;
 					default:
 						break;					
