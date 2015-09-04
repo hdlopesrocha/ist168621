@@ -59,7 +59,7 @@ public class KurentoManager {
 		
 		Room room = rooms.get(groupId);
 		if (room == null) {
-			MediaPipeline mp = Global.kurento.createMediaPipeline();
+			MediaPipeline mp = kurento.createMediaPipeline();
 			mp.setName( groupId );
 			room = new Room(mp);
 			rooms.put(groupId, room);
