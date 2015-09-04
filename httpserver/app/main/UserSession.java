@@ -18,7 +18,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
 
-import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
@@ -37,7 +36,6 @@ import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.GetCurrentRecordingService;
-import services.PublishService;
 import services.SaveRecordingService;
 
 /**
@@ -55,7 +53,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private final MyRecorder recorder;
 	private final HubPort compositeIn, compositeOut;
-	private Date firstBegin = null;
+	private String intervalId = null;
 
 	private PlayerEndpoint player;
 	private boolean realTime = true;
@@ -88,25 +86,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		
 
-		final Interval interval = new Interval(new ObjectId( room.getId()));
-		interval.save();
+	
 		
 		
-		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
+		recorder = new MyRecorder(endPoint,room, new MyRecorder.RecorderHandler() {
 			@Override
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
-				if(firstBegin == null){
-					firstBegin = begin;
-				}
+				
 				
 				try {
 					SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
 							getUser().getId().toString(), begin, end, filename, "video/webm",
-							interval.getId().toString());
-					srs.execute();					
+							intervalId);
+					srs.execute();		
+					
+					Interval interval = srs.getInterval();
+					
+					
 					JSONObject rec = new JSONObject();
-					rec.put("begin", Recording.FORMAT.format(firstBegin));
-					rec.put("end", Recording.FORMAT.format(end));
+					rec.put("begin", Recording.FORMAT.format(interval.getStart()));
+					rec.put("end", Recording.FORMAT.format(interval.getEnd()));
 					
 					JSONObject msg = new JSONObject();
 					msg.put("id", "rec");
