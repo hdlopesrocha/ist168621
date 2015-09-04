@@ -108,48 +108,7 @@
 				}
 			);
 	
-			Signaling.subscribe("rec:@groupId",function() {
-				console.log("video recorded!");
 	
-				Signaling.listRecordings("@groupId",last_sequence, function(data) {
-					var first = last_sequence == -1;
-					for ( var i in data) {
-						var obj = data[i];
-						if (obj.uid == "@userId") {
-							var inter = rendered_intervals[obj.inter];
-							var newInter = null;
-							if (!inter) {
-								newInter = {
-									id : obj.inter,
-									content : "&nbsp;",
-									start : obj.start,
-									end : obj.end
-								};
-							} else {
-								var oldStart = inter.start;
-								//console.log("oldStart",oldStart);
-								items.remove(obj.inter);
-								newInter = {
-									id : obj.inter,
-									content : "&nbsp;",
-									start : oldStart,
-									end : obj.end
-								};
-							}
-							items.add(newInter);
-							rendered_intervals[obj.inter] = newInter;
-							if (obj.seq > last_sequence) {
-								last_sequence = obj.seq;
-							}
-						}
-					}
-					if (first) {
-						timeline.fit({
-							animation : false
-						});
-					}
-				});
-			});
 	
 	
 			var kvideo = function(streamUrl) {
@@ -170,9 +129,33 @@
 					participants[userId] = email;
 				}
 			}
+			var firstRecording = true;
 			
 			var kinterval = function(id,start,end){
-				
+			
+					var inter = rendered_intervals[id];
+					var newInter = null;
+					
+					if(inter){
+						items.remove(id);
+					}
+			
+					items.add({
+						id : id,
+						content : "&nbsp;",
+						start : start,
+						end : end
+					});
+					rendered_intervals[obj.inter] = newInter;
+					
+				}
+				if (firstRecording) {
+					firstRecording = false;
+
+					timeline.fit({
+						animation : false
+					});
+				}
 			}
 			
 	
