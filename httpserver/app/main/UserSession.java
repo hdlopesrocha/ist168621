@@ -84,7 +84,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
 	
-		
+		endPoint.connect(endPoint);
+
+		//endPoint.connect(compositeIn); // this makes the video stop
+		compositeOut.connect(mixerPoint);
+
 
 	
 		
@@ -123,18 +127,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
-		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
-			@Override
-			public void onEvent(MediaSessionStartedEvent arg0) {
-				System.out.println("[MEDIA STREAM START]");
-				endPoint.connect(endPoint);
-
-				//endPoint.connect(compositeIn); // this makes the video stop
-				compositeOut.connect(mixerPoint);
-				recorder.start();
-			}
-		});
-	
+		recorder.start();
+		
 		
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
