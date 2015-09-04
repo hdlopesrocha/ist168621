@@ -72,13 +72,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
-		endPoint.connect(mixerPoint);
+
 		
+
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
+		
 
 		final Interval interval = new Interval();
 		interval.save();
-		recorder = new MyRecorder(interval.getId().toString(), endPoint, room, new MyRecorder.RecorderHandler() {
+		recorder = new MyRecorder(interval.getId().toString(),endPoint,room, new MyRecorder.RecorderHandler() {
 			@Override
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
 				try {
@@ -110,6 +112,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
+
+
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 
@@ -123,7 +127,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 				try {
 					synchronized (this) {
-						// System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+						//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 						System.out.println(response.toString());
 						sendMessage(response.toString());
 					}
@@ -168,31 +172,23 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void processOffer(String description) {
-		{
-			// XXX [CLIENT_OFFER_04] XXX
-			// XXX [CLIENT_OFFER_05] XXX
+		// XXX [CLIENT_OFFER_04] XXX
+		// XXX [CLIENT_OFFER_05] XXX
 
-			String arg0 = endPoint.processOffer(description);
-			// XXX [CLIENT_OFFER_06] XXX
-			JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
-			// XXX [CLIENT_OFFER_07] XXX
-			sendMessage(msg.toString());
-		}
-
+		String arg0 = endPoint.processOffer(description);
+		// XXX [CLIENT_OFFER_06] XXX
+		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
+		// XXX [CLIENT_OFFER_07] XXX
+		sendMessage(msg.toString());
+		endPoint.gatherCandidates();
+		
 		endPoint.connect(endPoint, MediaType.VIDEO);
 		endPoint.connect(endPoint, MediaType.AUDIO);
-		// endPoint.connect(mixerPort,MediaType.AUDIO);
-		// mixerPort.connect(endPoint, MediaType.AUDIO);
+	//	endPoint.connect(mixerPort,MediaType.AUDIO);
+	//	mixerPort.connect(endPoint, MediaType.AUDIO);
 		recorder.start();
-		{
-			String mixerSdp = endPoint.generateOffer();
-			JSONObject msg = new JSONObject().put("id", "description2").put("sdp", mixerSdp).put("type", "offer");
-			// XXX [CLIENT_OFFER_07] XXX
-			sendMessage(msg.toString());
 
-		}
-		endPoint.gatherCandidates();
-
+		
 	}
 
 	public void addCandidate(IceCandidate candidate) {
@@ -223,7 +219,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onSuccess(String arg0) throws Exception {
 				// TODO Auto-generated method stub
 				System.out.println("================");
-				System.out.println(arg0);
+				System.out.println(arg0);				
 			}
 
 			@Override
@@ -273,57 +269,59 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return result;
 	}
 
+	
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
 		playUser = userId;
-
-		if (player != null) {
+		
+		if(player!=null){
 			player.release();
 			realTime = true;
 		}
-
+		
 		System.out.println("SET HIST " + userId);
 		if (realTime) {
 			realTime = false;
 
-			Date currentTime = new Date(new Date().getTime() - playOffset);
-			UserSession session = room.getParticipant(playUser);
-			try {
-				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-						room.getGroupId(), session.getUser().getId().toString(), currentTime);
-				Recording rec = service.execute();
+				Date currentTime = new Date(new Date().getTime() - playOffset);
+				UserSession session = room.getParticipant(playUser);
+				try {
+					GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+							room.getGroupId(), session.getUser().getId().toString(), currentTime);
+					Recording rec = service.execute();
 
-				if (rec != null) {
-					System.out.println("PLAY:" + rec.getUrl());
+					if (rec != null) {
+						System.out.println("PLAY:" + rec.getUrl());
 
-					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
+						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+								.build();
 
-					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
-						@Override
-						public void onEvent(EndOfStreamEvent arg0) {
-							// TODO Auto-generated method stub
-							if (!realTime) {
-
-								player.release();
-								player = null;
-								realTime = true;
-								setHistoric(playUser, playOffset);
+							@Override
+							public void onEvent(EndOfStreamEvent arg0) {
+								// TODO Auto-generated method stub
+								if (!realTime) {
+							
+									player.release();
+									player = null;
+									realTime = true;
+									setHistoric(playUser, playOffset);
+								}
 							}
-						}
-					});
-					player.connect(endPoint);
-					player.play();
+						});
+						player.connect(endPoint);
+						player.play();
+						
+					} else {
+						realTime = true;
+						System.out.println("No video here!");
+					}
 
-				} else {
-					realTime = true;
-					System.out.println("No video here!");
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -331,7 +329,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint, MediaType.VIDEO);
+		session.endPoint.connect(endPoint,MediaType.VIDEO);
 		mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
@@ -339,6 +337,20 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// TODO Auto-generated method stub
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 		// mix only audio
+	}
+
+
+
+	public void processMixOffer(String description) {
+
+		String arg0 = mixerPoint.processOffer(description);
+		// XXX [CLIENT_OFFER_06] XXX
+		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
+		// XXX [CLIENT_OFFER_07] XXX
+		sendMessage(msg.toString());
+		mixerPoint.gatherCandidates();
+		
+		endPoint.connect(mixerPoint);
 	}
 
 }
