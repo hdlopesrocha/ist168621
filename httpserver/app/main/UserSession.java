@@ -97,8 +97,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							getUser().getId().toString(), begin, end, filename, "video/webm",
 							interval.getId().toString());
 					srs.execute();					
-					JSONObject rec = new JSONObject().append("begin", Recording.FORMAT.format(begin)).append("end", Recording.FORMAT.format(end));
-					JSONObject msg = new JSONObject().append("id", "rec").append(interval.getId().toString(), rec);
+					JSONObject rec = new JSONObject();
+					rec.put("begin", Recording.FORMAT.format(begin));
+					rec.put("end", Recording.FORMAT.format(end));
+					
+					JSONObject msg = new JSONObject();
+					msg.put("id", "rec");
+					msg.put(interval.getId().toString(), rec);
+
 					room.sendMessage(msg.toString());
 					System.out.println("STOP: " + filepath);
 					
