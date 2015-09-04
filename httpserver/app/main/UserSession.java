@@ -129,7 +129,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					synchronized (this) {
 						//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 						System.out.println(response.toString());
-						sendMessage(response.toString());
+				//		sendMessage(response.toString());
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -182,8 +182,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		sendMessage(msg.toString());
 		endPoint.gatherCandidates();
 		
-		endPoint.connect(endPoint, MediaType.VIDEO);
-		endPoint.connect(endPoint, MediaType.AUDIO);
+		endPoint.connect(endPoint);
 	//	endPoint.connect(mixerPort,MediaType.AUDIO);
 	//	mixerPort.connect(endPoint, MediaType.AUDIO);
 		recorder.start();
