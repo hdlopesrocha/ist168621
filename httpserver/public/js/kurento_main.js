@@ -131,6 +131,15 @@ var Kurento = new (function() {
 							newParticipantsCallback(uid, message.data[uid]);
 						}
 						break;
+					case 'description2':
+						var sdp = new RTCSessionDescription(message);
+						console.log("description2");
+						console.log(sdp);
+						// XXX [CLIENT_OFFER_08] XXX
+						mixerSdp.pc.setRemoteDescription(sdp, function(){
+							console.log("setRemoteDescription")
+							console.log(sdp)
+						},logError);
 					default:
 						break;					
 				}
