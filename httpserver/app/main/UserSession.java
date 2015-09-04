@@ -21,7 +21,6 @@ import java.util.Date;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
-import org.kurento.client.Continuation;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
@@ -159,8 +158,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.gatherCandidates();
 		
 		endPoint.connect(endPoint);
-		endPoint.connect(mixerPort,MediaType.AUDIO);
-		mixerPort.connect(mixerPoint, MediaType.AUDIO);
+		endPoint.connect(mixerPort);
+		mixerPort.connect(mixerPoint);
 		recorder.start();
 
 		
@@ -175,16 +174,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
-	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {
-
-		@Override
-		public void onSuccess(Void result) throws Exception {
-		}
-
-		@Override
-		public void onError(Throwable cause) throws Exception {
-		}
-	};
 
 	public User getUser() {
 		return user;
