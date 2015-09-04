@@ -14,15 +14,13 @@ import services.Service;
 
 public class Global extends GlobalSettings {
 
-	public final static KurentoClient kurento;
-	public final static RoomManager manager;
+	public final static KurentoManager manager;
 	static {
 		Service.init("webrtc");
 		System.out.println(Service.getCurrentTime());
 	//	Setup.main(null);
 	
-		kurento = KurentoClient.create("ws://localhost:8888/kurento");
-		manager = new RoomManager(kurento);
+		manager = new KurentoManager();
 
 		
 	}
