@@ -139,7 +139,6 @@
 					var end = array[i].end;
 					
 					var inter = rendered_intervals[id];
-					var newInter = null;
 					
 					if(inter){
 						items.remove(id);
@@ -151,7 +150,7 @@
 						start : start,
 						end : end
 					});
-					rendered_intervals[id] = newInter;
+					rendered_intervals[id] = true;
 					
 				
 				}
