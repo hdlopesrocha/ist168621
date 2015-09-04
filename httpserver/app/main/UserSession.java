@@ -117,26 +117,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 
-		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
-			@Override
-			public void onEvent(OnIceCandidateEvent event) {
-				JsonObject response = new JsonObject();
-				response.addProperty("id", "iceCandidate");
-
-				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-				try {
-					synchronized (this) {
-						//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-						System.out.println(response.toString());
-				//		sendMessage(response.toString());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
 
 		ep.setStunServerAddress("173.194.67.127");
 		ep.setStunServerPort(19302);
