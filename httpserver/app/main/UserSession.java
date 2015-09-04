@@ -67,9 +67,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
-		endPoint.setMaxVideoSendBandwidth(100);
 		mixerPoint = createWebRtcEndPoint();
-		mixerPoint.setMaxVideoSendBandwidth(1);
 
 		
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
@@ -150,10 +148,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	PlayerEndpoint pl;
 
 	private void loopTest(){
-		new Thread(new Runnable() {
 			
-			@Override
-			public void run() {
 				
 				
 				pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
@@ -171,8 +166,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				pl.play();
 				System.out.println("Playing 'video.webm' ...");
 				
-			}
-		}).start();
 	}
 
 	public WebRtcEndpoint createWebRtcEndPoint() {
