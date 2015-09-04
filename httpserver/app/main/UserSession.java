@@ -53,7 +53,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private final HubPort mixerPort;
+	private final HubPort mixerPortIn, mixerPortOut;
 
 	private PlayerEndpoint player;
 	private boolean realTime = true;
@@ -78,8 +78,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
+	
+		mixerPortIn = new HubPort.Builder(room.getMixer()).build();
+		mixerPortOut = new HubPort.Builder(room.getMixer()).build();
+
+		endPoint.connect(mixerPortIn);
+		mixerPortOut.connect(mixerPoint);
+
 		
-		mixerPort = new HubPort.Builder(room.getMixer()).build();
 		
 
 		final Interval interval = new Interval();
@@ -286,8 +292,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint,MediaType.VIDEO);
-		mixerPort.connect(endPoint, MediaType.AUDIO);
+		session.endPoint.connect(endPoint);
+		//mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
 	public void setMix() {
@@ -306,7 +312,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		mixerPoint.gatherCandidates();
-		mixerPort.connect(mixerPoint);
 		
 	//	endPoint.connect(mixerPort); // this crashes endPoint
 		
