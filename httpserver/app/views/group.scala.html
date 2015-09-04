@@ -20,7 +20,8 @@
 					<div class="col-sm-12">
 						<div class="panel panel-default">
 							<h3>Remote Video</h3>
-							<video id='myvideo' autoplay width='640px' height='480px' style="margin: 0px auto;display:block;"></video>
+							<video id='myvideo' autoplay width='480px' height='360px' style="margin: 0px auto;display:block;"></video>
+							<video id='mymixed' autoplay width='320px' height='240px' style="margin: 0px auto;display:block;"></video>
 							<div id="timeline"></div>
 						</div>
 					</div>
@@ -66,6 +67,7 @@
 		var real_time = true;
 		var current_interval = null;
 		var rendered_intervals = {};
+		var videoExists = false;
 	
 		// TIMELINE
 		var items = new vis.DataSet({
@@ -88,8 +90,9 @@
 			
 			
 			var kvideo = function(streamUrl) {
-				var video = document.getElementById("myvideo");
+				var video = videoExists ? document.getElementById("mymixed"): document.getElementById("myvideo");
 				video.src = streamUrl;
+				videoExists = true;
 				return video;
 			}
 	
