@@ -26,6 +26,7 @@ import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
+import org.kurento.client.MediaType;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
@@ -83,7 +84,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 
 	
-		endPoint.connect(endPoint);
+		endPoint.connect(endPoint, MediaType.VIDEO);
 		
 		//loopTest();
 	
@@ -204,6 +205,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			
 		endPoint.disconnect(compositePort); 
 		compositePort.disconnect(mixerPoint);
+		
 		compositePort.release();
 		mixerPoint.release();	
 		endPoint.release();
@@ -338,7 +340,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint);
+		session.endPoint.connect(endPoint, MediaType.VIDEO);
 		//mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 

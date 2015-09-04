@@ -49,7 +49,7 @@ public class MyRecorder {
 
 						handler.onFileRecorded(begin, end, filepath, filename);
 
-						// endPoint.disconnect(recorder);
+						endPoint.disconnect(recorder);
 						recorder.release();
 
 						// continuous parts (although not true)
@@ -80,6 +80,7 @@ public class MyRecorder {
 
 	public void close() {
 		stop();
+		recorder.release();
 	}
 
 }
