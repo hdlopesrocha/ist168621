@@ -26,7 +26,7 @@ import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.MediaType;
+import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
@@ -78,13 +78,19 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
+		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+
+			@Override
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				System.out.println("[MEDIA STREAM START]");
+				endPoint.connect(compositeIn); // this makes the video stop
+				compositeOut.connect(mixerPoint);				
+			}
+		});
 	
 		compositeIn = new HubPort.Builder(room.getComposite()).build();
 		compositeOut = new HubPort.Builder(room.getComposite()).build();
 
-		//endPoint.connect(compositeIn); // this makes the video stop
-		
-		compositeOut.connect(mixerPoint);
 
 	
 		
