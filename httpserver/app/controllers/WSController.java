@@ -73,12 +73,7 @@ public class WSController extends Controller {
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate,endPoint);
 								}
-									break;
-								case "answer":
-									System.out.println("----------");
-									String answer = args.getString("answer");
-									usession.processAnswer(answer);
-									break;
+								break;
 								case "realtime":
 									System.out.println("REALTIME");
 									new Thread(new Runnable() {										
