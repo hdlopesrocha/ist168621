@@ -45,12 +45,12 @@ public class Room implements Closeable {
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
-	private final Hub audioMixer;
+	private final Hub composite;
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
-		this.audioMixer = new Composite.Builder(mediaPipeline).build();
-			
+		this.composite = new Composite.Builder(mediaPipeline).build();
+		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
 
 			@Override
@@ -67,8 +67,8 @@ public class Room implements Closeable {
 
 	
 	
-	public Hub getMixer() {
-		return audioMixer;
+	public Hub getComposite() {
+		return composite;
 		
 	}
 
