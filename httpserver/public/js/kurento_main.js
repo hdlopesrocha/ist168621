@@ -57,7 +57,7 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.createPeerConnection = function() {
+	this.createPeerConnection = function(endPointId) {
 		// XXX [CLIENT_ICE_01] XXX
 		var pc = new RTCPeerConnection({
 			iceServers : [ {
@@ -73,6 +73,9 @@ var Kurento = new (function() {
 				var msg = {
 					id : "iceCandidate",
 					candidate : event.candidate
+				}
+				if(endPointId){
+					msg.endPoint=endPointId;
 				}
 				
 				// XXX [CLIENT_ICE_03] XXX
@@ -162,7 +165,7 @@ var Kurento = new (function() {
 			
 			Kurento.ws.onopen = function() {
 				Kurento.pc = Kurento.createPeerConnection(null);
-				Kurento.pc2 = Kurento.createPeerConnection(null);
+				Kurento.pc2 = Kurento.createPeerConnection("mixer");
 
 				
 				
