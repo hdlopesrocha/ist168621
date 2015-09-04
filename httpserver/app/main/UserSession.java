@@ -68,7 +68,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
-		endPoint.connect(endPoint);
 
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
@@ -111,6 +110,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
 				System.out.println("[MEDIA STREAM START]");
+				endPoint.connect(endPoint);
+
 				//endPoint.connect(compositeIn); // this makes the video stop
 				compositeOut.connect(mixerPoint);
 				recorder.start();
