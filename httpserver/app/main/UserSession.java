@@ -51,7 +51,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private HubPort compositePortIn,compositePortOut;
+	private HubPort compositePort;
 	private String intervalId = null;
 
 	private PlayerEndpoint player;
@@ -79,8 +79,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 	
-		compositePortIn = new HubPort.Builder(room.getComposite()).build();
-		compositePortOut = new HubPort.Builder(room.getComposite()).build();
+		compositePort = new HubPort.Builder(room.getComposite()).build();
 		
 
 	
@@ -89,8 +88,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		//loopTest();
 	
 				
-		endPoint.connect(compositePortIn); // this makes the video stop
-		compositePortIn.connect(mixerPoint);
+		endPoint.connect(compositePort); // this makes the video stop
+		compositePort.connect(mixerPoint);
 
 
 		
@@ -161,8 +160,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 		pl.play();
-		pl.connect(compositePortIn);
-		compositePortOut.connect(mixerPoint);
+		pl.connect(compositePort);
+		compositePort.connect(mixerPoint);
 
 		System.out.println("Playing 'video.webm' ...");
 
@@ -201,7 +200,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	@Override
 	public void close() throws IOException {
-
+		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
+		compositePort.release();
+		mixerPoint.release();
 		endPoint.release();
 	}
 
