@@ -147,25 +147,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 	PlayerEndpoint pl;
 
-	private void loopTest(){
-			
-				
-				
-				pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
-				pl.connect(compositePort);
-				compositePort.connect(mixerPoint);		
-				//pl.connect(mixerPoint);
-				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-					@Override
-					public void onEvent(EndOfStreamEvent arg0) {
-						pl.release();
-						loopTest();
-					}
-				});
+	private void loopTest() {
 
-				pl.play();
-				System.out.println("Playing 'video.webm' ...");
-				
+		pl = new PlayerEndpoint.Builder(room.getMediaPipeline(), "file:///rec/video.webm").build();
+
+		// pl.connect(mixerPoint);
+		pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+			@Override
+			public void onEvent(EndOfStreamEvent arg0) {
+				pl.release();
+				loopTest();
+			}
+		});
+
+		pl.play();
+		pl.connect(compositePort);
+		compositePort.connect(mixerPoint);
+
+		System.out.println("Playing 'video.webm' ...");
+
 	}
 
 	public WebRtcEndpoint createWebRtcEndPoint() {
