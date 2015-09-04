@@ -17,44 +17,48 @@ public class MyRecorder {
 	private Object recorderLock = new Object();
 	private Thread recorderThread = null;
 	private Runnable recorderRunnable = null;
-	
+
 	public MyRecorder(WebRtcEndpoint endPoint, Room room, RecorderHandler handler) {
-		
+
 		this.recorderRunnable = new Runnable() {
 
 			@Override
 			public void run() {
 				Date begin = new Date();
 
-				while (recorderThread!=null) {
-					String name = UUID.randomUUID().toString();
-
-					String filename = name + ".webm";
-					String filepath = "file:///rec/" + filename;
-					
-					System.out.println("REC: " + filepath);
-					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
-					endPoint.connect(recorder);
-					recorder.record();
-				
-					
+				while (recorderThread != null) {
 					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						String name = UUID.randomUUID().toString();
+
+						String filename = name + ".webm";
+						String filepath = "file:///rec/" + filename;
+
+						System.out.println("REC: " + filepath);
+						recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
+						endPoint.connect(recorder);
+						recorder.record();
+
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						recorder.stop();
+						Date end = new Date();
+
+						handler.onFileRecorded(begin, end, filepath, filename);
+
+						// endPoint.disconnect(recorder);
+						recorder.release();
+
+						// continuous parts (although not true)
+						begin = end;
+					} catch (Exception e) {
+						System.out.println("RECORDER STOP!");
+						break;
 					}
-
-					recorder.stop();
-					Date end = new Date();
-					
-					handler.onFileRecorded(begin, end, filepath, filename);
-
-				//	endPoint.disconnect(recorder);
-					recorder.release();
-
-					// continuous parts (although not true)
-					begin = end;
 				}
 			}
 		};
@@ -62,20 +66,17 @@ public class MyRecorder {
 
 	public void start() {
 		synchronized (recorderLock) {
-			if (recorderThread==null) {
+			if (recorderThread == null) {
 				recorderThread = new Thread(recorderRunnable);
 				recorderThread.start();
-			}			
+			}
 		}
 	}
-	
 
 	public void stop() {
 		synchronized (recorderLock) {
-			recorderThread = null;	
+			recorderThread = null;
 		}
 	}
-	
-	
 
 }
