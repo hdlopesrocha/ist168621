@@ -133,22 +133,22 @@
 			
 			var kinterval = function(id,start,end){
 			
-					var inter = rendered_intervals[id];
-					var newInter = null;
-					
-					if(inter){
-						items.remove(id);
-					}
-			
-					items.add({
-						id : id,
-						content : "&nbsp;",
-						start : start,
-						end : end
-					});
-					rendered_intervals[obj.inter] = newInter;
-					
+				var inter = rendered_intervals[id];
+				var newInter = null;
+				
+				if(inter){
+					items.remove(id);
 				}
+		
+				items.add({
+					id : id,
+					content : "&nbsp;",
+					start : start,
+					end : end
+				});
+				rendered_intervals[obj.inter] = newInter;
+				
+			
 				if (firstRecording) {
 					firstRecording = false;
 
