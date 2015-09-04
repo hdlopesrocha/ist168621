@@ -39,7 +39,7 @@ public class WSController extends Controller {
 						msg.put("id", "rec");
 						for (Interval interval : intervals) {
 							Date start = interval.getStart();
-							Date end = interval.getStart();
+							Date end = interval.getEnd();
 							
 							
 							if (start != null && end != null) {
