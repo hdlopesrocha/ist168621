@@ -201,9 +201,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	@Override
 	public void close() throws IOException {
 		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
+			
+		endPoint.disconnect(compositePort); 
+		compositePort.disconnect(mixerPoint);
 		compositePort.release();
-		mixerPoint.release();
+		mixerPoint.release();	
 		endPoint.release();
+		recorder.close();
 	}
 
 	public void processOffer(String description) {
