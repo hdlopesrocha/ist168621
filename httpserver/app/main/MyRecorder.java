@@ -1,6 +1,7 @@
 package main;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
@@ -14,7 +15,6 @@ public class MyRecorder {
 
 	private String name;
 	private RecorderEndpoint recorder;
-	private Long sequence = 0l;
 	private WebRtcEndpoint endPoint;
 	private Room room;
 
@@ -22,8 +22,8 @@ public class MyRecorder {
 	private Thread recorderThread = null;
 	private Runnable recorderRunnable = null;
 	
-	public MyRecorder(String path, WebRtcEndpoint endPoint, Room room, RecorderHandler handler) {
-		this.name = path;
+	public MyRecorder(WebRtcEndpoint endPoint, Room room, RecorderHandler handler) {
+		this.name = UUID.randomUUID().toString();
 		this.endPoint = endPoint;
 		this.room = room;
 		
@@ -35,7 +35,7 @@ public class MyRecorder {
 
 				while (recorderThread!=null) {
 
-					String filename = name + "-" + sequence + ".webm";
+					String filename = name + ".webm";
 					String filepath = "file:///rec/" + filename;
 					
 					System.out.println("REC: " + filepath);
@@ -61,7 +61,6 @@ public class MyRecorder {
 
 					// continuous parts (although not true)
 					begin = end;
-					++sequence;
 				}
 			}
 		};

@@ -24,9 +24,14 @@ public class SaveRecordingService extends Service<Recording> {
 	private String name;
 	private String type;
 	private String url;
+	private Interval inter = null;
 	private Date end;
 	private static Object LOCK = new Object();
 
+	public Interval getInterval(){
+		return inter;
+	}
+	
 	/**
 	 * Instantiates a new send message service.
 	 *
@@ -63,7 +68,6 @@ public class SaveRecordingService extends Service<Recording> {
 			url = uploadService.execute();
 		}
 		synchronized (LOCK) {
-			Interval inter = null;
 
 			if (interval == null) {
 				inter = new Interval(groupId, start, end);
