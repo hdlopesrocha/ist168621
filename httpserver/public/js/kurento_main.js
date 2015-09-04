@@ -172,6 +172,7 @@ var Kurento = new (function() {
 								id : "offer",
 								data : Kurento.pc.localDescription
 							}));
+							createOfferToReceiveMix();
 						}, logError);
 					}, logError,remote_constraints);
 				}, logError);
