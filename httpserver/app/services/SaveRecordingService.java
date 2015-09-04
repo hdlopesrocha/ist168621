@@ -66,7 +66,7 @@ public class SaveRecordingService extends Service<Recording> {
 			Interval inter = null;
 
 			if (interval == null) {
-				inter = new Interval(start, end);
+				inter = new Interval(groupId, start, end);
 				inter.save();
 				interval = inter.getId();
 			} else {
