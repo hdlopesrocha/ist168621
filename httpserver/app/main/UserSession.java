@@ -82,7 +82,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositeIn = new HubPort.Builder(room.getComposite()).build();
 		compositeOut = new HubPort.Builder(room.getComposite()).build();
 
-		endPoint.connect(compositeIn); // this makes the video stop
+		//endPoint.connect(compositeIn); // this makes the video stop
 		
 		compositeOut.connect(mixerPoint);
 
