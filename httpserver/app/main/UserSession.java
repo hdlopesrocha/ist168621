@@ -21,6 +21,7 @@ import java.util.Date;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
+import org.kurento.client.Continuation;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
@@ -85,9 +86,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	
 		endPoint.connect(endPoint);
+		
+		endPoint.connect(compositeIn,new Continuation<Void>() {
+			
+			@Override
+			public void onSuccess(Void arg0) throws Exception {
+				// TODO Auto-generated method stub
+				compositeOut.connect(mixerPoint);				
+			}
+			
+			@Override
+			public void onError(Throwable arg0) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 
 		//endPoint.connect(compositeIn); // this makes the video stop
-		compositeOut.connect(mixerPoint);
+
 
 
 	
