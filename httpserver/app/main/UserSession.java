@@ -21,7 +21,6 @@ import java.util.Date;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
-import org.kurento.client.Continuation;
 import org.kurento.client.EndOfStreamEvent;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
@@ -89,20 +88,30 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 
 		compositeOut.connect(mixerPoint);				
-		PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
-		pl.connect(mixerPoint);
-		compositeIn.connect(mixerPoint);
-		pl.play();
-		
-		pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+
+		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 
 			@Override
-			public void onEvent(EndOfStreamEvent arg0) {
+			public void onEvent(MediaSessionStartedEvent arg0) {
 				// TODO Auto-generated method stub
+				PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
+				pl.connect(mixerPoint);
+				compositeIn.connect(mixerPoint);
 				pl.play();
+				
+				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+
+					@Override
+					public void onEvent(EndOfStreamEvent arg0) {
+						// TODO Auto-generated method stub
+						pl.play();
+					}
+				});
+		
 			}
 		});
 		
+				
 		//endPoint.connect(compositeIn); // this makes the video stop
 
 
@@ -291,7 +300,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					if (rec != null) {
 						System.out.println("PLAY:" + rec.getUrl());
 
-						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), /*rec.getUrl()*/"file:///rec/video.webm")
+						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
 								.build();
 
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
