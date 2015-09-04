@@ -104,7 +104,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 
 				
-		endPoint.connect(compositePort); // this makes the video stop
+		//endPoint.connect(compositePort); // this makes the video stop
 
 
 
