@@ -87,22 +87,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.connect(endPoint);
 		
 		// COMPOSITE (TESTING YET)
-		{
-			pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
-			pl.connect(compositePort);
-			compositePort.connect(mixerPoint);		
-			pl.play();
-			System.out.println("Playing 'video.webm' ...");
-			pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-	
-				@Override
-				public void onEvent(EndOfStreamEvent arg0) {
-					// TODO Auto-generated method stub
-					pl.play();
-				}
-			});
-		}
+		mixerPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 
+			@Override
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
+				pl.connect(compositePort);
+				compositePort.connect(mixerPoint);		
+				pl.play();
+				System.out.println("Playing 'video.webm' ...");
+				pl.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+					@Override
+					public void onEvent(EndOfStreamEvent arg0) {
+						pl.play();
+					}
+				});
+			
+			}
+		});
+	
 				
 		//endPoint.connect(compositePort); // this makes the video stop
 
