@@ -186,11 +186,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 		recorder.start();
 		{
-			String mixerSdp = mixerPoint.generateOffer();
+			String mixerSdp = endPoint.generateOffer();
 			JSONObject msg = new JSONObject().put("id", "description2").put("sdp", mixerSdp).put("type", "offer");
 			// XXX [CLIENT_OFFER_07] XXX
 			sendMessage(msg.toString());
-			mixerPoint.gatherCandidates();
+			endPoint.gatherCandidates();
 		}
 	}
 
