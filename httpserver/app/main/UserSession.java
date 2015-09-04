@@ -190,7 +190,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			JSONObject msg = new JSONObject().put("id", "description2").put("sdp", mixerSdp).put("type", "offer");
 			// XXX [CLIENT_OFFER_07] XXX
 			sendMessage(msg.toString());
-			endPoint.gatherCandidates();
+			mixerPoint.gatherCandidates();
 		}
 	}
 
