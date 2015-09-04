@@ -42,6 +42,7 @@ public class MyRecorder {
 					recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
 					endPoint.connect(recorder);
 					recorder.record();
+				
 					
 					try {
 						Thread.sleep(10000);
