@@ -98,7 +98,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			@Override
 			public void onError(Throwable arg0) throws Exception {
 				// TODO Auto-generated method stub
-				
+				System.out.println("CON: "+arg0.getMessage());
 			}
 		});
 		
