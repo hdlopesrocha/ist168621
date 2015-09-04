@@ -191,10 +191,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 	}
 
-	public void addCandidate(IceCandidate candidate) {
+	public void addCandidate(IceCandidate candidate, String endPointId) {
 		// XXX [CLIENT_ICE_04] XXX
-		endPoint.addIceCandidate(candidate);
-
+		if(endPointId==null){
+			endPoint.addIceCandidate(candidate);
+		}else {
+			mixerPoint.addIceCandidate(candidate);
+		}
 	}
 
 	Continuation<Void> EMPTY_CONTINUATION = new Continuation<Void>() {

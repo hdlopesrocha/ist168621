@@ -67,9 +67,11 @@ public class WSController extends Controller {
 								break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
+									String endPoint = args.optString("endPoint",null);
+									
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									usession.addCandidate(candidate);
+									usession.addCandidate(candidate,endPoint);
 								}
 									break;
 								case "answer":
