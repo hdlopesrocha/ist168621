@@ -52,7 +52,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private HubPort compositeIn, compositeOut;
+	private HubPort compositePort;
 	private String intervalId = null;
 
 	private PlayerEndpoint player;
@@ -80,8 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		});
 
 	
-		compositeIn = new HubPort.Builder(room.getComposite()).build();
-		compositeOut = new HubPort.Builder(room.getComposite()).build();
+		compositePort = new HubPort.Builder(room.getComposite()).build();
 
 
 	
@@ -91,8 +90,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// TODO Auto-generated method stub
 		pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 		//pl.connect(mixerPoint);
-		pl.connect(compositeIn);
-		compositeOut.connect(mixerPoint);
+		pl.connect(compositePort);
+		compositePort.connect(mixerPoint);
 		//compositeIn.connect(mixerPoint);
 		//compositeOut.connect(mixerPoint);				
 		pl.play();
