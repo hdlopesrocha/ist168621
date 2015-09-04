@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
 import org.kurento.client.EndOfStreamEvent;
+import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
@@ -68,8 +69,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint = createWebRtcEndPoint();
 		mixerPoint = createWebRtcEndPoint();
 
-		
+		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
+			@Override
+			public void onEvent(ErrorEvent arg0) {
+				System.out.println("ERR:::::::: "+arg0.getDescription());
+				
+			}
+		});
+
+		
 		mixerPort = new HubPort.Builder(room.getMixer()).build();
 		
 
@@ -297,9 +306,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		mixerPoint.gatherCandidates();
-		//mixerPort.connect(mixerPoint);
+		mixerPort.connect(mixerPoint);
 		
-		endPoint.connect(mixerPort);
+		endPoint.connect(mixerPort); // this crashes endPoint
 		
 	}
 
