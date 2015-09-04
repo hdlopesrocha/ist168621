@@ -291,7 +291,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					if (rec != null) {
 						System.out.println("PLAY:" + rec.getUrl());
 
-						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl())
+						player = new PlayerEndpoint.Builder(room.getMediaPipeline(), /*rec.getUrl()*/"file:///rec/video.webm")
 								.build();
 
 						player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
