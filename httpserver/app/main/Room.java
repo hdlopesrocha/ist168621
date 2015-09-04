@@ -29,6 +29,7 @@ import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
+import org.kurento.client.MediaObject;
 import org.kurento.client.MediaPipeline;
 
 import models.Group;
@@ -48,7 +49,15 @@ public class Room implements Closeable {
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
+		
+		
 		this.composite = new Composite.Builder(mediaPipeline).build();
+		
+		
+		
+		for(MediaObject obj : mediaPipeline.getChilds()){
+			System.out.println("### "+obj.getClass().toString()+ " | "+ obj.toString());
+		}
 		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
 
