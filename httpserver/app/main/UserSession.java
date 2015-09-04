@@ -177,7 +177,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 			// XXX [CLIENT_OFFER_07] XXX
 			sendMessage(msg.toString());
-			endPoint.gatherCandidates();
 		}
 
 		endPoint.connect(endPoint, MediaType.VIDEO);
@@ -190,8 +189,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			JSONObject msg = new JSONObject().put("id", "description2").put("sdp", mixerSdp).put("type", "offer");
 			// XXX [CLIENT_OFFER_07] XXX
 			sendMessage(msg.toString());
-			endPoint.gatherCandidates();
+
 		}
+		endPoint.gatherCandidates();
+
 	}
 
 	public void addCandidate(IceCandidate candidate) {
