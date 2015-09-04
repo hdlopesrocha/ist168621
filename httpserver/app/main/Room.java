@@ -66,6 +66,8 @@ public class Room implements Closeable {
 	}
 
 	public void sendMessage(final String string) {
+		System.out.println("ROOM SEND: " + string);
+
 		for(UserSession user : participants.values()){
 			user.sendMessage(string);
 		}
