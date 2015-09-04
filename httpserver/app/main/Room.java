@@ -161,6 +161,7 @@ public class Room implements Closeable {
 
 	@Override
 	public void close() {
+		System.out.println("------------- ROOM CLOSE --------------");
 		for (final UserSession user : participants.values()) {
 			try {
 				user.close();
@@ -169,16 +170,7 @@ public class Room implements Closeable {
 			}
 		}
 		participants.clear();
-		mediaPipeline.release(new Continuation<Void>() {
-
-			@Override
-			public void onSuccess(Void result) throws Exception {
-			}
-
-			@Override
-			public void onError(Throwable cause) throws Exception {
-			}
-		});
+		mediaPipeline.release();
 	}
 
 	public String getId() {
