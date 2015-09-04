@@ -81,11 +81,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 		mixerPortIn = new HubPort.Builder(room.getMixer()).build();
 		mixerPortOut = new HubPort.Builder(room.getMixer()).build();
+		mixerPortIn.connect(mixerPortOut);
 
 		endPoint.connect(mixerPortIn);
 		mixerPortOut.connect(mixerPoint);
 
-		
+	
 		
 
 		final Interval interval = new Interval();
