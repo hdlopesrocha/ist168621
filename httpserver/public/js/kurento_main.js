@@ -24,11 +24,12 @@ function logError(err) {
 
 var newParticipantsCallback = null; 
 var newVideoCallback = null; 
-
+var mixerVideoCallback = null;
 
 var Kurento = new (function() {
 	
 	this.pc = null;
+	this.pc2 = null;
 
 	this.ws = null;
 
@@ -82,10 +83,10 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.start = function(groupId,npcb,nvcb) {		
+	this.start = function(groupId,npcb,nvcb,mvcb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
-		
+		mixerVideoVallback = mvcb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -124,7 +125,19 @@ var Kurento = new (function() {
 							console.log("setRemoteDescription")
 							console.log(sdp)
 						},logError);
-						break;
+						break;		
+						case 'mixDescription':
+							console.log(id, message);
+							var sdp = new RTCSessionDescription(message);
+
+							console.log("mixDescription");
+							console.log(sdp);
+							// XXX [CLIENT_OFFER_08] XXX
+							Kurento.pc2.setRemoteDescription(sdp, function(){
+								console.log("setRemoteDescription")
+								console.log(sdp)
+							},logError);
+							break;
 					case 'participants':
 						console.log(id,message);
 						for(var uid in message.data){
@@ -145,8 +158,14 @@ var Kurento = new (function() {
 				}
 			};
 
-			function createOfferToReceiveMix(){
-				Kurento.pc.createOffer(function (desc) {
+		
+			
+			Kurento.ws.onopen = function() {
+				Kurento.pc = Kurento.createPeerConnection(null);
+				Kurento.pc2 = Kurento.createPeerConnection(null);
+
+				
+				Kurento.pc2.createOffer(function (desc) {
 					console.log("createOfferToReceiveMix");
 					console.log(desc);
 					Kurento.ws.send(JSON.stringify({
@@ -154,11 +173,7 @@ var Kurento = new (function() {
 						data : desc
 					}));
 				}, logError,remote_constraints);
-			}
-			
-			Kurento.ws.onopen = function() {
-				Kurento.pc = Kurento.createPeerConnection(null);
-
+				
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
 					Kurento.pc.addStream(stream);
@@ -172,7 +187,6 @@ var Kurento = new (function() {
 								id : "offer",
 								data : Kurento.pc.localDescription
 							}));
-							createOfferToReceiveMix();
 						}, logError);
 					}, logError,remote_constraints);
 				}, logError);
@@ -199,11 +213,14 @@ var Kurento = new (function() {
 
 				
 				Kurento.pc.onaddstream = function (e) {
-					console.log(e);
+					console.log("pc1",e);
 					newVideoCallback(URL.createObjectURL(e.stream));
 				};
 				
-	
+				Kurento.pc2.onaddstream = function (e) {
+					console.log("pc2",e);
+					mixerVideoCallback(URL.createObjectURL(e.stream));
+				};
 				
 			};
 

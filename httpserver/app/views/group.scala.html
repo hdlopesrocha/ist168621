@@ -67,7 +67,6 @@
 		var real_time = true;
 		var current_interval = null;
 		var rendered_intervals = {};
-		var videoExists = false;
 	
 		// TIMELINE
 		var items = new vis.DataSet({
@@ -89,22 +88,7 @@
 	
 			
 			
-			var kvideo = function(streamUrl) {
-				var video = videoExists ? document.getElementById("mymixed"): document.getElementById("myvideo");
-				video.src = streamUrl;
-				videoExists = true;
-				return video;
-			}
-	
-			var kparticipants = function(userId, email) {
-				if (!participants[userId]) {
-					$("#state"+userId).attr('class', "circular circular-online" );				
-					participants[userId] = email;
-				}
-			}
-			
-			
-	
+
 		
 			timeline = HyperTimeline.create(items, "timeline",
 				function(offset) {
@@ -168,8 +152,30 @@
 			});
 	
 	
+			var kvideo = function(streamUrl) {
+				var video = document.getElementById("myvideo");
+				video.src = streamUrl;
+				return video;
+			}
+			
+			var mvideo = function(streamUrl) {
+				var video = document.getElementById("mymixed");
+				video.src = streamUrl;
+				return video;
+			}
+			
+			var kparticipants = function(userId, email) {
+				if (!participants[userId]) {
+					$("#state"+userId).attr('class', "circular circular-online" );				
+					participants[userId] = email;
+				}
+			}
+			
+			
 	
-			Kurento.start("@groupId", kparticipants, kvideo);
+			
+			
+			Kurento.start("@groupId", kparticipants, kvideo, mvideo);
 	
 			$("#refresh-button").click(function() {
 				document.location = document.location;
