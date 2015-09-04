@@ -93,7 +93,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
 				// TODO Auto-generated method stub
-				PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
+				final PlayerEndpoint pl = new PlayerEndpoint.Builder(room.getMediaPipeline(),"file:///rec/video.webm").build();
 				pl.connect(mixerPoint);
 				//compositeIn.connect(mixerPoint);
 				//compositeOut.connect(mixerPoint);				
