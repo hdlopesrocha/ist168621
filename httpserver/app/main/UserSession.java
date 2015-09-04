@@ -52,7 +52,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint mixerPoint;
 
 	private final MyRecorder recorder;
-	private final HubPort compositeIn, compositeOut;
+	private HubPort compositeIn, compositeOut;
 	private String intervalId = null;
 
 	private PlayerEndpoint player;
