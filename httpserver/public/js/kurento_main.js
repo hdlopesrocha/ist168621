@@ -217,25 +217,7 @@ var Kurento = new (function() {
 					}, logError);
 				}, logError,remote_constraints);
 				
-				/*
-				// XXX [CLIENT_OFFER_01] XXX
-				Kurento.pc.createOffer(function (desc) {
-					console.log("createOfferToReveive");
-					console.log(desc);
-					// XXX [CLIENT_OFFER_02] XXX
-
-					Kurento.pc.setLocalDescription(desc, function() {
-						// XXX [CLIENT_OFFER_03] XXX		
-						Kurento.ws.send(JSON.stringify({
-							id : "offer",
-							uid:userId,
-							data : Kurento.pc.localDescription
-						}));
-					}, logError);
-					
-				
-				}, logError,remote_constraints);
-				*/
+		
 
 				
 				Kurento.pc.onaddstream = function (e) {
