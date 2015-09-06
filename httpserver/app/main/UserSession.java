@@ -84,10 +84,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	 loopTest();
 
-		endPoint.connect(compositePort, MediaType.AUDIO);
-		endPoint.connect(compositePort, MediaType.VIDEO);
-		compositePort.connect(mixerPoint, MediaType.AUDIO);
-		compositePort.connect(mixerPoint, MediaType.VIDEO);
+		endPoint.connect(compositePort);
+		compositePort.connect(mixerPoint);
 
 		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
 			@Override
