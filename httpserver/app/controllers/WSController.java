@@ -78,16 +78,12 @@ public class WSController extends Controller {
 
 								case "offer": {
 									JSONObject data = args.getJSONObject("data");
+									String endPoint = args.optString("endPoint", null);
+
 									String description = data.getString("sdp");
-									usession.processOffer(description);
+									usession.processOffer(description,endPoint);
 								}
-									break;
-								case "mixOffer": {
-									JSONObject data = args.getJSONObject("data");
-									String description = data.getString("sdp");
-									usession.processMixOffer(description);
-								}
-									break;
+								break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
 									String endPoint = args.optString("endPoint", null);
@@ -96,7 +92,7 @@ public class WSController extends Controller {
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate, endPoint);
 								}
-									break;
+								break;
 								case "realtime":
 									System.out.println("REALTIME");
 									new Thread(new Runnable() {
