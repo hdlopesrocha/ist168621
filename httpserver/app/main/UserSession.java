@@ -82,7 +82,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		endPoint.connect(endPoint, MediaType.VIDEO);
 
-		// loopTest();
+	 loopTest();
 
 		endPoint.connect(compositePort, MediaType.AUDIO);
 		endPoint.connect(compositePort, MediaType.VIDEO);
