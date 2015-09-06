@@ -70,8 +70,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		endPoint = createWebRtcEndPoint();
-		mixerPoint = createWebRtcEndPoint();
+		endPoint = createWebRtcEndPoint(null);
+		mixerPoint = createWebRtcEndPoint("mixer");
 
 		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
 
