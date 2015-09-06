@@ -61,7 +61,7 @@ public class Room implements Closeable {
 		}
 		if(this.composite==null){
 			this.composite = new Composite.Builder(mediaPipeline).build();
-			this.composite.setName("composite");
+	//		this.composite.setName("composite");
 		}
 		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
