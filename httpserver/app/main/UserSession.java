@@ -17,6 +17,8 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
@@ -54,6 +56,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Room room;
 	private final WebRtcEndpoint endPoint;
 	private final WebRtcEndpoint mixerPoint;
+	private final Map<String,WebRtcEndpoint> endPoints = new TreeMap<String,WebRtcEndpoint>();
 
 	private final MyRecorder recorder;
 	private HubPort compositePort;
@@ -63,6 +66,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private boolean realTime = true;
 	private long playOffset = 0l;
 	private String playUser = "";
+	
+	
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -70,7 +75,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.room = room;
 
 		// XXX [ICE_01] XXX
-		endPoint = createWebRtcEndPoint(null);
+		endPoint = createWebRtcEndPoint("main");
 		mixerPoint = createWebRtcEndPoint("mixer");
 
 		compositePort = new HubPort.Builder(room.getComposite()).build();
@@ -153,6 +158,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public WebRtcEndpoint createWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
+		endPoints.put(name, ep);
+		
 		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
 			@Override
@@ -226,13 +233,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		recorder.close();
 	}
 
-	public void addCandidate(IceCandidate candidate, String endPointId) {
+	public void addCandidate(IceCandidate candidate, String name) {
+		WebRtcEndpoint ep = endPoints.get(name==null? "main" : name);
 		// XXX [CLIENT_ICE_04] XXX
-		if (endPointId == null) {
-			endPoint.addIceCandidate(candidate);
-		} else {
-			mixerPoint.addIceCandidate(candidate);
-		}
+		ep.addIceCandidate(candidate);
 	}
 
 	public User getUser() {
@@ -347,13 +351,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public void processOffer(String description, String name) {
 		// XXX [CLIENT_ICE_04] XXX
-		WebRtcEndpoint ep;
-
-		if (name == null) {
-			ep = endPoint;
-		} else {
-			ep = mixerPoint;
-		}
+		WebRtcEndpoint ep = endPoints.get(name==null? "main" : name);
+		
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 		String arg0 = ep.processOffer(description);
