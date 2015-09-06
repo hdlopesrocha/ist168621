@@ -210,7 +210,8 @@ var Kurento = new (function() {
 
 					Kurento.pc2.setLocalDescription(desc, function() {
 						Kurento.ws.send(JSON.stringify({
-							id : "mixOffer",
+							id : "offer",
+							endPoint : "mixer",
 							data : Kurento.pc2.localDescription
 						}));
 					}, logError);
