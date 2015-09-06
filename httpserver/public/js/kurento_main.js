@@ -184,18 +184,7 @@ var Kurento = new (function() {
 				Kurento.pc2 = Kurento.createPeerConnection("mixer");
 
 				
-				
-				Kurento.pc2.createOffer(function (desc) {
-					console.log("createOfferToReveiveMix");
-					console.log(desc);
-
-					Kurento.pc2.setLocalDescription(desc, function() {
-						Kurento.ws.send(JSON.stringify({
-							id : "mixOffer",
-							data : Kurento.pc2.localDescription
-						}));
-					}, logError);
-				}, logError,remote_constraints);
+			
 				
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
@@ -214,6 +203,19 @@ var Kurento = new (function() {
 					}, logError,remote_constraints);
 				}, logError);
 
+				
+				Kurento.pc2.createOffer(function (desc) {
+					console.log("createOfferToReveiveMix");
+					console.log(desc);
+
+					Kurento.pc2.setLocalDescription(desc, function() {
+						Kurento.ws.send(JSON.stringify({
+							id : "mixOffer",
+							data : Kurento.pc2.localDescription
+						}));
+					}, logError);
+				}, logError,remote_constraints);
+				
 				/*
 				// XXX [CLIENT_OFFER_01] XXX
 				Kurento.pc.createOffer(function (desc) {
