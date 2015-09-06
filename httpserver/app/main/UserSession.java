@@ -80,7 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		compositePort = new HubPort.Builder(room.getComposite()).build();
 
-		endPoint.connect(endPoint, MediaType.VIDEO);
+		endPoint.connect(endPoint);
 
 		// loopTest();
 
