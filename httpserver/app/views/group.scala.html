@@ -133,10 +133,9 @@
 			
 			var kinterval = function(array){
 				console.log("REC",array);
-				for (var i in array){
-					var id = array[i].id;
-					var start = array[i].start;
-					var end = array[i].end;
+				for (var id in array){
+					var start = array[id][0];
+					var end = array[id][1];
 					
 					var inter = rendered_intervals[id];
 					
