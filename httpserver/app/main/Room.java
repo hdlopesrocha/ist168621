@@ -56,7 +56,7 @@ public class Room implements Closeable {
 		
 		for(MediaObject obj : mediaPipeline.getChilds()){
 			if("composite".equals(obj.getName())){
-				this.composite = (Hub) obj;
+	//			this.composite = (Hub) obj;
 			}
 		}
 		if(this.composite==null){
