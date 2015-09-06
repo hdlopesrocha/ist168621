@@ -27,8 +27,12 @@ import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaType;
+import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
+import org.kurento.jsonrpc.JsonUtils;
+
+import com.google.gson.JsonObject;
 
 import exceptions.ServiceException;
 import models.Interval;
@@ -84,8 +88,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		// loopTest();
 
-		// endPoint.connect(compositePort); // this makes the video stop
-		// compositePort.connect(mixerPoint);
+		endPoint.connect(compositePort); // this makes the video stop
+		compositePort.connect(mixerPoint);
 
 		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
 			@Override
@@ -158,6 +162,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	public WebRtcEndpoint createWebRtcEndPoint() {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
+		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
+
+			@Override
+			public void onEvent(OnIceCandidateEvent event) {
+				JsonObject response = new JsonObject();
+				response.addProperty("id", "iceCandidate");
+
+				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+				try {
+					synchronized (this) {
+						// System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+						System.out.println(response.toString());
+						sendMessage(response.toString());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
 
 		ep.setStunServerAddress("173.194.67.127");
 		ep.setStunServerPort(19302);
@@ -318,12 +342,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// mix only audio
 	}
 
-
 	public void processOffer(String description, String endPointId) {
 		// XXX [CLIENT_ICE_04] XXX
 		WebRtcEndpoint ep;
-		String id ;
-		
+		String id;
+
 		if (endPointId == null) {
 			id = "description";
 			ep = endPoint;
