@@ -73,15 +73,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint = createWebRtcEndPoint(null);
 		mixerPoint = createWebRtcEndPoint("mixer");
 
-		endPoint.addErrorListener(new EventListener<ErrorEvent>() {
-
-			@Override
-			public void onEvent(ErrorEvent arg0) {
-				System.out.println("ERROR: " + arg0.getDescription());
-
-			}
-		});
-
 		compositePort = new HubPort.Builder(room.getComposite()).build();
 
 		endPoint.connect(endPoint, MediaType.VIDEO);
@@ -183,6 +174,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			}
 		});
+		
+
+		ep.addErrorListener(new EventListener<ErrorEvent>() {
+
+			@Override
+			public void onEvent(ErrorEvent arg0) {
+				System.out.println("ERROR: " + arg0.getDescription());
+
+			}
+		});
+
 
 		ep.setStunServerAddress("173.194.67.127");
 		ep.setStunServerPort(19302);
