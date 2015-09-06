@@ -160,7 +160,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
-	public WebRtcEndpoint createWebRtcEndPoint() {
+	public WebRtcEndpoint createWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 
@@ -168,8 +168,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onEvent(OnIceCandidateEvent event) {
 				JsonObject response = new JsonObject();
 				response.addProperty("id", "iceCandidate");
-
+				response.addProperty("name", name);
 				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+				
 				try {
 					synchronized (this) {
 						// System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
@@ -342,23 +343,20 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// mix only audio
 	}
 
-	public void processOffer(String description, String endPointId) {
+	public void processOffer(String description, String name) {
 		// XXX [CLIENT_ICE_04] XXX
 		WebRtcEndpoint ep;
-		String id;
 
-		if (endPointId == null) {
-			id = "description";
+		if (name == null) {
 			ep = endPoint;
 		} else {
-			id = "mixDescription";
 			ep = mixerPoint;
 		}
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 		String arg0 = ep.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", id).put("sdp", arg0).put("type", "answer");
+		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer").put("name",name);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		ep.gatherCandidates();

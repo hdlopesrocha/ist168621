@@ -58,7 +58,7 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.createPeerConnection = function(endPointId) {
+	this.createPeerConnection = function(name) {
 		// XXX [CLIENT_ICE_01] XXX
 		var pc = new RTCPeerConnection({
 			iceServers : [ {
@@ -75,8 +75,8 @@ var Kurento = new (function() {
 					id : "iceCandidate",
 					candidate : event.candidate
 				}
-				if(endPointId){
-					msg['endPoint']=endPointId;
+				if(name){
+					msg.name=name;
 				}
 				
 				// XXX [CLIENT_ICE_03] XXX
@@ -109,8 +109,8 @@ var Kurento = new (function() {
 					case 'iceCandidate':
 						console.log(id,message);
 						var candidate = new RTCIceCandidate(message.candidate);
-						if(message.uid){
-							KurentoReceiver.peerConnections[message.uid].addIceCandidate(candidate, function() {
+						if(message.name){
+							Kurento.pc2.addIceCandidate(candidate, function() {
 								console.log(candidate);
 							}, logError);
 						}else {
@@ -118,46 +118,28 @@ var Kurento = new (function() {
 								console.log(candidate);
 							}, logError);
 						}
-						break;
+					break;
 					case 'description':
+						var name = message.name;
+						var thisPc = name ? Kurento.pc : Kurento.pc2;
+						
 						console.log(id, message);
 						var sdp = new RTCSessionDescription(message);
 
 						console.log("description");
 						console.log(sdp);
 						// XXX [CLIENT_OFFER_08] XXX
-						Kurento.pc.setRemoteDescription(sdp, function(){
+						thisPc.setRemoteDescription(sdp, function(){
 							console.log("setRemoteDescription")
 							console.log(sdp)
 						},logError);
-						break;		
-						case 'mixDescription':
-							console.log(id, message);
-							var sdp = new RTCSessionDescription(message);
-
-							console.log("mixDescription");
-							console.log(sdp);
-							// XXX [CLIENT_OFFER_08] XXX
-							Kurento.pc2.setRemoteDescription(sdp, function(){
-								console.log("setRemoteDescription")
-								console.log(sdp)
-							},logError);
-							break;
+					break;		
 					case 'participants':
 						console.log(id,message);
 						for(var uid in message.data){
 							newParticipantsCallback(uid, message.data[uid]);
 						}
-						break;
-					case 'description2':
-						var sdp = new RTCSessionDescription(message);
-						console.log("description2");
-						console.log(sdp);
-						// XXX [CLIENT_OFFER_08] XXX
-						Kurento.pc.setRemoteDescription(sdp, function(){
-							console.log("setRemoteDescription")
-							console.log(sdp)
-						},logError);
+					break;
 					case 'rec':
 						console.log("REC", message);
 						var array = [];
@@ -211,7 +193,7 @@ var Kurento = new (function() {
 					Kurento.pc2.setLocalDescription(desc, function() {
 						Kurento.ws.send(JSON.stringify({
 							id : "offer",
-							endPoint : "mixer",
+							name : "mixer",
 							data : Kurento.pc2.localDescription
 						}));
 					}, logError);

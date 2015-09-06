@@ -78,19 +78,19 @@ public class WSController extends Controller {
 
 								case "offer": {
 									JSONObject data = args.getJSONObject("data");
-									String endPoint = args.optString("endPoint", null);
+									String name = args.optString("name", null);
 
 									String description = data.getString("sdp");
-									usession.processOffer(description,endPoint);
+									usession.processOffer(description,name);
 								}
 								break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
-									String endPoint = args.optString("endPoint", null);
+									String name = args.optString("name", null);
 
 									IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-									usession.addCandidate(candidate, endPoint);
+									usession.addCandidate(candidate, name);
 								}
 								break;
 								case "realtime":
