@@ -33,15 +33,17 @@ public class KurentoManager {
 	public final KurentoClient kurento;
 
 	public KurentoManager (){
-		kurento = KurentoClient.create("ws://localhost:8888/kurento");
-		
-		
-	//	Dispatcher disp = new Dispatcher.Builder()
+		System.out.println("Connecting to KMS...");
+		kurento = KurentoClient.create("ws://localhost:8888/kurento");		
+		System.out.println("Ok!");
+
+		System.out.println("Creating rooms...");
 		for(MediaPipeline pipeline : kurento.getServerManager().getPipelines()) {
 			System.out.println("Loaded: " + pipeline.getId() + " | " +pipeline.getName());
 			rooms.put(pipeline.getName(), new Room(pipeline));
 			
 		}	
+		System.out.println("Ok!");
 	}
 
 	private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
