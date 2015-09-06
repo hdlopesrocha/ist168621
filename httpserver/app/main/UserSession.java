@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
 import org.kurento.client.ConnectionStateChangedEvent;
@@ -100,13 +101,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					Interval interval = srs.getInterval();
 					intervalId = interval.getId().toString();
 
-					JSONObject rec = new JSONObject();
-					rec.put("begin", Recording.FORMAT.format(interval.getStart()));
-					rec.put("end", Recording.FORMAT.format(interval.getEnd()));
+					JSONArray array = new JSONArray();
+					array.put(Recording.FORMAT.format(interval.getStart()));
+					array.put(Recording.FORMAT.format(interval.getEnd()));
 
 					JSONObject msg = new JSONObject();
 					msg.put("id", "rec");
-					msg.put(interval.getId().toString(), rec);
+					msg.put(interval.getId().toString(), array);
 
 					room.sendMessage(msg.toString());
 

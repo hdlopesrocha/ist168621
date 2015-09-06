@@ -139,7 +139,7 @@ var Kurento = new (function() {
 						for (var id in message){
 							var obj = message[id];
 							if(id !== 'id'){
-								array.push({'id':id,start:obj.begin,end:obj.end});
+								array.push(obj);
 							}							
 						}
 						newRecordingCallback(array);

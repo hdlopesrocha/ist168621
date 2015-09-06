@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.IceCandidate;
 
@@ -44,9 +45,9 @@ public class WSController extends Controller {
 							
 							if (start != null && end != null) {
 
-								JSONObject rec = new JSONObject();
-								rec.put("begin", Recording.FORMAT.format(start));
-								rec.put("end", Recording.FORMAT.format(end));
+								JSONArray rec = new JSONArray();
+								rec.put(Recording.FORMAT.format(start));
+								rec.put(Recording.FORMAT.format(end));
 								msg.put(interval.getId().toString(), rec);
 
 							}
