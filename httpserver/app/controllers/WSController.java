@@ -69,7 +69,7 @@ public class WSController extends Controller {
 						// For each event received on the socket,
 						in.onMessage(new Callback<String>() {
 							public void invoke(String event) {
-								System.out.println("onMessage: " + event);
+								System.out.println("RECV: " + event);
 								JSONObject args = new JSONObject(event);
 								String id = args.getString("id");
 								String userId = args.has("uid") ? args.getString("uid") : null;

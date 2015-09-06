@@ -74,6 +74,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		this.user = user;
 		this.room = room;
 
+		
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint("main");
 		mixerPoint = createWebRtcEndPoint("mixer");
@@ -171,8 +172,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				
 				try {
 					synchronized (this) {
-						// System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-						System.out.println(response.toString());
 						sendMessage(response.toString());
 					}
 				} catch (Exception e) {
@@ -200,6 +199,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void sendMessage(final String string) {
+		System.out.println("SEND:" + string);
 		out.write(string);
 	}
 
