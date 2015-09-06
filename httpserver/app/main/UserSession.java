@@ -89,8 +89,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		//loopTest();
 	
 				
-		endPoint.connect(compositePort); // this makes the video stop
-		compositePort.connect(mixerPoint);
+		// endPoint.connect(compositePort); // this makes the video stop
+		// compositePort.connect(mixerPoint);
 
 
 		
@@ -212,19 +212,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		recorder.close();
 	}
 
-	public void processOffer(String description) {
-		// XXX [CLIENT_OFFER_04] XXX
-		// XXX [CLIENT_OFFER_05] XXX
-
-		String arg0 = endPoint.processOffer(description);
-		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
-		// XXX [CLIENT_OFFER_07] XXX
-		sendMessage(msg.toString());
-		endPoint.gatherCandidates();		
-
-		
-	}
 
 	public void addCandidate(IceCandidate candidate, String endPointId) {
 		// XXX [CLIENT_ICE_04] XXX
@@ -351,18 +338,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 
+	public void processOffer(String description) {
+		// XXX [CLIENT_OFFER_04] XXX
+		// XXX [CLIENT_OFFER_05] XXX
 
-	public void processMixOffer(String description) {
-
-		String arg0 = mixerPoint.processOffer(description);
+		String arg0 = endPoint.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", "mixDescription").put("sdp", arg0).put("type", "answer");
+		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer");
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
+		endPoint.gatherCandidates();		
+
+		
+	}
+	
+	public void processMixOffer(String description) {
+		String arg0 = mixerPoint.processOffer(description);
+		JSONObject msg = new JSONObject().put("id", "mixDescription").put("sdp", arg0).put("type", "answer");
+		sendMessage(msg.toString());
 		mixerPoint.gatherCandidates();
-		
-	//	endPoint.connect(mixerPort); // this crashes endPoint
-		
 	}
 
 }
