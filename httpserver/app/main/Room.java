@@ -42,10 +42,10 @@ import play.mvc.WebSocket;
  */
 public class Room implements Closeable {
 
-	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
-	private Hub composite;
+	private Hub composite= null;
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
