@@ -76,7 +76,7 @@ var Kurento = new (function() {
 					candidate : event.candidate
 				}
 				if(endPointId){
-					msg.endPoint=endPointId;
+					msg['endPoint']=endPointId;
 				}
 				
 				// XXX [CLIENT_ICE_03] XXX
