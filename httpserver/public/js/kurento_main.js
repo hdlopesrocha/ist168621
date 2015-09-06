@@ -134,18 +134,8 @@ var Kurento = new (function() {
 						}
 					break;
 					case 'rec':
-						console.log("REC", message);
-						var array = [];
-						for (var id in message){
-							var obj = message[id];
-							if(id !== 'id'){
-								array.push(obj);
-							}							
-						}
-						newRecordingCallback(array);
-						
-						
-						
+						delete message.id;
+						newRecordingCallback(message);						
 						break;
 					default:
 						break;					
