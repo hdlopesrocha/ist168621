@@ -35,10 +35,11 @@ public class KurentoManager {
 	public KurentoManager (){
 		kurento = KurentoClient.create("ws://localhost:8888/kurento");
 		
+		
 	//	Dispatcher disp = new Dispatcher.Builder()
-		for(MediaPipeline mediaPipeline : kurento.getServerManager().getPipelines()) {
-			System.out.println("Loaded: " + mediaPipeline.getId() + " | " +mediaPipeline.getName());
-			rooms.put(mediaPipeline.getName(), new Room(mediaPipeline));
+		for(MediaPipeline pipeline : kurento.getServerManager().getPipelines()) {
+			System.out.println("Loaded: " + pipeline.getId() + " | " +pipeline.getName());
+			rooms.put(pipeline.getName(), new Room(pipeline));
 			
 		}	
 	}
