@@ -172,6 +172,7 @@ var Kurento = new (function() {
 							// XXX [CLIENT_OFFER_03] XXX		
 							Kurento.ws.send(JSON.stringify({
 								id : "offer",
+								name : "main",
 								data : Kurento.pc["main"].localDescription
 							}));
 						}, logError);
