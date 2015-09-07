@@ -82,12 +82,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		compositePort = new HubPort.Builder(room.getComposite()).build();
 
+		endPoint.connect(compositePort); 
+		compositePort.connect(mixerPoint);
 		endPoint.connect(endPoint, MediaType.VIDEO);
 
-	// loopTest();
-
-		endPoint.connect(compositePort);
-		compositePort.connect(mixerPoint);
 
 		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
 			@Override
