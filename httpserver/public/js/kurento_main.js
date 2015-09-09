@@ -163,7 +163,7 @@ var Kurento = new (function() {
 							Kurento.ws.send(JSON.stringify({
 								id : "offer",
 								name : "main",
-								data : Kurento.pc["main"].localDescription
+								data : desc
 							}));
 						}, logError);
 					}, logError,remote_constraints);
