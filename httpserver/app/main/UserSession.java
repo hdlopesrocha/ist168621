@@ -91,7 +91,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.connect(compositePort, MediaType.AUDIO); 
 		compositePort.connect(mixerPoint, MediaType.VIDEO);
 		compositePort.connect(mixerPoint, MediaType.AUDIO);
-		endPoint.connect(endPoint);
+		endPoint.connect(endPoint, MediaType.VIDEO);
 
 
 		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
