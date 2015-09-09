@@ -16,9 +16,6 @@ var remote_constraints = {
 	'offerToReceiveVideo':1 
 };
 
-var remote_video = { 
-	'offerToReceiveVideo':1 
-};
 
 
 
@@ -118,18 +115,15 @@ var Kurento = new (function() {
 							console.log(candidate);
 						}, logError);
 					break;
-					case 'description':
+					case 'answer':
 						var name = message.name;
 						
 						console.log(id, message);
 						var sdp = new RTCSessionDescription(message);
-
-						console.log("description");
-						console.log(sdp);
 						// XXX [CLIENT_OFFER_08] XXX
 						Kurento.pc[message.name].setRemoteDescription(sdp, function(){
-							console.log("setRemoteDescription")
-							console.log(sdp)
+							console.log("setRemoteDescription");
+							console.log(sdp);
 						},logError);
 					break;		
 					case 'participants':
@@ -171,7 +165,7 @@ var Kurento = new (function() {
 								data : desc
 							}));
 						}, logError);
-					}, logError,remote_video);
+					}, logError,remote_constraints);
 				}, logError);
 
 				
