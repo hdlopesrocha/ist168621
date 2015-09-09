@@ -3,6 +3,7 @@ package main;
 import java.util.Date;
 import java.util.UUID;
 
+import org.kurento.client.MediaElement;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 
@@ -18,7 +19,7 @@ public class MyRecorder {
 	private Thread recorderThread = null;
 	private Runnable recorderRunnable = null;
 
-	public MyRecorder(WebRtcEndpoint endPoint, Room room, RecorderHandler handler) {
+	public MyRecorder(MediaElement endPoint, RecorderHandler handler) {
 
 		this.recorderRunnable = new Runnable() {
 
@@ -33,7 +34,7 @@ public class MyRecorder {
 						String filename = name + ".webm";
 						String filepath = "file:///rec/" + filename;
 
-						recorder = new RecorderEndpoint.Builder(room.getMediaPipeline(), filepath).build();
+						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), filepath).build();
 						endPoint.connect(recorder);
 						recorder.record();
 

@@ -40,6 +40,7 @@ import org.kurento.jsonrpc.JsonUtils;
 import com.google.gson.JsonObject;
 
 import exceptions.ServiceException;
+import main.MyRecorder.RecorderHandler;
 import models.Interval;
 import models.Recording;
 import models.User;
@@ -58,7 +59,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final User user;
 	private final Room room;
 	private final WebRtcEndpoint endPoint;
-	private final WebRtcEndpoint mixerPoint;
+	private final WebRtcEndpoint compositePoint;
 	private final Map<String,WebRtcEndpoint> endPoints = new TreeMap<String,WebRtcEndpoint>();
 
 	private final MyRecorder recorder;
@@ -80,10 +81,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 		// XXX [ICE_01] XXX
 		endPoint = createWebRtcEndPoint("main");
-		mixerPoint = createWebRtcEndPoint("mixer");
+		compositePoint = createWebRtcEndPoint("mixer");
 
 		endPoints.put("main", endPoint);
-		endPoints.put("mixer", mixerPoint);
+		endPoints.put("mixer", compositePoint);
 
 		
 		compositePort = createCompositePort();
@@ -91,7 +92,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
 
-		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
+		recorder = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
 			@Override
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
 
@@ -126,12 +127,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(compositePort, MediaType.VIDEO);
-				endPoint.connect(compositePort, MediaType.AUDIO); 
-				compositePort.connect(mixerPoint, MediaType.VIDEO);
-				compositePort.connect(mixerPoint, MediaType.AUDIO);
-				endPoint.connect(endPoint, MediaType.VIDEO);
-				recorder.start();				
+				endPoint.connect(compositePort);
+				compositePort.connect(compositePoint);
+				endPoint.connect(endPoint);
+				recorder.start();	
+				/*new MyRecorder(compositePort, new RecorderHandler() {
+					@Override
+					public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+					}
+				}).start();*/
 			}
 		});
 		
@@ -177,9 +181,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
 				
 				try {
-					synchronized (this) {
 						sendMessage(response.toString());
-					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -198,7 +200,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return ep;
 	}
 	
-	public void sendMessage(final String string) {
+	public synchronized void sendMessage(final String string) {
+		
 		System.out.println("SEND:" + string);
 		out.write(string);
 	}
@@ -225,10 +228,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
 
 		endPoint.disconnect(compositePort);
-		compositePort.disconnect(mixerPoint);
+		compositePort.disconnect(compositePoint);
 
 		compositePort.release();
-		mixerPoint.release();
+		compositePoint.release();
 		endPoint.release();
 		recorder.close();
 	}
@@ -320,7 +323,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							}
 						}
 					});
-					player.connect(endPoint);
+					player.connect(compositePoint);
 					player.play();
 
 				} else {
@@ -357,7 +360,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_05] XXX
 		String arg0 = ep.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", "description").put("sdp", arg0).put("type", "answer").put("name",name);
+		JSONObject msg = new JSONObject().put("id", "answer").put("sdp", arg0).put("type", "answer").put("name",name);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		ep.gatherCandidates();
