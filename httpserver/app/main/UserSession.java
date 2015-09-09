@@ -40,7 +40,6 @@ import org.kurento.jsonrpc.JsonUtils;
 import com.google.gson.JsonObject;
 
 import exceptions.ServiceException;
-import main.MyRecorder.RecorderHandler;
 import models.Interval;
 import models.Recording;
 import models.User;

@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bson.types.ObjectId;
-import org.kurento.client.Dispatcher;
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;
 

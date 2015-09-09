@@ -25,18 +25,11 @@ import javax.annotation.PreDestroy;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.kurento.client.Composite;
-import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
-import org.kurento.client.HubPort;
 import org.kurento.client.MediaObject;
 import org.kurento.client.MediaPipeline;
-import org.kurento.client.OnIceCandidateEvent;
-import org.kurento.client.WebRtcEndpoint;
-import org.kurento.jsonrpc.JsonUtils;
-
-import com.google.gson.JsonObject;
 
 import models.Group;
 import models.User;
@@ -55,8 +48,6 @@ public class Room implements Closeable {
 	
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
-		
-
 		
 		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
 
