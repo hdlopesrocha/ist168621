@@ -16,6 +16,11 @@ var remote_constraints = {
 	'offerToReceiveVideo':1 
 };
 
+var remote_video = { 
+	'offerToReceiveVideo':1 
+};
+
+
 
 function logError(err) {
 	console.log(err);
@@ -166,7 +171,7 @@ var Kurento = new (function() {
 								data : desc
 							}));
 						}, logError);
-					}, logError,remote_constraints);
+					}, logError,remote_video);
 				}, logError);
 
 				
