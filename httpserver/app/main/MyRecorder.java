@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.kurento.client.MediaElement;
 import org.kurento.client.RecorderEndpoint;
-import org.kurento.client.WebRtcEndpoint;
 
 public class MyRecorder {
 
