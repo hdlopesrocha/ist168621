@@ -30,6 +30,7 @@ import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaObject;
+import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
@@ -87,11 +88,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 		compositePort = createCompositePort();
 
-		endPoint.connect(compositePort, MediaType.VIDEO);
-		endPoint.connect(compositePort, MediaType.AUDIO); 
-		compositePort.connect(mixerPoint, MediaType.VIDEO);
-		compositePort.connect(mixerPoint, MediaType.AUDIO);
-		endPoint.connect(endPoint, MediaType.VIDEO);
+
 
 
 		recorder = new MyRecorder(endPoint, room, new MyRecorder.RecorderHandler() {
@@ -124,7 +121,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
-		recorder.start();
+		
+		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+
+			@Override
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				endPoint.connect(compositePort, MediaType.VIDEO);
+				endPoint.connect(compositePort, MediaType.AUDIO); 
+				compositePort.connect(mixerPoint, MediaType.VIDEO);
+				compositePort.connect(mixerPoint, MediaType.AUDIO);
+				endPoint.connect(endPoint, MediaType.VIDEO);
+				recorder.start();				
+			}
+		});
+		
+
 
 		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 
