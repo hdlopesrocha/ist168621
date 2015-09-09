@@ -84,8 +84,6 @@ public class Room implements Closeable {
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
 
-
-
 	
 	public void sendMessage(final String string) {
 		for(UserSession user : participants.values()){
@@ -99,7 +97,6 @@ public class Room implements Closeable {
 	}
 
 
-
 	@PreDestroy
 	private void shutdown() {
 		this.close();
@@ -108,20 +105,6 @@ public class Room implements Closeable {
 	public String getGroupId() {
 		return group.getId().toString();
 	}
-
-	
-	
-	
-
-	
-	public DispatcherOneToMany createDispatcher(UserSession session){
-
-		DispatcherOneToMany dotm = new  DispatcherOneToMany.Builder(mediaPipeline).build();
-		//dotm.setSource(session.getEndpoint(null));
-		
-		return dotm;
-	}
-	
 	
 	
 	public UserSession join(final User user, final WebSocket.Out<String> out )
