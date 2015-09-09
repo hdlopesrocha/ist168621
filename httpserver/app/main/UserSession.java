@@ -80,17 +80,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		
 		// XXX [ICE_01] XXX
-		endPoint = createWebRtcEndPoint("main");
-		compositePoint = createWebRtcEndPoint("mixer");
+		endPoint = getWebRtcEndPoint("main");
+		compositePoint = getWebRtcEndPoint("mixer");
 
-		endPoints.put("main", endPoint);
-		endPoints.put("mixer", compositePoint);
-
-		
-		compositePort = createCompositePort();
-
-
-
+	
+		compositePort = getCompositePort();
 
 		recorder = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
 			@Override
@@ -156,7 +150,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	
-	public HubPort createCompositePort(){
+	public HubPort getCompositePort(){
 		String name = user.getId().toString();
 		for (MediaObject port : room.getComposite().getChilds()){
 			if(port.getName().equals(name)){
@@ -170,33 +164,37 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 	
 	
-	public WebRtcEndpoint createWebRtcEndPoint(String name) {
-		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
-		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-			@Override
-			public void onEvent(OnIceCandidateEvent event) {
-				JsonObject response = new JsonObject();
-				response.addProperty("id", "iceCandidate");
-				response.addProperty("name", name);
-				response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-				
-				try {
-						sendMessage(response.toString());
-				} catch (Exception e) {
-					e.printStackTrace();
+	public WebRtcEndpoint getWebRtcEndPoint(String name) {
+		WebRtcEndpoint ep = endPoints.get(name);
+		if(ep==null){
+			ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
+			ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
+				@Override
+				public void onEvent(OnIceCandidateEvent event) {
+					JsonObject response = new JsonObject();
+					response.addProperty("id", "iceCandidate");
+					response.addProperty("name", name);
+					response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+					
+					try {
+							sendMessage(response.toString());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
+			});
+			
+			ep.addErrorListener(new EventListener<ErrorEvent>() {
+				@Override
+				public void onEvent(ErrorEvent arg0) {
+					System.out.println("ERROR: " + arg0.getDescription());
+				}
+			});
 		
-		ep.addErrorListener(new EventListener<ErrorEvent>() {
-			@Override
-			public void onEvent(ErrorEvent arg0) {
-				System.out.println("ERROR: " + arg0.getDescription());
-			}
-		});
-		
-		ep.setStunServerAddress("173.194.67.127");
-		ep.setStunServerPort(19302);
+			ep.setStunServerAddress("173.194.67.127");
+			ep.setStunServerPort(19302);
+			endPoints.put(name, ep);
+		}
 		return ep;
 	}
 	
@@ -215,14 +213,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return room.getGroupId();
 	}
 
-	/**
-	 * @param senderName
-	 *            the participant
-	 */
-	public void cancelVideoFrom(final UserSession sender) {
-		// endPoint.release();
-	}
-
+	
 	@Override
 	public void close() throws IOException {
 		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");

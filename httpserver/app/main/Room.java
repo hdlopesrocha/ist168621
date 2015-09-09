@@ -155,12 +155,7 @@ public class Room implements Closeable {
 		participantLeftJson.put("id", "participantLeft");
 		participantLeftJson.put("uid", uid);
 		for (final UserSession participant : participants.values()) {
-			
-			participant.cancelVideoFrom(user);
 			participant.sendMessage(participantLeftJson.toString());
-			
-		
-			
 		}
 		
 		user.close();
