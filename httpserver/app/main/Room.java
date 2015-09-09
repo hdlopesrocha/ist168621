@@ -56,6 +56,18 @@ public class Room implements Closeable {
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		
+
+		
+		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
+
+			@Override
+			public void onEvent(ErrorEvent arg0) {
+
+				System.out.println("PIPELINE ERROR");
+				System.out.println(arg0.getDescription());
+			}
+		});
+		
 		for(MediaObject obj : mediaPipeline.getChilds()){
 			if(obj.getName().equals("composite")){
 				this.composite = (Hub) obj;
@@ -70,19 +82,10 @@ public class Room implements Closeable {
 			this.composite.setName("composite");
 		}
 		
-		this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
-
-			@Override
-			public void onEvent(ErrorEvent arg0) {
-
-				System.out.println("PIPELINE ERROR");
-				System.out.println(arg0.getDescription());
-			}
-		});
-		
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
+	
 
 	
 	public void sendMessage(final String string) {
