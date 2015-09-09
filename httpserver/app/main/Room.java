@@ -29,8 +29,14 @@ import org.kurento.client.DispatcherOneToMany;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
+import org.kurento.client.HubPort;
 import org.kurento.client.MediaObject;
 import org.kurento.client.MediaPipeline;
+import org.kurento.client.OnIceCandidateEvent;
+import org.kurento.client.WebRtcEndpoint;
+import org.kurento.jsonrpc.JsonUtils;
+
+import com.google.gson.JsonObject;
 
 import models.Group;
 import models.User;
@@ -50,15 +56,15 @@ public class Room implements Closeable {
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		
-		
-		
-		
-		
 		for(MediaObject obj : mediaPipeline.getChilds()){
-			if("composite".equals(obj.getName())){
+			if(obj.getName().equals("composite")){
 				this.composite = (Hub) obj;
+				for(MediaObject child : obj.getChilds()){
+					child.release();
+				}
 			}
 		}
+		
 		if(this.composite==null){
 			this.composite = new Composite.Builder(mediaPipeline).build();
 			this.composite.setName("composite");
@@ -78,6 +84,9 @@ public class Room implements Closeable {
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
 
+
+
+	
 	public void sendMessage(final String string) {
 		for(UserSession user : participants.values()){
 			user.sendMessage(string);

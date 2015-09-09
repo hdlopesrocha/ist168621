@@ -29,6 +29,7 @@ import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
+import org.kurento.client.MediaObject;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
@@ -80,8 +81,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint = createWebRtcEndPoint("main");
 		mixerPoint = createWebRtcEndPoint("mixer");
 
-		compositePort = new HubPort.Builder(room.getComposite()).build();
+		endPoints.put("main", endPoint);
+		endPoints.put("mixer", mixerPoint);
 
+		
+		compositePort = createCompositePort();
+				
 		endPoint.connect(compositePort); 
 		compositePort.connect(mixerPoint);
 		endPoint.connect(endPoint, MediaType.VIDEO);
@@ -133,12 +138,24 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
+	
+	public HubPort createCompositePort(){
+		String name = user.getId().toString();
+		for (MediaObject port : room.getComposite().getChilds()){
+			if(port.getName().equals(name)){
+				return (HubPort) port;
+			}
+		}
+		
+		HubPort port = new HubPort.Builder(room.getComposite()).build();
+		port.setName(name);
+		return port;
+	}
+	
+	
 	public WebRtcEndpoint createWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
-		endPoints.put(name, ep);
-		
 		ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-
 			@Override
 			public void onEvent(OnIceCandidateEvent event) {
 				JsonObject response = new JsonObject();
@@ -153,27 +170,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		
-
 		ep.addErrorListener(new EventListener<ErrorEvent>() {
-
 			@Override
 			public void onEvent(ErrorEvent arg0) {
 				System.out.println("ERROR: " + arg0.getDescription());
-
 			}
 		});
-
-
+		
 		ep.setStunServerAddress("173.194.67.127");
 		ep.setStunServerPort(19302);
-
 		return ep;
 	}
-
+	
 	public void sendMessage(final String string) {
 		System.out.println("SEND:" + string);
 		out.write(string);
