@@ -10,21 +10,30 @@
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 	
 
-	
 	<h1>@groupName</h1>
+<style>
+.vis-item {
+	height: 100% !important;
+	top: 0px !important;
+}
+.vis-group, .vis-center {
+	height: 16px !important;
+}
+
+</style>
+	
 	<div class="tab" id="tab0">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="container" data-spy="scroll" data-target="#sidebar-nav">
-	
-					<div class="col-sm-12">
-						<div class="panel panel-default">
-							<h3>Remote Video</h3>
-							<video id='myvideo' autoplay width='480px' height='360px' style="margin: 0px auto;display:block;"></video>
-							<video id='mymixed' autoplay width='320px' height='240px' style="margin: 0px auto;display:none;"></video>
-							<div id="timeline"></div>
-						</div>
-					</div>
+				<div class="container panel">
+					<div id="timeline"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="container panel panel-default">
+						<h3>Remote Video</h3>
+						<video id='myvideo' autoplay width='480px' height='360px' style="margin: 0px auto;display:block;"></video>
+						<video id='mymixed' autoplay width='320px' height='240px' style="margin: 0px auto;display:none;"></video>
 				</div>
 			</div>
 		</div>
