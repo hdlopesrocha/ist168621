@@ -19,7 +19,11 @@ var HyperTimeline = new (function() {
 	        stack: false,
 	        align: 'center',
 	        showCurrentTime:true,
-	        selectable:false
+	        selectable:false,
+	        'margin': {
+	            item: 0,  // distance between items
+	            axis: 0   // distance between items and the time axis
+	          }
 	       // editable:true,
 	     // editable: true,
 	     // clickToUse: true
