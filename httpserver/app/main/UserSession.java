@@ -37,8 +37,6 @@ import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
-import com.google.gson.JsonObject;
-
 import exceptions.ServiceException;
 import models.Interval;
 import models.Recording;
@@ -117,25 +115,23 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		
 		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
-
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(compositePort);
-				compositePort.connect(compositePoint);
 				endPoint.connect(endPoint);
 				recorder.start();	
-				/*new MyRecorder(compositePort, new RecorderHandler() {
-					@Override
-					public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
-					}
-				}).start();*/
 			}
 		});
 		
 
-
-		this.endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
-
+		compositePoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
+			@Override
+			public void onEvent(MediaSessionStartedEvent arg0) {
+				endPoint.connect(compositePort);
+				compositePort.connect(compositePoint);
+			}
+		});
+		
+		endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 			@Override
 			public void onEvent(ConnectionStateChangedEvent arg0) {
 				// TODO Auto-generated method stub
@@ -170,10 +166,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 				@Override
 				public void onEvent(OnIceCandidateEvent event) {
-					JsonObject response = new JsonObject();
-					response.addProperty("id", "iceCandidate");
-					response.addProperty("name", name);
-					response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+					JSONObject response = new JSONObject();
+					response.put("id", "iceCandidate");
+					response.put("name", name);
+					response.put("data", new JSONObject(JsonUtils.toJson(event.getCandidate())));
 					
 					try {
 							sendMessage(response.toString());
@@ -199,7 +195,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	
 	public synchronized void sendMessage(final String string) {
 		
-		System.out.println("SEND:" + string);
+		System.out.println("\nSEND:" + string);
 		out.write(string);
 	}
 
@@ -348,9 +344,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
-		String arg0 = ep.processOffer(description);
+		String lsd = ep.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
-		JSONObject msg = new JSONObject().put("id", "answer").put("sdp", arg0).put("type", "answer").put("name",name);
+		JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
+		
+		
+		JSONObject msg = new JSONObject().put("id", "answer").put("data", data).put("name",name);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		ep.gatherCandidates();
