@@ -335,12 +335,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
-	public void setMix() {
-		// TODO Auto-generated method stub
-		// mixerPort.connect(endPoint, MediaType.AUDIO);
-		// mix only audio
-	}
-
 	public void processOffer(String description, String name) {
 		// XXX [CLIENT_ICE_04] XXX
 		WebRtcEndpoint ep = endPoints.get(name==null? "main" : name);

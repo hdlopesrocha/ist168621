@@ -14,7 +14,6 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="/assets/css/styles.css" rel="stylesheet">
 		<link href="/assets/css/main.css" rel="stylesheet">
 		<script src="/assets/js/jquery.js"></script>
 		<script src="/assets/js/bootstrap.min.js"></script>
@@ -22,10 +21,7 @@
 		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
 		<script type="text/javascript" src="/assets/js/signaling.js"></script>
 	
-		<style>
-				
 
-		</style>
 	</head>
 	<body>
 	<div class="page-container">
@@ -71,9 +67,15 @@
 		
 	</div>
 	<script type="text/javascript">
-			function switchTab(id){
-				$( ".tab" ).css( "display", "none" );
-				$(id).css("display", "block");
+			function switchTab(classTab,classBtn,number){
+				$(classTab).children().css( "display", "none" );
+				$(classTab+" div:nth-child("+number+")").css( "display", "block" );
+				
+				$(classBtn).children().attr("class","btn btn-default");
+				$(classBtn+" button:nth-child("+number+")").attr("class","btn btn-success");
+				
+				
+				
 			}
 			
 			

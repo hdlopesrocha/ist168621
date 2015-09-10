@@ -9,9 +9,10 @@
 	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 	
-
-	<h1>@groupName</h1>
 <style>
+   body {
+        padding-top: 70px;
+    }
 .vis-item {
 	height: 100% !important;
 	top: 0px !important;
@@ -20,52 +21,45 @@
 	height: 16px !important;
 }
 
+.vis-timeline {
+	border: none !important;
+}
+
+.container-full {
+	padding: 0px !important;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
 </style>
-	
-	<div class="tab" id="tab0">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="container panel">
-					<div id="timeline"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="container panel panel-default">
-						<h3>Remote Video</h3>
-						<video id='myvideo' autoplay width='480px' height='360px' style="margin: 0px auto;display:block;"></video>
-						<video id='mymixed' autoplay width='320px' height='240px' style="margin: 0px auto;display:none;"></video>
-				</div>
-			</div>
-		</div>
-		<footer>
-			<div class="container" id="footer-row"></div>
-		</footer>
-	</div>
 
-	<div class="tab" id="tab1">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="container" data-spy="scroll" data-target="#sidebar-nav">
-	
-					<div class="col-sm-6">
-						<div class="panel panel-default">
-							<h3>Add Members</h3>
-							&nbsp;Search:<input type="text"
-								onchange="candidate_search(this.value)" />
-							<ul id="candidate-list"></ul>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="panel panel-default">
-							<h3>Members</h3>
-							<div id="members-list"></div>
-						</div>
-					</div>
-				</div>
+	<div class="container">
+		<div class="row row-centered">
+			<div class="btn-group col-centered" role="group" id="mybtns">
+			  <button type="button" onclick="switchTab('#mytabs','#mybtns',1)" class="btn btn-default"><i class="fa fa-video-camera"></i></button>
+			  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-users"></i></button>
+			  <button type="button" onclick="switchTab('#mytabs','#mybtns',3)" class="btn btn-default"><i class="fa fa-comments"></i></button>
 			</div>
 		</div>
 	</div>
+	
 
+	
+	<div id="mytabs">
+		<div>@group_video()</div>
+		<div>@group_friends()</div>
+		<div>@group_messenger()</div>
+	</div>
 <script>
 		var selected_user =	"@userId";
 		var participants = {};
@@ -88,16 +82,10 @@
 	
 	
 		$(document).ready(function() {
-			$("#navbar-list").append("<li onclick=\"switchTab('#tab0')\"><a>Video</a></li>");
-			$("#navbar-list").append("<li onclick=\"switchTab('#tab1')\"><a>Members</a></li>");
 			
-			switchTab("#tab0");
+			switchTab("#mytabs","#mybtns",1);
 			
-			$("#footer-row").append("<button>mix</button>");				
-	
-			
-			
-
+			$("#navbar-list").append("<li><a>@groupName</a></li>");
 		
 			timeline = HyperTimeline.create(items, "timeline",
 				function(offset) {
@@ -200,9 +188,7 @@
 			});
 		});
 	
-		function select_mix(){
-			Kurento.receiveMix();
-		}
+	
 		
 		function select_user(userId){
 			selected_user = userId;
