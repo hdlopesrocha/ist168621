@@ -70,7 +70,7 @@ public class WSController extends Controller {
 						// For each event received on the socket,
 						in.onMessage(new Callback<String>() {
 							public void invoke(String event) {
-								System.out.println("RECV: " + event);
+								System.out.println("\nRECV: " + event);
 								JSONObject args = new JSONObject(event);
 								String id = args.getString("id");
 								String userId = args.has("uid") ? args.getString("uid") : null;
@@ -81,8 +81,8 @@ public class WSController extends Controller {
 									JSONObject data = args.getJSONObject("data");
 									String name = args.optString("name", null);
 
-									String description = data.getString("sdp");
-									usession.processOffer(description,name);
+									String rsd = data.getString("sdp");
+									usession.processOffer(rsd,name);
 								}
 								break;
 								case "iceCandidate": {

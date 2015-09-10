@@ -6,18 +6,14 @@ function wsurl(s) {
 
 
 var local_constraints = {
-		"audio" : true,
-		"video" : true,
-
+	"audio" : true,
+	"video" : true
 };
 	
 var remote_constraints = { 
-	'offerToReceiveAudio':1, 
-	'offerToReceiveVideo':1 
+	'offerToReceiveAudio':true, 
+	'offerToReceiveVideo':true 
 };
-
-
-
 
 function logError(err) {
 	console.log(err);
@@ -84,7 +80,8 @@ var Kurento = new (function() {
 				Kurento.ws.send(JSON.stringify(msg));
 			}
 		}
-		return pc;
+		
+		Kurento.pc[name] = pc;
 	}
 	
 	
@@ -109,7 +106,7 @@ var Kurento = new (function() {
 				switch(id){
 					case 'iceCandidate':
 						console.log(id,message);
-						var candidate = new RTCIceCandidate(message.candidate);
+						var candidate = new RTCIceCandidate(message.data);
 				
 						Kurento.pc[message.name].addIceCandidate(candidate, function() {
 							console.log(candidate);
@@ -119,11 +116,10 @@ var Kurento = new (function() {
 						var name = message.name;
 						
 						console.log(id, message);
-						var sdp = new RTCSessionDescription(message);
+						var rsd = new RTCSessionDescription(message.data);
 						// XXX [CLIENT_OFFER_08] XXX
-						Kurento.pc[message.name].setRemoteDescription(sdp, function(){
-							console.log("setRemoteDescription");
-							console.log(sdp);
+						Kurento.pc[message.name].setRemoteDescription(rsd, function(){
+							console.log("setRemoteSessionDescription",rsd);
 						},logError);
 					break;		
 					case 'participants':
@@ -144,46 +140,37 @@ var Kurento = new (function() {
 		
 			
 			Kurento.ws.onopen = function() {
-				Kurento.pc["main"] = Kurento.createPeerConnection("main");
-				Kurento.pc["mixer"] = Kurento.createPeerConnection("mixer");
+				Kurento.createPeerConnection("main");
+				Kurento.createPeerConnection("mixer");
 
-				
-			
-				
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
 					Kurento.pc["main"].addStream(stream);
-					Kurento.pc["main"].createOffer(function (desc) {		
-						console.log("createOffer");
-						console.log(desc);
+					Kurento.pc["main"].createOffer(function (lsd) {		
+						console.log("createOffer",lsd);
 						// XXX [CLIENT_OFFER_02] XXX
-						Kurento.pc["main"].setLocalDescription(desc, function() {
+						Kurento.pc["main"].setLocalDescription(lsd, function() {
 							// XXX [CLIENT_OFFER_03] XXX		
 							Kurento.ws.send(JSON.stringify({
 								id : "offer",
 								name : "main",
-								data : desc
+								data : lsd
 							}));
 						}, logError);
 					}, logError,remote_constraints);
 				}, logError);
-
 				
-				Kurento.pc["mixer"].createOffer(function (desc) {
-					console.log("createOfferToReveiveMix");
-					console.log(desc);
+				Kurento.pc["mixer"].createOffer(function (lsd) {
+					console.log("createOfferToReceive",lsd);
 
-					Kurento.pc["mixer"].setLocalDescription(desc, function() {
+					Kurento.pc["mixer"].setLocalDescription(lsd, function() {
 						Kurento.ws.send(JSON.stringify({
 							id : "offer",
 							name : "mixer",
-							data : desc
+							data : lsd
 						}));
 					}, logError);
 				}, logError,remote_constraints);
-				
-		
-
 				
 				Kurento.pc["main"].onaddstream = function (e) {
 					console.log("main",e);
@@ -194,14 +181,11 @@ var Kurento = new (function() {
 					console.log("mixer",e);
 					mixerVideoCallback(URL.createObjectURL(e.stream));
 				};
-				
 			};
 
 			Kurento.ws.onclose = function() {
 				console.log("Connection is closed...");
 			};
-
-	
 		
 			window.onbeforeunload = function() {
 				Kurento.ws.close();
