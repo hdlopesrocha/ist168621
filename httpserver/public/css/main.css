@@ -30,8 +30,8 @@ body {
     margin-right:-4px;
 }
 
-#footer-row > .circular-wrap:not(:first-child){
-	margin-left: 25px;
+#footer-row > .circular-wrap {
+	margin:8px;
 }
 
 .circular-wrap {
