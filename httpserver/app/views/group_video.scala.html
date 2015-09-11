@@ -1,4 +1,4 @@
-@()
+@(groupId : String, userId : String)
 
 
 <div class="row">
@@ -22,3 +22,19 @@
 		<div class="panel panel-default" id="footer-row"></div>
 	</div>
 </div>
+
+<script>
+	var selected_user =	"@userId";
+	var real_time = true;
+
+
+	function select_user(userId){
+		selected_user = userId;
+		
+		if(real_time){			
+			Kurento.receiveRealtime(selected_user);
+		}else {
+			Kurento.receiveHistoric(selected_user,current_offset);
+		}	
+	}
+</script>
