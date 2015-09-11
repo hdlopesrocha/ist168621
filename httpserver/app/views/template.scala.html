@@ -11,9 +11,7 @@
 			content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+
 		<link href="/assets/css/main.css" rel="stylesheet">
 		<script src="/assets/js/jquery.js"></script>
 		<script src="/assets/js/bootstrap.min.js"></script>
@@ -68,14 +66,10 @@
 	</div>
 	<script type="text/javascript">
 			function switchTab(classTab,classBtn,number){
-				$(classTab).children().css( "display", "none" );
-				$(classTab+" div:nth-child("+number+")").css( "display", "block" );
-				
+				$(classTab).children().hide();
+				$(classTab+" div:nth-child("+number+")").show();
 				$(classBtn).children().attr("class","btn btn-default");
-				$(classBtn+" button:nth-child("+number+")").attr("class","btn btn-success");
-				
-				
-				
+				$(classBtn+" button:nth-child("+number+")").attr("class","btn btn-primary");
 			}
 			
 			
