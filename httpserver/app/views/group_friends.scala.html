@@ -1,4 +1,4 @@
-@()
+@(groupId : String, userId : String)
 
 
 <div class="row">
@@ -17,3 +17,34 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+	function del_user_group(uid) {
+		var success = function() {
+			document.location = document.location;
+		};
+		Signaling.removeUserGroup("@groupId", uid, success);
+	}
+	
+	function add_user_group(uid) {
+		var success = function() {
+			document.location = document.location;
+		};
+		Signaling.addUserGroup("@groupId", uid, success);
+	}
+	
+	function candidate_search(query) {
+	
+		var result = function(array) {
+			var html = "";
+			for ( var i in array) {
+				var uid = array[i].uid;
+				var add_button = "<button onclick='add_user_group(\"" + uid	+ "\")'>add</button>";
+				html += "<li>" + array[i].email + add_button + "</li>";
+			}
+			$("#candidate-list").html(html);
+		};
+		Signaling.searchGroupCandidates("@groupId", query, result);
+	}
+</script>

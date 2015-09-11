@@ -20,21 +20,16 @@
 			</div>
 	
 			<div id="mytabs" style="padding-top: 20px;">
-				<div>@group_video()</div>
-				<div>@group_friends()</div>
+				<div>@group_video(groupId,userId)</div>
+				<div>@group_friends(groupId,userId)</div>
 				<div>@group_messenger()</div>
 			</div>
 		</div>
 	</div>
 <script>
-		var selected_user =	"@userId";
 		var participants = {};
-		var user_videos = {};
 		var timeline = null;
-		var last_sequence = -1;
 		var current_offset=0;
-		var real_time = true;
-		var current_interval = null;
 		var rendered_intervals = {};
 	
 		// TIMELINE
@@ -155,45 +150,7 @@
 		});
 	
 	
+
 		
-		function select_user(userId){
-			selected_user = userId;
-			
-			if(real_time){			
-				Kurento.receiveRealtime(selected_user);
-			}else {
-				Kurento.receiveHistoric(selected_user,current_offset);
-			}
-			
-		}
-		
-		
-		function del_user_group(uid) {
-			var success = function() {
-				document.location = document.location;
-			};
-			Signaling.removeUserGroup("@groupId", uid, success);
-		}
-	
-		function add_user_group(uid) {
-			var success = function() {
-				document.location = document.location;
-			};
-			Signaling.addUserGroup("@groupId", uid, success);
-		}
-	
-		function candidate_search(query) {
-	
-			var result = function(array) {
-				var html = "";
-				for ( var i in array) {
-					var uid = array[i].uid;
-					var add_button = "<button onclick='add_user_group(\"" + uid	+ "\")'>add</button>";
-					html += "<li>" + array[i].email + add_button + "</li>";
-				}
-				$("#candidate-list").html(html);
-			};
-			Signaling.searchGroupCandidates("@groupId", query, result);
-		}
 	</script>
 }
