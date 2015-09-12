@@ -76,7 +76,11 @@ public class WSController extends Controller {
 								String userId = args.has("uid") ? args.getString("uid") : null;
 
 								switch (id) {
-
+								case "msg": {
+									String data = args.getString("data");
+									// send msg
+								}
+								break;
 								case "offer": {
 									JSONObject data = args.getJSONObject("data");
 									String name = args.optString("name", null);

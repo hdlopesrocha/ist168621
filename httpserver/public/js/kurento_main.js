@@ -139,7 +139,7 @@ var Kurento = new (function() {
 				navigator.getUserMedia(local_constraints, function(stream) {
 					Kurento.pc["main"].addStream(stream);
 					Kurento.pc["main"].createOffer(function (lsd) {		
-						console.log("createOffer",lsd);
+						console.log("createOfferToSendReceive",lsd);
 						// XXX [CLIENT_OFFER_02] XXX
 						Kurento.pc["main"].setLocalDescription(lsd, function() {
 							// XXX [CLIENT_OFFER_03] XXX		
