@@ -2,21 +2,58 @@
 
 
 <div class="row">
-	<div class="col-sm-8">
-		<div class="panel panel-default">
-			<h3>Members</h3>
-			<div id="members-list"></div>
+
+	<div class="col-md-8">
+		<div class="panel panel-info">
+			<div class="panel-heading">MEMBERS</div>
+			<div class="panel-body">
+				<ul class="media-list" id="membersList">
+
+					
+				</ul>
+			</div>
 		</div>
 	</div>
-	<div class="col-sm-4">
-		<div class="panel panel-default">
-			<h3>Add Members</h3>
-			&nbsp;Search:<input type="text"
-				onchange="candidate_search(this.value)" />
-			<ul id="candidate-list"></ul>
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">ADD MEMBERS</div>
+			<div class="panel-body">
+				<div id="imaginary_container"> 
+	                <div class="input-group stylish-input-group">
+	                    <input type="text" class="form-control"  placeholder="Search" onchange="candidate_search(this.value)">
+	                    <span class="input-group-addon">
+	                        <button type="submit">
+	                            <span class="fa fa-search"></span>
+	                        </button>  
+	                    </span>
+	                </div>
+	            </div>
+			
+			
+				<ul class="media-list" id="candidateList">
+
+					
+				</ul>
+			</div>
 		</div>
 	</div>
+	
+
 </div>
+<style>
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+</style>
 
 <script>
 
@@ -37,13 +74,26 @@
 	function candidate_search(query) {
 	
 		var result = function(array) {
+			
 			var html = "";
 			for ( var i in array) {
 				var uid = array[i].uid;
-				var add_button = "<button onclick='add_user_group(\"" + uid	+ "\")'>add</button>";
-				html += "<li>" + array[i].email + add_button + "</li>";
+				var name = array[i].name;
+
+				var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
+				var add_button = "<i style='color:green' onclick='add_user_group(\"" + uid	+ "\")' class='fa fa-plus'></i>";
+
+				
+				
+				html += '<div class="media"><a '+style2+' class="pull-left media-object circular"></a>'+
+				'<div class="media-body"><h5>'+name+' | User | '+add_button+'</h5></div></div>';
+				
 			}
-			$("#candidate-list").html(html);
+			$("#candidateList").html(html);
+			
+		
+			
+			
 		};
 		Signaling.searchGroupCandidates("@groupId", query, result);
 	}

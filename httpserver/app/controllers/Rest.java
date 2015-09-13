@@ -526,6 +526,8 @@ public class Rest extends Controller {
 					obj.put("uid", u.getId().toString());
 					obj.put("email", u.getEmail());
 					array.put(obj);
+					obj.put("name", u.getPublicProperties().getString("name"));
+
 				}
 				return ok(array.toString());
 			} catch (ServiceException e) {

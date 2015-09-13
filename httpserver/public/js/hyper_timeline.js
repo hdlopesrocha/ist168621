@@ -38,10 +38,15 @@ var HyperTimeline = new (function() {
 	    	var end = properties.end;
 	    	var avg = new Date((start.getTime()+end.getTime())/2);
 	    	var customTime = timeline.getCustomTime("time");
+	    //	this.options.editable.add
+	    	
 	    	timeline.setCustomTime(avg,"time");
+	    	//timeline.customTimes[0].bar.contentEditable=false;
+	    //	timeline.customTimes[0].options.editable=false;
 	    });
 		
 	    timeline.on('rangechanged', function(properties){
+		    
 	    	if(properties.byUser){
 		    	var start = properties.start;
 		    	var end = properties.end;
