@@ -26,7 +26,8 @@ public class GetUserPhotoService extends Service<String> {
 	@Override
 	public String dispatch() {
 		Document properties = caller.getPublicProperties();
-		return properties.getString("photo");
+		System.out.println("PROPS: "+properties.toJson());
+		return properties.containsKey("photo")? properties.getString("photo"):null;
 	}
 
 	/*

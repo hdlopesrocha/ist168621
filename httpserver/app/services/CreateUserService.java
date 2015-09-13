@@ -17,7 +17,7 @@ import exceptions.ServiceException;
 /**
  * The Class AuthenticateUserService.
  */
-public class RegisterUserService extends Service<User> {
+public class CreateUserService extends Service<User> {
 
 	private User user;
 	private List<KeyValueFile> files;
@@ -25,7 +25,7 @@ public class RegisterUserService extends Service<User> {
 	private Document properties;
 	private List<String> permissions = new ArrayList<String>();
 	
-	public RegisterUserService(final String email, final String password,  final JSONObject properties, List<KeyValueFile>  files) {
+	public CreateUserService(final String email, final String password,  final JSONObject properties, List<KeyValueFile>  files) {
 		this.user = User.findByEmail(email);	
 		
 		
@@ -37,7 +37,7 @@ public class RegisterUserService extends Service<User> {
 		
 	}
 	
-	public RegisterUserService addPermission(String permission) {
+	public CreateUserService addPermission(String permission) {
 		permissions.add(permission);
 		return this;
 	}

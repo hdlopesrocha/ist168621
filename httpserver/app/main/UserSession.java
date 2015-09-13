@@ -43,7 +43,7 @@ import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.GetCurrentRecordingService;
-import services.SaveRecordingService;
+import services.CreateRecordingService;
 
 /**
  * 
@@ -88,7 +88,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
 
 				try {
-					SaveRecordingService srs = new SaveRecordingService(null, filepath, getGroupId(),
+					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(),
 							getUser().getId().toString(), begin, end, filename, "video/webm", intervalId);
 					srs.execute();
 
@@ -96,8 +96,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					intervalId = interval.getId().toString();
 
 					JSONArray array = new JSONArray();
-					array.put(Recording.FORMAT.format(interval.getStart()));
-					array.put(Recording.FORMAT.format(interval.getEnd()));
+					array.put(Tools.FORMAT.format(interval.getStart()));
+					array.put(Tools.FORMAT.format(interval.getEnd()));
 
 					JSONObject msg = new JSONObject();
 					msg.put("id", "rec");

@@ -14,7 +14,7 @@ import services.CreateGroupService;
 import services.CreateRelationService;
 import services.GetUserProfileService;
 import services.ListUsersService;
-import services.RegisterUserService;
+import services.CreateUserService;
 import services.Service;
 
 public class Setup {
@@ -24,7 +24,7 @@ public class Setup {
 		Service.getDatabase().drop();
 
 		try {
-			RegisterUserService regService = new RegisterUserService("admin", "admin", new JSONObject("{'test':'123'}"), new ArrayList<KeyValueFile>());
+			CreateUserService regService = new CreateUserService("admin", "admin", new JSONObject("{'test':'123'}"), new ArrayList<KeyValueFile>());
 			regService.addPermission("ADMIN");
 			regService.execute();
 		} catch (ServiceException e) {
@@ -32,9 +32,9 @@ public class Setup {
 		}
 
 		try {
-			User u1 = new RegisterUserService("hdlopesrocha", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
-			User u2 = new RegisterUserService("nbhatt", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
-			User u3 = new RegisterUserService("vils", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
+			User u1 = new CreateUserService("hdlopesrocha", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
+			User u2 = new CreateUserService("nbhatt", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
+			User u3 = new CreateUserService("vils", "qazokm", new JSONObject(), new ArrayList<KeyValueFile>()).execute();
 			 
 			 
 			new CreateRelationService(u1.getId().toString(), u2.getId().toString()).execute();

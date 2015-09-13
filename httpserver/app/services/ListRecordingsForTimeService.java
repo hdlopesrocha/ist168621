@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
 
 import exceptions.BadRequestException;
+import main.Tools;
 import models.Recording;
 import models.User;
 
@@ -42,7 +43,7 @@ public class ListRecordingsForTimeService extends Service<List<Recording>> {
 	public List<Recording> dispatch() throws BadRequestException {
 		try {
 			System.out.println("\tparsing "+time);
-			Date parsedTime = Recording.FORMAT.parse(time);
+			Date parsedTime = Tools.FORMAT.parse(time);
 			Date extendedEnd = new Date();
 			extendedEnd.setTime(parsedTime.getTime()+duration);
 			//Document present = new Document("start", new Document("$lt", parsedTime)).append("end", new Document("$gt", parsedTime));

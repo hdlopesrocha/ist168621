@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import exceptions.ConflictException;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
+import main.Tools;
 import models.Group;
 import models.KeyValueFile;
 import models.KeyValuePair;
@@ -32,7 +34,9 @@ import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
 import services.CreateGroupService;
+import services.CreateRecordingService;
 import services.CreateRelationService;
+import services.CreateUserService;
 import services.DenyRelationService;
 import services.DownloadFileService;
 import services.GetUserPhotoService;
@@ -47,9 +51,7 @@ import services.ListUsersService;
 import services.PostIceCandidateService;
 import services.PostSdpService;
 import services.PublishService;
-import services.RegisterUserService;
 import services.RemoveGroupMemberService;
-import services.SaveRecordingService;
 import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.SubscribeService;
@@ -133,20 +135,11 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	/**
-	 * Gets the photo.
-	 *
-	 * @param username
-	 *            the username
-	 * @return the photo
-	 */
-	public Result getFile(String fileName) {
-		fileName = fileName.replace("%20", " ");
+	void setPhotoHeaders(String fileName) {
 		String[] tokens = fileName.split("/");
 
 		response().setHeader("Content-disposition", "attachment;filename=" + tokens[tokens.length - 1]);
 		String ext = fileName.substring(fileName.lastIndexOf('.') + 1);
-
 		if ("jpg".equals(ext) || "jpeg".equals(ext)) {
 			response().setHeader(CONTENT_TYPE, "image/png");
 		} else if ("png".equals(ext)) {
@@ -156,6 +149,19 @@ public class Rest extends Controller {
 		} else {
 			response().setHeader(CONTENT_TYPE, "application/octet-stream");
 		}
+	}
+
+	/**
+	 * Gets the photo.
+	 *
+	 * @param username
+	 *            the username
+	 * @return the photo
+	 */
+	public Result getFile(String fileName) {
+		fileName = fileName.replace("%20", " ");
+
+		setPhotoHeaders(fileName);
 
 		try {
 
@@ -173,18 +179,30 @@ public class Rest extends Controller {
 		return notFound();
 	}
 
-	public Result getPhoto(String email) {
-		if (email != null && email.length() > 0) {
+	public Result getPhoto(String uid) {
+		if (uid != null && uid.length() > 0) {
 
 			try {
-				return getFile(new GetUserPhotoService(email).execute());
+				String fileName = new GetUserPhotoService(uid).execute();
+				if (fileName != null) {
+					System.out.println("GET "+fileName);
+					fileName = fileName.replace("%20", " ");
+
+					setPhotoHeaders(fileName);
+					DownloadFileService service = new DownloadFileService(fileName);
+					byte[] bytes = service.execute();
+					if (bytes != null) {
+						response().setHeader(CONTENT_LENGTH, bytes.length + "");
+						return ok(bytes);
+					}
+				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-		return notFound();
+		return redirect("/assets/images/default.png");
 
 	}
 
@@ -206,14 +224,10 @@ public class Rest extends Controller {
 				JSONArray array = new JSONArray();
 				for (KeyValuePair<Membership, User> kvp : ans) {
 					JSONObject obj = new JSONObject();
-
 					obj.put("uid", kvp.getKey().getUserId());
 					obj.put("email", kvp.getValue().getEmail());
 					obj.put("mid", kvp.getKey().getId());
-					Document props = kvp.getValue().getPublicProperties();
-					if(props.containsKey("photo")){
-						obj.put("photo", props.getString("photo"));
-					}
+					obj.put("name", kvp.getValue().getPublicProperties().getString("name"));
 					array.put(obj);
 				}
 				return ok(array.toString());
@@ -433,7 +447,7 @@ public class Rest extends Controller {
 			files.add(kvf);
 		}
 
-		RegisterUserService service = new RegisterUserService(email, password, info, files);
+		CreateUserService service = new CreateUserService(email, password, info, files);
 		try {
 			User ret = service.execute();
 			// session("email", email);
@@ -560,11 +574,11 @@ public class Rest extends Controller {
 		}
 		return badRequest();
 	}
-	
-	
+
 	public Result listRecordingsForTime(String groupId, String time, Long duration) {
-		System.out.println("listRecordingsForTime("+groupId+","+time+","+duration+")");
-		ListRecordingsForTimeService service = new ListRecordingsForTimeService(session("uid"), groupId, time,duration);
+		System.out.println("listRecordingsForTime(" + groupId + "," + time + "," + duration + ")");
+		ListRecordingsForTimeService service = new ListRecordingsForTimeService(session("uid"), groupId, time,
+				duration);
 		try {
 			List<Recording> res = service.execute();
 			JSONArray array = new JSONArray();
@@ -573,11 +587,11 @@ public class Rest extends Controller {
 				JSONObject jObj = new JSONObject();
 				// jObj.put("id", rec.getId());
 				jObj.put("seq", rec.getSequence());
-				jObj.put("start", Recording.FORMAT.format(rec.getStart()));
-				jObj.put("end", Recording.FORMAT.format(rec.getEnd()));
+				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
+				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
 				jObj.put("url", rec.getUrl());
 				jObj.put("uid", rec.getUserId().toString());
-				if(rec.getInterval()!=null){
+				if (rec.getInterval() != null) {
 					jObj.put("inter", rec.getInterval().toString());
 				}
 				jObj.put("type", rec.getType());
@@ -591,9 +605,8 @@ public class Rest extends Controller {
 			e.printStackTrace();
 		}
 		return badRequest();
-		
+
 	}
-	
 
 	public Result listRecordings(String groupId, Long sequence) {
 		ListRecordingsService service = new ListRecordingsService(session("uid"), groupId, sequence);
@@ -605,11 +618,11 @@ public class Rest extends Controller {
 				JSONObject jObj = new JSONObject();
 				// jObj.put("id", rec.getId());
 				jObj.put("seq", rec.getSequence());
-				jObj.put("start", Recording.FORMAT.format(rec.getStart()));
-				jObj.put("end", Recording.FORMAT.format(rec.getEnd()));
+				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
+				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
 				jObj.put("url", rec.getUrl());
 				jObj.put("uid", rec.getUserId().toString());
-				if(rec.getInterval()!=null){
+				if (rec.getInterval() != null) {
 					jObj.put("inter", rec.getInterval().toString());
 				}
 				jObj.put("type", rec.getType());
@@ -630,10 +643,10 @@ public class Rest extends Controller {
 		Map<String, String[]> form = multipart.asFormUrlEncoded();
 
 		String userId = form.get("uid")[0];
-		Date start = Recording.FORMAT.parse(form.get("start")[0]);
-		Date end = Recording.FORMAT.parse(form.get("end")[0]);
-		
-		System.out.println("XXX : "+ start + " | " +end);
+		Date start = Tools.FORMAT.parse(form.get("start")[0]);
+		Date end = Tools.FORMAT.parse(form.get("end")[0]);
+
+		System.out.println("XXX : " + start + " | " + end);
 		String name = form.get("name")[0];
 		String type = form.get("type")[0];
 		String inter = form.containsKey("inter") ? form.get("inter")[0] : null;
@@ -644,8 +657,8 @@ public class Rest extends Controller {
 			files.add(kvf);
 		}
 
-		SaveRecordingService saveService = new SaveRecordingService(files.get(0),null, groupId, userId, start, end, name,
-				type, inter);
+		CreateRecordingService saveService = new CreateRecordingService(files.get(0), null, groupId, userId, start, end,
+				name, type, inter);
 		PublishService publishService = new PublishService("rec:" + groupId);
 		try {
 			Recording rec = saveService.execute();
