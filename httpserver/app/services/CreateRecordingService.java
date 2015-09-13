@@ -13,7 +13,7 @@ import models.Recording;
 /**
  * The Class SendMessageService.
  */
-public class SaveRecordingService extends Service<Recording> {
+public class CreateRecordingService extends Service<Recording> {
 
 	private KeyValueFile anex;
 	private ObjectId groupId;
@@ -43,7 +43,7 @@ public class SaveRecordingService extends Service<Recording> {
 	 *            the content
 	 * @param anex
 	 */
-	public SaveRecordingService(final KeyValueFile anex, final String url, final String groupId, final String userId,
+	public CreateRecordingService(final KeyValueFile anex, final String url, final String groupId, final String userId,
 			Date start, Date end, String name, String type, String interval) {
 		this.anex = anex;
 		this.groupId = new ObjectId(groupId);

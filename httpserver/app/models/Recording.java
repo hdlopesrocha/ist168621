@@ -1,11 +1,8 @@
 package models;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -16,13 +13,7 @@ import com.mongodb.client.MongoCollection;
 import services.Service;
 
 public class Recording {
-	public static final DateFormat FORMAT;
-    
-	static {
-		TimeZone tz = TimeZone.getTimeZone("UTC");
-		FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		FORMAT.setTimeZone(tz);
-	}
+
 
 	private ObjectId groupId, userId, interval;
 	private Date start, end;

@@ -38,6 +38,13 @@ var Kurento = new (function() {
 		}));
 	}
 	
+	this.sendMessage = function(text){
+		Kurento.ws.send(JSON.stringify({
+			id: "msg",
+			data: text
+		}));
+	}
+	
 	this.receiveHistoric = function(userId,offset){
 		Kurento.ws.send(JSON.stringify({
 			id : "historic",
@@ -77,11 +84,12 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.start = function(groupId,npcb,nvcb,mvcb,nrcb) {		
+	this.start = function(groupId,npcb,nvcb,mvcb,nrcb,nmcb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
 		newRecordingCallback = nrcb;
+		newMessageCallback = nmcb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -123,6 +131,13 @@ var Kurento = new (function() {
 					case 'rec':
 						delete message.id;
 						newRecordingCallback(message);						
+						break;
+					case 'msg':
+						for(var i in message.data){
+							var msg = message.data[i];
+							newMessageCallback(msg.uid,msg.time,msg.text,msg.name);
+						}
+						
 						break;
 					default:
 						break;					

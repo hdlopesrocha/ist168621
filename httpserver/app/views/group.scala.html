@@ -14,15 +14,15 @@
 			<div class="row row-centered">
 				<div class="btn-group col-centered" role="group" id="mybtns">
 				  <button type="button" onclick="switchTab('#mytabs','#mybtns',1)" class="btn btn-default"><i class="fa fa-video-camera"></i></button>
-				  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-users"></i></button>
-				  <button type="button" onclick="switchTab('#mytabs','#mybtns',3)" class="btn btn-default"><i class="fa fa-comments"></i></button>
+				  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-comments"></i></button>
+				  <button type="button" onclick="switchTab('#mytabs','#mybtns',3)" class="btn btn-default"><i class="fa fa-users"></i></button>
 				</div>
 			</div>
 	
 			<div id="mytabs" style="padding-top: 20px;">
 				<div>@group_video(groupId,userId)</div>
-				<div>@group_friends(groupId,userId)</div>
 				<div>@group_messenger()</div>
+				<div>@group_friends(groupId,userId)</div>
 			</div>
 		</div>
 	</div>
@@ -83,10 +83,22 @@
 			
 			var kparticipants = function(userId, email) {
 				if (!participants[userId]) {
-					$("#state"+userId).attr('class', "circular circular-online" );				
+					$("#msgMember"+userId).attr('class', "media-object img-circle circular-online" );				
+					$("#vidMember"+userId).attr('class', "media-object img-circle circular-online" );				
+
 					participants[userId] = email;
 				}
 			}
+			
+			var kmessage = function(userId,time,text, name){
+				$("#messagesList").append(
+					'<li class="media"><div class="media-body"><div class="media">' +
+					'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
+					'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
+					'<hr /></div></div></div></li>'
+				);
+			}
+			
 			var firstRecording = true;
 			
 			var kinterval = function(array){
@@ -124,7 +136,7 @@
 			
 			
 			
-			Kurento.start("@groupId", kparticipants, kvideo, mvideo,kinterval);
+			Kurento.start("@groupId", kparticipants, kvideo, mvideo, kinterval, kmessage);
 	
 			$("#refresh-button").click(function() {
 				document.location = document.location;
@@ -137,14 +149,25 @@
 			Signaling.listGroupMembers("@groupId",function(array) {
 				for ( var i in array) {
 					var uid = array[i].uid;
-					var del_button = "onclick='del_user_group(\""+ uid+ "\")'";
+					var name = array[i].name;
+
+					var del_button = "<i onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
 					
-					var circular = array[i].photo? "<div class='circular circular-top' style='background-image:url(/file/"+array[i].photo+")'></div>":"";
-					$("#footer-row").append("<div "+onclick+" class='circular circular-wrap'>"+circular+"<div id='state"+uid+"' class='circular circular-offline'></div></div>");				
-					$("#members-list").append("<div class='circular circular-wrap'>"+circular+"<div class='circular'><i "+del_button+" class='fa fa-times'></i></div></div>");				
-
+					$("#members-list").append("<div class='circular' style='background-image:url(/photo/"+uid+")' id='state"+uid+"'>"+del_button+"</div>");
 				
+					
+					$("#videoMembers").append(
+							'<div class="media" '+ onclick+'>'+
+							'<a class="pull-left"> <img id="vidMember'+uid+'" class="media-object img-circle circular-offline" style="max-height: 40px;" src="/photo/'+uid+'" /></a>'+
+							'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+						);
+					
+					$("#messengerMembers").append(
+						'<div class="media">'+
+						'<a class="pull-left" href="#"> <img id="msgMember'+uid+'" class="media-object img-circle circular-offline" style="max-height: 40px;" src="/photo/'+uid+'" /></a>'+
+						'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+					);
 				}
 			});
 		});

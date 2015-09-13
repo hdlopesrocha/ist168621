@@ -9,16 +9,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.IceCandidate;
 
+import exceptions.ServiceException;
 import main.Global;
 import main.Room;
+import main.Tools;
 import main.UserSession;
 import models.Interval;
-import models.Recording;
+import models.Message;
 import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.WebSocket;
+import services.ListMessagesService;
+import services.CreateMessageService;
 
 public class WSController extends Controller {
 
@@ -34,26 +38,53 @@ public class WSController extends Controller {
 					if (room != null) {
 						// Join room
 						final UserSession usession = room.join(user, out);
-
-						List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
-						JSONObject msg = new JSONObject();
-						msg.put("id", "rec");
-						for (Interval interval : intervals) {
-							Date start = interval.getStart();
-							Date end = interval.getEnd();
-							
-							
-							if (start != null && end != null) {
-
-								JSONArray rec = new JSONArray();
-								rec.put(Recording.FORMAT.format(start));
-								rec.put(Recording.FORMAT.format(end));
-								msg.put(interval.getId().toString(), rec);
-
+						{
+							List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
+							JSONObject msg = new JSONObject();
+							msg.put("id", "rec");
+							for (Interval interval : intervals) {
+								Date start = interval.getStart();
+								Date end = interval.getEnd();
+								
+								
+								if (start != null && end != null) {
+	
+									JSONArray rec = new JSONArray();
+									rec.put(Tools.FORMAT.format(start));
+									rec.put(Tools.FORMAT.format(end));
+									msg.put(interval.getId().toString(), rec);
+	
+								}
 							}
+							room.sendMessage(msg.toString());
 						}
-						room.sendMessage(msg.toString());
-
+						{
+							ListMessagesService messagesService = new ListMessagesService(groupId);
+							JSONArray messagesArray = new JSONArray();
+							try {
+								List<Message> messages = messagesService.execute();
+								for(Message message : messages){
+									JSONObject messageObj = new JSONObject();
+									messageObj.put("time", Tools.FORMAT.format(message.getTime()));
+									messageObj.put("text", message.getText());
+									messageObj.put("uid", message.getUserId().toString());
+									User u = User.findById(message.getUserId());
+									messageObj.put("name", u.getPublicProperties().getString("name"));
+									
+									messagesArray.put(messageObj);
+								}
+								
+							} catch (ServiceException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+							JSONObject msg = new JSONObject();
+							msg.put("id", "msg");
+							msg.put("data", messagesArray);
+							usession.sendMessage(msg.toString());
+						}
+						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
@@ -73,11 +104,31 @@ public class WSController extends Controller {
 								System.out.println("\nRECV: " + event);
 								JSONObject args = new JSONObject(event);
 								String id = args.getString("id");
-								String userId = args.has("uid") ? args.getString("uid") : null;
 
 								switch (id) {
 								case "msg": {
 									String data = args.getString("data");
+									
+									CreateMessageService messageService = new CreateMessageService(groupId, user.getId().toString(), data, null);
+									System.out.println("XXXXXXXXXXXXXXXXXXX");
+									try {
+										Message message = messageService.execute();
+										JSONArray messagesArray = new JSONArray();
+										JSONObject messageObj = new JSONObject();
+										messageObj.put("time", Tools.FORMAT.format(message.getTime()));
+										messageObj.put("text", message.getText());
+										messageObj.put("uid", message.getUserId().toString());
+										messageObj.put("name", user.getPublicProperties().getString("name"));
+										messagesArray.put(messageObj);
+										JSONObject msg = new JSONObject();
+										msg.put("id", "msg");
+										msg.put("data", messagesArray);
+										room.sendMessage(msg.toString());
+										
+									} catch (ServiceException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}	
 									// send msg
 								}
 								break;
@@ -99,26 +150,31 @@ public class WSController extends Controller {
 								}
 								break;
 								case "realtime":
+								{
 									System.out.println("REALTIME");
+									String userId = args.has("uid") ? args.getString("uid") : null;
+
 									new Thread(new Runnable() {
 										@Override
 										public void run() {
 											usession.setRealtime(userId);
 										}
 									}).start();
-
-									break;
+								}
+								break;
 								case "historic":
+								{
 									System.out.println("HISTORIC");
+									String userId = args.has("uid") ? args.getString("uid") : null;
+
 									new Thread(new Runnable() {
 										@Override
 										public void run() {
 											usession.setHistoric(userId, args.getLong("offset"));
 										}
 									}).start();
-									break;
-				
-
+								}
+								break;
 								default:
 									break;
 								}
