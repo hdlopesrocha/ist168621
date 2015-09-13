@@ -83,8 +83,8 @@
 			
 			var kparticipants = function(userId, email) {
 				if (!participants[userId]) {
-					$("#msgMember"+userId).attr('class', "media-object img-circle circular-online" );				
-					$("#vidMember"+userId).attr('class', "media-object img-circle circular-online" );				
+					$("#msgMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
+					$("#vidMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
 
 					participants[userId] = email;
 				}
@@ -153,19 +153,22 @@
 
 					var del_button = "<i onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
+					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
+					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
+
 					
-					$("#members-list").append("<div class='circular' style='background-image:url(/photo/"+uid+")' id='state"+uid+"'>"+del_button+"</div>");
+					$("#members-list").append("<div class='circular' "+style1+" id='state"+uid+"'>"+del_button+"</div>");
 				
 					
 					$("#videoMembers").append(
-							'<div class="media" '+ onclick+'>'+
-							'<a class="pull-left"> <img id="vidMember'+uid+'" class="media-object img-circle circular-offline" style="max-height: 40px;" src="/photo/'+uid+'" /></a>'+
-							'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
-						);
+						'<div class="media" '+ onclick+'>'+
+						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular circular-offline"></a>'+
+						'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+					);
 					
 					$("#messengerMembers").append(
 						'<div class="media">'+
-						'<a class="pull-left" href="#"> <img id="msgMember'+uid+'" class="media-object img-circle circular-offline" style="max-height: 40px;" src="/photo/'+uid+'" /></a>'+
+						'<a id="msgMember'+uid+'" '+style2+' class="pull-left media-object circular circular-offline"></a>'+
 						'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 					);
 				}
