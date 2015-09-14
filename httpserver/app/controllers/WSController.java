@@ -162,6 +162,12 @@ public class WSController extends Controller {
 									}).start();
 								}
 								break;
+								case "play":
+								{
+									boolean play = args.getBoolean("data");
+									usession.setPlay(play);
+								}
+								break;
 								case "historic":
 								{
 									System.out.println("HISTORIC");
