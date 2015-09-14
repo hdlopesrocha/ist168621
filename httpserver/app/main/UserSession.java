@@ -57,7 +57,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Room room;
 	private final WebRtcEndpoint endPoint;
 	private final WebRtcEndpoint compositePoint;
-	private final Map<String,WebRtcEndpoint> endPoints = new TreeMap<String,WebRtcEndpoint>();
+	private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
 
 	private final MyRecorder recorder;
 	private HubPort compositePort;
@@ -69,20 +69,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private long playOffset = 0l;
 	private String playUser = "";
-	
-	
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
 		this.user = user;
 		this.room = room;
 
-		
 		// XXX [ICE_01] XXX
 		endPoint = getWebRtcEndPoint("main");
 		compositePoint = getWebRtcEndPoint("mixer");
 
-	
 		compositePort = getCompositePort();
 
 		recorder = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
@@ -115,24 +111,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			}
 		});
 
-		
 		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
 				endPoint.connect(endPoint, MediaType.VIDEO);
-				recorder.start();	
+				recorder.start();
 			}
 		});
-		
 
 		compositePoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(compositePort,MediaType.AUDIO);
-				compositePort.connect(compositePoint,MediaType.AUDIO);
+				endPoint.connect(compositePort, MediaType.AUDIO);
+				compositePort.connect(compositePoint, MediaType.AUDIO);
 			}
 		});
-		
+
 		endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
 			@Override
 			public void onEvent(ConnectionStateChangedEvent arg0) {
@@ -146,24 +140,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
-	
-	public HubPort getCompositePort(){
+	public HubPort getCompositePort() {
 		String name = user.getId().toString();
-		for (MediaObject port : room.getComposite().getChilds()){
-			if(port.getName().equals(name)){
+		for (MediaObject port : room.getComposite().getChilds()) {
+			if (port.getName().equals(name)) {
 				return (HubPort) port;
 			}
 		}
-		
+
 		HubPort port = new HubPort.Builder(room.getComposite()).build();
 		port.setName(name);
 		return port;
 	}
-	
-	
+
 	public WebRtcEndpoint getWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = endPoints.get(name);
-		if(ep==null){
+		if (ep == null) {
 			ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
 			ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
 				@Override
@@ -172,31 +164,31 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					response.put("id", "iceCandidate");
 					response.put("name", name);
 					response.put("data", new JSONObject(JsonUtils.toJson(event.getCandidate())));
-					
+
 					try {
-							sendMessage(response.toString());
+						sendMessage(response.toString());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			});
-			
+
 			ep.addErrorListener(new EventListener<ErrorEvent>() {
 				@Override
 				public void onEvent(ErrorEvent arg0) {
 					System.out.println("ERROR: " + arg0.getDescription());
 				}
 			});
-		
+
 			ep.setStunServerAddress("173.194.67.127");
 			ep.setStunServerPort(19302);
 			endPoints.put(name, ep);
 		}
 		return ep;
 	}
-	
+
 	public synchronized void sendMessage(final String string) {
-		
+
 		System.out.println("\nSEND:" + string);
 		out.write(string);
 	}
@@ -210,7 +202,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return room.getGroupId();
 	}
 
-	
 	@Override
 	public void close() throws IOException {
 		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
@@ -225,7 +216,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void addCandidate(IceCandidate candidate, String name) {
-		WebRtcEndpoint ep = endPoints.get(name==null? "main" : name);
+		WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
 		// XXX [CLIENT_ICE_04] XXX
 		ep.addIceCandidate(candidate);
 	}
@@ -275,100 +266,92 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
 		playUser = userId;
-
+		realTime = false;
+		
 		if (player != null) {
 			player.release();
-			realTime = true;
+			player= null;
 		}
 
 		System.out.println("SET HIST " + userId);
-		if (realTime) {
-			realTime = false;
 
-			Date currentTime = new Date(new Date().getTime() - playOffset);
-			UserSession session = room.getParticipant(playUser);
-			try {
-				GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-						room.getGroupId(), session.getUser().getId().toString(), currentTime);
-				Recording rec = service.execute();
+		Date currentTime = new Date(new Date().getTime() - playOffset);
+		UserSession session = room.getParticipant(playUser);
+		try {
+			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+					room.getGroupId(), session.getUser().getId().toString(), currentTime);
+			Recording rec = service.execute();
 
-				if (rec != null) {
-					System.out.println("PLAY:" + rec.getUrl());
+			if (rec != null) {
+				System.out.println("PLAY:" + rec.getUrl());
+				player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
+				player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 
-					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-
-					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-
-						@Override
-						public void onEvent(EndOfStreamEvent arg0) {
-							// TODO Auto-generated method stub
-							if (!realTime) {
-
-								player.release();
-								player = null;
-								realTime = true;
-								setHistoric(playUser, playOffset);
-							}
-						}
-					});
-					player.connect(endPoint,MediaType.VIDEO);
-					player.connect(compositePoint,MediaType.AUDIO);
-					if(play){
-						player.play();
+					@Override
+					public void onEvent(EndOfStreamEvent arg0) {
+						setHistoric(playUser, playOffset);
 					}
-
-				} else {
-					realTime = true;
-					System.out.println("No video here!");
+				});
+				player.connect(endPoint, MediaType.VIDEO);
+				player.connect(compositePoint, MediaType.AUDIO);
+				if (play) {
+					player.play();
 				}
 
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} else {
+				realTime = true;
+				System.out.println("No video here!");
 			}
+
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	public void setRealtime(String userId) {
+		if (player != null) {
+			player.release();
+			player= null;
+		}
+
+		
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
 		session.endPoint.connect(endPoint, MediaType.VIDEO);
-		compositePort.connect(compositePoint,MediaType.AUDIO);
+		compositePort.connect(compositePoint, MediaType.AUDIO);
 
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
 
 	public void processOffer(String description, String name) {
 		// XXX [CLIENT_ICE_04] XXX
-		WebRtcEndpoint ep = endPoints.get(name==null? "main" : name);
-		
+		WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
+
 		// XXX [CLIENT_OFFER_04] XXX
 		// XXX [CLIENT_OFFER_05] XXX
 		String lsd = ep.processOffer(description);
 		// XXX [CLIENT_OFFER_06] XXX
 		JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
-		
-		
-		JSONObject msg = new JSONObject().put("id", "answer").put("data", data).put("name",name);
+
+		JSONObject msg = new JSONObject().put("id", "answer").put("data", data).put("name", name);
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		ep.gatherCandidates();
 	}
 
-
 	public void setPlay(boolean play) {
-		if(player!=null){
-			if(play){
+		if (player != null) {
+			if (play) {
 				player.play();
-			}
-			else{
+			} else {
 				player.pause();
 			}
 		}
 		this.play = play;
-		
-		
+
 	}
 
 }
