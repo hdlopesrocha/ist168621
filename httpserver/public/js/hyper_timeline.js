@@ -11,22 +11,41 @@ var HyperTimeline = new (function() {
 		setTimeout(function(){followerWorker(timeline);},1000);
 	}
 	
+	function onAdd(item, callback){
+		item.group = 'tag';
+		item.editable = true;
+		var date = item.start._i;
+		item.start = new Date(date.getTime()-10000);
+		item.end =  new Date(date.getTime()+10000);	
+		item.className= 'vis-tag';
+
+		callback(item);
+		
+	}
+	
 	this.real_time = true;
 
 	
 	this.create = function(items,divId, current, realtime) {
+		
 	    var main = document.getElementById(divId);
 	    var options = {
 	    	stack: false,
 	        align: 'center',
 	        showCurrentTime:true,
-	        selectable:false,
-	        'margin': {
+	        selectable:true,
+	        onAdd:onAdd,
+	        margin: {
 	            item: 0,  // distance between items
 	            axis: 0   // distance between items and the time axis
-	          }
+	          },
 	       // editable:true,
-	     // editable: true,
+	      	editable: {
+	      		add:true, 	
+	      		remove:true,
+	      		updateGroup:false, 
+	      		updateTime:true 
+	      	}
 	     // clickToUse: true
 	    };
 
@@ -57,6 +76,7 @@ var HyperTimeline = new (function() {
 	    	//timeline.customTimes[0].options.editable=false;
     	
 	    });
+		timeline.items = items;
 		
 	    timeline.on('rangechanged', function(properties){
 		    
@@ -119,6 +139,20 @@ var HyperTimeline = new (function() {
 	    	timeline.timeRunning = !timeline.timeRunning;
 			
 
+	    }
+	    
+	    timeline.addTag= function(id,date, content){
+
+	    	timeline.items.add({
+				id : id,
+				content : content,
+				start : new Date(date.getTime()-1000),
+				end :  new Date(date.getTime()+1000),			
+	 	        selectable:true,
+		        editable:true,
+				className: 'vis-tag',
+				group:'tag'
+			});
 	    }
 	    
 	    
