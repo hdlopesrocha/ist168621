@@ -3,10 +3,11 @@
 var HyperTimeline = new (function() {
 
 	function followerWorker(timeline){
-		var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
-		var nowTime = new Date(now);
-		
-		timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
+    	if(timeline.timeRunning){
+			var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
+			var nowTime = new Date(now);			
+			timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
+    	}
 		setTimeout(function(){followerWorker(timeline);},1000);
 	}
 	
@@ -16,7 +17,7 @@ var HyperTimeline = new (function() {
 	this.create = function(items,divId, current, realtime) {
 	    var main = document.getElementById(divId);
 	    var options = {
-	        stack: false,
+	    	stack: false,
 	        align: 'center',
 	        showCurrentTime:true,
 	        selectable:false,
@@ -29,20 +30,32 @@ var HyperTimeline = new (function() {
 	     // clickToUse: true
 	    };
 
-	    var timeline =  new vis.Timeline(main, items, options);
+	    var groups = [
+	          {
+                id: 'tag',
+                content: 'Tags'
+              },
+              {
+                id: 'rec',
+                content: 'Recordings'
+              }
+        ];
+	    
+	    var timeline =  new vis.Timeline(main, items,groups, options);
 	    timeline.hyper_offset = 0;
 		timeline.addCustomTime(new Date(),"time");
 	  
 		timeline.on('rangechange', function(properties){
-	    	var start = properties.start;
+    		var start = properties.start;
 	    	var end = properties.end;
 	    	var avg = new Date((start.getTime()+end.getTime())/2);
 	    	var customTime = timeline.getCustomTime("time");
-	    //	this.options.editable.add
+	    	//this.options.editable.add
 	    	
 	    	timeline.setCustomTime(avg,"time");
 	    	//timeline.customTimes[0].bar.contentEditable=false;
-	    //	timeline.customTimes[0].options.editable=false;
+	    	//timeline.customTimes[0].options.editable=false;
+    	
 	    });
 		
 	    timeline.on('rangechanged', function(properties){
@@ -87,6 +100,27 @@ var HyperTimeline = new (function() {
 	    	
 	    	return null;
 	    };
+	    
+	    timeline.timeRunning = false;
+	   
+	    timeline.togglePlayStop=function(play,stop){
+	    	if(timeline.timeRunning){
+	    		stop();
+	    	}else {
+	    		play();
+	    	}
+	    	
+	    	var customTime = timeline.getCustomTime("time");
+	    	
+	    	timeline.hyper_offset = new Date().getTime() - customTime.getTime();
+			timeline.moveTo(customTime,{animation: false});
+
+	    	
+	    	timeline.timeRunning = !timeline.timeRunning;
+			
+
+	    }
+	    
 	    
 	    timeline.getMyTime = function(){
 	    	return new Date(new Date().getTime()-timeline.hyper_offset);

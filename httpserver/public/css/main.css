@@ -2,13 +2,19 @@ body {
    padding-top: 70px;
 }
 
+.vis-item.vis-tag {
+  color: white;
+  background-color: red;
+  border-color: darkred;
+}
+
 .vis-item {
-	height: 100% !important;
-	top: 0px !important;
+/*	height: 100% !important;*/
+/*	top: 0px !important;*/
 }
 
 .vis-group, .vis-center {
-	height: 16px !important;
+/*	height: 32px !important;*/
 }
 
 .vis-timeline {

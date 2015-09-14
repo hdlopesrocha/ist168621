@@ -40,10 +40,10 @@
 			}
 		});
 	
+		
 	
 	
 		$(document).ready(function() {
-			
 			switchTab("#mytabs","#mybtns",1);
 			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
@@ -65,6 +65,7 @@
 					real_time = true;
 				}
 			);
+			playStop();
 	
 	
 	
@@ -115,6 +116,7 @@
 			
 					items.add({
 						id : id,
+						group:'rec',
 						content : "&nbsp;",
 						start : start,
 						end : end
