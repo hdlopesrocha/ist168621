@@ -3,9 +3,11 @@
 
 <div class="row">
 	<div class="col-sm-12">
+		<button type="button" class="btn btn-danger" onclick="playStop()" id="playStop"></button>
 		<div class="panel panel-default container-full">
 			<div id="timeline"></div>
 		</div>
+		<button onclick="add_tag()">+tag</button>
 	</div>
 </div>
 <div class="row">
@@ -46,6 +48,20 @@
 	var selected_user =	"@userId";
 	var real_time = true;
 
+	
+	
+	function playStop(){
+		timeline.togglePlayStop(
+			function(){
+				$("#playStop").html('<i class="fa fa-stop"></i>');
+				$("#playStop").attr('class','btn btn-danger');					
+			},
+			function(){
+				$("#playStop").html('<i class="fa fa-play"></i>');
+				$("#playStop").attr('class','btn btn-success');					
+			}
+		);
+	}
 
 	function select_user(userId){
 		selected_user = userId;
@@ -55,5 +71,19 @@
 		}else {
 			Kurento.receiveHistoric(selected_user,current_offset);
 		}	
+	}
+	
+	function add_tag(){
+		var id = "tag"+new Date();
+		items.add({
+			id : id,
+			content : id,
+			start : new Date(new Date().getTime()-1000),
+			end :  new Date(new Date().getTime()+1000),			
+ 	        selectable:true,
+	        editable:true,
+			className: 'vis-tag',
+			group:'tag'
+		});
 	}
 </script>
