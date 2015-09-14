@@ -6,11 +6,20 @@
 		<button type="button" class="btn btn-warning" onclick="playStop()" id="playStop">
 			<i class="fa fa-pause"></i>
 		</button>
+	
+<div class="form-inline" style="float:right">
+  <div class="form-group">
+    <label class="control-label" for="tagContent">Create TAG</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="tagContent" onkeydown="if(event.keyCode==13){add_tag();}">
+      <span class="input-group-addon success"  onclick="add_tag()"><i class="fa fa-plus"></i></span>
+    </div>
+  </div>
+</div>
+		
 		<div class="panel panel-default container-full">
 			<div id="timeline"></div>
 		</div>
-		<button onclick="add_tag()">+tag</button>
-		<input type="text" id="tagContent"/>
 		
 	</div>
 </div>
