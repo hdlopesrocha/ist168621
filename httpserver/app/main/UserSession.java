@@ -65,6 +65,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private PlayerEndpoint player;
 	private boolean realTime = true;
+	private boolean play = true;
+
 	private long playOffset = 0l;
 	private String playUser = "";
 	
@@ -311,7 +313,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					});
 					player.connect(endPoint,MediaType.VIDEO);
 					player.connect(compositePoint,MediaType.AUDIO);
-					player.play();
+					if(play){
+						player.play();
+					}
 
 				} else {
 					realTime = true;
@@ -350,6 +354,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		// XXX [CLIENT_OFFER_07] XXX
 		sendMessage(msg.toString());
 		ep.gatherCandidates();
+	}
+
+
+	public void setPlay(boolean play) {
+		if(player!=null){
+			if(play){
+				player.play();
+			}
+			else{
+				player.pause();
+			}
+		}
+		this.play = play;
+		
+		
 	}
 
 }

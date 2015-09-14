@@ -31,6 +31,13 @@ var Kurento = new (function() {
 
 	this.ws = null;
 	
+	this.setPlay=function(play){
+		Kurento.ws.send(JSON.stringify({
+			id : "play",
+			data:play
+		}));
+	}
+	
 	this.receiveRealtime = function(userId){
 		Kurento.ws.send(JSON.stringify({
 			id : "realtime",

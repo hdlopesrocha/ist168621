@@ -18,14 +18,11 @@ var HyperTimeline = new (function() {
 		item.start = new Date(date.getTime()-10000);
 		item.end =  new Date(date.getTime()+10000);	
 		item.className= 'vis-tag';
-
 		callback(item);
-		
 	}
 	
 	this.real_time = true;
 
-	
 	this.create = function(items,divId, current, realtime) {
 		
 	    var main = document.getElementById(divId);
@@ -121,7 +118,7 @@ var HyperTimeline = new (function() {
 	    	return null;
 	    };
 	    
-	    timeline.timeRunning = false;
+	    timeline.timeRunning = true;
 	   
 	    timeline.togglePlayStop=function(play,stop){
 	    	if(timeline.timeRunning){
@@ -134,11 +131,7 @@ var HyperTimeline = new (function() {
 	    	
 	    	timeline.hyper_offset = new Date().getTime() - customTime.getTime();
 			timeline.moveTo(customTime,{animation: false});
-
-	    	
 	    	timeline.timeRunning = !timeline.timeRunning;
-			
-
 	    }
 	    
 	    timeline.addTag= function(id,date, content){
