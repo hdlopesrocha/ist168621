@@ -2,36 +2,43 @@
 
 var HyperTimeline = new (function() {
 
-	function followerWorker(timeline){
-    	if(timeline.timeRunning){
-			var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
-			var nowTime = new Date(now);			
-			timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
-    	}
-		setTimeout(function(){followerWorker(timeline);},1000);
-	}
+
 	
-	function onAdd(item, callback){
-		item.group = 'tag';
-		item.editable = true;
-		var date = item.start._i;
-		item.start = new Date(date.getTime()-10000);
-		item.end =  new Date(date.getTime()+10000);	
-		item.className= 'vis-tag';
-		callback(item);
-	}
+	
 	
 	this.real_time = true;
 
+	
 	this.create = function(items,divId, current, realtime) {
-		
+		function followerWorker(timeline){
+	    	if(timeline.timeRunning){
+				var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
+				var nowTime = new Date(now);			
+				timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
+	    	}
+			setTimeout(function(){followerWorker(timeline);},1000);
+		}
+	
+/*		
+		this.onAdd = function (item, callback){
+			console.log(this);
+			
+			item.group = 'tag';
+			item.editable = true;
+			var date = item.start._i;
+			item.start = new Date(date.getTime()-10000);
+			item.end =  new Date(date.getTime()+10000);	
+			item.className= 'vis-tag';
+			callback(item);
+		};
+*/		
 	    var main = document.getElementById(divId);
 	    var options = {
 	    	stack: false,
 	        align: 'center',
 	        showCurrentTime:true,
 	        selectable:true,
-	        onAdd:onAdd,
+	        //onAdd: this.onAdd,
 	        margin: {
 	            item: 0,  // distance between items
 	            axis: 0   // distance between items and the time axis
@@ -65,10 +72,10 @@ var HyperTimeline = new (function() {
     		var start = properties.start;
 	    	var end = properties.end;
 	    	var avg = new Date((start.getTime()+end.getTime())/2);
-	    	var customTime = timeline.getCustomTime("time");
+	    	var customTime = this.getCustomTime("time");
 	    	//this.options.editable.add
 	    	
-	    	timeline.setCustomTime(avg,"time");
+	    	this.setCustomTime(avg,"time");
 	    	//timeline.customTimes[0].bar.contentEditable=false;
 	    	//timeline.customTimes[0].options.editable=false;
     	
@@ -81,21 +88,21 @@ var HyperTimeline = new (function() {
 		    	var start = properties.start;
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
-		    	timeline.hyper_offset = new Date().getTime() - avg;
-				if (timeline.hyper_offset < 0){
-					var wasRealtime = timeline.real_time;
+		    	this.hyper_offset = new Date().getTime() - avg;
+				if (this.hyper_offset < 0){
+					var wasRealtime = this.real_time;
 		    		
-					timeline.real_time = true;
-					timeline.moveTo(new Date());
-					timeline.hyper_offset = 0;
+					this.real_time = true;
+					this.moveTo(new Date());
+					this.hyper_offset = 0;
 			    	
 			    	if(!wasRealtime){
 						realtime();
 			    	}
 				}
 				else {
-					timeline.real_time = false ;
-					current(timeline.hyper_offset);
+					this.real_time = false ;
+					current(this.hyper_offset);
 				}
 	    	}
 	    });
@@ -103,7 +110,7 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.intersects = function(start,end){
-	    	var customTime = timeline.getCustomTime("time");
+	    	var customTime = this.getCustomTime("time");
 	    	var customMS = customTime.getTime();
 	    	var startMS = start.getTime();
 	    	var endMS = end.getTime();
@@ -121,7 +128,7 @@ var HyperTimeline = new (function() {
 	    timeline.timeRunning = true;
 	   
 	    timeline.togglePlayStop=function(play,stop){
-	    	if(timeline.timeRunning){
+	    	if(this.timeRunning){
 	    		stop();
 	    	}else {
 	    		play();
@@ -135,12 +142,15 @@ var HyperTimeline = new (function() {
 	    }
 	    
 	    timeline.addTag= function(id,date, content){
-
-	    	timeline.items.add({
+	    	var start = this.range.start;
+	    	var end = this.range.end;
+	    	var len = end - start;
+	    	
+	    	this.items.add({
 				id : id,
 				content : content,
-				start : new Date(date.getTime()-1000),
-				end :  new Date(date.getTime()+1000),			
+				start : new Date(start+3*len/8),
+				end :  new Date(start+5*len/8),			
 	 	        selectable:true,
 		        editable:true,
 				className: 'vis-tag',
@@ -150,7 +160,7 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.getMyTime = function(){
-	    	return new Date(new Date().getTime()-timeline.hyper_offset);
+	    	return new Date(new Date().getTime()-this.hyper_offset);
 	    }
 
 		followerWorker(timeline);
