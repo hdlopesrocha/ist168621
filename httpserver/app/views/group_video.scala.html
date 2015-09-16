@@ -11,10 +11,14 @@
   <div class="form-group">
     <label class="control-label" for="tagContent">Create TAG</label>
     <div class="input-group">
-      <input type="text" class="form-control" id="tagContent" onkeydown="if(event.keyCode==13){add_tag();}">
-      <span class="input-group-addon success"  onclick="add_tag()"><i class="fa fa-plus"></i></span>
+      <input type="text" class="form-control" id="tagContent" onkeydown="if(event.keyCode==13){addTag();}">
+      <span class="input-group-addon success"  onclick="addTag()"><i class="fa fa-plus"></i></span>
     </div>
   </div>
+  
+  		<button type="button" class="btn btn-primary hidden" onclick="saveTags()" id="saveButton">
+			<i class="fa fa-floppy-o"></i>
+		</button>
 </div>
 		
 		<div class="panel panel-default container-full">
@@ -60,8 +64,18 @@
 <script>
 	var selected_user =	"@userId";
 	var real_time = true;
-
+	var unsaved_tags = [];
 	
+	function makeid()
+	{
+	    var text = "";
+	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	    for( var i=0; i < 10; i++ )
+	        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	    return text;
+	}
 	
 	function playStop(){
 		timeline.togglePlayStop(
@@ -88,9 +102,19 @@
 		}	
 	}
 	
-	function add_tag(){
-		var date = new Date();
-		var id = "tag"+date;
-		timeline.addTag(id,date,$("#tagContent").val());
+	function saveTags(){
+		console.log(unsaved_tags);
+		for(var i in unsaved_tags){
+			items.remove(unsaved_tags[i]);
+		}
+		unsaved_tags = [];
+		$("#saveButton").addClass("hidden");
+	}
+	
+	function addTag(){		
+		var id = makeid();
+		unsaved_tags.push(id);
+		timeline.addTag(id,$("#tagContent").val());
+		$("#saveButton").removeClass("hidden");
 	}
 </script>

@@ -56,11 +56,13 @@ var HyperTimeline = new (function() {
 	    var groups = [
 	          {
                 id: 'tag',
-                content: 'Tags'
+                content: 'Tags',
+                className:'tagsGroup'
               },
               {
                 id: 'rec',
-                content: 'Recordings'
+                content: 'Recordings',
+                className:'recsGroup'
               }
         ];
 	    
@@ -141,19 +143,20 @@ var HyperTimeline = new (function() {
 	    	timeline.timeRunning = !timeline.timeRunning;
 	    }
 	    
-	    timeline.addTag= function(id,date, content){
-	    	var start = this.range.start;
-	    	var end = this.range.end;
-	    	var len = end - start;
+	    timeline.addTag= function(id, content){
+	    	var start = (this.range.start +this.range.end)/2;
+	    	//var end = this.range.end;
+	    	//var len = end - start;
 	    	
 	    	this.items.add({
 				id : id,
 				content : content,
-				start : new Date(start+3*len/8),
-				end :  new Date(start+5*len/8),			
+				start:start,
+				//start : new Date(start+3*len/8),
+				//end :  new Date(start+5*len/8),			
 	 	        selectable:true,
 		        editable:true,
-				className: 'vis-tag',
+				className: 'default',
 				group:'tag'
 			});
 	    }

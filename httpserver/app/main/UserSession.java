@@ -34,6 +34,7 @@ import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
+import org.kurento.client.VideoCaps;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -315,7 +316,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			player.release();
 			player= null;
 		}
-
 		
 		playUser = userId;
 		realTime = true;

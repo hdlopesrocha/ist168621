@@ -2,10 +2,47 @@ body {
    padding-top: 70px;
 }
 
-.vis-item.vis-tag {
+.vis-item.warning {
   color: white;
-  background-color: red;
-  border-color: darkred;
+  background-color: #F0AD4E;
+  border-color: #E09D3E;
+}
+.vis-item.danger {
+  color: white;
+  background-color: #d9534f;
+  border-color: #c9433f;
+}
+
+.tagsGroup .vis-item.vis-selected
+{
+  color: #9f9f9f;
+  background-color: #efefef;
+  border-color: #bfbfbf;
+}
+
+.recsGroup .vis-item.vis-selected
+{
+  color: #9f9f9f;
+  background-color: #d9534f;
+  border-color: #c9433f;
+}
+
+.vis-item.default {
+  color: #7f7f7f;
+  background-color: #dfdfdf;
+  border-color: #9f9f9f;
+}
+
+.vis-item.info {
+  color: white;
+  background-color: #5bc0de;
+  border-color: #4bb0ce;
+}
+
+.vis-item.success {
+  color: white;
+  background-color: #5cb85c;
+  border-color: #4ca84c;
 }
 
 .vis-item {
