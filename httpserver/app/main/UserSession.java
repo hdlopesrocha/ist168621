@@ -15,7 +15,10 @@
 package main;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,7 +37,6 @@ import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
-import org.kurento.client.VideoCaps;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -43,8 +45,8 @@ import models.Interval;
 import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
-import services.GetCurrentRecordingService;
 import services.CreateRecordingService;
+import services.GetCurrentRecordingService;
 
 /**
  * 
@@ -70,6 +72,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private long playOffset = 0l;
 	private String playUser = "";
+	private Process convertProccess;
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -268,11 +271,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playOffset = offset;
 		playUser = userId;
 		realTime = false;
-		
-		if (player != null) {
-			player.release();
-			player= null;
-		}
 
 		System.out.println("SET HIST " + userId);
 
@@ -284,19 +282,38 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			Recording rec = service.execute();
 
 			if (rec != null) {
-				System.out.println("PLAY:" + rec.getUrl());
-				player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-				player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-
-					@Override
-					public void onEvent(EndOfStreamEvent arg0) {
-						setHistoric(playUser, playOffset);
+				if (player != null) {
+					synchronized (player) {
+						player.stop();
+						player.release();
+						player = null;
 					}
-				});
-				player.connect(endPoint, MediaType.VIDEO);
-				player.connect(compositePoint, MediaType.AUDIO);
-				if (play) {
-					player.play();
+				}
+
+				player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
+				synchronized (player) {
+
+					player.addErrorListener(new EventListener<ErrorEvent>() {
+
+						@Override
+						public void onEvent(ErrorEvent arg0) {
+							System.out.println("FAILURE");
+							setHistoric(playUser, playOffset);
+
+						}
+					});
+
+					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+						@Override
+						public void onEvent(EndOfStreamEvent arg0) {
+							setHistoric(playUser, playOffset);
+						}
+					});
+					player.connect(endPoint, MediaType.VIDEO);
+					player.connect(compositePoint, MediaType.AUDIO);
+					if (play) {
+						player.play();
+					}
 				}
 
 			} else {
@@ -304,19 +321,28 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				System.out.println("No video here!");
 			}
 
-		} catch (ServiceException e) {
+		} catch (
+
+		ServiceException e)
+
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 
 	}
 
 	public void setRealtime(String userId) {
+
 		if (player != null) {
-			player.release();
-			player= null;
+			synchronized (player) {
+				player.stop();
+				player.release();
+				player = null;
+			}
 		}
-		
+
 		playUser = userId;
 		realTime = true;
 		UserSession session = room.getParticipant(playUser);
