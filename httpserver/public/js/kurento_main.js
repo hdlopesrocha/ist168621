@@ -188,7 +188,9 @@ var Kurento = new (function() {
 				
 				Kurento.pc["main"].onaddstream = function (e) {
 					console.log("main",e);
-					newVideoCallback(URL.createObjectURL(e.stream));
+					stq = e.stream;
+					console.log(stq);
+					newVideoCallback(URL.createObjectURL(stq));
 				};
 				
 				Kurento.pc["mixer"].onaddstream = function (e) {

@@ -17,37 +17,43 @@ public class MyRecorder {
 	private Object recorderLock = new Object();
 	private Thread recorderThread = null;
 	private Runnable recorderRunnable = null;
-
+	private Date begin;
+	
 	public MyRecorder(MediaElement endPoint, RecorderHandler handler) {
 
 		this.recorderRunnable = new Runnable() {
 
 			@Override
 			public void run() {
-				Date begin = new Date();
+				begin = new Date();
 
 				while (recorderThread != null) {
 					try {
-						String name = UUID.randomUUID().toString();
+						final String name = UUID.randomUUID().toString();
 
-						String filename = name + ".webm";
-						String filepath = "file:///rec/" + filename;
+						final String filename = name + ".webm";
+						final String filepath = "file:///rec/" + filename;
 
 						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), filepath).build();
 						endPoint.connect(recorder);
 						recorder.record();
 
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
 						recorder.stop();
-						Date end = new Date();
-
-						handler.onFileRecorded(begin, end, filepath, filename);
+						final Date end = new Date();
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {								
+								handler.onFileRecorded(begin, end, filepath, filename);
+							}
+						}).start();
 
 						endPoint.disconnect(recorder);
 						recorder.release();
