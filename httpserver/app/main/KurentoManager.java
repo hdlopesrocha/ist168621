@@ -40,7 +40,6 @@ public class KurentoManager {
 		for(MediaPipeline pipeline : kurento.getServerManager().getPipelines()) {
 			System.out.println("Loaded: " + pipeline.getId() + " | " +pipeline.getName());
 			rooms.put(pipeline.getName(), new Room(pipeline));
-			
 		}	
 		System.out.println("Ok!");
 	}

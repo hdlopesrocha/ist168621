@@ -31,7 +31,7 @@ public class MyRecorder {
 					try {
 						final String name = UUID.randomUUID().toString();
 
-						final String filename = name + ".webm";
+						final String filename = name + ".mp4";
 						final String filepath = "file:///rec/" + filename;
 
 						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), filepath).build();
@@ -39,7 +39,7 @@ public class MyRecorder {
 						recorder.record();
 
 						try {
-							Thread.sleep(1000);
+							Thread.sleep(10000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
