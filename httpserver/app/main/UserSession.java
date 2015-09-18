@@ -15,10 +15,7 @@
 package main;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -47,6 +44,7 @@ import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
 import services.GetCurrentRecordingService;
+import services.Service;
 
 /**
  * 
@@ -67,6 +65,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private String intervalId = null;
 
 	private PlayerEndpoint player;
+	private Object playerLock = new Object();
+
 	private boolean realTime = true;
 	private boolean play = true;
 
@@ -282,22 +282,60 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			Recording rec = service.execute();
 
 			if (rec != null) {
-				if (player != null) {
-					synchronized (player) {
+				synchronized (playerLock) {
+					if (player != null) {
 						player.stop();
 						player.release();
 						player = null;
 					}
-				}
 
-				player = new PlayerEndpoint.Builder(room.getMediaPipeline(), rec.getUrl()).build();
-				synchronized (player) {
+					// WEBM
+					String path = "/rec/" + Service.getRandomString(12) + ".webm";
+					// MP4
+					// String path = "/tmp/" + Service.getRandomString(12) +
+					// ".mp4";
+
+					new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+							try {
+								if (convertProccess != null) {
+									convertProccess.destroyForcibly();
+								}
+								// WEBM
+								convertProccess = Runtime.getRuntime().exec("ffmpeg -y -i " + rec.getUrl().substring(7)
+										+ " -c:v libvpx -c:a libvorbis -b:v 1M -r 25 -ss 0 " + path);
+								// MP4
+								// convertProccess =
+								// Runtime.getRuntime().exec("ffmpeg -y -i " +
+								// rec.getUrl().substring(7) + " " + path);
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
+					}).start();
+					String uri = "file://" + path;
+
+					System.out.println("PLAY: " + uri);
+
+					// player = new
+					// PlayerEndpoint.Builder(room.getMediaPipeline(),
+					// rec.getUrl()).build();
+					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), "/rec/out.mp4").build();
+
+					// player = new
+					// PlayerEndpoint.Builder(room.getMediaPipeline(),
+					// uri).build();
 
 					player.addErrorListener(new EventListener<ErrorEvent>() {
 
 						@Override
 						public void onEvent(ErrorEvent arg0) {
-							System.out.println("FAILURE");
+							System.out.println("FAILURE: " + arg0.getDescription());
 							setHistoric(playUser, playOffset);
 
 						}
@@ -329,14 +367,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 
 	}
 
 	public void setRealtime(String userId) {
 
-		if (player != null) {
-			synchronized (player) {
+		synchronized (playerLock) {
+			if (player != null) {
 				player.stop();
 				player.release();
 				player = null;
@@ -369,15 +406,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setPlay(boolean play) {
-		if (player != null) {
-			if (play) {
-				player.play();
-			} else {
-				player.pause();
-			}
-		}
-		this.play = play;
+		synchronized (playerLock) {
 
+			if (player != null) {
+				if (play) {
+					player.play();
+				} else {
+					player.pause();
+				}
+			}
+			this.play = play;
+		}
 	}
 
 }
