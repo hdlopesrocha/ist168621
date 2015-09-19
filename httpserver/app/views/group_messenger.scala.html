@@ -1,52 +1,8 @@
 @()
 
 
-<div class="row ">
-	<div class="col-md-8">
-		<div class="panel panel-info">
-			<div class="panel-heading">RECENT CHAT HISTORY</div>
-			<div class="panel-body">
-				<ul class="media-list" id="messagesList">
 
-					
-				</ul>
-			</div>
-			<div class="panel-footer">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Enter Message" id="messageText" onkeydown="if(event.keyCode==13){sendMessage();}" />
-					<span class="input-group-btn">
-						<button class="btn btn-info" type="button" id="sendMessageButton" onclick="sendMessage()">SEND</button>
-					</span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="panel panel-primary">
-			<div class="panel-heading">USERS</div>
-			<div class="panel-body">
-				<ul class="media-list">
-
-					<li class="media">
-
-						<div class="media-body" id="messengerMembers">
-
-
-
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-	</div>
-</div>
 
 <script>
-	function sendMessage(){
-		var text = $("#messageText").val();
-		Kurento.sendMessage(text);	
-		$("#messageText").val("");
 
-	}
 </script>

@@ -9,19 +9,16 @@
 	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
+	<div class="row row-centered">
+		<div class="btn-group col-centered" role="group" id="mybtns">
+		  <button type="button" onclick="switchTab('#mytabs','#mybtns',1)" class="btn btn-default"><i class="fa fa-video-camera"></i></button>
+		  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-users"></i></button>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="container">	
-			<div class="row row-centered">
-				<div class="btn-group col-centered" role="group" id="mybtns">
-				  <button type="button" onclick="switchTab('#mytabs','#mybtns',1)" class="btn btn-default"><i class="fa fa-video-camera"></i></button>
-				  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-comments"></i></button>
-				  <button type="button" onclick="switchTab('#mytabs','#mybtns',3)" class="btn btn-default"><i class="fa fa-users"></i></button>
-				</div>
-			</div>
-	
 			<div id="mytabs" style="padding-top: 20px;">
 				<div>@group_video(groupId,userId)</div>
-				<div>@group_messenger()</div>
 				<div>@group_friends(groupId,userId)</div>
 			</div>
 		</div>
