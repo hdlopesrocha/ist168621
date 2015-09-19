@@ -3,118 +3,175 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<button type="button" class="btn btn-warning" onclick="playStop()" id="playStop">
-			<i class="fa fa-pause"></i>
-		</button>
-	
-<div class="form-inline" style="float:right">
-  <div class="form-group">
-    <label class="control-label" for="tagContent">Create TAG</label>
-    <div class="input-group">
-      <input type="text" class="form-control" id="tagContent" onkeydown="if(event.keyCode==13){addTag();}">
-      <span class="input-group-addon success"  onclick="addTag()"><i class="fa fa-plus"></i></span>
-    </div>
-  </div>
-  
-  		<button type="button" class="btn btn-primary hidden" onclick="saveTags()" id="saveButton">
-			<i class="fa fa-floppy-o"></i>
-		</button>
-</div>
-		
-		<div class="panel panel-default container-full">
-			<div id="timeline"></div>
+
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse3">TIMELINE</a>
+				</h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse in">
+				<button type="button" class="btn btn-warning" onclick="playStop()"
+					id="playStop">
+					<i class="fa fa-pause"></i>
+				</button>
+				<div class="form-inline" style="float: right">
+					<div class="form-group">
+						<label class="control-label" for="tagContent">Create TAG</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="tagContent"
+								onkeydown="if(event.keyCode==13){addTag();}"> <span
+								class="input-group-addon success" onclick="addTag()"><i
+								class="fa fa-plus"></i></span>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-primary hidden"
+						onclick="saveTags()" id="saveButton">
+						<i class="fa fa-floppy-o"></i>
+					</button>
+				</div>
+
+				<div class="panel panel-default container-full" style="margin-bottom: 0px;">
+					<div id="timeline"></div>
+				</div>
+			</div>
 		</div>
-		
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-6">
 		<div class="panel panel-info">
-			<div class="panel-heading">VIDEO</div>
-			<div class="panel-body">
-				<video id='myvideo' autoplay width='480px' height='360px'
-				style="margin: 0px auto; display: block;"></video>
-			<video id='mymixed' autoplay width='320px' height='240px'
-				style="margin: 0px auto; display: none;"></video>
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse0">VIDEO</a>
+				</h4>
+			</div>
+			<div id="collapse0" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<video id='myvideo' autoplay width='480px' height='360px'
+						style="margin: 0px auto; display: block;"></video>
+					<video id='mymixed' autoplay width='320px' height='240px'
+						style="margin: 0px auto; display: none;"></video>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-info">
+
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse2">RECENT CHAT HISTORY</a>
+				</h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<ul class="media-list" id="messagesList">
+
+
+					</ul>
+				</div>
+				<div class="panel-footer">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="Enter Message" id="messageText"
+							onkeydown="if(event.keyCode==13){sendMessage();}" /> <span
+							class="input-group-btn">
+							<button class="btn btn-info" type="button" id="sendMessageButton"
+								onclick="sendMessage()">SEND</button>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<div class="panel panel-primary">
-			<div class="panel-heading">USERS</div>
-			<div class="panel-body">
-				<ul class="media-list">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse1">USERS</a>
+				</h4>
+			</div>
 
-					<li class="media">
+			<div id="collapse1" class="panel-collapse collapse in">
 
-						<div class="media-body" id="videoMembers">
+				<div class="panel-body">
+					<ul class="media-list">
 
+						<li class="media">
 
-
-						</div>
-					</li>
-				</ul>
+							<div class="media-body" id="videoMembers"></div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 
 	</div>
+
 </div>
 
+
 <script>
-	var selected_user =	"@userId";
+	var selected_user = "@userId";
 	var real_time = true;
 	var unsaved_tags = [];
-	
-	function makeid()
-	{
-	    var text = "";
-	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-	    for( var i=0; i < 10; i++ )
-	        text += possible.charAt(Math.floor(Math.random() * possible.length));
+	function sendMessage(){
+		var text = $("#messageText").val();
+		Kurento.sendMessage(text);	
+		$("#messageText").val("");
 
-	    return text;
 	}
 	
-	function playStop(){
-		timeline.togglePlayStop(
-			function(){
-				$("#playStop").html('<i class="fa fa-pause"></i>');
-				$("#playStop").attr('class','btn btn-warning');	
-				Kurento.setPlay(true);
-			},
-			function(){
-				$("#playStop").html('<i class="fa fa-play"></i>');
-				$("#playStop").attr('class','btn btn-success');					
-				Kurento.setPlay(false);
-			}
-		);
+	function makeid() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (var i = 0; i < 10; i++)
+			text += possible
+					.charAt(Math.floor(Math.random() * possible.length));
+
+		return text;
 	}
 
-	function select_user(userId){
+	function playStop() {
+		timeline.togglePlayStop(function() {
+			$("#playStop").html('<i class="fa fa-pause"></i>');
+			$("#playStop").attr('class', 'btn btn-warning');
+			Kurento.setPlay(true);
+		}, function() {
+			$("#playStop").html('<i class="fa fa-play"></i>');
+			$("#playStop").attr('class', 'btn btn-success');
+			Kurento.setPlay(false);
+		});
+	}
+
+	function select_user(userId) {
 		selected_user = userId;
-		
-		if(real_time){
+
+		if (real_time) {
 			Kurento.receiveRealtime(selected_user);
-		}else {
-			Kurento.receiveHistoric(selected_user,current_offset);
-		}	
+		} else {
+			Kurento.receiveHistoric(selected_user, current_offset);
+		}
 	}
-	
-	function saveTags(){
+
+	function saveTags() {
 		console.log(unsaved_tags);
-		for(var i in unsaved_tags){
+		for ( var i in unsaved_tags) {
 			items.remove(unsaved_tags[i]);
 		}
 		unsaved_tags = [];
 		$("#saveButton").addClass("hidden");
 	}
-	
-	function addTag(){		
+
+	function addTag() {
 		var id = makeid();
 		unsaved_tags.push(id);
-		timeline.addTag(id,$("#tagContent").val());
+		timeline.addTag(id, $("#tagContent").val());
 		$("#saveButton").removeClass("hidden");
 	}
 </script>
