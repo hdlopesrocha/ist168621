@@ -78,7 +78,8 @@ var HyperTimeline = new (function() {
 	    	//this.options.editable.add
 	    	
 	    	this.setCustomTime(avg,"time");
-	    	//timeline.customTimes[0].bar.contentEditable=false;
+	    	$(timeline.customTimes[0].bar).css("pointer-events: none;");
+	    	console.log(timeline.customTimes[0]);
 	    	//timeline.customTimes[0].options.editable=false;
     	
 	    });

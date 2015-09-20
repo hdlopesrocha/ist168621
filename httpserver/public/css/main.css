@@ -2,6 +2,10 @@ body {
    padding-top: 70px;
 }
 
+.vis-custom-time {
+	pointer-events: none;
+}
+
 .vis-item.warning {
   color: white;
   background-color: #F0AD4E;
