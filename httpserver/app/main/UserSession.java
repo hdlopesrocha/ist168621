@@ -34,6 +34,8 @@ import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
+import org.kurento.client.VideoCaps;
+import org.kurento.client.VideoCodec;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -322,11 +324,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					System.out.println("PLAY: " + uri);
 
-					// player = new
-					// PlayerEndpoint.Builder(room.getMediaPipeline(),
-					// rec.getUrl()).build();
-					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), "/rec/out.mp4").build();
-
+					player = new PlayerEndpoint.Builder(room.getMediaPipeline(),rec.getUrl()).build();
 					// player = new
 					// PlayerEndpoint.Builder(room.getMediaPipeline(),
 					// uri).build();

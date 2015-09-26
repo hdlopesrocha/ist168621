@@ -3,8 +3,13 @@ package main;
 import java.util.Date;
 import java.util.UUID;
 
+import org.kurento.client.AudioCaps;
+import org.kurento.client.AudioCodec;
+import org.kurento.client.Fraction;
 import org.kurento.client.MediaElement;
 import org.kurento.client.RecorderEndpoint;
+import org.kurento.client.VideoCaps;
+import org.kurento.client.VideoCodec;
 
 public class MyRecorder {
 
@@ -31,10 +36,12 @@ public class MyRecorder {
 					try {
 						final String name = UUID.randomUUID().toString();
 
-						final String filename = name + ".mp4";
+						final String filename = name + ".webm";
 						final String filepath = "file:///rec/" + filename;
 
 						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), filepath).build();
+					//	recorder.setVideoFormat(new VideoCaps(VideoCodec.H264, new Fraction(1, 15)));
+					//	recorder.setAudioFormat(new AudioCaps(AudioCodec.OPUS, 16000));
 						endPoint.connect(recorder);
 						recorder.record();
 

@@ -64,12 +64,7 @@ public class WSController extends Controller {
 							try {
 								List<Message> messages = messagesService.execute();
 								for(Message message : messages){
-									JSONObject messageObj = new JSONObject();
-									messageObj.put("time", Tools.FORMAT.format(message.getTime()));
-									messageObj.put("text", message.getText());
-									messageObj.put("uid", message.getUserId().toString());
-									User u = User.findById(message.getUserId());
-									messageObj.put("name", u.getPublicProperties().getString("name"));
+									JSONObject messageObj = message.toJsonObject();
 									
 									messagesArray.put(messageObj);
 								}
@@ -114,11 +109,7 @@ public class WSController extends Controller {
 									try {
 										Message message = messageService.execute();
 										JSONArray messagesArray = new JSONArray();
-										JSONObject messageObj = new JSONObject();
-										messageObj.put("time", Tools.FORMAT.format(message.getTime()));
-										messageObj.put("text", message.getText());
-										messageObj.put("uid", message.getUserId().toString());
-										messageObj.put("name", user.getPublicProperties().getString("name"));
+										JSONObject messageObj = message.toJsonObject();
 										messagesArray.put(messageObj);
 										JSONObject msg = new JSONObject();
 										msg.put("id", "msg");
@@ -149,8 +140,7 @@ public class WSController extends Controller {
 									usession.addCandidate(candidate, name);
 								}
 								break;
-								case "realtime":
-								{
+								case "realtime": {
 									System.out.println("REALTIME");
 									String userId = args.has("uid") ? args.getString("uid") : null;
 
