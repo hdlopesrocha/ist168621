@@ -24,120 +24,12 @@
 		</div>
 	</div>
 <script>
-		var participants = {};
-		var timeline = null;
-		var current_offset=0;
-		var rendered_intervals = {};
-	
-		// TIMELINE
-		var items = new vis.DataSet({
-			type : {
-				start : 'ISODate',
-				end : 'ISODate'
-			}
-		});
-	
-		
-	
 	
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
-			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
-		
-			timeline = HyperTimeline.create(items, "timeline",
-				function(offset) {
-					console.log("HISTORIC",offset);
-					// current request
-					current_offset = offset;
-					Kurento.receiveHistoric(selected_user,current_offset);
-					real_time = false;
-				}, 
-				function() {
 			
-					console.log("REALTIME");
-					// realtime request
-					Kurento.receiveRealtime(selected_user);
-	
-					real_time = true;
-				}
-			);
-	
-	
-	
-	
-			var kvideo = function(streamUrl) {
-				var video = document.getElementById("myvideo");
-				video.src = streamUrl;
-				return video;
-			}
-			
-			var mvideo = function(streamUrl) {
-				var video = document.getElementById("mymixed");
-				video.src = streamUrl;
-				return video;
-			}
-			
-			var kparticipants = function(userId, email) {
-				if (!participants[userId]) {
-					$("#msgMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
-					$("#vidMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
-
-					participants[userId] = email;
-				}
-			}
-			
-			var kmessage = function(userId,time,text, name){
-				$("#messagesList").append(
-					'<li class="media"><div class="media-body"><div class="media">' +
-					'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
-					'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
-					'<hr /></div></div></div></li>'
-				);
-			}
-			
-			var firstRecording = true;
-			
-			var kinterval = function(array){
-				console.log("REC",array);
-				for (var id in array){
-					var start = array[id][0];
-					var end = array[id][1];
-					
-					var inter = rendered_intervals[id];
-					
-					if(inter){
-						items.remove(id);
-					}
-			
-					items.add({
-						id : id,
-						group:'rec',
-						content : "&nbsp;",
-				      	editable: false,
-				      	selectable: false,
-				      	className:'danger',
-						start : start,
-						end : end
-					});
-					rendered_intervals[id] = true;
-					
-				
-				}
-				if (firstRecording) {
-					firstRecording = false;
-
-					timeline.fit({
-						animation : false
-					});
-				}
-			}
-			
-	
-			
-			
-			
-			Kurento.start("@groupId", kparticipants, kvideo, mvideo, kinterval, kmessage);
+			Kurento.start("@groupId", participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived);
 	
 			$("#refresh-button").click(function() {
 				document.location = document.location;
@@ -157,7 +49,6 @@
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
 
-					
 					$("#membersList").append(
 							'<div class="media" '+ onclick+'>'+
 							'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
@@ -180,8 +71,5 @@
 			});
 		});
 	
-	
-
-		
 	</script>
 }

@@ -1,9 +1,7 @@
 @(groupId : String, userId : String)
 
-
 <div class="row">
 	<div class="col-sm-12">
-
 		<div class="panel panel-info">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -25,13 +23,11 @@
 								class="fa fa-plus"></i></span>
 						</div>
 					</div>
-
 					<button type="button" class="btn btn-primary hidden"
 						onclick="saveTags()" id="saveButton">
 						<i class="fa fa-floppy-o"></i>
 					</button>
 				</div>
-
 				<div class="panel panel-default container-full" style="margin-bottom: 0px;">
 					<div id="timeline"></div>
 				</div>
@@ -59,7 +55,6 @@
 	</div>
 	<div class="col-md-6">
 		<div class="panel panel-info">
-
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" href="#collapse2">RECENT CHAT HISTORY</a>
@@ -68,8 +63,6 @@
 			<div id="collapse2" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<ul class="media-list" id="messagesList">
-
-
 					</ul>
 				</div>
 				<div class="panel-footer">
@@ -86,7 +79,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="col-md-6">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -94,23 +86,17 @@
 					<a data-toggle="collapse" href="#collapse1">USERS</a>
 				</h4>
 			</div>
-
 			<div id="collapse1" class="panel-collapse collapse in">
-
 				<div class="panel-body">
 					<ul class="media-list">
-
 						<li class="media">
-
 							<div class="media-body" id="videoMembers"></div>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 </div>
 
 
@@ -118,7 +104,102 @@
 	var selected_user = "@userId";
 	var real_time = true;
 	var unsaved_tags = [];
+	var firstRecording = true;
+	var participants = {};
+	var timeline = null;
+	var current_offset=0;
+	var rendered_intervals = {};
 
+	// TIMELINE
+	var items = new vis.DataSet({
+		type : {
+			start : 'ISODate',
+			end : 'ISODate'
+		}
+	});
+	
+	$(document).ready(function() {
+		
+		timeline = HyperTimeline.create(items, "timeline",
+			function(offset) {
+				console.log("HISTORIC",offset);
+				// current request
+				current_offset = offset;
+				Kurento.receiveHistoric(selected_user,current_offset);
+				real_time = false;
+			}, 
+			function() {
+		
+				console.log("REALTIME");
+				// realtime request
+				Kurento.receiveRealtime(selected_user);
+
+				real_time = true;
+			}
+		);
+	});
+	
+	function intervalRecorded(array){
+		console.log("REC",array);
+		for (var id in array){
+			var start = array[id][0];
+			var end = array[id][1];
+			var inter = rendered_intervals[id];
+			
+			if(inter){
+				items.remove(id);
+			}
+	
+			items.add({
+				id : id,
+				group:'rec',
+				content : "&nbsp;",
+		      	editable: false,
+		      	selectable: false,
+		      	className:'danger',
+				start : start,
+				end : end
+			});
+			rendered_intervals[id] = true;
+		}
+		if (firstRecording) {
+			firstRecording = false;
+
+			timeline.fit({
+				animation : false
+			});
+		}
+	}
+	
+	function videoStream(streamUrl) {
+		var video = document.getElementById("myvideo");
+		video.src = streamUrl;
+		return video;
+	}
+	
+	function mixedStream(streamUrl) {
+		var video = document.getElementById("mymixed");
+		video.src = streamUrl;
+		return video;
+	}
+	
+	function participantOnline(userId, email) {
+		if (!participants[userId]) {
+			$("#msgMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
+			$("#vidMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
+			participants[userId] = email;
+		}
+	}
+	
+	function messageArrived(userId,time,text, name,mid){
+		$("#messagesList").append(
+			'<li class="media"><div class="media-body"><div class="media">' +
+			'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
+			'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
+			'<hr /></div></div></div></li>'
+		);
+	}
+	
 	function sendMessage(){
 		var text = $("#messageText").val();
 		Kurento.sendMessage(text);	
@@ -129,11 +210,8 @@
 	function makeid() {
 		var text = "";
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
 		for (var i = 0; i < 10; i++)
-			text += possible
-					.charAt(Math.floor(Math.random() * possible.length));
-
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
 		return text;
 	}
 

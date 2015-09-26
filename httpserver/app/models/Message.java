@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
+import main.Tools;
 import services.Service;
 
 public class Message {
@@ -88,7 +90,17 @@ public class Message {
 		this.time = time;
 	}
 
-
+	public JSONObject toJsonObject(){
+		JSONObject messageObj = new JSONObject();
+		User u = User.findById(getUserId());
+		messageObj.put("id", getId().toString());
+		messageObj.put("name", u.getPublicProperties().getString("name"));
+		messageObj.put("time", Tools.FORMAT.format(getTime()));
+		messageObj.put("text", getText());
+		messageObj.put("uid", getUserId().toString());
+		return messageObj;
+	}
+	
 	public ObjectId getGroupId() {
 		return groupId;
 	}
