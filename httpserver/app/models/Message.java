@@ -20,6 +20,7 @@ public class Message {
 	private Date time;
 	private String text;
 	private ObjectId id = null;
+	private Long sequence;
 
 	public static MongoCollection<Document> collection;
 
@@ -29,6 +30,14 @@ public class Message {
 		return collection;
 	}
 
+	
+	public Long generateSequence(){
+		long count = getCollection()
+				.count(new Document("gid", groupId));
+		
+		return count;
+	}
+	
 	public void save() {
 		Document doc = new Document();
 		if (id != null)
@@ -38,10 +47,13 @@ public class Message {
 		doc.put("uid", userId);
 		doc.put("time", time);
 		doc.put("text", text);
+		doc.put("seq", sequence);
 		
 
-		if (id == null)
+		if (id == null){
+			doc.put("seq", generateSequence());
 			getCollection().insertOne(doc);
+		}
 		else
 			getCollection().replaceOne(new Document("_id", id), doc);
 
@@ -56,6 +68,7 @@ public class Message {
 		rec.groupId = doc.getObjectId("gid");
 		rec.time = doc.getDate("time");
 		rec.text = doc.getString("text");
+		rec.sequence = doc.getLong("seq");
 		return rec;
 	}
 
