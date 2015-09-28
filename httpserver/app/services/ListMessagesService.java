@@ -14,6 +14,8 @@ import models.Message;
 public class ListMessagesService extends Service<List<Message>> {
 
 	private ObjectId groupId;
+	private Long end;
+	private int len;
 
 	
 	
@@ -28,8 +30,10 @@ public class ListMessagesService extends Service<List<Message>> {
 	 *            the content
 	 * @param anex
 	 */
-	public ListMessagesService(final String groupId) {
+	public ListMessagesService(final String groupId, final Long end, final int len) {
 		this.groupId = new ObjectId(groupId);
+		this.end = end;
+		this.len = len;
 	}
 
 	/*
@@ -39,7 +43,7 @@ public class ListMessagesService extends Service<List<Message>> {
 	 */
 	@Override
 	public List<Message> dispatch() throws ServiceException {
-		return Message.listByGroup(groupId);
+		return Message.listByGroup(groupId,end,len);
 	}
 
 	/*

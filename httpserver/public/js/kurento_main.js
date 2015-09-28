@@ -30,6 +30,15 @@ var Kurento = new (function() {
 	this.pc = {};
 
 	this.ws = null;
+
+	this.receiveMore=function(end,len){
+		Kurento.ws.send(JSON.stringify({
+			id : "getmsg",
+			len: len,
+			end: end
+		}));
+	}
+	
 	
 	this.setPlay=function(play){
 		Kurento.ws.send(JSON.stringify({
@@ -142,7 +151,7 @@ var Kurento = new (function() {
 					case 'msg':
 						for(var i in message.data){
 							var msg = message.data[i];
-							newMessageCallback(msg.uid,msg.time,msg.text,msg.name, msg.id);
+							newMessageCallback(msg.uid,msg.time,msg.text,msg.name, msg.id, msg.seq);
 						}
 						
 						break;

@@ -26,6 +26,10 @@ import services.CreateMessageService;
 
 public class WSController extends Controller {
 
+	
+
+	
+	
 	public WebSocket<String> connectToRoom(String groupId) {
 		final String uid = session("uid");
 
@@ -58,27 +62,7 @@ public class WSController extends Controller {
 							}
 							room.sendMessage(msg.toString());
 						}
-						{
-							ListMessagesService messagesService = new ListMessagesService(groupId);
-							JSONArray messagesArray = new JSONArray();
-							try {
-								List<Message> messages = messagesService.execute();
-								for(Message message : messages){
-									JSONObject messageObj = message.toJsonObject();
-									
-									messagesArray.put(messageObj);
-								}
-								
-							} catch (ServiceException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							
-							JSONObject msg = new JSONObject();
-							msg.put("id", "msg");
-							msg.put("data", messagesArray);
-							usession.sendMessage(msg.toString());
-						}
+						usession.sendMessages( null, 4);
 						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
@@ -121,6 +105,12 @@ public class WSController extends Controller {
 										e.printStackTrace();
 									}	
 									// send msg
+								}
+								break;
+								case "getmsg" : {
+									int len = args.getInt("len");
+									Long end = args.getLong("end");
+									usession.sendMessages(end, len);
 								}
 								break;
 								case "offer": {

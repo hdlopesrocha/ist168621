@@ -61,7 +61,7 @@
 				</h4>
 			</div>
 			<div id="collapse2" class="panel-collapse collapse in">
-				<div class="panel-body">
+				<div class="panel-body"  style="max-height: 256px;overflow: auto;" id="messagesPanel">
 					<ul class="media-list" id="messagesList">
 					</ul>
 				</div>
@@ -109,6 +109,7 @@
 	var timeline = null;
 	var current_offset=0;
 	var rendered_intervals = {};
+	var oldestMsg = null;
 
 	// TIMELINE
 	var items = new vis.DataSet({
@@ -118,7 +119,22 @@
 		}
 	});
 	
+	
+	function receiveMore(){
+		if(oldestMsg){
+			Kurento.receiveMore(oldestMsg,1);
+		}
+	}
+	
 	$(document).ready(function() {
+		$( "#messagesPanel" ).scroll(function() {
+			if($("#messagesPanel").scrollTop()==0){
+				receiveMore();
+				$("#messagesPanel").scrollTop(1);
+			}
+		});
+		
+		
 		
 		timeline = HyperTimeline.create(items, "timeline",
 			function(offset) {
@@ -191,13 +207,24 @@
 		}
 	}
 	
-	function messageArrived(userId,time,text, name,mid){
-		$("#messagesList").append(
-			'<li class="media"><div class="media-body"><div class="media">' +
-			'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
-			'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
-			'<hr /></div></div></div></li>'
-		);
+	function messageArrived(userId,time,text, name,mid,seq){
+		var html = '<li class="media"><div class="media-body"><div class="media">' +
+		'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
+		'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
+		'<hr /></div></div></div></li>';
+				
+		if(!oldestMsg || seq<oldestMsg){
+			oldestMsg = seq;
+			var oldHeight = $("#messagesList").height();
+			$("#messagesList").prepend(html);
+			var newHeight = $("#messagesList").height();
+			$("div").scrollTop(newHeight-oldHeight);
+					
+		} else {
+			$("#messagesList").append(html);
+			$("div").scrollTop($("#messagesList").height());
+		}
+		
 	}
 	
 	function sendMessage(){
