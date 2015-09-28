@@ -62,7 +62,7 @@ public class WSController extends Controller {
 							}
 							room.sendMessage(msg.toString());
 						}
-						usession.sendMessages( null, 4);
+						usession.sendMessages( null, 1);
 						
 						// When the socket is closed.
 						in.onClose(new Callback0() {

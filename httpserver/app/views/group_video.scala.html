@@ -119,6 +119,8 @@
 		}
 	});
 	
+
+	
 	
 	function receiveMore(){
 		if(oldestMsg){
@@ -133,6 +135,16 @@
 				$("#messagesPanel").scrollTop(1);
 			}
 		});
+		
+		// plugtrade.com - jQuery detect vertical scrollbar function //
+		(function($) {
+		    $.fn.hasScrollBar = function() {
+		        var divnode = this.get(0);
+		        if(divnode.scrollHeight > divnode.clientHeight)
+		            return true;
+		    }
+		})(jQuery);
+		
 		
 		
 		
@@ -224,6 +236,12 @@
 			$("#messagesList").append(html);
 			$("div").scrollTop($("#messagesList").height());
 		}
+		
+		
+		if(!$('#messagesPanel').hasScrollBar()){
+			receiveMore();
+		}
+		
 		
 	}
 	
