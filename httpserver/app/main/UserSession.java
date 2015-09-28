@@ -17,6 +17,7 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -41,11 +42,13 @@ import org.kurento.jsonrpc.JsonUtils;
 
 import exceptions.ServiceException;
 import models.Interval;
+import models.Message;
 import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
 import services.GetCurrentRecordingService;
+import services.ListMessagesService;
 import services.Service;
 
 /**
@@ -417,4 +420,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
+	public void sendMessages(Long end , int len){
+		ListMessagesService messagesService = new ListMessagesService(room.getGroupId(),end,len);
+		JSONArray messagesArray = new JSONArray();
+		try {
+			List<Message> messages = messagesService.execute();
+			for(Message message : messages){
+				JSONObject messageObj = message.toJsonObject();
+				
+				messagesArray.put(messageObj);
+			}
+			
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		JSONObject msg = new JSONObject();
+		msg.put("id", "msg");
+		msg.put("data", messagesArray);
+		sendMessage(msg.toString());
+	}
+	
 }

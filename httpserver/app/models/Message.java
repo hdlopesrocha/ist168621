@@ -29,7 +29,6 @@ public class Message {
 			collection = Service.getDatabase().getCollection("messages");
 		return collection;
 	}
-
 	
 	public Long generateSequence(){
 		long count = getCollection()
@@ -76,9 +75,14 @@ public class Message {
 		return id;
 	}
 	
-	public static List<Message> listByGroup(ObjectId groupId) {
+	public static List<Message> listByGroup(ObjectId groupId, Long end, int len) {
+		Document query = new Document("gid", groupId);
+		if(end!=null){
+			query.append("seq", new Document("$lt",end));
+		}
+		
 		FindIterable<Document> iter = getCollection()
-				.find(new Document("gid", groupId));
+				.find(query ).sort(new Document("seq",-1)).limit(len);
 		List<Message> ret = new ArrayList<Message>();
 		for (Document doc : iter) {
 			ret.add(Message.load(doc));
@@ -105,17 +109,22 @@ public class Message {
 
 	public JSONObject toJsonObject(){
 		JSONObject messageObj = new JSONObject();
-		User u = User.findById(getUserId());
+		User u = User.findById(userId);
 		messageObj.put("id", getId().toString());
 		messageObj.put("name", u.getPublicProperties().getString("name"));
-		messageObj.put("time", Tools.FORMAT.format(getTime()));
-		messageObj.put("text", getText());
-		messageObj.put("uid", getUserId().toString());
+		messageObj.put("time", Tools.FORMAT.format(time));
+		messageObj.put("text", text);
+		messageObj.put("seq", sequence);
+		messageObj.put("uid", userId.toString());
 		return messageObj;
 	}
 	
 	public ObjectId getGroupId() {
 		return groupId;
+	}
+
+	public ObjectId getUserId() {
+		return userId;
 	}
 
 	public Date getTime() {
@@ -126,14 +135,14 @@ public class Message {
 		return text;
 	}
 
+	public Long getSequence() {
+		return sequence;
+	}
+
 	public void delete() {
 		if (id != null) {
 			getCollection().deleteOne(new Document("_id", id));
 		}
-	}
-
-	public ObjectId getUserId() {
-		return userId;
 	}
 
 }

@@ -17,12 +17,14 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PreDestroy;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.Composite;
 import org.kurento.client.ErrorEvent;
@@ -31,9 +33,12 @@ import org.kurento.client.Hub;
 import org.kurento.client.MediaObject;
 import org.kurento.client.MediaPipeline;
 
+import exceptions.ServiceException;
 import models.Group;
+import models.Message;
 import models.User;
 import play.mvc.WebSocket;
+import services.ListMessagesService;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -76,8 +81,6 @@ public class Room implements Closeable {
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
-	
-
 	
 	public void sendMessage(final String string) {
 		for(UserSession user : participants.values()){
