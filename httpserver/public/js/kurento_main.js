@@ -31,7 +31,18 @@ var Kurento = new (function() {
 
 	this.ws = null;
 
-	this.receiveMore=function(end,len){
+	this.createTag = function(gid,time,title,content){
+		Kurento.ws.send(JSON.stringify({
+			id : "tag",
+			gid:gid,
+			time: time,
+			title: title,
+			content: content
+		}));
+	}
+	
+
+	this.receiveMore = function(end,len){
 		Kurento.ws.send(JSON.stringify({
 			id : "getmsg",
 			len: len,
