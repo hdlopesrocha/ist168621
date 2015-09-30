@@ -12,17 +12,18 @@ import com.mongodb.client.MongoCollection;
 
 import services.Service;
 
-public class Interval {
+public class TimeTag {
 
-	private Date start, end;
-
+	private Date time;
+	private String title;
+	private String content;
 	private ObjectId id, gid = null;
 
 	private static MongoCollection<Document> collection;
 
 	public static MongoCollection<Document> getCollection() {
 		if (collection == null)
-			collection = Service.getDatabase().getCollection("intervals");
+			collection = Service.getDatabase().getCollection("timeTags");
 		return collection;
 	}
 
@@ -32,8 +33,9 @@ public class Interval {
 			doc.put("_id", id);
 
 		doc.put("gid", gid);
-		doc.put("start", start);
-		doc.put("end", end);
+		doc.put("time", time);
+		doc.put("title",title);
+		doc.put("content",content);
 
 		if (id == null)
 			getCollection().insertOne(doc);
@@ -44,29 +46,14 @@ public class Interval {
 
 	}
 
-	public Date getStart() {
-		return start;
-	}
 
-	public void setStart(Date start) {
-		this.start = start;
-	}
-
-	public Date getEnd() {
-		return end;
-	}
-
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-
-
-	private static Interval load(Document doc) {
-		Interval rec = new Interval();
+	public static TimeTag load(Document doc) {
+		TimeTag rec = new TimeTag();
 		rec.id = doc.getObjectId("_id");
-		rec.end = doc.getDate("end");
+		rec.time = doc.getDate("time");
 		rec.gid = doc.getObjectId("gid");
-		rec.start = doc.getDate("start");
+		rec.title = doc.getString("title");
+		rec.content = doc.getString("content");
 		return rec;
 	}
 
@@ -83,36 +70,33 @@ public class Interval {
 		return getCollection().count(doc);
 	}
 
-	public static List<Interval> listByGroup(ObjectId groupId) {
+	public static List<TimeTag> listByGroup(ObjectId groupId) {
 		FindIterable<Document> iter = getCollection()
 				.find(new Document("gid", groupId));
-		List<Interval> ret = new ArrayList<Interval>();
+		List<TimeTag> ret = new ArrayList<TimeTag>();
 		for (Document doc : iter) {
-			ret.add(Interval.load(doc));
+			ret.add(TimeTag.load(doc));
 		}
 		return ret;
 	}
 	
-	public static Interval findById(ObjectId id) {
+	public static TimeTag findById(ObjectId id) {
 		Document doc = new Document("_id", id);
 		FindIterable<Document> iter = getCollection().find(doc);
 		doc = iter.first();
 		return doc != null ? load(doc) : null;
 	}
 
-	private Interval() {
+	private TimeTag() {
 
 	}
 	
-	public Interval(ObjectId gid) {
-		this.gid = gid;
 
-	}
-
-	public Interval(ObjectId gid,Date start, Date end) {
-		this.start = start;
+	public TimeTag(ObjectId gid,Date time, String title, String content) {
+		this.time = time;
 		this.gid = gid;
-		this.end = end;
+		this.title = title;
+		this.content = content;
 	}
 
 	public void delete() {

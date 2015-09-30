@@ -25,7 +25,7 @@ public class Group {
 
 	private String name = null;
 	private ObjectId id = null;
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 	
 	
 	public static MongoCollection<Document> getCollection(){

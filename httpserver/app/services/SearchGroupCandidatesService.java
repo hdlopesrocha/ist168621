@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 
 import models.Group;
 import models.Membership;
-import models.Relation;
 import models.User;
 
 // TODO: Auto-generated Javadoc

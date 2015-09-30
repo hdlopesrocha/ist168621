@@ -39,7 +39,7 @@ public class Relation {
 	}
 
 	
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 	
 	
 	public static MongoCollection<Document> getCollection(){

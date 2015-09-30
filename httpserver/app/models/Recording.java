@@ -39,7 +39,7 @@ public class Recording {
 	private ObjectId id = null;
 	private long sequence;
 
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 
 	public static MongoCollection<Document> getCollection() {
 		if (collection == null)

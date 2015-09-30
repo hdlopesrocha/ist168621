@@ -33,7 +33,7 @@ public class User implements Comparable<User> {
 	private List<String> permissions;
 	private Document publicProperties= new Document(); 
 	private Document privateProperties = new Document();
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 	
 	
 	public static MongoCollection<Document> getCollection(){

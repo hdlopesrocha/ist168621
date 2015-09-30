@@ -22,7 +22,7 @@ public class Message {
 	private ObjectId id = null;
 	private Long sequence;
 
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 
 	public static MongoCollection<Document> getCollection() {
 		if (collection == null)

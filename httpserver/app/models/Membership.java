@@ -20,7 +20,7 @@ public class Membership {
 	private Document properties = new Document();
 	
 
-	public static MongoCollection<Document> collection;
+	private static MongoCollection<Document> collection;
 	
 	
 	public static MongoCollection<Document> getCollection(){
