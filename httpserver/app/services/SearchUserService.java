@@ -3,9 +3,7 @@ package services;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.json.JSONObject;
 
-import exceptions.ServiceException;
 import models.User;
 
 // TODO: Auto-generated Javadoc
