@@ -285,6 +285,10 @@
 	function saveTags() {
 		console.log(unsaved_tags);
 		for ( var i in unsaved_tags) {
+			var time = new Date();
+			var title = "title";
+			var content = "content";
+			Kurento.createTag("@groupId",time,title,content);
 			items.remove(unsaved_tags[i]);
 		}
 		unsaved_tags = [];
