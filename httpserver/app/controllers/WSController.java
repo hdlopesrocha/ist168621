@@ -1,11 +1,13 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.kurento.client.IceCandidate;
 
@@ -16,20 +18,17 @@ import main.Tools;
 import main.UserSession;
 import models.Interval;
 import models.Message;
+import models.TimeTag;
 import models.User;
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.WebSocket;
-import services.ListMessagesService;
 import services.CreateMessageService;
+import services.CreateTagService;
 
 public class WSController extends Controller {
 
-	
-
-	
-	
 	public WebSocket<String> connectToRoom(String groupId) {
 		final String uid = session("uid");
 
@@ -49,21 +48,20 @@ public class WSController extends Controller {
 							for (Interval interval : intervals) {
 								Date start = interval.getStart();
 								Date end = interval.getEnd();
-								
-								
+
 								if (start != null && end != null) {
-	
+
 									JSONArray rec = new JSONArray();
 									rec.put(Tools.FORMAT.format(start));
 									rec.put(Tools.FORMAT.format(end));
 									msg.put(interval.getId().toString(), rec);
-	
+
 								}
 							}
 							room.sendMessage(msg.toString());
 						}
-						usession.sendMessages( null, 1);
-						
+						usession.sendMessages(null, 1);
+
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
@@ -87,8 +85,9 @@ public class WSController extends Controller {
 								switch (id) {
 								case "msg": {
 									String data = args.getString("data");
-									
-									CreateMessageService messageService = new CreateMessageService(groupId, user.getId().toString(), data, null);
+
+									CreateMessageService messageService = new CreateMessageService(groupId,
+											user.getId().toString(), data, null);
 									System.out.println("XXXXXXXXXXXXXXXXXXX");
 									try {
 										Message message = messageService.execute();
@@ -99,28 +98,28 @@ public class WSController extends Controller {
 										msg.put("id", "msg");
 										msg.put("data", messagesArray);
 										room.sendMessage(msg.toString());
-										
+
 									} catch (ServiceException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
-									}	
+									}
 									// send msg
 								}
-								break;
-								case "getmsg" : {
+									break;
+								case "getmsg": {
 									int len = args.getInt("len");
 									Long end = args.getLong("end");
 									usession.sendMessages(end, len);
 								}
-								break;
+									break;
 								case "offer": {
 									JSONObject data = args.getJSONObject("data");
 									String name = args.optString("name", null);
 
 									String rsd = data.getString("sdp");
-									usession.processOffer(rsd,name);
+									usession.processOffer(rsd, name);
 								}
-								break;
+									break;
 								case "iceCandidate": {
 									JSONObject jCand = args.getJSONObject("candidate");
 									String name = args.optString("name", null);
@@ -129,7 +128,7 @@ public class WSController extends Controller {
 											jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
 									usession.addCandidate(candidate, name);
 								}
-								break;
+									break;
 								case "realtime": {
 									System.out.println("REALTIME");
 									String userId = args.has("uid") ? args.getString("uid") : null;
@@ -141,15 +140,13 @@ public class WSController extends Controller {
 										}
 									}).start();
 								}
-								break;
-								case "play":
-								{
+									break;
+								case "play": {
 									boolean play = args.getBoolean("data");
 									usession.setPlay(play);
 								}
-								break;
-								case "historic":
-								{
+									break;
+								case "historic": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;
 
@@ -160,7 +157,36 @@ public class WSController extends Controller {
 										}
 									}).start();
 								}
-								break;
+
+									break;
+								case "addTag": {
+									System.out.println("CREATE TAGS");
+									JSONObject data = args.getJSONObject("data");
+
+									try {
+										Date time = Tools.FORMAT.parse(data.getString("time"));
+										String title = data.getString("title");
+										String content = data.getString("content");
+										CreateTagService service = new CreateTagService(groupId, time, title, content);
+										TimeTag tag = service.execute();
+
+										JSONObject msg = new JSONObject();
+										msg.put("id", "tag");
+										msg.put("data", tag.toJson());
+										room.sendMessage(msg.toString());
+
+									} catch (JSONException e) {
+										e.printStackTrace();
+									} catch (ParseException e) {
+										e.printStackTrace();
+									} catch (ServiceException e) {
+										e.printStackTrace();
+									}
+
+								}
+
+									break;
+
 								default:
 									break;
 								}

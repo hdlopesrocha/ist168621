@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
+import main.Tools;
 import services.Service;
 
 public class TimeTag {
@@ -103,6 +105,15 @@ public class TimeTag {
 		if (id != null) {
 			getCollection().deleteOne(new Document("_id", id));
 		}
+	}
+
+	public JSONObject toJson() {
+		JSONObject obj = new JSONObject();
+		obj.put("id", id.toString());
+		obj.put("title", title);
+		obj.put("content", id.toString());
+		obj.put("time", Tools.FORMAT.format(time));
+		return obj;
 	}
 
 }
