@@ -35,8 +35,6 @@ import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
-import org.kurento.client.VideoCaps;
-import org.kurento.client.VideoCodec;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
 
@@ -72,12 +70,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private PlayerEndpoint player;
 	private Object playerLock = new Object();
 
-	private boolean realTime = true;
 	private boolean play = true;
-
 	private long playOffset = 0l;
 	private String playUser = "";
-	private Process convertProccess;
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
 		this.out = out;
@@ -275,7 +270,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void setHistoric(String userId, long offset) {
 		playOffset = offset;
 		playUser = userId;
-		realTime = false;
 
 		System.out.println("SET HIST " + userId);
 
@@ -296,33 +290,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					// WEBM
 					String path = "/rec/" + Service.getRandomString(12) + ".webm";
-					// MP4
-					// String path = "/tmp/" + Service.getRandomString(12) +
-					// ".mp4";
-
-					new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-							try {
-								if (convertProccess != null) {
-									convertProccess.destroyForcibly();
-								}
-								// WEBM
-								convertProccess = Runtime.getRuntime().exec("ffmpeg -y -i " + rec.getUrl().substring(7)
-										+ " -c:v libvpx -c:a libvorbis -b:v 1M -r 25 -ss 0 " + path);
-								// MP4
-								// convertProccess =
-								// Runtime.getRuntime().exec("ffmpeg -y -i " +
-								// rec.getUrl().substring(7) + " " + path);
-
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-
-					}).start();
 					String uri = "file://" + path;
 
 					System.out.println("PLAY: " + uri);
@@ -356,7 +323,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				}
 
 			} else {
-				realTime = true;
 				System.out.println("No video here!");
 			}
 
@@ -382,7 +348,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 
 		playUser = userId;
-		realTime = true;
 		UserSession session = room.getParticipant(playUser);
 		session.endPoint.connect(endPoint, MediaType.VIDEO);
 		compositePort.connect(compositePoint, MediaType.AUDIO);
