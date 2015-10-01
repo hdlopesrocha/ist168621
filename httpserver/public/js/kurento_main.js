@@ -32,10 +32,9 @@ var Kurento = new (function() {
 
 	this.ws = null;
 
-	this.createTag = function(gid,time,title,content){
+	this.createTag = function(time,title,content){
 		Kurento.ws.send(JSON.stringify({
 			id : "addTag",
-			gid:gid,
 			time: time,
 			title: title,
 			content: content
