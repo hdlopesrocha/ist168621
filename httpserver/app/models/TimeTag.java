@@ -111,7 +111,7 @@ public class TimeTag {
 		JSONObject obj = new JSONObject();
 		obj.put("id", id.toString());
 		obj.put("title", title);
-		obj.put("content", id.toString());
+		obj.put("content", content);
 		obj.put("time", Tools.FORMAT.format(time));
 		return obj;
 	}
