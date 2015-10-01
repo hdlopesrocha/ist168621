@@ -26,6 +26,7 @@ import play.mvc.Controller;
 import play.mvc.WebSocket;
 import services.CreateMessageService;
 import services.CreateTagService;
+import services.ListTagsService;
 
 public class WSController extends Controller {
 
@@ -62,6 +63,26 @@ public class WSController extends Controller {
 						}
 						usession.sendMessages(null, 1);
 
+						
+						
+						try {
+							ListTagsService service  = new ListTagsService(uid, groupId);
+							List<TimeTag> tags =  service.execute();
+							for(TimeTag tag  : tags){
+								JSONObject msg = new JSONObject();
+								msg.put("id", "tag");
+								msg.put("data", tag.toJson());
+								room.sendMessage(msg.toString());								
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						} catch (ServiceException e) {
+							e.printStackTrace();
+						}
+
+						
+						
+						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
