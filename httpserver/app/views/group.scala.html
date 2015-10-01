@@ -29,7 +29,7 @@
 			switchTab("#mytabs","#mybtns",1);
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
-			Kurento.start("@groupId", participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived);
+			Kurento.start("@groupId", participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived);
 	
 			$("#refresh-button").click(function() {
 				document.location = document.location;

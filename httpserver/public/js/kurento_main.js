@@ -24,6 +24,7 @@ var newParticipantsCallback = null;
 var newVideoCallback = null; 
 var mixerVideoCallback = null;
 var newRecordingCallback = null;
+var tagArrivedCallback = null;
 
 var Kurento = new (function() {
 	
@@ -33,7 +34,7 @@ var Kurento = new (function() {
 
 	this.createTag = function(gid,time,title,content){
 		Kurento.ws.send(JSON.stringify({
-			id : "tag",
+			id : "addTag",
 			gid:gid,
 			time: time,
 			title: title,
@@ -111,12 +112,13 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.start = function(groupId,npcb,nvcb,mvcb,nrcb,nmcb) {		
+	this.start = function(groupId,npcb,nvcb,mvcb,nrcb,nmcb,tacb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
 		newRecordingCallback = nrcb;
 		newMessageCallback = nmcb;
+		tagArrivedCallback = tacb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -164,6 +166,12 @@ var Kurento = new (function() {
 							var msg = message.data[i];
 							newMessageCallback(msg.uid,msg.time,msg.text,msg.name, msg.id, msg.seq);
 						}
+						
+						break;
+					case 'tag':
+						var msg = message.data;
+						tagArrivedCallback(msg.id,msg.time,msg.title,msg.content);
+
 						
 						break;
 					default:
