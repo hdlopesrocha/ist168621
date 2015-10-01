@@ -161,12 +161,11 @@ public class WSController extends Controller {
 									break;
 								case "addTag": {
 									System.out.println("CREATE TAGS");
-									JSONObject data = args.getJSONObject("data");
 
 									try {
-										Date time = Tools.FORMAT.parse(data.getString("time"));
-										String title = data.getString("title");
-										String content = data.getString("content");
+										Date time = Tools.FORMAT.parse(args.getString("time"));
+										String title = args.getString("title");
+										String content = args.getString("content");
 										CreateTagService service = new CreateTagService(groupId, time, title, content);
 										TimeTag tag = service.execute();
 
