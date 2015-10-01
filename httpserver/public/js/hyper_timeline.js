@@ -144,6 +144,22 @@ var HyperTimeline = new (function() {
 	    	timeline.timeRunning = !timeline.timeRunning;
 	    }
 	    
+		timeline.loadTag= function(id,time, title,content){
+			var start = new Date(time);
+			this.items.add({
+				id : id,
+				content : title,
+				start:start,
+				//start : new Date(start+3*len/8),
+				//end :  new Date(start+5*len/8),			
+	 	      //  selectable:true,
+		      //  editable:true,
+				className: 'info',
+				group:'tag'
+			});
+		}
+
+	    
 	    timeline.addTag= function(id, content){
 	    	var start = (this.range.start +this.range.end)/2;
 	    	//var end = this.range.end;
