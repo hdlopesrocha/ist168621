@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
+import main.Tools;
 import services.Service;
 
 public class User implements Comparable<User> {
@@ -171,7 +172,7 @@ public class User implements Comparable<User> {
 	}
 
 	public void setPassword(String password) {
-		this.salt = Service.getRandomString(32);
+		this.salt = Tools.getRandomString(32);
 		this.hash = getHash(password, salt);
 	}
 

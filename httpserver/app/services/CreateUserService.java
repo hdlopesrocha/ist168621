@@ -3,14 +3,14 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.KeyValueFile;
-import models.User;
-
 import org.bson.Document;
 import org.json.JSONObject;
 
 import exceptions.ConflictException;
 import exceptions.ServiceException;
+import main.Tools;
+import models.KeyValueFile;
+import models.User;
 
 
 // TODO: Auto-generated Javadoc
@@ -70,10 +70,10 @@ public class CreateUserService extends Service<User> {
 		User newUser = new User(email, password, properties, permissions);
 
 			
-		String token = getRandomString(32);
+		String token = Tools.getRandomString(32);
 		
 		while(User.findByToken(token) !=null){
-			token = getRandomString(32);
+			token = Tools.getRandomString(32);
 		}
 		
 		newUser.setToken(token);

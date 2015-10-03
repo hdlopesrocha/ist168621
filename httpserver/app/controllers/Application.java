@@ -4,12 +4,14 @@ import java.io.File;
 
 import org.bson.types.ObjectId;
 
+import exceptions.ServiceException;
 import models.Group;
 import models.Membership;
 import models.User;
 import play.*;
 import play.mvc.*;
 import play.twirl.api.Html;
+import services.JoinGroupInviteService;
 
 
 public class Application extends Controller {
@@ -60,6 +62,14 @@ public class Application extends Controller {
     		return ok(views.html.sign.render());
     		
     	}    	
+    }
+    
+    public Result join(String groupId, String token) throws ServiceException{
+    	JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
+		if(service.execute()){			
+    		return redirect("/group/"+groupId);
+		}
+		return badRequest();
     }
 
     

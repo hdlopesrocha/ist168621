@@ -9,12 +9,31 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
+import main.Tools;
 import services.Service;
 
 public class Group {
 	
 	
+	private String name = null;
+	private ObjectId id = null;
+	private String invite = null;
+	private static MongoCollection<Document> collection;
 
+	public Group() {
+	}
+
+	public Group(String name) {
+		this.name = name;
+	}
+
+	public static MongoCollection<Document> getCollection(){
+		if(collection==null)
+			collection = Service.getDatabase().getCollection("groups");
+		return collection;		
+	}
+
+	
 	public String getName() {
 		return name;
 	}
@@ -23,15 +42,16 @@ public class Group {
 		this.name = name;
 	}
 
-	private String name = null;
-	private ObjectId id = null;
-	private static MongoCollection<Document> collection;
+	public void generateInvite(){
+		invite = Tools.getRandomString(12);
+	}
 	
+	public String getInvite(){
+		return invite;
+	}
 	
-	public static MongoCollection<Document> getCollection(){
-		if(collection==null)
-			collection = Service.getDatabase().getCollection("groups");
-		return collection;		
+	public boolean matchInvite(String attempt){
+		return invite!=null && invite.equals(attempt);
 	}
 	
 	public void save() {
@@ -40,6 +60,8 @@ public class Group {
 			doc.put("_id", id);
 
 		doc.put("name", name);
+		doc.put("invite", invite);
+
 		if (id == null)
 			getCollection().insertOne(doc);
 		else
@@ -51,8 +73,9 @@ public class Group {
 
 	private static Group load(Document doc) {
 		Group user = new Group();
-		user.setId(doc.getObjectId("_id"));
-		user.setName(doc.getString("name"));
+		user.id = doc.getObjectId("_id");
+		user.name = doc.getString("name");
+		user.invite = doc.getString("invite");
 		return user;
 	}
 
@@ -71,12 +94,6 @@ public class Group {
 		return doc != null ? load(doc) : null;
 	}
 
-	public Group() {
-	}
-
-	public Group(String name) {
-		this.name = name;
-	}
 
 	public void delete() {
 		if (id != null)
@@ -90,6 +107,10 @@ public class Group {
 			ret.add(load(doc));
 		}
 		return ret;
+	}
+
+	public void deleteInvite() {
+		invite = null;
 	}
 
 }
