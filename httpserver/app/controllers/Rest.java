@@ -583,7 +583,7 @@ public class Rest extends Controller {
 		GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
 		String token = service.execute();
 		if(token!=null){
-			return ok();
+			return ok(token);
 		}
 		return badRequest();
 	}
