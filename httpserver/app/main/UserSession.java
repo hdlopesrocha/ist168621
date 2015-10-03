@@ -117,7 +117,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(endPoint, MediaType.VIDEO);
+				endPoint.connect(endPoint);
 				recorder.start();
 			}
 		});
@@ -314,8 +314,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							setHistoric(playUser, playOffset);
 						}
 					});
-					player.connect(endPoint, MediaType.VIDEO);
-					player.connect(compositePoint /*, MediaType.AUDIO*/);
+					player.connect(endPoint/*, MediaType.VIDEO*/);
+				//	player.connect(compositePoint /*, MediaType.AUDIO*/);
 					if (play) {
 						player.play();
 					}
@@ -348,8 +348,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint, MediaType.VIDEO);
-		compositePort.connect(compositePoint, MediaType.AUDIO);
+		session.endPoint.connect(endPoint);
+//		compositePort.connect(compositePoint, MediaType.AUDIO);
 
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
 	}
