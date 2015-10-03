@@ -19,7 +19,7 @@
 			<div class="panel-heading">INVITE</div>
 			<div class="panel-body">
 				<input type="text" id="invite"/>
-				<button id="createInvite" onclick="createInvite()">Create</button>
+				<button id="createInvite" onclick="createInvite2()">Create</button>
 			</div>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
 
 <script>
 
-	function createInvite(){
+	function createInvite2(){
 		Signaling.createInvite("@groupId",function(token){
 			$("#invite").value("http://"+"ip"+"/invite/@groupId/" + token);	
 
