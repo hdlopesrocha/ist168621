@@ -39,7 +39,7 @@
 			});
 	
 			Signaling.getInvite("@groupId",function(token){
-				$("#invite").val($(location).attr('host')+"/invite/@groupId/" + token);	
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/invite/@groupId/" + token);	
 			});
 			
 			Signaling.listGroupMembers("@groupId",function(array) {
