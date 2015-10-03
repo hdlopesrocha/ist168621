@@ -61,19 +61,19 @@ var Signaling = (function(){
 	}
 	
 	this.deleteInvite = function(gid,success){
-		$.get( "/api/invite/delete/"+gid+, function( data ) {
+		$.get( "/api/invite/delete/"+gid, function( data ) {
 			success(data);
 		});
 	}
 	
 	this.createInvite = function(gid,success){
-		$.get( "/api/invite/create/"+gid+, function( data ) {
+		$.get( "/api/invite/create/"+gid, function( data ) {
 			success(data);
 		});
 	}
 	
 	this.getInvite = function(gid,success){
-		$.get( "/api/invite/get/"+gid+, function( data ) {
+		$.get( "/api/invite/get/"+gid, function( data ) {
 			success(data);
 		});
 	}
