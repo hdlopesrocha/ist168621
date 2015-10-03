@@ -19,6 +19,7 @@
 			<div class="panel-heading">INVITE</div>
 			<div class="panel-body">
 				<input type="text" id="invite"/>
+				<button id="createInvite" onclick="createInvite()">Create</button>
 			</div>
 		</div>
 	</div>
@@ -65,6 +66,13 @@
 </style>
 
 <script>
+
+	function createInvite(){
+		Signaling.createInvite("@groupId",function(token){
+			$("#invite").value("http://"+"ip"+"/invite/@groupId/" + token);	
+
+		});
+	}
 
 	function del_user_group(uid) {
 		var success = function() {
