@@ -581,7 +581,11 @@ public class Rest extends Controller {
 	
 	public Result getGroupInvite(String groupId) throws ServiceException{
 		GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
-		return ok(service.execute());
+		String token = service.execute();
+		if(token!=null){
+			return ok();
+		}
+		return badRequest();
 	}
 
 	public Result deleteGroupInvite(String groupId) throws ServiceException{
