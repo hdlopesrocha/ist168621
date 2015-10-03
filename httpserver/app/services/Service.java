@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -58,54 +57,13 @@ public abstract class Service<T> {
 	}
 	
 	
-	private static final String allChars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0987654321";
-	private static Random random = new Random();
 	protected static MongoClient client;
 	protected static MongoDatabase database;
 	protected static GridFS files;
 	static long lastOid = 0l;
 		
 
-	/**
-	 * Gets the random salt.
-	 *
-	 * @param size
-	 *            the size
-	 * @return the random salt
-	 */
-	public static String getRandomString(int size) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < size; ++i) {
-			builder.append(allChars.charAt(random.nextInt(allChars.length())));
-		}
-		return builder.toString();
-	}
 
-	static public String friendlyTime(String time) {
-		try {
-
-			if (time.charAt(time.length() - 1) != 'Z') {
-				time += "Z";
-			}
-			
-			
-             ZonedDateTime zdt = ZonedDateTime.parse(time); 
-           LocalDateTime ldt =  zdt.toLocalDateTime();
-             
-             
-             return  String.format("%02d", ldt.getDayOfMonth())+"/"+ String.format("%02d", ldt.getMonthValue())+"/"+ String.format("%04d", ldt.getYear())
-             + " " + String.format("%02d", ldt.getHour())+":"+ String.format("%02d", ldt.getMinute()) +":"+String.format("%02d", ldt.getSecond());
-		} catch (Exception e) {
-			e.printStackTrace();
-			// return "00/00/0000 00:00:00";
-		}
-		return time;
-	}
-
-	public static String getCurrentTime() {
-		return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-				.withZone(ZoneOffset.UTC).format(Instant.now());
-	}
 
 	/**
 	 * Execute.

@@ -1,8 +1,6 @@
 package controllers;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,12 +14,10 @@ import org.json.JSONObject;
 import exceptions.ConflictException;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
-import main.Tools;
 import models.Group;
 import models.KeyValueFile;
 import models.KeyValuePair;
 import models.Membership;
-import models.Recording;
 import models.Relation;
 import models.User;
 import play.mvc.Controller;
@@ -32,18 +28,19 @@ import services.AddGroupMemberService;
 import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
+import services.CreateGroupInviteService;
 import services.CreateGroupService;
-import services.CreateRecordingService;
 import services.CreateRelationService;
 import services.CreateUserService;
+import services.DeleteGroupInviteService;
 import services.DenyRelationService;
 import services.DownloadFileService;
+import services.GetGroupInviteService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
+import services.JoinGroupInviteService;
 import services.ListGroupMembersService;
 import services.ListGroupsService;
-import services.ListRecordingsForTimeService;
-import services.ListRecordingsService;
 import services.ListRelationRequestsService;
 import services.ListRelationsService;
 import services.ListUsersService;
@@ -55,6 +52,7 @@ import services.SearchGroupCandidatesService;
 import services.SearchUserService;
 import services.SubscribeService;
 import services.UpdateUserService;
+import views.html.defaultpages.error;
 
 public class Rest extends Controller {
 
@@ -575,107 +573,30 @@ public class Rest extends Controller {
 		}
 		return badRequest();
 	}
-
-	public Result listRecordingsForTime(String groupId, String time, Long duration) {
-		System.out.println("listRecordingsForTime(" + groupId + "," + time + "," + duration + ")");
-		ListRecordingsForTimeService service = new ListRecordingsForTimeService(session("uid"), groupId, time,
-				duration);
-		try {
-			List<Recording> res = service.execute();
-			JSONArray array = new JSONArray();
-
-			for (Recording rec : res) {
-				JSONObject jObj = new JSONObject();
-				// jObj.put("id", rec.getId());
-				jObj.put("seq", rec.getSequence());
-				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
-				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
-				jObj.put("url", rec.getUrl());
-				jObj.put("uid", rec.getUserId().toString());
-				if (rec.getInterval() != null) {
-					jObj.put("inter", rec.getInterval().toString());
-				}
-				jObj.put("type", rec.getType());
-				jObj.put("name", rec.getName());
-
-				array.put(jObj);
-			}
-			return ok(array.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return badRequest();
-
+	
+	public Result createGroupInvite(String groupId) throws ServiceException{
+		CreateGroupInviteService service = new CreateGroupInviteService(session("uid"), groupId);
+		return ok(service.execute());
+	}
+	
+	public Result getGroupInvite(String groupId) throws ServiceException{
+		GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
+		return ok(service.execute());
 	}
 
-	public Result listRecordings(String groupId, Long sequence) {
-		ListRecordingsService service = new ListRecordingsService(session("uid"), groupId, sequence);
-		try {
-			List<Recording> res = service.execute();
-			JSONArray array = new JSONArray();
-
-			for (Recording rec : res) {
-				JSONObject jObj = new JSONObject();
-				// jObj.put("id", rec.getId());
-				jObj.put("seq", rec.getSequence());
-				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
-				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
-				jObj.put("url", rec.getUrl());
-				jObj.put("uid", rec.getUserId().toString());
-				if (rec.getInterval() != null) {
-					jObj.put("inter", rec.getInterval().toString());
-				}
-				jObj.put("type", rec.getType());
-				jObj.put("name", rec.getName());
-
-				array.put(jObj);
-			}
-			return ok(array.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
+	public Result deleteGroupInvite(String groupId) throws ServiceException{
+		DeleteGroupInviteService service = new DeleteGroupInviteService(session("uid"), groupId);
+		service.execute();
+		return ok();
+	}
+	
+	public Result joinGroupInvite(String groupId, String token) throws ServiceException{
+		JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
+		if(service.execute()){			
+			return ok(groupId);
 		}
 		return badRequest();
 	}
-
-	public Result saveRecording(String groupId) throws ParseException {
-		MultipartFormData multipart = request().body().asMultipartFormData();
-		Map<String, String[]> form = multipart.asFormUrlEncoded();
-
-		String userId = form.get("uid")[0];
-		Date start = Tools.FORMAT.parse(form.get("start")[0]);
-		Date end = Tools.FORMAT.parse(form.get("end")[0]);
-
-		System.out.println("XXX : " + start + " | " + end);
-		String name = form.get("name")[0];
-		String type = form.get("type")[0];
-		String inter = form.containsKey("inter") ? form.get("inter")[0] : null;
-
-		List<KeyValueFile> files = new ArrayList<KeyValueFile>();
-		for (FilePart fp : multipart.getFiles()) {
-			KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-			files.add(kvf);
-		}
-
-		CreateRecordingService saveService = new CreateRecordingService(files.get(0), null, groupId, userId, start, end,
-				name, type, inter);
-		PublishService publishService = new PublishService("rec:" + groupId);
-		try {
-			Recording rec = saveService.execute();
-			publishService.execute();
-			System.out.println("saved recording!");
-			return ok(rec.getInterval().toString());
-
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return badRequest();
-
-	}
 	
 	
-	
-
 }

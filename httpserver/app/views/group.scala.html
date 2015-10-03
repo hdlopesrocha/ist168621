@@ -23,8 +23,7 @@
 			</div>
 		</div>
 	</div>
-<script>
-	
+	<script>
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
@@ -39,22 +38,25 @@
 				document.location = "/";
 			});
 	
+			Signaling.getInvite("@groupId",function(token){
+				$("#invite").value("http://"+"ip"+"/invite/@groupId/" + token);	
+			});
+			
 			Signaling.listGroupMembers("@groupId",function(array) {
 				for ( var i in array) {
 					var uid = array[i].uid;
 					var name = array[i].name;
-
+	
 					var del_button = "<i style='color:red' onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
-
+	
 					$("#membersList").append(
-							'<div class="media" '+ onclick+'>'+
-							'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
-							'<div class="media-body"><h5>'+name+' | User | '+del_button+'</h5>  <small class="text-muted">Active From 3 hours</small></div></div>'
+						'<div class="media" '+ onclick+'>'+
+						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
+						'<div class="media-body"><h5>'+name+' | User | '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 					);
-					
 					
 					$("#videoMembers").append(
 						'<div class="media" '+ onclick+'>'+
@@ -69,7 +71,6 @@
 					);
 				}
 			});
-		});
-	
+		});	
 	</script>
 }

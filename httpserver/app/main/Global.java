@@ -21,7 +21,7 @@ public class Global extends GlobalSettings {
 	static {
 		log.setLevel(Level.ALL);
 		Service.init("webrtc");
-		System.out.println(Service.getCurrentTime());
+		System.out.println(Tools.getCurrentTime());
 	//	Setup.main(null);
 	
 		manager = new KurentoManager();

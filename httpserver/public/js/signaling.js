@@ -19,6 +19,7 @@ var Signaling = (function(){
 	}
 	
 	
+	
 	this.postSdp = function(gid,sdp,success,error){
 		$.ajax({
 			type : "post",
@@ -57,6 +58,24 @@ var Signaling = (function(){
 	
 	this.listRecordings = function(){
 		
+	}
+	
+	this.deleteInvite = function(gid,success){
+		$.get( "/api/invite/delete/"+gid+, function( data ) {
+			success(data);
+		});
+	}
+	
+	this.createInvite = function(gid,success){
+		$.get( "/api/invite/create/"+gid+, function( data ) {
+			success(data);
+		});
+	}
+	
+	this.getInvite = function(gid,success){
+		$.get( "/api/invite/get/"+gid+, function( data ) {
+			success(data);
+		});
 	}
 	
 	this.listRecordings = function(gid,seq,success){

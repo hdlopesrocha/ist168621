@@ -47,7 +47,6 @@ import play.mvc.WebSocket;
 import services.CreateRecordingService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
-import services.Service;
 
 /**
  * 
@@ -289,7 +288,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					}
 
 					// WEBM
-					String path = "/rec/" + Service.getRandomString(12) + ".webm";
+					String path = "/rec/" + Tools.getRandomString(12) + ".webm";
 					String uri = "file://" + path;
 
 					System.out.println("PLAY: " + uri);
