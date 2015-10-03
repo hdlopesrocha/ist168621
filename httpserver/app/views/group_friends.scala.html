@@ -20,6 +20,8 @@
 			<div class="panel-body">
 				<input type="text" id="invite"/>
 				<button id="createInvite" onclick="createInvite2()">Create</button>
+				<button id="createInvite" onclick="deleteInvite2()">Delete</button>
+
 			</div>
 		</div>
 	</div>
@@ -69,11 +71,18 @@
 
 	function createInvite2(){
 		Signaling.createInvite("@groupId",function(token){
-			$("#invite").value("http://"+"ip"+"/invite/@groupId/" + token);	
+			$("#invite").val("http://"+"ip"+"/invite/@groupId/" + token);	
 
 		});
 	}
 
+	function deleteInvite2(){
+		Signaling.deleteInvite("@groupId",function(){
+			$("#invite").val("");	
+
+		});
+	}
+	
 	function del_user_group(uid) {
 		var success = function() {
 			document.location = document.location;

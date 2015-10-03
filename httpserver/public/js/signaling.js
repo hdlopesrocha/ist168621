@@ -62,7 +62,7 @@ var Signaling = (function(){
 	
 	this.deleteInvite = function(gid,success){
 		$.get( "/api/invite/delete/"+gid, function( data ) {
-			success(data);
+			success();
 		});
 	}
 	
