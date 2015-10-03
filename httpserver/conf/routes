@@ -8,6 +8,7 @@ GET     /pubsub                         controllers.Application.pubsub()
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
 GET     /template                       controllers.Application.template()
 GET     /stream/*path	 		       	controllers.Application.stream(path : String)
+GET		/join/:gid/:token				controllers.Application.join(gid : String, token : String)
 
 
 GET     /api/user/search	        	controllers.Rest.search()
