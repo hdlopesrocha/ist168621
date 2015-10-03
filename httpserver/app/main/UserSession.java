@@ -125,8 +125,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositePoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(compositePort, MediaType.AUDIO);
-				compositePort.connect(compositePoint, MediaType.AUDIO);
+				endPoint.connect(compositePort/*, MediaType.AUDIO*/);
+				compositePort.connect(compositePoint/*, MediaType.AUDIO*/);
 			}
 		});
 
@@ -315,7 +315,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						}
 					});
 					player.connect(endPoint, MediaType.VIDEO);
-					player.connect(compositePoint, MediaType.AUDIO);
+					player.connect(compositePoint /*, MediaType.AUDIO*/);
 					if (play) {
 						player.play();
 					}
