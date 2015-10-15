@@ -90,7 +90,9 @@ var HyperTimeline = new (function() {
 			var date = new Date(date);
 			
 			this.hyper_offset = new Date().getTime() -date.getTime();
-			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});			
+			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
+			current(this.hyper_offset);
+
 		}
 		
 	    timeline.on('rangechanged', function(properties){
