@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="/assets/js/webrtc.js"></script>
 	<script type="text/javascript" src="/assets/timeline/vis.js"></script>
 	<script type="text/javascript" src="/assets/js/hyper_timeline.js"></script>
+	<script type="text/javascript" src="/assets/js/bootstrap-list-filter.min.js"></script>
 	<link type="text/css" href="/assets/timeline/vis.css" rel="stylesheet" />
 
 	<div class="row row-centered">
@@ -24,6 +25,14 @@
 		</div>
 	</div>
 	<script>
+	
+
+	function friendlyTime(str){
+		var t = new Date(str);
+		return t.toLocaleString("pt-PT");
+	}
+	
+	
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
@@ -46,12 +55,12 @@
 				for ( var i in array) {
 					var uid = array[i].uid;
 					var name = array[i].name;
-	
+
 					var del_button = "<i style='color:red' onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
-	
+
 					$("#membersList").append(
 						'<div class="media" '+ onclick+'>'+
 						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+

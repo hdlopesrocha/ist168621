@@ -17,7 +17,7 @@
 					<div class="form-group">
 						<label class="control-label" for="tagContent">Create TAG</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="tagContent"
+							<input type="text" class="form-control" id="tagTitle"
 								onkeydown="if(event.keyCode==13){addTag();}"> <span
 								class="input-group-addon success" onclick="addTag()"><i
 								class="fa fa-plus"></i></span>
@@ -97,6 +97,30 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse1">TAGS</a>
+				</h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<ul class="media-list">
+						<li class="media">
+						    <div class="form-group">
+						        <input id="searchinput" class="form-control" type="search" placeholder="Search..." />
+						    </div>
+						
+							<div class="media-body list-group" id="tagList">
+							
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -129,6 +153,8 @@
 	}
 	
 	$(document).ready(function() {
+	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
+		
 		$( "#messagesPanel" ).scroll(function() {
 			if($("#messagesPanel").scrollTop()==0){
 				receiveMore();
@@ -219,10 +245,18 @@
 		}
 	}
 	
+	function jumpTo(date){
+		timeline.lookAt(date);
+
+		
+	}
 	
 	function tagArrived(id,time,title,content){
 		console.log(id,time,title,content);
 		timeline.loadTag(id,time, title,content);
+		
+		
+		$("#tagList").append(  '<div class="list-group-item" onclick="jumpTo(\''+time+'\')"><h5><span>'+title+'</span> <small>'+friendlyTime(time)+'</small></h5></div>')
 
 	}
 
@@ -293,11 +327,14 @@
 	function saveTags() {
 		console.log(unsaved_tags);
 		for ( var i in unsaved_tags) {
-			var time = new Date();
-			var title = "title";
-			var content = "content";
+			var tag = unsaved_tags[i];
+			var visTag = items.get(tag.id);
+			var time = new Date(visTag.start);
+		
+			var title = tag.title;
+			var content = tag.content;
 			Kurento.createTag(time,title,content);
-			items.remove(unsaved_tags[i]);
+			items.remove(tag.id);
 		}
 		unsaved_tags = [];
 		$("#saveButton").addClass("hidden");
@@ -305,8 +342,12 @@
 
 	function addTag() {
 		var id = makeid();
-		unsaved_tags.push(id);
-		timeline.addTag(id, $("#tagContent").val());
+		var title = $("#tagTitle").val();
+		var content = "";
+		
+		unsaved_tags.push( {id:id,title:title,content:content});
+		timeline.addTag(id, title);
 		$("#saveButton").removeClass("hidden");
+		
 	}
 </script>

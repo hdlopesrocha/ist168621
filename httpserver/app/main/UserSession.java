@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
@@ -32,12 +31,10 @@ import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaObject;
 import org.kurento.client.MediaSessionStartedEvent;
-import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
-
 import exceptions.ServiceException;
 import models.Interval;
 import models.Message;
@@ -61,14 +58,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final WebRtcEndpoint endPoint;
 	private final WebRtcEndpoint compositePoint;
 	private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
-
 	private final MyRecorder recorder;
 	private HubPort compositePort;
 	private String intervalId = null;
-
 	private PlayerEndpoint player;
 	private Object playerLock = new Object();
-
 	private boolean play = true;
 	private long playOffset = 0l;
 	private String playUser = "";
