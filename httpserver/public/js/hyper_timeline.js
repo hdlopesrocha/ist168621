@@ -85,6 +85,14 @@ var HyperTimeline = new (function() {
 	    });
 		timeline.items = items;
 		
+		
+		timeline.lookAt = function(date){
+			var date = new Date(date);
+			
+			this.hyper_offset = new Date().getTime() -date.getTime();
+			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});			
+		}
+		
 	    timeline.on('rangechanged', function(properties){
 		    
 	    	if(properties.byUser){
