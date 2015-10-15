@@ -91,6 +91,7 @@ var HyperTimeline = new (function() {
 			
 			this.hyper_offset = new Date().getTime() -date.getTime();
 			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
+			this.real_time = false ;
 			current(this.hyper_offset);
 
 		}
