@@ -32,13 +32,18 @@
 		return t.toLocaleString("pt-PT");
 	}
 	
+	function onKurentoOpen(){
+		Kurento.getContent(0);		
+	}
+	
 	
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
-			Kurento.start("@groupId", participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived);
-	
+			Kurento.start("@groupId",onKurentoOpen ,participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived, onContentArrived);
+			
+			
 			$("#refresh-button").click(function() {
 				document.location = document.location;
 			});

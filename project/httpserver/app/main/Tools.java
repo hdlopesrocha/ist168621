@@ -12,6 +12,8 @@ public class Tools {
 
 public static final DateFormat FORMAT;
     
+	public static final Random RANDOM = new Random();
+
 	static {
 		TimeZone tz = TimeZone.getTimeZone("UTC");
 		FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");

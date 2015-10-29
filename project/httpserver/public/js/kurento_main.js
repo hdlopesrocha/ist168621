@@ -25,6 +25,8 @@ var newVideoCallback = null;
 var mixerVideoCallback = null;
 var newRecordingCallback = null;
 var tagArrivedCallback = null;
+var contentArrivedCallback = null;
+
 
 var Kurento = new (function() {
 	
@@ -32,6 +34,14 @@ var Kurento = new (function() {
 
 	this.ws = null;
 
+	this.getContent = function(offset){
+		Kurento.ws.send(JSON.stringify({
+			id: "content",
+			offset: offset
+		}));
+	}
+	
+	
 	this.createTag = function(time,title,content){
 		Kurento.ws.send(JSON.stringify({
 			id : "addTag",
@@ -111,13 +121,14 @@ var Kurento = new (function() {
 	}
 	
 	
-	this.start = function(groupId,npcb,nvcb,mvcb,nrcb,nmcb,tacb) {		
+	this.start = function(groupId,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
 		newRecordingCallback = nrcb;
 		newMessageCallback = nmcb;
 		tagArrivedCallback = tacb;
+		contentArrivedCallback = cacb;
 		
 		if ("WebSocket" in window) {
 			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -126,6 +137,8 @@ var Kurento = new (function() {
 				console.log("Error!");
 
 			};
+			
+			
 			
 			Kurento.ws.onmessage = function(data) {
 				var message = JSON.parse(data.data);
@@ -156,6 +169,9 @@ var Kurento = new (function() {
 							newParticipantsCallback(uid, message.data[uid]);
 						}
 					break;
+					case 'content':
+						contentArrivedCallback(message);
+					break;
 					case 'rec':
 						delete message.id;
 						newRecordingCallback(message);						
@@ -181,6 +197,7 @@ var Kurento = new (function() {
 		
 			
 			Kurento.ws.onopen = function() {
+				kscb();
 				Kurento.createPeerConnection("main");
 				Kurento.createPeerConnection("mixer");
 
