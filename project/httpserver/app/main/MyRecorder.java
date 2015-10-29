@@ -1,15 +1,13 @@
 package main;
 
+import java.util.Collections;
 import java.util.Date;
-import java.util.UUID;
+import java.util.Map;
 
-import org.kurento.client.AudioCaps;
-import org.kurento.client.AudioCodec;
-import org.kurento.client.Fraction;
 import org.kurento.client.MediaElement;
+import org.kurento.client.MediaProfileSpecType;
 import org.kurento.client.RecorderEndpoint;
-import org.kurento.client.VideoCaps;
-import org.kurento.client.VideoCodec;
+import org.kurento.repository.service.pojo.RepositoryItemRecorder;
 
 public class MyRecorder {
 
@@ -24,6 +22,8 @@ public class MyRecorder {
 	private Runnable recorderRunnable = null;
 	private Date begin;
 	
+	
+	
 	public MyRecorder(MediaElement endPoint, RecorderHandler handler) {
 
 		this.recorderRunnable = new Runnable() {
@@ -34,19 +34,18 @@ public class MyRecorder {
 
 				while (recorderThread != null) {
 					try {
-						final String name = UUID.randomUUID().toString();
-
-						final String filename = name + ".webm";
-						final String filepath = "file:///rec/" + filename;
-
-						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), filepath).build();
+						Map<String, String> metadata = Collections.emptyMap();
+						RepositoryItemRecorder item =  KurentoManager.repository.createRepositoryItem(metadata);
+						
+						
+						recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).withMediaProfile(MediaProfileSpecType.WEBM).build();
 					//	recorder.setVideoFormat(new VideoCaps(VideoCodec.H264, new Fraction(1, 15)));
 					//	recorder.setAudioFormat(new AudioCaps(AudioCodec.OPUS, 16000));
 						endPoint.connect(recorder);
 						recorder.record();
 
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -58,7 +57,7 @@ public class MyRecorder {
 							
 							@Override
 							public void run() {								
-								handler.onFileRecorded(begin, end, filepath, filename);
+								handler.onFileRecorded(begin, end, item.getUrl(), item.getId());
 							}
 						}).start();
 
