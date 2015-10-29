@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -171,18 +172,24 @@ public class WSController extends Controller {
 									long offset = args.getLong("offset");
 									Date time = new Date(new Date().getTime() - offset);
 
+									int s = Tools.RANDOM.nextInt(2000)+500;
+									int e = s +Tools.RANDOM.nextInt(2000)+500;
 									
-									Date start = new Date(time.getTime() - offset+3000);
-									Date end = new Date(time.getTime() - offset+1000);
+									int mt = Tools.RANDOM.nextInt(400);
 
+									int ml = Tools.RANDOM.nextInt(400);
 									
+									Date start = new Date(time.getTime() - offset+s);
+									Date end = new Date(time.getTime() - offset+e);
+
+									JSONObject jArr = new JSONObject();
 									JSONObject jObj = new JSONObject();
 									jObj.put("start", Tools.FORMAT.format(start));
 									jObj.put("end", Tools.FORMAT.format(end));
-									jObj.put("id", "xpto");
-									jObj.put("content", "<b>Hello World | "+Tools.FORMAT.format(start)+"</b>");
-		
-									usession.sendMessage(jObj.toString());
+									jObj.put("content", "<b style=\"color:yellow;position:absolute;top:"+mt+"px;left:"+ml+"px\">"+Tools.getRandomString(16)+"</b>");
+									jArr.put(UUID.randomUUID().toString(), jObj);
+									jArr.put("id", "content");
+									usession.sendMessage(jArr.toString());
 									
 									
 									

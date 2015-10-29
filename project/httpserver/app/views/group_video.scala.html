@@ -70,10 +70,8 @@
 				<div class="panel-body">
 					
 					<div style="position:relative; width:480px;height:360px">
-						<div style="position: absolute;z-index:99;width:100%;height:100%;">
-							HI!	<br> this is a test!
-							<br>
-							<a style="float:right">right</a>
+						<div style="position: absolute;z-index:99;width:100%;height:100%;" id="mainVideoContent">
+						
 						</div>
 						<video id='myvideo' autoplay width='480px' height='360px'
 							style="margin: 0px auto; display: block;position: relative;"></video>
@@ -386,6 +384,8 @@
 			Kurento.receiveHistoric(selected_user, current_offset);
 		}
 	}
+	
+	
 
 	function saveTags() {
 		console.log(unsaved_tags);
@@ -403,6 +403,75 @@
 		$("#saveButton").addClass("hidden");
 	}
 
+	var localContent = {};
+	
+	function addContent(key, content){
+		var html = '<div style="position: absolute;z-index:99;width:100%;height:100%;" id="content'+key+'">';
+		html += content;
+		html += '</div>';
+		$("#mainVideoContent").append(html);
+	}
+	
+	function removeContent(key){
+		$("#content"+key).remove();
+	}
+	
+	
+	function renderContent(){
+		var currentTime = new Date().getTime() - current_offset;
+		
+		for(var i in localContent){
+			var entry = localContent[i]; 
+			(function(_i,_entry){
+			
+				var start = new Date(_entry.start);
+				var end = new Date(_entry.end);
+					
+				if(start.getTime()<=currentTime && currentTime <= end.getTime()){
+					addContent(_i,_entry.content);			
+					setTimeout(function(){
+						removeContent(_i);
+					}, end.getTime() - currentTime);
+				}
+			})(i,entry);
+		}
+	}
+	
+	function onContentArrived(content){
+		
+		var latestContent = null;
+		var currentTime = new Date().getTime() - current_offset;
+		
+		for(var i in content){
+			if(i!="id"){
+				var entry = content[i];
+				var start = new Date(entry.start);
+				var end = new Date(entry.end);
+	
+				
+				if(latestContent == null || start.getTime() > latestContent ){
+					latestContent = start.getTime();
+				}
+				
+				localContent[i] = entry;
+			}
+		}
+		renderContent();
+		
+		if(latestContent!=null){
+			setTimeout(function(){
+				Kurento.getContent(current_offset);
+			}, latestContent - currentTime);
+		}
+		else {
+			setTimeout(function(){
+				Kurento.getContent(current_offset);
+			}, 1000);
+		}
+		
+		console.log(content);
+	}
+	
 	function addTag() {
 		var id = makeid();
 		var title = $("#tagTitle").val();
