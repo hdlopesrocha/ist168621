@@ -1,0 +1,416 @@
+@(groupId : String, userId : String)
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-info">
+			<div class="btn-group pull-right">
+				<div class="form-inline">
+
+					<button type="button" class="btn btn-warning" onclick="playStop()"
+						id="playStop">
+						<i class="fa fa-pause"></i>
+					</button>
+					<button type="button" class="btn btn-primary" onclick="jumpTo(new Date())"
+						id="goToPresent">
+						<i class="fa fa-step-forward"></i>
+					</button>
+					<div class="form-group">
+						<label class="control-label" for="tagContent">Create TAG</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="tagTitle"
+								onkeydown="if(event.keyCode==13){addTag();}"> <span
+								class="input-group-addon success" onclick="addTag()"><i
+								class="fa fa-plus"></i></span>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary hidden"
+						onclick="saveTags()" id="saveButton">
+						<i class="fa fa-floppy-o"></i>
+					</button>
+				</div>
+			
+			</div>
+			
+			
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse3">TIMELINE</a>
+				</h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse in">
+				
+				
+				<div class="panel panel-default container-full" style="margin-bottom: 0px;">
+					<div id="timeline"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-info">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-primary" id="individualVideo" onclick="setGroup(false)">
+					<i class="fa fa-user"></i>
+				</button>
+				<button type="button" class="btn btn-primary" id="groupVideo" onclick="setGroup(true)">
+					<i class="fa fa-users"></i>
+				</button>
+			</div>
+			<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" href="#collapse0">VIDEO</a>
+			</h4>
+		
+		
+			
+			</div>
+			<div id="collapse0" class="panel-collapse collapse in">
+				<div class="panel-body">
+					
+					<div style="position:relative; width:480px;height:360px">
+						<div style="position: absolute;z-index:99;width:100%;height:100%;">
+							HI!	<br> this is a test!
+							<br>
+							<a style="float:right">right</a>
+						</div>
+						<video id='myvideo' autoplay width='480px' height='360px'
+							style="margin: 0px auto; display: block;position: relative;"></video>
+						<video id='mymixed' autoplay width='480px' height='360px'
+							style="margin: 0px auto; display: block;position: relative;"></video>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse2">RECENT CHAT HISTORY</a>
+				</h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse in">
+				<div class="panel-body"  style="max-height: 336px;overflow: auto;" id="messagesPanel">
+					<ul class="media-list" id="messagesList">
+					</ul>
+				</div>
+				<div class="panel-footer">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="Enter Message" id="messageText"
+							onkeydown="if(event.keyCode==13){sendMessage();}" /> <span
+							class="input-group-btn">
+							<button class="btn btn-info" type="button" id="sendMessageButton"
+								onclick="sendMessage()">SEND</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse1">USERS</a>
+				</h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<ul class="media-list">
+						<li class="media">
+							<div class="media-body" id="videoMembers"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse4">TAGS</a>
+				</h4>
+			</div>
+			<div id="collapse4" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<ul class="media-list">
+						<li class="media">
+						    <div class="form-group">
+						        <input id="searchinput" class="form-control" type="search" placeholder="Search..." />
+						    </div>
+						
+							<div class="media-body list-group" id="tagList">
+							
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" href="#collapse5">CONTENT EDITOR</a>
+				</h4>
+			</div>
+			<div id="collapse5" class="panel-collapse collapse in">
+				<div class="panel-body">
+			
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+</div>
+
+
+<script>
+	var group = true;
+	var selected_user = "@userId";
+	var real_time = true;
+	var unsaved_tags = [];
+	var firstRecording = true;
+	var participants = {};
+	var timeline = null;
+	var current_offset=0;
+	var rendered_intervals = {};
+	var oldestMsg = null;
+
+	// TIMELINE
+	var items = new vis.DataSet({
+		type : {
+			start : 'ISODate',
+			end : 'ISODate'
+		}
+	});
+	
+	function setGroup(val){
+		if(val){
+			$("#individualVideo").show();
+			$("#groupVideo").hide();
+			$("#myvideo").hide();
+			$("#mymixed").show();
+		}
+		else {
+			$("#individualVideo").hide();
+			$("#groupVideo").show();	
+			$("#myvideo").show();
+			$("#mymixed").hide();
+		}
+	}
+	
+	
+	
+	function receiveMore(){
+		if(oldestMsg){
+			Kurento.receiveMore(oldestMsg,1);
+		}
+	}
+	
+	$(document).ready(function() {
+		setGroup(true);
+	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
+		
+		$( "#messagesPanel" ).scroll(function() {
+			if($("#messagesPanel").scrollTop()==0){
+				receiveMore();
+				$("#messagesPanel").scrollTop(1);
+			}
+		});
+		
+		// plugtrade.com - jQuery detect vertical scrollbar function //
+		(function($) {
+		    $.fn.hasScrollBar = function() {
+		        var divnode = this.get(0);
+		        if(divnode.scrollHeight > divnode.clientHeight)
+		            return true;
+		    }
+		})(jQuery);
+		
+		
+		
+		
+		timeline = HyperTimeline.create(items, "timeline",
+			function(offset) {
+				console.log("HISTORIC",offset);
+				// current request
+				current_offset = offset;
+				Kurento.receiveHistoric(selected_user,current_offset);
+				real_time = false;
+			}, 
+			function() {
+		
+				console.log("REALTIME");
+				// realtime request
+				Kurento.receiveRealtime(selected_user);
+
+				real_time = true;
+			}
+		);
+	});
+	
+	function intervalRecorded(array){
+		console.log("REC",array);
+		for (var id in array){
+			var start = array[id][0];
+			var end = array[id][1];
+			var inter = rendered_intervals[id];
+			
+			if(inter){
+				items.remove(id);
+			}
+	
+			items.add({
+				id : id,
+				group:'rec',
+				content : "&nbsp;",
+		      	editable: false,
+		      	selectable: false,
+		      	className:'danger',
+				start : start,
+				end : end
+			});
+			rendered_intervals[id] = true;
+		}
+		if (firstRecording) {
+			firstRecording = false;
+
+			timeline.fit({
+				animation : false
+			});
+		}
+	}
+	
+	function videoStream(streamUrl) {
+		var video = document.getElementById("myvideo");
+		video.src = streamUrl;
+		return video;
+	}
+	
+	function mixedStream(streamUrl) {
+		var video = document.getElementById("mymixed");
+		video.src = streamUrl;
+		return video;
+	}
+	
+	function participantOnline(userId, email) {
+		if (!participants[userId]) {
+			$("#msgMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
+			$("#vidMember"+userId).attr('class', "pull-left media-object circular circular-online" );				
+			participants[userId] = email;
+		}
+	}
+	
+	function jumpTo(date){
+		timeline.lookAt(date);
+
+		
+	}
+	
+	function tagArrived(id,time,title,content){
+		console.log(id,time,title,content);
+		timeline.loadTag(id,time, title,content);
+		
+		
+		$("#tagList").append(  '<div class="list-group-item" onclick="jumpTo(\''+time+'\')"><h5><span>'+title+'</span> <small>'+friendlyTime(time)+'</small></h5></div>')
+
+	}
+
+	
+	function messageArrived(userId,time,text, name,mid,seq){
+		var html = '<li class="media"><div class="media-body"><div class="media">' +
+		'<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>' +
+		'<div class="media-body">' +text+ '<br /> <small class="text-muted">' +name +' | '+time+'</small>'+
+		'<hr /></div></div></div></li>';
+				
+		if(!oldestMsg || seq<oldestMsg){
+			oldestMsg = seq;
+			var oldHeight = $("#messagesList").height();
+			$("#messagesList").prepend(html);
+			var newHeight = $("#messagesList").height();
+			$("div").scrollTop(newHeight-oldHeight);
+					
+		} else {
+			$("#messagesList").append(html);
+			$("div").scrollTop($("#messagesList").height());
+		}
+		
+		
+		if(!$('#messagesPanel').hasScrollBar()){
+			receiveMore();
+		}
+		
+		
+	}
+	
+	function sendMessage(){
+		var text = $("#messageText").val();
+		Kurento.sendMessage(text);	
+		$("#messageText").val("");
+
+	}
+	
+	function makeid() {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		for (var i = 0; i < 10; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		return text;
+	}
+
+	function playStop() {
+		timeline.togglePlayStop(function() {
+			$("#playStop").html('<i class="fa fa-pause"></i>');
+			$("#playStop").attr('class', 'btn btn-warning');
+			Kurento.setPlay(true);
+		}, function() {
+			$("#playStop").html('<i class="fa fa-play"></i>');
+			$("#playStop").attr('class', 'btn btn-success');
+			Kurento.setPlay(false);
+		});
+	}
+
+	function select_user(userId) {
+		selected_user = userId;
+		setGroup(false);
+		if (real_time) {
+			Kurento.receiveRealtime(selected_user);
+		} else {
+			Kurento.receiveHistoric(selected_user, current_offset);
+		}
+	}
+
+	function saveTags() {
+		console.log(unsaved_tags);
+		for ( var i in unsaved_tags) {
+			var tag = unsaved_tags[i];
+			var visTag = items.get(tag.id);
+			var time = new Date(visTag.start);
+		
+			var title = tag.title;
+			var content = tag.content;
+			Kurento.createTag(time,title,content);
+			items.remove(tag.id);
+		}
+		unsaved_tags = [];
+		$("#saveButton").addClass("hidden");
+	}
+
+	function addTag() {
+		var id = makeid();
+		var title = $("#tagTitle").val();
+		var content = "";
+		
+		unsaved_tags.push( {id:id,title:title,content:content});
+		timeline.addTag(id, title);
+		$("#saveButton").removeClass("hidden");
+		
+	}
+</script>
