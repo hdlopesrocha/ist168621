@@ -167,6 +167,28 @@ public class WSController extends Controller {
 									usession.setPlay(play);
 								}
 									break;
+								case "content" : {
+									long offset = args.getLong("offset");
+									Date time = new Date(new Date().getTime() - offset);
+
+									
+									Date start = new Date(time.getTime() - offset+3000);
+									Date end = new Date(time.getTime() - offset+1000);
+
+									
+									JSONObject jObj = new JSONObject();
+									jObj.put("start", Tools.FORMAT.format(start));
+									jObj.put("end", Tools.FORMAT.format(end));
+									jObj.put("id", "xpto");
+									jObj.put("content", "<b>Hello World | "+Tools.FORMAT.format(start)+"</b>");
+		
+									usession.sendMessage(jObj.toString());
+									
+									
+									
+								}
+									break;
+									
 								case "historic": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;

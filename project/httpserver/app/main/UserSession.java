@@ -35,6 +35,8 @@ import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
 import org.kurento.jsonrpc.JsonUtils;
+import org.kurento.repository.service.pojo.RepositoryItemPlayer;
+
 import exceptions.ServiceException;
 import models.Interval;
 import models.Message;
@@ -282,12 +284,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					}
 
 					// WEBM
-					String path = "/rec/" + Tools.getRandomString(12) + ".webm";
-					String uri = "file://" + path;
 
-					System.out.println("PLAY: " + uri);
+					System.out.println("PLAY: " + rec.getUrl());
 
-					player = new PlayerEndpoint.Builder(room.getMediaPipeline(),rec.getUrl()).build();
+					RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getName());
+
+					
+					player = new PlayerEndpoint.Builder(room.getMediaPipeline(),item.getUrl()).build();
 					// player = new
 					// PlayerEndpoint.Builder(room.getMediaPipeline(),
 					// uri).build();

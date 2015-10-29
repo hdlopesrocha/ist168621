@@ -15,25 +15,46 @@
 package main;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bson.types.ObjectId;
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;
+import org.kurento.repository.rest.RepositoryRestApi;
+import org.kurento.repository.rest.RepositoryRestApiProvider;
 
 import models.Group;
-
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
  */
 public class KurentoManager {
-	public final KurentoClient kurento;
+	
 
+	final static String DEFAULT_KMS_WS_URI = "ws://localhost:8888/kurento";
+	final static String DEFAULT_REPOSITORY_SERVER_URI = "http://localhost:7676";
+	
+	public static KurentoClient kurento;
+	public static RepositoryRestApi repository;
+	
 	public KurentoManager (){
 		System.out.println("Connecting to KMS...");
-		kurento = KurentoClient.create("ws://localhost:8888/kurento");		
+		kurento = KurentoClient.create(DEFAULT_KMS_WS_URI);		
+		repository = RepositoryRestApiProvider.create(DEFAULT_REPOSITORY_SERVER_URI);
+		
+		if (repository != null) {
+			try {
+				Map<String, String> metadata = Collections.emptyMap();
+				repository.createRepositoryItem(metadata);
+			} catch (Exception e) {
+				System.out.println("Unable to create kurento repository items");
+			}
+		}
+		
+		
 		System.out.println("Ok!");
 
 		System.out.println("Creating rooms...");
