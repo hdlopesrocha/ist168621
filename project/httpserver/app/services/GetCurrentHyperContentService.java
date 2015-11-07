@@ -51,7 +51,7 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 			}
 		}
 		{
-			FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gt", time))).limit(1);
+			FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gt", time))).limit(5);
 			Document doc = iter.first();
 			if(doc!=null){
 				ret.add(HyperContent.load(doc));
