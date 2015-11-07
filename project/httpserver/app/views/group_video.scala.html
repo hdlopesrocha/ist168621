@@ -1,5 +1,7 @@
 @(groupId : String, userId : String)
 
+
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-info">
@@ -160,12 +162,11 @@
 			</div>
 			<div id="collapse5" class="panel-collapse collapse in">
 				<div class="panel-body">
-			
+					<input class="hasDatepicker" name="timeSlider" id="timeSlider" value="" type="text"/>
 				</div>
 			</div>
 		</div>
-	</div>	
-	
+	</div>		
 </div>
 
 
@@ -205,7 +206,6 @@
 	}
 	
 	
-	
 	function receiveMore(){
 		if(oldestMsg){
 			Kurento.receiveMore(oldestMsg,1);
@@ -215,7 +215,13 @@
 	$(document).ready(function() {
 		setGroup(true);
 	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
-		
+
+		$('#timeSlider').datetimepicker({
+			addSliderAccess: true,
+			sliderAccessArgs: { touchonly: false }
+		});
+
+	    
 		$( "#messagesPanel" ).scroll(function() {
 			if($("#messagesPanel").scrollTop()==0){
 				receiveMore();
