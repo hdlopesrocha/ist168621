@@ -205,7 +205,6 @@
 		}
 	}
 	
-	
 	function receiveMore(){
 		if(oldestMsg){
 			Kurento.receiveMore(oldestMsg,1);
@@ -215,14 +214,13 @@
 	$(document).ready(function() {
 		setGroup(true);
 	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
-/*
-		$('#timeSlider').datetimepicker({
+
+		$("#timeSlider").datetimepicker({
 			addSliderAccess: true,
 			sliderAccessArgs: { touchonly: false }
 		});
-*/
 	    
-		$( "#messagesPanel" ).scroll(function() {
+		$("#messagesPanel").scroll(function() {
 			if($("#messagesPanel").scrollTop()==0){
 				receiveMore();
 				$("#messagesPanel").scrollTop(1);
@@ -443,7 +441,7 @@
 				break;
 			}
 		}
-		boolean hasStarts = false;
+		var hasStarts = false;
 		for(var i in localContent){
 			var entry = localContent[i]; 
 			if(entry.type=="start"){

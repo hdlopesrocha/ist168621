@@ -9,17 +9,22 @@
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
-		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
-		<link href="/assets/css/main.css" rel="stylesheet">
-		<link href="/assets/css/jquery-ui-timepicker-addon.css" rel="stylesheet" media="all" type="text/css">
-		<script src="/assets/js/jquery.js" type="text/javascript" ></script>	
+		<link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="/assets/this/css/main.css" rel="stylesheet">
+		<link href="/assets/jquery-ui/jquery-ui.min.css" rel="stylesheet" media="all" type="text/css">
+		<link href="/assets/jquery-ui/jquery-ui-timepicker-addon.min.css" rel="stylesheet" media="all" type="text/css">
+		<link href="/assets/timeline/vis.css" rel="stylesheet" type="text/css" />
 
-		<script src="/assets/js/bootstrap.min.js"></script>
-		<script src="/assets/js/scripts.js"></script>
-		<script src="/assets/js/signaling.js" type="text/javascript"></script>
-		<script src="/assets/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
-		<script src="/assets/js/jquery-ui-sliderAccess.js" type="text/javascript"></script>
+		<script src="/assets/jquery/jquery.js" type="text/javascript" ></script>	
+		<script src="/assets/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="/assets/jquery-ui/jquery-ui-sliderAccess.js" type="text/javascript"></script>
+		<script src="/assets/jquery-ui/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
+		<script src="/assets/timeline/vis.js" type="text/javascript" ></script>
+		<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/assets/bootstrap/js/bootstrap-list-filter.min.js" type="text/javascript" ></script>
+	
+		
 	</head>
 	<body>
 	<div class="page-container">
@@ -63,14 +68,6 @@
 		
 	</div>
 	<script type="text/javascript">
-			function switchTab(classTab,classBtn,number){
-				$(classTab).children().hide();
-				$(classTab+" div:nth-child("+number+")").show();
-				$(classBtn).children().attr("class","btn btn-default");
-				$(classBtn+" button:nth-child("+number+")").attr("class","btn btn-primary");
-			}
-			
-			
 			$( document ).ready(function() {
 	
 				$("#logout-button").click(function(){
