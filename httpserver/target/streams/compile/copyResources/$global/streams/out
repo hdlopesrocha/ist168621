@@ -1,0 +1,6 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/home/hdlopesrocha/ist168621/httpserver/conf/generated.keystore,/home/hdlopesrocha/ist168621/httpserver/target/scala-2.11/classes/generated.keystore)[0m
+[0m[[0mdebug[0m] [0m	(/home/hdlopesrocha/ist168621/httpserver/conf/application.conf,/home/hdlopesrocha/ist168621/httpserver/target/scala-2.11/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/home/hdlopesrocha/ist168621/httpserver/conf/production.conf,/home/hdlopesrocha/ist168621/httpserver/target/scala-2.11/classes/production.conf)[0m
+[0m[[0mdebug[0m] [0m	(/home/hdlopesrocha/ist168621/httpserver/conf/routes,/home/hdlopesrocha/ist168621/httpserver/target/scala-2.11/classes/routes)[0m
+[0m[[0mdebug[0m] [0m	(/home/hdlopesrocha/ist168621/httpserver/conf/logback.xml,/home/hdlopesrocha/ist168621/httpserver/target/scala-2.11/classes/logback.xml)[0m

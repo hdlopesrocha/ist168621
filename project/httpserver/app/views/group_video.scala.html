@@ -215,12 +215,12 @@
 	$(document).ready(function() {
 		setGroup(true);
 	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
-
+/*
 		$('#timeSlider').datetimepicker({
 			addSliderAccess: true,
 			sliderAccessArgs: { touchonly: false }
 		});
-
+*/
 	    
 		$( "#messagesPanel" ).scroll(function() {
 			if($("#messagesPanel").scrollTop()==0){
@@ -254,7 +254,6 @@
 				console.log("REALTIME");
 				// realtime request
 				Kurento.receiveRealtime(selected_user);
-
 				real_time = true;
 			}
 		);
@@ -409,7 +408,7 @@
 		$("#saveButton").addClass("hidden");
 	}
 
-	var localContent = {};
+	var localContent = [];
 	
 	function addContent(key, content){
 		var html = '<div style="position: absolute;z-index:99;width:100%;height:100%;" id="content'+key+'">';
@@ -425,58 +424,59 @@
 	
 	
 	function renderContent(){
+		console.log("localContent.len = "+localContent.length);
 		var currentTime = new Date().getTime() - current_offset;
 		
+		while(localContent.length!=0){
+			var entry = localContent[0]; 
+			var time = new Date(entry.time);
+
+			
+			if(time.getTime() <= currentTime ){
+				localContent.shift();
+				if(entry.type=="start"){
+					addContent(entry.id,entry.content);			
+				} else if(entry.type=="end"){
+					removeContent(entry.id);
+				}
+			} else {
+				break;
+			}
+		}
+		boolean hasStarts = false;
 		for(var i in localContent){
 			var entry = localContent[i]; 
-			(function(_i,_entry){
+			if(entry.type=="start"){
+				hasStarts = true;
+				break;
+			}
 			
-				var start = new Date(_entry.start);
-				var end = new Date(_entry.end);
-					
-				if(start.getTime()<=currentTime && currentTime <= end.getTime()){
-					addContent(_i,_entry.content);			
-					setTimeout(function(){
-						removeContent(_i);
-					}, end.getTime() - currentTime);
-				}
-			})(i,entry);
+		}
+		if(localContent.length==0){
+			// no content, keep calm (I must check if this is really needed, I must avoid polling the server)
+			setTimeout(function(){
+				Kurento.getContent();
+			}, 100);
+		}else if(!hasStarts){
+			// all events started, check if others may start
+			Kurento.getContent();
+		}
+		else {
+			// wait for next event
+			var time = new Date(localContent[0].time);
+			setTimeout(function(){
+				renderContent();
+			}, time.getTime() - currentTime);
 		}
 	}
 	
-	function onContentArrived(content){
-		
-		var latestContent = null;
-		var currentTime = new Date().getTime() - current_offset;
-		
-		for(var i in content){
-			if(i!="id"){
-				var entry = content[i];
-				var start = new Date(entry.start);
-				var end = new Date(entry.end);
 	
-				
-				if(latestContent == null || start.getTime() > latestContent ){
-					latestContent = start.getTime();
-				}
-				
-				localContent[i] = entry;
-			}
-		}
+	function onContentArrived(content){
+		$("#mainVideoContent").html("");
+		localContent = content.sort(function(a, b){
+			return new Date(a.time).getTime()-new Date(b.time).getTime();
+		});
 		renderContent();
-		
-		if(latestContent!=null){
-			setTimeout(function(){
-				Kurento.getContent(current_offset);
-			}, latestContent - currentTime);
-		}
-		else {
-			setTimeout(function(){
-				Kurento.getContent(current_offset);
-			}, 1000);
-		}
-		
-		console.log(content);
 	}
 	
 	function addTag() {

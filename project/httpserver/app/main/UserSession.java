@@ -66,7 +66,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private PlayerEndpoint player;
 	private Object playerLock = new Object();
 	private boolean play = true;
-	private long playOffset = 0l;
+	private long timeOffset = 0l;
+	
+	public long getTimeOffset() {
+		return timeOffset;
+	}
+
 	private String playUser = "";
 
 	public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
@@ -263,12 +268,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setHistoric(String userId, long offset) {
-		playOffset = offset;
+		timeOffset = offset;
 		playUser = userId;
 
 		System.out.println("SET HIST " + userId);
 
-		Date currentTime = new Date(new Date().getTime() - playOffset);
+		Date currentTime = new Date(new Date().getTime() - timeOffset);
 		UserSession session = room.getParticipant(playUser);
 		try {
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
@@ -300,7 +305,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						@Override
 						public void onEvent(ErrorEvent arg0) {
 							System.out.println("FAILURE: " + arg0.getDescription());
-							setHistoric(playUser, playOffset);
+							setHistoric(playUser, timeOffset);
 
 						}
 					});
@@ -308,7 +313,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
 						@Override
 						public void onEvent(EndOfStreamEvent arg0) {
-							setHistoric(playUser, playOffset);
+							setHistoric(playUser, timeOffset);
 						}
 					});
 					player.connect(endPoint/*, MediaType.VIDEO*/);

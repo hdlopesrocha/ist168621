@@ -1,0 +1,1525 @@
+[0m[[0minfo[0m] [0mLoading project definition from /home/hdlopesrocha/ist168621/project/httpserver/project[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/project/}httpserver-build...[0m
+[0m[[0minfo[0m] [0mResolving com.typesafe.play#sbt-plugin;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#routes-compiler_2.10;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.10;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#sbt-run-support_2.10;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;18.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.h2database#h2;1.4.187 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.contentobjects.jnotify#jnotify;0.94-play-1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-twirl;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-compiler_2.10;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.10.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.10.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-parser_2.10;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-native-packager;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.tukaani#xz;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.vafer#jdeb;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.tukaani#xz;1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-core;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-model;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.plexus#plexus-utils;3.0.17 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-settings;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-settings-builder;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.plexus#plexus-interpolation;1.19 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.plexus#plexus-component-annotations;1.5.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.sonatype.plexus#plexus-sec-dispatcher;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.sonatype.plexus#plexus-cipher;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-repository-metadata;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-artifact;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-plugin-api;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.sisu#org.eclipse.sisu.plexus;0.0.0.M5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.enterprise#cdi-api;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.annotation#jsr250-api;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.sonatype.sisu#sisu-guice;3.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving aopalliance#aopalliance;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.sisu#org.eclipse.sisu.inject;0.0.0.M5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.plexus#plexus-classworlds;2.5.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-model-builder;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.maven#maven-aether-provider;3.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.aether#aether-api;0.9.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.aether#aether-spi;0.9.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.aether#aether-util;0.9.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.aether#aether-impl;0.9.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.ant#ant;1.9.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.ant#ant-launcher;1.9.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcpg-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.bouncycastle#bcprov-jdk15on;1.51 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-web;1.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.10;2.3.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#webjars-locator;0.25 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#webjars-locator-core;0.25 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-compress;1.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-js-engine;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#jse_2.10;1.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.10;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-contrib_2.10;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-remote_2.10;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.8.0.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.protobuf#protobuf-java;2.5.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.uncommons.maths#uncommons-maths;1.2.2a ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-cluster_2.10;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-persistence-experimental_2.10;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.iq80.leveldb#leveldb;0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.iq80.leveldb#leveldb-api;0.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-all;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.hawtjni#hawtjni-runtime;1.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-osx;1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-linux32;1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-linux64;1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-win32;1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.leveldbjni#leveldbjni-win64;1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.apigee.trireme#trireme-core;0.8.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.apigee#rhino;1.7R5pre4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.apigee.trireme#trireme-node10src;0.8.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.spray#spray-json_2.10;1.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-simple;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#npm_2.10;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#npm;2.11.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbteclipse#sbteclipse-plugin;3.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbteclipse#sbteclipse-core;3.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalaz#scalaz-core_2.10;7.0.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalaz#scalaz-effect_2.10;7.0.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-coffeescript;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#coffee-script-node;1.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#mkdirp;0.3.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-less;1.0.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#less-node;1.7.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#source-map;0.1.31-2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#amdefine;0.1.0-1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#clean-css;2.2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-jshint;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#jshint-node;2.4.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#underscorejs;1.5.2-2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#console-browserify;0.1.6-1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#strip-json-comments;1.0.2-1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-rjs;1.0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#rjs;2.1.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-digest;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-mocha;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#mocha;1.17.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#debug;0.7.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webjars#diff;1.0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.sbt#sbt-play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#sbt;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#actions;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classpath;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#interface;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#io;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#control;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#completion;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#collections;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#api;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-integration;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#incremental-compiler;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logging;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#process;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#relation;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compile;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#classfile;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#persist;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-tools.sbinary#sbinary_2.10;0.4.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-ivy-integration;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#ivy;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cross;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt.ivy#ivy;2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jcraft#jsch;0.1.46 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#serialization_2.10;0.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-pickling_2.10;0.10.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scalamacros#quasiquotes_2.10;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-core_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.json4s#json4s-ast_2.10;3.2.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#jawn-parser_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.spire-math#json4s-support_2.10;0.6.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#run;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#task-system;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tasks;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#tracking;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#cache;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#testing;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-agent;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#main-settings;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#apply-macro;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#command;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#logic;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#compiler-interface;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#precompiled-2_8_2;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#precompiled-2_9_2;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#precompiled-2_9_3;0.13.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#jline;2.10.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fusesource.jansi#jansi;1.4 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mSet current project to httpserver (in build file:/home/hdlopesrocha/ist168621/project/httpserver/)[0m
+[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Oct 29, 2015 4:40:03 AM[0m
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/}root...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.11;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.18.2-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-iteratees_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-stm#scala-stm_2.11;0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-json_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-functional_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-datacommons_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving joda-time#joda-time;2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.joda#joda-convert;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jdk8;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jsr310;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-utils;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jul-to-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jcl-over-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-core;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-classic;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-slf4j_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xerces#xercesImpl;2.11.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xml-apis#xml-apis;1.4.01 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.transaction#jta;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject#guice;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving aopalliance#aopalliance;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;16.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#extensions-parent;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-java8-compat_2.11;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.yaml#snakeyaml;1.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.0.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.validation#validation-api;1.1.0.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.1.1.GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml#classmate;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.2.1.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-context;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-core;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-beans;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.reflections#reflections;0.9.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#annotations;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.jodah#typetools;0.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;18.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#jsr305;2.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat#tomcat-servlet-api;8.0.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.10.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.netty#netty-http-pipelining;1.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc-api_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jolbox#bonecp;0.8.0.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.zaxxer#HikariCP;2.3.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.h2database#h2;1.4.187 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving tyrex#tyrex;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-cache_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sf.ehcache#ehcache-core;2.6.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-core;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-commonshttp4;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-test_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hamcrest#hamcrest-core;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.novocode#junit-interface;0.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fluentlenium#fluentlenium-core;0.10.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-java;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-chrome-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-remote-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving cglib#cglib-nodep;2.1_3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.sonatype.oss#oss-parent;9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-api;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-exec;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#jna;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#platform;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-htmlunit-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#xalan;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#serializer;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-collections#commons-collections;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpmime;4.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit-core-js;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.nekohtml#nekohtml;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.cssparser#cssparser;0.9.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.w3c.css#sac;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-websocket;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-project;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-project;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-http;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-firefox-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-ie-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-safari-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webbitserver#webbit;0.4.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-support;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-omnidoc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-docs_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-doc_2.11;1.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.pegdown#pegdown;1.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-java;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-core;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-tree;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-analysis;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-util;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.12.1 ...[0m
+[0m[[0minfo[0m] [0mdownloading https://repo1.maven.org/maven2/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar ...[0m
+[0m[[0minfo[0m] [0m	[SUCCESSFUL ] org.apache.httpcomponents#httpcore;4.0.1!httpcore.jar (527ms)[0m
+[0m[[0minfo[0m] [0mdownloading https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar ...[0m
+[0m[[0minfo[0m] [0m	[SUCCESSFUL ] org.apache.httpcomponents#httpclient;4.0.1!httpclient.jar (435ms)[0m
+[0m[[0minfo[0m] [0mdownloading https://repo1.maven.org/maven2/com/google/code/gson/gson/2.3/gson-2.3.jar ...[0m
+[0m[[0minfo[0m] [0m	[SUCCESSFUL ] com.google.code.gson#gson;2.3!gson.jar (325ms)[0m
+[0m[[0minfo[0m] [0mdownloading https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/8.1.15.v20140411/jetty-util-8.1.15.v20140411.jar ...[0m
+[0m[[0minfo[0m] [0m	[SUCCESSFUL ] org.eclipse.jetty#jetty-util;8.1.15.v20140411!jetty-util.jar (340ms)[0m
+[0m[[0minfo[0m] [0mdownloading https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/8.1.15.v20140411/jetty-io-8.1.15.v20140411.jar ...[0m
+[0m[[0minfo[0m] [0m	[SUCCESSFUL ] org.eclipse.jetty#jetty-io;8.1.15.v20140411!jetty-io.jar (287ms)[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+
+04:40:16,335 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+04:40:16,336 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+04:40:16,336 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/home/hdlopesrocha/ist168621/project/httpserver/lib/kurento-commons-6.1.1-SNAPSHOT.jar!/logback.xml]
+04:40:16,338 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs multiple times on the classpath.
+04:40:16,338 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/home/hdlopesrocha/ist168621/project/httpserver/lib/kurento-commons-6.1.0.jar!/logback.xml]
+04:40:16,338 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/home/hdlopesrocha/ist168621/project/httpserver/lib/kurento-commons-6.1.1-SNAPSHOT.jar!/logback.xml]
+04:40:16,378 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@48b717f6 - URL [jar:file:/home/hdlopesrocha/ist168621/project/httpserver/lib/kurento-commons-6.1.1-SNAPSHOT.jar!/logback.xml] is not of type file
+04:40:16,681 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+04:40:16,685 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+04:40:16,707 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [CONSOLE]
+04:40:16,765 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+04:40:16,876 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+04:40:16,876 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [CONSOLE] to Logger[ROOT]
+04:40:16,879 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache.catalina.startup.DigesterFactory] to ERROR
+04:40:16,879 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.kurento.test.Shell] to WARN
+04:40:16,879 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.apache] to WARN
+04:40:16,880 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.springframework] to WARN
+04:40:16,880 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.eclipse.jetty] to WARN
+04:40:16,880 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [org.kurento] to DEBUG
+04:40:16,880 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+04:40:16,882 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@3ff3e61b - Registering current configuration as safe fallback point
+
+[35m--- (Running the application, auto-reloading is enabled) ---[0m
+
+[[37minfo[0m] p.a.l.c.ActorSystemProvider - Starting application default Akka system: application
+[[37minfo[0m] p.c.s.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:2080
+[[37minfo[0m] p.c.s.NettyServer - Listening for HTTPS on port /0:0:0:0:0:0:0:0:2443
+
+[32m(Server started, use Ctrl+D to stop and go back to the console...)[0m
+
+[0m[[0minfo[0m] [0mCompiling 12 Scala sources and 70 Java sources to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+[[32msuccess[0m] Compiled in 45s
+Warning: node.js detection failed, sbt will use the Rhino based Trireme JavaScript engine instead to run JavaScript assets compilation, which in some cases may be orders of magnitude slower than using node.js.
+[[37minfo[0m] o.m.d.cluster - Cluster created with settings {hosts=[127.0.0.1:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = JMImplementation:type=MBeanServerDelegate
+[[36mdebug[0m] j.m.mbeanserver - name = JMImplementation:type=MBeanServerDelegate
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object JMImplementation:type=MBeanServerDelegate
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered JMImplementation:type=MBeanServerDelegate
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=ClassLoading
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.ClassLoadingImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=ClassLoading
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=ClassLoading
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=ClassLoading
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=ClassLoading
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=Compilation
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.CompilationImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=Compilation
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=Compilation
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=Compilation
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=Compilation
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=Memory
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=Memory
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=Memory
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=Memory
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=Memory
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.GarbageCollectorImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=PS Scavenge,type=GarbageCollector
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.GarbageCollectorImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=PS MarkSweep,type=GarbageCollector
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryManager,name=CodeCacheManager
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryManagerImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryManager,name=CodeCacheManager
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryManager,name=CodeCacheManager
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=CodeCacheManager,type=MemoryManager
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryManager,name=CodeCacheManager
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryManager,name=Metaspace Manager
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryManagerImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryManager,name=Metaspace Manager
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryManager,name=Metaspace Manager
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=Metaspace Manager,type=MemoryManager
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryManager,name=Metaspace Manager
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=Code Cache
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=Code Cache
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=Code Cache
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=Code Cache,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=Code Cache
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=Metaspace
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=Metaspace
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=Metaspace
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=Metaspace,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=Metaspace
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=Compressed Class Space
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=Compressed Class Space
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=Compressed Class Space
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=Compressed Class Space,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=Compressed Class Space
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=PS Eden Space
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=PS Eden Space
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=PS Eden Space
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=PS Eden Space,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=PS Eden Space
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=PS Survivor Space
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=PS Survivor Space
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=PS Survivor Space
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=PS Survivor Space,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=PS Survivor Space
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=MemoryPool,name=PS Old Gen
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.MemoryPoolImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=MemoryPool,name=PS Old Gen
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=MemoryPool,name=PS Old Gen
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:name=PS Old Gen,type=MemoryPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=MemoryPool,name=PS Old Gen
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.OperatingSystemImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=Runtime
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.RuntimeImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=Runtime
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=Runtime
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=Runtime
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=Runtime
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=Threading
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.ThreadImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.lang:type=Threading
+[[36mdebug[0m] j.m.mbeanserver - name = java.lang:type=Threading
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.lang:type=Threading
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.lang:type=Threading
+[[36mdebug[0m] j.m.mbeanserver -  name = java.util.logging:type=Logging
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.ManagementFactoryHelper$PlatformLoggingImpl
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.util.logging:type=Logging
+[[36mdebug[0m] j.m.mbeanserver - name = java.util.logging:type=Logging
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.util.logging:type=Logging
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.util.logging:type=Logging
+[[36mdebug[0m] j.m.mbeanserver -  name = java.nio:type=BufferPool,name=direct
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.ManagementFactoryHelper$1
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.nio:type=BufferPool,name=direct
+[[36mdebug[0m] j.m.mbeanserver - name = java.nio:type=BufferPool,name=direct
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.nio:name=direct,type=BufferPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.nio:type=BufferPool,name=direct
+[[36mdebug[0m] j.m.mbeanserver -  name = java.nio:type=BufferPool,name=mapped
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.ManagementFactoryHelper$1
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = java.nio:type=BufferPool,name=mapped
+[[36mdebug[0m] j.m.mbeanserver - name = java.nio:type=BufferPool,name=mapped
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object java.nio:name=mapped,type=BufferPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered java.nio:type=BufferPool,name=mapped
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS Scavenge
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=GarbageCollector,name=PS MarkSweep
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver -  name = java.lang:type=OperatingSystem
+[[36mdebug[0m] j.m.mbeanserver -  name = com.sun.management:type=HotSpotDiagnostic
+[[36mdebug[0m] j.m.misc - Building MBeanInfo for sun.management.HotSpotDiagnostic
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = com.sun.management:type=HotSpotDiagnostic
+[[36mdebug[0m] j.m.mbeanserver - name = com.sun.management:type=HotSpotDiagnostic
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object com.sun.management:type=HotSpotDiagnostic
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered com.sun.management:type=HotSpotDiagnostic
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = com.sun.management:type=DiagnosticCommand
+[[36mdebug[0m] j.m.mbeanserver - name = com.sun.management:type=DiagnosticCommand
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object com.sun.management:type=DiagnosticCommand
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered com.sun.management:type=DiagnosticCommand
+[[36mdebug[0m] j.m.mbeanserver - ObjectName = org.mongodb.driver:type=ConnectionPool,clusterId=5631bd3f5600de0992caeab1,host=127.0.0.1,port=27017
+[[36mdebug[0m] j.m.mbeanserver - name = org.mongodb.driver:type=ConnectionPool,clusterId=5631bd3f5600de0992caeab1,host=127.0.0.1,port=27017
+[[36mdebug[0m] j.m.mbeanserver - Send create notification of object org.mongodb.driver:clusterId=5631bd3f5600de0992caeab1,host=127.0.0.1,port=27017,type=ConnectionPool
+[[36mdebug[0m] j.m.mbeanserver - JMX.mbean.registered org.mongodb.driver:type=ConnectionPool,clusterId=5631bd3f5600de0992caeab1,host=127.0.0.1,port=27017
+[[36mdebug[0m] o.m.d.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]
+[[37minfo[0m] o.m.d.cluster - No server chosen by ReadPreferenceServerSelector{readPreference=primary} from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, all=[ServerDescription{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+[[37minfo[0m] o.m.d.connection - Opened connection [connectionId{localValue:1, serverValue:3}] to 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.cluster - Checking status of 127.0.0.1:27017
+[[37minfo[0m] o.m.d.cluster - Monitor thread successfully connected to server with description ServerDescription{address=127.0.0.1:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 0, 6]}, minWireVersion=0, maxWireVersion=3, electionId=null, maxDocumentSize=16777216, roundTripTimeNanos=1080925}
+[[36mdebug[0m] o.m.d.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[34mtrace[0m] o.m.d.connection - Checked out connection [connectionId{localValue:2}] to server 127.0.0.1:27017
+[[37minfo[0m] o.m.d.connection - Opened connection [connectionId{localValue:2, serverValue:4}] to 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Sending command {count : BsonString{value='fs.files'}} to database webrtc on connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Command execution completed
+[[34mtrace[0m] o.m.d.connection - Checked in connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[34mtrace[0m] o.m.d.connection - Checked out connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Sending command {createIndexes : BsonString{value='fs.files'}} to database webrtc on connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Command execution completed
+[[34mtrace[0m] o.m.d.connection - Checked in connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[34mtrace[0m] o.m.d.connection - Checked out connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Sending command {count : BsonString{value='fs.chunks'}} to database webrtc on connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+[[36mdebug[0m] o.m.d.p.command - Command execution completed
+[[34mtrace[0m] o.m.d.connection - Checked in connection [connectionId{localValue:2, serverValue:4}] to server 127.0.0.1:27017
+2015-10-29T06:31:27.408Z
+Connecting to KMS...
+[[37minfo[0m] o.k.c.KurentoClient - Connecting to kms in ws://localhost:8888/kurento
+[[36mdebug[0m] o.k.j.c.JsonRpcClientWebSocket - [KurentoClient]  Connecting webSocket client to server ws://localhost:8888/kurento
+[[36mdebug[0m] o.e.j.util.log - Logging to Logger[org.eclipse.jetty.util.log] via org.eclipse.jetty.util.log.Slf4jLog
+[[37minfo[0m] o.e.j.util.log - Logging initialized @6728470ms
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {null,POJO}
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {org.eclipse.jetty.io.MappedByteBufferPool@4752c66a,POJO}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting org.eclipse.jetty.websocket.client.WebSocketClient@22de9829
+[[36mdebug[0m] o.e.j.w.c.WebSocketClient - Starting org.eclipse.jetty.websocket.client.WebSocketClient@22de9829
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d8d7901,AUTO}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d8d7901
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728515ms org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d8d7901
+[[36mdebug[0m] o.e.j.w.c.WebSocketClient - Started org.eclipse.jetty.websocket.client.WebSocketClient@22de9829
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728516ms org.eclipse.jetty.websocket.client.WebSocketClient@22de9829
+[[36mdebug[0m] o.e.j.w.c.WebSocketClient - connect websocket org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e to ws://localhost:8888/kurento
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {WebSocketClient@585013289{STOPPED,8<=0<=200,i=0,q=0},MANAGED}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting WebSocketClient@585013289{STOPPED,8<=0<=200,i=0,q=0}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728545ms WebSocketClient@585013289{STARTED,8<=8<=200,i=8,q=0}
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {org.eclipse.jetty.websocket.client.io.ConnectionManager@3e74cdfd,MANAGED}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting org.eclipse.jetty.websocket.client.io.ConnectionManager@3e74cdfd
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.io.ConnectionManager@3e74cdfd added {org.eclipse.jetty.websocket.client.io.WebSocketClientSelectorManager@494037fa,AUTO}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting org.eclipse.jetty.websocket.client.io.WebSocketClientSelectorManager@494037fa
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=-1 selected=-1
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728566ms org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=0 selected=0
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=0 selected=0
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728567ms org.eclipse.jetty.websocket.client.io.WebSocketClientSelectorManager@494037fa
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=0 selected=0
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728567ms org.eclipse.jetty.websocket.client.io.ConnectionManager@3e74cdfd
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Idle/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 execute
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce enter
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 producing
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.w.c.e.JettyAnnotatedScanner - onMethodAnnotation(JettyPojoMetadata[onConnect=null,onBinary=null,onText=null,onFrame=null,onError=null,onClose=null], class org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket, public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onConnect(org.eclipse.jetty.websocket.api.Session), @org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect())
+[[36mdebug[0m] o.e.j.w.c.e.JettyAnnotatedScanner - onMethodAnnotation(JettyPojoMetadata[onConnect=CallableMethod[public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onConnect(org.eclipse.jetty.websocket.api.Session)],onBinary=null,onText=null,onFrame=null,onError=null,onClose=null], class org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket, public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onClose(int,java.lang.String), @org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose())
+[[36mdebug[0m] o.e.j.w.c.e.JettyAnnotatedScanner - onMethodAnnotation(JettyPojoMetadata[onConnect=CallableMethod[public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onConnect(org.eclipse.jetty.websocket.api.Session)],onBinary=null,onText=null,onFrame=null,onError=null,onClose=OptionalSessionCallableMethod[public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onClose(int,java.lang.String)]], class org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket, public void org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket.onMessage(java.lang.String), @org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage())
+[[36mdebug[0m] o.e.j.w.c.WebSocketClient - Connect Promise: FutureCallback@537df60f{false,false,null}
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue FutureCallback@537df60f{false,false,null}
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run FutureCallback@537df60f{false,false,null}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Queued change org.eclipse.jetty.io.ManagedSelector$Connect@72585b44 on org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=0 selected=0
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 0/0 selected
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - ran FutureCallback@537df60f{false,false,null}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Running change org.eclipse.jetty.io.ManagedSelector$Connect@72585b44
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 1/1 selected
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Connected true java.nio.channels.SocketChannel[connected local=localhost/127.0.0.1:42189 remote=localhost/127.0.0.1:8888]
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produced org.eclipse.jetty.io.ManagedSelector$1@75b8034f
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 dispatch
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run org.eclipse.jetty.io.ManagedSelector$1@75b8034f
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce enter
+[[36mdebug[0m] o.e.j.w.c.i.WebSocketClientSelectorManager - newEndPoint(java.nio.channels.SocketChannel[connected local=localhost/127.0.0.1:42189 remote=localhost/127.0.0.1:8888], org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=1 selected=1, sun.nio.ch.SelectionKeyImpl@5911c885)
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 producing
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.i.AbstractEndPoint - onOpen SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,13/300000,null}{io=0,kio=0,kro=8}
+[[36mdebug[0m] o.e.j.i.IdleTimeout - SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,14/300000,null}{io=0,kio=0,kro=8} idle timeout check, elapsed: 14 ms, remaining: 299986 ms
+[[36mdebug[0m] o.e.j.w.c.i.WebSocketClientSelectorManager - newConnection(java.nio.channels.SocketChannel[connected local=localhost/127.0.0.1:42189 remote=localhost/127.0.0.1:8888],SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,15/300000,null}{io=0,kio=0,kro=8},FutureCallback@537df60f{false,false,null})
+[[36mdebug[0m] o.e.j.i.AbstractConnection - onOpen UpgradeConnection@366d73dd
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue FutureCallback@1c8d6f94{false,false}
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run FutureCallback@1c8d6f94{false,false}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Created SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,31/300000,UpgradeConnection}{io=0,kio=0,kro=8}
+[[36mdebug[0m] o.e.j.i.WriteFlusher - write: WriteFlusher@31bfb55a{IDLE} [HeapByteBuffer@3f784cc5[p=0,l=203,c=203,r=203]={<<<GET /kurento HTTP...l: no-cache\r\n\r\n>>>}]
+[[36mdebug[0m] o.e.j.i.WriteFlusher - update WriteFlusher@31bfb55a{WRITING}:IDLE-->WRITING
+[[36mdebug[0m] o.e.j.i.ChannelEndPoint - flushed 203 SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,W,34/300000,UpgradeConnection}{io=0,kio=0,kro=8}
+[[36mdebug[0m] o.e.j.i.WriteFlusher - Flushed=true 203/203+0 WriteFlusher@31bfb55a{WRITING}
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 ran org.eclipse.jetty.io.ManagedSelector$1@75b8034f
+[[36mdebug[0m] o.e.j.i.WriteFlusher - update WriteFlusher@31bfb55a{IDLE}:WRITING-->IDLE
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce exit
+[[36mdebug[0m] o.e.j.i.AbstractConnection - fillInterested UpgradeConnection@366d73dd
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - ran org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=1 selected=0
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}} register AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}} register AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - changeInterests p=false 0->1 for SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,2/300000,UpgradeConnection}{io=1,kio=0,kro=8}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Queued change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61 on org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=1 selected=0
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 0/1 selected
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - ran FutureCallback@1c8d6f94{true,true}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Running change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - Key interests updated 0 -> 1 on SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,8/300000,UpgradeConnection}{io=1,kio=1,kro=8}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 1/1 selected
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - onSelected 1->0 for SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,9/300000,UpgradeConnection}{io=0,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produced org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 dispatch
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce enter
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 producing
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - Key interests updated 1 -> 0 on SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,12/300000,UpgradeConnection}{io=0,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}} fillable AC.ReadCB@366d73dd{UpgradeConnection@366d73dd}
+[[36mdebug[0m] o.e.j.i.ChannelEndPoint - filled 156 SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,13/300000,UpgradeConnection}{io=0,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.w.c.i.UpgradeConnection - Filled 156 bytes - HeapByteBuffer@4439f3e[p=0,l=156,c=2048,r=156]={<<<HTTP/1.1 101 Swit...: websocket\r\n\r\n>>>\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00...\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00}
+[[36mdebug[0m] o.e.j.w.c.e.ExtensionStack - Extension Configs=[]
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=null,incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]] added {ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection],AUTO}
+[[36mdebug[0m] o.e.j.u.c.ContainerLifeCycle - org.eclipse.jetty.websocket.client.WebSocketClient@22de9829 added {WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=null,incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]],MANAGED}
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=null,incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]]
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - starting ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728838ms ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]
+[[36mdebug[0m] o.e.j.u.c.AbstractLifeCycle - STARTED @6728838ms WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=null,incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]]
+[[36mdebug[0m] o.e.j.w.c.i.IOState - Notify State Listeners: CONNECTED
+[[36mdebug[0m] o.e.j.w.c.i.IOState - WebSocketClientConnection.onConnectionStateChange(CONNECTED)
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - CLIENT Connection State Change: CONNECTED
+[[36mdebug[0m] o.e.j.w.c.i.IOState - WebSocketSession.onConnectionStateChange(CONNECTED)
+[[36mdebug[0m] o.e.j.w.c.e.AbstractEventDriver - openSession(WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=WebSocketRemoteEndpoint@1a06a85[batching=true],incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]])
+[[36mdebug[0m] o.e.j.w.c.i.IOState - Notify State Listeners: OPEN
+[[36mdebug[0m] o.e.j.w.c.i.IOState - WebSocketClientConnection.onConnectionStateChange(OPEN)
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - CLIENT Connection State Change: OPEN
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - OPEN: normal fillInterested
+[[36mdebug[0m] o.e.j.i.AbstractConnection - fillInterested WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}} register AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}} register AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - changeInterests p=false 0->1 for SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,1/300000,WebSocketClientConnection}{io=1,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Queued change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61 on org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=1 selected=0
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 0/1 selected
+[[36mdebug[0m] o.e.j.w.c.i.IOState - WebSocketSession.onConnectionStateChange(OPEN)
+[[36mdebug[0m] o.e.j.w.c.WebSocketClient - Session Opened: WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=WebSocketRemoteEndpoint@1a06a85[batching=true],incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]]
+[[36mdebug[0m] o.e.j.w.c.WebSocketSession - open -> WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=WebSocketRemoteEndpoint@1a06a85[batching=true],incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]] - STARTED
+ +- incomingHandler : JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e]
+ +- outgoingHandler : ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection] - STARTED
+     +- Stack
+         +- Network  : WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}
+         +- Websocket: WebSocketSession[websocket=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],behavior=CLIENT,connection=WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]},remote=WebSocketRemoteEndpoint@1a06a85[batching=true],incoming=JettyAnnotatedEventDriver[org.kurento.jsonrpc.client.JsonRpcClientWebSocket$WebSocketClientSocket@1863db2e],outgoing=ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]]
+
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - set Initial Buffer - HeapByteBuffer@39772851[p=0,l=0,c=0,r=0]={<<<>>>}
+[[36mdebug[0m] o.e.j.i.AbstractConnection - onOpen WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Running change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - Key interests updated 0 -> 1 on SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,19/300000,WebSocketClientConnection}{io=1,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 ran org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce exit
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - ran EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[37minfo[0m] o.k.r.r.RepositoryRestApiProvider - Rest client service created for http://localhost:7676
+[[34mtrace[0m] s.n.w.p.h.HttpURLConnection - ProxySelector Request for http://localhost:7676/repo/item
+[[34mtrace[0m] s.n.w.p.h.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] s.n.w.p.h.HttpURLConnection - sun.net.www.MessageHeader@5a7c6f7e7 pairs: {POST /repo/item HTTP/1.1: null}{Content-Type: application/json; charset=UTF-8}{User-Agent: Java/1.8.0_60}{Host: localhost:7676}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}{Content-Length: 2}
+[[36mdebug[0m] s.n.w.p.h.HttpURLConnection - sun.net.www.MessageHeader@30c674be5 pairs: {null: HTTP/1.1 200 OK}{Server: Apache-Coyote/1.1}{Content-Type: application/json;charset=UTF-8}{Transfer-Encoding: chunked}{Date: Thu, 29 Oct 2015 06:31:28 GMT}
+Ok!
+Creating rooms...
+[[34mtrace[0m] o.k.c.i.c.RemoteObjectInvocationHandler - Invoking method public abstract java.util.List org.kurento.client.ServerManager.getPipelines() on object [RemoteObject: type=ServerManager remoteRef=manager_ServerManager
+[[36mdebug[0m] o.k.j.c.JsonRpcClientWebSocket - [KurentoClient]  Req-> {"id":1,"method":"invoke","params":{"object":"manager_ServerManager","operation":"getPipelines"},"jsonrpc":"2.0"}
+[[36mdebug[0m] o.e.j.w.c.WebSocketRemoteEndpoint - sendString with HeapByteBuffer@78c72550[p=0,l=113,c=113,r=113]={<<<{"id":1,"method":...jsonrpc":"2.0"}>>>}
+[[36mdebug[0m] o.e.j.w.c.e.ExtensionStack - Queuing TEXT[len=113,fin=true,rsv=...,masked=false]
+[[36mdebug[0m] o.e.j.w.c.e.ExtensionStack - Processing TEXT[len=113,fin=true,rsv=...,masked=false]
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - outgoingFrame(TEXT[len=113,fin=true,rsv=...,masked=true], org.eclipse.jetty.websocket.common.extensions.ExtensionStack$Flusher@4831d94c[PROCESSING])
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=1,aggregateSize=0,failure=null] queued FrameEntry[TEXT[len=113,fin=true,rsv=...,masked=true],org.eclipse.jetty.websocket.common.extensions.ExtensionStack$Flusher@4831d94c[PROCESSING],AUTO,null]
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] processing 1 entries: [FrameEntry[TEXT[len=113,fin=true,rsv=...,masked=true],org.eclipse.jetty.websocket.common.extensions.ExtensionStack$Flusher@4831d94c[PROCESSING],AUTO,null]]
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] acquired aggregate buffer java.nio.DirectByteBuffer[pos=0 lim=0 cap=32768]
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] aggregated 1 frames: [FrameEntry[TEXT[len=0,fin=true,rsv=...,masked=true],org.eclipse.jetty.websocket.common.extensions.ExtensionStack$Flusher@4831d94c[PROCESSING],AUTO,null]]
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] processing 0 entries: []
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] auto flushing
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] flushing aggregate java.nio.DirectByteBuffer[pos=0 lim=119 cap=32768]
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=0,failure=null] flushing 0 frames: []
+[[36mdebug[0m] o.e.j.i.WriteFlusher - write: WriteFlusher@31bfb55a{IDLE} [DirectByteBuffer@494b7d71[p=0,l=119,c=32768,r=119]={<<<\x81\xF1}\xDe\xE2\x8b\x06\xFc\x8b\xEf_\xE4\xD3\xA7_\xB3\x87...\x88\xF8\x12\xB0\x90\xFb\x1e\xFc\xD8\xA9O\xF0\xD2\xA9\x00>>>\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00...\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00}]
+[[36mdebug[0m] o.e.j.i.WriteFlusher - update WriteFlusher@31bfb55a{WRITING}:IDLE-->WRITING
+[[36mdebug[0m] o.e.j.i.ChannelEndPoint - flushed 119 SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,W,679/300000,WebSocketClientConnection}{io=1,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.i.WriteFlusher - Flushed=true 119/119+0 WriteFlusher@31bfb55a{WRITING}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 1/1 selected
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - onSelected 1->0 for SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,W,6/300000,WebSocketClientConnection}{io=0,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produced org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 dispatch
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - queue EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=119,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}} fillable AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=119,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=0,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - CLIENT onFillable()
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - run EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Pend/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 run
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce enter
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 producing
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - Key interests updated 1 -> 0 on SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,W,12/300000,WebSocketClientConnection}{io=0,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[36mdebug[0m] o.e.j.i.ChannelEndPoint - filled 100 SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,W,8/300000,WebSocketClientConnection}{io=0,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.w.c.i.AbstractWebSocketConnection - Filled 100 bytes - DirectByteBuffer@a46567[p=0,l=100,c=4096,r=100]={<<<\x81b{"id":1,"jsonrp...","value":[]}}\n>>>\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00...\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00}
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Parsing 100 bytes
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT OpCode TEXT, fin=true rsv=...
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Payload Length: 98 - Parser@f920b76[ExtensionStack,s=PAYLOAD_LEN,c=0,len=98,f=TEXT[len=0,fin=true,rsv=...,masked=false],p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Window: DirectByteBuffer@4f5e8138[p=0,l=98,c=98,r=98]={<<<{"id":1,"jsonrpc"...","value":[]}}\n>>>}
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Parsed Frame: TEXT[len=98,fin=true,rsv=...,masked=false]
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Notify ExtensionStack[queueSize=0,extensions=[],incoming=org.eclipse.jetty.websocket.common.WebSocketSession,outgoing=org.eclipse.jetty.websocket.client.io.WebSocketClientConnection]
+[[36mdebug[0m] o.e.j.w.c.e.AbstractEventDriver - incomingFrame(TEXT[len=98,fin=true,rsv=...,masked=false])
+[[36mdebug[0m] o.e.j.i.WriteFlusher - update WriteFlusher@31bfb55a{IDLE}:WRITING-->IDLE
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=119,failure=null] processing 0 entries: []
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=119,failure=null] auto flushing
+[[36mdebug[0m] o.e.j.w.c.i.FrameFlusher - Flusher[queueSize=0,aggregateSize=119,failure=null] flushing 0 frames: []
+[[36mdebug[0m] o.e.j.w.c.e.ExtensionStack - Entering IDLE
+[[36mdebug[0m] o.k.j.c.JsonRpcClientWebSocket - [KurentoClient]  <-Res {"id":1,"result":{"value":[],"sessionId":"841758a2-6625-48e0-a9ee-10f048c0eabf"},"jsonrpc":"2.0"}
+[[36mdebug[0m] o.e.j.w.c.Parser - CLIENT Parsing 0 bytes
+[[36mdebug[0m] o.e.j.i.ChannelEndPoint - filled 0 SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,-,-,34/300000,WebSocketClientConnection}{io=0,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.i.AbstractConnection - fillInterested WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=98,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=98,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}} register AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=98,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}
+[[36mdebug[0m] o.e.j.i.FillInterest - FillInterest@358027b5{true,AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=98,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}} register AC.ReadCB@6a48b84a{WebSocketClientConnection@6a48b84a{f=Flusher[queueSize=0,aggregateSize=0,failure=null],g=Generator[CLIENT,validating],p=Parser@f920b76[ExtensionStack,s=START,c=0,len=98,f=null,p=WebSocketPolicy@409bcde9[behavior=CLIENT,maxTextMessageSize=65536,maxTextMessageBufferSize=32768,maxBinaryMessageSize=65536,maxBinaryMessageBufferSize=32768,asyncWriteTimeout=60000,idleTimeout=300000,inputBufferSize=4096]]}}
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - changeInterests p=false 0->1 for SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,6/300000,WebSocketClientConnection}{io=1,kio=0,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Queued change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61 on org.eclipse.jetty.io.ManagedSelector@359330f6 id=0 keys=1 selected=0
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop woken up from select, 0/1 selected
+Ok!
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 ran org.eclipse.jetty.io.SelectChannelEndPoint$2@a84601e
+[[36mdebug[0m] o.e.j.u.t.s.ExecuteProduceRun - EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13 produce exit
+[[36mdebug[0m] o.e.j.u.t.QueuedThreadPool - ran EPR Prod/org.eclipse.jetty.io.ManagedSelector$SelectorProducer@16eb2e13
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Running change org.eclipse.jetty.io.SelectChannelEndPoint$1@7082bf61
+[[36mdebug[0m] o.e.j.i.SelectChannelEndPoint - Key interests updated 0 -> 1 on SelectChannelEndPoint@4f5cb261{localhost/127.0.0.1:8888<->42189,Open,in,out,R,-,16/300000,WebSocketClientConnection}{io=1,kio=1,kro=1}
+[[36mdebug[0m] o.e.j.i.ManagedSelector - Selector loop waiting on select
+[[37minfo[0m] - play.api.libs.concurrent.ActorSystemProvider - Starting application default Akka system: application
+Application has started
+[[37minfo[0m] - play.api.Play - Application started (Dev)
+[[33mwarn[0m] - play.core.server.ssl.DefaultSSLEngineProvider - Using generated key with self signed certificate for HTTPS. This should not be used in production.
+connectToRoom(55dfb9055600de728662da4a)
+PROPS: { "name" : "Henrique Rocha", "photo" : "7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg" }
+PROPS: { "name" : "Nikhil Bhatt" }
+GET 7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg
+ROOM 55dfb9055600de728662da4a has been created
+hdlopesrocha joining 55dfb9055600de728662da4a
+
+SEND:{"data":{"55dfb7235600de71525edeaa":"hdlopesrocha"},"id":"participants"}
+
+SEND:{"561055d15600de0600f8e89a":["2015-10-03T22:25:11.064Z","2015-10-03T22:27:02.071Z"],"561059f45600de0600f8e8d4":["2015-10-03T22:42:50.286Z","2015-10-17T10:40:37.577Z"],"561059855600de0600f8e8c7":["2015-10-03T22:40:59.720Z","2015-10-03T22:42:40.373Z"],"561fc8945600de0600fa6e4c":["2015-10-15T15:38:50.129Z","2015-10-15T15:39:30.633Z"],"56105a785600de0600f8e8e3":["2015-10-03T22:45:02.839Z","2015-10-03T22:46:03.218Z"],"561054055600de0600f8e87a":["2015-10-03T22:17:31.680Z","2015-10-03T22:19:12.557Z"],"561056e85600de0600f8e8aa":["2015-10-03T22:29:49.936Z","2015-10-03T22:32:10.889Z"],"561fcac05600de0600fa6eaa":["2015-10-15T15:48:06.651Z","2015-10-15T15:50:48.713Z"],"560d4b3a5600de0642b755be":["2015-10-01T15:03:12.732Z","2015-10-01T15:03:32.839Z"],"561fc9d85600de0600fa6e7c":["2015-10-15T15:44:14.886Z","2015-10-15T15:47:57.431Z"],"561059395600de0600f8e8c2":["2015-10-03T22:39:43.415Z","2015-10-03T22:40:24.016Z"],"561fc9755600de0600fa6e67":["2015-10-15T15:42:35.851Z","2015-10-15T15:44:06.705Z"],"561fc8735600de0600fa6e46":["2015-10-15T15:38:17.817Z","2015-10-15T15:38:37.942Z"],"560d4b265600de0642b755bc":["2015-10-01T15:02:52.745Z","2015-10-01T15:03:02.847Z"],"56105c315600de0600f8e923":["2015-10-03T22:52:23.347Z","2015-10-03T22:56:05.396Z"],"56105bca5600de0600f8e90d":["2015-10-03T22:50:40.838Z","2015-10-03T22:52:11.569Z"],"561fcb745600de0600fa6ecd":["2015-10-15T15:51:06.364Z","2015-10-15T16:09:13.599Z"],"5610546f5600de0600f8e885":["2015-10-03T22:19:17.571Z","2015-10-03T22:21:38.804Z"],"560d449f5600de0642b75545":["2015-10-01T14:35:01.640Z","2015-10-01T14:54:42.581Z"],"561053505600de0600f8e873":["2015-10-03T22:14:30.454Z","2015-10-03T22:15:10.806Z"],"561055bd5600de0600f8e896":["2015-10-03T22:24:51.399Z","2015-10-03T22:25:01.458Z"],"id":"rec","560d504f5600de6a6f2a0249":["2015-10-01T15:24:53.063Z","2015-10-01T15:25:13.315Z"],"56105d1a5600de0600f8e953":["2015-10-03T22:56:16.603Z","2015-10-03T22:57:07.075Z"]}
+
+SEND:{"data":[{"uid":"55dfb7235600de71525edeaa","name":"Henrique Rocha","id":"55f4c7f35600de20eb70b40b","time":"2015-09-13T00:48:51.365Z","text":"Olá!"}],"id":"msg"}
+
+SEND:{"data":{"id":"560d0d4a5600de26357b4c24","time":"2015-10-01T11:39:04.113Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"560d4b245600de0642b755bb","time":"2015-10-01T16:02:58.619Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"561fc9a55600de0600fa6e72","time":"2015-10-15T15:43:10.227Z","title":"ola","content":""},"id":"tag"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"697caf6c-b604-4737-82ef-799f256da099":{"start":"2015-10-29T14:15:57.806Z","end":"2015-10-29T14:15:59.324Z","content":"<b style=\"color:yellow;position:absolute;top:24px;left:183px\">zNiXsda9E8ol6Mi1<\/b>"},"id":"content"}
+
+RECV: {"id":"offer","name":"mixer","data":{"type":"offer","sdp":"v=0\r\no=- 702699362783998758 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE audio video\r\na=msid-semantic: WMS\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:Q4R9HPI+8V7kq25S\r\na=ice-pwd:r9ykzqiT6/NDtFGzr0QpowZD\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:audio\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=recvonly\r\na=rtcp-mux\r\na=rtpmap:111 opus/48000/2\r\na=fmtp:111 minptime=10; useinbandfec=1\r\na=rtpmap:103 ISAC/16000\r\na=rtpmap:104 ISAC/32000\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:106 CN/32000\r\na=rtpmap:105 CN/16000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:126 telephone-event/8000\r\na=maxptime:60\r\nm=video 9 UDP/TLS/RTP/SAVPF 100 116 117 96\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:Q4R9HPI+8V7kq25S\r\na=ice-pwd:r9ykzqiT6/NDtFGzr0QpowZD\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:video\r\na=extmap:2 urn:ietf:params:rtp-hdrext:toffset\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:4 urn:3gpp:video-orientation\r\na=recvonly\r\na=rtcp-mux\r\na=rtpmap:100 VP8/90000\r\na=rtcp-fb:100 ccm fir\r\na=rtcp-fb:100 nack\r\na=rtcp-fb:100 nack pli\r\na=rtcp-fb:100 goog-remb\r\na=rtpmap:116 red/90000\r\na=rtpmap:117 ulpfec/90000\r\na=rtpmap:96 rtx/90000\r\na=fmtp:96 apt=100\r\n"}}
+
+SEND:{"data":{"type":"answer","sdp":"v=0\r\no=- 3655116955 3655116955 IN IP4 0.0.0.0\r\ns=Kurento Media Server\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=msid-semantic: WMS\r\na=group:BUNDLE\r\nm=audio 0 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\na=mid:audio\r\nm=video 0 UDP/TLS/RTP/SAVPF 100 116 117 96\r\na=mid:video\r\n"},"name":"mixer","id":"answer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 49239 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 44549 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 41875 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 40666 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 49239 typ srflx raddr 192.168.88.250 rport 49239 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 44549 typ srflx raddr 192.168.88.250 rport 44549 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 41875 typ srflx raddr 192.168.88.250 rport 41875 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 40666 typ srflx raddr 192.168.88.250 rport 40666 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 1 tcp 1518280447 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 2 tcp 1518280446 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 1 tcp 1518280447 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 2 tcp 1518280446 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"offer","name":"main","data":{"type":"offer","sdp":"v=0\r\no=- 7351517719398372064 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE audio video\r\na=msid-semantic: WMS OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:i2tVGrFjAyQB9kW8\r\na=ice-pwd:N6MciASoMgWMXnFaJ2GMWITt\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:audio\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=sendrecv\r\na=rtcp-mux\r\na=rtpmap:111 opus/48000/2\r\na=fmtp:111 minptime=10; useinbandfec=1\r\na=rtpmap:103 ISAC/16000\r\na=rtpmap:104 ISAC/32000\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:106 CN/32000\r\na=rtpmap:105 CN/16000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:126 telephone-event/8000\r\na=maxptime:60\r\na=ssrc:751240662 cname:BKNtVYfNGYOS63xX\r\na=ssrc:751240662 msid:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE b66a6b42-dd1f-4b9c-a828-1fdbbecc1897\r\na=ssrc:751240662 mslabel:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE\r\na=ssrc:751240662 label:b66a6b42-dd1f-4b9c-a828-1fdbbecc1897\r\nm=video 9 UDP/TLS/RTP/SAVPF 100 116 117 96\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:i2tVGrFjAyQB9kW8\r\na=ice-pwd:N6MciASoMgWMXnFaJ2GMWITt\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:video\r\na=extmap:2 urn:ietf:params:rtp-hdrext:toffset\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:4 urn:3gpp:video-orientation\r\na=sendrecv\r\na=rtcp-mux\r\na=rtpmap:100 VP8/90000\r\na=rtcp-fb:100 ccm fir\r\na=rtcp-fb:100 nack\r\na=rtcp-fb:100 nack pli\r\na=rtcp-fb:100 goog-remb\r\na=rtpmap:116 red/90000\r\na=rtpmap:117 ulpfec/90000\r\na=rtpmap:96 rtx/90000\r\na=fmtp:96 apt=100\r\na=ssrc-group:FID 2279763581 2281208588\r\na=ssrc:2279763581 cname:BKNtVYfNGYOS63xX\r\na=ssrc:2279763581 msid:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE 15772a04-1750-4ab6-a39a-5fdf6c4ca069\r\na=ssrc:2279763581 mslabel:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE\r\na=ssrc:2279763581 label:15772a04-1750-4ab6-a39a-5fdf6c4ca069\r\na=ssrc:2281208588 cname:BKNtVYfNGYOS63xX\r\na=ssrc:2281208588 msid:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE 15772a04-1750-4ab6-a39a-5fdf6c4ca069\r\na=ssrc:2281208588 mslabel:OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE\r\na=ssrc:2281208588 label:15772a04-1750-4ab6-a39a-5fdf6c4ca069\r\n"}}
+
+SEND:{"data":{"type":"answer","sdp":"v=0\r\no=- 3655116958 3655116958 IN IP4 0.0.0.0\r\ns=Kurento Media Server\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=msid-semantic: WMS OJNKngxDc5HQLYWOobxcodOUm1vqnErPDZRE\r\na=group:BUNDLE\r\nm=audio 0 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\na=mid:audio\r\nm=video 0 UDP/TLS/RTP/SAVPF 100 116 117 96\r\na=mid:video\r\n"},"name":"main","id":"answer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 50434 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 40453 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 52293 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 55729 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","420955e3-84e9-47be-8237-86b04e89c88d":{"start":"2015-10-29T14:16:00.167Z","end":"2015-10-29T14:16:01.575Z","content":"<b style=\"color:yellow;position:absolute;top:352px;left:131px\">rBeBmZdjLEIvwE6G<\/b>"}}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 50434 typ srflx raddr 192.168.88.250 rport 50434 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 40453 typ srflx raddr 192.168.88.250 rport 40453 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 52293 typ srflx raddr 192.168.88.250 rport 52293 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 55729 typ srflx raddr 192.168.88.250 rport 55729 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:15:59.339Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/o9su90c21unod4fj3p58ktc2e0
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"410f389d-f7bf-4479-8aaf-f7a982059912":{"start":"2015-10-29T14:16:02.038Z","end":"2015-10-29T14:16:03.759Z","content":"<b style=\"color:yellow;position:absolute;top:138px;left:22px\">XlMufe41JrxFqo7M<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:00.506Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/fsrjh19hf0eu82as9srptrkbsh
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:01.658Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/gmv9jsgq1a2j507oo577i349tq
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"829fbb15-2c9c-401e-a4b2-2613a6df40d2":{"start":"2015-10-29T14:16:02.999Z","end":"2015-10-29T14:16:04.391Z","content":"<b style=\"color:yellow;position:absolute;top:121px;left:133px\">bOGCr1YcTZ86ZAtl<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:02.792Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/g6q4nsdk8q7pt4sq74ak61r63i
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"519fa1a3-64d6-4088-9b65-3aa495c641c8":{"start":"2015-10-29T14:16:04.457Z","end":"2015-10-29T14:16:06.525Z","content":"<b style=\"color:yellow;position:absolute;top:164px;left:314px\">uZRfnkdspkTs2B5a<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:03.978Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/im6m60kef65ioc7ortu2es2ui7
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"c88ea4b0-4a60-409b-8453-93614b69b0ab":{"start":"2015-10-29T14:16:06.725Z","end":"2015-10-29T14:16:08.417Z","content":"<b style=\"color:yellow;position:absolute;top:326px;left:399px\">KOH2pKX9gYvBshIt<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:05.213Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/a8of5rgmt4cn7e1b8apa5188kk
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:06.436Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/ie6k61ortr1h3pt8cs0iearnik
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"5a160c50-c40b-40da-8e4e-5a83898f3f1a":{"start":"2015-10-29T14:16:08.662Z","end":"2015-10-29T14:16:10.790Z","content":"<b style=\"color:yellow;position:absolute;top:354px;left:118px\">xkEDiD7CHHI4fD7p<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:07.658Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/adnhfo24safgqmpp3l63kln3mf
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"df0ecbdd-20d1-481b-a942-70c8796392ff":{"start":"2015-10-29T14:16:11.127Z","end":"2015-10-29T14:16:13.605Z","content":"<b style=\"color:yellow;position:absolute;top:339px;left:194px\">1lySr9WmVsOJWVxo<\/b>"},"id":"content"}
+
+SEND:{"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:08.902Z"],"id":"rec"}
+REC: http://127.0.0.1:7676/repository_servlet/t27vniln6cs1glrdgtrgihdden
+!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!
+Disconnected
+connectToRoom(55dfb9055600de728662da4a)
+hdlopesrocha joining 55dfb9055600de728662da4a
+PROPS: { "name" : "Nikhil Bhatt" }
+PROPS: { "name" : "Henrique Rocha", "photo" : "7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg" }
+GET 7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg
+
+SEND:{"data":{"55dfb7235600de71525edeaa":"hdlopesrocha"},"id":"participants"}
+
+SEND:{"561059855600de0600f8e8c7":["2015-10-03T22:40:59.720Z","2015-10-03T22:42:40.373Z"],"561fc8945600de0600fa6e4c":["2015-10-15T15:38:50.129Z","2015-10-15T15:39:30.633Z"],"56105a785600de0600f8e8e3":["2015-10-03T22:45:02.839Z","2015-10-03T22:46:03.218Z"],"561054055600de0600f8e87a":["2015-10-03T22:17:31.680Z","2015-10-03T22:19:12.557Z"],"561056e85600de0600f8e8aa":["2015-10-03T22:29:49.936Z","2015-10-03T22:32:10.889Z"],"560d4b3a5600de0642b755be":["2015-10-01T15:03:12.732Z","2015-10-01T15:03:32.839Z"],"561fc9d85600de0600fa6e7c":["2015-10-15T15:44:14.886Z","2015-10-15T15:47:57.431Z"],"561055bd5600de0600f8e896":["2015-10-03T22:24:51.399Z","2015-10-03T22:25:01.458Z"],"id":"rec","560d504f5600de6a6f2a0249":["2015-10-01T15:24:53.063Z","2015-10-01T15:25:13.315Z"],"561055d15600de0600f8e89a":["2015-10-03T22:25:11.064Z","2015-10-03T22:27:02.071Z"],"561059f45600de0600f8e8d4":["2015-10-03T22:42:50.286Z","2015-10-17T10:40:37.577Z"],"561fcac05600de0600fa6eaa":["2015-10-15T15:48:06.651Z","2015-10-15T15:50:48.713Z"],"561059395600de0600f8e8c2":["2015-10-03T22:39:43.415Z","2015-10-03T22:40:24.016Z"],"561fc9755600de0600fa6e67":["2015-10-15T15:42:35.851Z","2015-10-15T15:44:06.705Z"],"561fc8735600de0600fa6e46":["2015-10-15T15:38:17.817Z","2015-10-15T15:38:37.942Z"],"560d4b265600de0642b755bc":["2015-10-01T15:02:52.745Z","2015-10-01T15:03:02.847Z"],"56105c315600de0600f8e923":["2015-10-03T22:52:23.347Z","2015-10-03T22:56:05.396Z"],"56105bca5600de0600f8e90d":["2015-10-03T22:50:40.838Z","2015-10-03T22:52:11.569Z"],"561fcb745600de0600fa6ecd":["2015-10-15T15:51:06.364Z","2015-10-15T16:09:13.599Z"],"5610546f5600de0600f8e885":["2015-10-03T22:19:17.571Z","2015-10-03T22:21:38.804Z"],"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:08.902Z"],"560d449f5600de0642b75545":["2015-10-01T14:35:01.640Z","2015-10-01T14:54:42.581Z"],"561053505600de0600f8e873":["2015-10-03T22:14:30.454Z","2015-10-03T22:15:10.806Z"],"56105d1a5600de0600f8e953":["2015-10-03T22:56:16.603Z","2015-10-03T22:57:07.075Z"]}
+
+SEND:{"data":[{"uid":"55dfb7235600de71525edeaa","name":"Henrique Rocha","id":"55f4c7f35600de20eb70b40b","time":"2015-09-13T00:48:51.365Z","text":"Olá!"}],"id":"msg"}
+
+SEND:{"data":{"id":"560d0d4a5600de26357b4c24","time":"2015-10-01T11:39:04.113Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"560d4b245600de0642b755bb","time":"2015-10-01T16:02:58.619Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"561fc9a55600de0600fa6e72","time":"2015-10-15T15:43:10.227Z","title":"ola","content":""},"id":"tag"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","2538f9ff-acec-49ef-a78f-eee92c2145ce":{"start":"2015-10-29T14:16:10.995Z","end":"2015-10-29T14:16:11.613Z","content":"<b style=\"color:yellow;position:absolute;top:178px;left:166px\">h3UUHmB8EqmZGJq0<\/b>"}}
+
+RECV: {"id":"offer","name":"mixer","data":{"type":"offer","sdp":"v=0\r\no=- 3275251536388950608 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE audio video\r\na=msid-semantic: WMS\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:yHPfXmKJHiFYIQAF\r\na=ice-pwd:yrARQkgFB7GSaO6pDy0Smhiw\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:audio\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=recvonly\r\na=rtcp-mux\r\na=rtpmap:111 opus/48000/2\r\na=fmtp:111 minptime=10; useinbandfec=1\r\na=rtpmap:103 ISAC/16000\r\na=rtpmap:104 ISAC/32000\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:106 CN/32000\r\na=rtpmap:105 CN/16000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:126 telephone-event/8000\r\na=maxptime:60\r\nm=video 9 UDP/TLS/RTP/SAVPF 100 116 117 96\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:yHPfXmKJHiFYIQAF\r\na=ice-pwd:yrARQkgFB7GSaO6pDy0Smhiw\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:video\r\na=extmap:2 urn:ietf:params:rtp-hdrext:toffset\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:4 urn:3gpp:video-orientation\r\na=recvonly\r\na=rtcp-mux\r\na=rtpmap:100 VP8/90000\r\na=rtcp-fb:100 ccm fir\r\na=rtcp-fb:100 nack\r\na=rtcp-fb:100 nack pli\r\na=rtcp-fb:100 goog-remb\r\na=rtpmap:116 red/90000\r\na=rtpmap:117 ulpfec/90000\r\na=rtpmap:96 rtx/90000\r\na=fmtp:96 apt=100\r\n"}}
+
+SEND:{"data":{"type":"answer","sdp":"v=0\r\no=- 3655116969 3655116969 IN IP4 0.0.0.0\r\ns=Kurento Media Server\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=msid-semantic: WMS\r\na=group:BUNDLE\r\nm=audio 0 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\na=mid:audio\r\nm=video 0 UDP/TLS/RTP/SAVPF 100 116 117 96\r\na=mid:video\r\n"},"name":"mixer","id":"answer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 49796 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 45585 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 42003 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 51842 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 49796 typ srflx raddr 192.168.88.250 rport 49796 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 45585 typ srflx raddr 192.168.88.250 rport 45585 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 42003 typ srflx raddr 192.168.88.250 rport 42003 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 51842 typ srflx raddr 192.168.88.250 rport 51842 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 1 tcp 1518280447 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 2 tcp 1518280446 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 1 tcp 1518280447 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:885974137 2 tcp 1518280446 192.168.88.250 0 typ host tcptype active generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"mixer"}
+RECORDER STOP!
+
+RECV: {"id":"offer","name":"main","data":{"type":"offer","sdp":"v=0\r\no=- 196220278334134495 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE audio video\r\na=msid-semantic: WMS QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:Kmd9mfyJ4j5EXev/\r\na=ice-pwd:CxpttCn4M9x5g1f/b7pBT9/q\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:audio\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=sendrecv\r\na=rtcp-mux\r\na=rtpmap:111 opus/48000/2\r\na=fmtp:111 minptime=10; useinbandfec=1\r\na=rtpmap:103 ISAC/16000\r\na=rtpmap:104 ISAC/32000\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:106 CN/32000\r\na=rtpmap:105 CN/16000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:126 telephone-event/8000\r\na=maxptime:60\r\na=ssrc:4267175195 cname:B02uhoQlk7EBN9wZ\r\na=ssrc:4267175195 msid:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M c4a48732-d7d5-4da0-a6fb-f47926f51867\r\na=ssrc:4267175195 mslabel:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M\r\na=ssrc:4267175195 label:c4a48732-d7d5-4da0-a6fb-f47926f51867\r\nm=video 9 UDP/TLS/RTP/SAVPF 100 116 117 96\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:Kmd9mfyJ4j5EXev/\r\na=ice-pwd:CxpttCn4M9x5g1f/b7pBT9/q\r\na=fingerprint:sha-256 D6:99:88:A9:B7:55:FF:A3:C6:64:35:05:F5:93:FC:21:62:6F:32:13:AA:4A:F3:A8:E4:1E:F0:56:45:75:AA:85\r\na=setup:actpass\r\na=mid:video\r\na=extmap:2 urn:ietf:params:rtp-hdrext:toffset\r\na=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:4 urn:3gpp:video-orientation\r\na=sendrecv\r\na=rtcp-mux\r\na=rtpmap:100 VP8/90000\r\na=rtcp-fb:100 ccm fir\r\na=rtcp-fb:100 nack\r\na=rtcp-fb:100 nack pli\r\na=rtcp-fb:100 goog-remb\r\na=rtpmap:116 red/90000\r\na=rtpmap:117 ulpfec/90000\r\na=rtpmap:96 rtx/90000\r\na=fmtp:96 apt=100\r\na=ssrc-group:FID 3279020471 2458396384\r\na=ssrc:3279020471 cname:B02uhoQlk7EBN9wZ\r\na=ssrc:3279020471 msid:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M 37f892e8-b25a-4e1d-b176-650d9f0c9f3c\r\na=ssrc:3279020471 mslabel:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M\r\na=ssrc:3279020471 label:37f892e8-b25a-4e1d-b176-650d9f0c9f3c\r\na=ssrc:2458396384 cname:B02uhoQlk7EBN9wZ\r\na=ssrc:2458396384 msid:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M 37f892e8-b25a-4e1d-b176-650d9f0c9f3c\r\na=ssrc:2458396384 mslabel:QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M\r\na=ssrc:2458396384 label:37f892e8-b25a-4e1d-b176-650d9f0c9f3c\r\n"}}
+
+SEND:{"data":{"type":"answer","sdp":"v=0\r\no=- 3655116970 3655116970 IN IP4 0.0.0.0\r\ns=Kurento Media Server\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=msid-semantic: WMS QuCJ7CffVs23CjUFPzk4ob8KiazYX7GHUX0M\r\na=group:BUNDLE\r\nm=audio 0 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126\r\na=mid:audio\r\nm=video 0 UDP/TLS/RTP/SAVPF 100 116 117 96\r\na=mid:video\r\n"},"name":"main","id":"answer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 38464 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 39117 typ host generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 1 udp 2122260223 192.168.88.250 55301 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:2051872905 2 udp 2122260222 192.168.88.250 35324 typ host generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 38464 typ srflx raddr 192.168.88.250 rport 38464 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 2 udp 1686052606 146.193.224.179 39117 typ srflx raddr 192.168.88.250 rport 39117 generation 0","sdpMid":"audio","sdpMLineIndex":0},"name":"main"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:3066046234 1 udp 1686052607 146.193.224.179 55301 typ srflx raddr 192.168.88.250 rport 55301 generation 0","sdpMid":"video","sdpMLineIndex":1},"name":"main"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"e5de8e42-684c-4048-b276-fb8dba253b39":{"start":"2015-10-29T14:16:12.233Z","end":"2015-10-29T14:16:13.838Z","content":"<b style=\"color:yellow;position:absolute;top:97px;left:248px\">5F2GtQx9F9aueyOa<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:11.976Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/tqt55amo8mkecq32tng5mrqfjt
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"82e01bee-fee9-48c7-90f9-f0f5e35ee5f5":{"start":"2015-10-29T14:16:14.656Z","end":"2015-10-29T14:16:16.968Z","content":"<b style=\"color:yellow;position:absolute;top:292px;left:50px\">sJPNxXUD2i2o0eAc<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:13.245Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/1fca0acnvh37jv0c6r6fobjr12
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:14.455Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/dvqp24k1n06hk792meac85d4qb
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"ece1cef6-8fb4-4f7e-b57f-56a513298e95":{"start":"2015-10-29T14:16:15.758Z","end":"2015-10-29T14:16:16.939Z","content":"<b style=\"color:yellow;position:absolute;top:303px;left:341px\">spirHIYHRnfrNpvy<\/b>"},"id":"content"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"b2e1c0b3-c954-4753-8753-edb554bc88b9":{"start":"2015-10-29T14:16:17.428Z","end":"2015-10-29T14:16:18.846Z","content":"<b style=\"color:yellow;position:absolute;top:122px;left:217px\">XQTUfkh1C1IKqAt3<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:15.667Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/gfpiv80v4vm6tt7177o1mfadnr
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:16.925Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/p8kaqc2sr7siti311ejf5gblre
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","9adabe08-7d8c-411c-9c37-15b51d822ec9":{"start":"2015-10-29T14:16:19.049Z","end":"2015-10-29T14:16:21.476Z","content":"<b style=\"color:yellow;position:absolute;top:66px;left:70px\">W7h1kZryqmBtvkEH<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:18.112Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/hvd3tvu4f90sqab8v0l9dqbjp
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","317b670c-8d50-4431-bdfc-087ce564369d":{"start":"2015-10-29T14:16:19.897Z","end":"2015-10-29T14:16:21.909Z","content":"<b style=\"color:yellow;position:absolute;top:313px;left:392px\">AxJtHXXumgKgPT1J<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:19.311Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/kpup1kcjraraas097vib6cgctu
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"f6211bde-8df8-4f5c-85c5-599ef125cdfc":{"start":"2015-10-29T14:16:20.986Z","end":"2015-10-29T14:16:21.802Z","content":"<b style=\"color:yellow;position:absolute;top:45px;left:3px\">reo9fdc5DKSaJ06o<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:20.494Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/anhusrl54hleraqmish01ecsib
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"6ce41b98-63c7-438e-96c4-30f8d4eebcf9":{"start":"2015-10-29T14:16:22.842Z","end":"2015-10-29T14:16:24.970Z","content":"<b style=\"color:yellow;position:absolute;top:278px;left:387px\">3TushjtyIR70XJ4X<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:21.743Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/6gdeljanj306jbfl68lr5ea1oo
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"949a88b3-cfd2-4bd3-b396-e8338d3744ab":{"start":"2015-10-29T14:16:24.228Z","end":"2015-10-29T14:16:25.559Z","content":"<b style=\"color:yellow;position:absolute;top:361px;left:157px\">M2dJ33kQByoNF7QT<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:22.984Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/v5gv2r3sdaog5lfd6d3pcooe8v
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"4146d35e-0cbd-4f96-921b-1af8e174ea8b":{"start":"2015-10-29T14:16:24.980Z","end":"2015-10-29T14:16:25.706Z","content":"<b style=\"color:yellow;position:absolute;top:394px;left:104px\">I4nDrzvQkLRezo0g<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:24.195Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/j3s3vta7u5kl2pc2rhm3eh7s89
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"0b01f04f-b921-43ce-b3c8-25b7264afe46":{"start":"2015-10-29T14:16:27.503Z","end":"2015-10-29T14:16:29.128Z","content":"<b style=\"color:yellow;position:absolute;top:30px;left:354px\">wE4NPu1mEkusQVJy<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:25.380Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/c185vgsql9gt0vsp9c4bvs1uar
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:26.620Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/cl1ipshlobmdrfahd6ikuh9rj7
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","fb877dac-7849-4ef2-8511-43708c13adb7":{"start":"2015-10-29T14:16:29.479Z","end":"2015-10-29T14:16:30.173Z","content":"<b style=\"color:yellow;position:absolute;top:62px;left:289px\">aIGEeSZMv5sfQ7je<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:27.737Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/1369loaclc99pip14m3sucq5b9
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:28.949Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/kh6k0mug282oad0sk4fp8k7leb
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"5d2607da-d60a-49bf-a4cf-240fa63880bd":{"start":"2015-10-29T14:16:31.429Z","end":"2015-10-29T14:16:33.603Z","content":"<b style=\"color:yellow;position:absolute;top:359px;left:182px\">P6KQewOXznec2jDT<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:30.183Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/ricp46o4tulg7uketegetml562
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"8e2eabbe-b492-43c1-9960-764962fb4479":{"start":"2015-10-29T14:16:34.083Z","end":"2015-10-29T14:16:34.725Z","content":"<b style=\"color:yellow;position:absolute;top:111px;left:207px\">IUPvEELH8TTRdkSX<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:31.399Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/8obq78vppbr13h7nn2vva3j37i
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:32.608Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/ebidf5hjn0c9cho95qoo4d6m14
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:33.862Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/70pvoh342ob9f3l9simhlf3fbj
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"4a62cdc3-40c4-4262-87ca-951c067e954a":{"start":"2015-10-29T14:16:36.686Z","end":"2015-10-29T14:16:37.673Z","content":"<b style=\"color:yellow;position:absolute;top:290px;left:42px\">B3YwwEpiBRdOpbu4<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:35.097Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/8b5bfjued66qaueeu2cvmf36q5
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:36.348Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/cavrg50guhork1tals38vf1l0j
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"60503bd3-cf37-4961-b736-d092b19c35a9":{"start":"2015-10-29T14:16:38.199Z","end":"2015-10-29T14:16:39.517Z","content":"<b style=\"color:yellow;position:absolute;top:186px;left:193px\">9b6tuqx8G45CIGLM<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:37.566Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/cvrme9nj9kl9d3am4uufnurah
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"36a1fae7-f34b-49b1-bf49-b020b9030a81":{"start":"2015-10-29T14:16:39.483Z","end":"2015-10-29T14:16:41.755Z","content":"<b style=\"color:yellow;position:absolute;top:93px;left:247px\">2ifCCBp2cW6SzFyi<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:38.819Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/lse9iuetqmfhfejo6ts8bdk3qd
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"11b8b524-db9c-470b-910a-4ff83794e563":{"start":"2015-10-29T14:16:40.939Z","end":"2015-10-29T14:16:42.452Z","content":"<b style=\"color:yellow;position:absolute;top:240px;left:365px\">VlWusnIxdYTTyuUM<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:40.041Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/iiqj49ept0mk30qpm5h0bv314j
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","6617b553-673f-47b0-9083-3d36b424b4a1":{"start":"2015-10-29T14:16:42.995Z","end":"2015-10-29T14:16:44.539Z","content":"<b style=\"color:yellow;position:absolute;top:282px;left:305px\">AJUiGiZM7c7mpp1h<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:41.277Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/ar3aj8qu6d8f4r7vg3p1ruo6vi
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:42.509Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/oon8g0u2ei91pqhte6mu5i3oot
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"4340203d-2b67-4b54-a761-4350d0e0c191":{"start":"2015-10-29T14:16:45.466Z","end":"2015-10-29T14:16:46.806Z","content":"<b style=\"color:yellow;position:absolute;top:35px;left:355px\">MHnMEg76mBkaMaW6<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:43.737Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/3qmqh1cu1rqpa2b1f4gimh3fjf
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:44.950Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/n9eg7574sui25dfusn7l99041q
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"edfbf957-bde9-45b2-a766-ecc5ff0103dc":{"start":"2015-10-29T14:16:46.506Z","end":"2015-10-29T14:16:48.339Z","content":"<b style=\"color:yellow;position:absolute;top:203px;left:117px\">UKD6MUOKq8lWopUG<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:46.172Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/8cu0ltrnp2evdcm3vs8b3s1ak2
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"e3b69835-9909-49dc-a7ae-87e26b57f730":{"start":"2015-10-29T14:16:49.152Z","end":"2015-10-29T14:16:51.607Z","content":"<b style=\"color:yellow;position:absolute;top:247px;left:15px\">UHyInax4VGBLwdvl<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:47.416Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/gqeplnd1a65mseepe8cc6v743d
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:48.645Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/fmoal2b456ke728b7nc55i3s0
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"8d213762-af00-4504-81df-faf4c34c5c50":{"start":"2015-10-29T14:16:51.225Z","end":"2015-10-29T14:16:51.836Z","content":"<b style=\"color:yellow;position:absolute;top:374px;left:189px\">Djm5iqDrklUQnjZN<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:49.888Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/rpsa9ogc0oafbal1njrstcftuo
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","fbb04234-7625-4bb0-a3c3-96b1af2e7a76":{"start":"2015-10-29T14:16:53.518Z","end":"2015-10-29T14:16:54.078Z","content":"<b style=\"color:yellow;position:absolute;top:273px;left:149px\">Zmo0WaTfzNSMjXnr<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:51.122Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/5hsuad7vvf1636nmvnqc4s632r
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:52.338Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/cchvps3j288mh50hn4k902909c
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","1cff580d-ac09-4b5d-9c82-f921840b8c14":{"start":"2015-10-29T14:16:55.299Z","end":"2015-10-29T14:16:56.961Z","content":"<b style=\"color:yellow;position:absolute;top:225px;left:8px\">IMTecBTZ6ECo5pUU<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:53.575Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/nqcle821hhnlieu3sueaiq4j0l
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:54.771Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/gbmcjk5729ml4a3bcjloavfvgn
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","466ee7a7-49c4-4f86-b1a5-a34309dc6bd0":{"start":"2015-10-29T14:16:57.772Z","end":"2015-10-29T14:16:59.489Z","content":"<b style=\"color:yellow;position:absolute;top:315px;left:117px\">CYrotdFc24941V46<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:55.988Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/nu77ta7gig48sdpas3nmt28u4u
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:57.214Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/6k94jue1iclgphc70hnv6c3has
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"22687200-ba83-4e90-904f-40919fc04ccc":{"start":"2015-10-29T14:16:59.102Z","end":"2015-10-29T14:17:00.268Z","content":"<b style=\"color:yellow;position:absolute;top:374px;left:260px\">C7LQszGmihH8TfRC<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:58.461Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/2m0n1pgv7ng6hv3rnp64vi4efh
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","13aa3af9-6f1f-4f91-9847-8c32287ac369":{"start":"2015-10-29T14:17:00.243Z","end":"2015-10-29T14:17:02.673Z","content":"<b style=\"color:yellow;position:absolute;top:61px;left:342px\">81hTYo7e5j2hCOIj<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:16:59.659Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/5ndrqa4m8chgahcev9h0kot99a
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"7facec91-0f01-4a6d-bb52-c2b10f7981e0":{"start":"2015-10-29T14:17:02.622Z","end":"2015-10-29T14:17:03.886Z","content":"<b style=\"color:yellow;position:absolute;top:256px;left:118px\">3IW0CbeyQTa8Tm6V<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:00.900Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/cek1f0tept6k0i40nlh2pun03t
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:02.128Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/b7qqupn2fgd2nvm25ocj6k8o4o
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"b48a4272-52ac-49a2-8f50-956433a73824":{"start":"2015-10-29T14:17:04.133Z","end":"2015-10-29T14:17:05.251Z","content":"<b style=\"color:yellow;position:absolute;top:69px;left:236px\">pKmPZ23Ul7ylpMjk<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:03.345Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/2h7o4r1naq7ak8l43e6qlk9l49
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"cba668fd-ecbb-4022-9408-4e68695a7967":{"start":"2015-10-29T14:17:05.801Z","end":"2015-10-29T14:17:07.077Z","content":"<b style=\"color:yellow;position:absolute;top:204px;left:158px\">OSTJak4iKVJC8iFF<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:04.436Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/9693u98v9d746cvilp5okj2dsn
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:05.649Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/rid2rudci825jlq3qu96vunh4i
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"6d853322-0dae-43d8-93b8-d7a99021f894":{"start":"2015-10-29T14:17:08.324Z","end":"2015-10-29T14:17:10.661Z","content":"<b style=\"color:yellow;position:absolute;top:16px;left:51px\">jlf6WsRKWE4KTvXf<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:06.852Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/ehjnrloo7ih1dok8f5k1u9vj55
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:08.059Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/qkkumg1v9ct1r2ojlqjd1djqtk
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"2a5b86ff-e0d2-4087-8d86-ba3ece25b6ef":{"start":"2015-10-29T14:17:10.360Z","end":"2015-10-29T14:17:12.586Z","content":"<b style=\"color:yellow;position:absolute;top:73px;left:262px\">TFJa1B5an7M62uTi<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:09.300Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/tkaqctgg5j2q9a42lmj5mr3p20
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","061a29a2-e761-4e3b-acf3-1fb5f845e826":{"start":"2015-10-29T14:17:12.902Z","end":"2015-10-29T14:17:14.931Z","content":"<b style=\"color:yellow;position:absolute;top:62px;left:179px\">swCpemIOanYzwKG8<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:10.531Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/hirb8n93t4al1dfjtkr6o4jq2t
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:11.740Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/mpcm7dvibivt4nl5h1ie6c5h38
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","c2cd8a16-deb3-4324-aa71-81834185f71c":{"start":"2015-10-29T14:17:14.746Z","end":"2015-10-29T14:17:16.329Z","content":"<b style=\"color:yellow;position:absolute;top:359px;left:225px\">murkihj0sA2bi00w<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:12.949Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/mqt22upp6k7n4q19pp4rmo0483
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:14.150Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/vdsm0uqfphsdo4q6p47k00upj4
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","24cc9ef4-2bc0-4c85-b32a-ede1dd12466f":{"start":"2015-10-29T14:17:16.469Z","end":"2015-10-29T14:17:17.047Z","content":"<b style=\"color:yellow;position:absolute;top:225px;left:268px\">6t1Z0uoOj2C0fKiu<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:15.432Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/akal7d61b3gim6p21l2drbaagj
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"c885eacd-5350-4e76-b6d8-770f21ea2e14":{"start":"2015-10-29T14:17:17.226Z","end":"2015-10-29T14:17:18.865Z","content":"<b style=\"color:yellow;position:absolute;top:299px;left:46px\">9293wFks3gYcRP39<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:16.665Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/p5lsua68c16cicmbt1jg91v7m8
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","8dd168b9-8d44-40a9-8d45-791b007eec69":{"start":"2015-10-29T14:17:18.948Z","end":"2015-10-29T14:17:19.520Z","content":"<b style=\"color:yellow;position:absolute;top:94px;left:201px\">m19ZdwA1NWmEp0hA<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:17.863Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/s7f8u38l2s60ll2ddggveplnoa
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"9a9b3512-5348-45b8-97bc-55d1b1f79ee5":{"start":"2015-10-29T14:17:21.071Z","end":"2015-10-29T14:17:22.729Z","content":"<b style=\"color:yellow;position:absolute;top:377px;left:83px\">ejr4xSyXWn1iOC3r<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:19.064Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/fgvf0qd14gh0orb2mtcsd1iop2
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:20.313Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/mgul1ap2uu9mvor64s3hbtlp3d
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"6e9f6533-f795-4a75-a55a-5481e0ae4904":{"start":"2015-10-29T14:17:21.769Z","end":"2015-10-29T14:17:23.686Z","content":"<b style=\"color:yellow;position:absolute;top:282px;left:143px\">dCZ9ZsBQghKqomCF<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:21.509Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/7cs0rbl8e3tfkp96p8fg3bgsk1
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"4e778003-9dba-48c0-9e71-0757aa6f3f33":{"start":"2015-10-29T14:17:24.370Z","end":"2015-10-29T14:17:25.907Z","content":"<b style=\"color:yellow;position:absolute;top:120px;left:244px\">R7nLSRUMZyrVMDtl<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:22.591Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/l9ou0k6p7thgptvfs0v02b60fu
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:23.791Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/oea0g2ek59i42084a1lpm3fbag
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"2e7d7140-8fdc-4c4c-87b0-81464f656359":{"start":"2015-10-29T14:17:26.661Z","end":"2015-10-29T14:17:27.546Z","content":"<b style=\"color:yellow;position:absolute;top:29px;left:108px\">kjgALJCeYWQHBNBl<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:24.984Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/lsd2ia9jgsrc80ddodc9cbae49
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:26.280Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/f4c781aj6loqqb7g5o54h8jbt9
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","ccddc40b-139b-46f0-a385-68cdbccda3b1":{"start":"2015-10-29T14:17:27.980Z","end":"2015-10-29T14:17:28.779Z","content":"<b style=\"color:yellow;position:absolute;top:65px;left:235px\">fIAbEjl0A0rEdYhO<\/b>"}}
+connectToRoom(55dfb9055600de728662da4a)
+PROPS: { "name" : "Nikhil Bhatt" }
+PROPS: { "name" : "Henrique Rocha", "photo" : "7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg" }
+GET 7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg
+hdlopesrocha joining 55dfb9055600de728662da4a
+
+SEND:{"data":{"55dfb7235600de71525edeaa":"hdlopesrocha"},"id":"participants"}
+
+SEND:{"561059855600de0600f8e8c7":["2015-10-03T22:40:59.720Z","2015-10-03T22:42:40.373Z"],"561fc8945600de0600fa6e4c":["2015-10-15T15:38:50.129Z","2015-10-15T15:39:30.633Z"],"56105a785600de0600f8e8e3":["2015-10-03T22:45:02.839Z","2015-10-03T22:46:03.218Z"],"561054055600de0600f8e87a":["2015-10-03T22:17:31.680Z","2015-10-03T22:19:12.557Z"],"561056e85600de0600f8e8aa":["2015-10-03T22:29:49.936Z","2015-10-03T22:32:10.889Z"],"560d4b3a5600de0642b755be":["2015-10-01T15:03:12.732Z","2015-10-01T15:03:32.839Z"],"561fc9d85600de0600fa6e7c":["2015-10-15T15:44:14.886Z","2015-10-15T15:47:57.431Z"],"561055bd5600de0600f8e896":["2015-10-03T22:24:51.399Z","2015-10-03T22:25:01.458Z"],"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:27.517Z"],"560d504f5600de6a6f2a0249":["2015-10-01T15:24:53.063Z","2015-10-01T15:25:13.315Z"],"561055d15600de0600f8e89a":["2015-10-03T22:25:11.064Z","2015-10-03T22:27:02.071Z"],"561059f45600de0600f8e8d4":["2015-10-03T22:42:50.286Z","2015-10-17T10:40:37.577Z"],"561fcac05600de0600fa6eaa":["2015-10-15T15:48:06.651Z","2015-10-15T15:50:48.713Z"],"561059395600de0600f8e8c2":["2015-10-03T22:39:43.415Z","2015-10-03T22:40:24.016Z"],"561fc9755600de0600fa6e67":["2015-10-15T15:42:35.851Z","2015-10-15T15:44:06.705Z"],"561fc8735600de0600fa6e46":["2015-10-15T15:38:17.817Z","2015-10-15T15:38:37.942Z"],"560d4b265600de0642b755bc":["2015-10-01T15:02:52.745Z","2015-10-01T15:03:02.847Z"],"56105c315600de0600f8e923":["2015-10-03T22:52:23.347Z","2015-10-03T22:56:05.396Z"],"56105bca5600de0600f8e90d":["2015-10-03T22:50:40.838Z","2015-10-03T22:52:11.569Z"],"561fcb745600de0600fa6ecd":["2015-10-15T15:51:06.364Z","2015-10-15T16:09:13.599Z"],"5610546f5600de0600f8e885":["2015-10-03T22:19:17.571Z","2015-10-03T22:21:38.804Z"],"56322a1f5600de0992caeab3":["2015-10-29T14:15:58.107Z","2015-10-29T14:16:08.902Z"],"560d449f5600de0642b75545":["2015-10-01T14:35:01.640Z","2015-10-01T14:54:42.581Z"],"561053505600de0600f8e873":["2015-10-03T22:14:30.454Z","2015-10-03T22:15:10.806Z"],"56105d1a5600de0600f8e953":["2015-10-03T22:56:16.603Z","2015-10-03T22:57:07.075Z"]}
+
+SEND:{"data":[{"uid":"55dfb7235600de71525edeaa","name":"Henrique Rocha","id":"55f4c7f35600de20eb70b40b","time":"2015-09-13T00:48:51.365Z","text":"Olá!"}],"id":"msg"}
+
+SEND:{"data":{"id":"560d0d4a5600de26357b4c24","time":"2015-10-01T11:39:04.113Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"560d4b245600de0642b755bb","time":"2015-10-01T16:02:58.619Z","title":"title","content":"content"},"id":"tag"}
+
+SEND:{"data":{"id":"561fc9a55600de0600fa6e72","time":"2015-10-15T15:43:10.227Z","title":"ola","content":""},"id":"tag"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"75b988af-4cfe-4cc2-908e-544a2fc5111d":{"start":"2015-10-29T14:17:29.756Z","end":"2015-10-29T14:17:31.704Z","content":"<b style=\"color:yellow;position:absolute;top:2px;left:298px\">NsIZcW0dBASnCdSb<\/b>"},"id":"content"}
+
+RECV: {"id":"offer","name":"mixer","data":{"type":"offer","sdp":"v=0\r\no=mozilla...THIS_IS_SDPARTA-41.0.2 5502690402144145747 0 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 72:34:26:18:05:B1:DC:86:C4:4A:FD:DB:66:77:4F:D7:36:DC:A6:69:A0:08:C0:2A:AF:3F:A7:97:A6:9C:A2:3F\r\na=group:BUNDLE sdparta_0 sdparta_1\r\na=ice-options:trickle\r\na=msid-semantic:WMS *\r\nm=audio 9 RTP/SAVPF 109 9 0 8\r\nc=IN IP4 0.0.0.0\r\na=recvonly\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=ice-pwd:8ea68aacf7aae85290bb23d4a28ecd1c\r\na=ice-ufrag:a352ba38\r\na=mid:sdparta_0\r\na=rtcp-mux\r\na=rtpmap:109 opus/48000/2\r\na=rtpmap:9 G722/8000/1\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=setup:actpass\r\na=ssrc:2113133419 cname:{34994f2f-dcfa-4ca4-8fe1-c58428c49a36}\r\nm=video 9 RTP/SAVPF 120 126 97\r\nc=IN IP4 0.0.0.0\r\na=recvonly\r\na=fmtp:120 max-fs=12288;max-fr=60\r\na=fmtp:126 profile-level-id=42e01f;level-asymmetry-allowed=1;packetization-mode=1\r\na=fmtp:97 profile-level-id=42e01f;level-asymmetry-allowed=1\r\na=ice-pwd:8ea68aacf7aae85290bb23d4a28ecd1c\r\na=ice-ufrag:a352ba38\r\na=mid:sdparta_1\r\na=rtcp-fb:120 nack\r\na=rtcp-fb:120 nack pli\r\na=rtcp-fb:120 ccm fir\r\na=rtcp-fb:126 nack\r\na=rtcp-fb:126 nack pli\r\na=rtcp-fb:126 ccm fir\r\na=rtcp-fb:97 nack\r\na=rtcp-fb:97 nack pli\r\na=rtcp-fb:97 ccm fir\r\na=rtcp-mux\r\na=rtpmap:120 VP8/90000\r\na=rtpmap:126 H264/90000\r\na=rtpmap:97 H264/90000\r\na=setup:actpass\r\na=ssrc:2879101888 cname:{34994f2f-dcfa-4ca4-8fe1-c58428c49a36}\r\n"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:27.517Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/p6gllsbhqk9nke0njgfss64h0b
+
+SEND:{"data":{"type":"answer","sdp":"v=0\r\no=- 3655117047 3655117047 IN IP4 0.0.0.0\r\ns=Kurento Media Server\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=fingerprint:sha-256 72:34:26:18:05:B1:DC:86:C4:4A:FD:DB:66:77:4F:D7:36:DC:A6:69:A0:08:C0:2A:AF:3F:A7:97:A6:9C:A2:3F\r\na=ice-options:trickle\r\na=msid-semantic:WMS *\r\na=group:BUNDLE sdparta_0 sdparta_1\r\nm=audio 1 RTP/SAVPF 109 0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=rtpmap:109 opus/48000/2\r\na=rtpmap:0 PCMU/8000\r\na=sendonly\r\na=mid:sdparta_0\r\na=rtcp-mux\r\na=setup:active\r\na=ssrc:192609971 cname:user876425577@host-930053d4\r\na=ice-ufrag:Od0+\r\na=ice-pwd:P39afS2AxKdNzgngJREfMA\r\na=fingerprint:sha-256 3D:E6:49:21:78:86:B8:4C:F3:6A:99:72:9C:DC:EF:BB:46:7D:02:AC:D0:6F:78:94:6C:42:C6:5C:05:FE:1F:C8\r\nm=video 1 RTP/SAVPF 120\r\nb=AS:500\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=rtpmap:120 VP8/90000\r\na=rtcp-fb:120 nack\r\na=rtcp-fb:120 nack pli\r\na=rtcp-fb:120 ccm fir\r\na=sendonly\r\na=fmtp:120 max-fs=12288;max-fr=60\r\na=mid:sdparta_1\r\na=rtcp-mux\r\na=setup:active\r\na=ssrc:1281061891 cname:user876425577@host-930053d4\r\na=ice-ufrag:Od0+\r\na=ice-pwd:P39afS2AxKdNzgngJREfMA\r\na=fingerprint:sha-256 3D:E6:49:21:78:86:B8:4C:F3:6A:99:72:9C:DC:EF:BB:46:7D:02:AC:D0:6F:78:94:6C:42:C6:5C:05:FE:1F:C8\r\n"},"name":"mixer","id":"answer"}
+
+SEND:{"data":{"sdpMLineIndex":1,"candidate":"candidate:1 1 UDP 2013266431 192.168.88.2 58472 typ host","sdpMid":"sdparta_1"},"name":"mixer","id":"iceCandidate"}
+
+SEND:{"data":{"sdpMLineIndex":0,"candidate":"candidate:1 1 UDP 2013266431 192.168.88.2 58472 typ host","sdpMid":"sdparta_0"},"name":"mixer","id":"iceCandidate"}
+
+SEND:{"data":{"sdpMLineIndex":0,"candidate":"candidate:1 2 UDP 2013266430 192.168.88.2 43341 typ host","sdpMid":"sdparta_0"},"name":"mixer","id":"iceCandidate"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:0 1 UDP 2122252543 192.168.88.250 55576 typ host","sdpMid":"","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:0 2 UDP 2122252542 192.168.88.250 58242 typ host","sdpMid":"","sdpMLineIndex":0},"name":"mixer"}
+
+SEND:{"data":{"sdpMLineIndex":0,"candidate":"candidate:2 1 UDP 1677721855 146.193.224.179 58472 typ srflx raddr 192.168.88.2 rport 58472","sdpMid":"sdparta_0"},"name":"mixer","id":"iceCandidate"}
+
+SEND:{"data":{"sdpMLineIndex":1,"candidate":"candidate:1 2 UDP 2013266430 192.168.88.2 43341 typ host","sdpMid":"sdparta_1"},"name":"mixer","id":"iceCandidate"}
+
+SEND:{"data":{"sdpMLineIndex":1,"candidate":"candidate:2 1 UDP 1677721855 146.193.224.179 58472 typ srflx raddr 192.168.88.2 rport 58472","sdpMid":"sdparta_1"},"name":"mixer","id":"iceCandidate"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:0 1 UDP 2122252543 192.168.88.250 40683 typ host","sdpMid":"","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:0 2 UDP 2122252542 192.168.88.250 44101 typ host","sdpMid":"","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:1 1 UDP 1686052863 146.193.224.179 55576 typ srflx raddr 192.168.88.250 rport 55576","sdpMid":"","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:1 2 UDP 1686052862 146.193.224.179 58242 typ srflx raddr 192.168.88.250 rport 58242","sdpMid":"","sdpMLineIndex":0},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:1 1 UDP 1686052863 146.193.224.179 40683 typ srflx raddr 192.168.88.250 rport 40683","sdpMid":"","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"iceCandidate","candidate":{"candidate":"candidate:1 2 UDP 1686052862 146.193.224.179 44101 typ srflx raddr 192.168.88.250 rport 44101","sdpMid":"","sdpMLineIndex":1},"name":"mixer"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"b0e1250b-4dea-41c3-83c9-ffa4f30fe2d0":{"start":"2015-10-29T14:17:29.820Z","end":"2015-10-29T14:17:30.558Z","content":"<b style=\"color:yellow;position:absolute;top:16px;left:335px\">a3AFi0vjeKF4I4rz<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:28.649Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/e5ouhks2970jg87jdknf7klpao
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"ec3ff1ca-cd85-424a-82bb-a08a3b4fdee9":{"start":"2015-10-29T14:17:32.087Z","end":"2015-10-29T14:17:33.899Z","content":"<b style=\"color:yellow;position:absolute;top:164px;left:27px\">eftqEvqN9DTYfAD8<\/b>"},"id":"content"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","bc306fb3-e9ac-40f4-95a1-b7afd8040fad":{"start":"2015-10-29T14:17:32.213Z","end":"2015-10-29T14:17:33.750Z","content":"<b style=\"color:yellow;position:absolute;top:209px;left:319px\">Jo7bzIDRdC8h7rep<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:29.853Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/ionrhefhknhce775jgs8vm72ae
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:30.983Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/daa0gi6jc3herbf683l16u2b5b
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"fa0bc060-f74c-4113-89b9-bfb9bdd3247b":{"start":"2015-10-29T14:17:34.326Z","end":"2015-10-29T14:17:35.023Z","content":"<b style=\"color:yellow;position:absolute;top:387px;left:364px\">B0IVAniNZ9FZyQbh<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:32.087Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/r11h8jt5k5uueje7bhfkum4u3k
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"b5bc2cd9-5544-425d-b574-62207947848b":{"start":"2015-10-29T14:17:34.265Z","end":"2015-10-29T14:17:35.126Z","content":"<b style=\"color:yellow;position:absolute;top:339px;left:294px\">m3mGtDWfG9kmy0ho<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:33.221Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/68sqd66mnh5vg0vjlq978ubkeq
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"e5467e0d-8c2c-42b5-9525-e9fbedf32d6e":{"start":"2015-10-29T14:17:36.119Z","end":"2015-10-29T14:17:37.689Z","content":"<b style=\"color:yellow;position:absolute;top:220px;left:164px\">GSRxecfLGVZzNuVp<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:34.347Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/imea15hdnqql61pkkps6elrv6j
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"c56da08a-f260-4bb4-a8ca-dc885d910527":{"start":"2015-10-29T14:17:36.269Z","end":"2015-10-29T14:17:37.871Z","content":"<b style=\"color:yellow;position:absolute;top:280px;left:198px\">QK2aRMypsKMpJwE9<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:35.438Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/3gvgh5jtnip7qkp4d0jqikmk8k
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"cda5f030-ac48-4bb2-beb0-4432c61a4a05":{"start":"2015-10-29T14:17:37.248Z","end":"2015-10-29T14:17:38.751Z","content":"<b style=\"color:yellow;position:absolute;top:68px;left:387px\">Ibp4iELpNsK3qWip<\/b>"},"id":"content"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","662f3fc5-b5bd-4ce5-827e-eb922a7e3011":{"start":"2015-10-29T14:17:37.979Z","end":"2015-10-29T14:17:39.663Z","content":"<b style=\"color:yellow;position:absolute;top:147px;left:47px\">ItmgdDLPHuj0RhpF<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:36.632Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/m8ce38cib2df6934ou24av10d3
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","5d3b0a1b-ea6d-446a-a274-4d06b140fba3":{"start":"2015-10-29T14:17:38.632Z","end":"2015-10-29T14:17:40.226Z","content":"<b style=\"color:yellow;position:absolute;top:173px;left:85px\">PZ8mjUJxHpKTK5FO<\/b>"}}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:37.729Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/89r2mouk5m3uj11thknpt7gg8m
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","1e7de701-d25b-4f0b-bd0d-5790476cfa13":{"start":"2015-10-29T14:17:39.707Z","end":"2015-10-29T14:17:41.327Z","content":"<b style=\"color:yellow;position:absolute;top:24px;left:278px\">wyPtL57HVL6EmvPS<\/b>"}}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"a74e345b-c121-471b-9bf9-f14c892ec754":{"start":"2015-10-29T14:17:40.918Z","end":"2015-10-29T14:17:42.718Z","content":"<b style=\"color:yellow;position:absolute;top:255px;left:302px\">XeLXzpKD7knRa0Xx<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:38.849Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/pbvjhllln9cajqoj655a29nvo8
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"f05ff667-8454-427f-8465-b710244a4b91":{"start":"2015-10-29T14:17:41.580Z","end":"2015-10-29T14:17:42.775Z","content":"<b style=\"color:yellow;position:absolute;top:46px;left:208px\">nnJKIgW0O4xE9VQW<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:39.937Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/v8n2pbgo9bah8pi0n8li8n5li1
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"9c85e1a1-339a-4e03-bf65-af99bd63fe12":{"start":"2015-10-29T14:17:43.144Z","end":"2015-10-29T14:17:44.943Z","content":"<b style=\"color:yellow;position:absolute;top:224px;left:270px\">wFZq8yQh6FNWFxDY<\/b>"},"id":"content"}
+
+SEND:{"id":"rec","56322a2c5600de0992caeabd":["2015-10-29T14:16:10.778Z","2015-10-29T14:17:41.064Z"]}
+REC: http://127.0.0.1:7676/repository_servlet/oqvf6nv1qu05t360jmicmusp4m
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"id":"content","d48db6df-8c85-4759-b169-02ab287448cd":{"start":"2015-10-29T14:17:43.727Z","end":"2015-10-29T14:17:45.034Z","content":"<b style=\"color:yellow;position:absolute;top:48px;left:263px\">IIOj2mlvCgCySrPc<\/b>"}}
+!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!
+Disconnected
+RECORDER STOP!
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"12c05fd9-5e83-482a-a0e3-a5a29e5d1b98":{"start":"2015-10-29T14:17:45.654Z","end":"2015-10-29T14:17:46.245Z","content":"<b style=\"color:yellow;position:absolute;top:107px;left:300px\">MVlm8scLdx0vJs0z<\/b>"},"id":"content"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"c78e0f4d-e4c1-4fc2-a65c-2825ecb37825":{"start":"2015-10-29T14:17:48.331Z","end":"2015-10-29T14:17:49.774Z","content":"<b style=\"color:yellow;position:absolute;top:119px;left:208px\">aDvHdDUkRAITLcWF<\/b>"},"id":"content"}
+
+RECV: {"id":"content","offset":0}
+
+SEND:{"9fc06cf3-9bf7-417b-93f3-9686711b420a":{"start":"2015-10-29T14:17:50.469Z","end":"2015-10-29T14:17:52.408Z","content":"<b style=\"color:yellow;position:absolute;top:125px;left:204px\">uJQAXh1OrhineFiF<\/b>"},"id":"content"}
+!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!
+connectToRoom(55dfb9055600de728662da4a)
+PROPS: { "name" : "Nikhil Bhatt" }
+PROPS: { "name" : "Henrique Rocha", "photo" : "7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg" }
+GET 7f2dd755-c99c-41d1-9db6-9507ed174d6f/400585_105569182979740_201278618_n.jpg
+[[31merror[0m] - application - 
+
+! @6o17nnpg4 - Internal server error, for (GET) [/ws/room/55dfb9055600de728662da4a] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[KurentoServerException: Object '75ee62cb-ecba-499c-8bf6-7a55fe862b92_kurento.MediaPipeline' not found (Code:40101, Type:null)]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:265) ~[play_2.11-2.4.1.jar:2.4.1]
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:191) ~[play_2.11-2.4.1.jar:2.4.1]
+	at play.api.GlobalSettings$class.onError(GlobalSettings.scala:179) [play_2.11-2.4.1.jar:2.4.1]
+	at play.core.j.JavaGlobalSettingsAdapter.play$core$j$JavaGlobalSettingsAdapter$$super$onError(JavaGlobalSettingsAdapter.scala:36) [play_2.11-2.4.1.jar:2.4.1]
+	at play.core.j.JavaGlobalSettingsAdapter$$anonfun$onError$2.apply(JavaGlobalSettingsAdapter.scala:36) [play_2.11-2.4.1.jar:2.4.1]
+	at play.core.j.JavaGlobalSettingsAdapter$$anonfun$onError$2.apply(JavaGlobalSettingsAdapter.scala:36) [play_2.11-2.4.1.jar:2.4.1]
+	at scala.Option.getOrElse(Option.scala:121) [scala-library-2.11.6.jar:na]
+	at play.core.j.JavaGlobalSettingsAdapter.onError(JavaGlobalSettingsAdapter.scala:36) [play_2.11-2.4.1.jar:2.4.1]
+	at play.api.http.GlobalSettingsHttpErrorHandler.onServerError(HttpErrorHandler.scala:94) [play_2.11-2.4.1.jar:2.4.1]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$messageReceived$1.applyOrElse(PlayDefaultUpstreamHandler.scala:182) [play-netty-server_2.11-2.4.1.jar:2.4.1]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$messageReceived$1.applyOrElse(PlayDefaultUpstreamHandler.scala:180) [play-netty-server_2.11-2.4.1.jar:2.4.1]
+	at scala.runtime.AbstractPartialFunction.apply(AbstractPartialFunction.scala:36) [scala-library-2.11.6.jar:na]
+	at scala.util.Failure$$anonfun$recover$1.apply(Try.scala:215) [scala-library-2.11.6.jar:na]
+	at scala.util.Try$.apply(Try.scala:191) [scala-library-2.11.6.jar:na]
+	at scala.util.Failure.recover(Try.scala:215) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.Future$$anonfun$recover$1.apply(Future.scala:324) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.Future$$anonfun$recover$1.apply(Future.scala:324) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.6.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.executeScheduled(Execution.scala:109) [play-iteratees_2.11-2.4.1.jar:2.4.1]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:71) [play-iteratees_2.11-2.4.1.jar:2.4.1]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.6.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:40) [akka-actor_2.11-2.3.11.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:397) [akka-actor_2.11-2.3.11.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.6.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.6.jar:na]
+Caused by: org.kurento.client.internal.server.KurentoServerException: Object '75ee62cb-ecba-499c-8bf6-7a55fe862b92_kurento.MediaPipeline' not found (Code:40101, Type:null)
+	at org.kurento.client.internal.transport.jsonrpc.RomClientJsonRpcClient.sendRequest(RomClientJsonRpcClient.java:269) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.transport.jsonrpc.RomClientJsonRpcClient.invoke(RomClientJsonRpcClient.java:137) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.transport.jsonrpc.RomClientJsonRpcClient.invoke(RomClientJsonRpcClient.java:84) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.client.RomManager.invoke(RomManager.java:152) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.client.RemoteObject.invoke(RemoteObject.java:172) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.client.RemoteObjectInvocationHandler.invoke(RemoteObjectInvocationHandler.java:155) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.client.RemoteObjectInvocationHandler.internalInvoke(RemoteObjectInvocationHandler.java:122) ~[kurento-client-6.1.0.jar:6.1.0]
+	at org.kurento.client.internal.client.DefaultInvocationHandler.invoke(DefaultInvocationHandler.java:24) ~[kurento-client-6.1.0.jar:6.1.0]
+	at com.sun.proxy.$Proxy30.getName(Unknown Source) ~[na:na]
+	at main.Room.join(Room.java:110) ~[classes/:na]
+	at controllers.WSController$1.onReady(WSController.java:45) ~[classes/:na]
+	at play.core.j.JavaWebSocket$$anonfun$webSocketWrapper$1$$anonfun$apply$1$$anonfun$apply$3$$anonfun$apply$4.apply(JavaWebSocket.scala:71) ~[play_2.11-2.4.1.jar:2.4.1]
+	at play.core.j.JavaWebSocket$$anonfun$webSocketWrapper$1$$anonfun$apply$1$$anonfun$apply$3$$anonfun$apply$4.apply(JavaWebSocket.scala:45) ~[play_2.11-2.4.1.jar:2.4.1]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$messageReceived$5.apply(PlayDefaultUpstreamHandler.scala:179) ~[play-netty-server_2.11-2.4.1.jar:2.4.1]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$messageReceived$5.apply(PlayDefaultUpstreamHandler.scala:170) ~[play-netty-server_2.11-2.4.1.jar:2.4.1]
+	at scala.util.Success$$anonfun$map$1.apply(Try.scala:236) ~[scala-library-2.11.6.jar:na]
+	at scala.util.Try$.apply(Try.scala:191) [scala-library-2.11.6.jar:na]
+	at scala.util.Success.map(Try.scala:236) ~[scala-library-2.11.6.jar:na]
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:235) ~[scala-library-2.11.6.jar:na]
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:235) ~[scala-library-2.11.6.jar:na]
+	... 14 common frames omitted
+java.lang.IllegalArgumentException: unsupported message type: class org.jboss.netty.handler.codec.http.DefaultHttpResponse
+	at org.jboss.netty.channel.socket.nio.SocketSendBufferPool.acquire(SocketSendBufferPool.java:52)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.write0(AbstractNioWorker.java:193)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.writeFromTaskLoop(AbstractNioWorker.java:151)
+	at org.jboss.netty.channel.socket.nio.AbstractNioChannel$WriteTask.run(AbstractNioChannel.java:315)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.processTaskQueue(AbstractNioSelector.java:391)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:315)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:89)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)

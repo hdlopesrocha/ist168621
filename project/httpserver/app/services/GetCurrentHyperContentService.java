@@ -23,7 +23,8 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 	private User caller;
 	private ObjectId groupId;
 	private Date time;
-
+	private static final int PRELOAD_TIME = 5000;
+	
 	public GetCurrentHyperContentService(String callerId, String groupId, Date time) {
 		this.caller = User.findById(new ObjectId(callerId));
 		this.groupId = new ObjectId(groupId);
@@ -39,28 +40,26 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 	@Override
 	public List<HyperContent> dispatch() throws BadRequestException {
 		List<HyperContent> ret = new ArrayList<HyperContent>();
-		{
-			FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId)
-					.append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
+		Date later = new Date(time.getTime() + PRELOAD_TIME);
+		
+		
+	
+		FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId)
+				.append("end", new Document("$gte", time)).append("start", new Document("$lt", later)));
 
-			Iterator<Document> it = iter.iterator();
+		Iterator<Document> it = iter.iterator();
 
-			while (it.hasNext()) {
-				Document doc = it.next();
-				ret.add(HyperContent.load(doc));
-			}
+		while (it.hasNext()) {
+			Document doc = it.next();
+			ret.add(HyperContent.load(doc));
 		}
-		{
-			FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gt", time))).limit(5);
-			Document doc = iter.first();
-			if(doc!=null){
-				ret.add(HyperContent.load(doc));
-			}
-		}
+		
+	
 	
 		return ret;
 	}
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 

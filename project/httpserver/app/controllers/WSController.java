@@ -31,6 +31,52 @@ import services.ListTagsService;
 
 public class WSController extends Controller {
 
+	public void sendContent(UserSession usession){
+		long offset = usession.getTimeOffset();
+		Date time = new Date(new Date().getTime() - offset);
+		JSONArray jArr = new JSONArray();
+		JSONObject jRoot = new JSONObject();
+		
+		
+		
+		for (int i = 0; i < 8; ++i) {
+			int s = Tools.RANDOM.nextInt(5000);
+			int e = s + Tools.RANDOM.nextInt(5000) + 500;
+
+			int mt = Tools.RANDOM.nextInt(400);
+			int ml = Tools.RANDOM.nextInt(400);
+
+			Date start = new Date(time.getTime() + s);
+			Date end = new Date(time.getTime() + e);
+
+			String eventId = UUID.randomUUID().toString();
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(start));
+				jObj.put("type", "start");
+				jObj.put("id", eventId);
+				jObj.put("content", "<b style=\"color:yellow;position:absolute;top:" + mt
+						+ "px;left:" + ml + "px\">" + Tools.getRandomString(16) + "</b>");
+				jArr.put(jObj);
+			}
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(end));
+				jObj.put("type", "end");
+				jObj.put("id", eventId);
+				jArr.put(jObj);
+			}
+
+		}
+
+		jRoot.put("id", "content");
+		jRoot.put("data", jArr);
+		usession.sendMessage(jRoot.toString());
+	
+	}
+	
+	
+	
 	public WebSocket<String> connectToRoom(String groupId) {
 		final String uid = session("uid");
 
@@ -64,16 +110,14 @@ public class WSController extends Controller {
 						}
 						usession.sendMessages(null, 1);
 
-						
-						
 						try {
-							ListTagsService service  = new ListTagsService(uid, groupId);
-							List<TimeTag> tags =  service.execute();
-							for(TimeTag tag  : tags){
+							ListTagsService service = new ListTagsService(uid, groupId);
+							List<TimeTag> tags = service.execute();
+							for (TimeTag tag : tags) {
 								JSONObject msg = new JSONObject();
 								msg.put("id", "tag");
 								msg.put("data", tag.toJson());
-								room.sendMessage(msg.toString());								
+								room.sendMessage(msg.toString());
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -81,8 +125,8 @@ public class WSController extends Controller {
 							e.printStackTrace();
 						}
 
-						
-						
+						sendContent(usession);
+
 						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
@@ -159,6 +203,7 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setRealtime(userId);
+											sendContent(usession);
 										}
 									}).start();
 								}
@@ -168,34 +213,14 @@ public class WSController extends Controller {
 									usession.setPlay(play);
 								}
 									break;
-								case "content" : {
-									long offset = args.getLong("offset");
-									Date time = new Date(new Date().getTime() - offset);
+								case "content": {
+									// System.out.println("content");
 
-									int s = Tools.RANDOM.nextInt(2000)+500;
-									int e = s +Tools.RANDOM.nextInt(2000)+500;
-									
-									int mt = Tools.RANDOM.nextInt(400);
+									sendContent(usession);
 
-									int ml = Tools.RANDOM.nextInt(400);
-									
-									Date start = new Date(time.getTime() - offset+s);
-									Date end = new Date(time.getTime() - offset+e);
-
-									JSONObject jArr = new JSONObject();
-									JSONObject jObj = new JSONObject();
-									jObj.put("start", Tools.FORMAT.format(start));
-									jObj.put("end", Tools.FORMAT.format(end));
-									jObj.put("content", "<b style=\"color:yellow;position:absolute;top:"+mt+"px;left:"+ml+"px\">"+Tools.getRandomString(16)+"</b>");
-									jArr.put(UUID.randomUUID().toString(), jObj);
-									jArr.put("id", "content");
-									usession.sendMessage(jArr.toString());
-									
-									
-									
 								}
 									break;
-									
+
 								case "historic": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;
@@ -204,6 +229,7 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setHistoric(userId, args.getLong("offset"));
+											sendContent(usession);
 										}
 									}).start();
 								}
