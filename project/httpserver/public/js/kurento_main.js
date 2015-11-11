@@ -34,10 +34,9 @@ var Kurento = new (function() {
 
 	this.ws = null;
 
-	this.getContent = function(offset){
+	this.getContent = function(){
 		Kurento.ws.send(JSON.stringify({
 			id: "content",
-			offset: offset
 		}));
 	}
 	
@@ -170,7 +169,7 @@ var Kurento = new (function() {
 						}
 					break;
 					case 'content':
-						contentArrivedCallback(message);
+						contentArrivedCallback(message.data);
 					break;
 					case 'rec':
 						delete message.id;

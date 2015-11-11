@@ -1,0 +1,56 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           	controllers.Application.index()
+GET     /pubsub                         controllers.Application.pubsub()
+GET     /group/:groupId             	controllers.Application.group(groupId : String)
+GET     /template                       controllers.Application.template()
+GET     /stream/*path	 		       	controllers.Application.stream(path : String)
+GET		/join/:gid/:token				controllers.Application.join(gid : String, token : String)
+
+
+GET     /api/user/search	        	controllers.Rest.search()
+GET     /api/user/list              	controllers.Rest.listUsers()
+POST    /api/user/update            	controllers.Rest.updateUser()
+POST    /api/user/password	        	controllers.Rest.changePassword()
+GET		/api/user/get/:user_id			controllers.Rest.getUser(user_id : String)
+POST	/api/user/login					controllers.Rest.login()
+POST	/api/user/register				controllers.Rest.register()
+GET		/api/user/logout				controllers.Rest.logout()
+
+GET     /api/relation/del/:user_id		controllers.Rest.denyRelation(user_id : String)
+GET     /api/relation/add/:user_id		controllers.Rest.acceptRelation(user_id : String)
+GET     /api/relation/requests			controllers.Rest.listRelationRequests()
+GET     /api/relation/list				controllers.Rest.listRelations()
+
+
+GET		/api/invite/create/:gid			controllers.Rest.createGroupInvite(gid : String)
+GET		/api/invite/get/:gid			controllers.Rest.getGroupInvite(gid : String)
+GET		/api/invite/delete/:gid			controllers.Rest.deleteGroupInvite(gid : String)
+GET		/api/invite/join/:gid/:token	controllers.Rest.joinGroupInvite(gid : String, token : String)
+
+
+GET		/api/group/create				controllers.Rest.createGroup()
+GET		/api/group/list					controllers.Rest.listGroups()
+GET		/api/group/members/:groupId		controllers.Rest.listGroupMembers(groupId : String)
+GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(groupId : String)
+GET		/api/group/properties/:groupId	controllers.Rest.listGroupMembersProperties(groupId : String)
+GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
+GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
+POST 	/api/group/sdp/:key				controllers.Rest.postSdp(key : String)
+POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String, token : String)
+
+POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
+GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)
+
+
+GET		/photo/*id						controllers.Rest.getPhoto(id : String)
+GET		/file/*id						controllers.Rest.getFile(id : String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               	controllers.Assets.versioned(path="/public", file: Asset)
+
+
+GET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)
