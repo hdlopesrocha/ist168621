@@ -2,6 +2,8 @@ body {
    padding-top: 70px;
 }
 
+.ui-datepicker{ z-index: 9999 !important;}
+
 .vis-custom-time {
 	pointer-events: none;
 }

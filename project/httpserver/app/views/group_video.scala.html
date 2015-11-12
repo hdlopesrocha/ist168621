@@ -162,7 +162,7 @@
 			</div>
 			<div id="collapse5" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<input class="hasDatepicker" name="timeSlider" id="timeSlider" value="" type="text"/>
+					<input  id="timeSlider" value="" type="text">
 				</div>
 			</div>
 		</div>
@@ -216,10 +216,9 @@
 		setGroup(true);
 	    $('#tagList').btsListFilter('#searchinput', {itemChild: 'span'});
 
-		$("#timeSlider").datetimepicker({
-			addSliderAccess: true,
-			sliderAccessArgs: { touchonly: false }
-		});
+
+		$('#timeSlider').datetimepicker();
+
 	    
 		$("#messagesPanel").scroll(function() {
 			if($("#messagesPanel").scrollTop()==0){
