@@ -181,7 +181,8 @@
 	var current_offset=0;
 	var rendered_intervals = {};
 	var oldestMsg = null;
-
+	var localContent = [];
+	
 	// TIMELINE
 	var items = new vis.DataSet({
 		type : {
@@ -406,7 +407,6 @@
 		$("#saveButton").addClass("hidden");
 	}
 
-	var localContent = [];
 	
 	function addContent(key, content){
 		var html = '<div style="position: absolute;z-index:99;width:100%;height:100%;" id="content'+key+'">';
