@@ -6,6 +6,11 @@ function switchTab(classTab, classBtn, number) {
 			"btn btn-primary");
 }
 
+function friendlyTime(str){
+	var t = new Date(str);
+	return t.toLocaleString("pt-PT");
+}
+
 $(document).ready(function() {
 	$('[data-toggle=offcanvas]').click(function() {
 		$('.row-offcanvas').toggleClass('active');

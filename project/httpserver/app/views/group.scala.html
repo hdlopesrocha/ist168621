@@ -3,7 +3,6 @@
 	<script type="text/javascript" src="/assets/this/js/adapter.js"></script>
 	<script type="text/javascript" src="/assets/this/js/signaling.js"></script>
 	<script type="text/javascript" src="/assets/this/js/kurento_main.js"></script>
-	<script type="text/javascript" src="/assets/this/js/webrtc.js"></script>
 	<script type="text/javascript" src="/assets/this/js/hyper_timeline.js"></script>
 	<script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 
@@ -22,18 +21,11 @@
 		</div>
 	</div>
 	<script>
-	
-
-	function friendlyTime(str){
-		var t = new Date(str);
-		return t.toLocaleString("pt-PT");
-	}
-	
-	function onKurentoOpen(){
-		console.log("WebSocket Ok!");
-	}
-	
-	
+		
+		function onKurentoOpen(){
+			console.log("WebSocket Ok!");
+		}
+		
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
@@ -57,12 +49,12 @@
 				for ( var i in array) {
 					var uid = array[i].uid;
 					var name = array[i].name;
-
+	
 					var del_button = "<i style='color:red' onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
 					var onclick = 'onclick=\'select_user("'+uid+'")\'';
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
-
+	
 					$("#membersList").append(
 						'<div class="media" '+ onclick+'>'+
 						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
