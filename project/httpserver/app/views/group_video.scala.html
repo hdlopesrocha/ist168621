@@ -422,9 +422,7 @@
 	
 	
 	function renderContent(){
-		console.log("localContent.len = "+localContent.length);
-		var currentTime = new Date().getTime() - current_offset;
-		
+		var currentTime = new Date().getTime() - current_offset;		
 		while(localContent.length!=0){
 			var entry = localContent[0]; 
 			var time = new Date(entry.time);
