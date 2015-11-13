@@ -1,7 +1,17 @@
 body {
-   padding-top: 70px;
+   /*padding-top: 70px;*/
 }
 
+.typeahead { z-index: 1051; }
+
+.navbar-center
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+}
 .ui-datepicker{ z-index: 9999 !important;}
 
 .vis-custom-time {
