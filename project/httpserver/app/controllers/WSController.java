@@ -212,15 +212,14 @@ public class WSController extends Controller {
 									boolean play = args.getBoolean("data");
 									usession.setPlay(play);
 								}
-									break;
+								break;
 								case "content": {
 									// System.out.println("content");
 
 									sendContent(usession);
 
 								}
-									break;
-
+								break;
 								case "historic": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;
@@ -233,8 +232,7 @@ public class WSController extends Controller {
 										}
 									}).start();
 								}
-
-									break;
+								break;
 								case "addTag": {
 									System.out.println("CREATE TAGS");
 

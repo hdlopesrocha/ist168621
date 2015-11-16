@@ -64,6 +64,8 @@ public class Application extends Controller {
     	}    	
     }
     
+    
+  
     public Result join(String groupId, String token) throws ServiceException{
     	JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
 		if(service.execute()){			
