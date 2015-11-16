@@ -72,6 +72,11 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
+	public Result searchOnGroup(String gid){
+		String query = request().getQueryString("query");
+		return ok("[{\"name\":\"Tag\",\"type\":\"tag\"},{\"name\":\"Text\",\"type\":\"text\"}]");
+	}
+	
 	public Result addGroupMember(String groupId, String memberId) {
 		if (session("uid") != null) {
 			System.out.println("ADDMEMBER: " + groupId + " | " + memberId);

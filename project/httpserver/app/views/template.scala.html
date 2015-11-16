@@ -44,11 +44,11 @@
 			<ul class="nav navbar-nav navbar-left">
 				<li class="active"><a href="/">Home</a></li>
 			</ul>
-			<div class="nav navbar-nav navbar-center">
+			<div class="nav navbar-nav navbar-center collapse" id="searchNav">
 				<form class="navbar-form" role="search">
 					<div class="form-group">
 						<div class="input-group">
-							<input type="text" class="form-control typeahead" placeholder="Search"  id="searchText">
+							<input type="text" class="form-control" placeholder="Search"  id="searchText" data-provide="typeahead">
 							<span class="input-group-addon">
 								<i class="glyphicon glyphicon-search"></i>
 							</span>
@@ -68,50 +68,10 @@
 	
 	<script type="text/javascript">
 	
-	var substringMatcher = function(strs) {
-		  return function findMatches(q, cb) {
-		    var matches, substringRegex;
 
-		    // an array that will be populated with substring matches
-		    matches = [];
-
-		    // regex used to determine if a string contains the substring `q`
-		    substrRegex = new RegExp(q, 'i');
-
-		    // iterate through the pool of strings and for any string that
-		    // contains the substring `q`, add it to the `matches` array
-		    $.each(strs, function(i, str) {
-		      if (substrRegex.test(str)) {
-		        matches.push(str);
-		      }
-		    });
-
-		    cb(matches);
-		  };
-		};
-
-		var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-		  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-		  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-		  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-		  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-		  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-		  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-		  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-		  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-		];
-	
 	
 			$( document ).ready(function() {
-				$('#searchText').typeahead({
-					  hint: true,
-					  highlight: true,
-					  minLength: 1
-					},
-					{
-					  name: 'states',
-					  source: substringMatcher(states)
-					});
+	
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
 						document.location = document.location;

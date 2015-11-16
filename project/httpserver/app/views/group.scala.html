@@ -21,12 +21,45 @@
 	</div>
 	<script>
 		
+			function searchFunction(query,process){
+				$.get( "/api/group/search/@groupId?query="+query, function( data ) {
+					console.log(data);
+					process(JSON.parse(data));
+				});				
+			}
+		
+			function matcherFunction(item){
+				// should return true when the server will return the correct results
+				return item.name.toLowerCase().indexOf(this.query.toLowerCase()) >= 0;
+			}
+			
+			
+			function textFunction(item){
+				return JSON.stringify(item);
+			}
+			
+			
+			function displayFunction(item){
+				var obj = JSON.parse(item);
+				return (obj.type=="tag"? "<i class='fa fa-tag'></i>" : "<i class='fa fa-font'></i>" )+ " " + obj.name;
+			}
+			
+	
 		function onKurentoOpen(){
 			console.log("WebSocket Ok!");
 		}
 		
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
+			
+			$('#searchNav').show();
+			$('#searchText').typeahead({ 
+				source: searchFunction,
+				displayText: textFunction,
+				highlighter:displayFunction,
+				matcher:matcherFunction
+			});	
+			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
 			Kurento.start("@groupId",onKurentoOpen ,participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived, onContentArrived);
