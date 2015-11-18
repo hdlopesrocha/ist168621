@@ -1,0 +1,5 @@
+22 -> ssh
+80/2080 -> play
+443/2443 -> play (ssl)
+3080 -> apache
+8888 -> kurento
