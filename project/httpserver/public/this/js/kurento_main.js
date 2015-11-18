@@ -36,14 +36,23 @@ var Kurento = new (function() {
 
 	this.getContent = function(){
 		Kurento.ws.send(JSON.stringify({
-			id: "content",
+			id: "getContent",
 		}));
 	}
 	
 	
+	this.createContent = function(start,end,content){
+		Kurento.ws.send(JSON.stringify({
+			id : "createContent",
+			start: start,
+			end: end,
+			content: content
+		}));
+	}
+	
 	this.createTag = function(time,title,content){
 		Kurento.ws.send(JSON.stringify({
-			id : "addTag",
+			id : "createTag",
 			time: time,
 			title: title,
 			content: content
@@ -53,7 +62,7 @@ var Kurento = new (function() {
 
 	this.receiveMore = function(end,len){
 		Kurento.ws.send(JSON.stringify({
-			id : "getmsg",
+			id : "getMessages",
 			len: len,
 			end: end
 		}));
@@ -69,21 +78,21 @@ var Kurento = new (function() {
 	
 	this.receiveRealtime = function(userId){
 		Kurento.ws.send(JSON.stringify({
-			id : "realtime",
+			id : "setRealtime",
 			uid:userId
 		}));
 	}
 	
 	this.sendMessage = function(text){
 		Kurento.ws.send(JSON.stringify({
-			id: "msg",
+			id: "createMessage",
 			data: text
 		}));
 	}
 	
 	this.receiveHistoric = function(userId,offset){
 		Kurento.ws.send(JSON.stringify({
-			id : "historic",
+			id : "setHistoric",
 			uid:userId,
 			offset:offset
 		}));

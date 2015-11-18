@@ -17,14 +17,16 @@ import models.User;
 /**
  * The Class AuthenticateUserService.
  */
-public class ListTagsService extends Service<List<TimeTag>> {
+public class SearchTagsService extends Service<List<TimeTag>> {
 
 	private User caller;
 	private ObjectId gid;
+	private String query;
 
-	public ListTagsService(String email,String gid) {
+	public SearchTagsService(String email,String gid,String query) {
 		this.caller = email!=null?User.findByEmail(email):null;
 		this.gid = new ObjectId(gid);
+		this.query = query;
 	}
 
 	/*
@@ -34,14 +36,8 @@ public class ListTagsService extends Service<List<TimeTag>> {
 	 */
 	@Override
 	public List<TimeTag> dispatch() {
-		FindIterable<Document> iter = TimeTag.getCollection().find(new Document("gid",gid));
-		List<TimeTag> tags = new ArrayList<TimeTag>();
-		for (Document doc : iter ) {
-			TimeTag tag = TimeTag.load(doc);
-			tags.add(tag);	
-		}
-
-		return tags;
+	
+		return TimeTag.search(gid,query);
 	}
 
 	@Override

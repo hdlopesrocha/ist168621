@@ -1,5 +1,11 @@
 var Signaling = (function(){
 
+	this.searchInsideGroup = function(gid,query,success){
+		$.get( "/api/group/search/"+gid+"?query="+query, function( data ) {
+			success(data);
+		});	
+	}
+	
 	this.postIceCandidate = function(gid,token,sdp,success,error){
 		$.ajax({
 			type : "post",

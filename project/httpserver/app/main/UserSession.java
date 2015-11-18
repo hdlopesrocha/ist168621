@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.ConnectionState;
@@ -38,12 +40,14 @@ import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 
 import exceptions.ServiceException;
+import models.HyperContent;
 import models.Interval;
 import models.Message;
 import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
+import services.GetCurrentHyperContentService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
 
@@ -144,6 +148,87 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
+	public String getContent() throws ServiceException{
+		long offset = getTimeOffset();
+		Date time = new Date(new Date().getTime() - offset);
+		JSONArray jArr = new JSONArray();
+		JSONObject jRoot = new JSONObject();
+		
+		GetCurrentHyperContentService service = new GetCurrentHyperContentService(user.getId().toString(), room.getGroupId(), time);
+		List<HyperContent> result =  service.execute();
+		
+		for(HyperContent content : result){
+			String eventId = content.getId().toString();
+			
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(content.getStart()));
+				jObj.put("type", "start");
+				jObj.put("id", eventId);
+				jObj.put("content", content.getContent());
+				jArr.put(jObj);
+			}
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(content.getEnd()));
+				jObj.put("type", "end");
+				jObj.put("id", eventId);
+				jArr.put(jObj);
+			}
+		}
+		
+
+		jRoot.put("id", "content");
+		jRoot.put("data", jArr);
+		return jRoot.toString();
+	
+	}
+	
+	
+	private String getContentTest(){
+		long offset = getTimeOffset();
+		Date time = new Date(new Date().getTime() - offset);
+		JSONArray jArr = new JSONArray();
+		JSONObject jRoot = new JSONObject();
+		
+		
+		
+		for (int i = 0; i < 8; ++i) {
+			int s = Tools.RANDOM.nextInt(5000);
+			int e = s + Tools.RANDOM.nextInt(5000) + 500;
+
+			int mt = Tools.RANDOM.nextInt(400);
+			int ml = Tools.RANDOM.nextInt(400);
+
+			Date start = new Date(time.getTime() + s);
+			Date end = new Date(time.getTime() + e);
+
+			String eventId = UUID.randomUUID().toString();
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(start));
+				jObj.put("type", "start");
+				jObj.put("id", eventId);
+				jObj.put("content", "<b style=\"color:yellow;position:absolute;top:" + mt
+						+ "px;left:" + ml + "px\">" + Tools.getRandomString(16) + "</b>");
+				jArr.put(jObj);
+			}
+			{
+				JSONObject jObj = new JSONObject();
+				jObj.put("time", Tools.FORMAT.format(end));
+				jObj.put("type", "end");
+				jObj.put("id", eventId);
+				jArr.put(jObj);
+			}
+
+		}
+
+		jRoot.put("id", "content");
+		jRoot.put("data", jArr);
+		return jRoot.toString();
+	
+	}
+	
 	public HubPort getCompositePort() {
 		String name = user.getId().toString();
 		for (MediaObject port : room.getComposite().getChilds()) {
@@ -347,6 +432,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				player = null;
 			}
 		}
+		timeOffset = 0l;
 
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);

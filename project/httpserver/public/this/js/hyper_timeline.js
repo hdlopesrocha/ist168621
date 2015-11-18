@@ -9,7 +9,7 @@ var HyperTimeline = new (function() {
 	this.real_time = true;
 
 	
-	this.create = function(items,divId, current, realtime) {
+	this.create = function(items,divId, historic, realtime) {
 		function followerWorker(timeline){
 	    	if(timeline.timeRunning){
 				var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
@@ -91,8 +91,8 @@ var HyperTimeline = new (function() {
 			
 			this.hyper_offset = new Date().getTime() -date.getTime();
 			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
-			this.real_time = false ;
-			current(this.hyper_offset);
+			HyperTimeline.real_time = false ;
+			historic(this.hyper_offset);
 
 		}
 		
@@ -104,9 +104,9 @@ var HyperTimeline = new (function() {
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	this.hyper_offset = new Date().getTime() - avg;
 				if (this.hyper_offset < 0){
-					var wasRealtime = this.real_time;
+					var wasRealtime = HyperTimeline.real_time;
 		    		
-					this.real_time = true;
+					HyperTimeline.real_time = true;
 					this.moveTo(new Date());
 					this.hyper_offset = 0;
 			    	
@@ -115,8 +115,8 @@ var HyperTimeline = new (function() {
 			    	}
 				}
 				else {
-					this.real_time = false ;
-					current(this.hyper_offset);
+					HyperTimeline.real_time = false ;
+					historic(this.hyper_offset);
 				}
 	    	}
 	    });

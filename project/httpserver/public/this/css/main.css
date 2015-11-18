@@ -4,6 +4,30 @@ body {
 
 .typeahead { z-index: 1051; }
 
+.caption > * {
+		color:white;
+		background-color: rgba(0,0,0,0.5);
+	
+}
+
+.caption{
+	position: absolute;
+	width:100%;
+	text-align: center;
+	bottom:0px;
+	display:inline-block;
+}
+
+
+.overlay-content {
+	
+	position: absolute;
+	z-index:99;
+	width:100%;
+	height:100%;
+	display:inline-block;
+	
+}
 .navbar-center
 {
     position: absolute;

@@ -34,9 +34,9 @@
 			</div>
 
 
-			<div class="panel-heading">
+			<div class="panel-heading" data-toggle="collapse" data-target="#collapse3">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse3">TIMELINE</a>
+					TIMELINE
 				</h4>
 			</div>
 			<div id="collapse3" class="panel-collapse collapse in">
@@ -63,13 +63,10 @@
 					<i class="fa fa-users"></i>
 				</button>
 			</div>
-			<div class="panel-heading">
+			<div class="panel-heading" data-toggle="collapse" data-target="#collapse0">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse0">VIDEO</a>
+					VIDEO
 				</h4>
-
-
-
 			</div>
 			<div id="collapse0" class="panel-collapse collapse in">
 				<div class="panel-body">
@@ -88,11 +85,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="panel panel-primary">
-			<div class="panel-heading">
+			<div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse1">USERS</a>
+					USERS
 				</h4>
 			</div>
 			<div id="collapse1" class="panel-collapse collapse in">
@@ -106,11 +103,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="panel panel-info">
-			<div class="panel-heading">
+			<div class="panel-heading" data-toggle="collapse" data-target="#collapse2">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse2">RECENT CHAT HISTORY</a>
+					RECENT CHAT HISTORY
 				</h4>
 			</div>
 			<div id="collapse2" class="panel-collapse collapse in">
@@ -133,41 +130,48 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
+</div>
+<div class="row">
+	<div class="col-md-6">
 		<div class="panel panel-primary">
-			<div class="panel-heading">
+			<div class="panel-heading" data-toggle="collapse" data-target="#collapse5">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse5">CONTENT EDITOR</a>
+					CONTENT EDITOR
 				</h4>
 			</div>
 			<div id="collapse5" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<form class="form">
+					<form class="form" >
 						<label>Begin:</label>
 						<div class='input-group date' id='datetimepicker1'>
-							<input type='text' class="form-control" /> <span
+							<input type='text' class="form-control" id="contentStart"/> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
 						</div>
 						<label>End:</label>
 						<div class='input-group date' id='datetimepicker2'>
-							<input type='text' class="form-control" /> <span
+							<input type='text' class="form-control" id="contentEnd"/> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
 						</div>
 						<div class="form-group">
-							<label for="comment">Comment:</label>
-							<textarea class="form-control" rows="5" id="comment"></textarea>
+							<label for="comment">Content:</label>
+							<textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
 	
 						</div>
+						<div class="form-group">
+							<label for="comment">Is Caption:</label>
+							<input type="checkbox" id="contentCaption" checked/>
+						</div>
+						
 						<div class="pull-right">
-							<button type="button" class="btn btn-danger">
+							<button type="button" class="btn btn-danger" onclick="clearContent()">
 							  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear
 							</button>
 							
-							<button type="button" class="btn btn-success">
+							<button type="button" class="btn btn-success" onclick="createContent()">
 							  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
 							</button>
 						</div>
@@ -179,7 +183,7 @@
 			</div>
 		</div>
 	</div>
-
+<!--  XXXTAG
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -203,6 +207,7 @@
 			</div>
 		</div>
 	</div>
+		-->
 
 </div>
 
@@ -241,6 +246,38 @@
 			}
 		}
 
+		function clearContent(){
+			$("#contentText").val("");
+		}
+		
+		function parseTime(time){
+			var vec = time.match(/\d+/g); 
+			console.log(vec);
+			return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
+			
+		}
+		
+		
+		function createContent(){
+			
+			
+			var start = parseTime($("#contentStart").val());
+			var end = parseTime($("#contentEnd").val());
+			console.log(start,end);
+			
+			var content = $("#contentText").val();
+			if($("#contentCaption").is(':checked')){
+				content = '<div class="caption"><span>'+content+'</span></div>';
+			}
+			
+			
+			
+			if(content!=undefined && content.length>0){
+				Kurento.createContent(start.toISOString(),end.toISOString(),content);
+			}
+			clearContent();
+		}
+		
 		function receiveMore() {
 			if (oldestMsg) {
 				Kurento.receiveMore(oldestMsg, 1);
@@ -250,19 +287,20 @@
 		$(document).ready(
 				function() {
 					setGroup(true);
+					/* XXXTAG
 					$('#tagList').btsListFilter('#searchinput', {
 						itemChild : 'span'
 					});
-
+					*/
 					// $('#datetimepicker1').data("DateTimePicker")(function(){
 					$('#datetimepicker1').datetimepicker({
-						format : 'DD/MM/YYYY hh:mm:ss',
+						format : 'DD/MM/YYYY HH:mm:ss',
 						defaultDate : new Date(),
 						showTodayButton:true
 
 					});
 					$('#datetimepicker2').datetimepicker({
-						format : 'DD/MM/YYYY hh:mm:ss',
+						format : 'DD/MM/YYYY HH:mm:ss',
 						defaultDate : new Date(new Date().getTime()+1000),
 						showTodayButton:true
 
@@ -293,12 +331,14 @@
 								Kurento.receiveHistoric(selected_user,
 										current_offset);
 								real_time = false;
+
 							}, function() {
 
 								console.log("REALTIME");
 								// realtime request
 								Kurento.receiveRealtime(selected_user);
 								real_time = true;
+
 							});
 				});
 
@@ -364,12 +404,13 @@
 		function tagArrived(id, time, title, content) {
 			console.log(id, time, title, content);
 			timeline.loadTag(id, time, title, content);
-
+/*
+//XXXTAG
 			$("#tagList").append(
 					'<div class="list-group-item" onclick="jumpTo(\'' + time
 							+ '\')"><h5><span>' + title + '</span> <small>'
 							+ friendlyTime(time) + '</small></h5></div>')
-
+*/
 		}
 
 		function messageArrived(userId, time, text, name, mid, seq) {
@@ -429,7 +470,7 @@
 			});
 		}
 
-		function select_user(userId) {
+		function selectUser(userId) {
 			selected_user = userId;
 			setGroup(false);
 			if (real_time) {
@@ -456,7 +497,7 @@
 		}
 
 		function addContent(key, content) {
-			var html = '<div style="position: absolute;z-index:99;width:100%;height:100%;" id="content'
+			var html = '<div class="overlay-content" id="content'
 					+ key + '">';
 			html += content;
 			html += '</div>';
@@ -495,10 +536,7 @@
 
 			}
 			if (localContent.length == 0) {
-				// no content, keep calm (I must check if this is really needed, I must avoid polling the server)
-				setTimeout(function() {
-					Kurento.getContent();
-				}, 100);
+				// no content, keep calm 
 			} else if (!hasStarts) {
 				// all events started, check if others may start
 				Kurento.getContent();
@@ -513,6 +551,7 @@
 
 		function onContentArrived(content) {
 			$("#mainVideoContent").html("");
+			console.log(content);
 			localContent = content.sort(function(a, b) {
 				return new Date(a.time).getTime() - new Date(b.time).getTime();
 			});

@@ -2,7 +2,9 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -91,6 +93,19 @@ public class TimeTag {
 
 	private TimeTag() {
 
+	}
+	
+	
+	public static List<TimeTag> search(ObjectId gid, String query) {
+		Pattern regex = Pattern.compile(query);		
+		Document doc = new Document("gid",gid).append("title", regex);
+		FindIterable<Document> iter = getCollection().find(doc);
+		Iterator<Document> i = iter.iterator();
+		List<TimeTag> ret = new ArrayList<TimeTag>();
+		while(i.hasNext()){
+			ret.add(TimeTag.load(i.next()));
+		}
+		return ret;
 	}
 	
 

@@ -40,12 +40,11 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 	@Override
 	public List<HyperContent> dispatch() throws BadRequestException {
 		List<HyperContent> ret = new ArrayList<HyperContent>();
-		Date later = new Date(time.getTime() + PRELOAD_TIME);
 		
 		
 	
 		FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId)
-				.append("end", new Document("$gte", time)).append("start", new Document("$lt", later)));
+				.append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
 
 		Iterator<Document> it = iter.iterator();
 
@@ -55,7 +54,16 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 		}
 		
 	
-	
+		FindIterable<Document> iter2 = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gte", time))).limit(5);
+
+		Iterator<Document> it2 = iter2.iterator();
+
+		while (it2.hasNext()) {
+			Document doc = it2.next();
+			ret.add(HyperContent.load(doc));
+		}
+		
+		
 		return ret;
 	}
 

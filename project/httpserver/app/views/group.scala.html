@@ -21,28 +21,40 @@
 	</div>
 	<script>
 		
-			function searchFunction(query,process){
-				$.get( "/api/group/search/@groupId?query="+query, function( data ) {
-					console.log(data);
-					process(JSON.parse(data));
-				});				
+		function searchFunction(query,process){
+			Signaling.searchInsideGroup("@groupId",query, function( data ) {
+				console.log(data);
+				process(JSON.parse(data));
+			});
+			
+						
+		}
+	
+		function updaterFunction(item){
+			if(item.type=="tag"){
+				jumpTo(item.time);
 			}
+			console.log(item);
+			return item;
+		}
 		
-			function matcherFunction(item){
-				// should return true when the server will return the correct results
-				return item.name.toLowerCase().indexOf(this.query.toLowerCase()) >= 0;
+		function matcherFunction(item){
+			return true;
+		}
+		
+		
+		function textFunction(item){
+			return item.title;
+		}
+		
+		
+		function displayFunction(item){
+			if(item.type=="tag"){
+				return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
+			}else {
+				return "<i class='fa fa-font'></i> " + item.name;
 			}
-			
-			
-			function textFunction(item){
-				return JSON.stringify(item);
-			}
-			
-			
-			function displayFunction(item){
-				var obj = JSON.parse(item);
-				return (obj.type=="tag"? "<i class='fa fa-tag'></i>" : "<i class='fa fa-font'></i>" )+ " " + obj.name;
-			}
+		}
 			
 	
 		function onKurentoOpen(){
@@ -57,7 +69,8 @@
 				source: searchFunction,
 				displayText: textFunction,
 				highlighter:displayFunction,
-				matcher:matcherFunction
+				matcher:matcherFunction,
+				updater:updaterFunction
 			});	
 			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
@@ -83,7 +96,7 @@
 					var name = array[i].name;
 	
 					var del_button = "<i style='color:red' onclick='del_user_group(\""+ uid+ "\")' class='fa fa-times'></i>";
-					var onclick = 'onclick=\'select_user("'+uid+'")\'';
+					var onclick = 'onclick=\'selectUser("'+uid+'")\'';
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
 	

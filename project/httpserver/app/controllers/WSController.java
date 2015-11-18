@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -25,66 +24,19 @@ import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.WebSocket;
+import services.CreateHyperContentService;
 import services.CreateMessageService;
 import services.CreateTagService;
 import services.ListTagsService;
 
 public class WSController extends Controller {
 
-	public void sendContent(UserSession usession){
-		long offset = usession.getTimeOffset();
-		Date time = new Date(new Date().getTime() - offset);
-		JSONArray jArr = new JSONArray();
-		JSONObject jRoot = new JSONObject();
-		
-		
-		
-		for (int i = 0; i < 8; ++i) {
-			int s = Tools.RANDOM.nextInt(5000);
-			int e = s + Tools.RANDOM.nextInt(5000) + 500;
-
-			int mt = Tools.RANDOM.nextInt(400);
-			int ml = Tools.RANDOM.nextInt(400);
-
-			Date start = new Date(time.getTime() + s);
-			Date end = new Date(time.getTime() + e);
-
-			String eventId = UUID.randomUUID().toString();
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(start));
-				jObj.put("type", "start");
-				jObj.put("id", eventId);
-				jObj.put("content", "<b style=\"color:yellow;position:absolute;top:" + mt
-						+ "px;left:" + ml + "px\">" + Tools.getRandomString(16) + "</b>");
-				jArr.put(jObj);
-			}
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(end));
-				jObj.put("type", "end");
-				jObj.put("id", eventId);
-				jArr.put(jObj);
-			}
-
-		}
-
-		jRoot.put("id", "content");
-		jRoot.put("data", jArr);
-		usession.sendMessage(jRoot.toString());
-	
-	}
-	
-	
-	
 	public WebSocket<String> connectToRoom(String groupId) {
-		final String uid = session("uid");
-
-		System.out.println("connectToRoom(" + groupId + ")");
+		final String userId = session("uid");
 		return new WebSocket<String>() {
 			public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
 				Room room = Global.manager.getRoom(groupId);
-				User user = User.findById(new ObjectId(uid));
+				User user = User.findById(new ObjectId(userId));
 				try {
 					if (room != null) {
 						// Join room
@@ -111,7 +63,7 @@ public class WSController extends Controller {
 						usession.sendMessages(null, 1);
 
 						try {
-							ListTagsService service = new ListTagsService(uid, groupId);
+							ListTagsService service = new ListTagsService(userId, groupId);
 							List<TimeTag> tags = service.execute();
 							for (TimeTag tag : tags) {
 								JSONObject msg = new JSONObject();
@@ -125,8 +77,11 @@ public class WSController extends Controller {
 							e.printStackTrace();
 						}
 
-						sendContent(usession);
-
+						try {
+							usession.sendMessage(usession.getContent());
+						}catch(ServiceException e){
+							e.printStackTrace();
+						}
 						
 						// When the socket is closed.
 						in.onClose(new Callback0() {
@@ -149,12 +104,11 @@ public class WSController extends Controller {
 								String id = args.getString("id");
 
 								switch (id) {
-								case "msg": {
+								case "createMessage": {
 									String data = args.getString("data");
 
 									CreateMessageService messageService = new CreateMessageService(groupId,
 											user.getId().toString(), data, null);
-									System.out.println("XXXXXXXXXXXXXXXXXXX");
 									try {
 										Message message = messageService.execute();
 										JSONArray messagesArray = new JSONArray();
@@ -172,7 +126,7 @@ public class WSController extends Controller {
 									// send msg
 								}
 									break;
-								case "getmsg": {
+								case "getMessages": {
 									int len = args.getInt("len");
 									Long end = args.getLong("end");
 									usession.sendMessages(end, len);
@@ -195,7 +149,7 @@ public class WSController extends Controller {
 									usession.addCandidate(candidate, name);
 								}
 									break;
-								case "realtime": {
+								case "setRealtime": {
 									System.out.println("REALTIME");
 									String userId = args.has("uid") ? args.getString("uid") : null;
 
@@ -203,7 +157,11 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setRealtime(userId);
-											sendContent(usession);
+											try {
+												usession.sendMessage(usession.getContent());
+											}catch(ServiceException e){
+												e.printStackTrace();
+											}
 										}
 									}).start();
 								}
@@ -213,14 +171,15 @@ public class WSController extends Controller {
 									usession.setPlay(play);
 								}
 								break;
-								case "content": {
-									// System.out.println("content");
-
-									sendContent(usession);
-
-								}
+								case "getContent": {
+									try {
+										usession.sendMessage(usession.getContent());
+									}catch(ServiceException e){
+										e.printStackTrace();
+									}								}
 								break;
-								case "historic": {
+								
+								case "setHistoric": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;
 
@@ -228,14 +187,15 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setHistoric(userId, args.getLong("offset"));
-											sendContent(usession);
-										}
+											try {
+												usession.sendMessage(usession.getContent());
+											}catch(ServiceException e){
+												e.printStackTrace();
+											}										}
 									}).start();
 								}
 								break;
-								case "addTag": {
-									System.out.println("CREATE TAGS");
-
+								case "createTag": {
 									try {
 										Date time = Tools.FORMAT.parse(args.getString("time"));
 										String title = args.getString("title");
@@ -248,18 +208,35 @@ public class WSController extends Controller {
 										msg.put("data", tag.toJson());
 										room.sendMessage(msg.toString());
 
-									} catch (JSONException e) {
+									} catch (ServiceException | JSONException | ParseException e) {
 										e.printStackTrace();
-									} catch (ParseException e) {
-										e.printStackTrace();
-									} catch (ServiceException e) {
-										e.printStackTrace();
-									}
+									} 
 
 								}
 
-									break;
+								break;
+								case "createContent": {
+									
+									try {
+										Date start = Tools.FORMAT.parse(args.getString("start"));
+										Date end = Tools.FORMAT.parse(args.getString("end"));
+										String content = args.getString("content");
+										CreateHyperContentService service = new CreateHyperContentService(userId,groupId,start,end,content);
+										service.execute();
+									} catch (ServiceException | ParseException e) {
+										e.printStackTrace();
+									} 
+									
+									// System.out.println("content");
+									for(UserSession us : room.getParticipants()){
+										try {
+											us.sendMessage(us.getContent());
+										}catch(ServiceException e){
+											e.printStackTrace();
+										}									}
 
+								}
+								break;
 								default:
 									break;
 								}
