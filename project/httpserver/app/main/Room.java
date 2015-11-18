@@ -81,6 +81,9 @@ public class Room implements Closeable {
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
+
+	
+	
 	
 	public void sendMessage(final String string) {
 		for(UserSession user : participants.values()){

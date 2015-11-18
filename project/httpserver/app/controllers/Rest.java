@@ -19,6 +19,7 @@ import models.KeyValueFile;
 import models.KeyValuePair;
 import models.Membership;
 import models.Relation;
+import models.TimeTag;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -49,10 +50,10 @@ import services.PostSdpService;
 import services.PublishService;
 import services.RemoveGroupMemberService;
 import services.SearchGroupCandidatesService;
+import services.SearchTagsService;
 import services.SearchUserService;
 import services.SubscribeService;
 import services.UpdateUserService;
-import views.html.defaultpages.error;
 
 public class Rest extends Controller {
 
@@ -72,9 +73,28 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	public Result searchOnGroup(String gid){
+	public Result searchOnGroup(String groupId){
 		String query = request().getQueryString("query");
-		return ok("[{\"name\":\"Tag\",\"type\":\"tag\"},{\"name\":\"Text\",\"type\":\"text\"}]");
+		
+		JSONArray array = new JSONArray();
+		try {
+			SearchTagsService service = new SearchTagsService(session("uid"), groupId, query);
+			List<TimeTag> tags = service.execute();
+			
+			
+			for (TimeTag tag : tags) {
+				JSONObject msg = tag.toJson();
+				msg.put("type", "tag");
+				array.put(msg);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return ok(array.toString());
 	}
 	
 	public Result addGroupMember(String groupId, String memberId) {
