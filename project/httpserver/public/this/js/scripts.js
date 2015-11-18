@@ -6,21 +6,32 @@ function switchTab(classTab, classBtn, number) {
 			"btn btn-primary");
 }
 
-function friendlyTime(str){
+function friendlyTime(str) {
 	var t = new Date(str);
 	return t.toLocaleString("pt-PT");
 }
 
-$(document).ready(function() {
-	$('[data-toggle=offcanvas]').click(function() {
-		$('.row-offcanvas').toggleClass('active');
-	});
-	
-	$('.btn-toggle').click(
-			function() {
-				$(this).find('.btn').toggleClass('active').toggleClass(
-						'btn-default').toggleClass('btn-primary');
-			}
-	);
+function parseQuery(qstr) {
+	var query = {};
+	var a = qstr.substr(1).split('&');
+	for (var i = 0; i < a.length; i++) {
+		var b = a[i].split('=');
+		query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+	}
+	return query;
+}
 
-});
+$(document).ready(
+	function() {
+		$('[data-toggle=offcanvas]').click(function() {
+			$('.row-offcanvas').toggleClass('active');
+		});
+	
+		$('.btn-toggle').click(
+				function() {
+					$(this).find('.btn').toggleClass('active').toggleClass(
+							'btn-default').toggleClass('btn-primary');
+				});
+	
+	}
+);
