@@ -1,0 +1,17 @@
+- Why don't we choose XMPP? Multi tabs, reauth on refresh, what strategies?
+- Organization and entities
+- Own protocol description
+- Tests on recording, local download, preload and part switching
+- Kurento switch, use the same stream for everything
+- Kurento mixing audio, video and screensharing (Chrome VS firefox)
+- Kurento record, splits, part switch, audio glitch, no seek
+- Kurento without repo, ability to ffmpeg, although is slow, tests with WEBM and MP4
+- Kurento repo, scalable but limited due to impossibility to ffmpeg it (no fastforward)
+- Kurento limitations on content manipulation, no ffmpeg, no individual soundmeter
+- messenger, websockets vs pubsub (extra http connection)
+- tags, how they work
+- content overlay, how is achieved in the UI? how to synchronize?
+- content overlay DB queries, why dont preload in time and preload in N samples (avoid polling)?
+
+
+
