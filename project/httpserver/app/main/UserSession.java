@@ -180,6 +180,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		jRoot.put("id", "content");
 		jRoot.put("data", jArr);
+		jRoot.put("more", service.hasMore());
 		return jRoot.toString();
 	
 	}

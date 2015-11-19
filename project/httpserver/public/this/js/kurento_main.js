@@ -178,7 +178,7 @@ var Kurento = new (function() {
 						}
 					break;
 					case 'content':
-						contentArrivedCallback(message.data);
+						contentArrivedCallback(message.data,message.more);
 					break;
 					case 'rec':
 						delete message.id;
