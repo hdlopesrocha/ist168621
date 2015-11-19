@@ -549,7 +549,7 @@
 			}
 			if (localContent.length == 0) {
 				// no content, keep calm 
-			} else if (!hasStarts) {
+			} else if (!hasStarts) {	
 				if(moreContent){
 					// all events started, check if others may start
 					Kurento.getContent();
@@ -558,10 +558,12 @@
 				}
 			} else {
 				// wait for next event
-				var time = new Date(localContent[0].time);
-				setTimeout(function() {
-					renderContent();
-				}, time.getTime() - currentTime);
+				if(timeline.timeRunning){
+					var time = new Date(localContent[0].time);
+					setTimeout(function() {
+						renderContent();
+					}, time.getTime() - currentTime);
+				}
 			}
 		}
 
