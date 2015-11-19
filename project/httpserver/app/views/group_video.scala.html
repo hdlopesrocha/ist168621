@@ -31,7 +31,7 @@
 					</button>
 					
 					
-					<div class="btn btn-default btn-sm btn-success" data-toggle="modal" data-target="#timeQueryStringModal">
+					<div class="btn btn-info btn-success" onclick="setTimeLink()" data-toggle="modal" data-target="#timeQueryStringModal">
         				<i class="fa fa-link"></i>
         	      	</div>
 					
@@ -283,6 +283,10 @@
 				Kurento.createContent(start.toISOString(),end.toISOString(),content);
 			}
 			clearContent();
+		}
+		
+		function setTimeLink(){
+			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
 		
 		function receiveMore() {

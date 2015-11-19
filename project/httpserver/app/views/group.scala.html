@@ -59,6 +59,10 @@
 	
 		function onKurentoOpen(){
 			console.log("WebSocket Ok!");
+			var attrs = parseQuery(document.location.search);
+			if(attrs.time){
+				timeline.lookAt(new Date(attrs.time));
+			}
 		}
 		
 		$(document).ready(function() {
