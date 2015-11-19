@@ -230,6 +230,7 @@
 		var rendered_intervals = {};
 		var oldestMsg = null;
 		var localContent = [];
+		var moreContent = true;
 
 		// TIMELINE
 		var items = new vis.DataSet({
@@ -549,8 +550,12 @@
 			if (localContent.length == 0) {
 				// no content, keep calm 
 			} else if (!hasStarts) {
-				// all events started, check if others may start
-				Kurento.getContent();
+				if(moreContent){
+					// all events started, check if others may start
+					Kurento.getContent();
+				}else {
+					// there is no more content, the server may advertise more content later
+				}
 			} else {
 				// wait for next event
 				var time = new Date(localContent[0].time);
@@ -560,7 +565,8 @@
 			}
 		}
 
-		function onContentArrived(content) {
+		function onContentArrived(content,more) {
+			moreContent = more;
 			$("#mainVideoContent").html("");
 			console.log(content);
 			localContent = content.sort(function(a, b) {

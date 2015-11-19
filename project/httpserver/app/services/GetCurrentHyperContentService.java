@@ -23,8 +23,9 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 	private User caller;
 	private ObjectId groupId;
 	private Date time;
-	private static final int PRELOAD_TIME = 5000;
-	
+	private boolean hasMore;
+	private static final int PRELOAD_SIZE = 5;
+
 	public GetCurrentHyperContentService(String callerId, String groupId, Date time) {
 		this.caller = User.findById(new ObjectId(callerId));
 		this.groupId = new ObjectId(groupId);
@@ -53,21 +54,30 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 			ret.add(HyperContent.load(doc));
 		}
 		
-	
-		FindIterable<Document> iter2 = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gte", time))).limit(5);
+		FindIterable<Document> iter2 = HyperContent.getCollection().find(new Document("gid", groupId).append("start", new Document("$gte", time))).limit(PRELOAD_SIZE);
 
+		
+		
 		Iterator<Document> it2 = iter2.iterator();
-
+		int preloaded = 0;
 		while (it2.hasNext()) {
 			Document doc = it2.next();
 			ret.add(HyperContent.load(doc));
+			++preloaded;
 		}
+		hasMore = PRELOAD_SIZE==preloaded;
+			
+		
 		
 		
 		return ret;
 	}
 
 	
+	public boolean hasMore() {
+		return hasMore;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
