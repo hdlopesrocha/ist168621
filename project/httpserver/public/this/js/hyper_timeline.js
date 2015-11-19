@@ -142,7 +142,7 @@ var HyperTimeline = new (function() {
 	    timeline.timeRunning = true;
 	   
 	    timeline.togglePlayStop=function(play,stop){
-	    	if(this.timeRunning){
+	    	if(timeline.timeRunning){
 	    		stop();
 	    	}else {
 	    		play();
