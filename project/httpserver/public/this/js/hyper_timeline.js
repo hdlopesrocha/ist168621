@@ -191,7 +191,7 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.getMyTime = function(){
-	    	return new Date(new Date().getTime()-this.hyper_offset);
+	    	return timeline.getCustomTime("time");
 	    }
 
 		followerWorker(timeline);
