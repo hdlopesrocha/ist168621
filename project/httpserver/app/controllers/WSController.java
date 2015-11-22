@@ -104,8 +104,8 @@ public class WSController extends Controller {
 								case "createMessage": {
 									String data = args.getString("data");
 
-									CreateMessageService messageService = new CreateMessageService(groupId,
-											user.getId().toString(), data, null);
+									CreateMessageService messageService = new CreateMessageService(
+											user.getId().toString(),groupId, data, null);
 									try {
 										Message message = messageService.execute();
 										JSONArray messagesArray = new JSONArray();

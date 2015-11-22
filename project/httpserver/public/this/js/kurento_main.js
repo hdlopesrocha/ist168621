@@ -187,7 +187,7 @@ var Kurento = new (function() {
 					case 'msg':
 						for(var i in message.data){
 							var msg = message.data[i];
-							newMessageCallback(msg.uid,msg.time,msg.text,msg.name, msg.id, msg.seq);
+							newMessageCallback(msg.source,msg.time,msg.text,msg.name, msg.id, msg.seq);
 						}
 						
 						break;
