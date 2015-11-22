@@ -13,38 +13,39 @@
 						<i class="fa fa-pause"></i>
 					</button>
 					<button type="button" class="btn btn-primary"
-						onclick="jumpTo(new Date())" id="goToPresent">
+						onclick="timeline.setRealtime()" id="goToPresent">
 						<i class="fa fa-step-forward"></i>
 					</button>
 					<div class="form-group">
 						<label class="control-label" for="tagContent">Create TAG</label>
 						<div class="input-group">
 							<input type="text" class="form-control" id="tagTitle"
-								onkeydown="if(event.keyCode==13){addTag();}"> <span
-								class="input-group-addon success" onclick="addTag()"><i
-								class="fa fa-plus"></i></span>
+								onkeydown="if(event.keyCode==13){addTag();}" /> 
+							<span class="input-group-addon success" onclick="addTag()">
+								<i class="fa fa-plus"></i>
+							</span>
 						</div>
 					</div>
 					<button type="button" class="btn btn-primary hidden"
 						onclick="saveTags()" id="saveButton">
 						<i class="fa fa-floppy-o"></i>
 					</button>
-					
-					
-					<div class="btn btn-info btn-success" onclick="setTimeLink()" data-toggle="modal" data-target="#timeQueryStringModal">
-        				<i class="fa fa-link"></i>
-        	      	</div>
-					
-					
+
+
+					<div class="btn btn-info btn-success" onclick="setTimeLink()"
+						data-toggle="modal" data-target="#timeQueryStringModal">
+						<i class="fa fa-link"></i>
+					</div>
+
+
 				</div>
 
 			</div>
 
 
-			<div class="panel-heading" data-toggle="collapse" data-target="#collapse3">
-				<h4 class="panel-title">
-					TIMELINE
-				</h4>
+			<div class="panel-heading" data-toggle="collapse"
+				data-target="#collapse3">
+				<h4 class="panel-title">TIMELINE</h4>
 			</div>
 			<div id="collapse3" class="panel-collapse collapse in">
 
@@ -70,10 +71,9 @@
 					<i class="fa fa-users"></i>
 				</button>
 			</div>
-			<div class="panel-heading" data-toggle="collapse" data-target="#collapse0">
-				<h4 class="panel-title">
-					VIDEO
-				</h4>
+			<div class="panel-heading" data-toggle="collapse"
+				data-target="#collapse0">
+				<h4 class="panel-title">VIDEO</h4>
 			</div>
 			<div id="collapse0" class="panel-collapse collapse in">
 				<div class="panel-body">
@@ -94,10 +94,9 @@
 	</div>
 	<div class="col-md-6">
 		<div class="panel panel-primary">
-			<div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
-				<h4 class="panel-title">
-					USERS
-				</h4>
+			<div class="panel-heading" data-toggle="collapse"
+				data-target="#collapse1">
+				<h4 class="panel-title">USERS</h4>
 			</div>
 			<div id="collapse1" class="panel-collapse collapse in">
 				<div class="panel-body">
@@ -112,10 +111,9 @@
 	</div>
 	<div class="col-md-6">
 		<div class="panel panel-info">
-			<div class="panel-heading" data-toggle="collapse" data-target="#collapse2">
-				<h4 class="panel-title">
-					RECENT CHAT HISTORY
-				</h4>
+			<div class="panel-heading" data-toggle="collapse"
+				data-target="#collapse2">
+				<h4 class="panel-title">RECENT CHAT HISTORY</h4>
 			</div>
 			<div id="collapse2" class="panel-collapse collapse in">
 				<div class="panel-body" style="max-height: 336px; overflow: auto;"
@@ -127,8 +125,8 @@
 					<div class="input-group">
 						<input type="text" class="form-control"
 							placeholder="Enter Message" id="messageText"
-							onkeydown="if(event.keyCode==13){sendMessage();}" /> <span
-							class="input-group-btn">
+							onkeydown="if(event.keyCode==13){sendMessage();}" />
+						<span class="input-group-btn">
 							<button class="btn btn-info" type="button" id="sendMessageButton"
 								onclick="sendMessage()">SEND</button>
 						</span>
@@ -141,24 +139,23 @@
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-primary">
-			<div class="panel-heading" data-toggle="collapse" data-target="#collapse5">
-				<h4 class="panel-title">
-					CONTENT EDITOR
-				</h4>
+			<div class="panel-heading" data-toggle="collapse"
+				data-target="#collapse5">
+				<h4 class="panel-title">CONTENT EDITOR</h4>
 			</div>
 			<div id="collapse5" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<form class="form" >
+					<form class="form">
 						<label>Begin:</label>
 						<div class='input-group date' id='datetimepicker1'>
-							<input type='text' class="form-control" id="contentStart"/> <span
+							<input type='text' class="form-control" id="contentStart" /> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
 						</div>
 						<label>End:</label>
 						<div class='input-group date' id='datetimepicker2'>
-							<input type='text' class="form-control" id="contentEnd"/> <span
+							<input type='text' class="form-control" id="contentEnd" /> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -166,31 +163,29 @@
 						<div class="form-group">
 							<label for="comment">Content:</label>
 							<textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
-	
 						</div>
 						<div class="form-group">
-							<label for="comment">Is Caption:</label>
-							<input type="checkbox" id="contentCaption" checked/>
+							<label for="comment">Is Caption:</label> <input type="checkbox"
+								id="contentCaption" checked />
 						</div>
-						
 						<div class="pull-right">
-							<button type="button" class="btn btn-danger" onclick="clearContent()">
-							  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear
+							<button type="button" class="btn btn-danger"
+								onclick="clearContent()">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								Clear
 							</button>
-							
-							<button type="button" class="btn btn-success" onclick="createContent()">
-							  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+							<button type="button" class="btn btn-success"
+								onclick="createContent()">
+								<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+								Save
 							</button>
 						</div>
-						
 					</form>
 				</div>
-
-
 			</div>
 		</div>
 	</div>
-<!--  XXXTAG
+	<!--  XXXTAG
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -218,7 +213,7 @@
 
 </div>
 
-	<script>
+<script>
 		var group = true;
 		var selected_user = "@userId";
 		var real_time = true;
@@ -286,6 +281,8 @@
 			clearContent();
 		}
 		
+
+		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
@@ -336,22 +333,23 @@
 					})(jQuery);
 
 					timeline = HyperTimeline.create(items, "timeline",
-							function(offset) {
-								console.log("HISTORIC", offset);
-								// current request
-								current_offset = offset;
-								Kurento.receiveHistoric(selected_user,
-										current_offset);
-								real_time = false;
+						function(offset) {
+							console.log("HISTORIC", offset);
+							// current request
+							current_offset = offset;
+							Kurento.receiveHistoric(selected_user,
+									current_offset);
+							real_time = false;
 
-							}, function() {
+						}, function() {
 
-								console.log("REALTIME");
-								// realtime request
-								Kurento.receiveRealtime(selected_user);
-								real_time = true;
+							console.log("REALTIME");
+							// realtime request
+							Kurento.receiveRealtime(selected_user);
+							real_time = true;
 
-							});
+						}
+					);
 				});
 
 		function intervalRecorded(array) {
@@ -408,11 +406,7 @@
 			}
 		}
 
-		function jumpTo(date) {
-			timeline.lookAt(date);
-
-		}
-
+		
 		function tagArrived(id, time, title, content) {
 			console.log(id, time, title, content);
 			timeline.loadTag(id, time, title, content);
@@ -589,6 +583,5 @@
 			});
 			timeline.addTag(id, title);
 			$("#saveButton").removeClass("hidden");
-
 		}
 	</script>

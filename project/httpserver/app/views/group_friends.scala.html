@@ -3,7 +3,7 @@
 
 <div class="row">
 
-	<div class="col-md-8">
+	<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading">MEMBERS</div>
 			<div class="panel-body">
@@ -14,19 +14,28 @@
 			</div>
 		</div>
 	</div>
-		<div class="col-md-4">
+		<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading">INVITE</div>
 			<div class="panel-body">
-				<input type="text" id="invite"/>
-				<button id="createInvite" onclick="createInvite2()">Create</button>
-				<button id="createInvite" onclick="deleteInvite2()">Delete</button>
-
+		
+			<div class="input-group">
+				<input type="text" class="form-control" id="invite">
+                 <span class="input-group-addon" onclick="createInvite2()">
+                     Create
+                 </span>	
+  				<span class="input-group-addon" onclick="deleteInvite2()">
+					 Delete
+                 </span>
 			</div>
+			</div>
+			
+			
+			
 		</div>
 	</div>
 	
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading">ADD MEMBERS</div>
 			<div class="panel-body">

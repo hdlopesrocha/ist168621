@@ -64,6 +64,14 @@ public class Application extends Controller {
     	}    	
     }
     
+    public Result userProfile(String userId) {
+    	if(session("uid")!=null){
+    		return ok(views.html.profile.render(userId));
+    	} else {
+    		return ok(views.html.sign.render());
+    		
+    	}    	
+    }
     
   
     public Result join(String groupId, String token) throws ServiceException{

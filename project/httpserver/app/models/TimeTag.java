@@ -97,7 +97,7 @@ public class TimeTag {
 	
 	
 	public static List<TimeTag> search(ObjectId gid, String query) {
-		Pattern regex = Pattern.compile(query);		
+		Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);		
 		Document doc = new Document("gid",gid).append("title", regex);
 		FindIterable<Document> iter = getCollection().find(doc);
 		Iterator<Document> i = iter.iterator();

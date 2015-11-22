@@ -22,9 +22,9 @@
 	<script>
 		
 		function searchFunction(query,process){
-			Signaling.searchInsideGroup("@groupId",query, function( data ) {
-				console.log(data);
-				process(JSON.parse(data));
+			Signaling.searchInsideGroup("@groupId",query, function( array ) {
+				console.log(array);
+				process(array);
 			});
 			
 						
@@ -32,7 +32,7 @@
 	
 		function updaterFunction(item){
 			if(item.type=="tag"){
-				jumpTo(item.time);
+				timeline.setHistoric(item.time);
 			}
 			console.log(item);
 			return item;
@@ -52,7 +52,7 @@
 			if(item.type=="tag"){
 				return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 			}else {
-				return "<i class='fa fa-font'></i> " + item.name;
+				return "<i class='fa fa-font'></i> " + item.name ;
 			}
 		}
 			
@@ -61,7 +61,7 @@
 			console.log("WebSocket Ok!");
 			var attrs = parseQuery(document.location.search);
 			if(attrs.time){
-				timeline.lookAt(new Date(attrs.time));
+				timeline.setHistoric(new Date(attrs.time));
 			}
 		}
 		

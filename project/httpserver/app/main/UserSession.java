@@ -71,7 +71,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private Object playerLock = new Object();
 	private boolean play = true;
 	private long timeOffset = 0l;
-	
+
 	public long getTimeOffset() {
 		return timeOffset;
 	}
@@ -130,8 +130,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositePoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
-				endPoint.connect(compositePort/*, MediaType.AUDIO*/);
-				compositePort.connect(compositePoint/*, MediaType.AUDIO*/);
+				endPoint.connect(compositePort/* , MediaType.AUDIO */);
+				compositePort.connect(compositePoint/* , MediaType.AUDIO */);
 			}
 		});
 
@@ -148,88 +148,47 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
-	public String getContent() throws ServiceException{
+	public String getContent() {
 		long offset = getTimeOffset();
 		Date time = new Date(new Date().getTime() - offset);
 		JSONArray jArr = new JSONArray();
-		JSONObject jRoot = new JSONObject();
-		
-		GetCurrentHyperContentService service = new GetCurrentHyperContentService(user.getId().toString(), room.getGroupId(), time);
-		List<HyperContent> result =  service.execute();
-		
-		for(HyperContent content : result){
-			String eventId = content.getId().toString();
-			
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(content.getStart()));
-				jObj.put("type", "start");
-				jObj.put("id", eventId);
-				jObj.put("content", content.getContent());
-				jArr.put(jObj);
+		boolean hasMore = false;
+		try {
+			GetCurrentHyperContentService service = new GetCurrentHyperContentService(user.getId().toString(),
+					room.getGroupId(), time);
+			List<HyperContent> result = service.execute();
+			hasMore = service.hasMore();
+			for (HyperContent content : result) {
+				String eventId = content.getId().toString();
+
+				{
+					JSONObject jObj = new JSONObject();
+					jObj.put("time", Tools.FORMAT.format(content.getStart()));
+					jObj.put("type", "start");
+					jObj.put("id", eventId);
+					jObj.put("content", content.getContent());
+					jArr.put(jObj);
+				}
+				{
+					JSONObject jObj = new JSONObject();
+					jObj.put("time", Tools.FORMAT.format(content.getEnd()));
+					jObj.put("type", "end");
+					jObj.put("id", eventId);
+					jArr.put(jObj);
+				}
 			}
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(content.getEnd()));
-				jObj.put("type", "end");
-				jObj.put("id", eventId);
-				jArr.put(jObj);
-			}
-		}
-		
-
-		jRoot.put("id", "content");
-		jRoot.put("data", jArr);
-		jRoot.put("more", service.hasMore());
-		return jRoot.toString();
-	
-	}
-	
-	
-	private String getContentTest(){
-		long offset = getTimeOffset();
-		Date time = new Date(new Date().getTime() - offset);
-		JSONArray jArr = new JSONArray();
-		JSONObject jRoot = new JSONObject();
-		
-		
-		
-		for (int i = 0; i < 8; ++i) {
-			int s = Tools.RANDOM.nextInt(5000);
-			int e = s + Tools.RANDOM.nextInt(5000) + 500;
-
-			int mt = Tools.RANDOM.nextInt(400);
-			int ml = Tools.RANDOM.nextInt(400);
-
-			Date start = new Date(time.getTime() + s);
-			Date end = new Date(time.getTime() + e);
-
-			String eventId = UUID.randomUUID().toString();
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(start));
-				jObj.put("type", "start");
-				jObj.put("id", eventId);
-				jObj.put("content", "<b style=\"color:yellow;position:absolute;top:" + mt
-						+ "px;left:" + ml + "px\">" + Tools.getRandomString(16) + "</b>");
-				jArr.put(jObj);
-			}
-			{
-				JSONObject jObj = new JSONObject();
-				jObj.put("time", Tools.FORMAT.format(end));
-				jObj.put("type", "end");
-				jObj.put("id", eventId);
-				jArr.put(jObj);
-			}
-
+		} catch (ServiceException e) {
+			e.printStackTrace();
 		}
 
+		JSONObject jRoot = new JSONObject();
 		jRoot.put("id", "content");
 		jRoot.put("data", jArr);
+		jRoot.put("more", hasMore);
 		return jRoot.toString();
-	
+
 	}
-	
+
 	public HubPort getCompositePort() {
 		String name = user.getId().toString();
 		for (MediaObject port : room.getComposite().getChilds()) {
@@ -380,8 +339,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getName());
 
-					
-					player = new PlayerEndpoint.Builder(room.getMediaPipeline(),item.getUrl()).build();
+					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), item.getUrl()).build();
 					// player = new
 					// PlayerEndpoint.Builder(room.getMediaPipeline(),
 					// uri).build();
@@ -402,8 +360,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 							setHistoric(playUser, timeOffset);
 						}
 					});
-					player.connect(endPoint/*, MediaType.VIDEO*/);
-				//	player.connect(compositePoint /*, MediaType.AUDIO*/);
+					player.connect(endPoint/* , MediaType.VIDEO */);
+					// player.connect(compositePoint /*, MediaType.AUDIO*/);
 					if (play) {
 						player.play();
 					}
@@ -438,9 +396,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);
 		session.endPoint.connect(endPoint);
-//		compositePort.connect(compositePoint, MediaType.AUDIO);
+		// compositePort.connect(compositePoint, MediaType.AUDIO);
 
 		// mixerPort.connect(endPoint, MediaType.AUDIO);
+
 	}
 
 	public void processOffer(String description, String name) {
@@ -473,26 +432,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		}
 	}
 
-	public void sendMessages(Long end , int len){
-		ListMessagesService messagesService = new ListMessagesService(room.getGroupId(),end,len);
+	public void sendMessages(Long end, int len) {
+		ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), end, len);
 		JSONArray messagesArray = new JSONArray();
 		try {
 			List<Message> messages = messagesService.execute();
-			for(Message message : messages){
+			for (Message message : messages) {
 				JSONObject messageObj = message.toJsonObject();
-				
+
 				messagesArray.put(messageObj);
 			}
-			
+
 		} catch (ServiceException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		JSONObject msg = new JSONObject();
 		msg.put("id", "msg");
 		msg.put("data", messagesArray);
 		sendMessage(msg.toString());
 	}
-	
+
 }

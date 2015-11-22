@@ -77,12 +77,9 @@ public class WSController extends Controller {
 							e.printStackTrace();
 						}
 
-						try {
-							usession.sendMessage(usession.getContent());
-						}catch(ServiceException e){
-							e.printStackTrace();
-						}
+						usession.sendMessage(usession.getContent());
 						
+
 						// When the socket is closed.
 						in.onClose(new Callback0() {
 							public void invoke() {
@@ -157,11 +154,7 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setRealtime(userId);
-											try {
-												usession.sendMessage(usession.getContent());
-											}catch(ServiceException e){
-												e.printStackTrace();
-											}
+											usession.sendMessage(usession.getContent());
 										}
 									}).start();
 								}
@@ -170,15 +163,12 @@ public class WSController extends Controller {
 									boolean play = args.getBoolean("data");
 									usession.setPlay(play);
 								}
-								break;
+									break;
 								case "getContent": {
-									try {
-										usession.sendMessage(usession.getContent());
-									}catch(ServiceException e){
-										e.printStackTrace();
-									}								}
-								break;
-								
+									usession.sendMessage(usession.getContent());
+								}
+									break;
+
 								case "setHistoric": {
 									System.out.println("HISTORIC");
 									String userId = args.has("uid") ? args.getString("uid") : null;
@@ -187,14 +177,11 @@ public class WSController extends Controller {
 										@Override
 										public void run() {
 											usession.setHistoric(userId, args.getLong("offset"));
-											try {
-												usession.sendMessage(usession.getContent());
-											}catch(ServiceException e){
-												e.printStackTrace();
-											}										}
+											usession.sendMessage(usession.getContent());
+										}
 									}).start();
 								}
-								break;
+									break;
 								case "createTag": {
 									try {
 										Date time = Tools.FORMAT.parse(args.getString("time"));
@@ -210,33 +197,31 @@ public class WSController extends Controller {
 
 									} catch (ServiceException | JSONException | ParseException e) {
 										e.printStackTrace();
-									} 
+									}
 
 								}
 
-								break;
+									break;
 								case "createContent": {
-									
+
 									try {
 										Date start = Tools.FORMAT.parse(args.getString("start"));
 										Date end = Tools.FORMAT.parse(args.getString("end"));
 										String content = args.getString("content");
-										CreateHyperContentService service = new CreateHyperContentService(userId,groupId,start,end,content);
+										CreateHyperContentService service = new CreateHyperContentService(userId,
+												groupId, start, end, content);
 										service.execute();
 									} catch (ServiceException | ParseException e) {
 										e.printStackTrace();
-									} 
-									
+									}
+
 									// System.out.println("content");
-									for(UserSession us : room.getParticipants()){
-										try {
-											us.sendMessage(us.getContent());
-										}catch(ServiceException e){
-											e.printStackTrace();
-										}									}
+									for (UserSession us : room.getParticipants()) {
+										us.sendMessage(us.getContent());
+									}
 
 								}
-								break;
+									break;
 								default:
 									break;
 								}

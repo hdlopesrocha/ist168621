@@ -6,7 +6,6 @@ var HyperTimeline = new (function() {
 	
 	
 	
-	this.real_time = true;
 
 	
 	this.create = function(items,divId, historic, realtime) {
@@ -67,6 +66,7 @@ var HyperTimeline = new (function() {
         ];
 	    
 	    var timeline =  new vis.Timeline(main, items,groups, options);
+	    timeline.real_time = true;
 	    timeline.hyper_offset = 0;
 		timeline.addCustomTime(new Date(),"time");
 	  
@@ -86,14 +86,25 @@ var HyperTimeline = new (function() {
 		timeline.items = items;
 		
 		
-		timeline.lookAt = function(date){
+		timeline.setHistoric = function(date){
 			var date = new Date(date);
 			
 			this.hyper_offset = new Date().getTime() -date.getTime();
 			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
-			HyperTimeline.real_time = false ;
+			this.real_time = false ;
 			historic(this.hyper_offset);
 
+		}
+		
+		timeline.setRealtime = function(){
+			var wasRealtime = this.real_time;
+			this.real_time = true;
+			this.moveTo(new Date());
+			this.hyper_offset = 0;
+	    	
+	    	if(!wasRealtime){
+				realtime();
+	    	}
 		}
 		
 	    timeline.on('rangechanged', function(properties){
@@ -104,18 +115,10 @@ var HyperTimeline = new (function() {
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	this.hyper_offset = new Date().getTime() - avg;
 				if (this.hyper_offset < 0){
-					var wasRealtime = HyperTimeline.real_time;
-		    		
-					HyperTimeline.real_time = true;
-					this.moveTo(new Date());
-					this.hyper_offset = 0;
-			    	
-			    	if(!wasRealtime){
-						realtime();
-			    	}
+					this.setRealtime();
 				}
 				else {
-					HyperTimeline.real_time = false ;
+					this.real_time = false ;
 					historic(this.hyper_offset);
 				}
 	    	}
@@ -142,7 +145,7 @@ var HyperTimeline = new (function() {
 	    timeline.timeRunning = true;
 	   
 	    timeline.togglePlayStop=function(play,stop){
-	    	if(timeline.timeRunning){
+	    	if(this.timeRunning){
 	    		stop();
 	    	}else {
 	    		play();

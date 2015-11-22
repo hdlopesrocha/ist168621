@@ -50,6 +50,7 @@ import services.PostSdpService;
 import services.PublishService;
 import services.RemoveGroupMemberService;
 import services.SearchGroupCandidatesService;
+import services.SearchGroupService;
 import services.SearchTagsService;
 import services.SearchUserService;
 import services.SubscribeService;
@@ -73,15 +74,14 @@ public class Rest extends Controller {
 		return forbidden();
 	}
 
-	public Result searchOnGroup(String groupId){
+	public Result searchOnGroup(String groupId) {
 		String query = request().getQueryString("query");
-		
+
 		JSONArray array = new JSONArray();
 		try {
 			SearchTagsService service = new SearchTagsService(session("uid"), groupId, query);
 			List<TimeTag> tags = service.execute();
-			
-			
+
 			for (TimeTag tag : tags) {
 				JSONObject msg = tag.toJson();
 				msg.put("type", "tag");
@@ -92,11 +92,10 @@ public class Rest extends Controller {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return ok(array.toString());
 	}
-	
+
 	public Result addGroupMember(String groupId, String memberId) {
 		if (session("uid") != null) {
 			System.out.println("ADDMEMBER: " + groupId + " | " + memberId);
@@ -207,7 +206,7 @@ public class Rest extends Controller {
 			try {
 				String fileName = new GetUserPhotoService(uid).execute();
 				if (fileName != null) {
-					System.out.println("GET "+fileName);
+					System.out.println("GET " + fileName);
 					fileName = fileName.replace("%20", " ");
 
 					setPhotoHeaders(fileName);
@@ -504,25 +503,47 @@ public class Rest extends Controller {
 
 		try {
 			User me = User.findById(new ObjectId(session("uid")));
-
-			List<User> res = new SearchUserService(session("uid"), query).execute();
 			JSONArray array = new JSONArray();
-			for (User u : res) {
-				if (!u.getId().equals(me.getId())) {
-					JSONObject obj = new JSONObject();
-					obj.put("email", u.getEmail());
-					obj.put("uid", u.getId().toString());
-					Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
+			// Search User
+			{
+				List<User> res = new SearchUserService(session("uid"), query).execute();
+				for (User u : res) {
+					if (!u.getId().equals(me.getId())) {
+						JSONObject obj = new JSONObject();
+						obj.put("email", u.getEmail());
+						obj.put("id", u.getId().toString());
+						String name = u.getPublicProperties().getString("name");
+						if (name == null) {
+							name = u.getEmail();
+						}
+						obj.put("name", name);
+						obj.put("type", "user");
+						Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
 
-					if (rel == null) {
-						rel = Relation.findByEndpoint(u.getId(), me.getId());
+						if (rel == null) {
+							rel = Relation.findByEndpoint(u.getId(), me.getId());
+						}
+						if (rel != null) {
+							obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
+						}
+						array.put(obj);
 					}
-					if (rel != null) {
-						obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
-					}
-					array.put(obj);
 				}
 			}
+			// Search Group
+			{
+				List<Group> res = new SearchGroupService(session("uid"), query).execute();
+				for (Group u : res) {
+					if (!u.getId().equals(me.getId())) {
+						JSONObject obj = new JSONObject();
+						obj.put("name", u.getName());
+						obj.put("id", u.getId().toString());
+						obj.put("type", "group");
+						array.put(obj);
+					}
+				}
+			}
+			
 			return ok(array.toString());
 
 		} catch (ServiceException e) {
@@ -598,34 +619,33 @@ public class Rest extends Controller {
 		}
 		return badRequest();
 	}
-	
-	public Result createGroupInvite(String groupId) throws ServiceException{
+
+	public Result createGroupInvite(String groupId) throws ServiceException {
 		CreateGroupInviteService service = new CreateGroupInviteService(session("uid"), groupId);
 		return ok(service.execute());
 	}
-	
-	public Result getGroupInvite(String groupId) throws ServiceException{
+
+	public Result getGroupInvite(String groupId) throws ServiceException {
 		GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
 		String token = service.execute();
-		if(token!=null){
+		if (token != null) {
 			return ok(token);
 		}
 		return badRequest();
 	}
 
-	public Result deleteGroupInvite(String groupId) throws ServiceException{
+	public Result deleteGroupInvite(String groupId) throws ServiceException {
 		DeleteGroupInviteService service = new DeleteGroupInviteService(session("uid"), groupId);
 		service.execute();
 		return ok();
 	}
-	
-	public Result joinGroupInvite(String groupId, String token) throws ServiceException{
+
+	public Result joinGroupInvite(String groupId, String token) throws ServiceException {
 		JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
-		if(service.execute()){			
+		if (service.execute()) {
 			return ok(groupId);
 		}
 		return badRequest();
 	}
-	
-	
+
 }
