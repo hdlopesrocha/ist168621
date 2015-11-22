@@ -15,8 +15,8 @@ import models.Message;
 public class CreateMessageService extends Service<Message> {
 
 	private KeyValueFile anex;
-	private ObjectId groupId;
-	private ObjectId userId;
+	private ObjectId target;
+	private ObjectId source;
 	private Date time;
 	private String text;
 	
@@ -26,16 +26,16 @@ public class CreateMessageService extends Service<Message> {
 	 *
 	 * @param username
 	 *            the username
-	 * @param groupId
+	 * @param target
 	 *            the group id
 	 * @param content
 	 *            the content
 	 * @param anex
 	 */
-	public CreateMessageService(final String groupId, final String userId,final String text,final KeyValueFile anex) {
+	public CreateMessageService(final String source, final String target,final String text,final KeyValueFile anex) {
 		this.anex = anex;
-		this.groupId = new ObjectId(groupId);
-		this.userId = new ObjectId(userId);
+		this.target = new ObjectId(target);
+		this.source = new ObjectId(source);
 		this.text = text;
 		this.time = new Date();
 	}
@@ -47,7 +47,7 @@ public class CreateMessageService extends Service<Message> {
 	 */
 	@Override
 	public Message dispatch() throws ServiceException {
-		Message msg = new Message(groupId,userId,time,text);
+		Message msg = new Message(target,source,time,text);
 		msg.save();
 		return msg;
 	}

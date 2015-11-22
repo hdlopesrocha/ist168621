@@ -20,42 +20,34 @@
 		</div>
 	</div>
 	<script>
-		
-		function searchFunction(query,process){
-			Signaling.searchInsideGroup("@groupId",query, function( array ) {
-				console.log(array);
-				process(array);
-			});
-			
-						
-		}
-	
-		function updaterFunction(item){
-			if(item.type=="tag"){
-				timeline.setHistoric(item.time);
+		var mySearch = {
+			source: function(query,process){
+				Signaling.searchInsideGroup("@groupId",query, function( array ) {
+					console.log(array);
+					process(array);
+				});			
+			},
+			displayText: function(item){
+				return item.title;
+			},
+			highlighter: function(item){
+				if(item.type=="tag"){
+					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
+				}else {
+					return "<i class='fa fa-font'></i> " + item.name ;
+				}
+			},
+			matcher: function(item){
+				return true;
+			},
+			updater:function(item){
+				if(item.type=="tag"){
+					timeline.setHistoric(item.time);
+				}
+				console.log(item);
+				return item;
 			}
-			console.log(item);
-			return item;
-		}
-		
-		function matcherFunction(item){
-			return true;
-		}
-		
-		
-		function textFunction(item){
-			return item.title;
-		}
-		
-		
-		function displayFunction(item){
-			if(item.type=="tag"){
-				return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
-			}else {
-				return "<i class='fa fa-font'></i> " + item.name ;
-			}
-		}
-			
+		};
 	
 		function onKurentoOpen(){
 			console.log("WebSocket Ok!");
@@ -69,13 +61,7 @@
 			switchTab("#mytabs","#mybtns",1);
 			
 			$('#searchNav').show();
-			$('#searchText').typeahead({ 
-				source: searchFunction,
-				displayText: textFunction,
-				highlighter:displayFunction,
-				matcher:matcherFunction,
-				updater:updaterFunction
-			});	
+			$('#searchText').typeahead(mySearch);	
 			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			

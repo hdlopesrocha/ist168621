@@ -16,7 +16,7 @@ import services.Service;
 
 public class Message {
 	
-	private ObjectId groupId, userId;
+	private ObjectId target, source;
 	private Date time;
 	private String text;
 	private ObjectId id = null;
@@ -32,7 +32,7 @@ public class Message {
 	
 	public Long generateSequence(){
 		long count = getCollection()
-				.count(new Document("gid", groupId));
+				.count(new Document("target", target));
 		
 		return count;
 	}
@@ -42,8 +42,8 @@ public class Message {
 		if (id != null)
 			doc.put("_id", id);
 
-		doc.put("gid", groupId);
-		doc.put("uid", userId);
+		doc.put("target", target);
+		doc.put("source", source);
 		doc.put("time", time);
 		doc.put("text", text);
 		doc.put("seq", sequence);
@@ -63,8 +63,8 @@ public class Message {
 	public static Message load(Document doc) {
 		Message rec = new Message();
 		rec.id = doc.getObjectId("_id");
-		rec.userId = doc.getObjectId("uid");
-		rec.groupId = doc.getObjectId("gid");
+		rec.source = doc.getObjectId("source");
+		rec.target = doc.getObjectId("target");
 		rec.time = doc.getDate("time");
 		rec.text = doc.getString("text");
 		rec.sequence = doc.getLong("seq");
@@ -75,8 +75,8 @@ public class Message {
 		return id;
 	}
 	
-	public static List<Message> listByGroup(ObjectId groupId, Long end, int len) {
-		Document query = new Document("gid", groupId);
+	public static List<Message> listByTarget(ObjectId groupId, Long end, int len) {
+		Document query = new Document("target", groupId);
 		if(end!=null){
 			query.append("seq", new Document("$lt",end));
 		}
@@ -101,30 +101,30 @@ public class Message {
 	}
 
 	public Message(ObjectId groupId, ObjectId userId, Date time, String text) {
-		this.groupId = groupId;
-		this.userId = userId;
+		this.target = groupId;
+		this.source = userId;
 		this.text = text;
 		this.time = time;
 	}
 
 	public JSONObject toJsonObject(){
 		JSONObject messageObj = new JSONObject();
-		User u = User.findById(userId);
+		User u = User.findById(source);
 		messageObj.put("id", getId().toString());
 		messageObj.put("name", u.getPublicProperties().getString("name"));
 		messageObj.put("time", Tools.FORMAT.format(time));
 		messageObj.put("text", text);
 		messageObj.put("seq", sequence);
-		messageObj.put("uid", userId.toString());
+		messageObj.put("source", source.toString());
 		return messageObj;
 	}
 	
-	public ObjectId getGroupId() {
-		return groupId;
+	public ObjectId getTarget() {
+		return target;
 	}
 
-	public ObjectId getUserId() {
-		return userId;
+	public ObjectId getSource() {
+		return source;
 	}
 
 	public Date getTime() {
