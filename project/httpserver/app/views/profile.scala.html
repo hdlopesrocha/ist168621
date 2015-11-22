@@ -1,0 +1,45 @@
+@(userId : String) @template(1){
+<script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
+
+<div class="container-fluid">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<h3 id="userTitle">Username</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	$(document).ready(
+		function() {
+			
+			$('#searchNav').show();
+			$('#searchText').typeahead(SearchGeneric);	
+		
+			Signaling.userProfile("@userId",function(user) {
+				$("#userTitle").html(JSON.stringify(user));
+			});
+		}
+	);
+
+	function user_del(userId) {
+		var success = function() {
+			document.location = "/";
+		}
+		Signaling.rejectRelation(userId, success);
+	}
+
+	function user_add(userId) {
+		var success = function() {
+			document.location = "/";
+		}
+		Signaling.addRelation(userId, success);
+	}
+
+
+</script>
+}

@@ -1,10 +1,9 @@
 package services;
 
-import models.User;
-
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-import exceptions.ServiceException;
+import models.User;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,12 +15,12 @@ public class GetUserProfileService extends Service<String> {
 
 	
 	public GetUserProfileService(String callerId, String userId) {
-		this.caller = User.findByEmail(callerId);
+		this.caller = User.findById(new ObjectId(callerId));
 		if(caller!=null && callerId.equals(userId)){
 			this.user = this.caller;
 		}
 		else {
-			this.user = User.findByEmail(userId);
+			this.user = User.findById(new ObjectId(userId));
 		}
 		
 	}
@@ -47,16 +46,7 @@ public class GetUserProfileService extends Service<String> {
 	public boolean canExecute() {
 		if(caller==null || user==null)
 			return false;
-		
-		
-
-		try {
-			return new HasPermissionService(caller.getId().toString(),"ADMIN").execute();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+		return true;
 	}
 
 }

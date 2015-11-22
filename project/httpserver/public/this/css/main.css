@@ -10,6 +10,22 @@ body {
 	
 }
 
+
+.navbar-brand > img {
+	height: 24px;
+	width:  24px;
+}
+    
+    
+.navbar-brand2 {
+    background-image: url("/assets/images/favicon.png");
+    width:auto;
+    height:100%;
+    background-size: cover;
+    vertical-align: center;
+	
+}
+
 .caption{
 	position: absolute;
 	width:100%;
@@ -28,14 +44,7 @@ body {
 	display:inline-block;
 	
 }
-.navbar-center
-{
-    position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    margin: auto;
-}
+
 .ui-datepicker{ z-index: 9999 !important;}
 
 .vis-custom-time {

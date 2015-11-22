@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -127,8 +128,12 @@ public class User implements Comparable<User> {
 	}
 
 	public static List<User> search(String query) {
-		Pattern regex = Pattern.compile(query);		
-		Document doc = new Document("email", regex);
+		Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);	
+		BasicDBList or = new BasicDBList();
+		or.add(new Document("public.name",regex));
+		or.add(new Document("email",regex));
+		
+		Document doc = new Document("$or", or);
 		FindIterable<Document> iter = getCollection().find(doc);
 		Iterator<Document> i = iter.iterator();
 		List<User> ret = new ArrayList<User>();

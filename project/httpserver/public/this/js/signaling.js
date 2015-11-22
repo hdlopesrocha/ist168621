@@ -2,7 +2,14 @@ var Signaling = (function(){
 
 	this.searchInsideGroup = function(gid,query,success){
 		$.get( "/api/group/search/"+gid+"?query="+query, function( data ) {
-			success(data);
+			success(JSON.parse(data));
+		});	
+	}
+	
+	
+	this.userProfile = function(uid,success){
+		$.get( "/api/user/get/"+uid, function( data ) {
+			success(JSON.parse(data));
 		});	
 	}
 	

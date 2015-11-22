@@ -1,7 +1,9 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -112,5 +114,19 @@ public class Group {
 	public void deleteInvite() {
 		invite = null;
 	}
+
+	public static List<Group> search(User caller, String query) {
+		Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);		
+		Document doc = new Document("name", regex);
+		FindIterable<Document> iter = getCollection().find(doc);
+		Iterator<Document> i = iter.iterator();
+		List<Group> ret = new ArrayList<Group>();
+		while(i.hasNext()){
+			ret.add(Group.load(i.next()));
+		}
+		return ret;
+	}
+	
+	
 
 }
