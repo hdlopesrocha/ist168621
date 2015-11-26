@@ -30,19 +30,19 @@ var contentArrivedCallback = null;
 
 var Kurento = new (function() {
 	
-	this.pc = {};
+	this.peerConnection = {};
 
-	this.ws = null;
+	this.webSocket = null;
 
 	this.getContent = function(){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id: "getContent",
 		}));
 	}
 	
 	
 	this.createContent = function(start,end,content){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "createContent",
 			start: start,
 			end: end,
@@ -51,7 +51,7 @@ var Kurento = new (function() {
 	}
 	
 	this.createTag = function(time,title,content){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "createTag",
 			time: time,
 			title: title,
@@ -61,7 +61,7 @@ var Kurento = new (function() {
 	
 
 	this.receiveMore = function(end,len){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "getMessages",
 			len: len,
 			end: end
@@ -70,28 +70,28 @@ var Kurento = new (function() {
 	
 	
 	this.setPlay=function(play){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "play",
 			data:play
 		}));
 	}
 	
 	this.receiveRealtime = function(userId){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "setRealtime",
 			uid:userId
 		}));
 	}
 	
 	this.sendMessage = function(text){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id: "createMessage",
 			data: text
 		}));
 	}
 	
 	this.receiveHistoric = function(userId,offset){
-		Kurento.ws.send(JSON.stringify({
+		Kurento.webSocket.send(JSON.stringify({
 			id : "setHistoric",
 			uid:userId,
 			offset:offset
@@ -121,11 +121,11 @@ var Kurento = new (function() {
 				}
 				
 				// XXX [CLIENT_ICE_03] XXX
-				Kurento.ws.send(JSON.stringify(msg));
+				Kurento.webSocket.send(JSON.stringify(msg));
 			}
 		}
 		
-		Kurento.pc[name] = pc;
+		Kurento.peerConnection[name] = pc;
 	}
 	
 	
@@ -139,16 +139,16 @@ var Kurento = new (function() {
 		contentArrivedCallback = cacb;
 		
 		if ("WebSocket" in window) {
-			Kurento.ws = new WebSocket(wsurl("/ws/room/" + groupId));
+			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
 		
-			Kurento.ws.onerror = function() {
+			Kurento.webSocket.onerror = function() {
 				console.log("Error!");
 
 			};
 			
 			
 			
-			Kurento.ws.onmessage = function(data) {
+			Kurento.webSocket.onmessage = function(data) {
 				var message = JSON.parse(data.data);
 				var id = message.id;
 				
@@ -157,7 +157,7 @@ var Kurento = new (function() {
 						console.log(id,message);
 						var candidate = new RTCIceCandidate(message.data);
 				
-						Kurento.pc[message.name].addIceCandidate(candidate, function() {
+						Kurento.peerConnection[message.name].addIceCandidate(candidate, function() {
 							console.log(candidate);
 						}, logError);
 					break;
@@ -167,7 +167,7 @@ var Kurento = new (function() {
 						console.log(id, message);
 						var rsd = new RTCSessionDescription(message.data);
 						// XXX [CLIENT_OFFER_08] XXX
-						Kurento.pc[message.name].setRemoteDescription(rsd, function(){
+						Kurento.peerConnection[message.name].setRemoteDescription(rsd, function(){
 							console.log("setRemoteSessionDescription",rsd);
 						},logError);
 					break;		
@@ -204,20 +204,20 @@ var Kurento = new (function() {
 
 		
 			
-			Kurento.ws.onopen = function() {
+			Kurento.webSocket.onopen = function() {
 				kscb();
 				Kurento.createPeerConnection("main");
 				Kurento.createPeerConnection("mixer");
 
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
-					Kurento.pc["main"].addStream(stream);
-					Kurento.pc["main"].createOffer(function (lsd) {		
+					Kurento.peerConnection["main"].addStream(stream);
+					Kurento.peerConnection["main"].createOffer(function (lsd) {		
 						console.log("createOfferToSendReceive",lsd);
 						// XXX [CLIENT_OFFER_02] XXX
-						Kurento.pc["main"].setLocalDescription(lsd, function() {
+						Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
 							// XXX [CLIENT_OFFER_03] XXX		
-							Kurento.ws.send(JSON.stringify({
+							Kurento.webSocket.send(JSON.stringify({
 								id : "offer",
 								name : "main",
 								data : lsd
@@ -226,11 +226,11 @@ var Kurento = new (function() {
 					}, logError,remote_constraints);
 				}, logError);
 				
-				Kurento.pc["mixer"].createOffer(function (lsd) {
+				Kurento.peerConnection["mixer"].createOffer(function (lsd) {
 					console.log("createOfferToReceive",lsd);
 
-					Kurento.pc["mixer"].setLocalDescription(lsd, function() {
-						Kurento.ws.send(JSON.stringify({
+					Kurento.peerConnection["mixer"].setLocalDescription(lsd, function() {
+						Kurento.webSocket.send(JSON.stringify({
 							id : "offer",
 							name : "mixer",
 							data : lsd
@@ -238,25 +238,25 @@ var Kurento = new (function() {
 					}, logError);
 				}, logError,remote_constraints);
 				
-				Kurento.pc["main"].onaddstream = function (e) {
+				Kurento.peerConnection["main"].onaddstream = function (e) {
 					console.log("main",e);
 					stq = e.stream;
 					console.log(stq);
 					newVideoCallback(URL.createObjectURL(stq));
 				};
 				
-				Kurento.pc["mixer"].onaddstream = function (e) {
+				Kurento.peerConnection["mixer"].onaddstream = function (e) {
 					console.log("mixer",e);
 					mixerVideoCallback(URL.createObjectURL(e.stream));
 				};
 			};
 
-			Kurento.ws.onclose = function() {
+			Kurento.webSocket.onclose = function() {
 				console.log("Connection is closed...");
 			};
 		
 			window.onbeforeunload = function() {
-				Kurento.ws.close();
+				Kurento.webSocket.close();
 			};
 		
 		

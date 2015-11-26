@@ -4,23 +4,63 @@
 <div class="container-fluid">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<h3>Friend Requests</h3>
-					<ul id="friend-requests"></ul>
-					<h3>Friend List</h3>
-					<ul id="friend-list"></ul>
+		
+		
+			<div class="col-md-6">
+				<div class="panel panel-info">
+					<div class="panel-heading" data-toggle="collapse"
+						data-target="#collapse1">
+						<h4 class="panel-title">FRIEND REQUESTS</h4>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul id="friend-requests"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="col-md-6">
+				<div class="panel panel-info">
+					<div class="panel-heading" data-toggle="collapse"
+						data-target="#collapse2">
+						<h4 class="panel-title">FRIEND LIST</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul id="friend-list"></ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+		
 		<div class="row">
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<h3>Create Group</h3>
-					&nbsp;Name:<input type="text" id="group_name" />
-					<button onclick="group_create($('#group_name').val())">Create</button>
-					<h3>Group List</h3>
-					<ul id="group-list"></ul>
+			<div class="col-md-6">
+				<div class="panel panel-info">
+					<div class="panel-heading" data-toggle="collapse"
+						data-target="#collapse3">
+						<h4 class="panel-title">GROUP LIST</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul id="group-list"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="panel panel-info">
+					<div class="panel-heading" data-toggle="collapse"
+						data-target="#collapse4">
+						<h4 class="panel-title">CREATE GROUP</h4>
+					</div>
+					<div id="collapse4" class="panel-collapse collapse in">
+						<div class="panel-body">
+							Name:<input type="text" id="group_name" />
+							<button onclick="group_create($('#group_name').val())">Create</button>						</div>
+					</div>
 				</div>
 			</div>
 		</div>
