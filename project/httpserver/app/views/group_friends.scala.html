@@ -29,9 +29,6 @@
                  </span>
 			</div>
 			</div>
-			
-			
-			
 		</div>
 	</div>
 	
@@ -48,18 +45,12 @@
 	                        </button>  
 	                    </span>
 	                </div>
-	            </div>
-			
-			
+	            </div>	
 				<ul class="media-list" id="candidateList">
-
-					
 				</ul>
 			</div>
 		</div>
 	</div>
-	
-
 </div>
 <style>
 .stylish-input-group .input-group-addon{
@@ -117,18 +108,10 @@
 
 				var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
 				var add_button = "<i style='color:green' onclick='add_user_group(\"" + uid	+ "\")' class='fa fa-plus'></i>";
-
-				
-				
 				html += '<div class="media"><a '+style2+' class="pull-left media-object circular"></a>'+
 				'<div class="media-body"><h5>'+name+' | User | '+add_button+'</h5></div></div>';
-				
 			}
 			$("#candidateList").html(html);
-			
-		
-			
-			
 		};
 		Signaling.searchGroupCandidates("@groupId", query, result);
 	}
