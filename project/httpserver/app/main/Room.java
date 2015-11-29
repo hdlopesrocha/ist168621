@@ -91,7 +91,7 @@ public class Room implements Closeable {
 	}
 
 
-	public MyRecorder record(MediaElement endPoint,String id){
+	public MyRecorder record(final MediaElement endPoint,final String id){
 
 		return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
 			@Override
@@ -105,16 +105,16 @@ public class Room implements Closeable {
 					Interval interval = srs.getInterval();
 					intervalId = interval.getId().toString();
 
-					JSONArray array = new JSONArray();
-					array.put(Tools.FORMAT.format(interval.getStart()));
-					array.put(Tools.FORMAT.format(interval.getEnd()));
-
-					JSONObject msg = new JSONObject();
-					msg.put("id", "rec");
-					msg.put(interval.getId().toString(), array);
-
-					sendMessage(msg.toString());
-
+					if(id==null){
+						JSONArray array = new JSONArray();
+						array.put(Tools.FORMAT.format(interval.getStart()));
+						array.put(Tools.FORMAT.format(interval.getEnd()));
+	
+						JSONObject msg = new JSONObject();
+						msg.put("id", "rec");
+						msg.put(intervalId, array);
+						sendMessage(msg.toString());
+					}
 					System.out.println("REC: " + filepath);
 
 				} catch (ServiceException e) {
