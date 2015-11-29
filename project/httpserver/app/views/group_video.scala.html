@@ -85,6 +85,7 @@
 				<div class="panel-body">
 
 					<div style="position: relative; display: inline-block;  max-width:100%; max-height: 100%">
+						<div id="previewContent" style="position: absolute; z-index: 99; width: 100%; height: 100%;"></div>
 						<div id="mainVideoContent" style="position: absolute; z-index: 99; width: 100%; height: 100%;"></div>
 						<video id='myvideo' autoplay style="margin: 0px auto; position: relative; height: auto;max-width:100%; max-height: 100%"></video>
 						<video id='mymixed' autoplay style="margin: 0px auto; position: relative; height: auto;max-width:100%; max-height: 100%"></video>
@@ -175,6 +176,11 @@
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								Clear
 							</button>
+							<button type="button" class="btn btn-info"
+								onclick="previewContent()">
+								<span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+								Preview
+							</button>
 							<button type="button" class="btn btn-success"
 								onclick="createContent()">
 								<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
@@ -250,36 +256,12 @@
 			}
 		}
 
-		function clearContent(){
-			$("#contentText").val("");
-		}
 		
 		function parseTime(time){
 			var vec = time.match(/\d+/g); 
 			console.log(vec);
 			return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
 			
-		}
-		
-		
-		function createContent(){
-			
-			
-			var start = parseTime($("#contentStart").val());
-			var end = parseTime($("#contentEnd").val());
-			console.log(start,end);
-			
-			var content = $("#contentText").val();
-			if($("#contentCaption").is(':checked')){
-				content = '<div class="caption"><span>'+content+'</span></div>';
-			}
-			
-			
-			
-			if(content!=undefined && content.length>0){
-				Kurento.createContent(start.toISOString(),end.toISOString(),content);
-			}
-			clearContent();
 		}
 		
 
@@ -503,12 +485,49 @@
 			$("#saveButton").addClass("hidden");
 		}
 
+
+		function clearContent(){
+			$("#contentText").val("");
+			$("#previewContent").html("");
+		}
+		
+		function createContent(){
+			
+			
+			var start = parseTime($("#contentStart").val());
+			var end = parseTime($("#contentEnd").val());
+			console.log(start,end);
+			
+			var content = getContent();
+			
+			
+			
+			if(content){
+				Kurento.createContent(start.toISOString(),end.toISOString(),content);
+			}
+			clearContent();
+		}
+		
+		function getContent(){
+			var content = $("#contentText").val();
+			if(!content || content.length==0){
+				return null;
+			}
+
+			if($("#contentCaption").is(':checked')){
+				content = '<div class="caption"><span>'+content+'</span></div>';
+			}
+			return content;
+		}
+		
+		function previewContent(){
+			$("#previewContent").html(getContent());
+		}
+		
+		
+		
 		function addContent(key, content) {
-			var html = '<div class="overlay-content" id="content'
-					+ key + '">';
-			html += content;
-			html += '</div>';
-			$("#mainVideoContent").append(html);
+			$("#mainVideoContent").append('<div class="overlay-content" id="content'+ key + '">'+content+'</div>');
 		}
 
 		function removeContent(key) {
