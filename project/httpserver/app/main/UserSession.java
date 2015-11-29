@@ -228,7 +228,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				}
 			});
 
-			ep.setStunServerAddress("173.194.67.127");
+			ep.setStunServerAddress("64.233.184.127");
 			ep.setStunServerPort(19302);
 			endPoints.put(name, ep);
 		}
