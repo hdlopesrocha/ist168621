@@ -34,7 +34,6 @@ function parseTime(time){
 	var vec = time.match(/\d+/g); 
 	console.log(vec);
 	return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
-	
 }
 
 $(document).ready(
@@ -42,12 +41,10 @@ $(document).ready(
 		$('[data-toggle=offcanvas]').click(function() {
 			$('.row-offcanvas').toggleClass('active');
 		});
-	
 		$('.btn-toggle').click(
 				function() {
 					$(this).find('.btn').toggleClass('active').toggleClass(
 							'btn-default').toggleClass('btn-primary');
 				});
-	
 	}
 );
