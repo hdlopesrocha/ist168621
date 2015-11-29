@@ -22,25 +22,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-6">
-		<div class="panel panel-info">
-			<div class="panel-heading">ADD MEMBERS</div>
-			<div class="panel-body">
-				<div id="imaginary_container"> 
-	                <div class="input-group stylish-input-group">
-	                    <input type="text" class="form-control"  placeholder="Search" onchange="candidate_search(this.value)">
-	                    <span class="input-group-addon">
-	                        <button type="submit">
-	                            <span class="fa fa-search"></span>
-	                        </button>  
-	                    </span>
-	                </div>
-	            </div>	
-				<ul class="media-list" id="candidateList">
-				</ul>
-			</div>
-		</div>
-	</div>
+
 </div>
 <style>
 .stylish-input-group .input-group-addon{
@@ -73,36 +55,5 @@
 		});
 	}
 	
-	function del_user_group(uid) {
-		var success = function() {
-			document.location = document.location;
-		};
-		Signaling.removeUserGroup("@groupId", uid, success);
-	}
 	
-	function add_user_group(uid) {
-		var success = function() {
-			document.location = document.location;
-		};
-		Signaling.addUserGroup("@groupId", uid, success);
-	}
-	
-	function candidate_search(query) {
-	
-		var result = function(array) {
-			
-			var html = "";
-			for ( var i in array) {
-				var uid = array[i].uid;
-				var name = array[i].name;
-
-				var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
-				var add_button = "<i style='color:green' onclick='add_user_group(\"" + uid	+ "\")' class='fa fa-plus'></i>";
-				html += '<div class="media"><a '+style2+' class="pull-left media-object circular"></a>'+
-				'<div class="media-body"><h5>'+name+' | User | '+add_button+'</h5></div></div>';
-			}
-			$("#candidateList").html(html);
-		};
-		Signaling.searchGroupCandidates("@groupId", query, result);
-	}
 </script>
