@@ -492,16 +492,11 @@
 		}
 		
 		function createContent(){
-			
-			
 			var start = parseTime($("#contentStart").val());
-			var end = parseTime($("#contentEnd").val());
-			console.log(start,end);
-			
+			var end = parseTime($("#contentEnd").val());			
 			var content = getContent();
 			
-			
-			
+
 			if(content){
 				Kurento.createContent(start.toISOString(),end.toISOString(),content);
 			}

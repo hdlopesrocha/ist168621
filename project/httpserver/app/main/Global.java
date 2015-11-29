@@ -22,7 +22,7 @@ public class Global extends GlobalSettings {
 		log.setLevel(Level.ALL);
 		Service.init("webrtc");
 		System.out.println(Tools.getCurrentTime());
-	//	Setup.main(null);
+	//	Setup.main(null);cd ./
 		manager = new KurentoManager();
 	}
 
