@@ -44,7 +44,24 @@
 					<h4 class="modal-title">Group Settings</h4>
 				</div>
 				<div class="modal-body">
-					@group_friends(groupId,userId)
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-info">
+								<div class="panel-heading">INVITE</div>
+								<div class="panel-body">
+									<div class="input-group">
+										<input type="text" class="form-control" id="invite">
+						                 <span class="input-group-addon" onclick="createInvite2()">
+						                     Create
+						                 </span>	
+						  				<span class="input-group-addon" onclick="deleteInvite2()">
+											 Delete
+						                 </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -85,7 +102,19 @@
 				return item;
 			}
 		};
-	
+		function createInvite2(){
+			Signaling.createInvite("@groupId",function(token){
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);	
+			});
+		}
+
+		function deleteInvite2(){
+			Signaling.deleteInvite("@groupId",function(){
+				$("#invite").val("");	
+
+			});
+		}
+		
 		function del_user_group(uid) {
 			var success = function() {
 				document.location = document.location;
@@ -163,13 +192,13 @@
 					$("#videoMembers").append(
 						'<div class="media" '+ onclick+'>'+
 						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
-						'<div class="media-body"><h5>'+name+' | User | '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+						'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 					);
 					
 					$("#messengerMembers").append(
 						'<div class="media">'+
 						'<a id="msgMember'+uid+'" '+style2+' class="pull-left media-object circular circular-offline"></a>'+
-						'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+						'<div class="media-body"><h5>'+name+' </h5><small class="text-muted">Active From 3 hours</small></div></div>'
 					);
 				}
 			});
