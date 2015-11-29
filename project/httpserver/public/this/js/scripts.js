@@ -11,6 +11,15 @@ function friendlyTime(str) {
 	return t.toLocaleString("pt-PT");
 }
 
+function makeid() {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	for (var i = 0; i < 10; i++)
+		text += possible.charAt(Math.floor(Math.random()
+				* possible.length));
+	return text;
+}
+
 function parseQuery(qstr) {
 	var query = {};
 	var a = qstr.substr(1).split('&');
@@ -19,6 +28,13 @@ function parseQuery(qstr) {
 		query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
 	}
 	return query;
+}
+
+function parseTime(time){
+	var vec = time.match(/\d+/g); 
+	console.log(vec);
+	return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
+	
 }
 
 $(document).ready(

@@ -5,18 +5,29 @@
 	<script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
 	<script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 
-	<div class="row row-centered">
-		<div class="btn-group col-centered" role="group" id="mybtns">
-		  <button type="button" onclick="switchTab('#mytabs','#mybtns',1)" class="btn btn-default"><i class="fa fa-video-camera"></i></button>
-		  <button type="button" onclick="switchTab('#mytabs','#mybtns',2)" class="btn btn-default"><i class="fa fa-users"></i></button>
+
+
+	
+	
+	<div id="groupSettingsModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Group Settings</h4>
+				</div>
+				<div class="modal-body">
+					@group_friends(groupId,userId)
+				</div>
+			</div>
 		</div>
 	</div>
+	
+
 	<div class="container-fluid">
 		<div class="container">	
-			<div id="mytabs" style="padding-top: 20px;">
-				<div>@group_video(groupId,userId)</div>
-				<div>@group_friends(groupId,userId)</div>
-			</div>
+			<div>@group_video(groupId,userId)</div>
 		</div>
 	</div>
 	<script>
@@ -90,16 +101,10 @@
 					var style1='style="background-image:url(/photo/'+uid+');height:100px;width:100px"';
 					var style2='style="background-image:url(/photo/'+uid+');height:40px;width:40px"';
 	
-					$("#membersList").append(
+					$("#videoMembers").append(
 						'<div class="media" '+ onclick+'>'+
 						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular"></a>'+
 						'<div class="media-body"><h5>'+name+' | User | '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
-					);
-					
-					$("#videoMembers").append(
-						'<div class="media" '+ onclick+'>'+
-						'<a id="vidMember'+uid+'" '+style2+' class="pull-left media-object circular circular-offline"></a>'+
-						'<div class="media-body"><h5>'+name+' | User</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 					);
 					
 					$("#messengerMembers").append(
