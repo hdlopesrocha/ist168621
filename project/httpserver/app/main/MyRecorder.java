@@ -13,7 +13,7 @@ public class MyRecorder {
 
 	public interface RecorderHandler {
 
-		void onFileRecorded(Date begin, Date end, String filepath, String filename);
+		String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId);
 	}
 
 	private RecorderEndpoint recorder;
@@ -22,7 +22,8 @@ public class MyRecorder {
 	private Runnable recorderRunnable = null;
 	private Date begin;
 	
-	
+	private String intervalId = null;
+
 	
 	public MyRecorder(MediaElement endPoint, RecorderHandler handler) {
 
@@ -57,7 +58,7 @@ public class MyRecorder {
 							
 							@Override
 							public void run() {								
-								handler.onFileRecorded(begin, end, item.getUrl(), item.getId());
+								intervalId = handler.onFileRecorded(begin, end, item.getUrl(), item.getId(),intervalId);
 							}
 						}).start();
 

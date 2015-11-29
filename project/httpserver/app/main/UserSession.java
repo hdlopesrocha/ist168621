@@ -1,17 +1,3 @@
-/*
- * (C) Copyright 2014 Kurento (http://kurento.org/)
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Lesser General Public License
- * (LGPL) version 2.1 which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/lgpl-2.1.html
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- */
 package main;
 
 import java.io.Closeable;
@@ -30,7 +16,6 @@ import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
-import org.kurento.client.MediaObject;
 import org.kurento.client.MediaSessionStartedEvent;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
@@ -40,21 +25,15 @@ import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 
 import exceptions.ServiceException;
 import models.HyperContent;
-import models.Interval;
 import models.Message;
 import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
-import services.CreateRecordingService;
 import services.GetCurrentHyperContentService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
 
-/**
- * 
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
+
 public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private final WebSocket.Out<String> out;
@@ -65,7 +44,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
 	private final MyRecorder recorder;
 	private HubPort compositePort;
-	private String intervalId = null;
 	private PlayerEndpoint player;
 	private Object playerLock = new Object();
 	private boolean play = true;
@@ -86,37 +64,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		endPoint = getWebRtcEndPoint("main");
 		compositePoint = getWebRtcEndPoint("mixer");
 
-		compositePort = getCompositePort();
+		compositePort = room.getCompositePort(user.getId().toString());
 
-		recorder = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
-			@Override
-			public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
-
-				try {
-					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(),
-							getUser().getId().toString(), begin, end, filename, "video/webm", intervalId);
-					srs.execute();
-
-					Interval interval = srs.getInterval();
-					intervalId = interval.getId().toString();
-
-					JSONArray array = new JSONArray();
-					array.put(Tools.FORMAT.format(interval.getStart()));
-					array.put(Tools.FORMAT.format(interval.getEnd()));
-
-					JSONObject msg = new JSONObject();
-					msg.put("id", "rec");
-					msg.put(interval.getId().toString(), array);
-
-					room.sendMessage(msg.toString());
-
-					System.out.println("REC: " + filepath);
-
-				} catch (ServiceException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		recorder = room.record(endPoint, user.getId().toString());
+				
+		
 
 		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
@@ -188,18 +140,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 	}
 
-	public HubPort getCompositePort() {
-		String name = user.getId().toString();
-		for (MediaObject port : room.getComposite().getChilds()) {
-			if (port.getName().equals(name)) {
-				return (HubPort) port;
-			}
-		}
-
-		HubPort port = new HubPort.Builder(room.getComposite()).build();
-		port.setName(name);
-		return port;
-	}
 
 	public WebRtcEndpoint getWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = endPoints.get(name);
@@ -285,7 +225,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
 		if (this == obj) {
 			return true;
 		}
@@ -370,11 +309,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				System.out.println("No video here!");
 			}
 
-		} catch (
-
-		ServiceException e)
-
-		{
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

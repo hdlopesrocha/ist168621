@@ -17,7 +17,7 @@ package main;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -30,27 +30,28 @@ import org.kurento.client.Composite;
 import org.kurento.client.ErrorEvent;
 import org.kurento.client.EventListener;
 import org.kurento.client.Hub;
+import org.kurento.client.HubPort;
+import org.kurento.client.MediaElement;
 import org.kurento.client.MediaObject;
 import org.kurento.client.MediaPipeline;
 
 import exceptions.ServiceException;
 import models.Group;
-import models.Message;
+import models.Interval;
 import models.User;
 import play.mvc.WebSocket;
-import services.ListMessagesService;
+import services.CreateRecordingService;
 
-/**
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
+
 public class Room implements Closeable {
 
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
 	private Hub composite= null;
-	
+	private MyRecorder recorder;
+	private HubPort hubPort;
+
 	public Room(final MediaPipeline mediaPipeline) {
 		this.mediaPipeline = mediaPipeline;
 		
@@ -76,6 +77,8 @@ public class Room implements Closeable {
 		if(this.composite==null){
 			this.composite = new Composite.Builder(mediaPipeline).build();
 			this.composite.setName("composite");
+			this.hubPort = getCompositePort("this");
+			this.recorder = record(hubPort,null);
 		}
 		
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
@@ -83,7 +86,57 @@ public class Room implements Closeable {
 	}
 
 	
+	public HubPort getHubPort() {
+		return hubPort;
+	}
+
+
+	public MyRecorder record(MediaElement endPoint,String id){
+
+		return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
+			@Override
+			public String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId) {
+
+				try {
+					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(),
+							id, begin, end, filename, "video/webm", intervalId);
+					srs.execute();
+
+					Interval interval = srs.getInterval();
+					intervalId = interval.getId().toString();
+
+					JSONArray array = new JSONArray();
+					array.put(Tools.FORMAT.format(interval.getStart()));
+					array.put(Tools.FORMAT.format(interval.getEnd()));
+
+					JSONObject msg = new JSONObject();
+					msg.put("id", "rec");
+					msg.put(interval.getId().toString(), array);
+
+					sendMessage(msg.toString());
+
+					System.out.println("REC: " + filepath);
+
+				} catch (ServiceException e) {
+					e.printStackTrace();
+				}
+				return intervalId;
+			}
+		});
+	}
 	
+	public HubPort getCompositePort(String id) {
+		for (MediaObject port : getComposite().getChilds()) {
+			if (port.getName().equals(id)) {
+				return (HubPort) port;
+			}
+		}
+
+		HubPort port = new HubPort.Builder(getComposite()).build();
+		port.setName(id);
+		return port;
+	}
+
 	
 	public void sendMessage(final String string) {
 		for(UserSession user : participants.values()){
@@ -99,6 +152,7 @@ public class Room implements Closeable {
 
 	@PreDestroy
 	private void shutdown() {
+		this.recorder.close();
 		this.close();
 	}
 
