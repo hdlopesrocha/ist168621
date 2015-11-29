@@ -11,7 +11,6 @@ GET     /template                       controllers.Application.template()
 GET     /stream/*path	 		       	controllers.Application.stream(path : String)
 GET		/join/:gid/:token				controllers.Application.join(gid : String, token : String)
 
-
 GET     /api/user/search	        	controllers.Rest.search()
 GET     /api/user/list              	controllers.Rest.listUsers()
 POST    /api/user/update            	controllers.Rest.updateUser()
@@ -26,12 +25,10 @@ GET     /api/relation/add/:user_id		controllers.Rest.acceptRelation(user_id : St
 GET     /api/relation/requests			controllers.Rest.listRelationRequests()
 GET     /api/relation/list				controllers.Rest.listRelations()
 
-
 GET		/api/invite/create/:gid			controllers.Rest.createGroupInvite(gid : String)
 GET		/api/invite/get/:gid			controllers.Rest.getGroupInvite(gid : String)
 GET		/api/invite/delete/:gid			controllers.Rest.deleteGroupInvite(gid : String)
 GET		/api/invite/join/:gid/:token	controllers.Rest.joinGroupInvite(gid : String, token : String)
-
 
 GET		/api/group/create				controllers.Rest.createGroup()
 GET		/api/group/list					controllers.Rest.listGroups()
@@ -47,12 +44,10 @@ GET		/api/group/search/:gid			controllers.Rest.searchOnGroup(gid : String)
 POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
 GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)
 
-
 GET		/photo/*id						controllers.Rest.getPhoto(id : String)
 GET		/file/*id						controllers.Rest.getFile(id : String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.versioned(path="/public", file: Asset)
-
 
 GET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)
