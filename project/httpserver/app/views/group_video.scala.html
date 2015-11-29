@@ -13,7 +13,11 @@
 					id="goToPresent">
 					<i class="fa fa-step-forward"></i>
 				</div>
-				<div class="btn btn-info btn-success" onclick="setTimeLink()"
+				<div class="btn btn-default" data-toggle="modal" data-target="#groupSettingsModal">
+					<i class="fa fa-users" style="position: relative;"></i>
+				</div>
+				
+				<div class="btn btn-info" onclick="setTimeLink()"
 					data-toggle="modal" data-target="#timeQueryStringModal">
 					<i class="fa fa-clock-o" style="position: relative;"> <i
 						class="fa fa-link"
@@ -192,31 +196,6 @@
 			</div>
 		</div>
 	</div>
-	<!--  XXXTAG
-	<div class="col-md-3">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h4 class="panel-title">
-					<a data-toggle="collapse" href="#collapse4">TAGS</a>
-				</h4>
-			</div>
-			<div id="collapse4" class="panel-collapse collapse in">
-				<div class="panel-body">
-					<ul class="media-list">
-						<li class="media">
-							<div class="form-group">
-								<input id="searchinput" class="form-control" type="search"
-									placeholder="Search..." />
-							</div>
-
-							<div class="media-body list-group" id="tagList"></div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-		-->
 
 </div>
 
@@ -255,16 +234,6 @@
 				$("#mymixed").hide();
 			}
 		}
-
-		
-		function parseTime(time){
-			var vec = time.match(/\d+/g); 
-			console.log(vec);
-			return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
-			
-		}
-		
-
 		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
@@ -279,12 +248,7 @@
 		$(document).ready(
 				function() {
 					setGroup(true);
-					/* XXXTAG
-					$('#tagList').btsListFilter('#searchinput', {
-						itemChild : 'span'
-					});
-					*/
-					// $('#datetimepicker1').data("DateTimePicker")(function(){
+					
 					$('#datetimepicker1').datetimepicker({
 						format : 'DD/MM/YYYY HH:mm:ss',
 						defaultDate : new Date(),
@@ -297,7 +261,6 @@
 						showTodayButton:true
 
 					});
-					// });
 
 					$("#messagesPanel").scroll(function() {
 						if ($("#messagesPanel").scrollTop() == 0) {
@@ -393,13 +356,7 @@
 		function tagArrived(id, time, title, content) {
 			console.log(id, time, title, content);
 			timeline.loadTag(id, time, title, content);
-/*
-//XXXTAG
-			$("#tagList").append(
-					'<div class="list-group-item" onclick="jumpTo(\'' + time
-							+ '\')"><h5><span>' + title + '</span> <small>'
-							+ friendlyTime(time) + '</small></h5></div>')
-*/
+
 		}
 
 		function messageArrived(userId, time, text, name, mid, seq) {
@@ -438,14 +395,7 @@
 
 		}
 
-		function makeid() {
-			var text = "";
-			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-			for (var i = 0; i < 10; i++)
-				text += possible.charAt(Math.floor(Math.random()
-						* possible.length));
-			return text;
-		}
+		
 
 		function playStop() {
 			timeline.togglePlayStop(function() {
