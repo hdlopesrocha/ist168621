@@ -12,7 +12,7 @@ var local_constraints = {
 
 var audio_constraints = { 
 	'offerToReceiveAudio':true, 
-	'offerToReceiveVideo':false 
+	'offerToReceiveVideo':true 
 };
 
 var remote_constraints = { 
