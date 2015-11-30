@@ -9,7 +9,12 @@ var local_constraints = {
 	"audio" : true,
 	"video" : true
 };
-	
+
+var audio_constraints = { 
+	'offerToReceiveAudio':true, 
+	'offerToReceiveVideo':false 
+};
+
 var remote_constraints = { 
 	'offerToReceiveAudio':true, 
 	'offerToReceiveVideo':true 
@@ -236,7 +241,7 @@ var Kurento = new (function() {
 							data : lsd
 						}));
 					}, logError);
-				}, logError,remote_constraints);
+				}, logError,audio_constraints);
 				
 				Kurento.peerConnection["main"].onaddstream = function (e) {
 					console.log("main",e);

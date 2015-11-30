@@ -75,7 +75,7 @@ public class Deprecated extends Controller{
 				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
 				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
 				jObj.put("url", rec.getUrl());
-				jObj.put("uid", rec.getUserId().toString());
+				jObj.put("uid", rec.getOwner().toString());
 				if (rec.getInterval() != null) {
 					jObj.put("inter", rec.getInterval().toString());
 				}
@@ -108,7 +108,7 @@ public class Deprecated extends Controller{
 				jObj.put("start", Tools.FORMAT.format(rec.getStart()));
 				jObj.put("end", Tools.FORMAT.format(rec.getEnd()));
 				jObj.put("url", rec.getUrl());
-				jObj.put("uid", rec.getUserId().toString());
+				jObj.put("uid", rec.getOwner().toString());
 				if (rec.getInterval() != null) {
 					jObj.put("inter", rec.getInterval().toString());
 				}
