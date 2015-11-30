@@ -82,6 +82,8 @@ var Kurento = new (function() {
 	}
 	
 	this.receiveRealtime = function(userId){
+		console.log("receiveRealtime!",userId);
+
 		Kurento.webSocket.send(JSON.stringify({
 			id : "setRealtime",
 			uid:userId
@@ -96,6 +98,8 @@ var Kurento = new (function() {
 	}
 	
 	this.receiveHistoric = function(userId,offset){
+		console.log("receiveHistoric!",userId);
+
 		Kurento.webSocket.send(JSON.stringify({
 			id : "setHistoric",
 			uid:userId,
