@@ -149,7 +149,7 @@ public class WSController extends Controller {
 									break;
 								case "setRealtime": {
 									System.out.println("REALTIME2");
-									String userId = args.has("uid") ? args.getString("uid") : null;
+									String userId = args.optString("uid");
 									System.out.println("launch thread");
 
 									new Thread(new Runnable() {
@@ -173,7 +173,7 @@ public class WSController extends Controller {
 
 								case "setHistoric": {
 									System.out.println("HISTORIC");
-									String userId = args.has("uid") ? args.getString("uid") : null;
+									String userId = args.optString("uid");
 
 									new Thread(new Runnable() {
 										@Override
