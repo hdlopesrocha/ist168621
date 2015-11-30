@@ -260,7 +260,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		Date currentTime = new Date(new Date().getTime() - timeOffset);
 		UserSession session = room.getParticipant(playUser);
 		
-		String owner = session!=null? session.getUser().getId().toString() : getGroupId();
+		String owner = session!=null? session.getUser().getId().toString() : room.getGroupId();
 		
 		try {
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
