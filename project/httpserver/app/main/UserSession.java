@@ -336,7 +336,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			session.endPoint.connect(endPoint);
 		}
 		 //mixerPort.connect(endPoint, MediaType.AUDIO);
-
+		
 	}
 
 	public void processOffer(String description, String name) {
