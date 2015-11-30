@@ -45,7 +45,6 @@ var Kurento = new (function() {
 		}));
 	}
 	
-	
 	this.createContent = function(start,end,content){
 		Kurento.webSocket.send(JSON.stringify({
 			id : "createContent",
@@ -64,7 +63,6 @@ var Kurento = new (function() {
 		}));
 	}
 	
-
 	this.receiveMore = function(end,len){
 		Kurento.webSocket.send(JSON.stringify({
 			id : "getMessages",
@@ -72,7 +70,6 @@ var Kurento = new (function() {
 			end: end
 		}));
 	}
-	
 	
 	this.setPlay=function(play){
 		Kurento.webSocket.send(JSON.stringify({
@@ -134,7 +131,6 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	
 	this.start = function(groupId,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
@@ -149,10 +145,7 @@ var Kurento = new (function() {
 		
 			Kurento.webSocket.onerror = function() {
 				console.log("Error!");
-
 			};
-			
-			
 			
 			Kurento.webSocket.onmessage = function(data) {
 				var message = JSON.parse(data.data);
@@ -207,8 +200,6 @@ var Kurento = new (function() {
 						break;					
 				}
 			};
-
-		
 			
 			Kurento.webSocket.onopen = function() {
 				kscb();
@@ -264,7 +255,6 @@ var Kurento = new (function() {
 			window.onbeforeunload = function() {
 				Kurento.webSocket.close();
 			};
-		
 		
 		} else {
 			console.log("no websocket support!");
