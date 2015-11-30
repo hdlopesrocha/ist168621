@@ -17,6 +17,7 @@ import org.kurento.client.EventListener;
 import org.kurento.client.HubPort;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.MediaSessionStartedEvent;
+import org.kurento.client.MediaType;
 import org.kurento.client.OnIceCandidateEvent;
 import org.kurento.client.PlayerEndpoint;
 import org.kurento.client.WebRtcEndpoint;
@@ -82,7 +83,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
 				endPoint.connect(compositePort/* , MediaType.AUDIO */);
-				compositePort.connect(compositePoint/* , MediaType.AUDIO */);
+				compositePort.connect(compositePoint , MediaType.AUDIO );
 			}
 		});
 
@@ -299,7 +300,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						}
 					});
 					player.connect(endPoint/* , MediaType.VIDEO */);
-					// player.connect(compositePoint /*, MediaType.AUDIO*/);
+					//player.connect(compositePoint , MediaType.AUDIO);
 					if (play) {
 						player.play();
 					}
@@ -329,10 +330,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);
-		session.endPoint.connect(endPoint);
-		// compositePort.connect(compositePoint, MediaType.AUDIO);
-
-		// mixerPort.connect(endPoint, MediaType.AUDIO);
+		if(userId==null){
+			compositePort.connect(endPoint, MediaType.VIDEO);
+		}else {
+			session.endPoint.connect(endPoint);
+		}
+		 //mixerPort.connect(endPoint, MediaType.AUDIO);
 
 	}
 
