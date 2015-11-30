@@ -73,15 +73,15 @@ public class Room implements Closeable {
 				}
 			}
 		}
+		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		
 		if(this.composite==null){
 			this.composite = new Composite.Builder(mediaPipeline).build();
 			this.composite.setName("composite");
 			this.hubPort = getCompositePort("this");
-			this.recorder = record(hubPort,null);
+			this.recorder = record(hubPort,group.getId().toString());
 		}
 		
-		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
 	}
 
