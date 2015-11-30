@@ -331,7 +331,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);
 		if(userId==null){
-			compositePort.connect(endPoint, MediaType.VIDEO);
+			compositePort.connect(endPoint);
 		}else {
 			session.endPoint.connect(endPoint);
 		}
