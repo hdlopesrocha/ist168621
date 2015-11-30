@@ -150,6 +150,7 @@ public class WSController extends Controller {
 								case "setRealtime": {
 									System.out.println("REALTIME");
 									String userId = args.has("uid") ? args.getString("uid") : null;
+									System.out.println("launch thread");
 
 									new Thread(new Runnable() {
 										@Override
