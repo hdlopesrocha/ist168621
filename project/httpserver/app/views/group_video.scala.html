@@ -214,9 +214,7 @@
 				end : 'ISODate'
 			}
 		});
-
 	
-		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
@@ -264,17 +262,14 @@
 						console.log("HISTORIC", offset);
 						// current request
 						current_offset = offset;
-						Kurento.receiveHistoric(selected_user,
-								current_offset);
+						Kurento.receiveHistoric(selected_user, current_offset);
 						real_time = false;
 
 					}, function() {
-
 						console.log("REALTIME");
 						// realtime request
 						Kurento.receiveRealtime(selected_user);
 						real_time = true;
-
 					}
 				);
 			}
@@ -314,7 +309,6 @@
 
 		function videoStream(streamUrl) {
 			selectVideo(null);
-
 			var video = document.getElementById("myvideo");
 			video.src = streamUrl;
 			return video;
@@ -339,7 +333,6 @@
 		function tagArrived(id, time, title, content) {
 			console.log(id, time, title, content);
 			timeline.loadTag(id, time, title, content);
-
 		}
 
 		function messageArrived(userId, time, text, name, mid, seq) {

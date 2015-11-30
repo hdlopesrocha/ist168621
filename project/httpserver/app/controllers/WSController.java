@@ -35,6 +35,7 @@ public class WSController extends Controller {
 		final String userId = session("uid");
 		return new WebSocket<String>() {
 			public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
+				System.out.println("Join room "+groupId);
 				Room room = Global.manager.getRoom(groupId);
 				User user = User.findById(new ObjectId(userId));
 				try {
