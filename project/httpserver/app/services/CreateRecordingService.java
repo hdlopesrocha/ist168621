@@ -17,7 +17,7 @@ public class CreateRecordingService extends Service<Recording> {
 
 	private KeyValueFile anex;
 	private ObjectId groupId;
-	private ObjectId userId;
+	private ObjectId owner;
 
 	private ObjectId interval;
 	private Date start;
@@ -43,11 +43,11 @@ public class CreateRecordingService extends Service<Recording> {
 	 *            the content
 	 * @param anex
 	 */
-	public CreateRecordingService(final KeyValueFile anex, final String url, final String groupId, final String userId,
+	public CreateRecordingService(final KeyValueFile anex, final String url, final String groupId, final String owner,
 			Date start, Date end, String name, String type, String interval) {
 		this.anex = anex;
 		this.groupId = new ObjectId(groupId);
-		this.userId = new ObjectId(userId);
+		this.owner = owner !=null ? new ObjectId(owner) : null;
 		this.interval = interval != null ? new ObjectId(interval) : null;
 		this.start = start;
 		this.end = end;
@@ -82,7 +82,7 @@ public class CreateRecordingService extends Service<Recording> {
 				inter.save();
 			}
 
-			Recording rec = new Recording(groupId, userId, start, end, name, type, url, Recording.countByGroup(groupId),
+			Recording rec = new Recording(groupId, owner, start, end, name, type, url, Recording.countByGroup(groupId),
 					inter.getId());
 			rec.save();
 			return rec;

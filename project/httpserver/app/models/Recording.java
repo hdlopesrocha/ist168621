@@ -15,7 +15,7 @@ import services.Service;
 public class Recording {
 
 
-	private ObjectId groupId, userId, interval;
+	private ObjectId groupId, owner, interval;
 	private Date start, end;
 	private String name, type;
 
@@ -53,7 +53,7 @@ public class Recording {
 			doc.put("_id", id);
 
 		doc.put("gid", groupId);
-		doc.put("uid", userId);
+		doc.put("uid", owner);
 		doc.put("start", start);
 		doc.put("end", end);
 		doc.put("url", url);
@@ -112,7 +112,7 @@ public class Recording {
 		rec.type = doc.getString("type");
 		rec.interval = doc.getObjectId("inter");
 
-		rec.userId = doc.getObjectId("uid");
+		rec.owner = doc.getObjectId("uid");
 		rec.groupId = doc.getObjectId("gid");
 		rec.url = doc.getString("url");
 		rec.sequence = doc.getLong("seq");
@@ -152,10 +152,10 @@ public class Recording {
 	public Recording() {
 	}
 
-	public Recording(ObjectId groupId, ObjectId userId, Date start, Date end, String name, String type, String url,
+	public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String name, String type, String url,
 			long sequence, ObjectId interval) {
 		this.groupId = groupId;
-		this.userId = userId;
+		this.owner = owner;
 		this.start = start;
 		this.end = end;
 		this.url = url;
@@ -179,8 +179,8 @@ public class Recording {
 		}
 	}
 
-	public ObjectId getUserId() {
-		return userId;
+	public ObjectId getOwner() {
+		return owner;
 	}
 
 }
