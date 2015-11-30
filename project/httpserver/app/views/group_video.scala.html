@@ -64,11 +64,11 @@
 		<div class="panel panel-info">
 			<div class="btn-group pull-right">
 				<button type="button" class="btn btn-primary" id="individualVideo"
-					onclick="selectVideo(selected_user)">
+					onclick="selectVideo(false)">
 					<i class="fa fa-user"></i>
 				</button>
 				<button type="button" class="btn btn-primary" id="groupVideo"
-					onclick="selectVideo(null)">
+					onclick="selectVideo(true)">
 					<i class="fa fa-users"></i>
 				</button>
 			</div>
@@ -195,7 +195,9 @@
 
 <script>
 		var group = true;
-		var selected_user = "@userId";
+
+		var selectedUser = "@userId";
+		var savedUser = "@userId";
 		var real_time = true;
 		var unsaved_tags = [];
 		var firstRecording = true;
@@ -215,6 +217,9 @@
 			}
 		});
 	
+		
+	
+		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
@@ -262,13 +267,13 @@
 						console.log("HISTORIC", offset);
 						// current request
 						current_offset = offset;
-						Kurento.receiveHistoric(selected_user, current_offset);
+						Kurento.receiveHistoric(selectedUser, current_offset);
 						real_time = false;
 
 					}, function() {
 						console.log("REALTIME");
 						// realtime request
-						Kurento.receiveRealtime(selected_user);
+						Kurento.receiveRealtime(selectedUser);
 						real_time = true;
 					}
 				);
@@ -382,24 +387,33 @@
 			});
 		}
 
+		function selectUser(userId){
+			savedUser = selectedUser = userId;
 		
+			if (real_time) {
+				Kurento.receiveRealtime(selectedUser);
+			} else {
+				Kurento.receiveHistoric(selectedUser, current_offset);
+			}
+		}
 
 		
-		function selectVideo(userId) {
-			if(userId==null){
+		function selectVideo(isGroup) {
+			if(isGroup){
+				selectedUser = null;
 				$("#individualVideo").show();
 				$("#groupVideo").hide();
-			}else {
+			}
+			else {
+				selectedUser = savedUser;
 				$("#individualVideo").hide();
 				$("#groupVideo").show();
 			}
 			
-			console.log("click!",userId);
-			
 			if (real_time) {
-				Kurento.receiveRealtime(userId);
+				Kurento.receiveRealtime(selectedUser);
 			} else {
-				Kurento.receiveHistoric(userId, current_offset);
+				Kurento.receiveHistoric(selectedUser, current_offset);
 			}
 		}
 
