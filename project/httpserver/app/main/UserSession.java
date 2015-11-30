@@ -329,7 +329,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		System.out.println("gotUnlocked");
 
 		timeOffset = 0l;
-
 		playUser = userId;
 		UserSession session = room.getParticipant(playUser);
 		if(userId==null){
