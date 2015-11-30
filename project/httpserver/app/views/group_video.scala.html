@@ -313,6 +313,8 @@
 		}
 
 		function videoStream(streamUrl) {
+			selectVideo(null);
+
 			var video = document.getElementById("myvideo");
 			video.src = streamUrl;
 			return video;
