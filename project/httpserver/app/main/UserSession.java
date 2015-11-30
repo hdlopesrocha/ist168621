@@ -255,7 +255,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		timeOffset = offset;
 		playUser = userId;
 
-		System.out.println("SET HIST " + userId);
+		System.out.println("SET HIST2 " + userId);
 
 		Date currentTime = new Date(new Date().getTime() - timeOffset);
 		UserSession session = room.getParticipant(playUser);
@@ -265,7 +265,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		try {
 			// saying "no video here!", for group video
 			
-			System.out.println("GET REC for owner "+ owner + " | isgroup="+session == null);
+			System.out.println("GET REC for owner "+ owner + " | isgroup="+(session == null));
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
 					room.getGroupId(), owner, currentTime);
 			Recording rec = service.execute();
