@@ -263,6 +263,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		String owner = session!=null? session.getUser().getId().toString() : room.getGroupId();
 		
 		try {
+			// saying "no video here!", for group video
+			
 			System.out.println("GET REC for owner "+ owner + " | isgroup="+session == null);
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
 					room.getGroupId(), owner, currentTime);
