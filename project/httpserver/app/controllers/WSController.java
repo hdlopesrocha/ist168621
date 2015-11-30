@@ -148,7 +148,7 @@ public class WSController extends Controller {
 								}
 									break;
 								case "setRealtime": {
-									System.out.println("REALTIME");
+									System.out.println("REALTIME2");
 									String userId = args.has("uid") ? args.getString("uid") : null;
 									System.out.println("launch thread");
 
