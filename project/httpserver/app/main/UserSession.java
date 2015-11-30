@@ -318,7 +318,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setRealtime(String userId) {
-
+		System.out.println("setRealtime");
 		synchronized (playerLock) {
 			if (player != null) {
 				player.stop();
@@ -326,6 +326,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				player = null;
 			}
 		}
+		System.out.println("gotUnlocked");
+
 		timeOffset = 0l;
 
 		playUser = userId;
