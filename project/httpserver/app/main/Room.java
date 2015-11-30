@@ -210,7 +210,7 @@ public class Room implements Closeable {
 	 * @return the participant from this session
 	 */
 	public UserSession getParticipant(final String uid) {
-		return participants.get(uid);
+		return uid!=null ? participants.get(uid) : null;
 	}
 
 	@Override
