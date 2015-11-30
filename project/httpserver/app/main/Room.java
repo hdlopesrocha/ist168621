@@ -105,16 +105,16 @@ public class Room implements Closeable {
 					Interval interval = srs.getInterval();
 					intervalId = interval.getId().toString();
 
-					if(id==null){
-						JSONArray array = new JSONArray();
-						array.put(Tools.FORMAT.format(interval.getStart()));
-						array.put(Tools.FORMAT.format(interval.getEnd()));
-	
-						JSONObject msg = new JSONObject();
-						msg.put("id", "rec");
-						msg.put(intervalId, array);
-						sendMessage(msg.toString());
-					}
+			
+					JSONArray array = new JSONArray();
+					array.put(Tools.FORMAT.format(interval.getStart()));
+					array.put(Tools.FORMAT.format(interval.getEnd()));
+
+					JSONObject msg = new JSONObject();
+					msg.put("id", "rec");
+					msg.put(intervalId, array);
+					sendMessage(msg.toString());
+					
 					System.out.println("REC: " + filepath);
 
 				} catch (ServiceException e) {
