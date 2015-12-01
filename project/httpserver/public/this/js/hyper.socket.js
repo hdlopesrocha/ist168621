@@ -4,7 +4,6 @@ function wsurl(s) {
 	return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
 }
 
-
 var local_constraints = {
 	"audio" : true,
 	"video" : true
@@ -24,7 +23,6 @@ function logError(err) {
 	console.log(err);
 }
 
-
 var newParticipantsCallback = null; 
 var newVideoCallback = null; 
 var mixerVideoCallback = null;
@@ -40,8 +38,7 @@ var max_level_L = 0;
 var old_level_L = 0;
 
 function audioFunction(stream){
-	var cnvs = document.getElementById("test");
-	var cnvs_cntxt = cnvs.getContext("2d");
+	
 		var microphone = audioContext.createMediaStreamSource(stream);
 		var javascriptNode = audioContext.createScriptProcessor(1024, 1, 1);
 		
@@ -58,13 +55,7 @@ function audioFunction(stream){
 			}
 			instant_L = Math.sqrt(sum_L / inpt_L.length);
 			max_level_L = Math.max(max_level_L, instant_L);				
-			instant_L = Math.max( instant_L, old_level_L -0.008 );
-			old_level_L = instant_L;
-			
-			cnvs_cntxt.clearRect(0, 0, cnvs.width, cnvs.height);
-			cnvs_cntxt.fillStyle = '#00ff00';
-			cnvs_cntxt.fillRect(10,10,(cnvs.width-20)*(instant_L/max_level_L),(cnvs.height-20)); // x,y,w,h
-
+			$("#test").val(instant_L/max_level_L);
 		};
 }
 
@@ -296,7 +287,7 @@ var Kurento = new (function() {
 		
 		} else {
 			console.log("no websocket support!");
-		}	
+		}
 	};
 
 	return this;
