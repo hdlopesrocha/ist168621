@@ -255,7 +255,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		timeOffset = offset;
 		playUser = userId;
 
-		System.out.println("SET HIST2 " + userId);
 
 		Date currentTime = new Date(new Date().getTime() - timeOffset);
 		UserSession session = room.getParticipant(playUser);
@@ -265,7 +264,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		try {
 			// saying "no video here!", for group video
 			
-			System.out.println("GET REC for owner "+ owner + " | isgroup="+(session == null));
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
 					room.getGroupId(), owner, currentTime);
 			Recording rec = service.execute();
@@ -280,7 +278,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 					// WEBM
 
-					System.out.println("PLAY: " + rec.getUrl());
+					System.out.println("HISTORIC PLAY: " + rec.getUrl());
 
 					RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getName());
 
@@ -324,7 +322,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	}
 
 	public void setRealtime(String userId) {
-		System.out.println("setRealtime");
+		System.out.println("REALTIME");
 		synchronized (playerLock) {
 			if (player != null) {
 				player.stop();
@@ -332,7 +330,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				player = null;
 			}
 		}
-		System.out.println("gotUnlocked");
 
 		timeOffset = 0l;
 		playUser = userId;
