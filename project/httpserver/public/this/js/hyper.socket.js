@@ -38,10 +38,10 @@ var audioContext = new AudioContext();
 
 var max_level_L = 0;
 var old_level_L = 0;
-var cnvs = document.getElementById("test");
-var cnvs_cntxt = cnvs.getContext("2d");
 
 function audioFunction(stream){
+	var cnvs = document.getElementById("test");
+	var cnvs_cntxt = cnvs.getContext("2d");
 		var microphone = audioContext.createMediaStreamSource(stream);
 		var javascriptNode = audioContext.createScriptProcessor(1024, 1, 1);
 		
