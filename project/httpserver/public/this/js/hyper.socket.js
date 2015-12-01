@@ -55,7 +55,7 @@ function audioFunction(stream){
 			}
 			instant_L = Math.sqrt(sum_L / inpt_L.length);
 			max_level_L = Math.max(max_level_L, instant_L);				
-			$("#test").val(instant_L/max_level_L);
+			$("#test").html(instant_L/max_level_L);
 		};
 }
 
