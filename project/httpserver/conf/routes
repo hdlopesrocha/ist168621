@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           	controllers.Application.index()
+GET     /reset                          controllers.Application.reset()
 GET     /pubsub                         controllers.Application.pubsub()
 GET		/user/:userId					controllers.Application.userProfile(userId : String)
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
