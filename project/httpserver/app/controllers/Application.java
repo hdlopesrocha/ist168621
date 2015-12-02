@@ -11,6 +11,7 @@ import models.User;
 import play.*;
 import play.mvc.*;
 import play.twirl.api.Html;
+import services.GetGroupInviteService;
 import services.JoinGroupInviteService;
 
 
@@ -34,8 +35,6 @@ public class Application extends Controller {
     	File file = new File(path);
     	Result res = ok(file);
     	response().setHeader("Content-type", "video/webm");
-    	
-    	
     	return res;
     }
     
@@ -49,11 +48,12 @@ public class Application extends Controller {
     		ObjectId oid = new ObjectId(groupId);
     		Group group = Group.findById(oid);
     		User user = User.findById(new ObjectId(session("uid")));
-    		
+    		GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
+    		String token = service.execute();
     		if(group!=null && user!=null){
     			Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
     			if(membership!=null){
-    				return ok(views.html.group.render(groupId,group.getName(),session("uid"))) ;
+    				return ok(views.html.group.render(groupId,group.getName(),session("uid"),token)) ;
     			}
     		}
     		

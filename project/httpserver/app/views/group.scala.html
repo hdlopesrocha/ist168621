@@ -1,4 +1,4 @@
-@(groupId : String, groupName : String, userId : String) @template(1){
+@(groupId : String, groupName : String, userId : String, inviteToken : String) @template(1){
 
 	<script type="text/javascript" src="/assets/this/js/adapter.js"></script>
 	<script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
@@ -175,9 +175,10 @@
 				document.location = "/";
 			});
 	
-			Signaling.getInvite("@groupId",function(token){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);	
-			});
+			@if(inviteToken!=null){
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + @inviteToken);	
+			}
+		
 			
 			Signaling.listGroupMembers("@groupId",function(array) {
 				for ( var i in array) {
