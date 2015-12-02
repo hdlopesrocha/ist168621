@@ -1,11 +1,5 @@
 package services;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -62,7 +56,9 @@ public abstract class Service<T> {
 	protected static GridFS files;
 	static long lastOid = 0l;
 		
-
+	public void reset(){
+		getDatabase().drop();
+	}
 
 
 	/**
