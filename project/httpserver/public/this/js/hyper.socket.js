@@ -35,28 +35,29 @@ navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMed
 var audioContext = new AudioContext();
 
 var max_level_L = 0;
-var old_level_L = 0;
 
 function audioFunction(stream){
 	
 		var microphone = audioContext.createMediaStreamSource(stream);
 		var javascriptNode = audioContext.createScriptProcessor(1024, 1, 1);
-		
-		microphone.connect(javascriptNode);
-		javascriptNode.connect(audioContext.destination);
+
 		javascriptNode.onaudioprocess = function(event){
 
 			var inpt_L = event.inputBuffer.getChannelData(0);
-			var instant_L = 0.0;
-
+			var tmax = 0;
+			
 			var sum_L = 0.0;
 			for(var i = 0; i < inpt_L.length; ++i) {
-				sum_L += inpt_L[i] * inpt_L[i];
+				
+				tmax = Math.max(tmax, inpt_L[i]);				
 			}
-			instant_L = Math.sqrt(sum_L / inpt_L.length);
-			max_level_L = Math.max(max_level_L, instant_L);				
-			$("#test").html(instant_L+ " | " +instant_L/max_level_L);
+			
+			max_level_L = Math.max(max_level_L, tmax);				
+			$("#test").html(tmax+ " | " +tmax/max_level_L);
 		};
+		
+		microphone.connect(javascriptNode);
+		javascriptNode.connect(audioContext.destination);
 }
 
 
