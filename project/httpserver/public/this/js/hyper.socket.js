@@ -34,7 +34,16 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 var audioContext = new AudioContext();
 
-var max_level_L = 0;
+var maxAudioLevel = 0;
+
+function average(array){
+	var len = array.length;
+	var sum = 0;
+	for (var i = 0; i < len; i++) {
+		sum += array[i];
+	}
+	return sum/len;
+}
 
 function audioFunction(stream){
 	
@@ -42,21 +51,11 @@ function audioFunction(stream){
 		var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
 
 		javascriptNode.onaudioprocess = function(event){
-
-			var inpt_L = event.inputBuffer.getChannelData(0);
-			var tmax = 0;
-			
-			var sum_L = 0.0;
-			for(var i = 0; i < inpt_L.length; ++i) {
-				
-				tmax = Math.max(tmax, inpt_L[i]);				
-			}
-			
-			max_level_L = Math.max(max_level_L, tmax);
-			
-			var perc = tmax/max_level_L;
-			
-			$("#test").html((perc > 0.1 ? "1":"0")+" | "+tmax);
+			var inputLevels = event.inputBuffer.getChannelData(0);
+			var currentAudioLevel = average(inputLevels);
+			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+			var perc = currentAudioLevel/maxAudioLevel;
+			$("#test").html((perc > 0.1 ? "1":"0")+" | "+currentAudioLevel+" / "+maxAudioLevel);
 		};
 		
 		microphone.connect(javascriptNode);
