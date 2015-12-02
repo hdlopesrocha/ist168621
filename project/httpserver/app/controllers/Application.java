@@ -43,7 +43,7 @@ public class Application extends Controller {
     	return ok(views.html.pubsub.render());
     }
     
-    public Result group(String groupId) {
+    public Result group(String groupId) throws ServiceException {
     	if(session("uid")!=null){
     		ObjectId oid = new ObjectId(groupId);
     		Group group = Group.findById(oid);
