@@ -175,7 +175,7 @@
 			});
 	
 			@if(inviteToken!=null){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + @inviteToken);	
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");	
 			}
 		
 			
