@@ -39,7 +39,7 @@ var max_level_L = 0;
 function audioFunction(stream){
 	
 		var microphone = audioContext.createMediaStreamSource(stream);
-		var javascriptNode = audioContext.createScriptProcessor(1024, 0, 1);
+		var javascriptNode = audioContext.createScriptProcessor(128, 1, 1);
 
 		javascriptNode.onaudioprocess = function(event){
 
