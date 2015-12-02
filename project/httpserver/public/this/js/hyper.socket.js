@@ -52,8 +52,11 @@ function audioFunction(stream){
 				tmax = Math.max(tmax, inpt_L[i]);				
 			}
 			
-			max_level_L = Math.max(max_level_L, tmax);				
-			$("#test").html(tmax+ " | " +tmax/max_level_L);
+			max_level_L = Math.max(max_level_L, tmax);
+			
+			var perc = tmax/max_level_L;
+			
+			$("#test").html(perc > 0.1 ? "1":"0");
 		};
 		
 		microphone.connect(javascriptNode);
