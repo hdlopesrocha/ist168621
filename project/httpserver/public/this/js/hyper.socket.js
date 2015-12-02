@@ -56,7 +56,7 @@ function audioFunction(stream){
 			
 			var perc = tmax/max_level_L;
 			
-			$("#test").html(perc > 0.1 ? "1":"0");
+			$("#test").html((perc > 0.1 ? "1":"0")+" | "+tmax);
 		};
 		
 		microphone.connect(javascriptNode);
