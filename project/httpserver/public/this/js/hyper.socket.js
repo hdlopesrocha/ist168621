@@ -32,9 +32,7 @@ var contentArrivedCallback = null;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-var audioContext = new AudioContext();
 
-var maxAudioLevel = 0;
 
 function average(array){
 	var len = array.length;
@@ -45,30 +43,32 @@ function average(array){
 	return sum/len;
 }
 
-var soundProc = 0;
 
 function audioFunction(stream){
+	var soundProc = 0;
+	var audioContext = new AudioContext();
+	var maxAudioLevel = 0;
 	
-		var microphone = audioContext.createMediaStreamSource(stream);
-		var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
-		
-		javascriptNode.onaudioprocess = function(event){
-			if(soundProc==0){
-				var inputLevels = event.inputBuffer.getChannelData(0);
-				var currentAudioLevel = average(inputLevels);
-				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
-				var perc = currentAudioLevel/maxAudioLevel;
-				$("#soundIcon").attr("class",perc > 0.05 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
-				$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
-			}
-			soundProc=soundProc+1;
-			if(soundProc>4){
-				soundProc = 0;
-			}
-		};
-		
-		microphone.connect(javascriptNode);
-		javascriptNode.connect(audioContext.destination);
+	var microphone = audioContext.createMediaStreamSource(stream);
+	var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
+	
+	javascriptNode.onaudioprocess = function(event){
+		if(soundProc==0){
+			var inputLevels = event.inputBuffer.getChannelData(0);
+			var currentAudioLevel = average(inputLevels);
+			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+			var perc = currentAudioLevel/maxAudioLevel;
+			$("#soundIcon").attr("class",perc > 0.05 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
+			$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+		}
+		soundProc=soundProc+1;
+		if(soundProc>4){
+			soundProc = 0;
+		}
+	};
+	
+	microphone.connect(javascriptNode);
+	javascriptNode.connect(audioContext.destination);
 }
 
 
