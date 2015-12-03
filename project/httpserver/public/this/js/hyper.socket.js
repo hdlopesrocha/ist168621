@@ -45,6 +45,8 @@ function average(array){
 	return sum/len;
 }
 
+
+
 function audioFunction(stream){
 	
 		var microphone = audioContext.createMediaStreamSource(stream);
@@ -55,7 +57,7 @@ function audioFunction(stream){
 			var currentAudioLevel = average(inputLevels);
 			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
 			var perc = currentAudioLevel/maxAudioLevel;
-			$("#test").html((perc > 0.1 ? "<i class='fa fa-volume-up text-success'></i>":"<i class='fa fa-volume-up text-muted'></i>")+" | "+currentAudioLevel+" / "+maxAudioLevel);
+			$("#test").html((perc > 0.1 ? "<i class='fa fa-volume-up text-success fa-3'></i>":"<i class='fa fa-volume-up text-off fa-3'></i>")+" | "+currentAudioLevel+" / "+maxAudioLevel);
 		};
 		
 		microphone.connect(javascriptNode);

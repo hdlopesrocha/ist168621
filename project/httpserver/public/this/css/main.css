@@ -2,6 +2,10 @@ body {
    /*padding-top: 70px;*/
 }
 
+.text-off {
+	color: #DEDEDE;
+}
+
 .stylish-input-group .input-group-addon{
     background: white !important; 
 }
