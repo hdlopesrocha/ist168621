@@ -62,7 +62,7 @@ function audioFunction(stream){
 				$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
 			}
 			soundProc=soundProc+1;
-			if(soundProc>16){
+			if(soundProc>4){
 				soundProc = 0;
 			}
 		};
