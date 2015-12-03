@@ -248,7 +248,6 @@ var Kurento = new (function() {
 
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
-					audioFunction(stream);
 					Kurento.peerConnection["main"].addStream(stream);
 					Kurento.peerConnection["main"].createOffer(function (lsd) {		
 						console.log("createOfferToSendReceive",lsd);
@@ -260,6 +259,8 @@ var Kurento = new (function() {
 								name : "main",
 								data : lsd
 							}));
+							audioFunction(stream);
+
 						}, logError);
 					}, logError,remote_constraints);
 				}, logError);
