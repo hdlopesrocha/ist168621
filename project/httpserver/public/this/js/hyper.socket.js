@@ -58,7 +58,7 @@ function audioFunction(stream){
 				var currentAudioLevel = average(inputLevels);
 				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
 				var perc = currentAudioLevel/maxAudioLevel;
-				$("#soundIcon").attr("class",perc > 0.01 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
+				$("#soundIcon").attr("class",perc > 0.1 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
 				$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
 			}
 			soundProc=soundProc+1;
