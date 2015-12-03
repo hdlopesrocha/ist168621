@@ -45,21 +45,26 @@ function average(array){
 	return sum;
 }
 
-
+var soundProc = 0;
 
 function audioFunction(stream){
 	
 		var microphone = audioContext.createMediaStreamSource(stream);
 		var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
-
+		
 		javascriptNode.onaudioprocess = function(event){
-			var inputLevels = event.inputBuffer.getChannelData(0);
-			var currentAudioLevel = average(inputLevels);
-			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
-			var perc = currentAudioLevel/maxAudioLevel;
-			$("#soundIcon").attr("class",perc > 0.01 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
-			$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
-
+			if(soundProc==0){
+				var inputLevels = event.inputBuffer.getChannelData(0);
+				var currentAudioLevel = average(inputLevels);
+				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+				var perc = currentAudioLevel/maxAudioLevel;
+				$("#soundIcon").attr("class",perc > 0.01 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
+				$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+			}
+			soundProc=soundProc+1;
+			if(soundProc>128){
+				soundProc = 0;
+			}
 		};
 		
 		microphone.connect(javascriptNode);
