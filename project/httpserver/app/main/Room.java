@@ -196,6 +196,10 @@ public class Room implements Closeable {
 		}
 		
 		user.close();
+		if(participants.size()==0){
+			close();
+		}
+		
 	}
 
 	/**

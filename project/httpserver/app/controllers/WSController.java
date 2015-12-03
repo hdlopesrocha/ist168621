@@ -227,7 +227,6 @@ public class WSController extends Controller {
 							}
 						});
 					} else {
-						System.out.println("WEBSOCKET CLOSE");
 						out.close();
 					}
 				} catch (IOException e) {
