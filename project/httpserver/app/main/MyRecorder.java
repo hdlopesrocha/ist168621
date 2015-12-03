@@ -46,7 +46,7 @@ public class MyRecorder {
 						recorder.record();
 
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(10000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
