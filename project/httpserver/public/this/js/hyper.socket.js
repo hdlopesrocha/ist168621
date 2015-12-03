@@ -55,7 +55,7 @@ function audioFunction(stream){
 			var currentAudioLevel = average(inputLevels);
 			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
 			var perc = currentAudioLevel/maxAudioLevel;
-			$("#test").html((perc > 0.1 ? "1":"0")+" | "+currentAudioLevel+" / "+maxAudioLevel);
+			$("#test").html((perc > 0.1 ? "<i class='fa fa-volume-up text-success'></i>":"<i class='fa fa-volume-up text-muted'></i>")+" | "+currentAudioLevel+" / "+maxAudioLevel);
 		};
 		
 		microphone.connect(javascriptNode);
@@ -239,7 +239,7 @@ var Kurento = new (function() {
 
 				// XXX [CLIENT_OFFER_01] XXX
 				navigator.getUserMedia(local_constraints, function(stream) {
-				//	audioFunction(stream);
+					audioFunction(stream);
 					Kurento.peerConnection["main"].addStream(stream);
 					Kurento.peerConnection["main"].createOffer(function (lsd) {		
 						console.log("createOfferToSendReceive",lsd);
