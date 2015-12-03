@@ -40,9 +40,9 @@ function average(array){
 	var len = array.length;
 	var sum = 0;
 	for (var i = 0; i < len; i++) {
-		sum = Math.max(sum, array[i]);
+		sum += Math.abs(array[i]);
 	}
-	return sum;
+	return sum/len;
 }
 
 var soundProc = 0;
