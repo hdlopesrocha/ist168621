@@ -5,6 +5,14 @@ body {
     border-color: #D9534F;
 }
 
+.panel-green a {
+    color: #5CB85C;
+}
+
+.panel-red a {
+    color: #D9534F;
+}
+
 .panel-primary {
     border-color: #337AB7;
 }
