@@ -265,11 +265,12 @@ var Kurento = new (function() {
 									name : "main",
 									data : lsd
 								}));
-	
+								audioFunction(stq);
+
 							}, logError);
 						}, logError,remote_constraints);
 					}, logError);
-				}else {
+				}else if(mode==2){
 					Kurento.peerConnection["main"].createOffer(function (lsd) {
 						console.log("createOfferToSendReceive",lsd);
 
@@ -281,7 +282,6 @@ var Kurento = new (function() {
 							}));
 						}, logError);
 					}, logError,local_none);
-					
 				}
 				
 				
@@ -301,7 +301,6 @@ var Kurento = new (function() {
 				Kurento.peerConnection["main"].onaddstream = function (e) {
 					console.log("main",e);
 					stq = e.stream;
-					audioFunction(stq);
 					console.log(stq);
 					newVideoCallback(URL.createObjectURL(stq));
 				};
