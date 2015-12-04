@@ -210,6 +210,7 @@
 		
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,onKurentoOpen ,participantOnline, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived, onContentArrived);
+			$('#participantModal').modal('hide');
 		}
 		
 		$(document).ready(function() {
