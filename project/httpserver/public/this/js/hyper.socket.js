@@ -4,7 +4,12 @@ function wsurl(s) {
 	return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
 }
 
-var local_constraints = {
+var local_none = {
+		"audio" : false,
+		"video" : false
+	};
+
+var local_user = {
 	"audio" : true,
 	"video" : true
 };
@@ -171,7 +176,7 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	this.start = function(groupId,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb) {		
+	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
@@ -247,7 +252,8 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("mixer");
 
 				// XXX [CLIENT_OFFER_01] XXX
-				navigator.getUserMedia(local_constraints, function(stream) {
+				
+				navigator.getUserMedia(mode==0? local_user : local_none, function(stream) {
 					Kurento.peerConnection["main"].addStream(stream);
 					Kurento.peerConnection["main"].createOffer(function (lsd) {		
 						console.log("createOfferToSendReceive",lsd);
