@@ -5,8 +5,8 @@ function wsurl(s) {
 }
 
 var local_none = {
-		"audio" : false,
-		"video" : false
+		'offerToReceiveAudio':true, 
+		'offerToReceiveVideo':true 
 	};
 
 var local_user = {
@@ -252,24 +252,39 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("mixer");
 
 				// XXX [CLIENT_OFFER_01] XXX
-				
-				navigator.getUserMedia(mode==0? local_user : local_none, function(stream) {
-					Kurento.peerConnection["main"].addStream(stream);
-					Kurento.peerConnection["main"].createOffer(function (lsd) {		
+				if(mode==0){
+					navigator.getUserMedia(local_user, function(stream) {
+						Kurento.peerConnection["main"].addStream(stream);
+						Kurento.peerConnection["main"].createOffer(function (lsd) {		
+							console.log("createOfferToSendReceive",lsd);
+							// XXX [CLIENT_OFFER_02] XXX
+							Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
+								// XXX [CLIENT_OFFER_03] XXX		
+								Kurento.webSocket.send(JSON.stringify({
+									id : "offer",
+									name : "main",
+									data : lsd
+								}));
+	
+							}, logError);
+						}, logError,remote_constraints);
+					}, logError);
+				}else {
+					Kurento.peerConnection["main"].createOffer(function (lsd) {
 						console.log("createOfferToSendReceive",lsd);
-						// XXX [CLIENT_OFFER_02] XXX
+
 						Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
-							// XXX [CLIENT_OFFER_03] XXX		
 							Kurento.webSocket.send(JSON.stringify({
 								id : "offer",
 								name : "main",
 								data : lsd
 							}));
-							audioFunction(stream);
-
 						}, logError);
-					}, logError,remote_constraints);
-				}, logError);
+					}, logError,local_none);
+					
+				}
+				
+				
 				
 				Kurento.peerConnection["mixer"].createOffer(function (lsd) {
 					console.log("createOfferToReceive",lsd);
@@ -286,6 +301,7 @@ var Kurento = new (function() {
 				Kurento.peerConnection["main"].onaddstream = function (e) {
 					console.log("main",e);
 					stq = e.stream;
+					audioFunction(stq);
 					console.log(stq);
 					newVideoCallback(URL.createObjectURL(stq));
 				};
