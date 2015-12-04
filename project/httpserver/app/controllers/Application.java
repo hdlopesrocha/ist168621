@@ -49,7 +49,7 @@ public class Application extends Controller {
   
     public Result reset()  throws ServiceException {
     	JSONObject prop1=	new JSONObject();
-    	prop1.put("name", "Henerique Rocha");
+    	prop1.put("name", "Henrique Rocha");
     	
     	CreateUserService registerService = new CreateUserService("hdlopesrocha","qazokm", prop1, new ArrayList<KeyValueFile>());
     	User user = registerService.execute();
