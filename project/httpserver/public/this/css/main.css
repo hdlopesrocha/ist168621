@@ -34,12 +34,6 @@ body {
     background-color: #5CB85C;
 }
 
-.panel {
-    margin-bottom: 20px;
-    background-color: #FFF;
-    border-radius: 4px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
-}
 
 .text-off {
 	color: #DEDEDE;
