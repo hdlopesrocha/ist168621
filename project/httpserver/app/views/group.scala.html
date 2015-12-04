@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	
-	<div id="partipantModal" class="modal fade show" role="dialog">
+	<div id="participantModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
@@ -44,9 +44,9 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-4">
-							<div class="panel panel-heading">
+							<div class="panel panel-heading panel-danger">
 								<div class="panel-body">
-									<i class="fa fa-video-camera" style="font-size: 12em;"></i>
+									<i class="fa fa-video-camera" style="font-size: 8em;"></i>
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -56,9 +56,9 @@
                             </div>
 						</div>
 						<div class="col-md-4">
-							<div class="panel panel-heading">
+							<div class="panel panel-heading panel-success">
 								<div class="panel-body">
-									<i class="fa fa-desktop" style="font-size: 12em;"></i>
+									<i class="fa fa-desktop" style="font-size: 8em;"></i>
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -68,9 +68,9 @@
                             </div>
 						</div>
 						<div class="col-md-4">
-							<div class="panel panel-heading">
+							<div class="panel panel-heading panel-primary">
 								<div class="panel-body">
-									<i class="fa fa-eye" style="font-size: 12em;"></i>
+									<i class="fa fa-eye" style="font-size: 8em;"></i>
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -204,7 +204,7 @@
 		
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
-			
+			$('#participantModal').modal('show');
 			$('#searchNav').show();
 			$('#searchText').typeahead(mySearch);	
 			
