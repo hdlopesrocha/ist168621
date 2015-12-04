@@ -270,10 +270,9 @@ var Kurento = new (function() {
 							}, logError);
 						}, logError,remote_constraints);
 					}, logError);
-				}else if(mode==2){
+				} else if(mode==2){
 					Kurento.peerConnection["main"].createOffer(function (lsd) {
-						console.log("createOfferToSendReceive",lsd);
-
+						console.log("createOfferToReceive",lsd);
 						Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
 							Kurento.webSocket.send(JSON.stringify({
 								id : "offer",
@@ -284,11 +283,8 @@ var Kurento = new (function() {
 					}, logError,local_none);
 				}
 				
-				
-				
 				Kurento.peerConnection["mixer"].createOffer(function (lsd) {
 					console.log("createOfferToReceive",lsd);
-
 					Kurento.peerConnection["mixer"].setLocalDescription(lsd, function() {
 						Kurento.webSocket.send(JSON.stringify({
 							id : "offer",
