@@ -90,10 +90,11 @@
 
 
 			<ul class="nav navbar-nav navbar-right">
-
-				<li id="logout-button">
-					<a>Logout</a>
-				</li>
+				@if(session("uid")!=null){
+					<li id="logout-button">
+						<a>Logout</a>
+					</li>
+				}
 			</ul>
 		</div>
 		</div>
