@@ -237,29 +237,7 @@ public class Rest extends Controller {
 		return unauthorized();
 	}
 
-	public Result listGroupMembers(String groupId) {
-		if (session("uid") != null) {
-			ListGroupMembersService service = new ListGroupMembersService(session("uid"), groupId);
-			try {
-				List<KeyValuePair<Membership, User>> ans = service.execute();
-				JSONArray array = new JSONArray();
-				for (KeyValuePair<Membership, User> kvp : ans) {
-					JSONObject obj = new JSONObject();
-					obj.put("uid", kvp.getKey().getUserId());
-					obj.put("email", kvp.getValue().getEmail());
-					obj.put("mid", kvp.getKey().getId());
-					obj.put("name", kvp.getValue().getPublicProperties().getString("name"));
-					array.put(obj);
-				}
-				return ok(array.toString());
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ok("[]");
-		}
-		return forbidden();
-	}
+
 
 	public Result listGroupMembersProperties(String groupId) {
 		JSONObject obj = new JSONObject();
