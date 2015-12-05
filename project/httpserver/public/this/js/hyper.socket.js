@@ -267,7 +267,7 @@ var Kurento = new (function() {
 									name : "main",
 									data : lsd
 								}));
-								audioFunction(stq);
+								audioFunction(stream);
 
 							}, logError);
 						}, logError,remote_constraints);
