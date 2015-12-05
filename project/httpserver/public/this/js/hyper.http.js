@@ -224,12 +224,7 @@ var Signaling = (function(){
 			result(JSON.parse(data));
 		});
 	}
-	
-	this.listGroupMembers = function(groupId,result){
-		$.get( "/api/group/members/"+groupId, function( data ) {
-			result(JSON.parse(data));
-		});
-	}
+
 
 	this.listGroupMembersProperties = function(groupId,result){
 		$.get( "/api/group/properties/"+groupId, function( data ) {

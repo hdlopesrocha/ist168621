@@ -33,7 +33,6 @@ GET		/api/invite/join/:gid/:token	controllers.Rest.joinGroupInvite(gid : String,
 
 GET		/api/group/create				controllers.Rest.createGroup()
 GET		/api/group/list					controllers.Rest.listGroups()
-GET		/api/group/members/:groupId		controllers.Rest.listGroupMembers(groupId : String)
 GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(groupId : String)
 GET		/api/group/properties/:groupId	controllers.Rest.listGroupMembersProperties(groupId : String)
 GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
