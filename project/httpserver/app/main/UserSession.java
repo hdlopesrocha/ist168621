@@ -34,7 +34,6 @@ import services.GetCurrentHyperContentService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
 
-
 public class UserSession implements Closeable, Comparable<UserSession> {
 
 	private final WebSocket.Out<String> out;
@@ -68,8 +67,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		compositePort = room.getCompositePort(user.getId().toString());
 
 		recorder = room.record(endPoint, user.getId().toString());
-				
-		
 
 		endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
 			@Override
@@ -83,7 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			@Override
 			public void onEvent(MediaSessionStartedEvent arg0) {
 				endPoint.connect(compositePort/* , MediaType.AUDIO */);
-				compositePort.connect(compositePoint , MediaType.AUDIO );
+				compositePort.connect(compositePoint, MediaType.AUDIO);
 			}
 		});
 
@@ -112,7 +109,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 			hasMore = service.hasMore();
 			for (HyperContent content : result) {
 				String eventId = content.getId().toString();
-
 				{
 					JSONObject jObj = new JSONObject();
 					jObj.put("time", Tools.FORMAT.format(content.getStart()));
@@ -140,7 +136,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 		return jRoot.toString();
 
 	}
-
 
 	public WebRtcEndpoint getWebRtcEndPoint(String name) {
 		WebRtcEndpoint ep = endPoints.get(name);
@@ -194,10 +189,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	@Override
 	public void close() throws IOException {
 		System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
-
 		endPoint.disconnect(compositePort);
 		compositePort.disconnect(compositePoint);
-
 		compositePort.release();
 		compositePoint.release();
 		endPoint.release();
@@ -254,16 +247,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 	public void setHistoric(String userId, long offset) {
 		timeOffset = offset;
 		playUser = userId;
-
-
 		Date currentTime = new Date(new Date().getTime() - timeOffset);
 		UserSession session = room.getParticipant(playUser);
-		
-		String owner = session!=null? session.getUser().getId().toString() : room.getGroupId();
-		
+		String owner = session != null ? session.getUser().getId().toString() : room.getGroupId();
+
 		try {
 			// saying "no video here!", for group video
-			
 			GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
 					room.getGroupId(), owner, currentTime);
 			Recording rec = service.execute();
@@ -277,23 +266,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 					}
 
 					// WEBM
-
 					System.out.println("HISTORIC PLAY: " + rec.getUrl());
-
 					RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getName());
-
 					player = new PlayerEndpoint.Builder(room.getMediaPipeline(), item.getUrl()).build();
 					// player = new
 					// PlayerEndpoint.Builder(room.getMediaPipeline(),
 					// uri).build();
-
 					player.addErrorListener(new EventListener<ErrorEvent>() {
-
 						@Override
 						public void onEvent(ErrorEvent arg0) {
 							System.out.println("FAILURE: " + arg0.getDescription());
 							setHistoric(playUser, timeOffset);
-
 						}
 					});
 
@@ -304,7 +287,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 						}
 					});
 					player.connect(endPoint/* , MediaType.VIDEO */);
-					//player.connect(compositePoint , MediaType.AUDIO);
+					// player.connect(compositePoint , MediaType.AUDIO);
 					if (play) {
 						player.play();
 					}
@@ -330,17 +313,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 				player = null;
 			}
 		}
-
 		timeOffset = 0l;
 		playUser = userId;
-		UserSession session = room.getParticipant(playUser);
-		if(userId==null){
+		if (userId == null) {
 			compositePort.connect(endPoint);
-		}else {
-			session.endPoint.connect(endPoint);
+		} else {
+			UserSession session = room.getParticipant(playUser);
+			if (session != null) {
+				session.endPoint.connect(endPoint);
+			}
 		}
-		 //mixerPort.connect(endPoint, MediaType.AUDIO);
-		
+		// mixerPort.connect(endPoint, MediaType.AUDIO);
+
 	}
 
 	public void processOffer(String description, String name) {
