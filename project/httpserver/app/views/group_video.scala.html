@@ -347,29 +347,18 @@
 			
 				var del_button = "<i style='color:red' onclick='del_user_group(\""+ userId+ "\")' class='fa fa-times'></i>";
 				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
-				var style1='style="background-image:url(/photo/'+userId+');height:100px;width:100px"';
-				var style2='style="background-image:url(/photo/'+userId+');height:40px;width:40px"';
+				var style='style="background-image:url(/photo/'+userId+');height:40px;width:40px"';
 
 				$("#videoMembers").append(
 					'<div class="media" '+ onclick+'>'+
-					'<a id="vidMember'+userId+'" '+style2+'></a>'+
+					'<a id="vidMember'+userId+'" '+style+'></a>'+
 					'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
-				);
-				
-				$("#messengerMembers").append(
-					'<div class="media">'+
-					'<a id="msgMember'+userId+'" '+style2+'></a>'+
-					'<div class="media-body"><h5>'+name+' </h5><small class="text-muted">Active From 3 hours</small></div></div>'
-				);
-				
-			
+				);		
 			}
 			
 			if(online){
-				$("#msgMember" + userId).attr('class', "pull-left media-object circular circular-online");
 				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-online");
 			}else {
-				$("#msgMember" + userId).attr('class', "pull-left media-object circular circular-offline");
 				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-offline");				
 			}
 		}
