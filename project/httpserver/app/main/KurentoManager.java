@@ -81,7 +81,6 @@ public class KurentoManager {
 	 */
 	public void removeRoom(Room room) {
 		this.rooms.remove(room.getId());
-		room.close();
 	}
 
 }
