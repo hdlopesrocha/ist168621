@@ -154,35 +154,38 @@ public class Room implements Closeable {
 	
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
-		
-		// tell everyone that I am online
-		{
-			final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
-					new JSONArray().put(new JSONObject().put("uid",user.getId().toString()).put("name", user.getPublicProperties().getString("name")).put("online", true)));
-			sendMessage(myAdvertise.toString());
-		}
-		
-		// build current user's list for me
-		{
-			ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(),getGroupId() );
-			JSONArray otherUsers = new JSONArray();
-			
-			try {
-				for(KeyValuePair<Membership, User> m : service.execute()){
-					String userId = m.getValue().getId().toString();
-					String username = m.getValue().getPublicProperties().getString("name");
-					boolean isOnline = participants.containsKey(m.getKey().getUserId().toString());
-					otherUsers.put( new JSONObject().put("uid",userId).put("name",username ).put("online", isOnline));				
-				}
-			}catch(ServiceException e){
-				e.printStackTrace();
-			}
-			final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
-			participant.sendMessage(currentParticipants.toString());
-		}
-		
 		// add myself to the room
 		participants.put(participant.getUser().getId().toString(), participant);
+		
+		final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
+					new JSONArray().put(new JSONObject().put("uid",user.getId().toString()).put("name", user.getPublicProperties().getString("name")).put("online", true)));
+		
+		
+		ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(),getGroupId() );
+		JSONArray otherUsers = new JSONArray();
+		
+		try {
+			for(KeyValuePair<Membership, User> m : service.execute()){
+				UserSession otherSession = participants.get(m.getKey().getUserId().toString());
+				String username = m.getValue().getPublicProperties().getString("name");
+				String userId = m.getValue().getId().toString();
+				JSONObject otherUser = new JSONObject().put("uid",userId).put("name",username );
+				otherUser.put("online",otherSession!=null);									
+				
+				if(otherSession!=null && otherSession.getUser() != user){
+					otherSession.sendMessage(myAdvertise.toString());
+
+				}
+				otherUsers.put(otherUser);
+			}
+		}catch(ServiceException e){
+			e.printStackTrace();
+		}
+		final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+		participant.sendMessage(currentParticipants.toString());
+
+	
+
 
 		return participant;
 	}
