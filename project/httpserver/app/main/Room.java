@@ -45,7 +45,6 @@ public class Room implements Closeable {
 
 			@Override
 			public void onEvent(ErrorEvent arg0) {
-
 				System.out.println("PIPELINE ERROR");
 				System.out.println(arg0.getDescription());
 			}
@@ -185,7 +184,6 @@ public class Room implements Closeable {
 		if(participants.size()==0){
 			close();
 		}
-		
 	}
 
 	/**
