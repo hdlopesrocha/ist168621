@@ -58,9 +58,19 @@
 					</div>
 					<div id="collapse4" class="panel-collapse collapse in">
 						<div class="panel-body">
-							Name:<input type="text" id="group_name" />
-							<button onclick="group_create($('#group_name').val())">Create</button>						</div>
+						<label class="control-label" for="tagContent">Name:</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="group_name"/> 
+							<span class="input-group-addon success" onclick="group_create($('#group_name').val())"> 
+								<i class="fa fa-plus" ></i>
+							</span>
+						</div>
+									
 					</div>
+					</div>
+					
+			
+					
 				</div>
 			</div>
 		</div>
