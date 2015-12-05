@@ -342,8 +342,9 @@
 		}
 
 		function participantInfo(userId, name, online) {
+			alert(userId+"|"+online);
 			if (!participants[userId]) {
-				participants[userId] = name;
+				participants[userId] = online;
 			
 				var del_button = "<i style='color:red' onclick='del_user_group(\""+ userId+ "\")' class='fa fa-times'></i>";
 				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
