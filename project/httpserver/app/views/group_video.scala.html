@@ -4,13 +4,7 @@
 	<div class="col-sm-12">
 		<div class="btn-group pull-right">
 			<div class="form-inline">
-				<div class="btn btn-warning" onclick="playStop()" id="playStop">
-					<i class="fa fa-pause"></i>
-				</div>
-				<div class="btn btn-primary" onclick="timeline.setRealtime()"
-					id="goToPresent">
-					<i class="fa fa-step-forward"></i>
-				</div>
+		
 				<div class="btn btn-default" data-toggle="modal" data-target="#groupSettingsModal">
 					<i class="fa fa-users" style="position: relative;"></i>
 				</div>
@@ -47,6 +41,20 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-info">
+		
+			<div class="btn-group pull-right">
+				<div class="form-inline">
+					<div class="btn btn-warning" onclick="playStop()" id="playStop">
+						<i class="fa fa-pause"></i>
+					</div>
+					<div class="btn btn-primary" onclick="timeline.setRealtime()"
+						id="goToPresent">
+						<i class="fa fa-step-forward"></i>
+					</div>
+				
+				</div>
+			</div>
+		
 			<div class="panel-heading" data-toggle="collapse"
 				data-target="#collapse3">
 				<h4 class="panel-title">TIMELINE</h4>
@@ -186,7 +194,7 @@
 						</div>
 					</div>
 					<div class="panel-footer">				
-						<div class="input-group pull-right">
+						<div class="btn-group input-group pull-right">
 							<button type="button" class="btn btn-danger"
 								onclick="clearContent()">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
