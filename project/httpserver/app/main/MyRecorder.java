@@ -68,7 +68,13 @@ public class MyRecorder {
 						// continuous parts (although not true)
 						begin = end;
 					} catch (Exception e) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+						}
 						System.out.println("RECORDER STOP!");
+						e.printStackTrace();
+						
 						break;
 					}
 				}
