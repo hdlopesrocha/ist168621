@@ -231,6 +231,7 @@ public class Room implements Closeable {
 		}
 		participants.clear();
 		mediaPipeline.release();
+		Global.manager.removeRoom(this);
 	}
 
 	public String getId() {
