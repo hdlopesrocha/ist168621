@@ -3,57 +3,68 @@
 @template(1){
 <div class="container-fluid">
 	<div class="row">
-		<div class="container" data-spy="scroll" data-target="#sidebar-nav">
-
-
-<div class="col-lg-12">
-
 		<div class="col-lg-6">
-		
-		<div class="panel panel-info">
-			<div class="panel-heading" data-toggle="collapse"
-				data-target="#collapse3">
-				<h4 class="panel-title">Login</h4>
-			</div>
-			<div id="collapse3" class="panel-collapse collapse in">
-				<div class="panel panel-default container-full">
-					<form class="form-horizontal" id="signup-form" method="POST" enctype="multipart/form-data">
-						
-						<div class="form-group">
-							<label class="control-label">Email:</label> 
-							<input class="form-control" name="email" value="" placeholder="Email" type="text">
-						</div>		
-						<div class="form-group">
-							<label class="control-label">Password:</label> 
-							<input class="form-control" name="password" value="" placeholder="Password" type="password">
-						</div>			
-						<div class="form-group">
-							<button type="submit" class="btn btn-success">Login</button>
-						</div>
-					</form>				
-				
-				
-				
+			<div class="panel panel-info">
+				<div class="panel-heading" data-toggle="collapse"
+					data-target="#collapse3">
+					<h4 class="panel-title">Login</h4>
+				</div>
+				<div id="collapse3" class="panel-collapse collapse in">
+					<div class="panel panel-default container-full">
+						<form class="form-horizontal" id="login-form">
+							<div class="form-group">
+								<label class="control-label">Email:</label> 
+								<input class="form-control" name="email" value="" placeholder="Email" type="text">
+							</div>		
+							<div class="form-group">
+								<label class="control-label">Password:</label> 
+								<input class="form-control" name="password" value="" placeholder="Password" type="password">
+							</div>			
+							<div class="form-group">
+								<button type="submit" class="btn btn-success">Login</button>
+							</div>
+						</form>				
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-			
-		</div>
-	</div>
-
-
-	
-			<h3>Register</h3>
-			<form id="register-form">
-				Email:<input type="text" name="email" /> <br> Name:<input
-					type="text" name="name" /> <br> Password:<input
-					type="password" name="password" /><br> Confirm Password:<input
-					type="password" name="password2" /><br> Photo:<input
-					type="file" name="photo" /> <br> <input type="submit" />
-			</form>
+		<div class="col-lg-6">
+			<div class="panel panel-info">
+				<div class="panel-heading" data-toggle="collapse"
+					data-target="#collapse4">
+					<h4 class="panel-title">Register</h4>
+				</div>
+				<div id="collapse4" class="panel-collapse collapse in">
+					<div class="panel panel-default container-full">
+						<form class="form-horizontal" id="register-form">
+							
+							<div class="form-group">
+								<label class="control-label">Email:</label> 
+								<input class="form-control" name="email" value="" placeholder="Email" type="text">
+							</div>	
+							<div class="form-group">
+								<label class="control-label">Name:</label> 
+								<input class="form-control" name="name" value="" placeholder="Name" type="text">
+							</div>		
+							<div class="form-group">
+								<label class="control-label">Password:</label> 
+								<input class="form-control" name="password" value="" placeholder="Password" type="password">
+							</div>
+							<div class="form-group">
+								<label class="control-label">Confirm Password:</label> 
+								<input class="form-control" name="password2" value="" placeholder="Confirm Password" type="password">
+							</div>		
+							<div class="form-group">
+								<label class="control-label">Photo:</label> 
+								<input type="file" name="photo" />								
+							</div>	
+							<div class="form-group">
+								<button type="submit" class="btn btn-success">Login</button>
+							</div>
+						</form>				
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
