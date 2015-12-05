@@ -25,9 +25,12 @@ import org.kurento.client.MediaPipeline;
 import exceptions.ServiceException;
 import models.Group;
 import models.Interval;
+import models.KeyValuePair;
+import models.Membership;
 import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
+import services.ListGroupMembersService;
 
 
 public class Room implements Closeable {
@@ -152,19 +155,26 @@ public class Room implements Closeable {
 		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
 		participants.put(participant.getUser().getId().toString(), participant);
+		
+		final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
+				new JSONArray().put(new JSONObject().put("name", user.getPublicProperties().getString("name")).put("online", true)));
+		sendMessage(myAdvertise.toString());
 
-		final JSONObject myData = new JSONObject();
-		final JSONObject otherData = new JSONObject().put(user.getId().toString(),user.getEmail());
-		final JSONObject otherMsg = new JSONObject().put("id", "participants").put("data", otherData);
-		for (final UserSession session : participants.values()) {
-			if(session!=participant) {
-				session.sendMessage(otherMsg.toString());
+		ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(),getGroupId() );
+		JSONArray otherUsers = new JSONArray();
+		
+		try {
+			for(KeyValuePair<Membership, User> m : service.execute()){
+				boolean isOnline = participants.containsKey(m.getKey().getUserId().toString());
+				otherUsers.put( new JSONObject().put("name", user.getPublicProperties().getString("name")).put("online", isOnline));				
 			}
-			User sessionUser = session.getUser();
-			myData.put(sessionUser.getId().toString(),sessionUser.getEmail());
-		}		
-		final JSONObject myMsg = new JSONObject().put("id", "participants").put("data", myData);
-		participant.sendMessage(myMsg.toString());
+		}catch(ServiceException e){
+			e.printStackTrace();
+		}
+		
+		
+		final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+		participant.sendMessage(currentParticipants.toString());
 		return participant;
 	}
 
@@ -172,13 +182,9 @@ public class Room implements Closeable {
 		String uid = user.getUser().getId().toString();
 
 		participants.remove(uid);
-
-		final JSONObject participantLeftJson = new JSONObject();
-		participantLeftJson.put("id", "participantLeft");
-		participantLeftJson.put("uid", uid);
-		for (final UserSession participant : participants.values()) {
-			participant.sendMessage(participantLeftJson.toString());
-		}
+		final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
+				new JSONArray().put(new JSONObject().put("name", user.getUser().getPublicProperties().getString("name")).put("online", false)));
+		sendMessage(myAdvertise.toString());
 		
 		user.close();
 		if(participants.size()==0){
