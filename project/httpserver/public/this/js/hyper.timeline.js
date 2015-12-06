@@ -232,6 +232,11 @@ var HyperTimeline = new (function() {
 			});
 	    }
 	    
+	    timeline.removeTag= function(id){
+			this.items.remove(id);
+
+	    }
+	    
 	    
 	    timeline.getMyTime = function(){
 	    	return timeline.getCustomTime("time");
