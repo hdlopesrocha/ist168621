@@ -109,20 +109,20 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Create TAG</h4>
 				</div>
-				<div class="modal-body">
-					<div class="input-group">
-						<label>TAG Name:</label>
-						<input type="text" class="form-control" id="tagTitle" 			onkeydown="if(event.keyCode==13){addTag();}" /> 
+				<form class="form-horizontal" id="createTagForm">
+					<div class="modal-body">
+						<div class="input-group">
+							<label>TAG Name:</label>
+							<input type="text" class="form-control" id="tagTitle" /> 
+						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<div class="input-group pull-right">
-						<button type="button" class="btn btn-success" id="addMembers" data-toggle="modal" data-target="#createTagModal" onclick="addTag();">
-							<i class="fa fa-plus"></i>
-						</button>
+					<div class="modal-footer">
+						<div class="input-group pull-right">
+							<input type="submit" class="btn btn-success" id="addMembers"/>
+						</div>
+						<div class="clearfix"></div>
 					</div>
-					<div class="clearfix"></div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -227,6 +227,12 @@
 			$('#searchText').typeahead(mySearch);	
 			
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
+			
+			
+			$("createTagForm").submit(function(e){
+				e.preventDefault();
+				addTag();
+			});
 			
 			
 			
