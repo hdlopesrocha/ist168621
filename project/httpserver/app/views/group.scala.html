@@ -112,8 +112,8 @@
 				<form class="form-horizontal" id="createTagForm">
 					<div class="modal-body">
 						<div class="input-group">
-							<label>TAG Name:</label>
-							<input type="text" class="form-control" id="tagTitle" /> 
+							<label class="control-label">TAG Name:</label>
+							<input class="form-control" type="text" id="tagTitle" /> 
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -229,8 +229,8 @@
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
 			
-			$("createTagForm").submit(function(e){
-				e.preventDefault();
+			$("createTagForm").submit(function(event){
+				event.preventDefault();
 				$("#createTagModal").modal('hide');
 				var id = makeid();
 				var title = $("#tagTitle").val();
