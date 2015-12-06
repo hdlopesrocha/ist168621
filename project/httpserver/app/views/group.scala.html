@@ -466,7 +466,7 @@
 		
 		function del_user_group(uid) {
 			var success = function() {
-				document.location = document.location;
+				$("#vidMember"+uid).remove();
 			};
 			Signaling.removeUserGroup("@groupId", uid, success);
 		}
