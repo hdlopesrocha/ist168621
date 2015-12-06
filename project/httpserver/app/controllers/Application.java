@@ -63,6 +63,7 @@ public class Application extends Controller {
     	
     	AddGroupMemberService joinService = new AddGroupMemberService(user.getId().toString(),group.getId().toString(),user2.getId().toString());
     	joinService.execute();
+    	session().clear();
 		return redirect("/");
     }
     
