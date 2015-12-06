@@ -158,6 +158,7 @@ var Signaling = (function(){
 	
 	this.searchGroupCandidates = function(groupId,query,result){
 		$.get( "/api/group/candidates/"+groupId+"?s="+query, function( data ) {
+			console.log("searchGroupCandidates",query,data);
 			result(JSON.parse(data));
 		});
 	}
