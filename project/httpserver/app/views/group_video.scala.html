@@ -217,7 +217,6 @@
 		var participants = {};
 		var timeline = null;
 		var current_offset = 0;
-		var rendered_intervals = {};
 		var oldestMsg = null;
 		var localContent = [];
 		var moreContent = true;
@@ -288,16 +287,7 @@
 			for ( var id in array) {
 				var start = array[id][0];
 				var end = array[id][1];
-				var inter = rendered_intervals[id];
-
-				if (inter) {
-					timeline.removeRecord(id);
-				}
-				
-				timeline.addRecord(id, start, end);
-
-			
-				rendered_intervals[id] = true;
+				timeline.setRecord(id, start, end);
 			}
 			if (firstRecording) {
 				firstRecording = false;
