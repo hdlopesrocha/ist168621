@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -464,16 +465,16 @@ public class Rest extends Controller {
 			JSONArray array = new JSONArray();
 			// Search User
 			{
-				List<User> res = new SearchUserService(session("uid"), query).execute();
-				for (User u : res) {
-					if (!u.getId().equals(me.getId())) {
-						JSONObject profile = new GetUserProfileService(session("uid"), u.getId().toString()).execute();
+				Set<ObjectId> res = new SearchUserService(session("uid"), query).execute();
+				for (ObjectId userId : res) {
+					if (!userId.equals(me.getId())) {
+						JSONObject profile = new GetUserProfileService(session("uid"), userId.toString()).execute();
 						
 						profile.put("type", "user");
-						Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
+						Relation rel = Relation.findByEndpoint(me.getId(), userId);
 
 						if (rel == null) {
-							rel = Relation.findByEndpoint(u.getId(), me.getId());
+							rel = Relation.findByEndpoint(userId, me.getId());
 						}
 						if (rel != null) {
 							profile.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
