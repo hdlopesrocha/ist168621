@@ -24,9 +24,11 @@ import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.WebSocket;
+import services.AddGroupMemberService;
 import services.CreateHyperContentService;
 import services.CreateMessageService;
 import services.CreateTagService;
+import services.GetUserProfileService;
 import services.ListTagsService;
 
 public class WSController extends Controller {
@@ -157,6 +159,20 @@ public class WSController extends Controller {
 											usession.sendMessage(usession.getContent());
 										}
 									}).start();
+								}
+									break;
+								case "addUser": {
+									String userId = args.optString("uid",null);
+									AddGroupMemberService service = new AddGroupMemberService(user.getId().toString(), groupId, userId);
+									try {
+										service.execute();
+										JSONObject myProfile = new GetUserProfileService(user.getId().toString(), userId).execute();
+										final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+												new JSONArray().put(myProfile.put("uid", user.getId().toString()).put("online", false)));
+										room.sendMessage(myAdvertise.toString());
+									} catch (ServiceException e) {
+										e.printStackTrace();
+									}
 								}
 									break;
 								case "play": {
