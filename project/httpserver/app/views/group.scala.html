@@ -208,19 +208,19 @@
 			
 				var del_button = "<i style='color:red' onclick='del_user_group(\""+ userId+ "\")' class='fa fa-times'></i>";
 				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
-				var style='style="background-image:url(/photo/'+userId+');height:40px;width:40px"';
+				var style='style="background-image:url(/photo/'+userId+');height:40px;width:40px" class="pull-left media-object circular"';
 
 				$("#videoMembers").append(
-					'<div class="media" '+ onclick+'>'+
-					'<a id="vidMember'+userId+'" '+style+'></a>'+
+					'<div id="vidMember'+userId+'" '+ onclick+'>'+
+					'<a '+style+'></a>'+
 					'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 				);		
 			}
 			
 			if(online){
-				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-online");
+				$("#vidMember" + userId).attr('class', "media circular-online");
 			}else {
-				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-offline");				
+				$("#vidMember" + userId).attr('class', "media circular-offline");				
 			}
 		}
 
