@@ -518,15 +518,7 @@ public class Rest extends Controller {
 			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
 			JSONArray array = new JSONArray();
 			try {
-				List<User> ans = service.execute();
-				for (User u : ans) {
-					try {
-						JSONObject profile = new GetUserProfileService(session("uid"), u.getId().toString()).execute();
-						array.put(profile);
-					} catch (ServiceException e) {
-						e.printStackTrace();
-					}
-				}
+				array = service.execute();
 			} catch (ServiceException e) {
 				e.printStackTrace();
 			}

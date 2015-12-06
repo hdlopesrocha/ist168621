@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-
 import exceptions.ServiceException;
 import models.Group;
 import models.KeyValueFile;
@@ -15,12 +14,13 @@ import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
-import services.Service;
 import services.AddGroupMemberService;
 import services.CreateGroupService;
+import services.CreateRelationService;
 import services.CreateUserService;
 import services.GetGroupInviteService;
 import services.JoinGroupInviteService;
+import services.Service;
 
 
 public class Application extends Controller {
@@ -53,15 +53,20 @@ public class Application extends Controller {
     	prop1.put("name", "Henrique Rocha");
     	
     	CreateUserService registerService = new CreateUserService("hdlopesrocha","qazokm", prop1, new ArrayList<KeyValueFile>());
-    	User user = registerService.execute();
-    	CreateGroupService groupService = new CreateGroupService(user.getId().toString(),"WebRTC");
+    	User user1 = registerService.execute();
+    	CreateGroupService groupService = new CreateGroupService(user1.getId().toString(),"WebRTC");
     	Group group = groupService.execute();
     	JSONObject prop2=	new JSONObject();
     	prop2.put("name", "Nikhil Bhatt");
     	CreateUserService registerService2 = new CreateUserService("nbhatt","qazokm", prop2, new ArrayList<KeyValueFile>());
     	User user2 = registerService2.execute();
     	
-    	AddGroupMemberService joinService = new AddGroupMemberService(user.getId().toString(),group.getId().toString(),user2.getId().toString());
+    	
+    	new CreateRelationService(user1.getId().toString(),user2.getId().toString()).execute();
+    	new CreateRelationService(user2.getId().toString(),user1.getId().toString()).execute();
+    	
+    	
+    	AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(),group.getId().toString(),user2.getId().toString());
     	joinService.execute();
     	session().clear();
 		return redirect("/");
