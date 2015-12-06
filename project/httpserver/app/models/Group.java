@@ -34,7 +34,6 @@ public class Group {
 			collection = Service.getDatabase().getCollection("groups");
 		return collection;		
 	}
-
 	
 	public String getName() {
 		return name;
