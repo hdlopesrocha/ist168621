@@ -3,12 +3,12 @@
 var HyperTimeline = new (function() {
 
 
-	
-	
-	
 
 	
-	this.create = function(items,divId, historic, realtime) {
+	this.create = function(divId, historic, realtime) {
+		
+		
+		
 		function followerWorker(timeline){
 	    	if(timeline.timeRunning){
 				var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
@@ -64,6 +64,16 @@ var HyperTimeline = new (function() {
                 className:'recsGroup'
               }
         ];
+
+		// TIMELINE
+		var items = new vis.DataSet({
+			type : {
+				start : 'ISODate',
+				end : 'ISODate'
+			}
+		});
+
+	    
 	    
 	    var timeline =  new vis.Timeline(main, items,groups, options);
 	    timeline.real_time = true;
@@ -124,7 +134,29 @@ var HyperTimeline = new (function() {
 	    	}
 	    });
 	    
-	    
+	    timeline.removeRecord = function(id){
+			items.remove(id);
+		}
+		
+		
+		timeline.addRecord = function(id,start,end){
+			items.add({
+				id : id,
+				group : 'rec',
+				content : "&nbsp;",
+				editable : false,
+				selectable : false,
+				className : 'danger',
+				start : start,
+				end : end
+			});
+			
+		}
+		
+		
+		timeline.getRecord = function(id){
+			return items.get(id);
+		}
 	    
 	    timeline.intersects = function(start,end){
 	    	var customTime = this.getCustomTime("time");

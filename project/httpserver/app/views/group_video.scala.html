@@ -35,7 +35,6 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-info">
-		
 			<div class="btn-group pull-right">
 				<div class="form-inline">
 					<div class="btn btn-warning" onclick="playStop()" id="playStop">
@@ -51,7 +50,6 @@
 					</div>
 				</div>
 			</div>
-		
 			<div class="panel-heading" data-toggle="collapse"
 				data-target="#collapse3">
 				<h4 class="panel-title">TIMELINE</h4>
@@ -79,13 +77,7 @@
 				<button type="button" class="btn btn-primary" id="groupVideo"
 					onclick="selectVideo(true)">
 					<i class="fa fa-users"></i>
-				</button>
-				
-				
-				
-				
-				
-				
+				</button>				
 			</div>
 			<div class="panel-heading" data-toggle="collapse"
 				data-target="#collapse0">
@@ -95,10 +87,7 @@
 				</div>
 			</div>
 			<div id="collapse0" class="panel-collapse collapse in">
-			
 				<div class="panel-body">
-					
-					
 					<div style="position: relative; display: inline-block;  width:100%; height: auto">
 						<div id="previewContent" style="position: absolute; z-index: 99; width: 100%; height: 100%;"></div>
 						<div id="mainVideoContent" style="position: absolute; z-index: 99; width: 100%; height: 100%;"></div>
@@ -233,16 +222,6 @@
 		var localContent = [];
 		var moreContent = true;
 		var contentTimer = null;
-		// TIMELINE
-		var items = new vis.DataSet({
-			type : {
-				start : 'ISODate',
-				end : 'ISODate'
-			}
-		});
-	
-		
-	
 		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
@@ -286,7 +265,7 @@
 					}
 				})(jQuery);
 
-				timeline = HyperTimeline.create(items, "timeline",
+				timeline = HyperTimeline.create("timeline",
 					function(offset) {
 						console.log("HISTORIC", offset);
 						// current request
@@ -312,19 +291,12 @@
 				var inter = rendered_intervals[id];
 
 				if (inter) {
-					items.remove(id);
+					timeline.removeRecord(id);
 				}
+				
+				timeline.addRecord(id, start, end);
 
-				items.add({
-					id : id,
-					group : 'rec',
-					content : "&nbsp;",
-					editable : false,
-					selectable : false,
-					className : 'danger',
-					start : start,
-					end : end
-				});
+			
 				rendered_intervals[id] = true;
 			}
 			if (firstRecording) {
@@ -457,7 +429,7 @@
 			console.log(unsaved_tags);
 			for ( var i in unsaved_tags) {
 				var tag = unsaved_tags[i];
-				var visTag = items.get(tag.id);
+				var visTag = timeline.getRecord(tag.id);
 				var time = new Date(visTag.start);
 
 				var title = tag.title;
