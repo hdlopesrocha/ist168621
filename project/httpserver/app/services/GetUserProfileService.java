@@ -30,16 +30,16 @@ public class GetUserProfileService extends Service<JSONObject> {
 		PublicProfile publicProfile = PublicProfile.findByOwner(user);
 		IdentityProfile identityProfile = IdentityProfile.findByOwner(user);
 		
-		JSONObject publicProperties = new JSONObject(publicProfile.getData().toJson());
+		JSONObject props = new JSONObject(publicProfile.getData().toJson());
 		JSONObject identityProperties = new JSONObject(identityProfile.getData().toJson());
 		for(Object k: identityProperties.keySet()){
 			String key = (String) k;
-			publicProperties.put(key, identityProperties.get(key));
+			props.put(key, identityProperties.get(key));
 		}
 		
+		props.put("id", user.toString());
 		
-		
-		return publicProperties;
+		return props;
 	}
 
 	/*

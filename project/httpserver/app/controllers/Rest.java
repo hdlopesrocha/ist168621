@@ -296,14 +296,11 @@ public class Rest extends Controller {
 				JSONArray array = new JSONArray();
 				List<User> res = service.execute();
 				for (User user : res) {
-					JSONObject obj = new JSONObject();
-					obj.put("uid", user.getId().toString());
-					array.put(obj);
+					GetUserProfileService profService = new GetUserProfileService(session("uid"), user.getId().toString());					
+					array.put(profService.execute());
 				}
 				return ok(array.toString());
-
 			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
