@@ -155,24 +155,20 @@ public class Room implements Closeable {
 					.execute();
 
 			final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-					new JSONArray().put(myProfile.put("uid", user.getId().toString()).put("online", true)));
+					new JSONArray().put(myProfile.put("online", true)));
 
 			ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(), getGroupId());
 
 			for (KeyValuePair<Membership, User> m : service.execute()) {
 				UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-				JSONObject profile = new GetUserProfileService(user.getId().toString(), m.getValue().getId().toString())
+				JSONObject otherProfile = new GetUserProfileService(user.getId().toString(), m.getValue().getId().toString())
 						.execute();
-
-				String userId = m.getValue().getId().toString();
-				JSONObject otherUser = profile.put("uid", userId);
-				otherUser.put("online", otherSession != null);
-
+				otherProfile.put("online", otherSession != null);
 				if (otherSession != null && otherSession.getUser() != user) {
 					otherSession.sendMessage(myAdvertise.toString());
 
 				}
-				otherUsers.put(otherUser);
+				otherUsers.put(otherProfile);
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();

@@ -168,7 +168,7 @@ public class WSController extends Controller {
 										service.execute();
 										JSONObject myProfile = new GetUserProfileService(user.getId().toString(), userId).execute();
 										final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-												new JSONArray().put(myProfile.put("uid", userId).put("online", false)));
+												new JSONArray().put(myProfile.put("online", false)));
 										room.sendMessage(myAdvertise.toString());
 									} catch (ServiceException e) {
 										e.printStackTrace();
