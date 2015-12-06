@@ -12,13 +12,13 @@ import models.User;
  */
 public class AddGroupMemberService extends Service<Void> {
 
-	private User user, member;
-	private Group group;
+	private ObjectId user, member;
+	private ObjectId group;
 
 	public AddGroupMemberService(String uid, String groupId, String member) {
-		this.user = User.findById(new ObjectId(uid));
-		this.group = Group.findById(new ObjectId(groupId));
-		this.member = User.findById(new ObjectId(member));
+		this.user = new ObjectId(uid);
+		this.group = new ObjectId(groupId);
+		this.member = new ObjectId(member);
 	}
 
 	/*
@@ -28,8 +28,8 @@ public class AddGroupMemberService extends Service<Void> {
 	 */
 	@Override
 	public Void dispatch() {
-		if(Membership.findByUserGroup(member.getId(), group.getId())==null){
-			new Membership(member.getId(), group.getId()).save();
+		if(Membership.findByUserGroup(member, group)==null){
+			new Membership(member, group).save();
 		}
 		return null;
 	}
@@ -43,7 +43,7 @@ public class AddGroupMemberService extends Service<Void> {
 	public boolean canExecute() {
 		boolean ret = user != null && group != null && member!=null;
 		if(ret){
-			return Membership.findByUserGroup(user.getId(), group.getId()) !=null;			
+			return Membership.findByUserGroup(user, group) !=null;			
 		}
 		return false;
 	}
