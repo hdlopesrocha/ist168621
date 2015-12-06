@@ -509,20 +509,4 @@
 			renderContent();
 		}
 
-		function addTag() {
-			
-			$("#createTagModal").modal('hide');
-			
-			var id = makeid();
-			var title = $("#tagTitle").val();
-			var content = "";
-
-			unsaved_tags.push({
-				id : id,
-				title : title,
-				content : content
-			});
-			timeline.addTag(id, title);
-			$("#saveButton").removeClass("hidden");
-		}
 	</script>
