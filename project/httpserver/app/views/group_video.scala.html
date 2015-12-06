@@ -4,19 +4,7 @@
 	<div class="col-sm-12">
 		<div class="btn-group pull-right">
 			<div class="form-inline">
-				<div class="form-group">
-					<label class="control-label" for="tagContent">Create TAG</label>
-					<div class="input-group">
-						<input type="text" class="form-control" id="tagTitle"
-							onkeydown="if(event.keyCode==13){addTag();}" /> <span
-							class="input-group-addon success" onclick="addTag()"> <i
-							class="fa fa-tag" style="position: relative;"> <i
-								class="fa fa-plus"
-								style="position: absolute; bottom: 8px; left: 8px"></i>
-						</i>
-						</span>
-					</div>
-				</div>
+			
 				<div class="btn btn-primary hidden" onclick="saveTags()"
 					id="saveButton">
 					<i class="fa fa-floppy-o"></i>
@@ -42,6 +30,12 @@
 					data-toggle="modal" data-target="#timeQueryStringModal">
 						<i class="fa fa-link"></i>
 					</div>
+					<div class="btn btn-info" 
+					data-toggle="modal" data-target="#createTagModal">
+						<i class="fa fa-tag"></i>
+					</div>
+					
+					
 				</div>
 			</div>
 			<div class="panel-heading" data-toggle="collapse"
