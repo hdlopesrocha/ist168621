@@ -489,7 +489,7 @@
 				var success = function() {
 					$("#vidMember"+uid).remove();
 					$("#removeMemberModal").modal("hide");
-
+					participants[uid]=false;
 				};
 				Signaling.removeUserGroup("@groupId", uid, success);
 			});
