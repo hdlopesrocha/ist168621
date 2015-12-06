@@ -14,7 +14,6 @@ import models.Message;
  */
 public class CreateMessageService extends Service<Message> {
 
-	private KeyValueFile anex;
 	private ObjectId target;
 	private ObjectId source;
 	private Date time;
@@ -32,8 +31,7 @@ public class CreateMessageService extends Service<Message> {
 	 *            the content
 	 * @param anex
 	 */
-	public CreateMessageService(final String source, final String target,final String text,final KeyValueFile anex) {
-		this.anex = anex;
+	public CreateMessageService(final String source, final String target,final String text) {
 		this.target = new ObjectId(target);
 		this.source = new ObjectId(source);
 		this.text = text;

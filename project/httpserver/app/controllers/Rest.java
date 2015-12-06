@@ -25,7 +25,6 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import services.AddGroupMemberService;
-import services.AuthenticateTokenService;
 import services.AuthenticateUserService;
 import services.ChangeUserPasswordService;
 import services.CreateGroupInviteService;
@@ -35,6 +34,7 @@ import services.CreateUserService;
 import services.DeleteGroupInviteService;
 import services.DenyRelationService;
 import services.DownloadFileService;
+import services.FindIdentityProfileService;
 import services.GetGroupInviteService;
 import services.GetUserPhotoService;
 import services.GetUserProfileService;
@@ -227,7 +227,7 @@ public class Rest extends Controller {
 
 	public Result getUser(String userId) {
 		try {
-			return ok(new GetUserProfileService(session("uid"), userId).execute());
+			return ok(new GetUserProfileService(session("uid"), userId).execute().toString());
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -276,7 +276,6 @@ public class Rest extends Controller {
 				List<User> res = service.execute();
 				for (User user : res) {
 					JSONObject obj = new JSONObject();
-					obj.put("email", user.getEmail());
 					obj.put("uid", user.getId().toString());
 					array.put(obj);
 				}
@@ -298,7 +297,6 @@ public class Rest extends Controller {
 				List<User> res = service.execute();
 				for (User user : res) {
 					JSONObject obj = new JSONObject();
-					obj.put("email", user.getEmail());
 					obj.put("uid", user.getId().toString());
 					array.put(obj);
 				}
@@ -326,31 +324,18 @@ public class Rest extends Controller {
 		try {
 
 			Map<String, String[]> map = request().body().asFormUrlEncoded();
-			if (map.containsKey("token")) {
-				String token = map.get("token")[0];
-
-				AuthenticateTokenService service = new AuthenticateTokenService(token);
-				if (service.execute()) {
-					session("email", service.getEmail());
-					session("uid", service.getUserId());
-					return ok(service.getToken());
-				} else {
-					if (service.userExists())
-						return Rest.status(409);
-					else
-						return unauthorized();
-				}
-			} else if (map.containsKey("email") && map.containsKey("password")) {
+			if (map.containsKey("email") && map.containsKey("password")) {
 				String email = map.get("email")[0];
 
 				String password = map.get("password")[0];
-
-				AuthenticateUserService service = new AuthenticateUserService(email, password);
-				if (service.execute()) {
-
-					session("email", email);
-					session("uid", service.getUserId());
-					return ok(service.getToken());
+				String identity = new FindIdentityProfileService("email",email).execute();
+				AuthenticateUserService service = new AuthenticateUserService(identity, password);
+				User user = service.execute();
+				
+				
+				if (user!=null) {
+					session("uid", user.getId().toString());
+					return ok(user.getToken());
 				} else {
 					return unauthorized();
 				}
@@ -485,24 +470,18 @@ public class Rest extends Controller {
 				List<User> res = new SearchUserService(session("uid"), query).execute();
 				for (User u : res) {
 					if (!u.getId().equals(me.getId())) {
-						JSONObject obj = new JSONObject();
-						obj.put("email", u.getEmail());
-						obj.put("id", u.getId().toString());
-						String name = u.getPublicProperties().getString("name");
-						if (name == null) {
-							name = u.getEmail();
-						}
-						obj.put("name", name);
-						obj.put("type", "user");
+						JSONObject profile = new GetUserProfileService(session("uid"), u.getId().toString()).execute();
+						
+						profile.put("type", "user");
 						Relation rel = Relation.findByEndpoint(me.getId(), u.getId());
 
 						if (rel == null) {
 							rel = Relation.findByEndpoint(u.getId(), me.getId());
 						}
 						if (rel != null) {
-							obj.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
+							profile.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
 						}
-						array.put(obj);
+						array.put(profile);
 					}
 				}
 			}
@@ -537,23 +516,21 @@ public class Rest extends Controller {
 			System.out.println("SEARCH: " + groupId + " | " + query);
 
 			SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
+			JSONArray array = new JSONArray();
 			try {
 				List<User> ans = service.execute();
-				JSONArray array = new JSONArray();
 				for (User u : ans) {
-					JSONObject obj = new JSONObject();
-					obj.put("uid", u.getId().toString());
-					obj.put("email", u.getEmail());
-					array.put(obj);
-					obj.put("name", u.getPublicProperties().getString("name"));
-
+					try {
+						JSONObject profile = new GetUserProfileService(session("uid"), u.getId().toString()).execute();
+						array.put(profile);
+					} catch (ServiceException e) {
+						e.printStackTrace();
+					}
 				}
-				return ok(array.toString());
 			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return ok("[]");
+			return ok(array.toString());
 		}
 		return forbidden();
 	}

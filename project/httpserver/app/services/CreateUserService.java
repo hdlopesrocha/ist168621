@@ -9,7 +9,10 @@ import org.json.JSONObject;
 import exceptions.ConflictException;
 import exceptions.ServiceException;
 import main.Tools;
+import models.IdentityProfile;
 import models.KeyValueFile;
+import models.PrivateProfile;
+import models.PublicProfile;
 import models.User;
 
 
@@ -67,8 +70,7 @@ public class CreateUserService extends Service<User> {
 			properties.put(kvf.getKey(), photoUrl);
 		
 		}
-		User newUser = new User(email, password, properties, permissions);
-
+		User newUser = new User(password);
 			
 		String token = Tools.getRandomString(32);
 		
@@ -78,7 +80,11 @@ public class CreateUserService extends Service<User> {
 		
 		newUser.setToken(token);
 		newUser.save();
-
+		new IdentityProfile(newUser.getId(), new Document().append("email", email)).save();
+		new PublicProfile(newUser.getId(),properties).save();
+		new PrivateProfile(newUser.getId(), new Document()).save();
+		
+		
 		return newUser;
 	}
 

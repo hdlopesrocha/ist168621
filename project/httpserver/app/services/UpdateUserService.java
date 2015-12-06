@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import exceptions.ServiceException;
 import models.KeyValueFile;
-import models.User;
+import models.PublicProfile;
 
 
 // TODO: Auto-generated Javadoc
@@ -18,12 +18,12 @@ import models.User;
 public class UpdateUserService extends Service<Void> {
 
 	private JSONObject info;
-	private User user;
+	private ObjectId user;
 	private List<KeyValueFile> files;
 	
 	public UpdateUserService(final String uid,final JSONObject info, List<KeyValueFile>  files) {
 
-		this.user = uid!=null? User.findById(new ObjectId(uid)):null;
+		this.user = uid!=null? new ObjectId(uid):null;
 		
 		this.info = info;
 		
@@ -49,9 +49,11 @@ public class UpdateUserService extends Service<Void> {
 			}
 			properties.put(kvf.getKey(), photoUrl);
 		}
+		PublicProfile publicProfile = PublicProfile.findByOwner(user);
 		
-		user.setPublicProperties( properties);
-		user.save();
+		
+		publicProfile.setData(properties);
+		publicProfile.save();
 		return null;
 	}
 

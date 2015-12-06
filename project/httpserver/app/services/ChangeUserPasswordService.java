@@ -13,10 +13,10 @@ import models.User;
 public class ChangeUserPasswordService extends Service<Void> {
 
 	private String password, oldPassword; 
+	private ObjectId userId;
 	private User user;
-	
 	public ChangeUserPasswordService(final String uid, final String oldPassword,final String password) {
-		this.user = uid!=null? User.findById(new ObjectId(uid)):null;
+		this.userId = uid!=null? new ObjectId(uid):null;
 		this.password = password;
 		this.oldPassword = oldPassword;
 	}
@@ -41,15 +41,14 @@ public class ChangeUserPasswordService extends Service<Void> {
 	 */
 	@Override
 	public boolean canExecute() {
-		Boolean auth = false;
 		try {
-			auth = new AuthenticateUserService(user.getEmail(), oldPassword).execute();
+			user = new AuthenticateUserService(userId.toString(), oldPassword).execute();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return user!=null && auth  && password!=null;
+		return userId!=null && user!=null  && password!=null;
 	}
 	
 	

@@ -42,20 +42,8 @@ public class ListUsersService extends Service<String> {
 
 	@Override
 	public boolean canExecute() {
-		if (caller != null) {
-			try {
-				JSONArray array = new JSONArray(caller.getPermissions());
-				for (int i = 0; i < array.length(); ++i) {
-					if (array.getString(i).equals("ADMIN"))
-						return true;
-
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		return false;
+		
+		return caller!=null;
 	}
 
 

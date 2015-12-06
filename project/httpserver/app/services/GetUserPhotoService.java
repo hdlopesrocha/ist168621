@@ -3,7 +3,7 @@ package services;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import models.User;
+import models.PublicProfile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -11,11 +11,11 @@ import models.User;
  */
 public class GetUserPhotoService extends Service<String> {
 
-	private User caller;
+	private ObjectId callerId;
 
 	
 	public GetUserPhotoService(String uid) {
-		this.caller = User.findById(new ObjectId(uid));
+		this.callerId = new ObjectId(uid);
 	}
 
 	/*
@@ -25,9 +25,14 @@ public class GetUserPhotoService extends Service<String> {
 	 */
 	@Override
 	public String dispatch() {
-		Document properties = caller.getPublicProperties();
-		System.out.println("PROPS: "+properties.toJson());
-		return properties.containsKey("photo")? properties.getString("photo"):null;
+		PublicProfile profile = PublicProfile.findByOwner(callerId);
+		if(profile!=null){
+			Document properties = profile.getData();
+			System.out.println("PROPS: "+properties.toJson());
+			return properties.containsKey("photo")? properties.getString("photo"):null;
+		
+		}
+		return "";
 	}
 
 	/*
@@ -37,7 +42,7 @@ public class GetUserPhotoService extends Service<String> {
 	 */
 	@Override
 	public boolean canExecute() {
-		return caller!=null;
+		return callerId!=null;
 	}
 
 }

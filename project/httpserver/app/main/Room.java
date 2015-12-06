@@ -30,15 +30,15 @@ import models.Membership;
 import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
+import services.GetUserProfileService;
 import services.ListGroupMembersService;
-
 
 public class Room implements Closeable {
 
 	private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
 	private final MediaPipeline mediaPipeline;
 	private final Group group;
-	private Hub composite= null;
+	private Hub composite = null;
 	private MyRecorder recorder;
 	private HubPort hubPort;
 
@@ -52,48 +52,45 @@ public class Room implements Closeable {
 				System.out.println(arg0.getDescription());
 			}
 		});
-		
-		for(MediaObject obj : mediaPipeline.getChilds()){
-			if(obj.getName().equals("composite")){
+
+		for (MediaObject obj : mediaPipeline.getChilds()) {
+			if (obj.getName().equals("composite")) {
 				this.composite = (Hub) obj;
-				for(MediaObject child : obj.getChilds()){
+				for (MediaObject child : obj.getChilds()) {
 					child.release();
 				}
 			}
 		}
 		this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
-		
-		if(this.composite==null){
+
+		if (this.composite == null) {
 			this.composite = new Composite.Builder(mediaPipeline).build();
 			this.composite.setName("composite");
 			this.hubPort = getCompositePort("this");
-			this.recorder = record(hubPort,group.getId().toString());
+			this.recorder = record(hubPort, group.getId().toString());
 			this.recorder.start();
 		}
-		System.out.println("ROOM "+mediaPipeline.getName()+" has been created");	
+		System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
 	}
 
-	
 	public HubPort getHubPort() {
 		return hubPort;
 	}
 
-
-	public MyRecorder record(final MediaElement endPoint,final String id){
+	public MyRecorder record(final MediaElement endPoint, final String id) {
 
 		return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
 			@Override
 			public String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId) {
 
 				try {
-					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(),
-							id, begin, end, filename, "video/webm", intervalId);
+					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(), id, begin,
+							end, filename, "video/webm", intervalId);
 					srs.execute();
 
 					Interval interval = srs.getInterval();
 					intervalId = interval.getId().toString();
 
-			
 					JSONArray array = new JSONArray();
 					array.put(Tools.FORMAT.format(interval.getStart()));
 					array.put(Tools.FORMAT.format(interval.getEnd()));
@@ -102,7 +99,7 @@ public class Room implements Closeable {
 					msg.put("id", "rec");
 					msg.put(intervalId, array);
 					sendMessage(msg.toString());
-					
+
 					System.out.println("REC: " + filepath);
 
 				} catch (ServiceException e) {
@@ -112,7 +109,7 @@ public class Room implements Closeable {
 			}
 		});
 	}
-	
+
 	public HubPort getCompositePort(String id) {
 		for (MediaObject port : getComposite().getChilds()) {
 			if (port.getName().equals(id)) {
@@ -125,18 +122,16 @@ public class Room implements Closeable {
 		return port;
 	}
 
-	
 	public void sendMessage(final String string) {
-		for(UserSession user : participants.values()){
+		for (UserSession user : participants.values()) {
 			user.sendMessage(string);
 		}
-	}	
-	
-	public Hub getComposite() {
-		return composite;
-		
 	}
 
+	public Hub getComposite() {
+		return composite;
+
+	}
 
 	@PreDestroy
 	private void shutdown() {
@@ -147,45 +142,43 @@ public class Room implements Closeable {
 	public String getGroupId() {
 		return group.getId().toString();
 	}
-	
-	
-	public UserSession join(final User user, final WebSocket.Out<String> out )
-			throws IOException {
-	
-		System.out.println(user.getEmail() + " joining " + mediaPipeline.getName());
+
+	public UserSession join(final User user, final WebSocket.Out<String> out) throws IOException {
+
+		System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
 		final UserSession participant = new UserSession(user, this, out);
 		// add myself to the room
 		participants.put(participant.getUser().getId().toString(), participant);
-		
-		final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
-					new JSONArray().put(new JSONObject().put("uid",user.getId().toString()).put("name", user.getPublicProperties().getString("name")).put("online", true)));
-		
-		
-		ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(),getGroupId() );
 		JSONArray otherUsers = new JSONArray();
-		
 		try {
-			for(KeyValuePair<Membership, User> m : service.execute()){
+			JSONObject myProfile = new GetUserProfileService(user.getId().toString(), user.getId().toString())
+					.execute();
+
+			final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+					new JSONArray().put(myProfile.put("uid", user.getId().toString()).put("online", true)));
+
+			ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(), getGroupId());
+
+			for (KeyValuePair<Membership, User> m : service.execute()) {
 				UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-				String username = m.getValue().getPublicProperties().getString("name");
+				JSONObject profile = new GetUserProfileService(user.getId().toString(), m.getValue().getId().toString())
+						.execute();
+
 				String userId = m.getValue().getId().toString();
-				JSONObject otherUser = new JSONObject().put("uid",userId).put("name",username );
-				otherUser.put("online",otherSession!=null);									
-				
-				if(otherSession!=null && otherSession.getUser() != user){
+				JSONObject otherUser = profile.put("uid", userId);
+				otherUser.put("online", otherSession != null);
+
+				if (otherSession != null && otherSession.getUser() != user) {
 					otherSession.sendMessage(myAdvertise.toString());
 
 				}
 				otherUsers.put(otherUser);
 			}
-		}catch(ServiceException e){
+		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 		final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
 		participant.sendMessage(currentParticipants.toString());
-
-	
-
 
 		return participant;
 	}
@@ -194,12 +187,18 @@ public class Room implements Closeable {
 		String uid = user.getUser().getId().toString();
 
 		participants.remove(uid);
-		final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data", 
-				new JSONArray().put(new JSONObject().put("uid", user.getUser().getId().toString()).put("name", user.getUser().getPublicProperties().getString("name")).put("online", false)));
-		sendMessage(myAdvertise.toString());
-		
+		try {
+
+			JSONObject profile = new GetUserProfileService(uid, uid).execute();
+
+			final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+					new JSONArray().put(profile.put("uid", user.getUser().getId().toString()).put("online", false)));
+			sendMessage(myAdvertise.toString());
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 		user.close();
-		if(participants.size()==0){
+		if (participants.size() == 0) {
 			close();
 		}
 	}
@@ -216,7 +215,7 @@ public class Room implements Closeable {
 	 * @return the participant from this session
 	 */
 	public UserSession getParticipant(final String uid) {
-		return uid!=null ? participants.get(uid) : null;
+		return uid != null ? participants.get(uid) : null;
 	}
 
 	@Override
