@@ -35,6 +35,8 @@
 				</div>
 				<div class="modal-body">
 					Are you sure you want to remove <b id="removeUserName"></b> from this group?
+					<input type="hidden" id="removeUserId"/>
+					
 				</div>
 				<div class="modal-footer">
 				</div>
@@ -482,7 +484,9 @@
 		
 		function removeMemberConfirmation(uid,name){
 			$("#removeMemberModal").modal("show");
-			
+			$("#removeUserName").html(name);
+			$("#removeUserId").val(uid);
+
 			
 		}
 		
