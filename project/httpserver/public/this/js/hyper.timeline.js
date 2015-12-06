@@ -88,7 +88,7 @@ var HyperTimeline = new (function() {
 	    	//this.options.editable.add
 	    	
 	    	this.setCustomTime(avg,"time");
-	    	$(timeline.customTimes[0].bar).css("pointer-events: none;");
+	    	$(this.customTimes[0].bar).css("pointer-events: none;");
 	    //	console.log(timeline.customTimes[0]);
 	    	//timeline.customTimes[0].options.editable=false;
     	
@@ -135,16 +135,16 @@ var HyperTimeline = new (function() {
 	    });
 	    
 	    timeline.removeRecord = function(id){
-			items.remove(id);
+			this.items.remove(id);
 		}
 		
 	    timeline.recordSet = {};
 	    
 		timeline.setRecord = function(id,start,end){
-			var inter = timeline.recordSet[id];
+			var inter = this.recordSet[id];
 
 			if (inter) {
-				timeline.removeRecord(id);
+				this.removeRecord(id);
 			}
 			
 			
@@ -158,7 +158,7 @@ var HyperTimeline = new (function() {
 				start : start,
 				end : end
 			});
-			timeline.recordSet[id] = true;
+			this.recordSet[id] = true;
 		}
 		
 		
@@ -191,11 +191,11 @@ var HyperTimeline = new (function() {
 	    		play();
 	    	}
 	    	
-	    	var customTime = timeline.getCustomTime("time");
+	    	var customTime = this.getCustomTime("time");
 	    	
-	    	timeline.hyper_offset = new Date().getTime() - customTime.getTime();
-			timeline.moveTo(customTime,{animation: false});
-	    	timeline.timeRunning = !timeline.timeRunning;
+	    	this.hyper_offset = new Date().getTime() - customTime.getTime();
+	    	this.moveTo(customTime,{animation: false});
+	    	this.timeRunning = !this.timeRunning;
 	    }
 	    
 		timeline.loadTag= function(id,time, title,content){
@@ -239,7 +239,7 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    timeline.getMyTime = function(){
-	    	return timeline.getCustomTime("time");
+	    	return this.getCustomTime("time");
 	    }
 
 		followerWorker(timeline);
