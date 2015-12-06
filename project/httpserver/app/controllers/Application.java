@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-import com.google.common.util.concurrent.Service;
 
 import exceptions.ServiceException;
 import models.Group;
+import models.KeyValueFile;
 import models.Membership;
 import models.User;
-import models.KeyValueFile;
-import play.*;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 import play.twirl.api.Html;
+import services.Service;
 import services.AddGroupMemberService;
 import services.CreateGroupService;
 import services.CreateUserService;
@@ -48,6 +48,7 @@ public class Application extends Controller {
     
   
     public Result reset()  throws ServiceException {
+    	Service.reset();
     	JSONObject prop1=	new JSONObject();
     	prop1.put("name", "Henrique Rocha");
     	
@@ -62,7 +63,7 @@ public class Application extends Controller {
     	
     	AddGroupMemberService joinService = new AddGroupMemberService(user.getId().toString(),group.getId().toString(),user2.getId().toString());
     	joinService.execute();
-    	return ok();
+		return redirect("/");
     }
     
     public Result pubsub() {

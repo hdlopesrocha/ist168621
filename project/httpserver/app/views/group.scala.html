@@ -5,11 +5,8 @@
 	<script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
 	<script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 
-
-		<!-- Modal -->
 	<div id="timeQueryStringModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -32,7 +29,6 @@
 	
 	<div id="addMembersModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<!-- Modal content-->
 			<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -67,7 +63,6 @@
 	
 	<div id="participantModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -125,7 +120,6 @@
 	
 	<div id="createTagModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -238,13 +232,9 @@
 		function messageArrived(userId, time, text, name, mid, seq) {
 			var html = '<li class="media"><div class="media-body"><div class="media">'
 					+ '<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>'
-					+ '<div class="media-body">'
-					+ text
-					+ '<br /> <small class="text-muted">'
-					+ name
-					+ ' | '
-					+ time
-					+ '</small>' + '<hr /></div></div></div></li>';
+					+ '<div class="media-body">' + text + '<br />'
+					+' <small class="text-muted">' + name + ' | ' + time + '</small>' 
+					+ '<hr /></div></div></div></li>';
 
 			if (!oldestMsg || seq < oldestMsg) {
 				oldestMsg = seq;
