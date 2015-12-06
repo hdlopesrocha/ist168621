@@ -3,9 +3,11 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import models.Group;
+import models.IdentityProfile;
 import models.Membership;
 import models.User;
 
@@ -34,9 +36,16 @@ public class SearchGroupCandidatesService extends Service<List<User>> {
 	public List<User> dispatch() {
 		List<User> ans = new ArrayList<User>();
 		for (User u : user.getRelations()) {
-			if (u.getEmail().contains(query) && Membership.findByUserGroup(u.getId(), group.getId()) == null) {
-				ans.add(u);
+			IdentityProfile idProfile = IdentityProfile.findByOwner(u.getId());
+			Document doc = idProfile.getData();
+			for(String key : doc.keySet()){
+				String value = doc.getString(key);
+				if (value.contains(query) && Membership.findByUserGroup(u.getId(), group.getId()) == null) {
+					ans.add(u);
+					break;
+				}	
 			}
+			
 		}
 		return ans;
 	}

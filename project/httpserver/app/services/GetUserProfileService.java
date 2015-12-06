@@ -3,26 +3,21 @@ package services;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-import models.User;
+import models.IdentityProfile;
+import models.PublicProfile;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AuthenticateUserService.
  */
-public class GetUserProfileService extends Service<String> {
+public class GetUserProfileService extends Service<JSONObject> {
 
-	private User user, caller;
+	private ObjectId user, caller;
 
 	
 	public GetUserProfileService(String callerId, String userId) {
-		this.caller = User.findById(new ObjectId(callerId));
-		if(caller!=null && callerId.equals(userId)){
-			this.user = this.caller;
-		}
-		else {
-			this.user = User.findById(new ObjectId(userId));
-		}
-		
+		this.caller = new ObjectId(callerId);
+		this.user = new ObjectId(userId);
 	}
 
 	/*
@@ -31,10 +26,20 @@ public class GetUserProfileService extends Service<String> {
 	 * @see services.Service#dispatch()
 	 */
 	@Override
-	public String dispatch() {
-		JSONObject properties = new JSONObject(user.getPublicProperties().toJson());
-		properties.put("email", user.getEmail());
-		return properties.toString();
+	public JSONObject dispatch() {
+		PublicProfile publicProfile = PublicProfile.findByOwner(user);
+		IdentityProfile identityProfile = IdentityProfile.findByOwner(user);
+		
+		JSONObject publicProperties = new JSONObject(publicProfile.getData().toJson());
+		JSONObject identityProperties = new JSONObject(identityProfile.getData().toJson());
+		for(Object k: identityProperties.keySet()){
+			String key = (String) k;
+			publicProperties.put(key, identityProperties.get(key));
+		}
+		
+		
+		
+		return publicProperties;
 	}
 
 	/*

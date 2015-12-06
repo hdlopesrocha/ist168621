@@ -30,11 +30,8 @@ public class User implements Comparable<User> {
 
 
 
-	private String email, hash, salt, token;
+	private String hash, salt, token;
 	private ObjectId id = null;
-	private List<String> permissions;
-	private Document publicProperties= new Document(); 
-	private Document privateProperties = new Document();
 	private static MongoCollection<Document> collection;
 	
 	
@@ -50,13 +47,10 @@ public class User implements Comparable<User> {
 		if (id != null)
 			doc.put("_id", id);
 
-		doc.put("email", email);
 		doc.put("hash", hash);
 		doc.put("salt", salt);
 		doc.put("token", token);
-		doc.put("permissions", permissions);
-		doc.put("public", publicProperties);
-		doc.put("private", privateProperties);
+
 		
 		if (id == null)
 			getCollection().insertOne(doc);
@@ -67,30 +61,12 @@ public class User implements Comparable<User> {
 
 	}
 
-	public Document getPrivateProperties() {
-		return privateProperties;
-	}
-
-
-
-	public void setPrivateProperties(Document privateProperties) {
-		this.privateProperties = privateProperties;
-	}
-
-
-	@SuppressWarnings("unchecked")
 	private static User load(Document doc) {
 		User user = new User();
-		user.setId(doc.getObjectId("_id"));
-		user.setEmail(doc.getString("email"));
-		user.setHash(doc.getString("hash"));
-		user.setSalt(doc.getString("salt"));
-		user.setToken(doc.getString("token"));
-		user.setPublicProperties((Document) doc.get("public"));
-		user.setPrivateProperties((Document) doc.get("private"));
-		
-
-		user.setPermissions((List<String>) doc.get("permissions"));
+		user.id =doc.getObjectId("_id");
+		user.hash = doc.getString("hash");
+		user.salt = doc.getString("salt");
+		user.token = doc.getString("token");
 		return user;
 	}
 
@@ -162,12 +138,8 @@ public class User implements Comparable<User> {
 
 	}
 
-	public User(String email, String password,
-			Document properties, List<String> permissions) {
-		this.email = email;
-		this.publicProperties =  properties;
+	public User(String password) {
 		setPassword(password);
-		this.permissions = permissions;
 	}
 
 
@@ -181,21 +153,6 @@ public class User implements Comparable<User> {
 		this.hash = getHash(password, salt);
 	}
 
-	public Document getPublicProperties() {
-		return publicProperties;
-	}
-
-	public void setPublicProperties(Document properties) {
-		this.publicProperties = properties;
-	}
-
-	public List<String> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(List<String> permissions) {
-		this.permissions = permissions;
-	}
 
 
 	public String getHash() {
@@ -222,13 +179,7 @@ public class User implements Comparable<User> {
 		this.token = token;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 
 
 	/**
