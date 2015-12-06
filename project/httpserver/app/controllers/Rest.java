@@ -230,7 +230,6 @@ public class Rest extends Controller {
 		try {
 			return ok(new GetUserProfileService(session("uid"), userId).execute().toString());
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return unauthorized();
@@ -441,7 +440,6 @@ public class Rest extends Controller {
 			e.printStackTrace();
 			return unauthorized();
 		}
-
 	}
 
 	public Result removeGroupMember(String groupId, String memberId) {
