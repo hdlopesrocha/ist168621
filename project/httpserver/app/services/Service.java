@@ -56,7 +56,7 @@ public abstract class Service<T> {
 	protected static GridFS files;
 	static long lastOid = 0l;
 		
-	public void reset(){
+	public static void reset(){
 		getDatabase().drop();
 	}
 
