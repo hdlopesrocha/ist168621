@@ -143,10 +143,10 @@ var HyperTimeline = new (function() {
 
 	    
 		timeline.setRecord = function(id,start,end){
-			var inter = recordSet[id];
+			var inter = timeline.recordSet[id];
 
 			if (inter) {
-				removeRecord(id);
+				timeline.removeRecord(id);
 			}
 			
 			
@@ -160,7 +160,7 @@ var HyperTimeline = new (function() {
 				start : start,
 				end : end
 			});
-			recordSet[id] = true;
+			timeline.recordSet[id] = true;
 		}
 		
 		
