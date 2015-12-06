@@ -124,15 +124,24 @@ var Kurento = new (function() {
 	}
 	
 	this.receiveRealtime = function(userId){
-		console.log("receiveRealtime!",userId);
+		console.log("receiveRealtime",userId);
 		Kurento.webSocket.send(JSON.stringify({
 			id : "setRealtime",
 			uid:userId
 		}));
 	}
 	
+	this.addUser = function(userId){
+		console.log("addUser",userId);
+		Kurento.webSocket.send(JSON.stringify({
+			id : "addUser",
+			uid:userId
+		}));
+	}
+	
+	
 	this.receiveHistoric = function(userId,offset){
-		console.log("receiveHistoric!",userId);
+		console.log("receiveHistoric",userId);
 		Kurento.webSocket.send(JSON.stringify({
 			id : "setHistoric",
 			uid:userId,

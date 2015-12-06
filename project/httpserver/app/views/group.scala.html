@@ -501,10 +501,7 @@
 		}
 		
 		function add_user_group(uid) {
-			var success = function() {
-				document.location = document.location;
-			};
-			Signaling.addUserGroup("@groupId", uid, success);
+			Kurento.addUser(uid);
 		}
 		
 		function candidate_search(query) {
