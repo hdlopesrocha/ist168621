@@ -490,6 +490,8 @@
 			$("#removeUserButton").click(function(){
 				var success = function() {
 					$("#vidMember"+uid).remove();
+					$("#removeMemberModal").modal("hide");
+
 				};
 				Signaling.removeUserGroup("@groupId", uid, success);
 			});
