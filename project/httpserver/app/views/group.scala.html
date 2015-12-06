@@ -6,6 +6,29 @@
 	<script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 
 
+		<!-- Modal -->
+	<div id="timeQueryStringModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Time HyperLink</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>URL:</label> 
+						<input type="text" class="form-control" id="timeQueryString">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-default btn-success" onclick="copyLink()">Select</button>
+					<button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	
 	<div id="addMembersModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
@@ -24,7 +47,6 @@
 						Delete </span>
 				</div>
 				<label>Add Members manually</label>
-
 				<div id="imaginary_container">
 					<div class="input-group stylish-input-group">
 						<input type="text" class="form-control" placeholder="Search"
@@ -127,13 +149,286 @@
 		</div>
 	</div>
 	
-
 	<div class="container-fluid">
 		<div class="container">	
-			<div>@group_video(groupId,userId)</div>
+			@group_video(groupId,userId)
 		</div>
 	</div>
 	<script>
+		var group = true;
+		var selectedUser = "@userId";
+		var savedUser = "@userId";
+		var real_time = true;
+		var unsaved_tags = [];
+		var firstRecording = true;
+		var participants = {};
+		var timeline = null;
+		var current_offset = 0;
+		var oldestMsg = null;
+		var localContent = [];
+		var moreContent = true;
+		var contentTimer = null;
+		
+		function setTimeLink(){
+			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
+		}
+		
+		function receiveMore() {
+			if (oldestMsg) {
+				Kurento.receiveMore(oldestMsg, 1);
+			}
+		}
+		
+		function intervalRecorded(array) {
+			console.log("REC", array);
+			for ( var id in array) {
+				var start = array[id][0];
+				var end = array[id][1];
+				timeline.setRecord(id, start, end);
+			}
+			if (firstRecording) {
+				firstRecording = false;
+
+				timeline.fit({
+					animation : false
+				});
+			}
+		}
+
+		function videoStream(streamUrl) {
+			selectVideo(null);
+			var video = document.getElementById("myvideo");
+			video.src = streamUrl;
+			return video;
+		}
+
+		function mixedStream(streamUrl) {
+			var video = document.getElementById("onlyAudio");
+			video.src = streamUrl;
+			return video;
+		}
+
+		function participantInfo(userId, name, online) {
+			if (!participants[userId]) {
+				participants[userId] = true;
+			
+				var del_button = "<i style='color:red' onclick='del_user_group(\""+ userId+ "\")' class='fa fa-times'></i>";
+				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
+				var style='style="background-image:url(/photo/'+userId+');height:40px;width:40px"';
+
+				$("#videoMembers").append(
+					'<div class="media" '+ onclick+'>'+
+					'<a id="vidMember'+userId+'" '+style+'></a>'+
+					'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+				);		
+			}
+			
+			if(online){
+				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-online");
+			}else {
+				$("#vidMember" + userId).attr('class', "pull-left media-object circular circular-offline");				
+			}
+		}
+
+		function tagArrived(id, time, title, content) {
+			console.log(id, time, title, content);
+			timeline.loadTag(id, time, title, content);
+		}
+
+		function messageArrived(userId, time, text, name, mid, seq) {
+			var html = '<li class="media"><div class="media-body"><div class="media">'
+					+ '<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>'
+					+ '<div class="media-body">'
+					+ text
+					+ '<br /> <small class="text-muted">'
+					+ name
+					+ ' | '
+					+ time
+					+ '</small>' + '<hr /></div></div></div></li>';
+
+			if (!oldestMsg || seq < oldestMsg) {
+				oldestMsg = seq;
+				var oldHeight = $("#messagesList").height();
+				$("#messagesList").prepend(html);
+				var newHeight = $("#messagesList").height();
+				$("div").scrollTop(newHeight - oldHeight);
+
+			} else {
+				$("#messagesList").append(html);
+				$("div").scrollTop($("#messagesList").height());
+			}
+
+			if (!$('#messagesPanel').hasScrollBar()) {
+				receiveMore();
+			}
+		}
+
+		function sendMessage() {
+			var text = $("#messageText").val();
+			Kurento.sendMessage(text);
+			$("#messageText").val("");
+
+		}
+
+		function playStop() {
+			timeline.togglePlayStop(function() {
+				$("#playStop").html('<i class="fa fa-pause"></i>');
+				$("#playStop").attr('class', 'btn btn-warning');
+				Kurento.setPlay(true);
+			}, function() {
+				$("#playStop").html('<i class="fa fa-play"></i>');
+				$("#playStop").attr('class', 'btn btn-success');
+				Kurento.setPlay(false);
+			});
+		}
+
+		function selectUser(userId){
+			savedUser = selectedUser = userId;
+		
+			if (real_time) {
+				Kurento.receiveRealtime(selectedUser);
+			} else {
+				Kurento.receiveHistoric(selectedUser, current_offset);
+			}
+		}
+
+		
+		function selectVideo(isGroup) {
+			if(isGroup){
+				selectedUser = null;
+				$("#individualVideo").show();
+				$("#groupVideo").hide();
+			}
+			else {
+				selectedUser = savedUser;
+				$("#individualVideo").hide();
+				$("#groupVideo").show();
+			}
+			
+			if (real_time) {
+				Kurento.receiveRealtime(selectedUser);
+			} else {
+				Kurento.receiveHistoric(selectedUser, current_offset);
+			}
+		}
+
+		function saveTags() {
+			console.log(unsaved_tags);
+			for ( var i in unsaved_tags) {
+				var tag = unsaved_tags[i];
+				var visTag = timeline.getRecord(tag.id);
+				var time = new Date(visTag.start);
+
+				var title = tag.title;
+				var content = tag.content;
+				Kurento.createTag(time, title, content);
+				timeline.removeTag(tag.id);
+			}
+			unsaved_tags = [];
+			$("#saveButton").addClass("hidden");
+		}
+
+		function clearContent(){
+			$("#contentText").val("");
+			$("#previewContent").html("");
+		}
+		
+		function createContent(){
+			var start = parseTime($("#contentStart").val());
+			var end = parseTime($("#contentEnd").val());			
+			var content = getContent();
+			
+			if(content){
+				Kurento.createContent(start.toISOString(),end.toISOString(),content);
+			}
+			clearContent();
+		}
+		
+		function getContent(){
+			var content = $("#contentText").val();
+			if(!content || content.length==0){
+				return null;
+			}
+
+			if($("#contentCaption").is(':checked')){
+				content = '<div class="caption"><span>'+content+'</span></div>';
+			}
+			return content;
+		}
+		
+		function previewContent(){
+			$("#previewContent").html(getContent());
+		}
+		
+		function addContent(key, content) {
+			$("#mainVideoContent").append('<div class="overlay-content" id="content'+ key + '">'+content+'</div>');
+		}
+
+		function removeContent(key) {
+			$("#content" + key).remove();
+			delete localContent[key];
+		}
+
+		function renderContent() {
+			var currentTime = new Date().getTime() - current_offset;
+			while (localContent.length != 0) {
+				var entry = localContent[0];
+				var time = new Date(entry.time);
+
+				if (time.getTime() <= currentTime) {
+					localContent.shift();
+					if (entry.type == "start") {
+						addContent(entry.id, entry.content);
+					} else if (entry.type == "end") {
+						removeContent(entry.id);
+					}
+				} else {
+					break;
+				}
+			}
+			var hasStarts = false;
+			for ( var i in localContent) {
+				var entry = localContent[i];
+				if (entry.type == "start") {
+					hasStarts = true;
+					break;
+				}
+
+			}
+			if (localContent.length == 0) {
+				// no content, keep calm 
+			} else if (!hasStarts) {	
+				if(moreContent){
+					// all events started, check if others may start
+					Kurento.getContent();
+				}else {
+					// there is no more content, the server may advertise more content later
+				}
+			} else {
+				// wait for next event
+				if(timeline.timeRunning){
+					var time = new Date(localContent[0].time);
+					if(contentTimer!=null){
+						clearTimeout(contentTimer);
+					}
+					contentTimer = setTimeout(function() {
+						contentTimer = null;
+						renderContent();
+					}, time.getTime() - currentTime);
+				}
+			}
+		}
+
+		function onContentArrived(content,more) {
+			moreContent = more;
+			$("#mainVideoContent").html("");
+			console.log(content);
+			localContent = content.sort(function(a, b) {
+				return new Date(a.time).getTime() - new Date(b.time).getTime();
+			});
+			renderContent();
+		}
+
 		var mySearch = {
 			source: function(query,process){
 				Signaling.searchInsideGroup("@groupId",query, function( array ) {
@@ -162,6 +457,11 @@
 				return item;
 			}
 		};
+
+		function copyLink(){
+			$("#timeQueryString").select();
+		}
+		
 		function createInvite2(){
 			Signaling.createInvite("@groupId",function(token){
 				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);	
@@ -189,9 +489,7 @@
 		}
 		
 		function candidate_search(query) {
-		
 			var result = function(array) {
-				
 				var html = "";
 				for ( var i in array) {
 					var uid = array[i].uid;
@@ -259,7 +557,50 @@
 				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");	
 			}
 		
-			
+			$('#datetimepicker1').datetimepicker({
+				format : 'DD/MM/YYYY HH:mm:ss',
+				defaultDate : new Date(),
+				showTodayButton:true
+
+			});
+			$('#datetimepicker2').datetimepicker({
+				format : 'DD/MM/YYYY HH:mm:ss',
+				defaultDate : new Date(new Date().getTime()+1000),
+				showTodayButton:true
+
+			});
+
+			$("#messagesPanel").scroll(function() {
+				if ($("#messagesPanel").scrollTop() == 0) {
+					receiveMore();
+					$("#messagesPanel").scrollTop(1);
+				}
+			});
+
+			// plugtrade.com - jQuery detect vertical scrollbar function //
+			(function($) {
+				$.fn.hasScrollBar = function() {
+					var divnode = this.get(0);
+					if (divnode.scrollHeight > divnode.clientHeight)
+						return true;
+				}
+			})(jQuery);
+
+			timeline = HyperTimeline.create("timeline",
+				function(offset) {
+					console.log("HISTORIC", offset);
+					// current request
+					current_offset = offset;
+					Kurento.receiveHistoric(selectedUser, current_offset);
+					real_time = false;
+
+				}, function() {
+					console.log("REALTIME");
+					// realtime request
+					Kurento.receiveRealtime(selectedUser);
+					real_time = true;
+				}
+			);
 		
 		});	
 	</script>
