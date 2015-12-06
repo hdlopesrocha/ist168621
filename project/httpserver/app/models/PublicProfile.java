@@ -1,10 +1,17 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import services.Service;
+
+import com.mongodb.BasicDBList;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -59,6 +66,21 @@ public class PublicProfile {
 
 	public PublicProfile() {
 
+	}
+	
+	public static List<PublicProfile> search(String key,String query) {
+		Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);	
+		BasicDBList or = new BasicDBList();
+		or.add(new Document("data."+key,regex));
+		
+		Document doc = new Document("$or", or);
+		FindIterable<Document> iter = getCollection().find(doc);
+		Iterator<Document> i = iter.iterator();
+		List<PublicProfile> ret = new ArrayList<PublicProfile>();
+		while(i.hasNext()){
+			ret.add(PublicProfile.load(i.next()));
+		}
+		return ret;
 	}
 
 	public PublicProfile(ObjectId owner,

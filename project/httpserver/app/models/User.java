@@ -107,7 +107,6 @@ public class User implements Comparable<User> {
 		Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);	
 		BasicDBList or = new BasicDBList();
 		or.add(new Document("public.name",regex));
-		or.add(new Document("email",regex));
 		
 		Document doc = new Document("$or", or);
 		FindIterable<Document> iter = getCollection().find(doc);
