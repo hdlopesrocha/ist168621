@@ -508,8 +508,9 @@
 		}
 		
 		function candidate_search(query) {
-			console.log("candidate",query);
 			var result = function(array) {
+				console.log("candidate",query,array);
+
 				var html = "";
 				for ( var i in array) {
 					var uid = array[i].uid;
