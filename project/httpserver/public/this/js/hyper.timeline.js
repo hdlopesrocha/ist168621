@@ -44,7 +44,7 @@ var HyperTimeline = new (function() {
 	          },
 	       // editable:true,
 	      	editable: {
-	      		add:true, 	
+	      		add:false, 	
 	      		remove:true,
 	      		updateGroup:false, 
 	      		updateTime:true 
@@ -138,9 +138,7 @@ var HyperTimeline = new (function() {
 			items.remove(id);
 		}
 		
-		
 	    timeline.recordSet = {};
-
 	    
 		timeline.setRecord = function(id,start,end){
 			var inter = timeline.recordSet[id];
