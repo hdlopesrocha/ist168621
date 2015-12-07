@@ -27,6 +27,7 @@ import models.Group;
 import models.Interval;
 import models.KeyValuePair;
 import models.Membership;
+import models.Recording;
 import models.User;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
@@ -78,36 +79,38 @@ public class Room implements Closeable {
 	}
 
 	public MyRecorder record(final MediaElement endPoint, final String id) {
-
-		return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
+		final MyRecorder mYrec = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
 			@Override
 			public String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId) {
 
 				try {
 					CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(), id, begin,
 							end, filename, "video/webm", intervalId);
-					srs.execute();
+					Recording rec = srs.execute();
+					if (rec != null) {
+						Interval interval = srs.getInterval();
+						intervalId = interval.getId().toString();
 
-					Interval interval = srs.getInterval();
-					intervalId = interval.getId().toString();
+						JSONArray array = new JSONArray();
+						array.put(Tools.FORMAT.format(interval.getStart()));
+						array.put(Tools.FORMAT.format(interval.getEnd()));
 
-					JSONArray array = new JSONArray();
-					array.put(Tools.FORMAT.format(interval.getStart()));
-					array.put(Tools.FORMAT.format(interval.getEnd()));
+						JSONObject msg = new JSONObject();
+						msg.put("id", "rec");
+						msg.put(intervalId, array);
+						sendMessage(msg.toString());
 
-					JSONObject msg = new JSONObject();
-					msg.put("id", "rec");
-					msg.put(intervalId, array);
-					sendMessage(msg.toString());
-
-					System.out.println("REC: " + filepath);
-
+						System.out.println("REC: " + filepath);
+					}else {
+						return null;
+					}
 				} catch (ServiceException e) {
 					e.printStackTrace();
 				}
 				return intervalId;
 			}
 		});
+		return mYrec;
 	}
 
 	public HubPort getCompositePort(String id) {
@@ -161,8 +164,8 @@ public class Room implements Closeable {
 
 			for (KeyValuePair<Membership, User> m : service.execute()) {
 				UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-				JSONObject otherProfile = new GetUserProfileService(user.getId().toString(), m.getValue().getId().toString())
-						.execute();
+				JSONObject otherProfile = new GetUserProfileService(user.getId().toString(),
+						m.getValue().getId().toString()).execute();
 				otherProfile.put("online", otherSession != null);
 				if (otherSession != null && otherSession.getUser() != user) {
 					otherSession.sendMessage(myAdvertise.toString());

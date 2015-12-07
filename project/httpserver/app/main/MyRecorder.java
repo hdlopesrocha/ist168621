@@ -59,6 +59,9 @@ public class MyRecorder {
 							@Override
 							public void run() {								
 								intervalId = handler.onFileRecorded(begin, end, item.getUrl(), item.getId(),intervalId);
+								if(intervalId==null){
+									stop();
+								}	
 							}
 						}).start();
 
