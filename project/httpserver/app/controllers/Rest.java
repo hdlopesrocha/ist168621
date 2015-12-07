@@ -468,13 +468,12 @@ public class Rest extends Controller {
 						JSONObject profile = new GetUserProfileService(session("uid"), userId.toString()).execute();
 						
 						profile.put("type", "user");
-						Relation rel = Relation.findByEndpoint(me.getId(), userId);
+						Relation rel1 = Relation.findByEndpoint(me.getId(), userId);
+						Relation rel2 = Relation.findByEndpoint(userId,me.getId());
 
-						if (rel == null) {
-							rel = Relation.findByEndpoint(userId, me.getId());
-						}
-						if (rel != null) {
-							profile.put("state", me.getId().equals(rel.getFrom()) ? rel.getToState() : rel.getFromState());
+						
+						if (rel1 != null) {
+							profile.put("state", rel2!=null);
 						}
 						array.put(profile);
 					}
