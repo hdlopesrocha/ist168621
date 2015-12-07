@@ -28,16 +28,9 @@ public class CreateRelationService extends Service<Void> {
 	public Void dispatch() {
 		Relation rel = Relation.findByEndpoint(from.getId(), to.getId());
 		if(rel==null){
-			rel =  Relation.findByEndpoint(to.getId(), from.getId());
-			if(rel==null){
-				rel = new Relation(true, from.getId(), to.getId(), false);	
-			} else {
-				rel.setToState(true);				
-			}
-		}else {
-			rel.setFromState(true);				
+			rel = new Relation(from.getId(), to.getId());		
+			rel.save();
 		}
-		rel.save();
 		return null;
 	}
 

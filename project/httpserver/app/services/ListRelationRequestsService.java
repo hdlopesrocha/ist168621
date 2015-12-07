@@ -31,8 +31,9 @@ public class ListRelationRequestsService extends Service<List<User>> {
 	public List<User> dispatch() {
 		List<User> ret = new ArrayList<User>();
 		for(Relation r : Relation.listTo(caller.getId())){
-			if(!r.getToState()){
-				ret.add(User.findById(r.getFrom()));
+			Relation r2 = Relation.findByEndpoint(caller.getId(),r.getFrom());
+			if(r2==null){
+				ret.add(User.findById(r.getTo()));
 			}
 		}
 		return ret;
