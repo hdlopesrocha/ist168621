@@ -72,14 +72,15 @@ public class User implements Comparable<User> {
 
 	public List<User> getRelations(){
 		List<User> ans = new ArrayList<User>();
-		for(Relation rel : Relation.listFrom(getId())){
-			if(rel.getToState()){
-				User u = User.findById(rel.getTo());
+		for(Relation rel1 : Relation.listFrom(getId())){
+			Relation rel2 = Relation.findByEndpoint(rel1.getTo(), rel1.getFrom());
+			if(rel1!=null && rel2!=null){
+				User u = User.findById(rel1.getTo());
 				ans.add(u);	
 			}
 		}
 		for(Relation rel : Relation.listTo(getId())){
-			if(rel.getFromState()){
+			if(rel!=null){
 				User u = User.findById(rel.getFrom());
 				ans.add(u);		
 			}
