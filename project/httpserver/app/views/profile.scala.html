@@ -1,9 +1,15 @@
-@(userId : String) @template(1){
+@(userId : String, from : Boolean, to : Boolean) 
+@template(1){
 <script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
 
 <div class="container-fluid">
 	<div class="container">
 		<div class="row">
+			@from | @to
+		</div>
+		<div class="row">
+		
+		
 	<div class="col-md-6">
 		<div class="panel panel-primary">
 			<div class="panel-heading" data-toggle="collapse"
