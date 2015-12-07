@@ -10,6 +10,7 @@ import exceptions.ServiceException;
 import models.Group;
 import models.KeyValueFile;
 import models.Membership;
+import models.Relation;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -101,7 +102,11 @@ public class Application extends Controller {
     
     public Result userProfile(String userId) {
     	if(session("uid")!=null){
-    		return ok(views.html.profile.render(userId));
+    	
+    		boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId))!=null;
+    		boolean to = Relation.findByEndpoint(new ObjectId(userId),new ObjectId(session("uid")))!=null;
+    		
+    		return ok(views.html.profile.render(userId,from,to));
     	} else {
     		return ok(views.html.sign.render());
     		
