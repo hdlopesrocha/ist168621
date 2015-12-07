@@ -13,19 +13,9 @@ import com.mongodb.client.MongoCollection;
 import services.Service;
 
 public class Relation {
-	
-	
-
-	
-	// in order to have a successful relationship both endPoint states must be true
 
 	private ObjectId from = null, to = null, id = null;
-
-	
-
-	
 	private static MongoCollection<Document> collection;
-	
 	
 	public static MongoCollection<Document> getCollection(){
 		if(collection==null)
@@ -117,9 +107,6 @@ public class Relation {
 		return ret;
 	}
 
-
-
-	
 	public static Relation findById(ObjectId id) {
 		Document doc = new Document("_id", id);
 		FindIterable<Document> iter = getCollection().find(doc);
@@ -136,8 +123,6 @@ public class Relation {
 		this.from = fi;
 
 	}
-
-
 
 	public void delete() {
 		if (id != null)

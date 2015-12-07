@@ -23,7 +23,6 @@ import services.GetGroupInviteService;
 import services.JoinGroupInviteService;
 import services.Service;
 
-
 public class Application extends Controller {
 
     public Result index() {
@@ -31,9 +30,7 @@ public class Application extends Controller {
     		return ok(views.html.index.render());
     	} else {
     		return ok(views.html.sign.render());
-    		
     	}
-    	
     }
 
     public Result template(){
@@ -46,7 +43,6 @@ public class Application extends Controller {
     	response().setHeader("Content-type", "video/webm");
     	return res;
     }
-    
   
     public Result reset()  throws ServiceException {
     	Service.reset();
@@ -64,10 +60,8 @@ public class Application extends Controller {
     	CreateUserService registerService2 = new CreateUserService("nbhatt","qazokm", prop2, new ArrayList<KeyValueFile>());
     	User user2 = registerService2.execute();
     	
-    	
     	new CreateRelationService(user1.getId().toString(),user2.getId().toString()).execute();
     	new CreateRelationService(user2.getId().toString(),user1.getId().toString()).execute();
-    	
     	
     	AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(),group.getId().toString(),user2.getId().toString());
     	joinService.execute();
@@ -92,7 +86,6 @@ public class Application extends Controller {
     				return ok(views.html.group.render(groupId,group.getName(),session("uid"),token)) ;
     			}
     		}
-    		
     		return redirect("/");
     	} else {
     		return ok(views.html.sign.render());
@@ -102,17 +95,13 @@ public class Application extends Controller {
     
     public Result userProfile(String userId) {
     	if(session("uid")!=null){
-    	
     		boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId))!=null;
     		boolean to = Relation.findByEndpoint(new ObjectId(userId),new ObjectId(session("uid")))!=null;
-    		
     		return ok(views.html.profile.render(userId,from,to));
     	} else {
     		return ok(views.html.sign.render());
-    		
     	}    	
     }
-    
   
     public Result join(String groupId, String token) throws ServiceException{
     	JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
@@ -121,6 +110,4 @@ public class Application extends Controller {
 		}
 		return badRequest();
     }
-
-    
 }
