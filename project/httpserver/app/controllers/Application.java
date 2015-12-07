@@ -51,13 +51,15 @@ public class Application extends Controller {
     	Service.reset();
     	JSONObject prop1=	new JSONObject();
     	prop1.put("name", "Henrique Rocha");
-    	
+    	prop1.put("photo", "/assets/images/user1.jpg");
+
     	CreateUserService registerService = new CreateUserService("hdlopesrocha","qazokm", prop1, new ArrayList<KeyValueFile>());
     	User user1 = registerService.execute();
     	CreateGroupService groupService = new CreateGroupService(user1.getId().toString(),"WebRTC");
     	Group group = groupService.execute();
     	JSONObject prop2=	new JSONObject();
     	prop2.put("name", "Nikhil Bhatt");
+    	prop2.put("photo", "/assets/images/user2.jpg");
     	CreateUserService registerService2 = new CreateUserService("nbhatt","qazokm", prop2, new ArrayList<KeyValueFile>());
     	User user2 = registerService2.execute();
     	
