@@ -5,6 +5,17 @@
 <div class="container-fluid">
 	<div class="container">
 		<div class="row">
+			@if(!from && !to){
+				<div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Add friend</div>
+			}@else if(!from && to){
+				<div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Accept friend</div>
+			}@else if(from && !to){
+				<div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Cancel friendship</div>
+			}@else if(from && to){
+				<div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Reject friendship</div>
+			}
+		
+		
 			@from | @to
 		</div>
 		<div class="row">
