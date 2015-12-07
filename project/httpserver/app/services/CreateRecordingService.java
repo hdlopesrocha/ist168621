@@ -75,7 +75,9 @@ public class CreateRecordingService extends Service<Recording> {
 				interval = inter.getId();
 			} else {
 				inter = Interval.findById(interval);
-				if (inter.getStart() == null) {
+				if(inter==null){
+					return null;
+				}else if (inter.getStart() == null) {
 					inter.setStart(start);
 				}
 				inter.setEnd(end);
