@@ -60,14 +60,14 @@
 
 	function user_del(userId) {
 		var success = function() {
-			document.location = "/";
+			document.location = document.location;
 		}
 		Signaling.rejectRelation(userId, success);
 	}
 
 	function user_add(userId) {
 		var success = function() {
-			document.location = "/";
+			document.location = document.location;
 		}
 		Signaling.addRelation(userId, success);
 	}
