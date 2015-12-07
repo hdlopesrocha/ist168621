@@ -25,13 +25,14 @@ public class DenyRelationService extends Service<Void> {
 	 */
 	@Override
 	public Void dispatch() {
-		Relation rel = Relation.findByEndpoint(from.getId(), to.getId());
-		if (rel == null) {
-			rel = Relation.findByEndpoint(to.getId(), from.getId());
+		Relation rel1 = Relation.findByEndpoint(from.getId(), to.getId());
+		Relation rel2 = Relation.findByEndpoint(to.getId(), from.getId());
+		
+		if (rel2 != null) {
+			rel2.delete();
 		}
-
-		if (rel != null) {
-			rel.delete();
+		if (rel1 != null) {
+			rel1.delete();
 		}
 		return null;
 	}
