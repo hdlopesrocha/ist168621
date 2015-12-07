@@ -218,13 +218,18 @@
 			return video;
 		}
 
-		function participantInfo(userId, name, online) {
+		function participantInfo(info) {
+			var userId = info.id;
+			var name = info.name;
+			var photo = info.photo;
+			var online = info.online;
+			
 			if (!participants[userId]) {
 				participants[userId] = true;
 			
 				var del_button = "<i style='color:red' onclick='removeMemberConfirmation(\""+ userId+ "\",\""+name+"\")' class='fa fa-times'></i>";
 				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
-				var style='style="background-image:url(/photo/'+userId+');height:40px;width:40px" class="pull-left media-object circular"';
+				var style='style="background-image:url('+photo+');height:40px;width:40px" class="pull-left media-object circular"';
 
 				$("#videoMembers").append(
 					'<div id="vidMember'+userId+'" '+ onclick+'>'+
