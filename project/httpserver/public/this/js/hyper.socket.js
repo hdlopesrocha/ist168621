@@ -14,6 +14,18 @@ var local_user = {
 	"video" : true
 };
 
+var screen_user = {
+    audio: true,
+    video: {
+        mandatory: {
+            chromeMediaSource: 'screen',
+            maxWidth: 1280,
+            maxHeight: 720
+        },
+        optional: []
+    }
+};
+
 var audio_constraints = { 
 	'offerToReceiveAudio':true, 
 	'offerToReceiveVideo':true 
@@ -261,8 +273,8 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("mixer");
 
 				// XXX [CLIENT_OFFER_01] XXX
-				if(mode==0){
-					navigator.getUserMedia(local_user, function(stream) {
+				if(mode==0 || mode==1){
+					navigator.getUserMedia(mode==0? local_user: screen_user, function(stream) {
 						audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
