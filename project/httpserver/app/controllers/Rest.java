@@ -147,7 +147,6 @@ public class Rest extends Controller {
 			try {
 				service.execute();
 			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return ok("OK");
