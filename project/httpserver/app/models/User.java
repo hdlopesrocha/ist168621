@@ -79,12 +79,7 @@ public class User implements Comparable<User> {
 				ans.add(u);	
 			}
 		}
-		for(Relation rel : Relation.listTo(getId())){
-			if(rel!=null){
-				User u = User.findById(rel.getFrom());
-				ans.add(u);		
-			}
-		}
+	
 		return ans;
 	}
 	
