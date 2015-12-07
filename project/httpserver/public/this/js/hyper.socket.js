@@ -227,8 +227,7 @@ var Kurento = new (function() {
 					case 'participants':
 						console.log(id,message);
 						for(var userId in message.data){
-							var user = message.data[userId];
-							newParticipantsCallback(user.id, user.name, user.online);
+							newParticipantsCallback(message.data[userId]);
 						}
 					break;
 					case 'content':
