@@ -30,13 +30,10 @@ public class ListRelationsService extends Service<List<User>> {
 	@Override
 	public List<User> dispatch() {
 		List<User> ret = new ArrayList<User>();
-		for(Relation r : Relation.listTo(caller.getId())){
-			if(r.getToState() && r.getFromState()){
-				ret.add(User.findById(r.getFrom()));
-			}
-		}
+		
 		for(Relation r : Relation.listFrom(caller.getId())){
-			if(r.getToState() && r.getFromState()){
+			Relation r2 = Relation.findByEndpoint(r.getTo(), caller.getId());
+			if(r2!=null){
 				ret.add(User.findById(r.getTo()));
 			}
 		}

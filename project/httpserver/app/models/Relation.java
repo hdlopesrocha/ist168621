@@ -19,24 +19,9 @@ public class Relation {
 	
 	// in order to have a successful relationship both endPoint states must be true
 
-	private boolean fromState, toState;
 	private ObjectId from = null, to = null, id = null;
 
-	public boolean getFromState() {
-		return fromState;
-	}
-
-	public void setFromState(boolean fromState) {
-		this.fromState = fromState;
-	}
-
-	public boolean getToState() {
-		return toState;
-	}
-
-	public void setToState(boolean toState) {
-		this.toState = toState;
-	}
+	
 
 	
 	private static MongoCollection<Document> collection;
@@ -55,8 +40,7 @@ public class Relation {
 
 		doc.put("fi", from);
 		doc.put("ti", to);
-		doc.put("fs", fromState);
-		doc.put("ts", toState);
+
 
 		if (id == null)
 			getCollection().insertOne(doc);
@@ -72,8 +56,6 @@ public class Relation {
 		user.setId(doc.getObjectId("_id"));
 		user.setFrom(doc.getObjectId("fi"));
 		user.setTo(doc.getObjectId("ti"));
-		user.setFromState(doc.getBoolean("fs"));
-		user.setToState(doc.getBoolean("ts"));
 
 		return user;
 	}
@@ -149,20 +131,13 @@ public class Relation {
 	}
 
 	public Relation(ObjectId fi, ObjectId ti) {
-		this.fromState = false;
-		this.toState = false;
 
 		this.to = ti;
 		this.from = fi;
 
 	}
 
-	public Relation(boolean fs, ObjectId fi, ObjectId ti, boolean ts) {
-		this.fromState = fs;
-		this.toState = ts;
-		this.to = ti;
-		this.from = fi;
-	}
+
 
 	public void delete() {
 		if (id != null)
