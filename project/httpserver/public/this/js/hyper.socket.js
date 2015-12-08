@@ -59,6 +59,7 @@ function average(array){
 }
 
 
+var soundDetected = false;
 function audioFunction(stream){
 	var soundProc = 0;
 	var audioContext = new AudioContext();
@@ -73,8 +74,24 @@ function audioFunction(stream){
 			var currentAudioLevel = average(inputLevels);
 			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
 			var perc = currentAudioLevel/maxAudioLevel;
-			$("#soundIcon").attr("class",perc > 0.05 ?"fa fa-microphone text-success" : "fa fa-microphone text-off");
-			$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+			if(perc>0.05){
+				if(!soundDetected){
+					soundDetected = true;
+					
+					$("#soundIcon").attr("class","fa fa-microphone text-success");
+					$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+					
+				}
+			}else {
+				if(soundDetected){
+					soundDetected = false;
+					$("#soundIcon").attr("class","fa fa-microphone text-off");
+					$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+				}
+				
+			}
+			
+		
 		}
 		soundProc=soundProc+1;
 		if(soundProc>4){
