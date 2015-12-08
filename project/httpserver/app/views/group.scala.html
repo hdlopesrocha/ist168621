@@ -179,13 +179,12 @@
 		var localContent = [];
 		var moreContent = true;
 		var contentTimer = null;
-		var microphoneState = true;
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
 		
 		function toggleMicrophone(){
-			microphoneState = !microphoneState;
+			var microphoneState = !Kurento.microphoneState;
 			Kurento.setMicrophone(microphoneState);
 			if(microphoneState){
 				$("#soundIcon").attr("class","fa fa-microphone-slash");
