@@ -86,13 +86,13 @@ var Kurento = new (function() {
 					perc = currentAudioLevel/maxAudioLevel;
 				}
 				if(perc>0.05){
-					if(!soundDetected){
-						soundDetected = true;
+					if(!Kurento.soundDetected){
+						Kurento.soundDetected = true;
 						Kurento.talk(true);
 					}
 				}else {
-					if(soundDetected){
-						soundDetected = false;
+					if(Kurento.soundDetected){
+						Kurento.soundDetected = false;
 						Kurento.talk(false);
 					}
 					
