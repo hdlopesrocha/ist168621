@@ -272,22 +272,30 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("main");
 				Kurento.createPeerConnection("mixer");
 
+				
 				if(mode==1){
-						navigator.getUserMedia(screen_user, function(stream) {
-							Kurento.peerConnection["main"].addStream(stream);
-							Kurento.peerConnection["main"].createOffer(function (lsd) {		
-								console.log("createOfferToSendReceive",lsd);
-								// XXX [CLIENT_OFFER_02] XXX
-								Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
-									// XXX [CLIENT_OFFER_03] XXX		
-									Kurento.webSocket.send(JSON.stringify({
-										id : "offer",
-										name : "main",
-										data : lsd
-									}));
-								}, logError);
-							}, logError,remote_constraints);
-						}, logError);
+				navigator.mediaDevices.getOutputMedia({ video: true })
+				  .then(stream => {
+				   
+					  Kurento.peerConnection["main"].addStream(stream);
+						Kurento.peerConnection["main"].createOffer(function (lsd) {		
+							console.log("createOfferToSendReceive",lsd);
+							// XXX [CLIENT_OFFER_02] XXX
+							Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
+								// XXX [CLIENT_OFFER_03] XXX		
+								Kurento.webSocket.send(JSON.stringify({
+									id : "offer",
+									name : "main",
+									data : lsd
+								}));
+							}, logError);
+						}, logError,remote_constraints);
+					  
+					  
+				  }, error => {
+				    console.log("Unable to acquire screen capture", error);
+				  });
+		
 						
 				}
 				
