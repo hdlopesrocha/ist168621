@@ -273,7 +273,6 @@ var Kurento = new (function() {
 				
 				if(mode==1){
 					navigator.getUserMedia(screen_user, function(stream) {
-						audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
