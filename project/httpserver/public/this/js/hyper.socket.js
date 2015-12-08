@@ -20,10 +20,8 @@ var local_user = {
 
 var screen_user = {
 		video: {
-	        mandatory: {
-	            chromeMediaSource: 'screen'
-	        }
-	    }
+		    mediaSource: 'window' || 'screen'
+		}
 };
 
 var audio_constraints = { 
@@ -274,11 +272,9 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
-					console.log("xxx",navigator);
-					navigator.mediaDevices.getUserMedia({ video: true })
-				  .then(stream => {
-				   
-					  Kurento.peerConnection["main"].addStream(stream);
+					navigator.getUserMedia(screen_user, function(stream) {
+						audioFunction(stream);
+						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
 							// XXX [CLIENT_OFFER_02] XXX
@@ -291,12 +287,7 @@ var Kurento = new (function() {
 								}));
 							}, logError);
 						}, logError,remote_constraints);
-					  
-					  
-				  }, error => {
-				    console.log("Unable to acquire screen capture", error);
-				  });
-		
+					}, logError);
 						
 				}
 				
