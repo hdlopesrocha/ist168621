@@ -66,6 +66,7 @@ var Kurento = new (function() {
 		  		audioTracks[i].enabled = this.microphoneState;
 		  	}
 		}
+		return this.microphoneState;
 	}
 	
 	this.audioFunction= function(stream){
@@ -94,11 +95,8 @@ var Kurento = new (function() {
 					if(Kurento.soundDetected){
 						Kurento.soundDetected = false;
 						Kurento.talk(false);
-					}
-					
+					}	
 				}
-				
-			
 			}
 			soundProc=soundProc+1;
 			if(soundProc>4){
