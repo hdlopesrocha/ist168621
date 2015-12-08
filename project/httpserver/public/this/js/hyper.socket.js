@@ -274,8 +274,8 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
-					console.log("xxx",navigator);
-					navigator.mediaDevices.getOutputMedia({ video: true })
+					console.log("xxx",navigator.);
+					navigator.mediaDevices.getUserMedia({ video: true })
 				  .then(stream => {
 				   
 					  Kurento.peerConnection["main"].addStream(stream);
