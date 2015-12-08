@@ -524,10 +524,11 @@
 					var userId = array[i].id;
 					var name = array[i].name;
 					var photo = array[i].photo;
-
+					var audio ='<i id="mic'+userId+'" class="fa fa-microphone text-off"></i>';
 					var style2='style="background-image:url('+photo+');height:40px;width:40px"';
 					var add_button = "<i style='color:green' onclick='add_user_group(\"" + userId	+ "\")' class='fa fa-plus'></i>";
-					html += '<div class="media"><a '+style2+' class="pull-left media-object circular"></a>'+
+					
+					html += '<div class="media">'+audio+'<a '+style2+' class="pull-left media-object circular"></a>'+
 					'<div class="media-body"><h5>'+name+' | User | '+add_button+'</h5></div></div>';
 				}
 				$("#candidateList").html(html);
