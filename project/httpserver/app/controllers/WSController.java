@@ -184,6 +184,17 @@ public class WSController extends Controller {
 									usession.sendMessage(usession.getContent());
 								}
 									break;
+								case "talk": {
+									Boolean value = args.optBoolean("value",false);
+									JSONObject msg = new JSONObject();
+									msg.put("id", "talk");
+									JSONObject data = new JSONObject();
+									data.put("uid", user.getId().toString());
+									data.put("value", value);
+									msg.put("data", data);
+									room.sendMessage(msg.toString());
+								}
+									break;
 
 								case "setHistoric": {
 									String userId = args.optString("uid",null);

@@ -77,16 +77,12 @@ function audioFunction(stream){
 			if(perc>0.05){
 				if(!soundDetected){
 					soundDetected = true;
-					
-					$("#soundIcon").attr("class","fa fa-microphone text-success");
-					$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
-					
+					Kurento.talk(true);
 				}
 			}else {
 				if(soundDetected){
 					soundDetected = false;
-					$("#soundIcon").attr("class","fa fa-microphone text-off");
-					$("#soundValues").html(currentAudioLevel+" / "+maxAudioLevel);
+					Kurento.talk(false);
 				}
 				
 			}
@@ -111,6 +107,13 @@ var Kurento = new (function() {
 
 	this.webSocket = null;
 
+	this.talk = function(value){
+		Kurento.webSocket.send(JSON.stringify({
+			id: "talk",
+			value:value
+		}));
+	}
+	
 	this.getContent = function(){
 		Kurento.webSocket.send(JSON.stringify({
 			id: "getContent",
@@ -212,7 +215,7 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb) {		
+	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb) {		
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
@@ -220,6 +223,7 @@ var Kurento = new (function() {
 		newMessageCallback = nmcb;
 		tagArrivedCallback = tacb;
 		contentArrivedCallback = cacb;
+		talkReceivedCallback = trcb;
 		
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -277,6 +281,13 @@ var Kurento = new (function() {
 
 						
 						break;
+					case 'talk':
+						var msg = message.data;
+
+						
+						talkReceivedCallback(msg.uid,msg.value);
+						break;
+						
 					default:
 						break;					
 				}
