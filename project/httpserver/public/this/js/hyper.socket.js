@@ -19,12 +19,15 @@ var local_user = {
 
 
 var screen_user = {
-    audio: false,
-    video: {
-        mandatory: {    chromeMediaSource: 'screen'     },
-        optional: []
-    }
-};
+		 audio: false,
+		 video: {
+		   mandatory: {
+		       chromeMediaSource: 'screen',
+		       maxWidth: 1280,
+		       maxHeight: 720
+		   },
+		   optional: []
+		 };
 
 var audio_constraints = { 
 	'offerToReceiveAudio':true, 
@@ -273,9 +276,7 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("mixer");
 
 				if(mode==1){
-					getScreenId(function(error, sourceId, screen_constraints){
-						console.log(error, sourceId, screen_constraints);
-						navigator.getUserMedia(screen_constraints, function(stream) {
+						navigator.getUserMedia(screen_user, function(stream) {
 							Kurento.peerConnection["main"].addStream(stream);
 							Kurento.peerConnection["main"].createOffer(function (lsd) {		
 								console.log("createOfferToSendReceive",lsd);
@@ -291,7 +292,6 @@ var Kurento = new (function() {
 							}, logError,remote_constraints);
 						}, logError);
 						
-					});
 				}
 				
 				
