@@ -276,7 +276,6 @@ var Kurento = new (function() {
 					getScreenId(function(error, sourceId, screen_constraints){
 						console.log(error, sourceId, screen_constraints);
 						navigator.getUserMedia(screen_constraints, function(stream) {
-							audioFunction(stream);
 							Kurento.peerConnection["main"].addStream(stream);
 							Kurento.peerConnection["main"].createOffer(function (lsd) {		
 								console.log("createOfferToSendReceive",lsd);
