@@ -14,14 +14,14 @@ var local_user = {
 	"video" : true
 };
 
+
+
+
+
 var screen_user = {
-    audio: true,
+    audio: false,
     video: {
-        mandatory: {
-            chromeMediaSource: 'desktop',
-            maxWidth: 1280,
-            maxHeight: 720
-        },
+        mandatory: {    chromeMediaSource: 'screen'     },
         optional: []
     }
 };
@@ -273,16 +273,7 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("mixer");
 
 				
-				if(mode==1){
-					var screen = new Screen('screen-unique-id');
-
-					// get shared screens
-					screen.onaddstream = function(e) {
-					    document.body.appendChild(e.video);
-					};
-
-					
-				}
+				
 				
 				// XXX [CLIENT_OFFER_01] XXX
 				if(mode==0 || mode==1){
