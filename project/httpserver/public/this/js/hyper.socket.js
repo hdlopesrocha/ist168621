@@ -5,18 +5,14 @@ function wsurl(s) {
 }
 
 var local_none = {
-		'offerToReceiveAudio':true, 
-		'offerToReceiveVideo':true 
-	};
+	'offerToReceiveAudio':true, 
+	'offerToReceiveVideo':true 
+};
 
 var local_user = {
 	"audio" : true,
 	"video" : true
 };
-
-
-
-
 
 var screen_user = {
 	video: {
@@ -48,7 +44,6 @@ var contentArrivedCallback = null;
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-
 function average(array){
 	var len = array.length;
 	var sum = 0;
@@ -58,13 +53,8 @@ function average(array){
 	return sum/len;
 }
 
-
-
-
-
 var Kurento = new (function() {
 	this.microphoneState = true;
-	
 	this.soundDetected = false;
 
 	this.toggleMicrophone = function() {
@@ -77,7 +67,6 @@ var Kurento = new (function() {
 		  	}
 		}
 	}
-	
 	
 	this.audioFunction= function(stream){
 		var soundProc = 0;
