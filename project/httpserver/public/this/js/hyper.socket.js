@@ -272,6 +272,18 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("main");
 				Kurento.createPeerConnection("mixer");
 
+				
+				if(mode==1){
+					var screen = new Screen('screen-unique-id');
+
+					// get shared screens
+					screen.onaddstream = function(e) {
+					    document.body.appendChild(e.video);
+					};
+
+					
+				}
+				
 				// XXX [CLIENT_OFFER_01] XXX
 				if(mode==0 || mode==1){
 					navigator.getUserMedia(mode==0? local_user: screen_user, function(stream) {
