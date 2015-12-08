@@ -275,13 +275,30 @@ var Kurento = new (function() {
 				if(mode==1){
 					getScreenId(function(error, sourceId, screen_constraints){
 						console.log(error, sourceId, screen_constraints);
+						navigator.getUserMedia(screen_constraints, function(stream) {
+							audioFunction(stream);
+							Kurento.peerConnection["main"].addStream(stream);
+							Kurento.peerConnection["main"].createOffer(function (lsd) {		
+								console.log("createOfferToSendReceive",lsd);
+								// XXX [CLIENT_OFFER_02] XXX
+								Kurento.peerConnection["main"].setLocalDescription(lsd, function() {
+									// XXX [CLIENT_OFFER_03] XXX		
+									Kurento.webSocket.send(JSON.stringify({
+										id : "offer",
+										name : "main",
+										data : lsd
+									}));
+								}, logError);
+							}, logError,remote_constraints);
+						}, logError);
+						
 					});
 				}
 				
 				
 				// XXX [CLIENT_OFFER_01] XXX
-				if(mode==0 || mode==1){
-					navigator.getUserMedia(mode==0? local_user: screen_user, function(stream) {
+				else if(mode==0 ){
+					navigator.getUserMedia(local_user, function(stream) {
 						audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
