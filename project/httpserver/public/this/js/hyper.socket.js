@@ -18,7 +18,7 @@ var screen_user = {
     audio: true,
     video: {
         mandatory: {
-            chromeMediaSource: 'screen',
+            chromeMediaSource: 'desktop',
             maxWidth: 1280,
             maxHeight: 720
         },
