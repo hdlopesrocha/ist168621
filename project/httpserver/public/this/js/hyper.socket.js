@@ -19,15 +19,11 @@ var local_user = {
 
 
 var screen_user = {
-		 audio: false,
-		 video: {
-		   mandatory: {
-		       chromeMediaSource: 'screen',
-		       maxWidth: 1280,
-		       maxHeight: 720
-		   },
-		   optional: []
-		 }
+		video: {
+	        mandatory: {
+	            chromeMediaSource: 'screen'
+	        }
+	    }
 };
 
 var audio_constraints = { 
