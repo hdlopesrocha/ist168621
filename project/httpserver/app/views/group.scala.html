@@ -186,9 +186,9 @@
 		function toggleMicrophone(){
 			var microphoneState = Kurento.toggleMicrophone();
 			if(microphoneState){
-				$("#soundIcon").attr("class","fa fa-microphone-slash");
+				$("#soundIcon").attr("class","fa fa-microphone text-success");
 			} else {
-				$("#soundIcon").attr("class","fa fa-microphone");
+				$("#soundIcon").attr("class","fa fa-microphone-slash text-danger");
 			}
 		}
 		
