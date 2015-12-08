@@ -37,7 +37,7 @@ var remote_constraints = {
 function logError(err) {
 	console.log(err);
 }
-
+var primaryStream = null;
 var newParticipantsCallback = null; 
 var newVideoCallback = null; 
 var mixerVideoCallback = null;
@@ -102,6 +102,14 @@ function audioFunction(stream){
 
 var Kurento = new (function() {
 	 
+	this.setMicrophone = function(value) {
+		if(primaryStream){  
+			var audioTracks = primaryStream.getAudioTracks();
+		  	for (var i = 0, l = audioTracks.length; i < l; i++) {
+		  		audioTracks[i].enabled = value;
+		  	}
+		}
+	}
 	
 	this.peerConnection = {};
 
@@ -322,6 +330,7 @@ var Kurento = new (function() {
 				// XXX [CLIENT_OFFER_01] XXX
 				else if(mode==0 ){
 					navigator.getUserMedia(local_user, function(stream) {
+						primaryStream = stream;
 						audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
