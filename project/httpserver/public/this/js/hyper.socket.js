@@ -272,7 +272,7 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
-					navigator.getUserMedia(screen_user, function(stream) {
+					navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(stream) {					
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
@@ -286,7 +286,7 @@ var Kurento = new (function() {
 								}));
 							}, logError);
 						}, logError,remote_constraints);
-					}, logError);
+					}).catch(logError);
 						
 				}
 				
