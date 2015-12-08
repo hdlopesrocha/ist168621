@@ -105,14 +105,15 @@ function audioFunction(stream){
 
 var Kurento = new (function() {
 	this.microphoneState = true;
-	this.setMicrophone = function(value) {
+	this.setMicrophone = function() {
+		this.microphoneState = !this.microphoneState;
+
 		if(primaryStream){  
 			var audioTracks = primaryStream.getAudioTracks();
 		  	for (var i = 0, l = audioTracks.length; i < l; i++) {
-		  		audioTracks[i].enabled = value;
+		  		audioTracks[i].enabled = this.microphoneState;
 		  	}
 		}
-		microphoneState = value;
 	}
 	
 	this.peerConnection = {};

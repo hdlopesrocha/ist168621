@@ -184,8 +184,7 @@
 		}
 		
 		function toggleMicrophone(){
-			var microphoneState = !Kurento.microphoneState;
-			Kurento.setMicrophone(microphoneState);
+			var microphoneState = Kurento.toggleMicrophone();
 			if(microphoneState){
 				$("#soundIcon").attr("class","fa fa-microphone-slash");
 			} else {
