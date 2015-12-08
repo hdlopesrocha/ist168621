@@ -19,9 +19,9 @@ var local_user = {
 
 
 var screen_user = {
-		video: {
-		    mediaSource: 'window' || 'screen'
-		}
+	video: {
+	    mediaSource: 'window' || 'screen'
+	}
 };
 
 var audio_constraints = { 
@@ -272,7 +272,7 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
-					navigator.mediaDevices.getUserMedia(screen_user).then(function(stream) {					
+					navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(stream) {					
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
