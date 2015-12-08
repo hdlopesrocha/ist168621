@@ -71,7 +71,7 @@ function audioFunction(stream){
 	javascriptNode.onaudioprocess = function(event){
 		if(soundProc==0){
 			var perc = 0;
-			if(microphoneState){
+			if(Kurento.microphoneState){
 				var inputLevels = event.inputBuffer.getChannelData(0);
 				var currentAudioLevel = average(inputLevels);
 				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
