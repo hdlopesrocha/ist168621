@@ -70,10 +70,13 @@ function audioFunction(stream){
 	
 	javascriptNode.onaudioprocess = function(event){
 		if(soundProc==0){
-			var inputLevels = event.inputBuffer.getChannelData(0);
-			var currentAudioLevel = average(inputLevels);
-			maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
-			var perc = currentAudioLevel/maxAudioLevel;
+			var perc = 0;
+			if(microphoneState){
+				var inputLevels = event.inputBuffer.getChannelData(0);
+				var currentAudioLevel = average(inputLevels);
+				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+				perc = currentAudioLevel/maxAudioLevel;
+			}
 			if(perc>0.05){
 				if(!soundDetected){
 					soundDetected = true;
@@ -101,7 +104,7 @@ function audioFunction(stream){
 
 
 var Kurento = new (function() {
-	 
+	this.microphoneState = true;
 	this.setMicrophone = function(value) {
 		if(primaryStream){  
 			var audioTracks = primaryStream.getAudioTracks();
@@ -109,6 +112,7 @@ var Kurento = new (function() {
 		  		audioTracks[i].enabled = value;
 		  	}
 		}
+		microphoneState = value;
 	}
 	
 	this.peerConnection = {};
