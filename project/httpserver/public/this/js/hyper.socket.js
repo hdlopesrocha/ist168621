@@ -27,7 +27,8 @@ var screen_user = {
 		       maxHeight: 720
 		   },
 		   optional: []
-		 };
+		 }
+};
 
 var audio_constraints = { 
 	'offerToReceiveAudio':true, 
