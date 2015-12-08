@@ -67,7 +67,7 @@ var Kurento = new (function() {
 	
 	this.soundDetected = false;
 
-	this.setMicrophone = function() {
+	this.toggleMicrophone = function() {
 		this.microphoneState = !this.microphoneState;
 
 		if(primaryStream){  
