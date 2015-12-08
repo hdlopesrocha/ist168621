@@ -272,7 +272,11 @@ var Kurento = new (function() {
 				Kurento.createPeerConnection("main");
 				Kurento.createPeerConnection("mixer");
 
-				
+				if(mode==1){
+					getScreenId(function(error, sourceId, screen_constraints){
+						console.log(error, sourceId, screen_constraints);
+					});
+				}
 				
 				
 				// XXX [CLIENT_OFFER_01] XXX
