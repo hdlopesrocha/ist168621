@@ -274,6 +274,7 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
+					console.log("xxx",navigator.mediaDevices);
 					navigator.mediaDevices.getOutputMedia({ video: true })
 				  .then(stream => {
 				   
