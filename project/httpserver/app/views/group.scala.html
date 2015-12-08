@@ -254,9 +254,9 @@
 
 		function talkArrived(userId,value){
 			if(value){
-				$("#soundIcon").attr("class","fa fa-microphone text-success");
+				$("#mic"+userId).attr("class","fa fa-microphone text-success");
 			}else {
-				$("#soundIcon").attr("class","fa fa-microphone text-off");
+				$("#mic"+userId).attr("class","fa fa-microphone text-off");
 			}
 		}
 		
