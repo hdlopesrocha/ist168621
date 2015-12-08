@@ -59,52 +59,14 @@ function average(array){
 }
 
 
-var soundDetected = false;
-function audioFunction(stream){
-	var soundProc = 0;
-	var audioContext = new AudioContext();
-	var maxAudioLevel = 0;
-	
-	var microphone = audioContext.createMediaStreamSource(stream);
-	var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
-	
-	javascriptNode.onaudioprocess = function(event){
-		if(soundProc==0){
-			var perc = 0;
-			if(Kurento.microphoneState){
-				var inputLevels = event.inputBuffer.getChannelData(0);
-				var currentAudioLevel = average(inputLevels);
-				maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
-				perc = currentAudioLevel/maxAudioLevel;
-			}
-			if(perc>0.05){
-				if(!soundDetected){
-					soundDetected = true;
-					Kurento.talk(true);
-				}
-			}else {
-				if(soundDetected){
-					soundDetected = false;
-					Kurento.talk(false);
-				}
-				
-			}
-			
-		
-		}
-		soundProc=soundProc+1;
-		if(soundProc>4){
-			soundProc = 0;
-		}
-	};
-	
-	microphone.connect(javascriptNode);
-	javascriptNode.connect(audioContext.destination);
-}
+
 
 
 var Kurento = new (function() {
 	this.microphoneState = true;
+	
+	this.soundDetected = false;
+
 	this.setMicrophone = function() {
 		this.microphoneState = !this.microphoneState;
 
@@ -115,6 +77,50 @@ var Kurento = new (function() {
 		  	}
 		}
 	}
+	
+	
+	this.audioFunction= function(stream){
+		var soundProc = 0;
+		var audioContext = new AudioContext();
+		var maxAudioLevel = 0;
+		
+		var microphone = audioContext.createMediaStreamSource(stream);
+		var javascriptNode = audioContext.createScriptProcessor(256, 1, 1);
+		
+		javascriptNode.onaudioprocess = function(event){
+			if(soundProc==0){
+				var perc = 0;
+				if(Kurento.microphoneState){
+					var inputLevels = event.inputBuffer.getChannelData(0);
+					var currentAudioLevel = average(inputLevels);
+					maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+					perc = currentAudioLevel/maxAudioLevel;
+				}
+				if(perc>0.05){
+					if(!soundDetected){
+						soundDetected = true;
+						Kurento.talk(true);
+					}
+				}else {
+					if(soundDetected){
+						soundDetected = false;
+						Kurento.talk(false);
+					}
+					
+				}
+				
+			
+			}
+			soundProc=soundProc+1;
+			if(soundProc>4){
+				soundProc = 0;
+			}
+		};
+		
+		microphone.connect(javascriptNode);
+		javascriptNode.connect(audioContext.destination);
+	}
+	
 	
 	this.peerConnection = {};
 
@@ -336,7 +342,7 @@ var Kurento = new (function() {
 				else if(mode==0 ){
 					navigator.getUserMedia(local_user, function(stream) {
 						primaryStream = stream;
-						audioFunction(stream);
+						Kurento.audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
