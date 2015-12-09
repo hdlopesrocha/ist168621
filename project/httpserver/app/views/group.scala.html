@@ -333,12 +333,7 @@
 		}
 		
 		function toggleVideo() {
-			if(selectedUser!=null){
-				selectedUser = null;
-			}
-			else {
-				selectedUser = savedUser;
-			}
+			selectedUser = selectedUser!=null ? null: savedUser;
 			setVideoIcon();
 			if (real_time) {
 				Kurento.receiveRealtime(selectedUser);
