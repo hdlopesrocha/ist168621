@@ -380,7 +380,7 @@
 			}
 
 			if($("#contentCaption").is(':checked')){
-				content = '<div class="caption"><center>'+content+'</center></div>';
+				content = '<div class="caption"><span>'+content+'</span></div>';
 			}
 			return content;
 		}
@@ -450,7 +450,8 @@
 
 		function onContentArrived(content,more) {
 			moreContent = more;
-			$("#mainVideoContent").html("");
+			$('#mainVideoContent:not(first-child)').remove();
+
 			console.log(content);
 			localContent = content.sort(function(a, b) {
 				return new Date(a.time).getTime() - new Date(b.time).getTime();
