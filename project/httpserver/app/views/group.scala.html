@@ -181,8 +181,16 @@
 		var localContent = [];
 		var moreContent = true;
 		var contentTimer = null;
+		var autoSelect = false;
+		
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
+		}
+		
+		function toggleAutoSelect(){
+			autoSelect = !autoSelect;
+			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
+
 		}
 		
 		function toggleMicrophone(){
@@ -263,6 +271,9 @@
 
 		function talkArrived(userId,value){
 			if(value){
+				if(autoSelect){
+					selectUser(userId);
+				}
 				$("#mic"+userId).attr("class","fa fa-microphone text-success");
 			}else {
 				$("#mic"+userId).attr("class","fa fa-microphone text-off");
