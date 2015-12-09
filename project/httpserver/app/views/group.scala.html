@@ -162,7 +162,7 @@
 		</div>
 	</div>
 	
-	<div id="screen">
+	<div id="screen" style="width:100%;height:100%" class="hidden">
 		<button type="button" class="btn btn-primary" onclick="toggleVideoSize()">
 			<i class="fa fa-compress"></i>
 		</button>
@@ -203,9 +203,12 @@
 			fullscreen = !fullscreen;
 			if(fullscreen){
 				$("#fullscreen").append($("#videoWrapper").remove());
+				$("#fullscreen").attr("class","");
 			}
 			else {
 				$("#videoPanel").append($("#videoWrapper").remove());
+				$("#fullscreen").attr("class","hidden");
+
 			}	
 		}
 		
