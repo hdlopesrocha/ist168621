@@ -248,11 +248,13 @@
 				var del_button = "<i style='color:red' onclick='removeMemberConfirmation(\""+ userId+ "\",\""+name+"\")' class='fa fa-times'></i>";
 				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
 				var style='style="background-image:url('+photo+');height:40px;width:40px" class="pull-left media-object circular"';
-				var audio ='<i style="float:left;position:absolute" id="mic'+userId+'" class="fa fa-microphone text-off"></i>';
+				var audio ='<i style=" top: -14px;left: -22px;position:relative" id="mic'+userId+'" class="fa fa-microphone text-off"></i>';
 
+		
+				
 				$("#videoMembers").append(
-					'<div id="vidMember'+userId+'" '+ onclick+'>'+audio+
-					'<a '+style+'></a>'+
+					'<div id="vidMember'+userId+'" '+ onclick+'>'+
+					'<a '+style+'>'+audio+'</a>'+
 					'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
 				);		
 			}
