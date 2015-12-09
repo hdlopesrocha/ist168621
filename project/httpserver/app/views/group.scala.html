@@ -450,7 +450,7 @@
 
 		function onContentArrived(content,more) {
 			moreContent = more;
-			$('#mainVideoContent:not(first-child)').remove();
+			$('#mainVideoContent div:not(first-child)').remove();
 
 			console.log(content);
 			localContent = content.sort(function(a, b) {
