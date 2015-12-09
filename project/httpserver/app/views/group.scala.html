@@ -161,7 +161,6 @@
 			</div>
 		</div>
 	</div>
-	<div id="fullscreen"></div>
 	
 	<div id="screen-unique-id"></div>
 	<div class="container-fluid">
@@ -199,10 +198,10 @@
 		function toggleVideoSize(){
 			fullscreen = !fullscreen;
 			if(fullscreen){
-				$("#fullscreen").insert($("#videoWrapper").remove());
+				$("#fullscreen").append($("#videoWrapper").remove());
 			}
 			else {
-				$("#videoPanel").insert($("#videoWrapper").remove());
+				$("#videoPanel").append($("#videoWrapper").remove());
 			}	
 		}
 		
