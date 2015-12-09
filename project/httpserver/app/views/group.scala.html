@@ -324,12 +324,7 @@
 
 		
 		function setVideoIcon(){
-			if(selectedUser==null){
-				$("#toggleVideo").attr("class","fa fa-users");
-			}
-			else {
-				$("#toggleVideo").attr("class","fa fa-user");
-			}
+			$("#toggleVideo").attr("class",selectedUser==null ? "fa fa-users":"fa fa-user");
 		}
 		
 		function toggleVideo() {
@@ -564,7 +559,7 @@
 			$('#participantModal').modal('show');
 			$('#searchNav').show();
 			$('#searchText').typeahead(mySearch);	
-			
+			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
 			
