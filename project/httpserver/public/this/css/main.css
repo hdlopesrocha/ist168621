@@ -76,7 +76,6 @@ body {
 .caption{
 	position: absolute;
 	width:100%;
-	text-align: center;
 	bottom:0px;
 	display:inline-block;
 }
