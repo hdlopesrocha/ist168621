@@ -161,6 +161,8 @@
 			</div>
 		</div>
 	</div>
+	<div id="fullscreen"></div>
+	
 	<div id="screen-unique-id"></div>
 	<div class="container-fluid">
 		<div class="container">	
@@ -182,7 +184,7 @@
 		var moreContent = true;
 		var contentTimer = null;
 		var autoSelect = false;
-		
+		var fullscreen = false;
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
@@ -191,6 +193,17 @@
 			autoSelect = !autoSelect;
 			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
 
+		}
+		
+		
+		function toggleVideoSize(){
+			fullscreen = !fullscreen;
+			if(fullscreen){
+				$("#fullscreen").insert($("#videoWrapper").remove());
+			}
+			else {
+				$("#videoPanel").insert($("#videoWrapper").remove());
+			}	
 		}
 		
 		function toggleMicrophone(){
