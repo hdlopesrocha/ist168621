@@ -314,7 +314,7 @@
 
 		function selectUser(userId){
 			savedUser = selectedUser = userId;
-		
+			setVideoIcon();
 			if (real_time) {
 				Kurento.receiveRealtime(selectedUser);
 			} else {
@@ -323,16 +323,23 @@
 		}
 
 		
-		function toggleVideo() {
-			if(selectedUser!=null){
-				selectedUser = null;
+		function setVideoIcon(){
+			if(selectedUser==null){
 				$("#toggleVideo").attr("class","fa fa-users");
 			}
 			else {
-				selectedUser = savedUser;
 				$("#toggleVideo").attr("class","fa fa-user");
 			}
-			
+		}
+		
+		function toggleVideo() {
+			if(selectedUser!=null){
+				selectedUser = null;
+			}
+			else {
+				selectedUser = savedUser;
+			}
+			setVideoIcon();
 			if (real_time) {
 				Kurento.receiveRealtime(selectedUser);
 			} else {
