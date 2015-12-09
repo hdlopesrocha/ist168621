@@ -42,9 +42,7 @@ public class ListUsersService extends Service<String> {
 
 	@Override
 	public boolean canExecute() {
-		
 		return caller!=null;
 	}
-
 
 }

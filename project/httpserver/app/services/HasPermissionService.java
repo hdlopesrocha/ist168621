@@ -38,8 +38,6 @@ public class HasPermissionService extends Service<Boolean> {
 	 */
 	@Override
 	public Boolean dispatch() {
-
-		
 		return Permission.find(source, name,target)!=null;
 	}
 
