@@ -62,7 +62,6 @@ public class KurentoManager {
 		if(group==null){
 			return null;
 		}
-		
 		Room room = rooms.get(groupId);
 		if (room == null) {
 			MediaPipeline mp = kurento.createMediaPipeline();
