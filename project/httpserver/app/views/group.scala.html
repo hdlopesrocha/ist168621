@@ -217,7 +217,6 @@
 		}
 
 		function videoStream(streamUrl) {
-			selectVideo(null);
 			var video = document.getElementById("myvideo");
 			video.src = streamUrl;
 			return video;
@@ -324,16 +323,14 @@
 		}
 
 		
-		function selectVideo(isGroup) {
-			if(isGroup){
+		function toggleVideo() {
+			if(selectedUser==null){
 				selectedUser = null;
-				$("#individualVideo").show();
-				$("#groupVideo").hide();
+				$("#toggleVideo").attr("class","fa fa-users");
 			}
 			else {
 				selectedUser = savedUser;
-				$("#individualVideo").hide();
-				$("#groupVideo").show();
+				$("#toggleVideo").attr("class","fa fa-user");
 			}
 			
 			if (real_time) {
