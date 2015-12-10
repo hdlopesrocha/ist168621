@@ -6,6 +6,18 @@ body,html {
 
 /* ======================================================*/
 
+.fullscreen {
+	position: fixed;
+	left:0px;
+	right:0px;
+	top:0px;
+	z-index:9999;
+	bottom:0px;
+	width:100%;
+	height:100%;
+	background-color: #202020;
+}
+
 .fullscreen #videoWrapper #mainVideoContent {
 	position: absolute; 
 	z-index: 99; 
@@ -58,17 +70,7 @@ body,html {
 	height: 100%;
 }
 
-.fullscreen {
-	position: fixed;
-	left:0px;
-	right:0px;
-	top:0px;
-	z-index:9999;
-	bottom:0px;
-	width:100%;
-	height:100%;
-	background-color: #202020;
-}
+
 
 /* ======================================================*/
 

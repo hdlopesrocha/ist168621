@@ -200,10 +200,13 @@
 			if(fullscreen){
 				$("#videoPanel").attr("class","fullscreen");
 				$("#minimizeVideo").show();
+				$(".not-fullscreen").hide();
+
 			}
 			else {
 				$("#videoPanel").attr("class","panel-body");
 				$("#minimizeVideo").hide();
+				$(".not-fullscreen").show();
 
 			}	
 		}

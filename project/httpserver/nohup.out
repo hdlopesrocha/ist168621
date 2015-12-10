@@ -13646,3 +13646,1179 @@ SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorSta
 [A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-jsonrpc-client;6.2.0 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-commons;6.2.0 ...[0m
 [A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#fluent-hc;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#openstack-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-mapper-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-core-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-model;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-client;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-common;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-api;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-core;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-elements;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-filters;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-server;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-internal;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-mongodb;1.6.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-tx;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-commons;1.9.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.mongodb#mongo-java-driver;2.12.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-fileupload#commons-fileupload;1.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-web;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot;1.2.1.RELEASE ...[0m
+[[37minfo[0m] p.a.l.c.ActorSystemProvider - Starting application default Akka system: application
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-autoconfigure;1.2.1.RELEASE ...[0m
+org.jboss.netty.channel.ChannelException: Failed to bind to: /0.0.0.0:2080
+	at org.jboss.netty.bootstrap.ServerBootstrap.bind(ServerBootstrap.java:272)
+	at play.core.server.NettyServer$$anonfun$1.apply(NettyServer.scala:132)
+	at play.core.server.NettyServer$$anonfun$1.apply(NettyServer.scala:129)
+	at scala.Option.map(Option.scala:146)
+	at play.core.server.NettyServer.<init>(NettyServer.scala:129)
+	at play.core.server.NettyServerProvider.createServer(NettyServer.scala:200)
+	at play.core.server.NettyServerProvider.createServer(NettyServer.scala:199)
+	at play.core.server.DevServerStart$$anonfun$mainDev$1.apply(DevServerStart.scala:208)
+	at play.core.server.DevServerStart$$anonfun$mainDev$1.apply(DevServerStart.scala:61)
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+	at play.core.server.DevServerStart$.mainDev(DevServerStart.scala:60)
+	at play.core.server.DevServerStart$.mainDevHttpMode(DevServerStart.scala:50)
+	at play.core.server.DevServerStart.mainDevHttpMode(DevServerStart.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at play.runsupport.Reloader$.startDevMode(Reloader.scala:207)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.devModeServer$lzycompute$1(PlayRun.scala:73)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.play$sbt$run$PlayRun$$anonfun$$anonfun$$anonfun$$devModeServer$1(PlayRun.scala:73)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.apply(PlayRun.scala:99)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.apply(PlayRun.scala:52)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+Caused by: java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:433)
+	at sun.nio.ch.Net.bind(Net.java:425)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss$RegisterTask.run(NioServerBoss.java:193)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.processTaskQueue(AbstractNioSelector.java:391)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:315)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.run(NioServerBoss.java:42)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[0m[[31merror[0m] [0mTotal time: 8 s, completed Dec 10, 2015 4:24:35 PM[0m
+20. Waiting for source changes... (press enter to interrupt)
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-tomcat;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-core;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-el;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-logging-juli;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-websocket;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.1.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-web;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-aop;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-webmvc;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.squareup.retrofit#retrofit;1.9.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-log4j;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-log4j12;1.7.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving log4j#log4j;1.2.17 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-test_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hamcrest#hamcrest-core;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.novocode#junit-interface;0.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fluentlenium#fluentlenium-core;0.10.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-java;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-chrome-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-remote-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving cglib#cglib-nodep;2.1_3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-api;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-exec;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#jna;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#platform;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-htmlunit-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#xalan;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#serializer;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-collections#commons-collections;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpmime;4.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit-core-js;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.nekohtml#nekohtml;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.cssparser#cssparser;0.9.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.w3c.css#sac;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-websocket;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-http;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-firefox-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-ie-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-safari-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webbitserver#webbit;0.4.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-support;2.44.0 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-omnidoc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-docs_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-doc_2.11;1.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.pegdown#pegdown;1.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-java;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-core;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-tree;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-analysis;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-util;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.12.1 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources and 1 Java source to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m9 errors found[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/}root...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.11;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.18.2-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources and 1 Java source to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+Waiting for lock on /home/hdlopesrocha/.ivy2/.sbt.ivy.lock to be available...
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-iteratees_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-stm#scala-stm_2.11;0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-json_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-functional_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-datacommons_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving joda-time#joda-time;2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.joda#joda-convert;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jdk8;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jsr310;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-utils;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jul-to-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jcl-over-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-core;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-classic;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-slf4j_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xerces#xercesImpl;2.11.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xml-apis#xml-apis;1.4.01 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.transaction#jta;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject#guice;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving aopalliance#aopalliance;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;16.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#extensions-parent;4.0 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-java8-compat_2.11;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.yaml#snakeyaml;1.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.0.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.validation#validation-api;1.1.0.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.1.1.GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml#classmate;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.2.1.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-context;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-core;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-beans;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.reflections#reflections;0.9.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#annotations;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.jodah#typetools;0.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;18.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#jsr305;2.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat#tomcat-servlet-api;8.0.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.10.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.netty#netty-http-pipelining;1.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc-api_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jolbox#bonecp;0.8.0.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.zaxxer#HikariCP;2.3.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.h2database#h2;1.4.187 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving tyrex#tyrex;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-cache_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sf.ehcache#ehcache-core;2.6.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-core;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-commonshttp4;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-java;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-client;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-jsonrpc-client;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-commons;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#fluent-hc;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#openstack-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-mapper-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-core-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-model;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-client;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-common;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-api;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-core;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-elements;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-filters;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-server;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-internal;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-mongodb;1.6.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-tx;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-commons;1.9.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.mongodb#mongo-java-driver;2.12.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-fileupload#commons-fileupload;1.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-web;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-autoconfigure;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-tomcat;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-core;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-el;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-logging-juli;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-websocket;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.1.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-web;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-aop;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-webmvc;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.squareup.retrofit#retrofit;1.9.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-log4j;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-log4j12;1.7.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving log4j#log4j;1.2.17 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-test_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hamcrest#hamcrest-core;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.novocode#junit-interface;0.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fluentlenium#fluentlenium-core;0.10.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-java;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-chrome-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-remote-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving cglib#cglib-nodep;2.1_3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-api;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-exec;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#jna;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#platform;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-htmlunit-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#xalan;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#serializer;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-collections#commons-collections;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpmime;4.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit-core-js;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.nekohtml#nekohtml;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.cssparser#cssparser;0.9.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.w3c.css#sac;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-websocket;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-http;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-firefox-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-ie-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-safari-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webbitserver#webbit;0.4.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-support;2.44.0 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-omnidoc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-docs_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-doc_2.11;1.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.pegdown#pegdown;1.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-java;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-core;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-tree;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-analysis;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-util;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.12.1 ...[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/hdlopesrocha/.ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/hdlopesrocha/.ivy2/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.7.8.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m9 errors found[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m
+Failed to instantiate [ch.qos.logback.classic.LoggerContext]
+Reported exception:
+java.lang.OutOfMemoryError: Metaspace
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at ch.qos.logback.core.spi.ContextAwareBase.addError(ContextAwareBase.java:104)
+	at ch.qos.logback.core.joran.action.AppenderAction.begin(AppenderAction.java:80)
+	at ch.qos.logback.core.joran.spi.Interpreter.callBeginAction(Interpreter.java:275)
+	at ch.qos.logback.core.joran.spi.Interpreter.startElement(Interpreter.java:147)
+	at ch.qos.logback.core.joran.spi.Interpreter.startElement(Interpreter.java:129)
+	at ch.qos.logback.core.joran.spi.EventPlayer.play(EventPlayer.java:50)
+	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:149)
+	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:135)
+	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:99)
+	at ch.qos.logback.core.joran.GenericConfigurator.doConfigure(GenericConfigurator.java:49)
+	at ch.qos.logback.classic.util.ContextInitializer.configureByResource(ContextInitializer.java:77)
+	at ch.qos.logback.classic.util.ContextInitializer.autoConfig(ContextInitializer.java:152)
+	at org.slf4j.impl.StaticLoggerBinder.init(StaticLoggerBinder.java:85)
+	at org.slf4j.impl.StaticLoggerBinder.<clinit>(StaticLoggerBinder.java:55)
+	at org.slf4j.LoggerFactory.bind(LoggerFactory.java:141)
+	at org.slf4j.LoggerFactory.performInitialization(LoggerFactory.java:120)
+	at org.slf4j.LoggerFactory.getILoggerFactory(LoggerFactory.java:331)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:283)
+	at play.api.Logger$.<init>(Logger.scala:177)
+	at play.api.Logger$.<clinit>(Logger.scala)
+	at play.core.server.DevServerStart$$anonfun$mainDev$1.apply(DevServerStart.scala:88)
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+java.lang.OutOfMemoryError: Metaspace
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at ch.qos.logback.classic.LoggerContext.getLogger(LoggerContext.java:132)
+	at ch.qos.logback.classic.LoggerContext.getLogger(LoggerContext.java:45)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:284)
+	at play.api.Logger$.<init>(Logger.scala:177)
+	at play.api.Logger$.<clinit>(Logger.scala)
+	at play.core.server.DevServerStart$$anonfun$mainDev$1.apply(DevServerStart.scala:88)
+	at play.core.server.DevServerStart$$anonfun$mainDev$1.apply(DevServerStart.scala:61)
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+	at play.core.server.DevServerStart$.mainDev(DevServerStart.scala:60)
+	at play.core.server.DevServerStart$.mainDevHttpMode(DevServerStart.scala:50)
+	at play.core.server.DevServerStart.mainDevHttpMode(DevServerStart.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at play.runsupport.Reloader$.startDevMode(Reloader.scala:207)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.devModeServer$lzycompute$1(PlayRun.scala:73)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.play$sbt$run$PlayRun$$anonfun$$anonfun$$anonfun$$devModeServer$1(PlayRun.scala:73)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.apply(PlayRun.scala:99)
+	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3.apply(PlayRun.scala:52)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[0m[[31merror[0m] [0mTotal time: 22 s, completed Dec 10, 2015 4:25:49 PM[0m
+21. Waiting for source changes... (press enter to interrupt)
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.3 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources and 1 Java source to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+java.lang.OutOfMemoryError: Metaspace
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[0m[[31merror[0m] [0mTotal time: 5 s, completed Dec 10, 2015 4:33:07 PM[0m
+22. Waiting for source changes... (press enter to interrupt)
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m9 errors found[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources and 1 Java source to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+java.lang.OutOfMemoryError: Metaspace
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[0m[[31merror[0m] [0mTotal time: 4 s, completed Dec 10, 2015 4:33:47 PM[0m
+23. Waiting for source changes... (press enter to interrupt)
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m9 errors found[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/}root...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.6 ...[0m
+
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.11;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.18.2-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-iteratees_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-stm#scala-stm_2.11;0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-json_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-functional_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-datacommons_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving joda-time#joda-time;2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.joda#joda-convert;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jdk8;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jsr310;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-utils;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jul-to-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jcl-over-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-core;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-classic;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-slf4j_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xerces#xercesImpl;2.11.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xml-apis#xml-apis;1.4.01 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.transaction#jta;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject#guice;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving aopalliance#aopalliance;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;16.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Creating new HttpsClient with url:https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy:DIRECT with connect timeout:-1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@128dd4615 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@51ffda5816 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/xml}{Last-Modified: Tue, 28 Apr 2015 20:35:00 GMT}{ETag: "553feef4-225"}{Via: 1.1 varnish}{Content-Length: 549}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:33:57 GMT}{Via: 1.1 varnish}{Age: 2267232}{Connection: keep-alive}{X-Served-By: cache-iad2129-IAD, cache-ams4132-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 758, 4518}{X-Timer: S1449765237.242915,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@6c9e06e86 pairs: {GET /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Accept-Encoding: gzip,deflate}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream used: https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@726a6e0a16 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/xml}{Last-Modified: Tue, 28 Apr 2015 20:35:00 GMT}{ETag: "553feef4-225"}{Via: 1.1 varnish}{Content-Length: 549}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:33:57 GMT}{Via: 1.1 varnish}{Age: 2267232}{Connection: keep-alive}{X-Served-By: cache-iad2129-IAD, cache-ams4132-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 758, 4519}{X-Timer: S1449765237.376694,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@518590bb5 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@127ce1f716 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:33:57 GMT}{Via: 1.1 varnish}{Age: 2267232}{Connection: keep-alive}{X-Served-By: cache-iad2125-IAD, cache-ams4132-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 717, 6707}{X-Timer: S1449765237.456752,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@e490c165 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@2ff239eb16 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:33:57 GMT}{Via: 1.1 varnish}{Age: 2267232}{Connection: keep-alive}{X-Served-By: cache-iad2125-IAD, cache-ams4132-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 717, 6708}{X-Timer: S1449765237.510822,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@528f74e66 pairs: {GET /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Accept-Encoding: gzip,deflate}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream used: https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@2709541916 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:33:57 GMT}{Via: 1.1 varnish}{Age: 2267232}{Connection: keep-alive}{X-Served-By: cache-iad2125-IAD, cache-ams4132-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 717, 6709}{X-Timer: S1449765237.578747,VS0,VE0}
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#extensions-parent;4.0 ...[0m
+java.lang.OutOfMemoryError: Metaspace
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-java8-compat_2.11;0.3.0 ...[0m
+[0m[[31merror[0m] [0mTotal time: 5 s, completed Dec 10, 2015 4:33:57 PM[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.yaml#snakeyaml;1.15 ...[0m
+24. Waiting for source changes... (press enter to interrupt)
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.0.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.validation#validation-api;1.1.0.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.1.1.GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml#classmate;1.0.0 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.6 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.2.1.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-context;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-core;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-beans;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.reflections#reflections;0.9.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#annotations;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.jodah#typetools;0.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;18.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#jsr305;2.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat#tomcat-servlet-api;8.0.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.10.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.netty#netty-http-pipelining;1.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc-api_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jolbox#bonecp;0.8.0.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.zaxxer#HikariCP;2.3.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.h2database#h2;1.4.187 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving tyrex#tyrex;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-cache_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sf.ehcache#ehcache-core;2.6.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-core;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-commonshttp4;1.2.1.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-java;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-client;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-jsonrpc-client;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-commons;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.3 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#fluent-hc;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#openstack-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-mapper-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-core-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-model;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-client;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-common;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-api;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-core;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-elements;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-filters;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-server;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-internal;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-mongodb;1.6.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-tx;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-commons;1.9.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.mongodb#mongo-java-driver;2.12.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-fileupload#commons-fileupload;1.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-web;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-autoconfigure;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-tomcat;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-core;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-el;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-logging-juli;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-websocket;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.1.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-web;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-aop;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-webmvc;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.squareup.retrofit#retrofit;1.9.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-log4j;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-log4j12;1.7.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving log4j#log4j;1.2.17 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-test_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hamcrest#hamcrest-core;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.novocode#junit-interface;0.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-sbt#test-interface;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.fluentlenium#fluentlenium-core;0.10.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-java;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-chrome-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-remote-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving cglib#cglib-nodep;2.1_3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-api;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-exec;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#jna;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.java.dev.jna#platform;3.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-htmlunit-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#xalan;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xalan#serializer;2.7.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-collections#commons-collections;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpmime;4.3.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.htmlunit#htmlunit-core-js;2.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.nekohtml#nekohtml;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sourceforge.cssparser#cssparser;0.9.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.w3c.css#sac;1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-websocket;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-http;8.1.15.v20140411 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-firefox-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-ie-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-safari-driver;2.44.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.webbitserver#webbit;0.4.14 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.seleniumhq.selenium#selenium-support;2.44.0 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving junit#junit;4.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-omnidoc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-docs_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-doc_2.11;1.2.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.pegdown#pegdown;1.4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-java;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.parboiled#parboiled-core;1.1.5 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-tree;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-analysis;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.ow2.asm#asm-util;4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving jline#jline;2.12.1 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[0minfo[0m] [0mCompiling 11 Scala sources and 1 Java source to /home/hdlopesrocha/ist168621/project/httpserver/target/scala-2.11/classes...[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:6: type Application is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /                           	controllers.Application.index()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:15: type Rest is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET     /api/user/search	        	controllers.Rest.search()[0m
+[0m[[31merror[0m] [0m/home/hdlopesrocha/ist168621/project/httpserver/conf/routes:53: type WSController is not a member of package controllers[0m
+[0m[[31merror[0m] [0mGET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)[0m
+[0m[[31merror[0m] [0m9 errors found[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) Compilation failed[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.5 ms, state=CONNECTED}]
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/}root...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.11;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.18.2-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-iteratees_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-stm#scala-stm_2.11;0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-json_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-functional_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-datacommons_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving joda-time#joda-time;2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.joda#joda-convert;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jdk8;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jsr310;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-utils;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jul-to-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jcl-over-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-core;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-classic;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-slf4j_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xerces#xercesImpl;2.11.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xml-apis#xml-apis;1.4.01 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.transaction#jta;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject#guice;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving aopalliance#aopalliance;1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;16.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#guice-assistedinject;4.0 ...[0m
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Creating new HttpsClient with url:https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy:DIRECT with connect timeout:-1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@7283c7ac5 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@65d5416317 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/xml}{Last-Modified: Tue, 28 Apr 2015 20:35:00 GMT}{ETag: "553feef4-225"}{Via: 1.1 varnish}{Fastly-Debug-Digest: a8d768bacfa559695a663a0d7a65b873ea7d6df9a9f981dd53607668fca7ba77}{Content-Length: 549}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:34:36 GMT}{Via: 1.1 varnish}{Age: 32536}{Connection: keep-alive}{X-Served-By: cache-iad2144-IAD, cache-ams4137-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 3741, 139}{X-Timer: S1449765276.478549,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@5d4b9fa66 pairs: {GET /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Accept-Encoding: gzip,deflate}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream used: https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@272c11317 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/xml}{Last-Modified: Tue, 28 Apr 2015 20:35:00 GMT}{ETag: "553feef4-225"}{Via: 1.1 varnish}{Fastly-Debug-Digest: a8d768bacfa559695a663a0d7a65b873ea7d6df9a9f981dd53607668fca7ba77}{Content-Length: 549}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:34:36 GMT}{Via: 1.1 varnish}{Age: 32537}{Connection: keep-alive}{X-Served-By: cache-iad2144-IAD, cache-ams4137-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 3741, 140}{X-Timer: S1449765276.634633,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@49ce47875 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@6b79bc0917 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Fastly-Debug-Digest: 4d5d12e64c0e75780aaf9c8761e03ec9bb052502290c19ae2a1415028d24e7ff}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:34:36 GMT}{Via: 1.1 varnish}{Age: 32537}{Connection: keep-alive}{X-Served-By: cache-iad2145-IAD, cache-ams4137-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 1, 205}{X-Timer: S1449765276.751956,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@6a4ea86f5 pairs: {HEAD /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@7e20966c17 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Fastly-Debug-Digest: 4d5d12e64c0e75780aaf9c8761e03ec9bb052502290c19ae2a1415028d24e7ff}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:34:36 GMT}{Via: 1.1 varnish}{Age: 32537}{Connection: keep-alive}{X-Served-By: cache-iad2145-IAD, cache-ams4137-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 1, 206}{X-Timer: S1449765276.826126,VS0,VE0}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - ProxySelector Request for https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Looking for HttpClient for URL https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 and proxy value of DIRECT
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream retrieved from the cache, sun.net.www.protocol.https.HttpsClient(https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1)
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - Proxy used: DIRECT
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@456904506 pairs: {GET /maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1 HTTP/1.1: null}{User-Agent: Apache Ivy/2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f}{Accept-Encoding: gzip,deflate}{Host: repo1.maven.org}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[[34mtrace[0m] - sun.net.www.protocol.http.HttpURLConnection - KeepAlive stream used: https://repo1.maven.org/maven2/com/google/inject/extensions/guice-assistedinject/4.0/guice-assistedinject-4.0.pom.sha1
+[[36mdebug[0m] - sun.net.www.protocol.http.HttpURLConnection - sun.net.www.MessageHeader@6356610017 pairs: {null: HTTP/1.1 200 OK}{Server: nginx}{Content-Type: text/plain}{Last-Modified: Tue, 15 Sep 2015 20:33:18 GMT}{ETag: "55f8808e-28"}{Via: 1.1 varnish}{Fastly-Debug-Digest: 4d5d12e64c0e75780aaf9c8761e03ec9bb052502290c19ae2a1415028d24e7ff}{Content-Length: 40}{Accept-Ranges: bytes}{Date: Thu, 10 Dec 2015 16:34:36 GMT}{Via: 1.1 varnish}{Age: 32537}{Connection: keep-alive}{X-Served-By: cache-iad2145-IAD, cache-ams4137-AMS}{X-Cache: HIT, HIT}{X-Cache-Hits: 1, 207}{X-Timer: S1449765276.897204,VS0,VE0}
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject.extensions#extensions-parent;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-java8-compat_2.11;0.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.yaml#snakeyaml;1.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.0.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.validation#validation-api;1.1.0.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.1.1.GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml#classmate;1.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.jboss.logging#jboss-logging;3.2.1.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-context;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-core;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-beans;4.1.6.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.reflections#reflections;0.9.9 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#annotations;2.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.jodah#typetools;0.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.guava#guava;18.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.findbugs#jsr305;2.0.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat#tomcat-servlet-api;8.0.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving io.netty#netty;3.10.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.netty#netty-http-pipelining;1.1.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-jdbc-api_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.jolbox#bonecp;0.8.0.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.zaxxer#HikariCP;2.3.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.h2database#h2;1.4.187 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving tyrex#tyrex;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-cache_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving net.sf.ehcache#ehcache-core;2.6.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-java-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-ws_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.9.21 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-core;1.2.1.2 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving oauth.signpost#signpost-commonshttp4;1.2.1.2 ...[0m
+java.lang.OutOfMemoryError: Metaspace
+[0m[[31mtrace[0m] [0mStack trace suppressed: run [34mlast compile:run[0m for the full output.[0m
+[0m[[31merror[0m] [0m(compile:[31mrun[0m) java.lang.reflect.InvocationTargetException[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.0.1 ...[0m
+[0m[[31merror[0m] [0mTotal time: 5 s, completed Dec 10, 2015 4:34:38 PM[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-java;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-client;6.2.0 ...[0m
+25. Waiting for source changes... (press enter to interrupt)
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-jsonrpc-client;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-commons;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.code.gson#gson;2.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpclient;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#httpcore;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-logging#commons-logging;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.httpcomponents#fluent-hc;4.3.2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-client;3.2.1 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.7 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#openstack-client;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-mapper-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.codehaus.jackson#jackson-core-asl;1.9.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.woorea#keystone-model;3.2.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-client;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-common;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.websocket#websocket-api;9.3.0.M2 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-core;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-elements;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kms-api-filters;6.2.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-server;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.kurento#kurento-repository-internal;6.0.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-mongodb;1.6.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-tx;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.0.7.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.data#spring-data-commons;1.9.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.mongodb#mongo-java-driver;2.12.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-fileupload#commons-fileupload;1.3.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-io#commons-io;2.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-web;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-autoconfigure;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-tomcat;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-core;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-el;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-logging-juli;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.tomcat.embed#tomcat-embed-websocket;8.0.15 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.hibernate#hibernate-validator;5.1.3.Final ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-web;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-aop;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-webmvc;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework#spring-expression;4.1.4.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.squareup.retrofit#retrofit;1.9.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.springframework.boot#spring-boot-starter-log4j;1.2.1.RELEASE ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-log4j12;1.7.8 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving log4j#log4j;1.2.17 ...[0m
