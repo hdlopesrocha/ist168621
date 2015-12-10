@@ -16,7 +16,7 @@ body,html {
 	height:100%;
 	position:static;
 	z-index:8888;
-	background-color: #101010;
+	background-color: #505050;
 }
 
 #fullscreen #videoWrapper #mainVideoContent{
