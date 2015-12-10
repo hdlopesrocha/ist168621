@@ -200,11 +200,12 @@
 			if(fullscreen){
 				$("#fullscreen").append($("#videoWrapper").remove());
 				$("#fullscreen").attr("class","");
+				$(".not-fullscreen").hide();
 			}
 			else {
 				$("#videoPanel").append($("#videoWrapper").remove());
 				$("#fullscreen").attr("class","hidden");
-
+				$(".not-fullscreen").show();
 			}	
 		}
 		
