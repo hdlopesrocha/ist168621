@@ -14,8 +14,6 @@ body,html {
 #videoWrapper {
 	position: relative; 
 	display: inline-block;  
-	width:100%; 
-	height: auto;
 }
 
 #fullscreen {
