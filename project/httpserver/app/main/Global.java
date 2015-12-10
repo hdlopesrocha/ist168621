@@ -16,15 +16,8 @@ import services.Service;
 
 public class Global extends GlobalSettings {
 
-	public final static KurentoManager manager;
-	public static final Logger log = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-	static {
-		log.setLevel(Level.ALL);
-		Service.init("webrtc");
-		System.out.println(Tools.getCurrentTime());
-	//	Setup.main(null);cd ./
-		manager = new KurentoManager();
-	}
+	public static KurentoManager manager;
+	public static Logger log;
 
 	@Override
 	public Promise<Result> onError(RequestHeader arg0, Throwable arg1) {
@@ -38,6 +31,10 @@ public class Global extends GlobalSettings {
 	@Override
 	public void onStart(Application app) {
 		System.out.println("Application has started");
+		log = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+		log.setLevel(Level.ALL);
+		Service.init("webrtc");
+		manager = new KurentoManager();
 	}
 
 	@Override

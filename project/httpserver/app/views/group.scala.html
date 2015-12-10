@@ -201,16 +201,11 @@
 				$("#fullscreen").append($("#videoWrapper").remove());
 				$("#fullscreen").show();
 				$(".not-fullscreen").hide();
-				//$("#videoWrapper").attr("style","top: 50%;transform: translateY(-50%);")
-			
-				
 			}
 			else {
 				$("#videoPanel").append($("#videoWrapper").remove());
 				$("#fullscreen").hide();
 				$(".not-fullscreen").show();
-				$("#videoWrapper").attr("style","")
-
 			}	
 		}
 		
@@ -419,6 +414,18 @@
 		
 		function addContent(key, content) {
 			$("#mainVideoContent").append('<div id="content'+ key + '">'+content+'</div>');
+			$("#content"+key).click(function(){
+				if($(this).attr("selected")){
+					$(this).attr("selected",false);
+					$(this).attr("class","");
+				}else {
+					$(this).attr("selected",true);
+					$(this).attr("class","selectedDelete");
+				}
+				
+			});
+			
+			
 		}
 
 		function removeContent(key) {
