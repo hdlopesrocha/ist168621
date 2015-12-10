@@ -383,6 +383,11 @@
 		function clearContent(){
 			$("#contentText").val("");
 			$("#previewContent").html("");
+			
+			$(".selectedDelete").each(function(index){
+				console.log("clear",$(this));
+			});
+
 		}
 		
 		function createContent(){
@@ -421,12 +426,12 @@
 				}else {
 					$(this).attr("selected",true);
 					$(this).attr("class","selectedDelete");
+					$(this).attr("cid",key);
 				}
-				
 			});
-			
-			
 		}
+		
+		
 
 		function removeContent(key) {
 			$("#content" + key).remove();
