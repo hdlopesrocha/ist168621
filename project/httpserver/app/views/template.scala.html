@@ -34,7 +34,7 @@
 	</head>
 	<body>
 
-	<div id="fullscreen" class="hidden">
+	<div id="fullscreen">
 		<button type="button" class="btn btn-primary" onclick="toggleVideoSize()" style="z-index:9999;position:absolute;right:0px">
 			<i class="fa fa-compress"></i>
 		</button>
@@ -91,7 +91,7 @@
 	
 		
 			$( document ).ready(function() {
-	
+				$("#fullscreen").hide();
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){
 						document.location = document.location;
