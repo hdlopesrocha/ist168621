@@ -8277,3 +8277,233 @@ javax.net.ssl.SSLException: Inbound closed before receiving peer's close_notify:
 [[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
 [[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
 [[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.3 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.jboss.netty.handler.ssl.SslHandler - Failed to clean up SSLEngine.
+javax.net.ssl.SSLException: Inbound closed before receiving peer's close_notify: possible truncation attack?
+	at sun.security.ssl.Alerts.getSSLException(Alerts.java:208) ~[na:1.8.0_66]
+	at sun.security.ssl.SSLEngineImpl.fatal(SSLEngineImpl.java:1666) ~[na:1.8.0_66]
+	at sun.security.ssl.SSLEngineImpl.fatal(SSLEngineImpl.java:1634) ~[na:1.8.0_66]
+	at sun.security.ssl.SSLEngineImpl.closeInbound(SSLEngineImpl.java:1561) ~[na:1.8.0_66]
+	at org.jboss.netty.handler.ssl.SslHandler.closeEngine(SslHandler.java:591) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.handler.ssl.SslHandler.channelDisconnected(SslHandler.java:583) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.SimpleChannelUpstreamHandler.handleUpstream(SimpleChannelUpstreamHandler.java:102) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:559) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.Channels.fireChannelDisconnected(Channels.java:396) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.close(AbstractNioWorker.java:360) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.NioWorker.read(NioWorker.java:93) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.process(AbstractNioWorker.java:108) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:337) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:89) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108) [netty-3.10.3.Final.jar:na]
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42) [netty-3.10.3.Final.jar:na]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_66]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_66]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_66]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.3 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.3 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.3 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.9 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=0.8 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=2.6 ms, state=CONNECTED}]
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.0 ms, state=CONNECTED}]
+[0m[[0minfo[0m] [0mUpdating {file:/home/hdlopesrocha/ist168621/project/httpserver/}root...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#twirl-api_2.11;1.1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.apache.commons#commons-lang3;3.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-enhancer;1.1.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.18.2-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-server_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#build-link;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-exceptions;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.javassist#javassist;3.19.0-GA ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-iteratees_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-stm#scala-stm_2.11;0.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe#config;1.3.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-json_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-functional_2.11;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-datacommons_2.11;2.4.1 ...[0m
+[[36mdebug[0m] - org.mongodb.driver.cluster - Checking status of 127.0.0.1:27017
+[[36mdebug[0m] - org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=3.3 ms, state=CONNECTED}]
+[A[2K[0m[[0minfo[0m] [0mResolving joda-time#joda-time;2.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.joda#joda-convert;1.7 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.6 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-core;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-annotations;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.core#jackson-databind;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jdk8;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.fasterxml.jackson.datatype#jackson-datatype-jsr310;2.5.4 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.play#play-netty-utils;2.4.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jul-to-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.slf4j#jcl-over-slf4j;1.7.12 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-core;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving ch.qos.logback#logback-classic;1.1.3 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-actor_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.typesafe.akka#akka-slf4j_2.11;2.3.11 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving commons-codec#commons-codec;1.10 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xerces#xercesImpl;2.11.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving xml-apis#xml-apis;1.4.01 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.transaction#jta;1.1 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving com.google.inject#guice;4.0 ...[0m
+[A[2K[0m[[0minfo[0m] [0mResolving javax.inject#javax.inject;1 ...[0m
