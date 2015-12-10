@@ -28,6 +28,7 @@ import services.AddGroupMemberService;
 import services.CreateHyperContentService;
 import services.CreateMessageService;
 import services.CreateTagService;
+import services.DeleteHyperContentService;
 import services.GetUserProfileService;
 import services.ListTagsService;
 
@@ -246,6 +247,24 @@ public class WSController extends Controller {
 										us.sendMessage(us.getContent());
 									}
 
+								}
+									break;
+								case "deleteContent": {
+									String contentId = args.getString("cid");
+									try {
+										
+										DeleteHyperContentService service = new DeleteHyperContentService(userId,
+												groupId, contentId);
+										service.execute();
+									} catch (ServiceException e) {
+										e.printStackTrace();
+									}
+
+									// System.out.println("content");
+									for (UserSession us : room.getParticipants()) {
+										us.sendMessage(us.getContent());
+									}
+									
 								}
 									break;
 								default:
