@@ -198,14 +198,13 @@
 		function toggleVideoSize(){
 			fullscreen = !fullscreen;
 			if(fullscreen){
-				$("#fullscreen").append($("#videoWrapper").remove());
-				$("#fullscreen").show();
-				$(".not-fullscreen").hide();
+				$("#videoPanel").attr("class","fullscreen");
+				$("#minimizeVideo").show();
 			}
 			else {
-				$("#videoPanel").append($("#videoWrapper").remove());
-				$("#fullscreen").hide();
-				$(".not-fullscreen").show();
+				$("#videoPanel").attr("class","panel-body");
+				$("#minimizeVideo").hide();
+
 			}	
 		}
 		
