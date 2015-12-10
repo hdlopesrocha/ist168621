@@ -19,7 +19,7 @@ body,html {
 	background-color: #101010;
 }
 
-#fullscreen > #mainVideoContent{
+#fullscreen #videoWrapper #mainVideoContent{
 	max-height:100%;
 	max-width:100%;
 }
