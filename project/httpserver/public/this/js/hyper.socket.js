@@ -119,6 +119,13 @@ var Kurento = new (function() {
 			value:value
 		}));
 	}
+
+	this.deleteContent = function(cid){
+		Kurento.webSocket.send(JSON.stringify({
+			id: "deleteContent",
+			cid:cid
+		}));
+	}
 	
 	this.getContent = function(){
 		Kurento.webSocket.send(JSON.stringify({
