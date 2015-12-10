@@ -201,11 +201,16 @@
 				$("#fullscreen").append($("#videoWrapper").remove());
 				$("#fullscreen").show();
 				$(".not-fullscreen").hide();
+				$("#videoWrapper").attr("style","top: 50%;transform: translateY(-50%);")
+			
+				
 			}
 			else {
 				$("#videoPanel").append($("#videoWrapper").remove());
 				$("#fullscreen").hide();
 				$(".not-fullscreen").show();
+				$("#videoWrapper").attr("style","")
+
 			}	
 		}
 		
