@@ -22,7 +22,7 @@ body,html {
 	top: 50%;transform: translateY(-50%);
     position: static;
 	display: inline;
-    height: auto;
+    height: 100%;
     width: 100%;
     max-height: 100%;
 }
