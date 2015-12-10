@@ -199,12 +199,12 @@
 			fullscreen = !fullscreen;
 			if(fullscreen){
 				$("#fullscreen").append($("#videoWrapper").remove());
-				$("#fullscreen").attr("class","");
+				$("#fullscreen").show();
 				$(".not-fullscreen").hide();
 			}
 			else {
 				$("#videoPanel").append($("#videoWrapper").remove());
-				$("#fullscreen").attr("class","hidden");
+				$("#fullscreen").hide();
 				$(".not-fullscreen").show();
 			}	
 		}
