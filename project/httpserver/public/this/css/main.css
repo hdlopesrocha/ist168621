@@ -19,10 +19,6 @@ body,html {
 	width:100%;
 }
 
-#fullsreen #videoWrapper{
-	top: 50%;
-    transform: translateY(-50%);	
-}
 
 #videoWrapper {
 	position: relative; 
