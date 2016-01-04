@@ -1,12 +1,15 @@
 package exceptions;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class UnauthorizedException.
  */
 public class UnauthorizedException extends ServiceException {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -8710384907608499138L;
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = -8710384907608499138L;
 
 }

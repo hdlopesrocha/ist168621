@@ -1,17 +1,19 @@
 @()
 
 <html>
-	<head>
-		<script type="text/javascript" src="/assets/js/jquery.js"></script>	
-		<script type="text/javascript" src="/assets/js/signaling.js"></script>	
-	</head>
-	<body>
-		<button onclick="publish2()" >Publish</button><input type="text" id="keypub"/><input type="text" id="datapub"/>
-		<br>
-		<button onclick="subscribe2()" >Subscribe</button><input type="text" id="keysub"/>
-		
-		
-		<script>
+<head>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/signaling.js"></script>
+</head>
+<body>
+<button onclick="publish2()">Publish</button>
+<input type="text" id="keypub"/><input type="text" id="datapub"/>
+<br>
+<button onclick="subscribe2()">Subscribe</button>
+<input type="text" id="keysub"/>
+
+
+<script>
 			function publish2(){
 				Signaling.publish($("#keypub").val(),$("#datapub").val(), function(){},function(){});	
 			}
@@ -23,8 +25,9 @@
 					ts = JSON.parse(result).ts;
 				} );	
 			}
-		</script>
-		
-		
-	</body>
+
+</script>
+
+
+</body>
 </html>
