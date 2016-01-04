@@ -1,47 +1,48 @@
-@(userId : String, from : Boolean, to : Boolean) 
+@(userId : String, from : Boolean, to : Boolean)
 @template(1){
 <script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
 
 <div class="container-fluid">
-	<div class="container">
-		
-		<div class="row">
-		
-		
-	<div class="col-md-6">
-		<div class="panel panel-primary">
-			<div class="btn-group pull-right">
-		
-			@if(!from && !to){
-				<div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Add friend</div>
-			}
-			@if(!from && to){
-				<div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Accept friend</div>
-			}
-			@if(from && !to){
-				<div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Cancel friendship</div>
-			}
-			@if(from && to){
-				<div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Reject friendship</div>
-			}
-		
-		</div>
-		
-			<div class="panel-heading" data-toggle="collapse"
-				data-target="#collapse1">
-				<h4 class="panel-title">User Profile</h4>
-			</div>
-			<div id="collapse1" class="panel-collapse collapse in">
-				<div class="panel-body">
-					<div id="userTitle"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-		</div>
-	</div>
-</div>
+    <div class="container">
 
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="btn-group pull-right">
+
+                        @if(!from && !to){
+                        <div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Add friend</div>
+                        }
+                        @if(!from && to){
+                        <div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Accept friend</div>
+                        }
+                        @if(from && !to){
+                        <div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Cancel friendship
+                        </div>
+                        }
+                        @if(from && to){
+                        <div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Reject friendship
+                        </div>
+                        }
+
+                    </div>
+
+                    <div class="panel-heading" data-toggle="collapse"
+                         data-target="#collapse1">
+                        <h4 class="panel-title">User Profile</h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id="userTitle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -71,6 +72,7 @@
 		}
 		Signaling.addRelation(userId, success);
 	}
+
 
 
 </script>
