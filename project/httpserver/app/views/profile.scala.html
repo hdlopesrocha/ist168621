@@ -4,43 +4,49 @@
 
 <div class="container-fluid">
     <div class="container">
-
         <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                <div class="panel panel-info">
 
-
-            <div class="col-md-6">
-                <div class="panel panel-primary">
-                    <div class="btn-group pull-right">
-
-                        @if(!from && !to){
-                        <div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Add friend</div>
-                        }
-                        @if(!from && to){
-                        <div class="btn btn-success" id="addMembers" onclick='user_add("@userId")'>Accept friend</div>
-                        }
-                        @if(from && !to){
-                        <div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Cancel friendship
-                        </div>
-                        }
-                        @if(from && to){
-                        <div class="btn btn-danger" id="addMembers" onclick='user_del("@userId")'>Reject friendship
-                        </div>
-                        }
-
+                    <div class="panel-heading">
+                        <h3 class="panel-title" id="userName"></h3>
                     </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center">
+                                <img alt="User Pic" id="userPhoto" class="img-circle img-responsive">
+                            </div>
 
-                    <div class="panel-heading" data-toggle="collapse"
-                         data-target="#collapse1">
-                        <h4 class="panel-title">User Profile</h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div id="userTitle"></div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody id="userProperties">
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span class="pull-right">
+                            @if(!from && !to){
+                                <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Add friend</div>
+                            }
+                            @if(!from && to){
+                                <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Accept friend</div>
+                            }
+                            @if(from && !to){
+                                <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Cancel friendship</div>
+                            }
+                            @if(from && to){
+                                <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Reject friendship</div>
+                            }
+                        </span>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="userTitle"></div>
     </div>
 </div>
 
@@ -54,7 +60,14 @@
 			$('#searchText').typeahead(SearchGeneric);	
 		
 			Signaling.userProfile("@userId",function(user) {
-				$("#userTitle").html(JSON.stringify(user));
+			    var html = "";
+			    for(var attr in user){
+                    html += "<tr><td>"+ attr  + "</td><td>" + user[attr] + "</td></tr>";
+			    }
+
+				$("#userProperties").html(html);
+				$('#userPhoto').attr("src",user.photo);
+				$('#userName').html(user.name);
 			});
 		}
 	);

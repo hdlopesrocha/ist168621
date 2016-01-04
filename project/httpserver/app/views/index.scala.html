@@ -102,9 +102,8 @@
 				Signaling.listRelations(function(array) {
 					var html = "";
 					for ( var i in array) {
-						var del_button = "<button onclick='user_del(\""
-								+ array[i].id + "\")'>deny</button>";
-						html += "<li>" + array[i].name + del_button + "</li>";
+
+						html += "<li><a href='/user/"+array[i].id+"'>" + array[i].name + "</a></li>";
 					}
 					$("#friend-list").html(html);
 				});
