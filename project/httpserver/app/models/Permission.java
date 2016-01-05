@@ -10,29 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Permission {
-    public static final String TYPE = "common.Permission";
-    public static final String PERMISSION_SCOE_ADMIN = "scoe.admin";
-    public static final String PERMISSION_STAC_ADMIN = "stac.admin";
-    public static final String PERMISSION_ADMIN = "root.admin";
-    public static final String PERMISSION_STREAM = "scoe.stream";
-    public static final String PERMISSION_STORE = "scoe.store";
-    public static final String[] PERMISSIONS = {PERMISSION_ADMIN, PERMISSION_STREAM, PERMISSION_STORE, PERMISSION_SCOE_ADMIN, PERMISSION_STAC_ADMIN};
-    private static MongoCollection<Document> collection;
     private ObjectId id;
     private ObjectId source;
     private ObjectId target;
     private String name;
 
-    public Permission() {
+    public static final String TYPE = "common.Permission";
+    public static final String PERMISSION_READ = "READ";
+    public static final String PERMISSION_WRITE = "WRITE";
+    public static final String PERMISSION_ADMIN = "root.admin";
 
-    }
 
-
-    public Permission(ObjectId source, String name, ObjectId target) {
-        this.name = name;
-        this.source = source;
-        this.target = target;
-    }
+    private static MongoCollection<Document> collection;
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null) {
@@ -42,50 +31,17 @@ public class Permission {
         return collection;
     }
 
-    public static Permission load(Document doc) {
-        Permission obj = new Permission();
-        obj.id = doc.getObjectId("_id");
-        obj.source = doc.getObjectId("source");
-        obj.target = doc.getObjectId("target");
-        obj.name = doc.getString("name");
-        return obj;
+
+    public Permission() {
+
     }
 
-    public static void deleteObject(ObjectId id) {
-        getCollection().deleteMany(new Document("target", id));
-        getCollection().deleteMany(new Document("source", id));
+    public Permission(ObjectId source, String name, ObjectId target) {
+        this.name = name;
+        this.source = source;
+        this.target = target;
     }
 
-    public static void deleteTargetPermissions(ObjectId target) {
-        getCollection().deleteMany(new Document("target", target));
-    }
-
-    public static void deleteSourcePermissions(ObjectId source) {
-        getCollection().deleteMany(new Document("source", source));
-    }
-
-    public static Permission findById(ObjectId id) {
-        Document doc = new Document("_id", id);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
-    }
-
-    public static Permission find(ObjectId source, String name, ObjectId target) {
-        Document doc = new Document("source", source).append("name", name).append("target", target);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
-    }
-
-    public static List<Permission> list(ObjectId source) {
-        FindIterable<Document> iter = getCollection().find(new Document("source", source));
-        List<Permission> ret = new ArrayList<Permission>();
-        for (Document doc : iter) {
-            ret.add(load(doc));
-        }
-        return ret;
-    }
 
     public ObjectId getSource() {
         return source;
@@ -142,4 +98,56 @@ public class Permission {
 
     }
 
+    public static Permission load(Document doc) {
+        Permission obj = new Permission();
+        obj.id = doc.getObjectId("_id");
+        obj.source = doc.getObjectId("source");
+        obj.target = doc.getObjectId("target");
+        obj.name = doc.getString("name");
+        return obj;
+    }
+
+    public static void deleteObject(ObjectId id) {
+        getCollection().deleteMany(new Document("target", id));
+        getCollection().deleteMany(new Document("source", id));
+    }
+
+    public static void deleteTargetPermissions(ObjectId target) {
+        getCollection().deleteMany(new Document("target", target));
+    }
+
+    public static void deleteSourcePermissions(ObjectId source) {
+        getCollection().deleteMany(new Document("source", source));
+    }
+
+    public static Permission findById(ObjectId id) {
+        Document doc = new Document("_id", id);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? load(doc) : null;
+    }
+
+    public static boolean allowed(ObjectId source, String name, ObjectId target) {
+        if (source != null) {
+            return find(source, name, target) != null || find(null, name, target) != null;
+        } else {
+            return find(source, name, target) != null;
+        }
+    }
+
+    public static Permission find(ObjectId source, String name, ObjectId target) {
+        Document doc = new Document("source", source).append("name", name).append("target", target);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? load(doc) : null;
+    }
+
+    public static List<Permission> list(ObjectId source) {
+        FindIterable<Document> iter = getCollection().find(new Document("source", source));
+        List<Permission> ret = new ArrayList<Permission>();
+        for (Document doc : iter) {
+            ret.add(load(doc));
+        }
+        return ret;
+    }
 }

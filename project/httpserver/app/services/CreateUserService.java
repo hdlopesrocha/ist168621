@@ -1,14 +1,10 @@
 package services;
 
-import exceptions.ConflictException;
+import dtos.AttributeDto;
 import exceptions.ServiceException;
 import main.Tools;
-import models.IdentityProfile;
-import models.KeyValueFile;
-import models.PublicProfile;
+import models.Attribute;
 import models.User;
-import org.bson.Document;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +17,12 @@ import java.util.List;
  */
 public class CreateUserService extends Service<User> {
 
-    private User user;
-    private List<KeyValueFile> files;
-    private String email, password;
-    private Document properties;
+    private String password;
+    private List<AttributeDto> properties;
     private List<String> permissions = new ArrayList<String>();
 
-    public CreateUserService(final String email, final String password, final JSONObject properties, List<KeyValueFile> files) {
-        this.user = User.findByEmail(email);
-        this.properties = Document.parse(properties.toString());
-        this.files = files;
-        this.email = email;
+    public CreateUserService(final String password, final List<AttributeDto> properties) {
+        this.properties = properties;
         this.password = password;
     }
 
@@ -48,22 +39,6 @@ public class CreateUserService extends Service<User> {
      */
     @Override
     public synchronized User dispatch() throws ServiceException {
-        if (user != null) {
-            throw new ConflictException();
-        }
-
-        for (KeyValueFile kvf : files) {
-            UploadFileService service = new UploadFileService(kvf);
-            String photoUrl = "";
-            try {
-                photoUrl = service.execute();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
-            properties.put(kvf.getKey(), photoUrl);
-
-        }
-        User newUser = new User(password);
 
         String token = Tools.getRandomString(32);
 
@@ -71,13 +46,14 @@ public class CreateUserService extends Service<User> {
             token = Tools.getRandomString(32);
         }
 
-        newUser.setToken(token);
-        newUser.save();
-        new IdentityProfile(newUser.getId(), new Document().append("email", email)).save();
-        new PublicProfile(newUser.getId(), properties).save();
+        User user = new User(password);
+        user.setToken(token);
+        user.save();
+        for(AttributeDto attr : properties){
+            new Attribute(user.getId(),attr.getKey(),attr.getValue(),attr.isIdentifiable(),attr.isSearchable()).save();
+        }
 
-
-        return newUser;
+        return user;
     }
 
     /*

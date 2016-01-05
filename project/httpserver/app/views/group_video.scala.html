@@ -46,8 +46,6 @@
                 <button class="btn btn-default" onclick="toggleAutoSelect()">
                     <i id="autoSelect" class="fa fa-thumb-tack"></i>
                 </button>
-
-
                 <button class="btn btn-default" onclick="toggleMicrophone()">
                     <i id="soundIcon" class="fa fa-microphone text-success"></i>
                 </button>
@@ -59,15 +57,10 @@
                         onclick="toggleVideoSize()">
                     <i class="fa fa-expand"></i>
                 </button>
-
-
             </div>
             <div class="panel-heading" data-toggle="collapse"
                  data-target="#collapse0">
                 <h4 class="panel-title">Video</h4>
-                <div id="soundValues">
-
-                </div>
             </div>
             <div id="collapse0" class="panel-collapse collapse in">
                 <div class="panel-body" id="videoPanel">
@@ -162,11 +155,11 @@
 							</span>
                         </div>
                         <div class="form-group">
-                            <label for="comment">Content:</label>
+                            <label>Content:</label>
                             <textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
                         </div>
                         <div class="input-group">
-                            <label for="comment">Is Caption:</label> <input type="checkbox"
+                            <label>Is Caption:</label> <input type="checkbox"
                                                                             id="contentCaption" checked/>
                         </div>
                     </div>

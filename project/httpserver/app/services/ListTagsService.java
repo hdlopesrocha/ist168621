@@ -2,7 +2,6 @@ package services;
 
 import com.mongodb.client.FindIterable;
 import models.TimeTag;
-import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -16,11 +15,11 @@ import java.util.List;
  */
 public class ListTagsService extends Service<List<TimeTag>> {
 
-    private User caller;
+    private ObjectId caller;
     private ObjectId gid;
 
     public ListTagsService(String email, String gid) {
-        this.caller = email != null ? User.findByEmail(email) : null;
+        this.caller = new ObjectId(email);
         this.gid = new ObjectId(gid);
     }
 
@@ -43,7 +42,7 @@ public class ListTagsService extends Service<List<TimeTag>> {
 
     @Override
     public boolean canExecute() {
-        return true;
+        return caller!=null;
     }
 
 

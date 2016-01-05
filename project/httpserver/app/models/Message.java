@@ -106,8 +106,10 @@ public class Message {
     public JSONObject toJsonObject() {
         JSONObject messageObj = new JSONObject();
         messageObj.put("id", getId().toString());
-        PublicProfile publicProfile = PublicProfile.findByOwner(source);
-        messageObj.put("name", publicProfile.getData().getString("name"));
+        Attribute attr = Attribute.getByOwnerKey(source,"name");
+        if(attr!=null) {
+            messageObj.put("name", attr.getValue());
+        }
         messageObj.put("time", Tools.FORMAT.format(time));
         messageObj.put("text", text);
         messageObj.put("seq", sequence);

@@ -1,6 +1,6 @@
 package controllers;
 
-import exceptions.ConflictException;
+import dtos.AttributeDto;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import models.*;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class Rest extends Controller {
 
@@ -136,12 +135,7 @@ public class Rest extends Controller {
         }
     }
 
-    /**
-     * Gets the photo.
-     *
-     * @param username the username
-     * @return the photo
-     */
+
     public Result getFile(String fileName) {
         fileName = fileName.replace("%20", " ");
 
@@ -167,8 +161,10 @@ public class Rest extends Controller {
         if (uid != null && uid.length() > 0) {
 
             try {
-                String fileName = new GetUserPhotoService(uid).execute();
-                if (fileName != null) {
+                Attribute attr = new GetOwnerAttributeService(uid,"photo").execute();
+
+                if (attr != null && attr.getValue()!=null) {
+                    String fileName = attr.getValue().toString();
                     System.out.println("GET " + fileName);
                     fileName = fileName.replace("%20", " ");
 
@@ -190,13 +186,13 @@ public class Rest extends Controller {
 
     }
 
-    public Result getUser(String userId) {
-        try {
-            return ok(new GetUserProfileService(session("uid"), userId).execute().toString());
-        } catch (ServiceException e) {
-            e.printStackTrace();
+    public Result getUser(String userId) throws ServiceException {
+        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId).execute();
+        JSONObject result = new JSONObject();
+        for(Attribute attribute : attributes){
+            result.put(attribute.getKey(),attribute.getValue());
         }
-        return unauthorized();
+        return ok(result.toString());
     }
 
 
@@ -245,7 +241,6 @@ public class Rest extends Controller {
                 return ok(array.toString());
 
             } catch (ServiceException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -257,10 +252,15 @@ public class Rest extends Controller {
             ListRelationsService service = new ListRelationsService(session("uid"));
             try {
                 JSONArray array = new JSONArray();
-                List<User> res = service.execute();
-                for (User user : res) {
-                    GetUserProfileService profService = new GetUserProfileService(session("uid"), user.getId().toString());
-                    array.put(profService.execute());
+                List<Relation> relations = service.execute();
+                for (Relation relation : relations) {
+                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), relation.getTo().toString()).execute();
+                    JSONObject result = new JSONObject();
+                    result.put("id",relation.getTo().toString());
+                    for(Attribute attribute : attributes){
+                        result.put(attribute.getKey(),attribute.getValue());
+                    }
+                    array.put(result);
                 }
                 return ok(array.toString());
             } catch (ServiceException e) {
@@ -288,7 +288,9 @@ public class Rest extends Controller {
                 String email = map.get("email")[0];
 
                 String password = map.get("password")[0];
-                String identity = new FindIdentityProfileService("email", email).execute();
+
+
+                String identity = new GetOwnerByAttributeService("email", email).execute();
                 AuthenticateUserService service = new AuthenticateUserService(identity, password);
                 User user = service.execute();
 
@@ -358,7 +360,7 @@ public class Rest extends Controller {
 
     }
 
-    public Result register() {
+    public Result register() throws ServiceException {
 
         MultipartFormData multipart = request().body().asMultipartFormData();
         Map<String, String[]> form = multipart.asFormUrlEncoded();
@@ -366,43 +368,62 @@ public class Rest extends Controller {
         String email = form.get("email")[0];
 
         String password = form.get("password")[0];
+        List<AttributeDto> attributes = new ArrayList<AttributeDto>();
 
-        JSONObject info = new JSONObject();
         for (Entry<String, String[]> s : form.entrySet()) {
-            if (!s.getKey().equals("email") && !s.getKey().equals("password") && !s.getKey().equals("password2")) {
+            if (!s.getKey().equals("password") && !s.getKey().equals("password2")) {
                 String[] value = s.getValue();
+                Object obj = null;
+
                 if (value.length == 1) {
-                    info.put(s.getKey(), value[0]);
+                    obj = value[0];
                 } else if (value.length > 1) {
                     JSONArray array = new JSONArray();
                     for (int i = 0; i < value.length; ++i) {
                         array.put(value[i]);
                     }
-                    info.put(s.getKey(), array);
+                    obj = array;
                 }
+
+                if(obj!=null){
+                    boolean searchable = false;
+                    boolean identifiable = false;
+
+                    if(s.getKey().equals("name")){
+                        searchable = true;
+                    }
+                    else if(s.getKey().equals("email")){
+                        searchable = identifiable = true;
+                    }
+
+                    attributes.add(new AttributeDto(s.getKey(), obj,identifiable,searchable));
+
+
+                }
+
             }
         }
 
-        List<KeyValueFile> files = new ArrayList<KeyValueFile>();
         for (FilePart fp : multipart.getFiles()) {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-            files.add(kvf);
+            UploadFileService service = new UploadFileService(kvf);
+            try {
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),false,false));
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
         }
 
-        CreateUserService service = new CreateUserService(email, password, info, files);
-        try {
-            User ret = service.execute();
-            // session("email", email);
-            return ok(ret.getToken());
-        } catch (ConflictException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        String existingUser = new GetOwnerByAttributeService("email",email).execute();
+        if(existingUser!=null){
             return Rest.status(409);
-        } catch (ServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return unauthorized();
         }
+
+        CreateUserService service = new CreateUserService(password, attributes);
+
+        User ret = service.execute();
+        return ok(ret.getToken());
+
     }
 
     public Result removeGroupMember(String groupId, String memberId) {
@@ -426,20 +447,30 @@ public class Rest extends Controller {
             JSONArray array = new JSONArray();
             // Search User
             {
-                Set<ObjectId> res = new SearchUserService(session("uid"), query).execute();
+                ListOwnersService service = new ListOwnersService(session("uid"), null,null);
+                service.setSearch(query);
+                List<ObjectId> res = service.execute();
+
+
                 for (ObjectId userId : res) {
                     if (!userId.equals(me.getId())) {
-                        JSONObject profile = new GetUserProfileService(session("uid"), userId.toString()).execute();
+                        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId.toString()).execute();
+                        JSONObject result = new JSONObject();
+                        for(Attribute attribute : attributes){
+                            result.put(attribute.getKey(),attribute.getValue());
+                        }
 
-                        profile.put("type", "user");
+
+
+                        result.put("type", "user");
                         Relation rel1 = Relation.findByEndpoint(me.getId(), userId);
                         Relation rel2 = Relation.findByEndpoint(userId, me.getId());
 
 
                         if (rel1 != null) {
-                            profile.put("state", rel2 != null);
+                            result.put("state", rel2 != null);
                         }
-                        array.put(profile);
+                        array.put(result);
                     }
                 }
             }
@@ -506,7 +537,10 @@ public class Rest extends Controller {
                 files.add(kvf);
             }
 
-            UpdateUserService service = new UpdateUserService(session("uid"), info, files);
+
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+
+            UpdateUserService service = new UpdateUserService(session("uid"), attributes);
 
             service.execute();
             return ok();
