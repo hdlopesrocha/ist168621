@@ -10,8 +10,8 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="control-label">Room Name:</label> <input type="text"
-                                                                           class="form-control" id="group_name"/>
+                    <label class="control-label">Room Name:</label>
+                    <input type="text" class="form-control" id="group_name"/>
                 </div>
             </div>
             <div class="modal-footer">
@@ -79,44 +79,43 @@
 </div>
 <script>
 
-
 	$(document).ready(
-			function() {
-				
-				$('#searchNav').show();
-				$('#searchText').typeahead(SearchGeneric);	
+        function() {
+            $('#searchNav').show();
+            $('#searchText').typeahead(SearchGeneric);
 
-				Signaling.listRequests(function(array) {
-					var html = "";
-					for ( var i in array) {
-						var add_button = "<button onclick='user_add(\""
-								+ array[i].id + "\")'>accept</button>";
-						var del_button = "<button onclick='user_del(\""
-								+ array[i].id + "\")'>deny</button>";
+            Signaling.listRequests(function(array) {
+                var html = "";
+                for ( var i in array) {
+                    var add_button = "<button onclick='user_add(\""
+                            + array[i].id + "\")'>accept</button>";
+                    var del_button = "<button onclick='user_del(\""
+                            + array[i].id + "\")'>deny</button>";
 
-						html += "<li>" + array[i].email + add_button
-								+ del_button + "</li>";
-					}
-					$("#friend-requests").html(html);
-				});
-				Signaling.listRelations(function(array) {
-					var html = "";
-					for ( var i in array) {
+                    html += "<li>" + array[i].email + add_button
+                            + del_button + "</li>";
+                }
+                $("#friend-requests").html(html);
+            });
+            Signaling.listRelations(function(array) {
+                console.log(array);
+                var html = "";
+                for ( var i in array) {
 
-						html += "<li><a href='/user/"+array[i].id+"'>" + array[i].name + "</a></li>";
-					}
-					$("#friend-list").html(html);
-				});
-				Signaling.listGroups(function(array) {
-					var html = "";
-					for ( var i in array) {
-						html += "<li><a href='/group/"+array[i].id+"'>"
-								+ array[i].name + "</a></li>";
-					}
-					$("#group-list").html(html);
-				});
-
-			});
+                    html += "<li><a href='/user/"+array[i].id+"'>" + array[i].name + "</a></li>";
+                }
+                $("#friend-list").html(html);
+            });
+            Signaling.listGroups(function(array) {
+                var html = "";
+                for ( var i in array) {
+                    html += "<li><a href='/group/"+array[i].id+"'>"
+                            + array[i].name + "</a></li>";
+                }
+                $("#group-list").html(html);
+            });
+        }
+    );
 
 	function user_del(userId) {
 		var success = function() {

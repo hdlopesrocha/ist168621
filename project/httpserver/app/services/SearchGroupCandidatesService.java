@@ -1,10 +1,16 @@
 package services;
 
-import models.*;
-import org.bson.Document;
+import models.Attribute;
+import models.Group;
+import models.Membership;
+import models.User;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 // TODO: Auto-generated Javadoc
 
@@ -31,37 +37,35 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
     @Override
     public JSONArray dispatch() {
         JSONArray ans = new JSONArray();
-        for (User u : user.getRelations()) {
-            if (Membership.findByUserGroup(u.getId(), group.getId()) == null) {
-                IdentityProfile idProfile = IdentityProfile.findByOwner(u.getId());
-                PublicProfile pubProfile = PublicProfile.findByOwner(u.getId());
-                boolean match = false;
-                Document doc = idProfile.getData();
-                for (String key : doc.keySet()) {
-                    String value = doc.getString(key).toLowerCase();
-                    if (value.contains(query)) {
-                        match = true;
-                        break;
-                    }
-                }
-                String name = pubProfile.getData().getString("name");
-                if (!match && name != null) {
-                    if (name.toLowerCase().contains(query)) {
-                        match = true;
-                    }
-                }
-                if (match) {
-                    JSONObject props = new JSONObject(pubProfile.getData().toJson());
-                    JSONObject identityProperties = new JSONObject(idProfile.getData().toJson());
-                    for (String key : idProfile.getData().keySet()) {
-                        props.put(key, identityProperties.get(key));
-                    }
-                    props.put("id", u.getId().toString());
-                    ans.put(props);
-                }
+        List<User> relations = user.getRelations();
+        List<Attribute> attributes = Attribute.searchByValue(query);
 
+        Set<ObjectId> matches = new HashSet<ObjectId>();
+
+        for(Attribute a : attributes) {
+            if(!matches.contains(a.getOwner())) {
+                for (User u : relations) {
+                    if (Membership.findByUserGroup(u.getId(), group.getId()) == null) {
+
+                      matches.add(a.getOwner());
+
+                    }
+                }
             }
         }
+
+        for(ObjectId oid : matches){
+            JSONObject props = new JSONObject();
+            List<Attribute> attrs = Attribute.listByOwner(oid);
+            for(Attribute a : attrs){
+                props.put(a.getKey(),a.getValue());
+            }
+
+
+            props.put("id", oid.toString());
+            ans.put(props);
+        }
+
         return ans;
     }
 

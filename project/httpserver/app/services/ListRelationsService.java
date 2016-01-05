@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * The Class AuthenticateUserService.
  */
-public class ListRelationsService extends Service<List<User>> {
+public class ListRelationsService extends Service<List<Relation>> {
 
     private User caller;
 
@@ -28,13 +28,13 @@ public class ListRelationsService extends Service<List<User>> {
      * @see services.Service#dispatch()
      */
     @Override
-    public List<User> dispatch() {
-        List<User> ret = new ArrayList<User>();
+    public List<Relation> dispatch() {
+        List<Relation> ret = new ArrayList<Relation>();
 
         for (Relation r : Relation.listFrom(caller.getId())) {
             Relation r2 = Relation.findByEndpoint(r.getTo(), caller.getId());
             if (r2 != null) {
-                ret.add(User.findById(r.getTo()));
+                ret.add(r);
             }
         }
         return ret;

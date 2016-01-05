@@ -1,7 +1,11 @@
 package controllers;
 
+import dtos.AttributeDto;
 import exceptions.ServiceException;
-import models.*;
+import models.Group;
+import models.Membership;
+import models.Relation;
+import models.User;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import play.mvc.Controller;
@@ -11,6 +15,7 @@ import services.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Application extends Controller {
@@ -36,22 +41,53 @@ public class Application extends Controller {
 
     public Result reset() throws ServiceException {
         Service.reset();
-        JSONObject prop1 = new JSONObject();
-        prop1.put("name", "Henrique Rocha");
-        prop1.put("photo", "/assets/images/user1.jpeg");
+        User user1,user2,user3,user4;
 
-        CreateUserService registerService = new CreateUserService("hdlopesrocha", "qazokm", prop1, new ArrayList<KeyValueFile>());
-        User user1 = registerService.execute();
-        CreateGroupService groupService = new CreateGroupService(user1.getId().toString(), "WebRTC");
-        Group group = groupService.execute();
-        JSONObject prop2 = new JSONObject();
-        prop2.put("name", "Nikhil Bhatt");
-        prop2.put("photo", "/assets/images/user2.jpeg");
-        CreateUserService registerService2 = new CreateUserService("nbhatt", "qazokm", prop2, new ArrayList<KeyValueFile>());
-        User user2 = registerService2.execute();
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "hdlopesrocha", true,true));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false,false));
+            user1 = new CreateUserService("qazokm", attributes).execute();
+        }
+
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "nbhatt", true,true));
+            attributes.add(new AttributeDto("name", "Nikhil Bhatt", false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", false,false));
+            user2 = new CreateUserService("qazokm", attributes).execute();
+        }
+
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "grocha", true,true));
+            attributes.add(new AttributeDto("name", "Gonçalo Rocha", false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", false,false));
+            user3 = new CreateUserService("qazokm", attributes).execute();
+        }
+
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "dvd-r", true,true));
+            attributes.add(new AttributeDto("name", "David Rocha", false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", false,false));
+            user4 = new CreateUserService("qazokm", attributes).execute();
+        }
+
 
         new CreateRelationService(user1.getId().toString(), user2.getId().toString()).execute();
         new CreateRelationService(user2.getId().toString(), user1.getId().toString()).execute();
+
+        new CreateRelationService(user1.getId().toString(), user3.getId().toString()).execute();
+        new CreateRelationService(user3.getId().toString(), user1.getId().toString()).execute();
+
+        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
+        new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
+
+
+        CreateGroupService groupService = new CreateGroupService(user1.getId().toString(), "WebRTC");
+        Group group = groupService.execute();
 
         AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group.getId().toString(), user2.getId().toString());
         joinService.execute();

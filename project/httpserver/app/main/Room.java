@@ -8,14 +8,15 @@ import org.json.JSONObject;
 import org.kurento.client.*;
 import play.mvc.WebSocket;
 import services.CreateRecordingService;
-import services.GetUserProfileService;
 import services.ListGroupMembersService;
+import services.ListOwnerAttributesService;
 
 import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -139,8 +140,13 @@ public class Room implements Closeable {
         participants.put(participant.getUser().getId().toString(), participant);
         JSONArray otherUsers = new JSONArray();
         try {
-            JSONObject myProfile = new GetUserProfileService(user.getId().toString(), user.getId().toString())
-                    .execute();
+
+            List<Attribute> attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString()).execute();
+            JSONObject myProfile = new JSONObject();
+            for(Attribute attribute : attributes1){
+                myProfile.put(attribute.getKey(),attribute.getValue());
+            }
+
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                     new JSONArray().put(myProfile.put("online", true)));
@@ -149,8 +155,14 @@ public class Room implements Closeable {
 
             for (KeyValuePair<Membership, User> m : service.execute()) {
                 UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-                JSONObject otherProfile = new GetUserProfileService(user.getId().toString(),
+                List<Attribute> attributes2 = new ListOwnerAttributesService(user.getId().toString(),
                         m.getValue().getId().toString()).execute();
+                JSONObject otherProfile = new JSONObject();
+                for(Attribute attribute : attributes2){
+                    otherProfile.put(attribute.getKey(),attribute.getValue());
+                }
+
+
                 otherProfile.put("online", otherSession != null);
                 if (otherSession != null && otherSession.getUser() != user) {
                     otherSession.sendMessage(myAdvertise.toString());
@@ -173,10 +185,15 @@ public class Room implements Closeable {
         participants.remove(uid);
         try {
 
-            JSONObject profile = new GetUserProfileService(uid, uid).execute();
+            List<Attribute> attributes = new ListOwnerAttributesService(uid, uid).execute();
+            JSONObject result = new JSONObject();
+            for(Attribute attribute : attributes){
+                result.put(attribute.getKey(),attribute.getValue());
+            }
+
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                    new JSONArray().put(profile.put("uid", user.getUser().getId().toString()).put("online", false)));
+                    new JSONArray().put(result.put("uid", user.getUser().getId().toString()).put("online", false)));
             sendMessage(myAdvertise.toString());
         } catch (ServiceException e) {
             e.printStackTrace();
@@ -195,7 +212,6 @@ public class Room implements Closeable {
     }
 
     /**
-     * @param name
      * @return the participant from this session
      */
     public UserSession getParticipant(final String uid) {

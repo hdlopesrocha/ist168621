@@ -36,7 +36,7 @@ public class User implements Comparable<User> {
 
     }
 
-    private static User load(Document doc) {
+    public static User load(Document doc) {
         User user = new User();
         user.id = doc.getObjectId("_id");
         user.hash = doc.getString("hash");
@@ -45,12 +45,7 @@ public class User implements Comparable<User> {
         return user;
     }
 
-    public static User findByEmail(String email) {
-        Document doc = new Document("email", email);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
-    }
+
 
     public static List<User> search(String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);

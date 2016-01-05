@@ -5,10 +5,7 @@ import main.Global;
 import main.Room;
 import main.Tools;
 import main.UserSession;
-import models.Interval;
-import models.Message;
-import models.TimeTag;
-import models.User;
+import models.*;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +34,7 @@ public class WSController extends Controller {
                 try {
                     if (room != null) {
                         // Join room
-                        final UserSession usession = room.join(user, out);
+                        final UserSession userSession = room.join(user, out);
                         {
                             List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
                             JSONObject msg = new JSONObject();
@@ -57,7 +54,7 @@ public class WSController extends Controller {
                             }
                             room.sendMessage(msg.toString());
                         }
-                        usession.sendMessages(null, 1);
+                        userSession.sendMessages(null, 1);
 
                         try {
                             ListTagsService service = new ListTagsService(userId, groupId);
@@ -74,14 +71,14 @@ public class WSController extends Controller {
                             e.printStackTrace();
                         }
 
-                        usession.sendMessage(usession.getContent());
+                        userSession.sendMessage(userSession.getContent());
 
 
                         // When the socket is closed.
                         in.onClose(new Callback0() {
                             public void invoke() {
                                 try {
-                                    room.leave(usession);
+                                    room.leave(userSession);
                                 } catch (IOException e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
@@ -123,7 +120,7 @@ public class WSController extends Controller {
                                     case "getMessages": {
                                         int len = args.getInt("len");
                                         Long end = args.getLong("end");
-                                        usession.sendMessages(end, len);
+                                        userSession.sendMessages(end, len);
                                     }
                                     break;
                                     case "offer": {
@@ -131,7 +128,7 @@ public class WSController extends Controller {
                                         String name = args.optString("name", null);
 
                                         String rsd = data.getString("sdp");
-                                        usession.processOffer(rsd, name);
+                                        userSession.processOffer(rsd, name);
                                     }
                                     break;
                                     case "iceCandidate": {
@@ -140,7 +137,7 @@ public class WSController extends Controller {
 
                                         IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
                                                 jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-                                        usession.addCandidate(candidate, name);
+                                        userSession.addCandidate(candidate, name);
                                     }
                                     break;
                                     case "setRealtime": {
@@ -149,8 +146,8 @@ public class WSController extends Controller {
                                         new Thread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                usession.setRealtime(userId);
-                                                usession.sendMessage(usession.getContent());
+                                                userSession.setRealtime(userId);
+                                                userSession.sendMessage(userSession.getContent());
                                             }
                                         }).start();
                                     }
@@ -160,9 +157,15 @@ public class WSController extends Controller {
                                         AddGroupMemberService service = new AddGroupMemberService(user.getId().toString(), groupId, userId);
                                         try {
                                             service.execute();
-                                            JSONObject myProfile = new GetUserProfileService(user.getId().toString(), userId).execute();
+
+                                            List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId).execute();
+                                            JSONObject result = new JSONObject();
+                                            for(Attribute attribute : attributes){
+                                                result.put(attribute.getKey(),attribute.getValue());
+                                            }
+
                                             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                                                    new JSONArray().put(myProfile.put("online", false)));
+                                                    new JSONArray().put(result.put("online", false)));
                                             room.sendMessage(myAdvertise.toString());
                                         } catch (ServiceException e) {
                                             e.printStackTrace();
@@ -171,11 +174,11 @@ public class WSController extends Controller {
                                     break;
                                     case "play": {
                                         boolean play = args.getBoolean("data");
-                                        usession.setPlay(play);
+                                        userSession.setPlay(play);
                                     }
                                     break;
                                     case "getContent": {
-                                        usession.sendMessage(usession.getContent());
+                                        userSession.sendMessage(userSession.getContent());
                                     }
                                     break;
                                     case "talk": {
@@ -196,8 +199,8 @@ public class WSController extends Controller {
                                         new Thread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                usession.setHistoric(userId, args.getLong("offset"));
-                                                usession.sendMessage(usession.getContent());
+                                                userSession.setHistoric(userId, args.getLong("offset"));
+                                                userSession.sendMessage(userSession.getContent());
                                             }
                                         }).start();
                                     }

@@ -1,11 +1,7 @@
 package services;
 
-import exceptions.ServiceException;
-import models.KeyValueFile;
-import models.PublicProfile;
-import org.bson.Document;
+import dtos.AttributeDto;
 import org.bson.types.ObjectId;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -17,17 +13,14 @@ import java.util.List;
  */
 public class UpdateUserService extends Service<Void> {
 
-    private JSONObject info;
+    private List<AttributeDto> attributes;
     private ObjectId user;
-    private List<KeyValueFile> files;
 
-    public UpdateUserService(final String uid, final JSONObject info, List<KeyValueFile> files) {
+    public UpdateUserService(final String uid, final List<AttributeDto> attributes) {
 
         this.user = uid != null ? new ObjectId(uid) : null;
 
-        this.info = info;
-
-        this.files = files;
+        this.attributes = attributes;
     }
 
     /*
@@ -37,23 +30,7 @@ public class UpdateUserService extends Service<Void> {
      */
     @Override
     public Void dispatch() {
-        Document properties = Document.parse(info.toString());
-        for (KeyValueFile kvf : files) {
-            UploadFileService service = new UploadFileService(kvf);
-            String photoUrl = "";
-            try {
-                photoUrl = service.execute();
-            } catch (ServiceException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            properties.put(kvf.getKey(), photoUrl);
-        }
-        PublicProfile publicProfile = PublicProfile.findByOwner(user);
 
-
-        publicProfile.setData(properties);
-        publicProfile.save();
         return null;
     }
 
