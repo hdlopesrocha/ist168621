@@ -251,21 +251,21 @@ var Kurento = new (function() {
 				
 				switch(id){
 					case 'iceCandidate':
-						console.log(id,message);
+						// console.log(id,message);
 						var candidate = new RTCIceCandidate(message.data);
 				
 						Kurento.peerConnection[message.name].addIceCandidate(candidate, function() {
-							console.log(candidate);
+							// console.log(candidate);
 						}, logError);
 					break;
 					case 'answer':
 						var name = message.name;
 						
-						console.log(id, message);
+						// console.log(id, message);
 						var rsd = new RTCSessionDescription(message.data);
 						// XXX [CLIENT_OFFER_08] XXX
 						Kurento.peerConnection[message.name].setRemoteDescription(rsd, function(){
-							console.log("setRemoteSessionDescription",rsd);
+							// console.log("setRemoteSessionDescription",rsd);
 						},logError);
 					break;		
 					case 'participants':

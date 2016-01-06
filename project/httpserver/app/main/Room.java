@@ -143,6 +143,7 @@ public class Room implements Closeable {
 
             List<Attribute> attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString()).execute();
             JSONObject myProfile = new JSONObject();
+            myProfile.put("id",user.getId().toString());
             for(Attribute attribute : attributes1){
                 myProfile.put(attribute.getKey(),attribute.getValue());
             }
@@ -155,16 +156,19 @@ public class Room implements Closeable {
 
             for (KeyValuePair<Membership, User> m : service.execute()) {
                 UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-                List<Attribute> attributes2 = new ListOwnerAttributesService(user.getId().toString(),
+                ObjectId otherId = m.getKey().getUserId();
+
+                List<Attribute> attributes2 = new ListOwnerAttributesService(otherId.toString(),
                         m.getValue().getId().toString()).execute();
                 JSONObject otherProfile = new JSONObject();
+                otherProfile.put("id",otherId.toString());
                 for(Attribute attribute : attributes2){
                     otherProfile.put(attribute.getKey(),attribute.getValue());
                 }
 
 
                 otherProfile.put("online", otherSession != null);
-                if (otherSession != null && otherSession.getUser() != user) {
+                if (otherSession != null && !otherId.equals(user.getId())) {
                     otherSession.sendMessage(myAdvertise.toString());
 
                 }
@@ -187,13 +191,14 @@ public class Room implements Closeable {
 
             List<Attribute> attributes = new ListOwnerAttributesService(uid, uid).execute();
             JSONObject result = new JSONObject();
+            result.put("id",uid);
             for(Attribute attribute : attributes){
                 result.put(attribute.getKey(),attribute.getValue());
             }
 
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                    new JSONArray().put(result.put("uid", user.getUser().getId().toString()).put("online", false)));
+                    new JSONArray().put(result.put("online", false)));
             sendMessage(myAdvertise.toString());
         } catch (ServiceException e) {
             e.printStackTrace();
