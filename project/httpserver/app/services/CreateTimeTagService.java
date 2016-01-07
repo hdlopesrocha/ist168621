@@ -6,14 +6,14 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class CreateTagService extends Service<TimeTag> {
+public class CreateTimeTagService extends Service<TimeTag> {
 
-    private ObjectId gid;
-    private String title;
-    private String content;
-    private Date time;
+    private final ObjectId gid;
+    private final String title;
+    private final String content;
+    private final Date time;
 
-    public CreateTagService(String gid, Date time, String title, String content) {
+    public CreateTimeTagService(String gid, Date time, String title, String content) {
         this.gid = new ObjectId(gid);
         this.time = time;
         this.title = title;

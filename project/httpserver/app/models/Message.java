@@ -21,7 +21,7 @@ public class Message {
     private ObjectId id = null;
     private Long sequence;
 
-    public Message() {
+    private Message() {
     }
 
     public Message(ObjectId groupId, ObjectId userId, Date time, String text) {
@@ -31,13 +31,13 @@ public class Message {
         this.time = time;
     }
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection("messages");
         return collection;
     }
 
-    public static Message load(Document doc) {
+    private static Message load(Document doc) {
         Message rec = new Message();
         rec.id = doc.getObjectId("_id");
         rec.source = doc.getObjectId("source");
@@ -70,11 +70,9 @@ public class Message {
         return doc != null ? load(doc) : null;
     }
 
-    public Long generateSequence() {
-        long count = getCollection()
+    private Long generateSequence() {
+        return getCollection()
                 .count(new Document("target", target));
-
-        return count;
     }
 
     public void save() {
@@ -99,7 +97,7 @@ public class Message {
 
     }
 
-    public ObjectId getId() {
+    private ObjectId getId() {
         return id;
     }
 

@@ -24,7 +24,7 @@ public class HyperContent {
         this.content = content;
     }
 
-    public HyperContent() {
+    private HyperContent() {
     }
 
     public static MongoCollection<Document> getCollection() {

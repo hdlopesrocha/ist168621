@@ -57,7 +57,7 @@ public class WSController extends Controller {
                         userSession.sendMessages(null, 1);
 
                         try {
-                            ListTagsService service = new ListTagsService(userId, groupId);
+                            ListTimeTagsService service = new ListTimeTagsService(userId, groupId);
                             List<TimeTag> tags = service.execute();
                             for (TimeTag tag : tags) {
                                 JSONObject msg = new JSONObject();
@@ -210,7 +210,7 @@ public class WSController extends Controller {
                                             Date time = Tools.FORMAT.parse(args.getString("time"));
                                             String title = args.getString("title");
                                             String content = args.getString("content");
-                                            CreateTagService service = new CreateTagService(groupId, time, title, content);
+                                            CreateTimeTagService service = new CreateTimeTagService(groupId, time, title, content);
                                             TimeTag tag = service.execute();
 
                                             JSONObject msg = new JSONObject();

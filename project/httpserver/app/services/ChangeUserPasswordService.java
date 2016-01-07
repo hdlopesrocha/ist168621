@@ -12,8 +12,9 @@ import org.bson.types.ObjectId;
  */
 public class ChangeUserPasswordService extends Service<Void> {
 
-    private String password, oldPassword;
-    private ObjectId userId;
+    private final String password;
+    private final String oldPassword;
+    private final ObjectId userId;
     private User user;
 
     public ChangeUserPasswordService(final String uid, final String oldPassword, final String password) {

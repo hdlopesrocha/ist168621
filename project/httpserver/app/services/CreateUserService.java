@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class CreateUserService extends Service<User> {
 
-    private String password;
-    private List<AttributeDto> properties;
-    private List<String> permissions = new ArrayList<String>();
+    private final String password;
+    private final List<AttributeDto> properties;
+    private final List<String> permissions = new ArrayList<String>();
 
     public CreateUserService(final String password, final List<AttributeDto> properties) {
         this.properties = properties;

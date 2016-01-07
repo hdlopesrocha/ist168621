@@ -16,7 +16,7 @@ import services.Service;
 public class Global extends GlobalSettings {
 
     public static KurentoManager manager;
-    public static Logger log;
+    private static Logger log;
 
     @Override
     public Promise<Result> onError(RequestHeader arg0, Throwable arg1) {

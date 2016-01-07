@@ -13,16 +13,9 @@ import java.util.UUID;
  */
 public class UploadFileService extends Service<String> {
 
-    private KeyValueFile anex;
+    private final KeyValueFile anex;
 
-    /**
-     * Instantiates a new send message service.
-     *
-     * @param username the username
-     * @param groupId  the group id
-     * @param content  the content
-     * @param anex
-     */
+
     public UploadFileService(final KeyValueFile anex) {
         this.anex = anex;
     }

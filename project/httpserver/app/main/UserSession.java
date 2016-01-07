@@ -31,11 +31,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private final WebRtcEndpoint compositePoint;
     private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
     private final MyRecorder recorder;
-    private HubPort compositePort;
+    private final HubPort compositePort;
     private PlayerEndpoint player;
-    private Object playerLock = new Object();
+    private final Object playerLock = new Object();
     private boolean play = true;
-    private long timeOffset = 0l;
+    private long timeOffset = 0L;
     private String playUser = "";
 
     public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
@@ -80,7 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
-    public long getTimeOffset() {
+    private long getTimeOffset() {
         return timeOffset;
     }
 
@@ -124,7 +124,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
-    public WebRtcEndpoint getWebRtcEndPoint(String name) {
+    private WebRtcEndpoint getWebRtcEndPoint(String name) {
         WebRtcEndpoint ep = endPoints.get(name);
         if (ep == null) {
             ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
@@ -169,7 +169,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      * @return The room
      */
-    public String getGroupId() {
+    private String getGroupId() {
         return room.getGroupId();
     }
 
@@ -300,7 +300,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 player = null;
             }
         }
-        timeOffset = 0l;
+        timeOffset = 0L;
         playUser = userId;
         if (userId == null) {
             compositePort.connect(endPoint);

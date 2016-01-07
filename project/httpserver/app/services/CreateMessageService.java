@@ -13,20 +13,11 @@ import java.util.Date;
  */
 public class CreateMessageService extends Service<Message> {
 
-    private ObjectId target;
-    private ObjectId source;
-    private Date time;
-    private String text;
+    private final ObjectId target;
+    private final ObjectId source;
+    private final Date time;
+    private final String text;
 
-
-    /**
-     * Instantiates a new send message service.
-     *
-     * @param username the username
-     * @param target   the group id
-     * @param content  the content
-     * @param anex
-     */
     public CreateMessageService(final String source, final String target, final String text) {
         this.target = new ObjectId(target);
         this.source = new ObjectId(source);

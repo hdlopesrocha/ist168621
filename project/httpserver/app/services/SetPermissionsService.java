@@ -8,9 +8,9 @@ import java.util.List;
 
 public class SetPermissionsService extends Service<Void> {
 
-    private List<String> permissions;
-    private ObjectId callerId;
-    private ObjectId source;
+    private final List<String> permissions;
+    private final ObjectId callerId;
+    private final ObjectId source;
 
     public SetPermissionsService(String callerId, String ownerId, List<String> permissions) {
         this.permissions = permissions;

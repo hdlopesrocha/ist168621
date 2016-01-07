@@ -2,7 +2,6 @@ package services;
 
 import exceptions.ServiceException;
 import models.Interval;
-import models.KeyValueFile;
 import models.Recording;
 import org.bson.types.ObjectId;
 
@@ -15,29 +14,20 @@ import java.util.Date;
  */
 public class CreateRecordingService extends Service<Recording> {
 
-    private static Object LOCK = new Object();
-    private KeyValueFile anex;
-    private ObjectId groupId;
-    private ObjectId owner;
+    private static final Object LOCK = new Object();
+    private final ObjectId groupId;
+    private final ObjectId owner;
     private ObjectId interval;
-    private Date start;
-    private String name;
-    private String type;
+    private final Date start;
+    private final String name;
+    private final String type;
     private String url;
     private Interval inter = null;
-    private Date end;
+    private final Date end;
 
-    /**
-     * Instantiates a new send message service.
-     *
-     * @param username the username
-     * @param groupId  the group id
-     * @param content  the content
-     * @param anex
-     */
-    public CreateRecordingService(final KeyValueFile anex, final String url, final String groupId, final String owner,
+
+    public CreateRecordingService(final String url, final String groupId, final String owner,
                                   Date start, Date end, String name, String type, String interval) {
-        this.anex = anex;
         this.groupId = new ObjectId(groupId);
         this.owner = owner != null ? new ObjectId(owner) : null;
         this.interval = interval != null ? new ObjectId(interval) : null;
@@ -59,10 +49,6 @@ public class CreateRecordingService extends Service<Recording> {
      */
     @Override
     public Recording dispatch() throws ServiceException {
-        if (url == null) {
-            UploadFileService uploadService = new UploadFileService(anex);
-            url = uploadService.execute();
-        }
         synchronized (LOCK) {
 
             if (interval == null) {

@@ -12,8 +12,8 @@ import org.bson.types.ObjectId;
  */
 public class GetGroupInviteService extends Service<String> {
 
-    private ObjectId caller;
-    private ObjectId groupId;
+    private final ObjectId caller;
+    private final ObjectId groupId;
 
     public GetGroupInviteService(final String caller, final String groupId) {
         this.caller = new ObjectId(caller);

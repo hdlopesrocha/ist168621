@@ -19,9 +19,9 @@ import java.util.Set;
  */
 public class SearchGroupCandidatesService extends Service<JSONArray> {
 
-    private User user;
-    private Group group;
-    private String query;
+    private final User user;
+    private final Group group;
+    private final String query;
 
     public SearchGroupCandidatesService(String userId, String groupId, String query) {
         this.user = User.findById(new ObjectId(userId));

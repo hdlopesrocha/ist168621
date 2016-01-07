@@ -12,8 +12,8 @@ import org.bson.types.ObjectId;
  */
 public class GetOwnerAttributeService extends Service<Attribute> {
 
-	private ObjectId userId;
-	private String attr;
+	private final ObjectId userId;
+	private final String attr;
 
 	public GetOwnerAttributeService(String userId, String attr) {
 		this.attr = attr;

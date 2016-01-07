@@ -12,8 +12,8 @@ import org.bson.types.ObjectId;
  */
 public class DeleteGroupInviteService extends Service<Void> {
 
-    private ObjectId caller;
-    private ObjectId groupId;
+    private final ObjectId caller;
+    private final ObjectId groupId;
 
     public DeleteGroupInviteService(final String caller, final String groupId) {
         this.caller = new ObjectId(caller);

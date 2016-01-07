@@ -16,14 +16,14 @@ import exceptions.UnauthorizedException;
  * @param <T> the generic type
  */
 public abstract class Service<T> {
-    protected static DB db;
-    protected static MongoClient client;
-    protected static MongoDatabase database;
-    protected static GridFS files;
-    static long lastOid = 0l;
+    private static DB db;
+    private static MongoClient client;
+    private static MongoDatabase database;
+    static GridFS files;
+    static long lastOid = 0L;
     private static String DB_NAME = "webrtc";
 
-    public static MongoClient getClient() {
+    private static MongoClient getClient() {
         if (client == null) {
             client = new MongoClient(ServerAddress.defaultHost());
         }
@@ -38,7 +38,7 @@ public abstract class Service<T> {
     }
 
     @SuppressWarnings("deprecation")
-    public static DB getDB() {
+    private static DB getDB() {
         if (db == null) {
             db = Service.getClient().getDB(DB_NAME);
         }
@@ -78,12 +78,12 @@ public abstract class Service<T> {
      * @return the t
      * @throws ServiceException
      */
-    public abstract T dispatch() throws ServiceException;
+    protected abstract T dispatch() throws ServiceException;
 
     /**
      * Can execute.
      *
      * @return true, if successful
      */
-    public abstract boolean canExecute();
+    protected abstract boolean canExecute();
 }

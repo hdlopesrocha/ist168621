@@ -13,9 +13,9 @@ import org.bson.types.ObjectId;
  */
 public class JoinGroupInviteService extends Service<Boolean> {
 
-    private ObjectId caller;
-    private ObjectId groupId;
-    private String token;
+    private final ObjectId caller;
+    private final ObjectId groupId;
+    private final String token;
 
     public JoinGroupInviteService(final String caller, final String groupId, final String token) {
         this.caller = new ObjectId(caller);

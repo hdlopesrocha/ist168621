@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class ListRecordingsForTimeService extends Service<List<Recording>> {
 
-    private User caller;
-    private ObjectId groupId;
-    private long duration;
-    private String time;
+    private final User caller;
+    private final ObjectId groupId;
+    private final long duration;
+    private final String time;
 
     public ListRecordingsForTimeService(String callerId, String groupId, String time, long duration) {
         this.caller = User.findById(new ObjectId(callerId));

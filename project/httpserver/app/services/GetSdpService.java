@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class GetSdpService extends Service<List<Document>> {
 
-    private User user;
-    private Membership membership;
+    private final User user;
+    private final Membership membership;
 
     public GetSdpService(String uid, String membershipId) {
         this.user = User.findById(new ObjectId(uid));

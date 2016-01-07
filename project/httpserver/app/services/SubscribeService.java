@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class SubscribeService extends Service<Document> {
 
-    private String key;
-    private long ts;
+    private final String key;
+    private final long ts;
 
     public SubscribeService(String key, Long ts) {
         this.key = key;
@@ -30,7 +30,7 @@ public class SubscribeService extends Service<Document> {
      */
     @Override
     public Document dispatch() {
-        if (ts == -1l) {
+        if (ts == -1L) {
             Document find = PubSub.getKeyCollection().find(new Document("key", key)).first();
             if (find != null) {
                 return find;

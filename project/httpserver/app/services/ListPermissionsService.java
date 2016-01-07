@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ListPermissionsService extends Service<List<String>> {
 
-    private ObjectId callerId;
-    private ObjectId ownerId;
+    private final ObjectId callerId;
+    private final ObjectId ownerId;
 
     public ListPermissionsService(String callerId, String ownerId) {
         this.callerId = new ObjectId(callerId);

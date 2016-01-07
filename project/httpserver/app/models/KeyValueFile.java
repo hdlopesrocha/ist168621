@@ -3,8 +3,9 @@ package models;
 import java.io.File;
 
 public class KeyValueFile {
-    private String key, name;
-    private File value;
+    private final String key;
+    private final String name;
+    private final File value;
 
     public KeyValueFile(String key, String name, File value) {
         super();

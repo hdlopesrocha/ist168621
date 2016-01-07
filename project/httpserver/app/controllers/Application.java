@@ -7,7 +7,6 @@ import models.Membership;
 import models.Relation;
 import models.User;
 import org.bson.types.ObjectId;
-import org.json.JSONObject;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.twirl.api.Html;
@@ -45,33 +44,33 @@ public class Application extends Controller {
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "hdlopesrocha", true,true));
-            attributes.add(new AttributeDto("name", "Henrique Rocha", false,true));
-            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false,false));
+            attributes.add(new AttributeDto("email", "hdlopesrocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
             user1 = new CreateUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "nbhatt", true,true));
-            attributes.add(new AttributeDto("name", "Nikhil Bhatt", false,true));
-            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", false,false));
+            attributes.add(new AttributeDto("email", "nbhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
+            attributes.add(new AttributeDto("name", "Nikhil Bhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
             user2 = new CreateUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "grocha", true,true));
-            attributes.add(new AttributeDto("name", "Gonçalo Rocha", false,true));
-            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", false,false));
+            attributes.add(new AttributeDto("email", "grocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
+            attributes.add(new AttributeDto("name", "Gonçalo Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
             user3 = new CreateUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "dvd-r", true,true));
-            attributes.add(new AttributeDto("name", "David Rocha", false,true));
-            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", false,false));
+            attributes.add(new AttributeDto("email", "dvd-r", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
+            attributes.add(new AttributeDto("name", "David Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
+            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
             user4 = new CreateUserService("qazokm", attributes).execute();
         }
 

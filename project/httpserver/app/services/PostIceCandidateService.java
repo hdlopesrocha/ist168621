@@ -15,9 +15,10 @@ import java.util.List;
  */
 public class PostIceCandidateService extends Service<Void> {
 
-    private User user;
-    private Membership membership;
-    private String sdpjson, token;
+    private final User user;
+    private final Membership membership;
+    private final String sdpjson;
+    private final String token;
 
     public PostIceCandidateService(String uid, String groupId, String token, String sdpjson) {
         this.user = User.findById(new ObjectId(uid));

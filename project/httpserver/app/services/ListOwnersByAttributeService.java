@@ -10,9 +10,9 @@ import java.util.List;
 
 public class ListOwnersByAttributeService extends Service<List<String>> {
 
-	private ObjectId user;
-	private String key;
-	private String value;
+	private final ObjectId user;
+	private final String key;
+	private final String value;
 
 	public ListOwnersByAttributeService(String callerId, String key, String value) {
 		this.user = new ObjectId(callerId);

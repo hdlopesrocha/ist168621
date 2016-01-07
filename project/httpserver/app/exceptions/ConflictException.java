@@ -5,7 +5,7 @@ package exceptions;
 /**
  * The Class UnauthorizedException.
  */
-public class ConflictException extends ServiceException {
+class ConflictException extends ServiceException {
 
     /**
      * The Constant serialVersionUID.

@@ -1,8 +1,8 @@
 package models;
 
 public class KeyValuePair<K, V> {
-    private K key;
-    private V value;
+    private final K key;
+    private final V value;
 
     public KeyValuePair(K key, V value) {
         super();

@@ -14,7 +14,7 @@ public class Tools {
 
     public static final Random RANDOM = new Random();
     private static final String allChars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0987654321";
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     static {
         TimeZone tz = TimeZone.getTimeZone("UTC");

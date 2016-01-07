@@ -43,7 +43,7 @@ public class Rest extends Controller {
 
         JSONArray array = new JSONArray();
         try {
-            SearchTagsService service = new SearchTagsService(session("uid"), groupId, query);
+            SearchTimeTagsService service = new SearchTimeTagsService(session("uid"), groupId, query);
             List<TimeTag> tags = service.execute();
 
             for (TimeTag tag : tags) {
@@ -119,7 +119,7 @@ public class Rest extends Controller {
         return forbidden();
     }
 
-    void setPhotoHeaders(String fileName) {
+    private void setPhotoHeaders(String fileName) {
         String[] tokens = fileName.split("/");
 
         response().setHeader("Content-disposition", "attachment;filename=" + tokens[tokens.length - 1]);
@@ -396,7 +396,7 @@ public class Rest extends Controller {
                         searchable = identifiable = true;
                     }
 
-                    attributes.add(new AttributeDto(s.getKey(), obj,identifiable,searchable));
+                    attributes.add(new AttributeDto(s.getKey(), obj,AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable,searchable));
 
 
                 }
@@ -408,7 +408,7 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),false,false));
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -447,12 +447,11 @@ public class Rest extends Controller {
             JSONArray array = new JSONArray();
             // Search User
             {
-                ListOwnersService service = new ListOwnersService(session("uid"), null,null);
-                service.setSearch(query);
-                List<ObjectId> res = service.execute();
+                SearchOwnersService service = new SearchOwnersService(session("uid"), null,null,query);
+                List<String> res = service.execute();
 
-
-                for (ObjectId userId : res) {
+                for (String r : res) {
+                    ObjectId userId = new ObjectId(r);
                     if (!userId.equals(me.getId())) {
                         List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId.toString()).execute();
                         JSONObject result = new JSONObject();
@@ -460,12 +459,9 @@ public class Rest extends Controller {
                             result.put(attribute.getKey(),attribute.getValue());
                         }
 
-
-
                         result.put("type", "user");
                         Relation rel1 = Relation.findByEndpoint(me.getId(), userId);
                         Relation rel2 = Relation.findByEndpoint(userId, me.getId());
-
 
                         if (rel1 != null) {
                             result.put("state", rel2 != null);

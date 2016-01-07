@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class ListRecordingsService extends Service<List<Recording>> {
 
-    private User caller;
-    private ObjectId groupId;
-    private long sequence;
+    private final User caller;
+    private final ObjectId groupId;
+    private final long sequence;
 
     public ListRecordingsService(String callerId, String groupId, long sequence) {
         this.caller = User.findById(new ObjectId(callerId));

@@ -21,7 +21,7 @@ public class Recording {
     private ObjectId id = null;
     private long sequence;
 
-    public Recording() {
+    private Recording() {
     }
     public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String name, String type, String url,
                      long sequence, ObjectId interval) {

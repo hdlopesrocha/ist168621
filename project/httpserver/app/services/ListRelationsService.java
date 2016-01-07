@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ListRelationsService extends Service<List<Relation>> {
 
-    private User caller;
+    private final User caller;
 
 
     public ListRelationsService(String uid) {

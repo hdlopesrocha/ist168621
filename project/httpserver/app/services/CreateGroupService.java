@@ -13,8 +13,8 @@ import org.bson.types.ObjectId;
  */
 public class CreateGroupService extends Service<Group> {
 
-    private User user;
-    private String name;
+    private final User user;
+    private final String name;
 
     public CreateGroupService(String uid, String name) {
         this.user = User.findById(new ObjectId(uid));

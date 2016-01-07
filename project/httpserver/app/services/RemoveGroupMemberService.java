@@ -12,8 +12,9 @@ import org.bson.types.ObjectId;
  */
 public class RemoveGroupMemberService extends Service<Void> {
 
-    private User user, member;
-    private Group group;
+    private final User user;
+    private final User member;
+    private final Group group;
 
     public RemoveGroupMemberService(String callerId, String groupId, String memberId) {
         this.user = User.findById(new ObjectId(callerId));

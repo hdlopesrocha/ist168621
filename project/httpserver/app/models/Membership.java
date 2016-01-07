@@ -18,7 +18,7 @@ public class Membership {
     private Document properties = new Document();
 
 
-    public Membership() {
+    private Membership() {
     }
 
 
@@ -27,7 +27,7 @@ public class Membership {
         this.groupId = groupId;
     }
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection("memberships");
         return collection;
@@ -100,7 +100,7 @@ public class Membership {
         return properties;
     }
 
-    public void setProperties(Document properties) {
+    private void setProperties(Document properties) {
         this.properties = properties;
     }
 
@@ -108,7 +108,7 @@ public class Membership {
         return groupId;
     }
 
-    public void setGroupId(ObjectId groupId) {
+    private void setGroupId(ObjectId groupId) {
         this.groupId = groupId;
     }
 
@@ -116,7 +116,7 @@ public class Membership {
         return userId;
     }
 
-    public void setUserId(ObjectId userId) {
+    private void setUserId(ObjectId userId) {
         this.userId = userId;
     }
 
@@ -124,7 +124,7 @@ public class Membership {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    private void setId(ObjectId id) {
         this.id = id;
     }
 

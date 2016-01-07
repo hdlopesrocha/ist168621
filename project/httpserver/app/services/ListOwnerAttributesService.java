@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class ListOwnerAttributesService extends Service<List<Attribute>> {
 
-	private ObjectId user;
-	private ObjectId caller;
+	private final ObjectId user;
+	private final ObjectId caller;
 
 	public ListOwnerAttributesService(String caller,String userId) {
 		this.user =  new ObjectId(userId);

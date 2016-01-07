@@ -11,7 +11,8 @@ import org.bson.types.ObjectId;
  */
 public class DenyRelationService extends Service<Void> {
 
-    private User from, to;
+    private final User from;
+    private final User to;
 
     public DenyRelationService(String from, String to) {
         this.from = User.findById(new ObjectId(from));

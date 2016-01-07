@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class DownloadFileService extends Service<byte[]> {
 
-    private String fileName;
+    private final String fileName;
 
     public DownloadFileService(String fileName) {
         // TODO Auto-generated constructor stub

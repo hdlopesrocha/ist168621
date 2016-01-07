@@ -12,20 +12,14 @@ public class AuthenticateUserService extends Service<User> {
     /**
      * The user.
      */
-    private ObjectId user;
+    private final ObjectId user;
 
     /**
      * The password.
      */
-    private String password;
+    private final String password;
 
 
-    /**
-     * Instantiates a new authenticate user service.
-     *
-     * @param username the username
-     * @param password the password
-     */
     public AuthenticateUserService(final String userId, final String password) {
         this.user = new ObjectId(userId);
         this.password = password;

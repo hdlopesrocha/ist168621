@@ -31,7 +31,7 @@ public class Interval {
         this.end = end;
     }
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection("intervals");
         return collection;

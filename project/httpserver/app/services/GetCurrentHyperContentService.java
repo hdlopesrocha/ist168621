@@ -20,9 +20,9 @@ import java.util.List;
 public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 
     private static final int PRELOAD_SIZE = 5;
-    private User caller;
-    private ObjectId groupId;
-    private Date time;
+    private final User caller;
+    private final ObjectId groupId;
+    private final Date time;
     private boolean hasMore;
 
     public GetCurrentHyperContentService(String callerId, String groupId, Date time) {

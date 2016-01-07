@@ -12,9 +12,9 @@ import org.bson.types.ObjectId;
  */
 public class PostSdpService extends Service<Void> {
 
-    private User user;
-    private Membership membership;
-    private String data;
+    private final User user;
+    private final Membership membership;
+    private final String data;
 
     public PostSdpService(String uid, String groupId, String data) {
         this.user = User.findById(new ObjectId(uid));

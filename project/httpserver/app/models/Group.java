@@ -20,14 +20,14 @@ public class Group {
     private ObjectId id = null;
     private String invite = null;
 
-    public Group() {
+    private Group() {
     }
 
     public Group(String name) {
         this.name = name;
     }
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection("groups");
         return collection;

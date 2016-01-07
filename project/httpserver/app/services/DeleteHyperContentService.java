@@ -1,9 +1,7 @@
 package services;
 
 
-import models.Group;
 import models.HyperContent;
-import models.User;
 import org.bson.types.ObjectId;
 
 // TODO: Auto-generated Javadoc
@@ -13,14 +11,14 @@ import org.bson.types.ObjectId;
  */
 public class DeleteHyperContentService extends Service<Void> {
 
-    private User user;
-    private Group group;
+    private final ObjectId user;
+    private ObjectId group;
     private ObjectId contentId = null;
 
 
     public DeleteHyperContentService(String uid, String gid, String cid) {
-        this.user = User.findById(new ObjectId(uid));
-        this.group = Group.findById(new ObjectId(gid));
+        this.user = new ObjectId(uid);
+        this.group = new ObjectId(gid);
         this.contentId = new ObjectId(cid);
 
     }

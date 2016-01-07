@@ -65,12 +65,12 @@ public class Room implements Closeable {
     }
 
     public MyRecorder record(final MediaElement endPoint, final String id) {
-        final MyRecorder mYrec = new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
+        return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
             @Override
             public String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId) {
 
                 try {
-                    CreateRecordingService srs = new CreateRecordingService(null, filepath, getGroupId(), id, begin,
+                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), id, begin,
                             end, filename, "video/webm", intervalId);
                     Recording rec = srs.execute();
                     if (rec != null) {
@@ -96,7 +96,6 @@ public class Room implements Closeable {
                 return intervalId;
             }
         });
-        return mYrec;
     }
 
     public HubPort getCompositePort(String id) {
@@ -117,7 +116,7 @@ public class Room implements Closeable {
         }
     }
 
-    public Hub getComposite() {
+    private Hub getComposite() {
         return composite;
 
     }
@@ -132,7 +131,7 @@ public class Room implements Closeable {
         return group.getId().toString();
     }
 
-    public UserSession join(final User user, final WebSocket.Out<String> out) throws IOException {
+    public UserSession join(final User user, final WebSocket.Out<String> out) {
 
         System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
         final UserSession participant = new UserSession(user, this, out);

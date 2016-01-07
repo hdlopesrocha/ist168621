@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class ListGroupMembersService extends Service<List<KeyValuePair<Membership, User>>> {
 
-    private User user;
-    private Group group;
+    private final User user;
+    private final Group group;
 
     public ListGroupMembersService(String uid, String groupId) {
         this.user = User.findById(new ObjectId(uid));

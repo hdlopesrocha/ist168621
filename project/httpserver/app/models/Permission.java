@@ -15,7 +15,7 @@ public class Permission {
     private ObjectId target;
     private String name;
 
-    public static final String TYPE = "common.Permission";
+    private static final String TYPE = "common.Permission";
     public static final String PERMISSION_READ = "READ";
     public static final String PERMISSION_WRITE = "WRITE";
     public static final String PERMISSION_ADMIN = "root.admin";
@@ -23,7 +23,7 @@ public class Permission {
 
     private static MongoCollection<Document> collection;
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null) {
             collection = Service.getDatabase().getCollection(TYPE);
         }
@@ -32,7 +32,7 @@ public class Permission {
     }
 
 
-    public Permission() {
+    private Permission() {
 
     }
 
@@ -98,7 +98,7 @@ public class Permission {
 
     }
 
-    public static Permission load(Document doc) {
+    private static Permission load(Document doc) {
         Permission obj = new Permission();
         obj.id = doc.getObjectId("_id");
         obj.source = doc.getObjectId("source");

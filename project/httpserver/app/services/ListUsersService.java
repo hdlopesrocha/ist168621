@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ListUsersService extends Service<String> {
 
-    private ObjectId caller;
+    private final ObjectId caller;
 
     public ListUsersService(String caller) {
         this.caller = new ObjectId(caller);

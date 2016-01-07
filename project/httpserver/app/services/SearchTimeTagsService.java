@@ -10,13 +10,13 @@ import java.util.List;
 /**
  * The Class AuthenticateUserService.
  */
-public class SearchTagsService extends Service<List<TimeTag>> {
+public class SearchTimeTagsService extends Service<List<TimeTag>> {
 
-    private ObjectId caller;
-    private ObjectId gid;
-    private String query;
+    private final ObjectId caller;
+    private final ObjectId gid;
+    private final String query;
 
-    public SearchTagsService(String caller, String gid, String query) {
+    public SearchTimeTagsService(String caller, String gid, String query) {
         this.caller = new ObjectId(caller);
         this.gid = new ObjectId(gid);
         this.query = query;

@@ -13,19 +13,11 @@ import java.util.List;
  */
 public class ListMessagesService extends Service<List<Message>> {
 
-    private ObjectId target;
-    private Long end;
-    private int len;
+    private final ObjectId target;
+    private final Long end;
+    private final int len;
 
 
-    /**
-     * Instantiates a new send message service.
-     *
-     * @param username the username
-     * @param groupId  the group id
-     * @param content  the content
-     * @param anex
-     */
     public ListMessagesService(final String target, final Long end, final int len) {
         this.target = new ObjectId(target);
         this.end = end;

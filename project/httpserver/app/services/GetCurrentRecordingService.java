@@ -16,10 +16,10 @@ import java.util.Date;
  */
 public class GetCurrentRecordingService extends Service<Recording> {
 
-    private User caller;
-    private ObjectId groupId;
-    private ObjectId userId;
-    private Date time;
+    private final User caller;
+    private final ObjectId groupId;
+    private final ObjectId userId;
+    private final Date time;
 
     public GetCurrentRecordingService(String callerId, String groupId, String userId, Date time) {
         this.caller = User.findById(new ObjectId(callerId));

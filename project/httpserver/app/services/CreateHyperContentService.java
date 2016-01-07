@@ -14,9 +14,10 @@ import java.util.Date;
  */
 public class CreateHyperContentService extends Service<HyperContent> {
 
-    private User user;
-    private Group group;
-    private Date start, end;
+    private final User user;
+    private final Group group;
+    private final Date start;
+    private final Date end;
     private String content = null;
 
 

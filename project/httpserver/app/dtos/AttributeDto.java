@@ -15,18 +15,30 @@ public class AttributeDto {
     private final boolean identifiable;
     private final boolean searchable;
 
+    public enum Access {READ,WRITE,NONE}
+	public enum Visibility {PUBLIC, PRIVATE}
+	
+	private final Visibility visibility;
+    private final String key;
+    private final Object value;
+    private final Access access;
 
-    private String key;
-    private Object value;
-
-    public AttributeDto(String key, Object value,boolean identifiable,boolean searchable) {
+    public AttributeDto(String key, Object value, Access access, Visibility visibility, boolean identifiable, boolean searchable) {
         this.key = key;
         this.value = value;
-
+        this.visibility = visibility;
+        this.access = access;
         this.identifiable = identifiable;
         this.searchable = searchable;
     }
 
+    public Visibility getVisibility() {
+		return visibility;
+	}
+
+	public Access getAccess() {
+		return access;
+	}
 
 	public String getKey() {
         return key;

@@ -13,12 +13,12 @@ import java.util.List;
 /**
  * The Class AuthenticateUserService.
  */
-public class ListTagsService extends Service<List<TimeTag>> {
+public class ListTimeTagsService extends Service<List<TimeTag>> {
 
-    private ObjectId caller;
-    private ObjectId gid;
+    private final ObjectId caller;
+    private final ObjectId gid;
 
-    public ListTagsService(String email, String gid) {
+    public ListTimeTagsService(String email, String gid) {
         this.caller = new ObjectId(email);
         this.gid = new ObjectId(gid);
     }

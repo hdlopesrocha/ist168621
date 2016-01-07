@@ -11,7 +11,8 @@ import org.bson.types.ObjectId;
  */
 public class CreateRelationService extends Service<Void> {
 
-    private User from, to;
+    private final User from;
+    private final User to;
 
 
     public CreateRelationService(String from, String to) {

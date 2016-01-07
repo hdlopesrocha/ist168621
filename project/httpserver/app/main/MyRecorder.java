@@ -12,7 +12,7 @@ import java.util.Map;
 public class MyRecorder {
 
     private RecorderEndpoint recorder;
-    private Object recorderLock = new Object();
+    private final Object recorderLock = new Object();
     private Thread recorderThread = null;
     private Runnable recorderRunnable = null;
     private Date begin;

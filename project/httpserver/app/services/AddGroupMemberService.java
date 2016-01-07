@@ -10,8 +10,9 @@ import org.bson.types.ObjectId;
  */
 public class AddGroupMemberService extends Service<Void> {
 
-    private ObjectId user, member;
-    private ObjectId group;
+    private final ObjectId user;
+    private final ObjectId member;
+    private final ObjectId group;
 
     public AddGroupMemberService(String uid, String groupId, String member) {
         this.user = new ObjectId(uid);

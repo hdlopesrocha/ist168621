@@ -19,7 +19,7 @@ public class User implements Comparable<User> {
     private static MongoCollection<Document> collection;
     private String hash, salt, token;
     private ObjectId id = null;
-    public User() {
+    private User() {
 
     }
 

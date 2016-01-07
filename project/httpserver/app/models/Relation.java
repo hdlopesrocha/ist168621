@@ -15,7 +15,7 @@ public class Relation {
     private static MongoCollection<Document> collection;
     private ObjectId from = null, to = null, id = null;
 
-    public Relation() {
+    private Relation() {
     }
 
     public Relation(ObjectId fi, ObjectId ti) {
@@ -25,7 +25,7 @@ public class Relation {
 
     }
 
-    public static MongoCollection<Document> getCollection() {
+    private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection("relations");
         return collection;
@@ -102,7 +102,7 @@ public class Relation {
         return from;
     }
 
-    public void setFrom(ObjectId from) {
+    private void setFrom(ObjectId from) {
         this.from = from;
     }
 
@@ -110,7 +110,7 @@ public class Relation {
         return to;
     }
 
-    public void setTo(ObjectId to) {
+    private void setTo(ObjectId to) {
         this.to = to;
     }
 
@@ -118,7 +118,7 @@ public class Relation {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    private void setId(ObjectId id) {
         this.id = id;
     }
 

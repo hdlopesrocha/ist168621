@@ -14,7 +14,7 @@ public class HasPermissionService extends Service<Boolean> {
      */
     private ObjectId source, target;
 
-    private String name;
+    private final String name;
 
     public HasPermissionService(final String source, final String name) {
         if (source != null)

@@ -10,7 +10,7 @@ import org.bson.Document;
  */
 public class PublishService extends Service<Void> {
 
-    private String key;
+    private final String key;
 
     public PublishService(String key) {
         this.key = key;
@@ -40,8 +40,8 @@ public class PublishService extends Service<Void> {
             Document doc = PubSub.getKeyCollection().findOneAndUpdate(new Document("key", key), new Document("$inc", new Document("ts", 1)));
             return doc.getLong("ts") + 1;
         } else {
-            PubSub.getKeyCollection().insertOne(new Document("key", key).append("ts", 0l));
-            return 0l;
+            PubSub.getKeyCollection().insertOne(new Document("key", key).append("ts", 0L));
+            return 0L;
         }
 
     }

@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SearchGroupService extends Service<List<Group>> {
 
-    private User caller;
-    private String query;
+    private final User caller;
+    private final String query;
 
 
     public SearchGroupService(String uid, String query) {

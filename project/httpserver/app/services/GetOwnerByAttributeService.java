@@ -9,8 +9,8 @@ import models.Attribute;
  */
 public class GetOwnerByAttributeService extends Service<String> {
 
-	private String key;
-	private Object value;
+	private final String key;
+	private final Object value;
 
 	public GetOwnerByAttributeService(String key, Object value) {
 		this.key = key;
