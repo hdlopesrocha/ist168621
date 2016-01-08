@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Group {
-
-
     private static MongoCollection<Document> collection;
     private String name = null;
     private ObjectId id = null;
@@ -29,7 +27,7 @@ public class Group {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("groups");
+            collection = Service.getDatabase().getCollection(Group.class.getName());
         return collection;
     }
 

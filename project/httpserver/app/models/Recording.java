@@ -38,7 +38,7 @@ public class Recording {
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("recordings");
+            collection = Service.getDatabase().getCollection(Recording.class.getName());
         return collection;
     }
 

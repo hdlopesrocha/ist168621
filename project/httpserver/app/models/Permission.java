@@ -15,7 +15,6 @@ public class Permission {
     private ObjectId target;
     private String name;
 
-    private static final String TYPE = "common.Permission";
     public static final String PERMISSION_READ = "READ";
     public static final String PERMISSION_WRITE = "WRITE";
     public static final String PERMISSION_ADMIN = "root.admin";
@@ -25,7 +24,7 @@ public class Permission {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null) {
-            collection = Service.getDatabase().getCollection(TYPE);
+            collection = Service.getDatabase().getCollection(Permission.class.getName());
         }
 
         return collection;

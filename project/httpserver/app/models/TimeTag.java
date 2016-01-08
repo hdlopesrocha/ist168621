@@ -35,7 +35,7 @@ public class TimeTag {
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("timeTags");
+            collection = Service.getDatabase().getCollection(TimeTag.class.getName());
         return collection;
     }
 

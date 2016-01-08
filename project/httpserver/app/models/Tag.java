@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 public class Tag {
 
 
-          private static final String TYPE = "common.Tag";
 
 
         private List<String> value;
@@ -46,7 +45,7 @@ public class Tag {
 
         public static MongoCollection<Document> getCollection() {
             if(collection==null)
-                collection = Service.getDatabase().getCollection(TYPE);
+                collection = Service.getDatabase().getCollection(Tag.class.getName());
             return collection;
         }
 

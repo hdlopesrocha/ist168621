@@ -3,7 +3,6 @@ package services;
 import dtos.AttributeDto;
 import exceptions.ServiceException;
 import main.Tools;
-import models.Attribute;
 import models.User;
 
 import java.util.ArrayList;
@@ -18,12 +17,12 @@ import java.util.List;
 public class CreateUserService extends Service<User> {
 
     private final String password;
-    private final List<AttributeDto> properties;
     private final List<String> permissions = new ArrayList<String>();
+    private final List<AttributeDto> attributes;
 
-    public CreateUserService(final String password, final List<AttributeDto> properties) {
-        this.properties = properties;
+    public CreateUserService(final String password, List<AttributeDto> attributes) {
         this.password = password;
+        this.attributes = attributes;
     }
 
     public CreateUserService addPermission(String permission) {
@@ -49,9 +48,8 @@ public class CreateUserService extends Service<User> {
         User user = new User(password);
         user.setToken(token);
         user.save();
-        for(AttributeDto attr : properties){
-            new Attribute(user.getId(),attr.getKey(),attr.getValue(),attr.isIdentifiable(),attr.isSearchable()).save();
-        }
+
+        new SetAttributesService(user.getId().toString(),user.getId().toString(),attributes).execute();
 
         return user;
     }

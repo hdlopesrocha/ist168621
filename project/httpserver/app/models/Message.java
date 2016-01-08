@@ -33,7 +33,7 @@ public class Message {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("messages");
+            collection = Service.getDatabase().getCollection(Message.class.getName());
         return collection;
     }
 

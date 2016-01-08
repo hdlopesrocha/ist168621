@@ -29,7 +29,7 @@ public class Membership {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("memberships");
+            collection = Service.getDatabase().getCollection(Membership.class.getName());
         return collection;
     }
 

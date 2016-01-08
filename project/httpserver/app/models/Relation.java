@@ -27,7 +27,7 @@ public class Relation {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("relations");
+            collection = Service.getDatabase().getCollection(Relation.class.getName());
         return collection;
     }
 

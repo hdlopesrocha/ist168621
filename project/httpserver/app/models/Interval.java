@@ -33,7 +33,7 @@ public class Interval {
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("intervals");
+            collection = Service.getDatabase().getCollection(Interval.class.getName());
         return collection;
     }
 

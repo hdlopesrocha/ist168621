@@ -31,7 +31,6 @@ public class WSController extends Controller {
                 System.out.println("Join room " + groupId);
                 Room room = Global.manager.getRoom(groupId);
                 User user = User.findById(new ObjectId(userId));
-                try {
                     if (room != null) {
                         // Join room
                         final UserSession userSession = room.join(user, out);
@@ -271,10 +270,8 @@ public class WSController extends Controller {
                     } else {
                         out.close();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    out.close();
-                }
+
+
             }
         };
     }

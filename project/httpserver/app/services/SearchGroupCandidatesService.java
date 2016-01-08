@@ -38,7 +38,7 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
     public JSONArray dispatch() {
         JSONArray ans = new JSONArray();
         List<User> relations = user.getRelations();
-        List<Attribute> attributes = Attribute.searchByValue(query);
+        List<Attribute> attributes = Attribute.searchByValue(query,null,null);
 
         Set<ObjectId> matches = new HashSet<ObjectId>();
 

@@ -47,7 +47,7 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("email", "hdlopesrocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
             attributes.add(new AttributeDto("name", "Henrique Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
             attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
-            user1 = new CreateUserService("qazokm", attributes).execute();
+            user1 = new CreateUserService("qazokm",attributes).execute();
         }
 
         {
@@ -55,7 +55,7 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("email", "nbhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
             attributes.add(new AttributeDto("name", "Nikhil Bhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
             attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
-            user2 = new CreateUserService("qazokm", attributes).execute();
+            user2 = new CreateUserService("qazokm",attributes).execute();
         }
 
         {
@@ -63,7 +63,7 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("email", "grocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
             attributes.add(new AttributeDto("name", "Gonçalo Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
             attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
-            user3 = new CreateUserService("qazokm", attributes).execute();
+            user3 = new CreateUserService("qazokm",attributes).execute();
         }
 
         {
@@ -71,7 +71,7 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("email", "dvd-r", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true));
             attributes.add(new AttributeDto("name", "David Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true));
             attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
-            user4 = new CreateUserService("qazokm", attributes).execute();
+            user4 = new CreateUserService("qazokm",attributes).execute();
         }
 
 

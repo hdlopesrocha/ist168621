@@ -419,9 +419,7 @@ public class Rest extends Controller {
             return Rest.status(409);
         }
 
-        CreateUserService service = new CreateUserService(password, attributes);
-
-        User ret = service.execute();
+        User ret = new CreateUserService(password,attributes).execute();
         return ok(ret.getToken());
 
     }
@@ -443,25 +441,25 @@ public class Rest extends Controller {
         String query = request().queryString().get("s")[0];
 
         try {
-            User me = User.findById(new ObjectId(session("uid")));
+            ObjectId me = new ObjectId(session("uid"));
             JSONArray array = new JSONArray();
             // Search User
             {
                 SearchOwnersService service = new SearchOwnersService(session("uid"), null,null,query);
-                List<String> res = service.execute();
+                List<String> users = service.execute();
 
-                for (String r : res) {
-                    ObjectId userId = new ObjectId(r);
-                    if (!userId.equals(me.getId())) {
-                        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId.toString()).execute();
+                for (String user : users) {
+                    ObjectId userId = new ObjectId(user);
+                    if (!userId.equals(me)) {
+                        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),user).execute();
                         JSONObject result = new JSONObject();
                         for(Attribute attribute : attributes){
                             result.put(attribute.getKey(),attribute.getValue());
                         }
 
                         result.put("type", "user");
-                        Relation rel1 = Relation.findByEndpoint(me.getId(), userId);
-                        Relation rel2 = Relation.findByEndpoint(userId, me.getId());
+                        Relation rel1 = Relation.findByEndpoint(me, userId);
+                        Relation rel2 = Relation.findByEndpoint(userId, me);
 
                         if (rel1 != null) {
                             result.put("state", rel2 != null);
@@ -474,7 +472,7 @@ public class Rest extends Controller {
             {
                 List<Group> res = new SearchGroupService(session("uid"), query).execute();
                 for (Group u : res) {
-                    if (!u.getId().equals(me.getId())) {
+                    if (!u.getId().equals(me)) {
                         JSONObject obj = new JSONObject();
                         obj.put("name", u.getName());
                         obj.put("id", u.getId().toString());
@@ -483,7 +481,7 @@ public class Rest extends Controller {
                     }
                 }
             }
-
+            System.out.println("me="+me+" | " +array.toString());
             return ok(array.toString());
 
         } catch (ServiceException e) {

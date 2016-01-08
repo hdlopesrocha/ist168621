@@ -30,7 +30,7 @@ public class User implements Comparable<User> {
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null) {
-            collection = Service.getDatabase().getCollection("users");
+            collection = Service.getDatabase().getCollection(User.class.getName());
         }
         return collection;
 

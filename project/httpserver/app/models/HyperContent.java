@@ -29,7 +29,7 @@ public class HyperContent {
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection("hypercontent");
+            collection = Service.getDatabase().getCollection(HyperContent.class.getName());
         return collection;
     }
 

@@ -1,7 +1,6 @@
 package services;
 
 import com.mongodb.client.FindIterable;
-import models.Permission;
 import models.Tag;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -44,14 +43,14 @@ public class SearchOwnersService extends Service<List<String>> {
 		count = Tag.countByValue(search);
 
 		for (Tag tag : tags ) {
-			ret.add(tag.getId().toString());
+			ret.add(tag.getOwner().toString());
 		}
 		return ret;
 	}
 
 	@Override
 	public boolean canExecute() {
-		return caller!=null && Permission.find(caller, Permission.PERMISSION_ADMIN,null)!=null;
+		return caller!=null;
 
 	}
 
