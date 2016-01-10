@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     This file should not be altered                                  %
+%     To see what other .tex files search for TODO word                %
+%     If more chapters are required, add more \inputs{file} commands   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,a4paper,twoside]{report}
+
+% TODO - change this with your external packages (if required)
+\input{preamble}
+
+\begin{document}
+
+% Set plain page style (no headers, footer with centered page number)
+\pagestyle{plain}
+
+% Set roman numbering (i,ii,...) before the start of chapters
+\pagenumbering{roman}
+
+% TODO Define your cover page
+\input{frontCover}
+
+% TODO Dedication page (optional, and not normal)
+% \input{Thesis_Dedication} % Uncomment if it is used
+
+% TODO Acknowledgments (optional and can be in native language)
+\input{acknowledgements}
+
+% TODO Abstract in English and Portuguese
+\input{abstract}
+\input{resumo}
+
+% ----------------------------------------------------------------------
+%  Table of contents, list of tables, list of figures and nomenclature
+%  (DO NOT TOUCH THIS!!!)
+% ----------------------------------------------------------------------
+
+% Table of contents
+\tableofcontents
+\cleardoublepage
+
+% List of figures
+\listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+\cleardoublepage
+
+% List of tables
+\listoftables
+\addcontentsline{toc}{chapter}{\listtablename}
+\cleardoublepage
+
+\section*{}
+\addcontentsline{toc}{chapter}{Acronyms}
+\input{acronyms}
+\cleardoublepage
+
+% Set arabic numbering (1,2,...) after preface
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% ----------------------------------------------------------------------
+%  TODO - Edit each chapters file and create new if necessary
+% ----------------------------------------------------------------------
+
+\input{introduction} % file "Thesis_Introduction.tex"
+
+\input{relatedwork}
+\input{architecture}
+\input{implementation}
+\input{evaluation}
+
+%\input{new_file} % add new .tex files for new chapters
+
+\input{conclusions} % file "Thesis_Conclusions.tex"
+
+% ----------------------------------------------------------------------
+%  TODO - Appendix (optional)
+% ----------------------------------------------------------------------
+\appendix
+\input{appendix} % file "Thesis_Appendix.tex"
+
+% ----------------------------------------------------------------------
+%  Bibliography
+% ----------------------------------------------------------------------
+
+
+% External bibliography database file in the BibTeX format
+\cleardoublepage
+
+\bibliographystyle{splncs}
+% TODO - This file "references.bib" should include all your bibtex
+\bibliography{references} 
+
+% Add entry in the table of contents as chapter
+\addcontentsline{toc}{chapter}{\bibname}
+\cleardoublepage
+
+\end{document}
