@@ -49,6 +49,8 @@ public class CreateUserService extends Service<User> {
         user.setToken(token);
         user.save();
 
+
+        attributes.add(new AttributeDto("type",User.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC,false,false,true));
         new SetAttributesService(user.getId().toString(),user.getId().toString(),attributes).execute();
 
         return user;

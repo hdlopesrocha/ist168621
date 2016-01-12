@@ -369,14 +369,14 @@
 		function saveTags() {
 			console.log(unsaved_tags);
 			for ( var i in unsaved_tags) {
-				var tag = unsaved_tags[i];
-				var visTag = timeline.getRecord(tag.id);
+				var metaData = unsaved_tags[i];
+				var visTag = timeline.getRecord(metaData.id);
 				var time = new Date(visTag.start);
 
-				var title = tag.title;
-				var content = tag.content;
+				var title = metaData.title;
+				var content = metaData.content;
 				Kurento.createTag(time, title, content);
-				timeline.removeTag(tag.id);
+				timeline.removeTag(metaData.id);
 			}
 			unsaved_tags = [];
 			$("#saveButton").addClass("hidden");
@@ -512,8 +512,8 @@
 				return item.title;
 			},
 			highlighter: function(item){
-				if(item.type=="tag"){
-					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
+				if(item.type=="metaData"){
+					return "<i class='fa fa-metaData'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else {
 					return "<i class='fa fa-font'></i> " + item.name ;
 				}
@@ -522,7 +522,7 @@
 				return true;
 			},
 			updater:function(item){
-				if(item.type=="tag"){
+				if(item.type=="metaData"){
 					timeline.setHistoric(item.time);
 				}
 				console.log(item);

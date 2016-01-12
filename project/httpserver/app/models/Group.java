@@ -14,16 +14,12 @@ import java.util.regex.Pattern;
 
 public class Group {
     private static MongoCollection<Document> collection;
-    private String name = null;
     private ObjectId id = null;
     private String invite = null;
 
-    private Group() {
+    public Group() {
     }
 
-    public Group(String name) {
-        this.name = name;
-    }
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
@@ -34,7 +30,6 @@ public class Group {
     private static Group load(Document doc) {
         Group user = new Group();
         user.id = doc.getObjectId("_id");
-        user.name = doc.getString("name");
         user.invite = doc.getString("invite");
         return user;
     }
@@ -67,13 +62,6 @@ public class Group {
         return ret;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public void generateInvite() {
         invite = Tools.getRandomString(12);
@@ -92,7 +80,6 @@ public class Group {
         if (id != null)
             doc.put("_id", id);
 
-        doc.put("name", name);
         doc.put("invite", invite);
 
         if (id == null)

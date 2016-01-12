@@ -1,6 +1,7 @@
 package controllers;
 
 import dtos.AttributeDto;
+import dtos.KeyValue;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import models.*;
@@ -94,7 +95,11 @@ public class Rest extends Controller {
         if (session("uid") != null) {
             Map<String, String[]> qs = request().queryString();
             String name = qs.get("n")[0];
-            CreateGroupService service = new CreateGroupService(session("uid"), name);
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("name",name, AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+
+
+            CreateGroupService service = new CreateGroupService(session("uid"), attributes);
             try {
                 service.execute();
             } catch (ServiceException e) {
@@ -214,7 +219,12 @@ public class Rest extends Controller {
                 for (Group g : ans) {
                     JSONObject obj = new JSONObject();
                     obj.put("id", g.getId());
-                    obj.put("name", g.getName());
+                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString()).execute();
+                    for(Attribute attribute : attributes){
+                        obj.put(attribute.getKey(),attribute.getValue());
+
+                    }
+
                     array.put(obj);
                 }
                 return ok(array.toString());
@@ -369,6 +379,8 @@ public class Rest extends Controller {
 
         String password = form.get("password")[0];
         List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+        attributes.add(new AttributeDto("type",User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false,false,true));
+
 
         for (Entry<String, String[]> s : form.entrySet()) {
             if (!s.getKey().equals("password") && !s.getKey().equals("password2")) {
@@ -396,7 +408,7 @@ public class Rest extends Controller {
                         searchable = identifiable = true;
                     }
 
-                    attributes.add(new AttributeDto(s.getKey(), obj,AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable,searchable));
+                    attributes.add(new AttributeDto(s.getKey(), obj,AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable,searchable,false));
 
 
                 }
@@ -408,7 +420,7 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false));
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -445,7 +457,7 @@ public class Rest extends Controller {
             JSONArray array = new JSONArray();
             // Search User
             {
-                SearchOwnersService service = new SearchOwnersService(session("uid"), null,null,query);
+                SearchOwnersService service = new SearchOwnersService(session("uid"), null,null,query.toLowerCase(), new ArrayList<KeyValue<String>>());
                 List<String> users = service.execute();
 
                 for (String user : users) {
@@ -453,35 +465,15 @@ public class Rest extends Controller {
                     if (!userId.equals(me)) {
                         List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),user).execute();
                         JSONObject result = new JSONObject();
+                        result.put("id", userId);
+
                         for(Attribute attribute : attributes){
                             result.put(attribute.getKey(),attribute.getValue());
-                        }
-
-                        result.put("type", "user");
-                        Relation rel1 = Relation.findByEndpoint(me, userId);
-                        Relation rel2 = Relation.findByEndpoint(userId, me);
-
-                        if (rel1 != null) {
-                            result.put("state", rel2 != null);
                         }
                         array.put(result);
                     }
                 }
             }
-            // Search Group
-            {
-                List<Group> res = new SearchGroupService(session("uid"), query).execute();
-                for (Group u : res) {
-                    if (!u.getId().equals(me)) {
-                        JSONObject obj = new JSONObject();
-                        obj.put("name", u.getName());
-                        obj.put("id", u.getId().toString());
-                        obj.put("type", "group");
-                        array.put(obj);
-                    }
-                }
-            }
-            System.out.println("me="+me+" | " +array.toString());
             return ok(array.toString());
 
         } catch (ServiceException e) {

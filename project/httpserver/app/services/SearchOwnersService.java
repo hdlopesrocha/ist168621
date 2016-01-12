@@ -1,7 +1,8 @@
 package services;
 
 import com.mongodb.client.FindIterable;
-import models.Tag;
+import dtos.KeyValue;
+import models.MetaData;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -19,13 +20,14 @@ public class SearchOwnersService extends Service<List<String>> {
 	private Long count =null;
 	private Long total =null;
 	private String search =null;
-
+private List<KeyValue<String>> filters;
 	
-	public SearchOwnersService(String callerId, Integer offset, Integer limit, String search) {
+	public SearchOwnersService(String callerId, Integer offset, Integer limit, String search,List<KeyValue<String>> filters) {
 		this.offset = offset;
 		this.limit = limit;
 		this.search = search;
 		this.caller = new ObjectId(callerId);
+		this.filters = filters;
 	}
 
 	/*
@@ -37,13 +39,13 @@ public class SearchOwnersService extends Service<List<String>> {
 	public List<String> dispatch() {
 		List<String> ret = new ArrayList<String>();
 		FindIterable<Document> iter;
-		total = Tag.getCollection().count();
+		total = MetaData.getCollection().count();
 
-		List<Tag> tags = Tag.searchByValue(search,offset,limit);
-		count = Tag.countByValue(search);
+		List<MetaData> metaDatas = MetaData.search(search,offset,limit,filters);
+		count = MetaData.count(search,filters);
 
-		for (Tag tag : tags ) {
-			ret.add(tag.getOwner().toString());
+		for (MetaData metaData : metaDatas) {
+			ret.add(metaData.getOwner().toString());
 		}
 		return ret;
 	}

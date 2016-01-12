@@ -4,7 +4,7 @@ package services;
 import dtos.AttributeDto;
 import models.Attribute;
 import models.Permission;
-import models.Tag;
+import models.MetaData;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -53,8 +53,8 @@ public class SetAttributesService extends Service<Void> {
 		}
 
 
-		Tag.deleteByOwner(owner);
-		new Tag(owner,tags).save();
+		MetaData.deleteByOwner(owner);
+		new MetaData(owner,tags).save();
 
 		return null;
 	}

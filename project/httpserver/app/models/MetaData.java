@@ -16,18 +16,16 @@ import java.util.regex.Pattern;
 /**
  * Created by hdlopesrocha on 06-01-2016.
  */
-public class Tag {
+public class MetaData {
 
     private List<String> search;
     private ObjectId id = null;
-    private String type;
     private ObjectId owner = null;
     private Document filter= null;
 
-    public Tag(ObjectId owner, List<String> search, String type,Document filter) {
+    public MetaData(ObjectId owner, List<String> search, Document filter) {
         this.owner = owner;
         this.search = search;
-        this.type = type;
         this.filter = filter;
     }
 
@@ -40,30 +38,24 @@ public class Tag {
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(Tag.class.getName());
+            collection = Service.getDatabase().getCollection(MetaData.class.getName());
         return collection;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public static Tag load(Document doc) {
-        Tag user = new Tag();
+    public static MetaData load(Document doc) {
+        MetaData user = new MetaData();
         user.id = doc.getObjectId("_id");
         user.owner = doc.getObjectId("owner");
-        user.type = doc.getString("type");
         user.filter = (Document) doc.get("filter");
         user.search = (List<String>) doc.get("search");
         return user;
     }
 
-    public Tag save() {
+    public MetaData save() {
         Document doc = new Document();
 
         doc.put("search", search);
         doc.put("owner", owner);
-        doc.put("type", type);
         doc.put("filter", filter);
 
         if (id == null) {
@@ -80,29 +72,29 @@ public class Tag {
         return id;
     }
 
-    public static Tag findById(ObjectId id) {
+    public static MetaData findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
         return doc != null ? load(doc) : null;
     }
 
-    public Tag() {
+    public MetaData() {
 
     }
 
-    public static List<Tag> listByOwner(ObjectId id) {
+    public static List<MetaData> listByOwner(ObjectId id) {
         Document doc = new Document("owner", id);
         MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<Tag> ret = new ArrayList<Tag>();
+        List<MetaData> ret = new ArrayList<MetaData>();
         while (iter.hasNext()) {
-            ret.add(Tag.load(iter.next()));
+            ret.add(MetaData.load(iter.next()));
         }
 
         return ret;
     }
 
-    public static List<Tag> search(String search, Integer offset, Integer limit, String type, List<KeyValue<String>> filters) {
+    public static List<MetaData> search(String search, Integer offset, Integer limit, List<KeyValue<String>> filters) {
         Document query = new Document();
 
         for(KeyValue<String> kvp : filters){
@@ -112,9 +104,7 @@ public class Tag {
         if (search != null) {
             query.append("search", Pattern.compile(search));
         }
-        if (type != null) {
-            query.append("type", type);
-        }
+
 
         FindIterable<Document> find = getCollection().find(query);
         if (offset != null) {
@@ -125,9 +115,9 @@ public class Tag {
         }
 
         MongoCursor<Document> iter = find.iterator();
-        List<Tag> ret = new ArrayList<Tag>();
+        List<MetaData> ret = new ArrayList<MetaData>();
         while (iter.hasNext()) {
-            ret.add(Tag.load(iter.next()));
+            ret.add(MetaData.load(iter.next()));
         }
         return ret;
 
@@ -137,21 +127,24 @@ public class Tag {
         getCollection().deleteMany(new Document("owner", owner));
     }
 
-    public Tag(ObjectId owner, String[] search) {
+
+    public MetaData(ObjectId owner, List<String> search) {
+        this.owner = owner;
+        this.search = search;
+    }
+
+    public MetaData(ObjectId owner, String[] search) {
         this.owner = owner;
         this.search = Arrays.asList(search);
     }
 
-    public static Long countByValue(String search, String type, List<KeyValue<String>> filters) {
+    public static Long count(String search, List<KeyValue<String>> filters) {
         Document query = new Document();
         for(KeyValue<String> kvp : filters){
             query.append("filter."+kvp.getKey(), kvp.getValue());
         }
         if (search != null) {
             query.append("search", Pattern.compile(search));
-        }
-        if (type != null) {
-            query.append("type", type);
         }
 
         return getCollection().count(query);
