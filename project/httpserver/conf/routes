@@ -33,8 +33,6 @@ GET		/api/group/create				controllers.Rest.createGroup()
 GET		/api/group/list					controllers.Rest.listGroups()
 GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(groupId : String)
 GET		/api/group/properties/:groupId	controllers.Rest.listGroupMembersProperties(groupId : String)
-GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
-GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
 GET		/api/group/search/:gid			controllers.Rest.searchOnGroup(gid : String)
 
 

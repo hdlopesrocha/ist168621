@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class Group {
 
-    public enum Visibility {PUBLIC, PRIVATE, FRIENDS}
+    public enum Visibility {PUBLIC, PRIVATE}
 
 
     private static MongoCollection<Document> collection;

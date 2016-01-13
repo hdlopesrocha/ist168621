@@ -69,7 +69,6 @@ public class Application extends Controller {
             user4 = new CreateUserService("qazokm",attributes).execute();
         }
 
-        System.out.println("1!");
 
         new CreateRelationService(user1.getId().toString(), user2.getId().toString()).execute();
         new CreateRelationService(user2.getId().toString(), user1.getId().toString()).execute();
@@ -80,15 +79,12 @@ public class Application extends Controller {
 //        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
         new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
 
-        System.out.println("2!");
 
         List<AttributeDto> attributes = new ArrayList<AttributeDto>();
         attributes.add(new AttributeDto("name","WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
 
-        System.out.println("3!");
 
         Group group =  new CreateGroupService(user1.getId().toString(), attributes).execute();
-        System.out.println("4!");
 
         AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group.getId().toString(), user2.getId().toString());
         joinService.execute();

@@ -4,7 +4,6 @@
 
 }{
 
-
 <script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
 
 <div id="createRoomModal" class="modal fade" role="dialog">
@@ -32,71 +31,49 @@
     </div>
 </div>
 
-
-        <div class="row">
-<div class="center">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-success"  data-toggle="modal"
-                                data-target="#createRoomModal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="panel-heading" data-toggle="collapse"
-                         data-target="#collapse1">
-                        <h4 class="panel-title">My Rooms</h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <ul id="group-list"></ul>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="center">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-success"  data-toggle="modal"
+                            data-target="#createRoomModal">
+                        <i class="fa fa-plus"></i>
+                    </button>
                 </div>
-            </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-info">
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-success"  data-toggle="modal"
-                        data-target="#createRoomModal">
-                    <i class="fa fa-plus"></i>
-                </button>
-            </div>
-            <div class="panel-heading" data-toggle="collapse"
-                 data-target="#collapse2">
-                <h4 class="panel-title">Friends Rooms</h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <ul id="group-list"></ul>
+                <div class="panel-heading" data-toggle="collapse"
+                     data-target="#collapse1">
+                    <h4 class="panel-title">Private Rooms</h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul id="group-list"></ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="panel panel-info">
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-success"  data-toggle="modal"
-                        data-target="#createRoomModal">
-                    <i class="fa fa-plus"></i>
-                </button>
-            </div>
-            <div class="panel-heading" data-toggle="collapse"
-                 data-target="#collapse3">
-                <h4 class="panel-title">Public Rooms</h4>
-            </div>
-            <div id="collapse3" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <ul id="group-list"></ul>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-success"  data-toggle="modal"
+                            data-target="#createRoomModal">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="panel-heading" data-toggle="collapse"
+                     data-target="#collapse3">
+                    <h4 class="panel-title">Public Rooms</h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul id="group-list"></ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-        </div>
-        </div>
+</div>
 <script>
 
     function gotoUser(uid){
@@ -144,8 +121,6 @@
 		}
 		Signaling.addRelation(userId, success);
 	}
-
-
 
 </script>
 }

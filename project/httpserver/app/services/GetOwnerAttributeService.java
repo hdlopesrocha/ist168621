@@ -24,7 +24,7 @@ public class GetOwnerAttributeService extends Service<Attribute> {
 	@Override
 	public Attribute dispatch() throws ServiceException {
 		Attribute at = Attribute.getByOwnerKey(userId,attr);
-		if(Permission.allowed(userId, Permission.PERMISSION_READ, at.getId()) || Permission.allowed(userId, Permission.PERMISSION_WRITE, at.getId())){
+		if( Permission.allowed(userId, Permission.PERMISSION_READ, at.getId()) || Permission.allowed(userId, Permission.PERMISSION_WRITE, at.getId())){
 			return at;
 		}
 		

@@ -234,7 +234,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void setHistoric(String userId, long offset) {
         timeOffset = offset;
         playUser = userId;
-        Date currentTime = new Date(new Date().getTime() - timeOffset);
+        Date currentTime = new Date(new Date().getTime() - timeOffset + 500);
         UserSession session = room.getParticipant(playUser);
         String owner = session != null ? session.getUser().getId().toString() : room.getGroupId();
 

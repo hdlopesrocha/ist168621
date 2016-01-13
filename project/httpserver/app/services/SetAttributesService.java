@@ -1,14 +1,15 @@
 package services;
 
 
-import dtos.AttributeDto;
-import models.Attribute;
-import models.Permission;
-import models.MetaData;
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import dtos.AttributeDto;
+import models.Attribute;
+import models.MetaData;
+import models.Permission;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 
 /**
@@ -16,10 +17,9 @@ import java.util.List;
  */
 public class SetAttributesService extends Service<Void> {
 
-	private final ObjectId owner;
-	private final ObjectId caller;
-
-	private final List<AttributeDto> attributes;
+	private ObjectId owner;
+	private ObjectId caller;
+	List<AttributeDto> attributes;
 
 	public SetAttributesService(String caller, String owner, List<AttributeDto> attributes) {
 		this.caller =  new ObjectId(caller);
@@ -29,7 +29,7 @@ public class SetAttributesService extends Service<Void> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see services.Service#dispatch()
 	 */
 	@Override
@@ -37,6 +37,8 @@ public class SetAttributesService extends Service<Void> {
 
 		Attribute.deleteByOwner(owner);
 		List<String> tags = new ArrayList<String>();
+		Document filters = new Document();
+
 		for(AttributeDto attr : attributes){
 			if(attr.isSearchable()){
 				tags.add(attr.getValue().toString().toLowerCase());
@@ -50,18 +52,22 @@ public class SetAttributesService extends Service<Void> {
 			else if(attr.getAccess().equals(AttributeDto.Access.WRITE)){
 				new Permission(from,Permission.PERMISSION_WRITE,at.getId() ).save();
 			}
+
+			if(attr.isAggregator()){
+				filters.append(attr.getKey(), attr.getValue());
+			}
 		}
 
 
 		MetaData.deleteByOwner(owner);
-		new MetaData(owner,tags).save();
+		new MetaData(owner,tags,filters).save();
 
 		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see services.Service#canExecute()
 	 */
 	@Override

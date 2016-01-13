@@ -31,13 +31,14 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         System.out.println("Application has started");
         log = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        log.setLevel(Level.ALL);
+       // log.setLevel(Level.ALL);
         Service.init("webrtc");
         manager = new KurentoManager();
     }
 
     @Override
     public void onStop(Application app) {
+
         System.out.println("Application shutdown...");
     }
 

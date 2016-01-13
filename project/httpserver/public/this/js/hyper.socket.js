@@ -33,14 +33,7 @@ var remote_constraints = {
 function logError(err) {
 	console.log(err);
 }
-var primaryStream = null;
-var newParticipantsCallback = null; 
-var newVideoCallback = null; 
-var mixerVideoCallback = null;
-var newRecordingCallback = null;
-var tagArrivedCallback = null;
-var contentArrivedCallback = null;
-var setTimeCallback = null;
+
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -55,6 +48,18 @@ function average(array){
 }
 
 var Kurento = new (function() {
+    var primaryStream = null;
+    var newParticipantsCallback = null;
+    var newVideoCallback = null;
+    var mixerVideoCallback = null;
+    var newRecordingCallback = null;
+    var tagArrivedCallback = null;
+    var contentArrivedCallback = null;
+    var setTimeCallback = null;
+    var removedUserCallback= null;
+
+
+
 	this.microphoneState = true;
 	this.soundDetected = false;
 
@@ -175,7 +180,7 @@ var Kurento = new (function() {
 		}));
 	}
 	
-	this.addUser = function(userId){
+	this.addUserGroup = function(userId){
 		console.log("addUser",userId);
 		Kurento.webSocket.send(JSON.stringify({
 			id : "addUser",
@@ -183,7 +188,14 @@ var Kurento = new (function() {
 		}));
 	}
 	
-	
+
+    this.removeUserGroup = function(userId){
+        Kurento.webSocket.send(JSON.stringify({
+            id : "removeUser",
+            uid:userId
+        }));
+    }
+
 	this.receiveHistoric = function(userId,offset){
 		console.log("receiveHistoric",userId);
 		Kurento.webSocket.send(JSON.stringify({
@@ -229,7 +241,7 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb,stcb) {
+	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
@@ -239,6 +251,7 @@ var Kurento = new (function() {
 		contentArrivedCallback = cacb;
 		talkReceivedCallback = trcb;
 		setTimeCallback = stcb;
+		removedUserCallback = rucb;
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
 		
@@ -274,6 +287,9 @@ var Kurento = new (function() {
 						for(var userId in message.data){
 							newParticipantsCallback(message.data[userId]);
 						}
+					break;
+					case 'removedUser':
+                        removedUserCallback(message.uid);
 					break;
 					case 'content':
 						contentArrivedCallback(message.data,message.more);

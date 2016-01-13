@@ -151,14 +151,35 @@ public class WSController extends Controller {
                                         }).start();
                                     }
                                     break;
+                                    case "removeUser": {
+                                        String uid = args.optString("uid", null);
+                                        RemoveGroupMemberService service = new RemoveGroupMemberService(userId, groupId, uid);
+                                        try {
+                                            service.execute();
+                                        } catch (ServiceException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        final JSONObject myAdvertise = new JSONObject().put("id", "removedUser").put("uid",uid);
+
+                                        room.sendMessage(myAdvertise.toString());
+                                    }
+
+
+                                    break;
+
+
+
                                     case "addUser": {
-                                        String userId = args.optString("uid", null);
-                                        AddGroupMemberService service = new AddGroupMemberService(user.getId().toString(), groupId, userId);
+                                        String uid = args.optString("uid", null);
+                                        AddGroupMemberService service = new AddGroupMemberService(userId, groupId, uid);
                                         try {
                                             service.execute();
 
-                                            List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId).execute();
+                                            List<Attribute> attributes = new ListOwnerAttributesService(userId,uid).execute();
                                             JSONObject result = new JSONObject();
+                                            result.put("id",uid);
+
                                             for(Attribute attribute : attributes){
                                                 result.put(attribute.getKey(),attribute.getValue());
                                             }

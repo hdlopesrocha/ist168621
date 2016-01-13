@@ -35,7 +35,6 @@ public class CreateGroupService extends Service<Group> {
         group.save();
         Membership membership = new Membership(caller, group.getId());
         membership.save();
-        Global.manager.getRoom(membership.getId().toString());
         attributes.add(new AttributeDto("type",Group.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC,false,false,true));
         new SetAttributesService(group.getId().toString(),group.getId().toString(),attributes).execute();
         return group;

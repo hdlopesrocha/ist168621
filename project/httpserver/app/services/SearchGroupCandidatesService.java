@@ -1,13 +1,13 @@
 package services;
 
-import models.Attribute;
-import models.Group;
-import models.Membership;
-import models.User;
+import dtos.KeyValue;
+import exceptions.ServiceException;
+import models.*;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class SearchGroupCandidatesService extends Service<JSONArray> {
 
-    private final User user;
-    private final Group group;
+    private final ObjectId user;
+    private final ObjectId group;
     private final String query;
 
     public SearchGroupCandidatesService(String userId, String groupId, String query) {
-        this.user = User.findById(new ObjectId(userId));
-        this.group = Group.findById(new ObjectId(groupId));
+        this.user = new ObjectId(userId);
+        this.group = new ObjectId(groupId);
         this.query = query.toLowerCase();
     }
 
@@ -35,36 +35,34 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
      * @see services.Service#dispatch()
      */
     @Override
-    public JSONArray dispatch() {
+    public JSONArray dispatch() throws ServiceException {
         JSONArray ans = new JSONArray();
-        List<User> relations = user.getRelations();
-        List<Attribute> attributes = Attribute.searchByValue(query,null,null);
+        Set<ObjectId> relations = new HashSet<ObjectId>();
 
-        Set<ObjectId> matches = new HashSet<ObjectId>();
+        for (Relation u : new ListRelationsService(user.toString()).execute()) {
+            if (Membership.findByUserGroup(u.getTo(), group) == null) {
+                relations.add(u.getTo());
+            }
+        }
 
-        for(Attribute a : attributes) {
-            if(!matches.contains(a.getOwner())) {
-                for (User u : relations) {
-                    if (Membership.findByUserGroup(u.getId(), group.getId()) == null) {
+        List<KeyValue<String>> filters = new ArrayList<KeyValue<String>>();
+        filters.add(new KeyValue<String>("type",User.class.getName()));
 
-                      matches.add(a.getOwner());
 
-                    }
+        for(MetaData m : MetaData.search(query,null,null,filters)) {
+            if (relations.contains(m.getOwner())) {
+                JSONObject props = new JSONObject();
+                List<Attribute> attrs = Attribute.listByOwner(m.getOwner());
+                for (Attribute a : attrs) {
+                    props.put(a.getKey(), a.getValue());
                 }
+
+
+                props.put("id", m.getOwner());
+                ans.put(props);
             }
         }
 
-        for(ObjectId oid : matches){
-            JSONObject props = new JSONObject();
-            List<Attribute> attrs = Attribute.listByOwner(oid);
-            for(Attribute a : attrs){
-                props.put(a.getKey(),a.getValue());
-            }
-
-
-            props.put("id", oid.toString());
-            ans.put(props);
-        }
 
         return ans;
     }

@@ -161,58 +161,49 @@
 
 <script type="text/javascript">
 
- function gotoUser(uid){
+    function gotoUser(uid){
         document.location = "/user/"+uid;
     }
 
 
- $("#menu-toggle").click(function(e) {
-        e.preventDefault();
+    $( document ).ready(function() {
+         $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+         });
 
 
-        $("#wrapper").toggleClass("toggled");
+       Signaling.listRequests(function(array) {
+            console.log("listRequests",array);
+            var html = "";
+            for ( var i in array) {
+                html += '<li><a href="/user/'+array[i].id+'"><i class="fa fa-fw fa-user"></i> '+array[i].name+'</a></li>';
+            }
+
+            $("#requestList").html(html);
+            if(!array.length){
+                $("#requestButton").toggleClass("disabled");
+            }else {
+                $("#requestCount").html("<span class='badge badge-danger'>"+array.length+"</span>");
+            }
+        });
+        Signaling.listRelations(function(array) {
+            console.log("listRelations",array);
+            var html = "";
+            for ( var i in array) {
+                var user = array[i];
+                html += "<li onclick='gotoUser(\""+ user.id+"\")' style='margin-top: 0px;'><a><span style='background-image: url(\""+user.photo+"\"); width: 20px; height: 20px;margin:0px 16px 0px 0px' class='fa-stack circular'></span>" + user.name + "</a></li>";
+            }
+            $("#friend-list").html(html);
+        });
+
+        $("#fullscreen").hide();
+        $("#logout-button").click(function(){
+            Signaling.logout(function(){
+                document.location = document.location;
+            })
+        });
     });
-
-
-		
-			$( document ).ready(function() {
-               Signaling.listRequests(function(array) {
-                    console.log("listRequests",array);
-                    var html = "";
-                    for ( var i in array) {
-                        html += '<li><a href="/user/'+array[i].id+'"><i class="fa fa-fw fa-user"></i> '+array[i].name+'</a></li>';
-                    }
-
-
-
-
-
-
-
-                    $("#requestList").html(html);
-                    if(!array.length){
-                        $("#requestButton").toggleClass("disabled");
-                    }else {
-                        $("#requestCount").html("<span class='badge badge-danger'>"+array.length+"</span>");
-                    }
-                });
-				Signaling.listRelations(function(array) {
-                    console.log("listRelations",array);
-                    var html = "";
-                    for ( var i in array) {
-                        var user = array[i];
-                        html += "<li onclick='gotoUser(\""+ user.id+"\")' style='margin-top: 0px;'><a><span style='background-image: url(\""+user.photo+"\"); width: 20px; height: 20px;margin:0px 16px 0px 0px' class='fa-stack circular'></span>" + user.name + "</a></li>";
-                    }
-                    $("#friend-list").html(html);
-                });
-
-                $("#fullscreen").hide();
-				$("#logout-button").click(function(){
-					Signaling.logout(function(){
-						document.location = document.location;
-					})
-				});
-			});
 
 
 

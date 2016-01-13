@@ -144,23 +144,5 @@ public class Attribute {
 	}
 
 
-	public static List<Attribute> searchByValue(String value, Integer offset, Integer limit){
-		Pattern regex = Pattern.compile(value);
-		Document query = new Document("value", regex);
-		FindIterable<Document> find = getCollection().find(query);
-		if(offset!=null){
-			find.skip(offset);
-		}
-		if(limit!=null){
-			find.limit(limit);
-		}
 
-		MongoCursor<Document> iter = find.iterator();
-		List<Attribute> ret = new ArrayList<Attribute>();
-		while (iter.hasNext()){
-			ret.add(load(iter.next()));
-		}
-		return ret;
-
-	}
 }

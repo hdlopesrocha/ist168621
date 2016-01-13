@@ -60,19 +60,7 @@ public class Rest extends Controller {
         return ok(array.toString());
     }
 
-    public Result addGroupMember(String groupId, String memberId) {
-        if (session("uid") != null) {
-            System.out.println("ADDMEMBER: " + groupId + " | " + memberId);
-            AddGroupMemberService service = new AddGroupMemberService(session("uid"), groupId, memberId);
-            try {
-                service.execute();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
-            return ok("OK");
-        }
-        return forbidden();
-    }
+
 
     public Result changePassword() {
         Map<String, String[]> info = request().body().asFormUrlEncoded();
@@ -163,28 +151,18 @@ public class Rest extends Controller {
 
     public Result getPhoto(String uid) {
         if (uid != null && uid.length() > 0) {
-
             try {
                 Attribute attr = new GetOwnerAttributeService(uid,"photo").execute();
-
                 if (attr != null && attr.getValue()!=null) {
                     String fileName = attr.getValue().toString();
                     System.out.println("GET " + fileName);
                     fileName = fileName.replace("%20", " ");
-
-                    setPhotoHeaders(fileName);
-                    DownloadFileService service = new DownloadFileService(fileName);
-                    byte[] bytes = service.execute();
-                    if (bytes != null) {
-                        response().setHeader(CONTENT_LENGTH, bytes.length + "");
-                        return ok(bytes);
-                    }
+                    return redirect(fileName);
                 }
             } catch (ServiceException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
         }
         return redirect("/assets/images/default.png");
 
@@ -404,18 +382,7 @@ public class Rest extends Controller {
 
     }
 
-    public Result removeGroupMember(String groupId, String memberId) {
-        if (session("uid") != null) {
-            RemoveGroupMemberService service = new RemoveGroupMemberService(session("uid"), groupId, memberId);
-            try {
-                service.execute();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
-            return ok("OK");
-        }
-        return forbidden();
-    }
+
 
     public Result search() {
         String query = request().queryString().get("s")[0];
@@ -456,7 +423,6 @@ public class Rest extends Controller {
         if (session("uid") != null) {
             String query = request().queryString().get("s")[0];
 
-            System.out.println("SEARCH: " + groupId + " | " + query);
 
             SearchGroupCandidatesService service = new SearchGroupCandidatesService(session("uid"), groupId, query);
             JSONArray array = new JSONArray();
@@ -465,6 +431,9 @@ public class Rest extends Controller {
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
+
+            System.out.println("SEARCH: " + groupId + " | " + query + " | "+array.toString());
+
             return ok(array.toString());
         }
         return forbidden();

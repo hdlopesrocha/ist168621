@@ -64,19 +64,20 @@
 							Delete </span>
                 </div>
                 <label>Add Members manually</label>
-                <div id="imaginary_container">
-                    <div class="input-group stylish-input-group">
+
+
+                <form role="search" class="form">
+
+                    <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search"
-                               onchange="candidate_search(this.value)"> <span
-                            class="input-group-addon">
-								<button type="submit">
-                                    <span class="fa fa-search"></span>
-                                </button>
-							</span>
+                               id="searchCandidateText"
+                               data-provide="typeahead" autocomplete="off"/>
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
                     </div>
-                </div>
-                <ul class="media-list" id="candidateList">
-                </ul>
+
+                </form>
             </div>
         </div>
     </div>
@@ -714,10 +715,42 @@
 			renderContent();
 		}
 
-		var mySearch = {
+
+	    var candidateSearch = new (function() {
+
+            this.source = function(query,process){
+       			Signaling.searchGroupCandidates("@groupId", query, function(array){
+       			    console.log(array);
+                    process(array);
+       			});
+            };
+
+            this.displayText = function(item){
+                return item.name;
+            };
+
+            this.highlighter = function(item){
+                return "<i class='fa fa-user'></i> "  + item.name;
+            };
+
+            this.matcher = function(item){
+                return true;
+            };
+
+            this.updater = function(item){
+                console.log(item);
+               	Kurento.addUserGroup(item.id);
+			    $("#addMembersModal").modal("hide");
+                return item;
+            }
+
+            return this;
+        })();
+
+
+		var generalSearch = {
 			source: function(query,process){
 				Signaling.searchInsideGroup("@groupId",query, function( array ) {
-					console.log(array);
 					process(array);
 				});			
 			},
@@ -738,7 +771,6 @@
 				if(item.type=="tag"){
 					timeline.setHistoric(item.time);
 				}
-				console.log(item);
 				return item;
 			}
 		};
@@ -764,41 +796,18 @@
 			$("#removeUserName").html(name);
 			$("#removeUserId").val(uid);
 			$("#removeUserButton").click(function(){
-				var success = function() {
-					$("#vidMember"+uid).remove();
-					$("#removeMemberModal").modal("hide");
-					participants[uid]=false;
-				};
-				Signaling.removeUserGroup("@groupId", uid, success);
+				Kurento.removeUserGroup(uid);
+				$("#removeMemberModal").modal("hide");
 			});
-			
 		}
-		
-		function del_user_group(uid) {
 
+
+		function participantRemoved(uid) {
+            $("#vidMember"+uid).remove();
+            participants[uid]=false;
 		}
-		
-		function add_user_group(uid) {
-			Kurento.addUser(uid);
-		}
-		
-		function candidate_search(query) {
-			var result = function(array) {
-				var html = "";
-				for ( var i in array) {
-					var userId = array[i].id;
-					var name = array[i].name;
-					var photo = array[i].photo;
-					var style2='style="background-image:url('+photo+');height:40px;width:40px"';
-					var add_button = "<i style='color:green' onclick='add_user_group(\"" + userId	+ "\")' class='fa fa-plus'></i>";
-					
-					html += '<div class="media"><a '+style2+' class="pull-left media-object circular"></a>'+
-					'<div class="media-body"><h5>'+name+' | User | '+add_button+'</h5></div></div>';
-				}
-				$("#candidateList").html(html);
-			};
-			Signaling.searchGroupCandidates("@groupId", query, result);
-		}
+
+
 		
 		function onKurentoOpen(){
 			console.log("WebSocket Ok!");
@@ -809,7 +818,10 @@
 		}
 		
 		function kurentoStart(mode){
-			Kurento.start("@groupId",mode,onKurentoOpen ,participantInfo, videoStream, mixedStream, intervalRecorded, messageArrived,tagArrived, onContentArrived,talkArrived,setTime);
+			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
+			                                mixedStream, intervalRecorded, messageArrived,
+			                                tagArrived, onContentArrived,talkArrived,setTime,
+			                                participantRemoved);
 			$('#participantModal').modal('hide');
 		}
 		
@@ -817,7 +829,10 @@
 			switchTab("#mytabs","#mybtns",1);
 			$('#participantModal').modal('show');
 			$('#searchNav').show();
-			$('#searchText').typeahead(mySearch);	
+			$('#searchText').typeahead(generalSearch);
+
+			$('#searchCandidateText').typeahead(candidateSearch);
+
 			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
 			
