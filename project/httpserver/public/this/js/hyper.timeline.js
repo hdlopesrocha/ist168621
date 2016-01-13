@@ -95,13 +95,18 @@ var HyperTimeline = new (function() {
 	    });
 		timeline.items = items;
 		
-		
+		timeline.setTime = function(date){
+            var date = new Date(date);
+
+            this.hyper_offset = new Date().getTime() -date.getTime();
+            this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
+            this.real_time = false ;
+
+        }
+
+
 		timeline.setHistoric = function(date){
-			var date = new Date(date);
-			
-			this.hyper_offset = new Date().getTime() -date.getTime();
-			this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
-			this.real_time = false ;
+			setTime(date);
 			historic(this.hyper_offset);
 
 		}

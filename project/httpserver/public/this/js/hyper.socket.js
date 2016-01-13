@@ -40,6 +40,7 @@ var mixerVideoCallback = null;
 var newRecordingCallback = null;
 var tagArrivedCallback = null;
 var contentArrivedCallback = null;
+var setTimeCallback = null;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -228,7 +229,7 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb) {		
+	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb,stcb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
@@ -237,7 +238,7 @@ var Kurento = new (function() {
 		tagArrivedCallback = tacb;
 		contentArrivedCallback = cacb;
 		talkReceivedCallback = trcb;
-		
+		setTimeCallback = stcb;
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
 		
@@ -300,7 +301,9 @@ var Kurento = new (function() {
 						
 						talkReceivedCallback(msg.uid,msg.value);
 						break;
-						
+                    case 'setTime':
+                        setTimeCallback(new Date(message.time));
+                        break;
 					default:
 						break;					
 				}

@@ -271,12 +271,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
                             setHistoric(playUser, timeOffset);
+
                         }
                     });
                     player.connect(endPoint/* , MediaType.VIDEO */);
                     // player.connect(compositePoint , MediaType.AUDIO);
                     if (play) {
                         player.play();
+                        JSONObject msg = new JSONObject();
+                        msg.put("id","setTime");
+                        msg.put("time",Tools.FORMAT.format(rec.getStart()));
+                        sendMessage(msg.toString());
                     }
                 }
 
