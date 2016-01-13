@@ -1,4 +1,4 @@
-@(tab : Integer)(content : Html)
+@(tab : Integer)(actionBar : Html)(content : Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,7 @@
     <link type="text/css" href="/assets/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link type="text/css" href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link type="text/css" href="/assets/this/css/main.css" rel="stylesheet">
+    <link type="text/css" href="/assets/this/css/simple-sidebar.css" rel="stylesheet">
     <!--<link type="text/css" href="/assets/jquery-ui/jquery-ui.min.css" rel="stylesheet" media="all">
         <link type="text/css" href="/assets/jquery-ui/jquery-ui.min.css" rel="stylesheet" media="all">
         <link type="text/css" href="/assets/jquery-ui/jquery-ui-timepicker-addon.css" rel="stylesheet" media="all" -->
@@ -71,9 +72,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(session.get("uid")!=null){
-                <li id="logout-button">
-                    <a>Logout</a>
-                </li>
+
+                    @actionBar
+                    <li id="logout-button">
+                        <a>Logout</a>
+                    </li>
+
                 }
             </ul>
         </div>
@@ -81,13 +85,33 @@
 </nav>
 
 <div class="page-container">
+    <div class="container-fluid">
+
     @content
+    </div>
 </div>
 
 <script type="text/javascript">
-	
+	  $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+
+
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    var $sides = $('#wrapper');
+
+    var setCss = function() {
+        if($(window).width() < 768) {
+            if(!$sides.is("toggled")){
+                $sides.addClass('toggled');
+            }
+        }
+    };
 		
 			$( document ).ready(function() {
+			     setCss();
+                $(window).resize(setCss);
 				$("#fullscreen").hide();
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){

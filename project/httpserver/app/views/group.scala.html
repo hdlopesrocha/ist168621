@@ -1,4 +1,7 @@
-@(groupId : String, groupName : String, userId : String, inviteToken : String) @template(1){
+@(groupId : String, groupName : String, userId : String, inviteToken : String) @template2(1){
+
+
+}{
 
 <script type="text/javascript" src="/assets/this/js/adapter.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
@@ -87,7 +90,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="panel panel-red" onclick="kurentoStart(0)">
                             <div class="panel-heading" style="text-align: center;">
                                 <i class="fa fa-video-camera" style="font-size: 6em;"></i>
@@ -101,23 +104,8 @@
                             </a>
                         </div>
                     </div>
-                    <!--
+
                     <div class="col-md-4">
-                        <div class="panel panel-green" onclick="kurentoStart(1)">
-                            <div class="panel-heading " style="text-align: center;">
-                                <i class="fa fa-desktop" style="font-size: 6em;"></i>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Share screen</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                     -->
-                    <div class="col-md-6">
                         <div class="panel panel-primary" onclick="kurentoStart(2)">
                             <div class="panel-heading " style="text-align: center;">
                                 <i class="fa fa-eye" style="font-size: 6em;"></i>
@@ -131,6 +119,38 @@
                             </a>
                         </div>
                     </div>
+
+                     <div class="col-md-4">
+                         <div class="panel panel-green" onclick="returnToHome()">
+                             <div class="panel-heading " style="text-align: center;">
+                                 <i class="fa fa-sign-out" style="font-size: 6em;"></i>
+                             </div>
+                             <a href="#">
+                                 <div class="panel-footer">
+                                     <span class="pull-left">Return</span>
+                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                     <div class="clearfix"></div>
+                                 </div>
+                             </a>
+                         </div>
+                     </div>
+
+                    <!--
+                   <div class="col-md-4">
+                       <div class="panel panel-green" onclick="kurentoStart(1)">
+                           <div class="panel-heading " style="text-align: center;">
+                               <i class="fa fa-desktop" style="font-size: 6em;"></i>
+                           </div>
+                           <a href="#">
+                               <div class="panel-footer">
+                                   <span class="pull-left">Share screen</span>
+                                   <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                   <div class="clearfix"></div>
+                               </div>
+                           </a>
+                       </div>
+                   </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -163,10 +183,8 @@
 </div>
 
 
-<div class="container-fluid">
-    <div class="container">
-        @group_video(groupId,userId)
-    </div>
+<div class="center">
+    @group_video(groupId,userId)
 </div>
 <script>
 		var group = true;
@@ -193,7 +211,10 @@
 			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
 
 		}
-		
+
+		function returnToHome(){
+		    document.location = "/";
+		}
 		
 		function toggleVideoSize(){
 			fullscreen = !fullscreen;
@@ -369,14 +390,14 @@
 		function saveTags() {
 			console.log(unsaved_tags);
 			for ( var i in unsaved_tags) {
-				var metaData = unsaved_tags[i];
-				var visTag = timeline.getRecord(metaData.id);
+				var tag = unsaved_tags[i];
+				var visTag = timeline.getRecord(tag.id);
 				var time = new Date(visTag.start);
 
-				var title = metaData.title;
-				var content = metaData.content;
+				var title = tag.title;
+				var content = tag.content;
 				Kurento.createTag(time, title, content);
-				timeline.removeTag(metaData.id);
+				timeline.removeTag(tag.id);
 			}
 			unsaved_tags = [];
 			$("#saveButton").addClass("hidden");
@@ -512,8 +533,8 @@
 				return item.title;
 			},
 			highlighter: function(item){
-				if(item.type=="metaData"){
-					return "<i class='fa fa-metaData'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
+				if(item.type=="tag"){
+					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else {
 					return "<i class='fa fa-font'></i> " + item.name ;
 				}
@@ -522,7 +543,7 @@
 				return true;
 			},
 			updater:function(item){
-				if(item.type=="metaData"){
+				if(item.type=="tag"){
 					timeline.setHistoric(item.time);
 				}
 				console.log(item);

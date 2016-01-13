@@ -33,7 +33,7 @@ public class ListRelationRequestsService extends Service<List<User>> {
         for (Relation r : Relation.listTo(caller.getId())) {
             Relation r2 = Relation.findByEndpoint(caller.getId(), r.getFrom());
             if (r2 == null) {
-                ret.add(User.findById(r.getTo()));
+                ret.add(User.findById(r.getFrom()));
             }
         }
         return ret;

@@ -4,6 +4,13 @@ body,html {
 	height:100%;
 }
 
+.disabled {
+    pointer-events: auto;
+      cursor: default !important;
+}
+.badge-danger {
+    background-color: #D43F3A;
+}
 /* ======================================================*/
 
 .fullscreen {

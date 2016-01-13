@@ -1,0 +1,171 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+
+#menu-toggle{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    color: white;
+    height: 32px;
+    background-color: rgba(255,255,255,0.05);
+    text-align: center;
+    vertical-align: center;
+    line-height: 32px;
+}
+
+body,html {
+    height: 100%;
+}
+#page-content-wrapper,#sidebar-wrapper{
+    height: 100%;
+    display: block;
+}
+
+#page-content-wrapper,#sidebar-wrapper,#page-content-wrapper .navbar {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #222;
+}
+#page-content-wrapper {
+    width: auto;
+    position: relative;
+}
+
+
+.center {
+    margin: 0 auto;
+    width: 80%;
+}
+
+#sidebar-wrapper {
+   width: 50px;
+}
+
+/* not @media (min-width: 768px){ */
+.toggled #sidebar-wrapper {
+    width:  250px; /* MMM */
+}
+
+#page-content-wrapper{
+        padding-left: 50px;
+}
+
+.toggled #page-content-wrapper{
+        padding-left: 250px;
+}
+
+#menu-toggle:after{
+    content: ">";
+}
+
+#wrapper.toggled #menu-toggle:after{
+    content: "<";
+}
+
+.mainContainer{
+    padding-top: 70px;
+}
+
+    #page-content-wrapper .navbar {
+            margin-left: 50px;
+    }
+
+    .toggled #page-content-wrapper .navbar {
+            margin-left: 250px;
+    }
+/* end } */
+
+@media (min-width: 768px){
+   #sidebar-wrapper {
+       width: 250px;
+    }
+
+    .toggled #sidebar-wrapper {
+        width:  50px; /* MMM */
+    }
+
+    #page-content-wrapper{
+        padding-left: 250px;
+    }
+ 
+    .toggled #page-content-wrapper{
+        padding-left: 50px;
+    }
+
+    #page-content-wrapper .navbar {
+            margin-left: 250px;
+    }
+
+    .toggled #page-content-wrapper .navbar {
+            margin-left: 50px;
+    }
+    #menu-toggle:after{
+     content: "<";
+    }
+
+    #wrapper.toggled #menu-toggle:after{
+        content: ">";
+    }
+}
+
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 14px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 50px;
+    font-size: 18px;
+    line-height: 50px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+

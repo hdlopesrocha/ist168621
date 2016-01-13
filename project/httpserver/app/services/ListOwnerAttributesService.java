@@ -14,8 +14,8 @@ public class ListOwnerAttributesService extends Service<List<Attribute>> {
 	private final ObjectId user;
 	private final ObjectId caller;
 
-	public ListOwnerAttributesService(String caller,String userId) {
-		this.user =  new ObjectId(userId);
+	public ListOwnerAttributesService(String caller,String user) {
+		this.user =  new ObjectId(user);
 		this.caller = new ObjectId(caller);
 	}
 

@@ -5,10 +5,8 @@
 # Home page
 GET     /                           	controllers.Application.index()
 GET     /reset                          controllers.Application.reset()
-GET     /pubsub                         controllers.Application.pubsub()
 GET		/user/:userId					controllers.Application.userProfile(userId : String)
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
-GET     /template                       controllers.Application.template()
 GET     /stream/*path	 		       	controllers.Application.stream(path : String)
 GET		/join/:gid/:token				controllers.Application.join(gid : String, token : String)
 
@@ -37,12 +35,8 @@ GET		/api/group/candidates/:groupId	controllers.Rest.searchGroupCandidates(group
 GET		/api/group/properties/:groupId	controllers.Rest.listGroupMembersProperties(groupId : String)
 GET		/api/group/add/:gid/:uid		controllers.Rest.addGroupMember(gid : String, uid : String)
 GET		/api/group/del/:gid/:uid		controllers.Rest.removeGroupMember(gid : String, uid : String)
-POST 	/api/group/sdp/:key				controllers.Rest.postSdp(key : String)
-POST 	/api/group/ice/:key/:token		controllers.Rest.postIceCandidate(key : String, token : String)
 GET		/api/group/search/:gid			controllers.Rest.searchOnGroup(gid : String)
 
-POST 	/api/pubsub/:key 				controllers.Rest.publish(key : String)
-GET 	/api/pubsub/:key/:ts			controllers.Rest.subscribe(key : String, ts : Long)
 
 GET		/photo/*id						controllers.Rest.getPhoto(id : String)
 GET		/file/*id						controllers.Rest.getFile(id : String)

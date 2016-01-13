@@ -13,13 +13,21 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Group {
+
+    public enum Visibility {PUBLIC, PRIVATE, FRIENDS}
+
+
     private static MongoCollection<Document> collection;
     private ObjectId id = null;
     private String invite = null;
+    private Visibility visibility;
 
-    public Group() {
+    public Group(Visibility visibility ) {
+        this.visibility = visibility;
     }
 
+    private Group() {
+    }
 
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
@@ -31,6 +39,7 @@ public class Group {
         Group user = new Group();
         user.id = doc.getObjectId("_id");
         user.invite = doc.getString("invite");
+        user.visibility = Visibility.valueOf(doc.getString("visibility"));
         return user;
     }
 
@@ -62,6 +71,9 @@ public class Group {
         return ret;
     }
 
+    public Visibility getVisibility() {
+        return visibility;
+    }
 
     public void generateInvite() {
         invite = Tools.getRandomString(12);
@@ -81,6 +93,7 @@ public class Group {
             doc.put("_id", id);
 
         doc.put("invite", invite);
+        doc.put("visibility", visibility.toString());
 
         if (id == null)
             getCollection().insertOne(doc);

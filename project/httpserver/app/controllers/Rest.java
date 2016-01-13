@@ -31,7 +31,6 @@ public class Rest extends Controller {
             try {
                 service.execute();
             } catch (ServiceException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return ok("OK");
@@ -219,6 +218,7 @@ public class Rest extends Controller {
                 for (Group g : ans) {
                     JSONObject obj = new JSONObject();
                     obj.put("id", g.getId());
+                    obj.put("visibility", g.getVisibility());
                     List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString()).execute();
                     for(Attribute attribute : attributes){
                         obj.put(attribute.getKey(),attribute.getValue());
@@ -245,7 +245,13 @@ public class Rest extends Controller {
                 List<User> res = service.execute();
                 for (User user : res) {
                     JSONObject obj = new JSONObject();
-                    obj.put("uid", user.getId().toString());
+
+                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString()).execute();
+                    obj.put("id",user.getId().toString());
+                    for(Attribute attribute : attributes){
+                        obj.put(attribute.getKey(),attribute.getValue());
+                    }
+
                     array.put(obj);
                 }
                 return ok(array.toString());
@@ -329,46 +335,8 @@ public class Rest extends Controller {
         return ok();
     }
 
-    public Result postIceCandidate(String groupId, String token) {
-        if (session("uid") != null) {
-            synchronized (MONGODB_SDP_LOCK) {
-                String data = request().body().asText();
-                try {
-                    PostIceCandidateService service = new PostIceCandidateService(session("uid"), groupId, token, data);
-                    service.execute();
-                    return ok("OK");
-                } catch (ServiceException e) {
-                    e.printStackTrace();
-                }
-            }
-            return badRequest();
-        }
-        return forbidden();
-    }
 
-    public Result postSdp(String groupId) {
-        if (session("uid") != null) {
-            synchronized (MONGODB_SDP_LOCK) {
-                String data = request().body().asText();
-                try {
-                    PostSdpService service = new PostSdpService(session("uid"), groupId, data);
-                    service.execute();
-                    return ok("OK");
-                } catch (ServiceException e) {
-                    e.printStackTrace();
-                }
-            }
-            return badRequest();
-        }
-        return forbidden();
-    }
 
-    public Result publish(String groupId) throws ServiceException {
-        PublishService service2 = new PublishService(groupId);
-        service2.execute();
-        return ok("OK");
-
-    }
 
     public Result register() throws ServiceException {
 
@@ -502,15 +470,6 @@ public class Rest extends Controller {
         return forbidden();
     }
 
-    public Result subscribe(String groupId, Long ts) throws ServiceException {
-        SubscribeService service = new SubscribeService(groupId, ts);
-
-        Document doc = service.execute();
-        if (doc == null || !doc.containsKey("ts")) {
-            return ok("");
-        }
-        return ok(new JSONObject().put("ts", doc.getLong("ts")).toString());
-    }
 
     public Result updateUser() {
         try {

@@ -24,9 +24,6 @@ public class Application extends Controller {
         }
     }
 
-    public Result template() {
-        return ok(views.html.template.render(0, new Html("")));
-    }
 
     public Result stream(String path) {
         File file = new File(path);
@@ -80,7 +77,7 @@ public class Application extends Controller {
         new CreateRelationService(user1.getId().toString(), user3.getId().toString()).execute();
         new CreateRelationService(user3.getId().toString(), user1.getId().toString()).execute();
 
-        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
+//        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
         new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
 
         System.out.println("2!");
@@ -99,9 +96,6 @@ public class Application extends Controller {
         return redirect("/");
     }
 
-    public Result pubsub() {
-        return ok(views.html.pubsub.render());
-    }
 
     public Result group(String groupId) throws ServiceException {
         if (session("uid") != null) {

@@ -1,4 +1,10 @@
-@() @template(1){
+@() @template2(1){
+
+
+
+}{
+
+
 <script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
 
 <div id="createRoomModal" class="modal fade" role="dialog">
@@ -16,7 +22,7 @@
             </div>
             <div class="modal-footer">
                 <div class="input-group pull-right">
-                    <div class="btn btn-success" id="addMembers"
+                    <div class="btn btn-success"
                          onclick="group_create($('#group_name').val())">Create
                     </div>
                 </div>
@@ -26,87 +32,88 @@
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="container">
+
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading" data-toggle="collapse"
-                         data-target="#collapse1">
-                        <h4 class="panel-title">Friend requests</h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <ul id="friend-requests"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading" data-toggle="collapse"
-                         data-target="#collapse2">
-                        <h4 class="panel-title">Friend list</h4>
-                    </div>
-                    <div id="collapse2" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <ul id="friend-list"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="center">
             <div class="col-md-4">
                 <div class="panel panel-info">
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
+                        <button type="button" class="btn btn-success"  data-toggle="modal"
                                 data-target="#createRoomModal">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                     <div class="panel-heading" data-toggle="collapse"
-                         data-target="#collapse3">
-                        <h4 class="panel-title">Room list</h4>
+                         data-target="#collapse1">
+                        <h4 class="panel-title">My Rooms</h4>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse in">
+                    <div id="collapse1" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <ul id="group-list"></ul>
                         </div>
                     </div>
                 </div>
             </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-success"  data-toggle="modal"
+                        data-target="#createRoomModal">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="panel-heading" data-toggle="collapse"
+                 data-target="#collapse2">
+                <h4 class="panel-title">Friends Rooms</h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <ul id="group-list"></ul>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-success"  data-toggle="modal"
+                        data-target="#createRoomModal">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <div class="panel-heading" data-toggle="collapse"
+                 data-target="#collapse3">
+                <h4 class="panel-title">Public Rooms</h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <ul id="group-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+        </div>
 <script>
+
+    function gotoUser(uid){
+        document.location = "/user/"+uid;
+    }
 
 	$(document).ready(
         function() {
+
+
             $('#searchNav').show();
             $('#searchText').typeahead(SearchGeneric);
 
-            Signaling.listRequests(function(array) {
-                var html = "";
-                for ( var i in array) {
-                    var add_button = "<button onclick='user_add(\""
-                            + array[i].id + "\")'>accept</button>";
-                    var del_button = "<button onclick='user_del(\""
-                            + array[i].id + "\")'>deny</button>";
 
-                    html += "<li>" + array[i].email + add_button
-                            + del_button + "</li>";
-                }
-                $("#friend-requests").html(html);
-            });
-            Signaling.listRelations(function(array) {
-                console.log(array);
-                var html = "";
-                for ( var i in array) {
 
-                    html += "<li><a href='/user/"+array[i].id+"'>" + array[i].name + "</a></li>";
-                }
-                $("#friend-list").html(html);
-            });
             Signaling.listGroups(function(array) {
+                console.log("listGroups",array);
                 var html = "";
                 for ( var i in array) {
                     html += "<li><a href='/group/"+array[i].id+"'>"
