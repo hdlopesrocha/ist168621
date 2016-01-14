@@ -320,6 +320,8 @@ var Kurento = new (function() {
                     case 'setTime':
                         setTimeCallback(new Date(message.time));
                         break;
+
+
 					default:
 						break;					
 				}

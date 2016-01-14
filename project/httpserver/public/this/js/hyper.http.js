@@ -30,9 +30,7 @@ var Signaling = (function(){
 			}
 		});
 	}
-	
-	
-	
+
 	this.postSdp = function(gid,sdp,success,error){
 		$.ajax({
 			type : "post",
@@ -163,9 +161,6 @@ var Signaling = (function(){
 		});
 	}
 
-
-	
-	
 	this.search = function(query,result){
 		$.get( "/api/user/search?s="+query, function( data ) {
 			result(JSON.parse(data));
@@ -204,8 +199,8 @@ var Signaling = (function(){
 	}
 	
 	
-	this.createGroup = function(name,success){
-		$.get( "/api/group/create?n="+name, function( data ) {
+	this.createGroup = function(name,visibility,success){
+		$.get( "/api/group/create?n="+name+"&v="+visibility, function( data ) {
 			success();			
 		});
 	}

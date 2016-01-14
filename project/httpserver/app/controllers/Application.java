@@ -80,13 +80,25 @@ public class Application extends Controller {
         new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
 
 
-        List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-        attributes.add(new AttributeDto("name","WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        List<AttributeDto> attributes0 = new ArrayList<AttributeDto>();
+        attributes0.add(new AttributeDto("name","WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        Group group0 =  new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, attributes0).execute();
 
 
-        Group group =  new CreateGroupService(user1.getId().toString(), attributes).execute();
+        List<AttributeDto> attributes1 = new ArrayList<AttributeDto>();
+        attributes1.add(new AttributeDto("name","Group1", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes1).execute();
 
-        AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group.getId().toString(), user2.getId().toString());
+        List<AttributeDto> attributes2 = new ArrayList<AttributeDto>();
+        attributes2.add(new AttributeDto("name","Group2", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        new CreateGroupService(user2.getId().toString(), Group.Visibility.PRIVATE, attributes2).execute();
+
+        List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
+        attributes3.add(new AttributeDto("name","Group3", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        new CreateGroupService(user3.getId().toString(), Group.Visibility.PUBLIC, attributes3).execute();
+
+
+        AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), user2.getId().toString());
         joinService.execute();
         session().clear();
         return redirect("/");
@@ -102,7 +114,18 @@ public class Application extends Controller {
             String token = service.execute();
             if (group != null && user != null) {
                 Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
-                if (membership != null) {
+                boolean isPublic = false;
+
+                if(group.getVisibility().equals(Group.Visibility.PUBLIC)){
+                    isPublic = true;
+                    if(membership == null){
+                        new Membership(user.getId(),group.getId()).save();
+                    }
+
+                }
+
+
+                if (membership != null || isPublic) {
                     Attribute attrName = new GetOwnerAttributeService(groupId,"name").execute();
 
                     return ok(views.html.group.render(groupId, attrName!=null ? attrName.getValue().toString():"", session("uid"), token));

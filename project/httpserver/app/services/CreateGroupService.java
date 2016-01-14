@@ -18,10 +18,11 @@ public class CreateGroupService extends Service<Group> {
 
     private final ObjectId caller;
     private final List<AttributeDto> attributes;
-
-    public CreateGroupService(String uid, List<AttributeDto> attributes) {
+    private final Group.Visibility visibility;
+    public CreateGroupService(String uid, Group.Visibility visibility, List<AttributeDto> attributes) {
         this.caller = new ObjectId(uid);
         this.attributes = attributes;
+        this.visibility = visibility;
     }
 
     /*
@@ -31,7 +32,7 @@ public class CreateGroupService extends Service<Group> {
      */
     @Override
     public Group dispatch() throws ServiceException {
-        Group group = new Group(Group.Visibility.PRIVATE);
+        Group group = new Group(visibility);
         group.save();
         Membership membership = new Membership(caller, group.getId());
         membership.save();

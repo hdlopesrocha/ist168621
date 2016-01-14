@@ -92,26 +92,11 @@
 </div>
 
 <script type="text/javascript">
-	  $("#menu-toggle").click(function(e) {
-        e.preventDefault();
 
 
-        $("#wrapper").toggleClass("toggled");
-    });
-
-    var $sides = $('#wrapper');
-
-    var setCss = function() {
-        if($(window).width() < 768) {
-            if(!$sides.is("toggled")){
-                $sides.addClass('toggled');
-            }
-        }
-    };
 		
 			$( document ).ready(function() {
-			     setCss();
-                $(window).resize(setCss);
+
 				$("#fullscreen").hide();
 				$("#logout-button").click(function(){
 					Signaling.logout(function(){

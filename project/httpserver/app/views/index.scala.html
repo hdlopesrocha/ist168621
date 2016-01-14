@@ -47,7 +47,7 @@
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <ul id="group-list"></ul>
+                        <ul id="privateGroups"></ul>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 </div>
                 <div id="collapse3" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <ul id="group-list"></ul>
+                        <ul id="publicGroups"></ul>
                     </div>
                 </div>
             </div>
@@ -80,47 +80,28 @@
         document.location = "/user/"+uid;
     }
 
-	$(document).ready(
-        function() {
+	$(document).ready(function() {
+        $('#searchNav').show();
+        $('#searchText').typeahead(SearchGeneric);
 
+        Signaling.listGroups(function(array) {
+            console.log("listGroups",array);
 
-            $('#searchNav').show();
-            $('#searchText').typeahead(SearchGeneric);
+            for ( var i in array) {
+                var group = array[i];
+                var html = "<li><a href='/group/"+group.id+"'>" + group.name + "</a></li>";
+                $(group.visibility == "PUBLIC" ? "#publicGroups":"#privateGroups").append(html);
 
-
-
-            Signaling.listGroups(function(array) {
-                console.log("listGroups",array);
-                var html = "";
-                for ( var i in array) {
-                    html += "<li><a href='/group/"+array[i].id+"'>"
-                            + array[i].name + "</a></li>";
-                }
-                $("#group-list").html(html);
-            });
-        }
-    );
-
-	function user_del(userId) {
-		var success = function() {
-			document.location = "/";
-		}
-		Signaling.rejectRelation(userId, success);
-	}
+            }
+        });
+    });
 
 	function group_create(name) {
-		var success = function() {
+		Signaling.createGroup(name, "PRIVATE",function() {
 			document.location = "/";
-		}
-		Signaling.createGroup(name, success);
+		});
 	}
 
-	function user_add(userId) {
-		var success = function() {
-			document.location = "/";
-		}
-		Signaling.addRelation(userId, success);
-	}
 
 </script>
 }

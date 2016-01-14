@@ -60,8 +60,6 @@ public class Rest extends Controller {
         return ok(array.toString());
     }
 
-
-
     public Result changePassword() {
         Map<String, String[]> info = request().body().asFormUrlEncoded();
         String oldPassword = info.get("oldPassword")[0];
@@ -82,15 +80,16 @@ public class Rest extends Controller {
         if (session("uid") != null) {
             Map<String, String[]> qs = request().queryString();
             String name = qs.get("n")[0];
+
+            Group.Visibility visibility = Group.Visibility.valueOf(qs.get("v")[0]);
+
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("name",name, AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
 
-
-            CreateGroupService service = new CreateGroupService(session("uid"), attributes);
+            CreateGroupService service = new CreateGroupService(session("uid"), visibility,attributes);
             try {
                 service.execute();
             } catch (ServiceException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return ok("OK");
@@ -142,7 +141,6 @@ public class Rest extends Controller {
                 return ok(bytes);
             }
         } catch (ServiceException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -160,7 +158,6 @@ public class Rest extends Controller {
                     return redirect(fileName);
                 }
             } catch (ServiceException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -353,12 +350,8 @@ public class Rest extends Controller {
                     else if(s.getKey().equals("email")){
                         searchable = identifiable = true;
                     }
-
                     attributes.add(new AttributeDto(s.getKey(), obj,AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable,searchable,false));
-
-
                 }
-
             }
         }
 

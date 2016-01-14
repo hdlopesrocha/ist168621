@@ -805,6 +805,10 @@
 		function participantRemoved(uid) {
             $("#vidMember"+uid).remove();
             participants[uid]=false;
+            if(uid=="@userId"){
+                document.location = "/";
+            }
+
 		}
 
 
