@@ -1,6 +1,7 @@
-\ProvidesClass{friggeri-cv}[2012/04/30 CV class]
+\ProvidesClass{friggeri-cv-a4}[2015/10/22 CV class]
 \NeedsTeXFormat{LaTeX2e}
 
+\DeclareOption{nocolors}{\def\@cv@nocolors{}}
 \DeclareOption{print}{\def\@cv@print{}}
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{article}%
@@ -8,7 +9,17 @@
 \ProcessOptions\relax
 \LoadClass{article}
 
+% set A4 paper format
+\setlength\paperheight {297mm}
+\setlength\paperwidth  {210mm}
 
+\ProcessOptions
+
+\RequirePackage{float}
+\RequirePackage{mdframed}
+\RequirePackage{longtable}
+\RequirePackage{tabularx}
+\RequirePackage{framed}
 %%%%%%%%%%
 % Colors %
 %%%%%%%%%%
@@ -43,6 +54,18 @@
 \colorlet{textcolor}{gray}
 \colorlet{headercolor}{gray}
 
+\ifdefined\@cv@nocolors
+  \colorlet{green}{gray}
+  \colorlet{rdfgreen}{gray}
+  \colorlet{orange}{gray}
+  \colorlet{rdforange}{gray}
+  \colorlet{purple}{gray}
+  \colorlet{rdfpurple}{gray}
+  \colorlet{brown}{gray}
+  \colorlet{red}{gray}
+  \colorlet{blue}{gray}
+\fi
+
 %%%%%%%%%
 % Fonts %
 %%%%%%%%%
@@ -50,14 +73,14 @@
 \RequirePackage[quiet]{fontspec}
 \RequirePackage[math-style=TeX,vargreek-shape=unicode]{unicode-math}
 
-\newfontfamily\bodyfont[]{Helvetica Neue}
-\newfontfamily\thinfont[]{Helvetica Neue UltraLight}
-\newfontfamily\headingfont[]{Helvetica Neue Condensed Bold}
+\newfontfamily\bodyfont[]{SourceSansPro}
+\newfontfamily\thinfont[]{SourceSansPro ExtraLight}
+\newfontfamily\headingfont[]{SourceSansPro Black}
 
 \defaultfontfeatures{Mapping=tex-text}
-\setmainfont[Mapping=tex-text, Color=textcolor]{Helvetica Neue Light}
+\setmainfont[Mapping=tex-text, Color=textcolor]{SourceSansPro Light}
 
-%\setmathfont{XITS Math}
+%%%
 
 %%%%%%%%%%
 % Header %
@@ -119,9 +142,15 @@
   \par\vspace{\parskip}
 }
 
-\renewcommand{\subsection}[2]{
+\renewcommand{\subsection}[1]{
   \par\vspace{.5\parskip}%
-  \Large\headingfont\color{headercolor} #2%
+  {\Large\headingfont\color{headercolor} #1}
+  \par\vspace{.25\parskip}%
+}
+
+\renewcommand{\subsubsection}[2]{
+  \par\vspace{.5\parskip}%
+  {\Large\headingfont\color{headercolor} #2}
   \par\vspace{.25\parskip}%
 }
 
@@ -134,18 +163,30 @@
 
 \setlength{\tabcolsep}{0pt}
 \newenvironment{entrylist}{%
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ll}
-}{%
-  \end{tabular*}
+  \begin{longtable}{ll}
 }
+{%
+  \end{longtable}
+}
+
 \renewcommand{\bfseries}{\headingfont\color{headercolor}}
+
 \newcommand{\entry}[4]{%
-  #1&\parbox[t]{11.8cm}{%
+ % \begin{mdframed}
+
+
+  \parbox[t]{2cm}{\small{#1}}
+  &
+  \begin{minipage}[t]{12.2cm}
     \textbf{#2}%
     \hfill%
     {\footnotesize\addfontfeature{Color=lightgray} #3}\\%
-    #4\vspace{\parsep}%
-  }\\}
+    \small{#4}\vspace{\parsep}%
+  \end{minipage}
+  \\
+%\end{mdframed}
+
+}
 
 
 %%%%%%%%%%%%%%
@@ -160,7 +201,7 @@
   \renewcommand{\section}[1]{
     \par\vspace{\baselineskip}{\Large\headingfont\color{headercolor} ##1}
   }
-  \begin{textblock}{3.6}(1.5, 4.33)
+  \begin{textblock}{4.6}(0.5, 4.33)
   \begin{flushright}
   \obeycr
 }{%
@@ -174,7 +215,7 @@
 % Bibliography %
 %%%%%%%%%%%%%%%%
 
-\RequirePackage[style=verbose, maxnames=99, sorting=ydnt]{biblatex}
+\RequirePackage[backend=biber, style=verbose, maxnames=99, sorting=ydnt]{biblatex}
 
 \DeclareFieldFormat[article]{title}{#1\par}
 \DeclareFieldFormat[book]{title}{#1\par}
@@ -287,10 +328,15 @@
     {}%
 }
 
+\defbibheading{bibheading}[\bibname]{%
+   \subsubsection*{#1}
+   \markboth{#1}{#1}
+}
+
 \newcommand{\printbibsection}[2]{
   \begin{refsection}
     \nocite{*}
-    \printbibliography[sorting=chronological, type={#1}, title={#2}, heading=subbibliography]
+    \printbibliography[sorting=chronological, type={#1}, title={#2}, heading=bibheading]
   \end{refsection}
 }
 
@@ -305,5 +351,17 @@
 % Other tweaks %
 %%%%%%%%%%%%%%%%
 
-\RequirePackage[left=6.1cm,top=2cm,right=1.5cm,bottom=2.5cm,nohead,nofoot]{geometry}
+\RequirePackage[left=6.1cm,top=2cm,right=2.5cm,bottom=2.5cm,nohead,nofoot]{geometry}
 \RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=false,       
+    linkcolor=red,          
+    citecolor=red,        
+    filecolor=red,      
+    urlcolor = red}
+    
+% A fix for \href{}{} colors not working with fontspec
+\makeatletter
+\def\HyColor@@@@UseColor#1\@nil{\addfontfeatures{Color=#1}}
+\makeatother
+

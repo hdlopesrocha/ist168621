@@ -9,10 +9,7 @@ var local_none = {
 	'offerToReceiveVideo':true 
 };
 
-var local_user = {
-	"audio" : true,
-	"video" : true
-};
+
 
 var screen_user = {
 	video: {
@@ -57,7 +54,7 @@ var Kurento = new (function() {
     var contentArrivedCallback = null;
     var setTimeCallback = null;
     var removedUserCallback= null;
-
+    var localVideoCallback=null;
 
 
 	this.microphoneState = true;
@@ -241,7 +238,7 @@ var Kurento = new (function() {
 		Kurento.peerConnection[name] = pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb) {
+	this.start = function(groupId,mode,kscb,npcb,nvcb,mvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		mixerVideoCallback = mvcb;
@@ -252,6 +249,7 @@ var Kurento = new (function() {
 		talkReceivedCallback = trcb;
 		setTimeCallback = stcb;
 		removedUserCallback = rucb;
+		localVideoCallback = lvcb;
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
 		
@@ -334,7 +332,9 @@ var Kurento = new (function() {
 
 				
 				if(mode==1){
-					navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(stream) {					
+					navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(stream) {
+						localVideoCallback(window.URL.createObjectURL(stream));
+
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		
 							console.log("createOfferToSendReceive",lsd);
@@ -355,8 +355,9 @@ var Kurento = new (function() {
 				
 				// XXX [CLIENT_OFFER_01] XXX
 				else if(mode==0 ){
-					navigator.getUserMedia(local_user, function(stream) {
-						primaryStream = stream;
+					navigator.getUserMedia({"audio" : true,	"video" : true }, function(stream) {
+						localVideoCallback(window.URL.createObjectURL(stream));
+                        primaryStream = stream;
 						Kurento.audioFunction(stream);
 						Kurento.peerConnection["main"].addStream(stream);
 						Kurento.peerConnection["main"].createOffer(function (lsd) {		

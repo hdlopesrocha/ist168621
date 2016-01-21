@@ -63,6 +63,20 @@ body,html {
 	background-color: #000000;	
 }
 
+#ownvideo {
+    display:block;
+	margin: 0px auto;
+	position: absolute;
+	height: auto;
+	bottom: 0px;
+	right: 0px;
+	z-index: 98;
+	width:20%;
+	max-height:100%;
+	background-color: transparent;
+
+}
+
 #videoWrapper {
 	position: relative; 
 	display: inline-block;  

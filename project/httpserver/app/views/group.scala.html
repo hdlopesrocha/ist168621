@@ -258,6 +258,7 @@
                             <div id="mainVideoContent">
                                 <div id="previewContent"></div>
                             </div>
+                            <video id='ownvideo' autoplay></video>
                             <video id='myvideo' autoplay></video>
                         </div>
                     </div>
@@ -492,7 +493,8 @@
 			if(online){
 				$("#vidMember" + userId).attr('class', "media circular-online");
 			}else {
-				$("#vidMember" + userId).attr('class', "media circular-offline");				
+				$("#vidMember" + userId).attr('class', "media circular-offline");
+				$("#mic"+userId).attr("class","fa fa-microphone text-off");
 			}
 		}
 
@@ -820,12 +822,17 @@
 				timeline.setHistoric(new Date(attrs.time));
 			}
 		}
-		
+
+		function localVideo(streamUrl){
+      			var video = document.getElementById("ownvideo");
+			video.src = streamUrl;
+		}
+
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
 			                                mixedStream, intervalRecorded, messageArrived,
 			                                tagArrived, onContentArrived,talkArrived,setTime,
-			                                participantRemoved);
+			                                participantRemoved,localVideo);
 			$('#participantModal').modal('hide');
 		}
 		
