@@ -73,10 +73,10 @@ public class Room implements Closeable {
     private void record(int duration) {
         MyRecorder.record(hubPort,new Date(),duration,new MyRecorder.RecorderHandler() {
             @Override
-            public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+            public void onFileRecorded(Date begin, Date end, String filepath) {
                 try {
                     CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), group.getId().toString(), begin,
-                            end, filename, "video/webm");
+                            end);
                     Recording rec = srs.execute();
                     if (rec != null) {
 

@@ -66,10 +66,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void record(int duration) {
         MyRecorder.record(endPoint,new Date(),duration,new MyRecorder.RecorderHandler() {
             @Override
-            public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+            public void onFileRecorded(Date begin, Date end, String filepath) {
                 try {
                     CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), user.getId().toString(), begin,
-                            end, filename, "video/webm");
+                            end);
                     Recording rec = srs.execute();
                     if (rec != null) {
                         System.out.println("REC: " + filepath);
@@ -254,7 +254,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                     // WEBM
                     System.out.println("HISTORIC PLAY: " + rec.getUrl());
-                    RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getName());
+                    RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getUrl());
+
                     player = new PlayerEndpoint.Builder(room.getMediaPipeline(), item.getUrl()).build();
                     // player = new
                     // PlayerEndpoint.Builder(room.getMediaPipeline(),

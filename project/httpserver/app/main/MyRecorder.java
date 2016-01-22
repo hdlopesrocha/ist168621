@@ -18,9 +18,7 @@ public class MyRecorder {
                 Map < String, String > metadata = Collections.emptyMap();
                 RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
 
-                RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).withMediaProfile(MediaProfileSpecType.WEBM).build();
-                //	recorder.setVideoFormat(new VideoCaps(VideoCodec.H264, new Fraction(1, 15)));
-                //	recorder.setAudioFormat(new AudioCaps(AudioCodec.OPUS, 16000));
+                RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).build();
                 endPoint.connect(recorder);
                 recorder.record();
 
@@ -31,11 +29,10 @@ public class MyRecorder {
                 }
 
                 recorder.stop();
-
                 endPoint.disconnect(recorder);
                 recorder.release();
                 final Date end = new Date();
-                handler.onFileRecorded(begin, end, item.getUrl(), item.getId());
+                handler.onFileRecorded(begin, end, item.getId());
             }
         }).start();
 
@@ -44,7 +41,7 @@ public class MyRecorder {
 
 
     public interface RecorderHandler {
-        void onFileRecorded(Date begin, Date end, String filepath, String filename);
+        void onFileRecorded(Date begin, Date end, String filepath);
     }
 
 }

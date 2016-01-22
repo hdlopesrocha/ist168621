@@ -16,23 +16,19 @@ public class Recording {
     private static MongoCollection<Document> collection;
     private ObjectId groupId, owner;
     private Date start, end;
-    private String name, type;
     private String url;
     private ObjectId id = null;
-    private long sequence;
 
     private Recording() {
+
     }
-    public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String name, String type, String url,
-                     long sequence) {
+
+    public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String url) {
         this.groupId = groupId;
         this.owner = owner;
         this.start = start;
         this.end = end;
         this.url = url;
-        this.sequence = sequence;
-        this.name = name;
-        this.type = type;
     }
 
     public static MongoCollection<Document> getCollection() {
@@ -46,13 +42,10 @@ public class Recording {
         rec.id = doc.getObjectId("_id");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
-        rec.name = doc.getString("name");
-        rec.type = doc.getString("type");
 
         rec.owner = doc.getObjectId("uid");
         rec.groupId = doc.getObjectId("gid");
         rec.url = doc.getString("url");
-        rec.sequence = doc.getLong("seq");
         return rec;
     }
 
@@ -78,22 +71,6 @@ public class Recording {
         return doc != null ? load(doc) : null;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void save() {
         Document doc = new Document();
         if (id != null)
@@ -104,9 +81,6 @@ public class Recording {
         doc.put("start", start);
         doc.put("end", end);
         doc.put("url", url);
-        doc.put("name", name);
-        doc.put("type", type);
-        doc.put("seq", sequence);
 
         if (id == null)
             getCollection().insertOne(doc);
@@ -115,14 +89,6 @@ public class Recording {
 
         id = doc.getObjectId("_id");
 
-    }
-
-    public long getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(long sequence) {
-        this.sequence = sequence;
     }
 
     public Date getStart() {

@@ -79,7 +79,6 @@ public class WSController extends Controller {
                                 try {
                                     room.leave(userSession);
                                 } catch (IOException e) {
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
                                 System.out.println("Disconnected");
@@ -110,7 +109,6 @@ public class WSController extends Controller {
                                             room.sendMessage(msg.toString());
 
                                         } catch (ServiceException e) {
-                                            // TODO Auto-generated catch block
                                             e.printStackTrace();
                                         }
                                         // send msg

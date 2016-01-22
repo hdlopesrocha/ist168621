@@ -18,20 +18,16 @@ public class CreateRecordingService extends Service<Recording> {
     private final ObjectId groupId;
     private final ObjectId owner;
     private final Date start;
-    private final String name;
-    private final String type;
     private String url;
     private final Date end;
 
 
     public CreateRecordingService(final String url, final String groupId, final String owner,
-                                  Date start, Date end, String name, String type) {
+                                  Date start, Date end) {
         this.groupId = new ObjectId(groupId);
         this.owner = owner != null ? new ObjectId(owner) : null;
         this.start = start;
         this.end = end;
-        this.name = name;
-        this.type = type;
         this.url = url;
     }
 
@@ -43,15 +39,10 @@ public class CreateRecordingService extends Service<Recording> {
     @Override
     public Recording dispatch() throws ServiceException {
         synchronized (LOCK) {
-
-
-
-            Recording rec = new Recording(groupId, owner, start, end, name, type, url, Recording.countByGroup(groupId));
+            Recording rec = new Recording(groupId, owner, start, end, url);
             rec.save();
             return rec;
-
         }
-
     }
 
     /*
