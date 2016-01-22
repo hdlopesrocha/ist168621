@@ -11,90 +11,40 @@ import java.util.Map;
 
 public class MyRecorder {
 
-    private RecorderEndpoint recorder;
-    private final Object recorderLock = new Object();
-    private Thread recorderThread = null;
-    private Runnable recorderRunnable = null;
-    private Date begin;
-    private String intervalId = null;
-
-    public MyRecorder(MediaElement endPoint, RecorderHandler handler) {
-
-        this.recorderRunnable = new Runnable() {
-
+    public static void record(MediaElement endPoint, Date begin,int duration, RecorderHandler handler){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                begin = new Date();
+                Map < String, String > metadata = Collections.emptyMap();
+                RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
 
-                while (recorderThread != null) {
-                    try {
-                        Map<String, String> metadata = Collections.emptyMap();
-                        RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
+                RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).withMediaProfile(MediaProfileSpecType.WEBM).build();
+                //	recorder.setVideoFormat(new VideoCaps(VideoCodec.H264, new Fraction(1, 15)));
+                //	recorder.setAudioFormat(new AudioCaps(AudioCodec.OPUS, 16000));
+                endPoint.connect(recorder);
+                recorder.record();
 
-
-                        recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).withMediaProfile(MediaProfileSpecType.WEBM).build();
-                        //	recorder.setVideoFormat(new VideoCaps(VideoCodec.H264, new Fraction(1, 15)));
-                        //	recorder.setAudioFormat(new AudioCaps(AudioCodec.OPUS, 16000));
-                        endPoint.connect(recorder);
-                        recorder.record();
-
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-
-                        recorder.stop();
-                        final Date end = new Date();
-                        new Thread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                intervalId = handler.onFileRecorded(begin, end, item.getUrl(), item.getId(), intervalId);
-                                if (intervalId == null) {
-                                    stop();
-                                }
-                            }
-                        }).start();
-
-                        endPoint.disconnect(recorder);
-                        recorder.release();
-
-                        // continuous parts (although not true)
-                        begin = end;
-                    } catch (Exception e) {
-                        System.out.println("RECORDER STOP!");
-                        break;
-                    }
+                try {
+                    Thread.sleep(duration);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+
+                recorder.stop();
+
+                endPoint.disconnect(recorder);
+                recorder.release();
+                final Date end = new Date();
+                handler.onFileRecorded(begin, end, item.getUrl(), item.getId());
             }
-        };
+        }).start();
+
+
     }
 
-    public void start() {
-        synchronized (recorderLock) {
-            if (recorderThread == null) {
-                recorderThread = new Thread(recorderRunnable);
-                recorderThread.start();
-            }
-        }
-    }
-
-    public void stop() {
-        synchronized (recorderLock) {
-            recorderThread = null;
-        }
-    }
-
-    public void close() {
-        stop();
-        recorder.release();
-    }
 
     public interface RecorderHandler {
-
-        String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId);
+        void onFileRecorded(Date begin, Date end, String filepath, String filename);
     }
 
 }

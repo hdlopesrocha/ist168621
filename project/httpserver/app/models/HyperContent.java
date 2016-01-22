@@ -2,13 +2,17 @@ package models;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import main.Tools;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
 import services.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class HyperContent {
 
@@ -109,4 +113,23 @@ public class HyperContent {
     }
 
 
+    public static List<HyperContent> search(ObjectId gid, String query) {
+        Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
+        Document doc = new Document("gid", gid).append("content", regex);
+        FindIterable<Document> iter = getCollection().find(doc);
+        Iterator<Document> i = iter.iterator();
+        List<HyperContent> ret = new ArrayList<HyperContent>();
+        while (i.hasNext()) {
+            ret.add(HyperContent.load(i.next()));
+        }
+        return ret;
+    }
+
+    public JSONObject toJson() {
+        JSONObject obj = new JSONObject();
+        obj.put("id", id.toString());
+        obj.put("content", content);
+        obj.put("time", Tools.FORMAT.format(start));
+        return obj;
+    }
 }

@@ -253,12 +253,12 @@
                                 style="display:none;z-index:9999;position:absolute;right:0px">
                             <i class="fa fa-compress"></i>
                         </button>
-
                         <div id="videoWrapper">
+                            <div id="currentTag"></div>
                             <div id="mainVideoContent">
                                 <div id="previewContent"></div>
                             </div>
-                            <video id='ownvideo' autoplay></video>
+                            <video id='ownvideo' autoplay muted></video>
                             <video id='myvideo' autoplay></video>
                         </div>
                     </div>
@@ -502,6 +502,7 @@
 			console.log(id, time, title, content);
 			timeline.loadTag(id, time, title, content);
 		}
+
 
 		function talkArrived(userId,value){
 			if(value){
@@ -749,6 +750,11 @@
             return this;
         })();
 
+        function extractTextFromXml(xml){
+           // var obj = $.parseXML( xml );
+            return xml.replace(/<[^>]*>/g, "");
+        }
+
 
 		var generalSearch = {
 			source: function(query,process){
@@ -757,13 +763,18 @@
 				});			
 			},
 			displayText: function(item){
-				return item.title;
+				if(item.type=="tag"){
+				    return item.title;
+			    }else {
+			        console.log(item.content);
+			        return item.content;
+			    }
 			},
 			highlighter: function(item){
 				if(item.type=="tag"){
 					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else {
-					return "<i class='fa fa-font'></i> " + item.name ;
+					return "<i class='fa fa-font'></i> " + item.content;
 				}
 			},
 			matcher: function(item){
@@ -771,6 +782,9 @@
 			},
 			updater:function(item){
 				if(item.type=="tag"){
+					timeline.setHistoric(item.time);
+				}
+				else if(item.type=="html"){
 					timeline.setHistoric(item.time);
 				}
 				return item;
@@ -920,7 +934,14 @@
 					// realtime request
 					Kurento.receiveRealtime(selectedUser);
 					real_time = true;
-				}
+				}, function(tag){
+				    if(tag!=null){
+                        $("#currentTag").html(tag.text);
+                    }else {
+                        $("#currentTag").html("");
+                    }
+                }
+
 			);
 		});	
 

@@ -14,7 +14,7 @@ public class Recording {
 
 
     private static MongoCollection<Document> collection;
-    private ObjectId groupId, owner, interval;
+    private ObjectId groupId, owner;
     private Date start, end;
     private String name, type;
     private String url;
@@ -24,7 +24,7 @@ public class Recording {
     private Recording() {
     }
     public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String name, String type, String url,
-                     long sequence, ObjectId interval) {
+                     long sequence) {
         this.groupId = groupId;
         this.owner = owner;
         this.start = start;
@@ -33,7 +33,6 @@ public class Recording {
         this.sequence = sequence;
         this.name = name;
         this.type = type;
-        this.interval = interval;
     }
 
     public static MongoCollection<Document> getCollection() {
@@ -49,7 +48,6 @@ public class Recording {
         rec.start = doc.getDate("start");
         rec.name = doc.getString("name");
         rec.type = doc.getString("type");
-        rec.interval = doc.getObjectId("inter");
 
         rec.owner = doc.getObjectId("uid");
         rec.groupId = doc.getObjectId("gid");
@@ -107,7 +105,6 @@ public class Recording {
         doc.put("end", end);
         doc.put("url", url);
         doc.put("name", name);
-        doc.put("inter", interval);
         doc.put("type", type);
         doc.put("seq", sequence);
 
@@ -158,14 +155,6 @@ public class Recording {
 
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    public ObjectId getInterval() {
-        return interval;
-    }
-
-    public void setInterval(ObjectId interval) {
-        this.interval = interval;
     }
 
     public void delete() {

@@ -5,19 +5,42 @@ var HyperTimeline = new (function() {
 
 
 	
-	this.create = function(divId, historic, realtime) {
-		
-		
-		
+	this.create = function(divId, historic, realtime, onCurrentTag) {
+
+	    var tags = [];
+        var currentTag = null;
+
 		function followerWorker(timeline){
+		    var now = new Date().getTime()-timeline.hyper_offset;
+            setCurrentTag(now);
 	    	if(timeline.timeRunning){
-				var now = new Date().getTime()-timeline.hyper_offset+1000; // plus 1000 because it's the duration of the animation
-				var nowTime = new Date(now);			
+				var nowTime = new Date(now+1000);			// plus 1000 because it's the duration of the animation
 				timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
 	    	}
+
+
 			setTimeout(function(){followerWorker(timeline);},1000);
 		}
-	
+
+
+	    function setCurrentTag(now){
+              var minTag =null;
+                var minDiff=null;
+                for(var i in tags){
+                    var tag = tags[i];
+                    var dif = now - tag.time.getTime();
+                    if(dif > 0 && (minDiff==null || dif < minDiff)){
+                        minTag = tag;
+                        minDiff=dif;
+                    }
+                }
+
+                if(currentTag!=minTag){
+                    currentTag = minTag;
+                    onCurrentTag(minTag);
+                }
+	    }
+
 /*		
 		this.onAdd = function (item, callback){
 			console.log(this);
@@ -89,7 +112,8 @@ var HyperTimeline = new (function() {
 	    	
 	    	this.setCustomTime(avg,"time");
 	    	$(this.customTimes[0].bar).css("pointer-events: none;");
-	    //	console.log(timeline.customTimes[0]);
+
+    	    //console.log(timeline.customTimes[0]);
 	    	//timeline.customTimes[0].options.editable=false;
     	
 	    });
@@ -202,9 +226,10 @@ var HyperTimeline = new (function() {
 	    	this.moveTo(customTime,{animation: false});
 	    	this.timeRunning = !this.timeRunning;
 	    }
-	    
+
 		timeline.loadTag= function(id,time, title,content){
 			var start = new Date(time);
+			tags.push({text:title,time:start,id:id});
 			this.items.add({
 				id : id,
 				content : title,

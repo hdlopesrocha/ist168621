@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
 import play.mvc.WebSocket;
+import services.CreateIntervalService;
 import services.CreateRecordingService;
 import services.ListGroupMembersService;
 import services.ListOwnerAttributesService;
@@ -25,8 +26,8 @@ public class Room implements Closeable {
     private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
     private final MediaPipeline mediaPipeline;
     private final Group group;
+    private Interval interval;
     private Hub composite = null;
-    private MyRecorder recorder;
     private HubPort hubPort;
 
     public Room(final MediaPipeline mediaPipeline) {
@@ -54,8 +55,13 @@ public class Room implements Closeable {
             this.composite = new Composite.Builder(mediaPipeline).build();
             this.composite.setName("composite");
             this.hubPort = getCompositePort("this");
-            this.recorder = record(hubPort, group.getId().toString());
-            this.recorder.start();
+            try {
+                this.interval = new CreateIntervalService(group.getId().toString(),new Date()).execute();
+                record(10000);
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+
         }
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }
@@ -64,38 +70,47 @@ public class Room implements Closeable {
         return hubPort;
     }
 
-    public MyRecorder record(final MediaElement endPoint, final String id) {
-        return new MyRecorder(endPoint, new MyRecorder.RecorderHandler() {
+    private void record(int duration) {
+        MyRecorder.record(hubPort,new Date(),duration,new MyRecorder.RecorderHandler() {
             @Override
-            public String onFileRecorded(Date begin, Date end, String filepath, String filename, String intervalId) {
-
+            public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
                 try {
-                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), id, begin,
-                            end, filename, "video/webm", intervalId);
+                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), group.getId().toString(), begin,
+                            end, filename, "video/webm");
                     Recording rec = srs.execute();
                     if (rec != null) {
-                        Interval interval = srs.getInterval();
-                        intervalId = interval.getId().toString();
+
+                        interval.setEnd(end);
+                        interval.save();
 
                         JSONArray array = new JSONArray();
                         array.put(Tools.FORMAT.format(interval.getStart()));
                         array.put(Tools.FORMAT.format(interval.getEnd()));
 
+
                         JSONObject msg = new JSONObject();
                         msg.put("id", "rec");
-                        msg.put(intervalId, array);
+                        msg.put(interval.getId().toString(), array);
                         sendMessage(msg.toString());
 
                         System.out.println("REC: " + filepath);
                     } else {
-                        return null;
+                        return;
                     }
                 } catch (ServiceException e) {
                     e.printStackTrace();
                 }
-                return intervalId;
+                if(participants.size()>0) {
+                    record(duration);
+                }
             }
         });
+
+        for(UserSession session : participants.values()){
+            session.record(duration);
+        }
+
+
     }
 
     public HubPort getCompositePort(String id) {
@@ -123,7 +138,6 @@ public class Room implements Closeable {
 
     @PreDestroy
     private void shutdown() {
-        this.recorder.close();
         this.close();
     }
 
@@ -132,19 +146,17 @@ public class Room implements Closeable {
     }
 
     public UserSession join(final User user, final WebSocket.Out<String> out) {
-
-        System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
-        final UserSession participant = new UserSession(user, this, out);
-        // add myself to the room
-        participants.put(participant.getUser().getId().toString(), participant);
-        JSONArray otherUsers = new JSONArray();
         try {
-
+            System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
+            final UserSession participant = new UserSession(user, this, out);
+            // add myself to the room
+            participants.put(participant.getUser().getId().toString(), participant);
+            JSONArray otherUsers = new JSONArray();
             List<Attribute> attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString()).execute();
             JSONObject myProfile = new JSONObject();
-            myProfile.put("id",user.getId().toString());
-            for(Attribute attribute : attributes1){
-                myProfile.put(attribute.getKey(),attribute.getValue());
+            myProfile.put("id", user.getId().toString());
+            for (Attribute attribute : attributes1) {
+                myProfile.put(attribute.getKey(), attribute.getValue());
             }
 
 
@@ -160,9 +172,9 @@ public class Room implements Closeable {
                 List<Attribute> attributes2 = new ListOwnerAttributesService(otherId.toString(),
                         m.getValue().getId().toString()).execute();
                 JSONObject otherProfile = new JSONObject();
-                otherProfile.put("id",otherId.toString());
-                for(Attribute attribute : attributes2){
-                    otherProfile.put(attribute.getKey(),attribute.getValue());
+                otherProfile.put("id", otherId.toString());
+                for (Attribute attribute : attributes2) {
+                    otherProfile.put(attribute.getKey(), attribute.getValue());
                 }
 
 
@@ -173,13 +185,14 @@ public class Room implements Closeable {
                 }
                 otherUsers.put(otherProfile);
             }
+            final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+            participant.sendMessage(currentParticipants.toString());
+
+            return participant;
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
-        participant.sendMessage(currentParticipants.toString());
-
-        return participant;
+        return null;
     }
 
     public void leave(final UserSession user) throws IOException {

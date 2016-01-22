@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Rest extends Controller {
 
@@ -51,6 +53,34 @@ public class Rest extends Controller {
                 msg.put("type", "tag");
                 array.put(msg);
             }
+
+
+            SearchHyperContentService service2 = new SearchHyperContentService(session("uid"), groupId, query);
+            List<HyperContent> contents = service2.execute();
+
+
+            Pattern pattern = Pattern.compile("<(\\w+)>.*?</\\1>");
+
+            for (HyperContent content : contents) {
+                JSONObject msg = content.toJson();
+                msg.put("type", "html");
+
+                String text = content.getContent();
+                Matcher m = pattern.matcher(text);
+
+
+                String newText = "";
+                while(m.find()){
+                    newText += m.group();
+                }
+
+
+                msg.put("content",newText);
+
+
+                array.put(msg);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ServiceException e) {

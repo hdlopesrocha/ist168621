@@ -17,29 +17,22 @@ public class CreateRecordingService extends Service<Recording> {
     private static final Object LOCK = new Object();
     private final ObjectId groupId;
     private final ObjectId owner;
-    private ObjectId interval;
     private final Date start;
     private final String name;
     private final String type;
     private String url;
-    private Interval inter = null;
     private final Date end;
 
 
     public CreateRecordingService(final String url, final String groupId, final String owner,
-                                  Date start, Date end, String name, String type, String interval) {
+                                  Date start, Date end, String name, String type) {
         this.groupId = new ObjectId(groupId);
         this.owner = owner != null ? new ObjectId(owner) : null;
-        this.interval = interval != null ? new ObjectId(interval) : null;
         this.start = start;
         this.end = end;
         this.name = name;
         this.type = type;
         this.url = url;
-    }
-
-    public Interval getInterval() {
-        return inter;
     }
 
     /*
@@ -51,23 +44,9 @@ public class CreateRecordingService extends Service<Recording> {
     public Recording dispatch() throws ServiceException {
         synchronized (LOCK) {
 
-            if (interval == null) {
-                inter = new Interval(groupId, start, end);
-                inter.save();
-                interval = inter.getId();
-            } else {
-                inter = Interval.findById(interval);
-                if (inter == null) {
-                    return null;
-                } else if (inter.getStart() == null) {
-                    inter.setStart(start);
-                }
-                inter.setEnd(end);
-                inter.save();
-            }
 
-            Recording rec = new Recording(groupId, owner, start, end, name, type, url, Recording.countByGroup(groupId),
-                    inter.getId());
+
+            Recording rec = new Recording(groupId, owner, start, end, name, type, url, Recording.countByGroup(groupId));
             rec.save();
             return rec;
 

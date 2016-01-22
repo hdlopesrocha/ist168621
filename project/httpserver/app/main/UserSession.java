@@ -1,19 +1,14 @@
 package main;
 
 import exceptions.ServiceException;
-import models.HyperContent;
-import models.Message;
-import models.Recording;
-import models.User;
+import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
-import services.GetCurrentHyperContentService;
-import services.GetCurrentRecordingService;
-import services.ListMessagesService;
+import services.*;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -30,7 +25,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private final WebRtcEndpoint endPoint;
     private final WebRtcEndpoint compositePoint;
     private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
-    private final MyRecorder recorder;
     private final HubPort compositePort;
     private PlayerEndpoint player;
     private final Object playerLock = new Object();
@@ -38,7 +32,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private long timeOffset = 0L;
     private String playUser = "";
 
-    public UserSession(final User user, final Room room, WebSocket.Out<String> out) {
+    public UserSession(final User user, final Room room, WebSocket.Out<String> out) throws ServiceException {
         this.out = out;
         this.user = user;
         this.room = room;
@@ -49,13 +43,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
         compositePort = room.getCompositePort(user.getId().toString());
 
-        recorder = room.record(endPoint, user.getId().toString());
 
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
                 endPoint.connect(endPoint);
-                recorder.start();
+              //  record(10000);
             }
         });
 
@@ -67,17 +60,25 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
         });
 
-        endPoint.addConnectionStateChangedListener(new EventListener<ConnectionStateChangedEvent>() {
+    }
+
+
+    public void record(int duration) {
+        MyRecorder.record(endPoint,new Date(),duration,new MyRecorder.RecorderHandler() {
             @Override
-            public void onEvent(ConnectionStateChangedEvent arg0) {
-                // TODO Auto-generated method stub
-                if (arg0.getOldState().equals(ConnectionState.CONNECTED)
-                        && arg0.getNewState().equals(ConnectionState.DISCONNECTED)) {
-                    recorder.stop();
+            public void onFileRecorded(Date begin, Date end, String filepath, String filename) {
+                try {
+                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), user.getId().toString(), begin,
+                            end, filename, "video/webm");
+                    Recording rec = srs.execute();
+                    if (rec != null) {
+                        System.out.println("REC: " + filepath);
+                    }
+                } catch (ServiceException e) {
+                    e.printStackTrace();
                 }
             }
         });
-
     }
 
     private long getTimeOffset() {
@@ -181,7 +182,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         compositePort.release();
         compositePoint.release();
         endPoint.release();
-        recorder.close();
     }
 
     public void addCandidate(IceCandidate candidate, String name) {
