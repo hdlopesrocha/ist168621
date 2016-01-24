@@ -73,10 +73,10 @@
             <ul class="nav navbar-nav navbar-right">
                 @if(session.get("uid")!=null){
 
-                    @actionBar
-                    <li id="logout-button">
-                        <a>Logout</a>
-                    </li>
+                @actionBar
+                <li id="logout-button">
+                    <a>Logout</a>
+                </li>
 
                 }
             </ul>
@@ -87,7 +87,7 @@
 <div class="page-container">
     <div class="container-fluid">
 
-    @content
+        @content
     </div>
 </div>
 
@@ -104,6 +104,7 @@
 					})
 				});	
 			});		
+
 
 </script>
 

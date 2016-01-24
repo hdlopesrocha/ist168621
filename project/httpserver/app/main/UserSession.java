@@ -1,14 +1,20 @@
 package main;
 
 import exceptions.ServiceException;
-import models.*;
+import models.HyperContent;
+import models.Message;
+import models.Recording;
+import models.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
-import services.*;
+import services.CreateRecordingService;
+import services.GetCurrentHyperContentService;
+import services.GetCurrentRecordingService;
+import services.ListMessagesService;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -26,8 +32,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private final WebRtcEndpoint compositePoint;
     private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
     private final HubPort compositePort;
-    private PlayerEndpoint player;
     private final Object playerLock = new Object();
+    private PlayerEndpoint player;
     private boolean play = true;
     private long timeOffset = 0L;
     private String playUser = "";
@@ -48,7 +54,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
                 endPoint.connect(endPoint);
-              //  record(10000);
+                //  record(10000);
             }
         });
 
@@ -64,7 +70,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
     public void record(int duration) {
-        MyRecorder.record(endPoint,new Date(),duration,new MyRecorder.RecorderHandler() {
+        MyRecorder.record(endPoint, new Date(), duration, new MyRecorder.RecorderHandler() {
             @Override
             public void onFileRecorded(Date begin, Date end, String filepath) {
                 try {
@@ -280,8 +286,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     if (play) {
                         player.play();
                         JSONObject msg = new JSONObject();
-                        msg.put("id","setTime");
-                        msg.put("time",Tools.FORMAT.format(rec.getStart()));
+                        msg.put("id", "setTime");
+                        msg.put("time", Tools.FORMAT.format(rec.getStart()));
                         sendMessage(msg.toString());
                     }
                 }

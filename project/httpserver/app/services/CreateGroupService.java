@@ -2,14 +2,10 @@ package services;
 
 import dtos.AttributeDto;
 import exceptions.ServiceException;
-import main.Global;
 import models.*;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
 import java.util.List;
-
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class AuthenticateUserService.
@@ -19,6 +15,7 @@ public class CreateGroupService extends Service<Group> {
     private final ObjectId caller;
     private final List<AttributeDto> attributes;
     private final Group.Visibility visibility;
+
     public CreateGroupService(String uid, Group.Visibility visibility, List<AttributeDto> attributes) {
         this.caller = new ObjectId(uid);
         this.attributes = attributes;
@@ -36,10 +33,10 @@ public class CreateGroupService extends Service<Group> {
         group.save();
         Membership membership = new Membership(caller, group.getId());
         membership.save();
-        attributes.add(new AttributeDto("type",Group.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC,false,false,true));
-        new Data(group.getId(),attributes).save();
-        new Search(group.getId(),attributes).save();
-        new Permission(group.getId(),attributes).save();
+        attributes.add(new AttributeDto("type", Group.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, true));
+        new Data(group.getId(), attributes).save();
+        new Search(group.getId(), attributes).save();
+        new Permission(group.getId(), attributes).save();
         return group;
     }
 

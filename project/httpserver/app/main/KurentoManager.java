@@ -17,9 +17,8 @@ public class KurentoManager {
 
     private final static String DEFAULT_KMS_WS_URI = "ws://localhost:8888/kurento";
     private final static String DEFAULT_REPOSITORY_SERVER_URI = "http://localhost:7676";
-
-    private static KurentoClient kurento;
     public static RepositoryRestApi repository;
+    private static KurentoClient kurento;
     private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
     public KurentoManager() {

@@ -6,8 +6,8 @@ import org.bson.Document;
 import services.Service;
 
 public class PubSub {
-    private static MongoCollection<Document> collection;
     private static final MongoCollection<Document> keyCollection;
+    private static MongoCollection<Document> collection;
 
     static {
         collection = Service.getDatabase().getCollection("pubsub");

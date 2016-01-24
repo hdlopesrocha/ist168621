@@ -11,7 +11,6 @@ public class DownloadFileService extends Service<byte[]> {
     private final String fileName;
 
     public DownloadFileService(String fileName) {
-        // TODO Auto-generated constructor stub
         this.fileName = fileName;
     }
 

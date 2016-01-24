@@ -16,11 +16,11 @@ import exceptions.UnauthorizedException;
  * @param <T> the generic type
  */
 public abstract class Service<T> {
+    static GridFS files;
+    static long lastOid = 0L;
     private static DB db;
     private static MongoClient client;
     private static MongoDatabase database;
-    static GridFS files;
-    static long lastOid = 0L;
     private static String DB_NAME = "webrtc";
 
     private static MongoClient getClient() {

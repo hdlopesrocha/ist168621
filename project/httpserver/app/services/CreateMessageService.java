@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SendMessageService.

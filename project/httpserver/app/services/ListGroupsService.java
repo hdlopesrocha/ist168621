@@ -1,6 +1,5 @@
 package services;
 
-import com.sun.org.apache.regexp.internal.RE;
 import models.Group;
 import models.Membership;
 import models.Relation;
@@ -41,13 +40,13 @@ public class ListGroupsService extends Service<List<Group>> {
             uniqueGroups.add(g.getId());
         }
 
-        for(Relation relA : Relation.listFrom(user.getId())){
-            Relation relB = Relation.findByEndpoint(relA.getTo(),relA.getFrom());
-            if(relB!=null){
+        for (Relation relA : Relation.listFrom(user.getId())) {
+            Relation relB = Relation.findByEndpoint(relA.getTo(), relA.getFrom());
+            if (relB != null) {
                 for (Membership m : Membership.listByUser(relA.getTo())) {
                     Group g = Group.findById(m.getGroupId());
-                    if(g.getVisibility().equals(Group.Visibility.PUBLIC)) {
-                        if(!uniqueGroups.contains(g.getId())) {
+                    if (g.getVisibility().equals(Group.Visibility.PUBLIC)) {
+                        if (!uniqueGroups.contains(g.getId())) {
                             uniqueGroups.add(g.getId());
                             ans.add(g);
                         }

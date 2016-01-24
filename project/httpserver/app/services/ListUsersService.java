@@ -39,8 +39,8 @@ public class ListUsersService extends Service<String> {
             User user = User.load(doc);
             JSONObject inc = new JSONObject();
             List<Attribute> attributes = Attribute.listByOwner(user.getId());
-            for(Attribute attribute : attributes){
-                inc.put(attribute.getKey(),attribute.getValue());
+            for (Attribute attribute : attributes) {
+                inc.put(attribute.getKey(), attribute.getValue());
             }
             array.put(inc);
         }

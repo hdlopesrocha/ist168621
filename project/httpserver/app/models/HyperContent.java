@@ -64,6 +64,18 @@ public class HyperContent {
         return ret;
     }
 
+    public static List<HyperContent> search(ObjectId gid, String query) {
+        Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
+        Document doc = new Document("gid", gid).append("content", regex);
+        FindIterable<Document> iter = getCollection().find(doc);
+        Iterator<Document> i = iter.iterator();
+        List<HyperContent> ret = new ArrayList<HyperContent>();
+        while (i.hasNext()) {
+            ret.add(HyperContent.load(i.next()));
+        }
+        return ret;
+    }
+
     public void save() {
         Document doc = new Document();
         if (id != null)
@@ -110,19 +122,6 @@ public class HyperContent {
     public void delete() {
         if (id != null)
             getCollection().deleteOne(new Document("_id", id));
-    }
-
-
-    public static List<HyperContent> search(ObjectId gid, String query) {
-        Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
-        Document doc = new Document("gid", gid).append("content", regex);
-        FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<HyperContent> ret = new ArrayList<HyperContent>();
-        while (i.hasNext()) {
-            ret.add(HyperContent.load(i.next()));
-        }
-        return ret;
     }
 
     public JSONObject toJson() {

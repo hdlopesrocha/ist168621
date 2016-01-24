@@ -46,13 +46,13 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
         }
 
         List<KeyValue<String>> filter = new ArrayList<KeyValue<String>>();
-        filter.add(new KeyValue<String>("type",User.class.getName()));
+        filter.add(new KeyValue<String>("type", User.class.getName()));
 
 
         List<List<KeyValue<String>>> filters = new ArrayList<>();
         filters.add(filter);
 
-        for(Search m : Search.search(query,null,null,filters)) {
+        for (Search m : Search.search(query, null, null, filters)) {
             if (relations.contains(m.getOwner())) {
                 JSONObject props = new JSONObject();
                 List<Attribute> attrs = Attribute.listByOwner(m.getOwner());

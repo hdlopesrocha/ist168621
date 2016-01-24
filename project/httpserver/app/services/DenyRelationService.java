@@ -4,7 +4,6 @@ import models.Relation;
 import models.User;
 import org.bson.types.ObjectId;
 
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class AuthenticateUserService.

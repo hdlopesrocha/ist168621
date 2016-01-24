@@ -4,9 +4,6 @@ import exceptions.ServiceException;
 import models.Group;
 import org.bson.types.ObjectId;
 
-
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class AuthenticateUserService.
  */

@@ -14,34 +14,34 @@ import java.util.List;
  */
 public class SetAttributesService extends Service<Search> {
 
-	private ObjectId owner;
-	private List<AttributeDto> attributes;
+    private ObjectId owner;
+    private List<AttributeDto> attributes;
 
-	public SetAttributesService(final String owner, List<AttributeDto> attributes) {
-		this.owner = owner !=null ? new ObjectId(owner) : null;
-		this.attributes = attributes;
-	}
+    public SetAttributesService(final String owner, List<AttributeDto> attributes) {
+        this.owner = owner != null ? new ObjectId(owner) : null;
+        this.attributes = attributes;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see services.Service#dispatch()
-	 */
-	@Override
-	public synchronized Search dispatch() throws ServiceException {
-		Search.deleteByOwner(owner);
-		Search data = new Search(owner,attributes).save();
-		return data;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see services.Service#dispatch()
+     */
+    @Override
+    public synchronized Search dispatch() throws ServiceException {
+        Search.deleteByOwner(owner);
+        Search data = new Search(owner, attributes).save();
+        return data;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see services.Service#canExecute()
-	 */
-	@Override
-	public boolean canExecute() {
-		return owner != null;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see services.Service#canExecute()
+     */
+    @Override
+    public boolean canExecute() {
+        return owner != null;
+    }
 
 }

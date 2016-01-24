@@ -1,7 +1,6 @@
 package main;
 
 import org.kurento.client.MediaElement;
-import org.kurento.client.MediaProfileSpecType;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.repository.service.pojo.RepositoryItemRecorder;
 
@@ -11,11 +10,11 @@ import java.util.Map;
 
 public class MyRecorder {
 
-    public static void record(MediaElement endPoint, Date begin,int duration, RecorderHandler handler){
+    public static void record(MediaElement endPoint, Date begin, int duration, RecorderHandler handler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Map < String, String > metadata = Collections.emptyMap();
+                Map<String, String> metadata = Collections.emptyMap();
                 RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
 
                 RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).build();

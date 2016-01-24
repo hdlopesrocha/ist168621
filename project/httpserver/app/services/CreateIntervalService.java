@@ -2,12 +2,9 @@ package services;
 
 import exceptions.ServiceException;
 import models.Interval;
-import models.Recording;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
-
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SendMessageService.
@@ -21,7 +18,7 @@ public class CreateIntervalService extends Service<Interval> {
     private Interval inter = null;
 
 
-    public CreateIntervalService(final String groupId,  Date start) {
+    public CreateIntervalService(final String groupId, Date start) {
         this.groupId = new ObjectId(groupId);
         this.start = start;
     }

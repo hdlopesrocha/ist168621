@@ -10,41 +10,34 @@ import services.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * Created by hdlopesrocha on 06-01-2016.
  */
 public class Data {
 
+    private static MongoCollection<Document> collection;
     private ObjectId id = null;
     private Document data = null;
     private ObjectId owner = null;
 
-
     public Data(ObjectId owner, List<AttributeDto> attributes) {
 
         this.data = new Document();
-        for(AttributeDto attr : attributes){
-            data.append(attr.getKey(),attr.getValue());
+        for (AttributeDto attr : attributes) {
+            data.append(attr.getKey(), attr.getValue());
         }
         this.owner = owner;
     }
 
-    public ObjectId getOwner() {
-        return owner;
-    }
+    private Data() {
 
-    private static MongoCollection<Document> collection;
+    }
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Data.class.getName());
         return collection;
-    }
-
-    private Data(){
-
     }
 
     public static Data load(Document doc) {
@@ -53,6 +46,58 @@ public class Data {
         user.owner = doc.getObjectId("owner");
         user.data = (Document) doc.get("data");
         return user;
+    }
+
+    public static Data findById(ObjectId id) {
+        Document doc = new Document("_id", id);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? load(doc) : null;
+    }
+
+    public static Data getByOwnerKey(ObjectId id, String key) {
+        Document doc = new Document("owner", id).append("key", key);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+
+        return iter != null ? Data.load(doc) : null;
+    }
+
+    public static void deleteByOwner(ObjectId owner) {
+        getCollection().deleteMany(new Document("owner", owner));
+    }
+
+    public static List<Data> listByKeyValue(String key, Object value) {
+        Document doc = new Document("data." + key, value);
+        MongoCursor<Document> iter = getCollection().find(doc).iterator();
+        List<Data> ret = new ArrayList<Data>();
+        while (iter.hasNext()) {
+            ret.add(Data.load(iter.next()));
+        }
+
+        return ret;
+    }
+
+    public static Data getByKeyValue(String key, Object value) {
+        Document doc = new Document("data." + key, value);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? Data.load(doc) : null;
+    }
+
+    public static Document findByOwner(ObjectId id, Document projection) {
+        Document doc = new Document("owner", id);
+        FindIterable<Document> find = getCollection().find(doc);
+
+        if (projection != null) {
+            find.projection(projection);
+        }
+        doc = find.first();
+        return doc != null ? doc : null;
+    }
+
+    public ObjectId getOwner() {
+        return owner;
     }
 
     public Data save() {
@@ -73,57 +118,6 @@ public class Data {
 
     public ObjectId getId() {
         return id;
-    }
-
-    public static Data findById(ObjectId id) {
-        Document doc = new Document("_id", id);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
-    }
-
-
-
-    public static Data getByOwnerKey(ObjectId id, String key) {
-        Document doc = new Document("owner", id).append("key",key);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-
-        return iter!=null ? Data.load(doc):null;
-    }
-
-    public static void deleteByOwner(ObjectId owner) {
-        getCollection().deleteMany(new Document("owner", owner));
-    }
-
-
-    public static List<Data> listByKeyValue(String key, Object value) {
-        Document doc = new Document("data."+key, value);
-        MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<Data> ret = new ArrayList<Data>();
-        while (iter.hasNext()){
-            ret.add(Data.load(iter.next()));
-        }
-
-        return ret;
-    }
-
-    public static Data getByKeyValue(String key, Object value) {
-        Document doc = new Document("data."+key, value);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc =iter.first();
-        return doc!=null ? Data.load(doc):null;
-    }
-
-    public static Document findByOwner(ObjectId id, Document projection) {
-        Document doc = new Document("owner", id);
-        FindIterable<Document> find = getCollection().find(doc);
-
-        if(projection!=null){
-            find.projection(projection);
-        }
-        doc = find.first();
-        return doc != null ? doc : null;
     }
 
     public Document getData() {

@@ -4,27 +4,19 @@ package dtos;
  * Created by hdlopesrocha on 07-12-2015.
  */
 public class AttributeDto {
-    public boolean isIdentifiable() {
-        return identifiable;
-    }
-
-    public boolean isSearchable() {
-        return searchable;
-    }
-
     private final boolean identifiable;
     private final boolean searchable;
     private final boolean aggregator;
-
-    public enum Access {READ,WRITE,NONE};
-    public enum Visibility {PUBLIC, PRIVATE};
-
     private Visibility visibility;
     private String key;
     private Object value;
+
+    ;
     private Access access;
 
-    public AttributeDto(String key, Object value, Access access,Visibility visibility,boolean identifiable,boolean searchable,boolean aggregator) {
+    ;
+
+    public AttributeDto(String key, Object value, Access access, Visibility visibility, boolean identifiable, boolean searchable, boolean aggregator) {
         this.key = key;
         this.value = value;
         this.visibility = visibility;
@@ -32,6 +24,14 @@ public class AttributeDto {
         this.identifiable = identifiable;
         this.searchable = searchable;
         this.aggregator = aggregator;
+    }
+
+    public boolean isIdentifiable() {
+        return identifiable;
+    }
+
+    public boolean isSearchable() {
+        return searchable;
     }
 
     public boolean isAggregator() {
@@ -53,6 +53,10 @@ public class AttributeDto {
     public Object getValue() {
         return value;
     }
+
+    public enum Access {READ, WRITE, NONE}
+
+    public enum Visibility {PUBLIC, PRIVATE}
 
 
 }

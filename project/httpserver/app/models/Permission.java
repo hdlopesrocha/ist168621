@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class Permission {
 
+    private static MongoCollection<Document> collection;
     private ObjectId id = null;
     private ObjectId owner = null;
     private Document data = null;
 
-
     public Permission(ObjectId owner, List<AttributeDto> attributes) {
         this.data = new Document();
 
-        for(AttributeDto attr : attributes){
-            if(attr.getVisibility().equals(AttributeDto.Visibility.PRIVATE)){
+        for (AttributeDto attr : attributes) {
+            if (attr.getVisibility().equals(AttributeDto.Visibility.PRIVATE)) {
                 List<ObjectId> array = new ArrayList<ObjectId>();
                 array.add(owner);
                 data.append(attr.getKey(), array);
@@ -34,20 +34,14 @@ public class Permission {
         this.owner = owner;
     }
 
-    public ObjectId getOwner() {
-        return owner;
-    }
+    private Permission() {
 
-    private static MongoCollection<Document> collection;
+    }
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Permission.class.getName());
         return collection;
-    }
-
-    private Permission(){
-
     }
 
     public static Permission load(Document doc) {
@@ -56,6 +50,39 @@ public class Permission {
         user.owner = doc.getObjectId("owner");
         user.data = (Document) doc.get("data");
         return user;
+    }
+
+    public static Permission findById(ObjectId id) {
+        Document doc = new Document("_id", id);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? load(doc) : null;
+    }
+
+    public static List<Permission> listByOwner(ObjectId id) {
+        Document doc = new Document("owner", id);
+        MongoCursor<Document> iter = getCollection().find(doc).iterator();
+        List<Permission> ret = new ArrayList<Permission>();
+        while (iter.hasNext()) {
+            ret.add(Permission.load(iter.next()));
+        }
+
+        return ret;
+    }
+
+    public static void deleteByOwner(ObjectId owner) {
+        getCollection().deleteMany(new Document("owner", owner));
+    }
+
+    public static Permission findByOwner(ObjectId id) {
+        Document doc = new Document("owner", id);
+        FindIterable<Document> iter = getCollection().find(doc);
+        doc = iter.first();
+        return doc != null ? load(doc) : null;
+    }
+
+    public ObjectId getOwner() {
+        return owner;
     }
 
     public Permission save() {
@@ -76,38 +103,6 @@ public class Permission {
 
     public ObjectId getId() {
         return id;
-    }
-
-    public static Permission findById(ObjectId id) {
-        Document doc = new Document("_id", id);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
-    }
-
-
-    public static List<Permission> listByOwner(ObjectId id) {
-        Document doc = new Document("owner", id);
-        MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<Permission> ret = new ArrayList<Permission>();
-        while (iter.hasNext()) {
-            ret.add(Permission.load(iter.next()));
-        }
-
-        return ret;
-    }
-
-
-
-    public static void deleteByOwner(ObjectId owner) {
-        getCollection().deleteMany(new Document("owner", owner));
-    }
-
-    public static Permission findByOwner(ObjectId id) {
-        Document doc = new Document("owner", id);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return doc != null ? load(doc) : null;
     }
 
     public Document getData() {

@@ -1,13 +1,11 @@
 package services;
 
 import exceptions.ServiceException;
-import models.Interval;
 import models.Recording;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SendMessageService.
@@ -18,8 +16,8 @@ public class CreateRecordingService extends Service<Recording> {
     private final ObjectId groupId;
     private final ObjectId owner;
     private final Date start;
-    private String url;
     private final Date end;
+    private String url;
 
 
     public CreateRecordingService(final String url, final String groupId, final String owner,

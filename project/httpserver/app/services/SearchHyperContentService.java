@@ -1,7 +1,6 @@
 package services;
 
 import models.HyperContent;
-import models.TimeTag;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class SearchHyperContentService extends Service<List<HyperContent>> {
 
     @Override
     public boolean canExecute() {
-        return caller!=null;
+        return caller != null;
     }
 
 

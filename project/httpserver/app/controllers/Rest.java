@@ -69,12 +69,12 @@ public class Rest extends Controller {
 
 
                 String newText = "";
-                while(m.find()){
+                while (m.find()) {
                     newText += m.group();
                 }
 
 
-                msg.put("content",newText);
+                msg.put("content", newText);
 
 
                 array.put(msg);
@@ -113,9 +113,9 @@ public class Rest extends Controller {
             Group.Visibility visibility = Group.Visibility.valueOf(qs.get("v")[0]);
 
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("name",name, AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+            attributes.add(new AttributeDto("name", name, AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
 
-            CreateGroupService service = new CreateGroupService(session("uid"), visibility,attributes);
+            CreateGroupService service = new CreateGroupService(session("uid"), visibility, attributes);
             try {
                 service.execute();
             } catch (ServiceException e) {
@@ -179,7 +179,7 @@ public class Rest extends Controller {
     public Result getPhoto(String uid) {
         if (uid != null && uid.length() > 0) {
             try {
-                Document document = new ListOwnerAttributesService(session("uid"),uid, Arrays.asList(new String[] {"photo"})).execute();
+                Document document = new ListOwnerAttributesService(session("uid"), uid, Arrays.asList(new String[]{"photo"})).execute();
                 String photo = document.getString("photo");
                 if (photo != null) {
                     System.out.println("GET " + photo);
@@ -195,7 +195,7 @@ public class Rest extends Controller {
     }
 
     public Result getUser(String userId) throws ServiceException {
-        Document attributes = new ListOwnerAttributesService(session("uid"),userId,null).execute();
+        Document attributes = new ListOwnerAttributesService(session("uid"), userId, null).execute();
         JSONObject result = new JSONObject(attributes.toJson());
 
         return ok(result.toString());
@@ -218,7 +218,7 @@ public class Rest extends Controller {
                 List<Group> ans = service.execute();
                 JSONArray array = new JSONArray();
                 for (Group g : ans) {
-                    Document attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString(),null).execute();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString(), null).execute();
                     JSONObject obj = new JSONObject(attributes.toJson());
                     obj.put("id", g.getId());
                     obj.put("visibility", g.getVisibility());
@@ -241,9 +241,9 @@ public class Rest extends Controller {
                 List<User> res = service.execute();
                 for (User user : res) {
 
-                    Document attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString(),null).execute();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString(), null).execute();
                     JSONObject obj = new JSONObject(attributes.toJson());
-                    obj.put("id",user.getId().toString());
+                    obj.put("id", user.getId().toString());
                     array.put(obj);
                 }
                 return ok(array.toString());
@@ -262,9 +262,9 @@ public class Rest extends Controller {
                 JSONArray array = new JSONArray();
                 List<Relation> relations = service.execute();
                 for (Relation relation : relations) {
-                    Document attributes = new ListOwnerAttributesService(session("uid"), relation.getTo().toString(),null).execute();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), relation.getTo().toString(), null).execute();
                     JSONObject result = new JSONObject(attributes.toJson());
-                    result.put("id",relation.getTo().toString());
+                    result.put("id", relation.getTo().toString());
                     array.put(result);
                 }
                 return ok(array.toString());
@@ -325,8 +325,6 @@ public class Rest extends Controller {
     }
 
 
-
-
     public Result register() throws ServiceException {
 
         MultipartFormData multipart = request().body().asMultipartFormData();
@@ -336,7 +334,7 @@ public class Rest extends Controller {
 
         String password = form.get("password")[0];
         List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-        attributes.add(new AttributeDto("type",User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false,false,true));
+        attributes.add(new AttributeDto("type", User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, false, true));
 
 
         for (Entry<String, String[]> s : form.entrySet()) {
@@ -354,17 +352,16 @@ public class Rest extends Controller {
                     obj = array;
                 }
 
-                if(obj!=null){
+                if (obj != null) {
                     boolean searchable = false;
                     boolean identifiable = false;
 
-                    if(s.getKey().equals("name")){
+                    if (s.getKey().equals("name")) {
                         searchable = true;
-                    }
-                    else if(s.getKey().equals("email")){
+                    } else if (s.getKey().equals("email")) {
                         searchable = identifiable = true;
                     }
-                    attributes.add(new AttributeDto(s.getKey(), obj,AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable,searchable,false));
+                    attributes.add(new AttributeDto(s.getKey(), obj, AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable, searchable, false));
                 }
             }
         }
@@ -373,22 +370,21 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(),AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
         }
 
-        String existingUser = new GetOwnerByAttributeService("email",email).execute();
-        if(existingUser!=null){
+        String existingUser = new GetOwnerByAttributeService("email", email).execute();
+        if (existingUser != null) {
             return Rest.status(409);
         }
 
-        User ret = new RegisterUserService(password,attributes).execute();
+        User ret = new RegisterUserService(password, attributes).execute();
         return ok(ret.getToken());
 
     }
-
 
 
     public Result search() {
@@ -402,13 +398,13 @@ public class Rest extends Controller {
                 List<List<KeyValue<String>>> filters = new ArrayList<>();
 
 
-                SearchDataService service = new SearchDataService(session("uid"), null,null,query.toLowerCase(), filters);
+                SearchDataService service = new SearchDataService(session("uid"), null, null, query.toLowerCase(), filters);
                 List<String> users = service.execute();
 
                 for (String user : users) {
                     ObjectId userId = new ObjectId(user);
                     if (!userId.equals(me)) {
-                        Document attributes = new ListOwnerAttributesService(session("uid"),user,null).execute();
+                        Document attributes = new ListOwnerAttributesService(session("uid"), user, null).execute();
                         JSONObject result = new JSONObject(attributes.toJson());
                         result.put("id", userId);
                         array.put(result);
@@ -438,7 +434,7 @@ public class Rest extends Controller {
                 e.printStackTrace();
             }
 
-            System.out.println("SEARCH: " + groupId + " | " + query + " | "+array.toString());
+            System.out.println("SEARCH: " + groupId + " | " + query + " | " + array.toString());
 
             return ok(array.toString());
         }

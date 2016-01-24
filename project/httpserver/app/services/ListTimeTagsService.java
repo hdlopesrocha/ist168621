@@ -42,7 +42,7 @@ public class ListTimeTagsService extends Service<List<TimeTag>> {
 
     @Override
     public boolean canExecute() {
-        return caller!=null;
+        return caller != null;
     }
 
 

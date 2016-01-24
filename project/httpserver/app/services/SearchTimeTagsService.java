@@ -35,7 +35,7 @@ public class SearchTimeTagsService extends Service<List<TimeTag>> {
 
     @Override
     public boolean canExecute() {
-        return caller!=null;
+        return caller != null;
     }
 
 

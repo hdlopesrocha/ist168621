@@ -18,7 +18,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -57,7 +56,7 @@ public class Room implements Closeable {
             this.composite.setName("composite");
             this.hubPort = getCompositePort("this");
             try {
-                this.interval = new CreateIntervalService(group.getId().toString(),new Date()).execute();
+                this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
                 record(10000);
             } catch (ServiceException e) {
                 e.printStackTrace();
@@ -72,7 +71,7 @@ public class Room implements Closeable {
     }
 
     private void record(int duration) {
-        MyRecorder.record(hubPort,new Date(),duration,new MyRecorder.RecorderHandler() {
+        MyRecorder.record(hubPort, new Date(), duration, new MyRecorder.RecorderHandler() {
             @Override
             public void onFileRecorded(Date begin, Date end, String filepath) {
                 try {
@@ -101,13 +100,13 @@ public class Room implements Closeable {
                 } catch (ServiceException e) {
                     e.printStackTrace();
                 }
-                if(participants.size()>0) {
+                if (participants.size() > 0) {
                     record(duration);
                 }
             }
         });
 
-        for(UserSession session : participants.values()){
+        for (UserSession session : participants.values()) {
             session.record(duration);
         }
 
@@ -153,7 +152,7 @@ public class Room implements Closeable {
             // add myself to the room
             participants.put(participant.getUser().getId().toString(), participant);
             JSONArray otherUsers = new JSONArray();
-            Document attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString(),null).execute();
+            Document attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString(), null).execute();
             JSONObject myProfile = new JSONObject(attributes1.toJson());
             myProfile.put("id", user.getId().toString());
 
@@ -167,7 +166,7 @@ public class Room implements Closeable {
                 ObjectId otherId = m.getKey().getUserId();
 
                 Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
-                        m.getValue().getId().toString(),null).execute();
+                        m.getValue().getId().toString(), null).execute();
                 JSONObject otherProfile = new JSONObject(attributes2.toJson());
                 otherProfile.put("id", otherId.toString());
 
@@ -195,9 +194,9 @@ public class Room implements Closeable {
         participants.remove(uid);
         try {
 
-            Document attributes = new ListOwnerAttributesService(uid, uid,null).execute();
+            Document attributes = new ListOwnerAttributesService(uid, uid, null).execute();
             JSONObject result = new JSONObject(attributes.toJson());
-            result.put("id",uid);
+            result.put("id", uid);
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                     new JSONArray().put(result.put("online", false)));

@@ -2,12 +2,14 @@ package controllers;
 
 import dtos.AttributeDto;
 import exceptions.ServiceException;
-import models.*;
+import models.Group;
+import models.Membership;
+import models.Relation;
+import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.twirl.api.Html;
 import services.*;
 
 import java.io.File;
@@ -38,37 +40,37 @@ public class Application extends Controller {
         System.out.println("RESET!");
         Service.reset();
 
-        User user1,user2,user3,user4;
+        User user1, user2, user3, user4;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "hdlopesrocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true,false));
-            attributes.add(new AttributeDto("name", "Henrique Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true,false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
-            user1 = new RegisterUserService("qazokm",attributes).execute();
+            attributes.add(new AttributeDto("email", "hdlopesrocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+            user1 = new RegisterUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "nbhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true,false));
-            attributes.add(new AttributeDto("name", "Nikhil Bhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true,false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
-            user2 = new RegisterUserService("qazokm",attributes).execute();
+            attributes.add(new AttributeDto("email", "nbhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
+            attributes.add(new AttributeDto("name", "Nikhil Bhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+            user2 = new RegisterUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "grocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true,false));
-            attributes.add(new AttributeDto("name", "Gonçalo Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true,false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
-            user3 = new RegisterUserService("qazokm",attributes).execute();
+            attributes.add(new AttributeDto("email", "grocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
+            attributes.add(new AttributeDto("name", "Gonçalo Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+            user3 = new RegisterUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "dvd-r", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true,true,false));
-            attributes.add(new AttributeDto("name", "David Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,true,false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false,false,false));
-            user4 = new RegisterUserService("qazokm",attributes).execute();
+            attributes.add(new AttributeDto("email", "dvd-r", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
+            attributes.add(new AttributeDto("name", "David Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+            user4 = new RegisterUserService("qazokm", attributes).execute();
         }
 
 
@@ -83,20 +85,20 @@ public class Application extends Controller {
 
 
         List<AttributeDto> attributes0 = new ArrayList<AttributeDto>();
-        attributes0.add(new AttributeDto("name","WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
-        Group group0 =  new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, attributes0).execute();
+        attributes0.add(new AttributeDto("name", "WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
+        Group group0 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, attributes0).execute();
 
 
         List<AttributeDto> attributes1 = new ArrayList<AttributeDto>();
-        attributes1.add(new AttributeDto("name","Group1", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        attributes1.add(new AttributeDto("name", "Group1", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
         new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes1).execute();
 
         List<AttributeDto> attributes2 = new ArrayList<AttributeDto>();
-        attributes2.add(new AttributeDto("name","Group2", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        attributes2.add(new AttributeDto("name", "Group2", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
         new CreateGroupService(user2.getId().toString(), Group.Visibility.PRIVATE, attributes2).execute();
 
         List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
-        attributes3.add(new AttributeDto("name","Group3", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC,false,true,false));
+        attributes3.add(new AttributeDto("name", "Group3", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
         new CreateGroupService(user3.getId().toString(), Group.Visibility.PUBLIC, attributes3).execute();
 
 
@@ -118,21 +120,21 @@ public class Application extends Controller {
                 Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
                 boolean isPublic = false;
 
-                if(group.getVisibility().equals(Group.Visibility.PUBLIC)){
+                if (group.getVisibility().equals(Group.Visibility.PUBLIC)) {
                     isPublic = true;
-                    if(membership == null){
-                        new Membership(user.getId(),group.getId()).save();
+                    if (membership == null) {
+                        new Membership(user.getId(), group.getId()).save();
                     }
 
                 }
 
 
                 if (membership != null || isPublic) {
-                    Document service1 = new ListOwnerAttributesService(session("uid"),groupId, Arrays.asList(new String [] {"name"})).execute();
+                    Document service1 = new ListOwnerAttributesService(session("uid"), groupId, Arrays.asList(new String[]{"name"})).execute();
                     String name = service1.getString("name");
 
 
-                    return ok(views.html.group.render(groupId, name!=null ? name:"", session("uid"), token));
+                    return ok(views.html.group.render(groupId, name != null ? name : "", session("uid"), token));
                 }
             }
             return redirect("/");

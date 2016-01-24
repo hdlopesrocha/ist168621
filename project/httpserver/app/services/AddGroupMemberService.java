@@ -3,8 +3,6 @@ package services;
 import models.Membership;
 import org.bson.types.ObjectId;
 
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class AuthenticateUserService.
  */

@@ -14,15 +14,11 @@ import java.util.regex.Pattern;
 
 public class Group {
 
-    public enum Visibility {PUBLIC, PRIVATE}
-
-
     private static MongoCollection<Document> collection;
     private ObjectId id = null;
     private String invite = null;
     private Visibility visibility;
-
-    public Group(Visibility visibility ) {
+    public Group(Visibility visibility) {
         this.visibility = visibility;
     }
 
@@ -120,6 +116,8 @@ public class Group {
     public void deleteInvite() {
         invite = null;
     }
+
+    public enum Visibility {PUBLIC, PRIVATE}
 
 
 }

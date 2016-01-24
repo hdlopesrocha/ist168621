@@ -1,7 +1,6 @@
 package main;
 
 
-import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import exceptions.ServiceException;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         System.out.println("Application has started");
         log = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-       // log.setLevel(Level.ALL);
+        // log.setLevel(Level.ALL);
         Service.init("webrtc");
         manager = new KurentoManager();
     }

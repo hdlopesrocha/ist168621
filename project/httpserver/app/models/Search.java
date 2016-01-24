@@ -1,60 +1,53 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import dtos.AttributeDto;
 import dtos.KeyValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import services.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by hdlopesrocha on 06-01-2016.
  */
 public class Search {
 
+    private static MongoCollection<Document> collection;
     private List<String> search;
     private ObjectId id = null;
     private ObjectId owner = null;
     private Document filter = null;
-
 
     public Search(ObjectId owner, List<AttributeDto> attributes) {
 
         this.search = new ArrayList<String>();
         this.filter = new Document();
 
-        for(AttributeDto attr : attributes){
-            if(attr.isSearchable()){
+        for (AttributeDto attr : attributes) {
+            if (attr.isSearchable()) {
                 search.add(attr.getValue().toString().toLowerCase());
             }
-            if(attr.isAggregator()){
+            if (attr.isAggregator()) {
                 filter.append(attr.getKey(), attr.getValue());
             }
         }
         this.owner = owner;
     }
 
-    public ObjectId getOwner() {
-        return owner;
-    }
+    private Search() {
 
-    private static MongoCollection<Document> collection;
+    }
 
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Search.class.getName());
         return collection;
-    }
-
-    private Search(){
-
     }
 
     public static Search load(Document doc) {
@@ -66,34 +59,12 @@ public class Search {
         return user;
     }
 
-    public Search save() {
-        Document doc = new Document();
-        doc.put("owner", owner);
-        doc.put("filter", filter);
-        doc.put("search", search);
-
-
-        if (id == null) {
-            getCollection().insertOne(doc);
-            id = doc.getObjectId("_id");
-        } else {
-            doc.put("_id", id);
-            getCollection().findOneAndReplace(new Document("_id", id), doc);
-        }
-        return this;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
     public static Search findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
         return doc != null ? load(doc) : null;
     }
-
 
     public static List<Search> listByOwner(ObjectId id) {
         Document doc = new Document("owner", id);
@@ -127,7 +98,7 @@ public class Search {
     public static List<Search> search(String search, Integer offset, Integer limit,
                                       List<List<KeyValue<String>>> filters) {
         Document query = buildQuery(filters);
-        System.out.println("SEARCH: "+query.toJson());
+        System.out.println("SEARCH: " + query.toJson());
         if (search != null) {
             query.append("search", Pattern.compile(search));
         }
@@ -153,7 +124,6 @@ public class Search {
         getCollection().deleteMany(new Document("owner", owner));
     }
 
-
     public static Long countByValue(String search, List<List<KeyValue<String>>> filters) {
         Document query = buildQuery(filters);
 
@@ -170,6 +140,30 @@ public class Search {
         return getCollection().count(query);
     }
 
+    public ObjectId getOwner() {
+        return owner;
+    }
+
+    public Search save() {
+        Document doc = new Document();
+        doc.put("owner", owner);
+        doc.put("filter", filter);
+        doc.put("search", search);
 
 
- }
+        if (id == null) {
+            getCollection().insertOne(doc);
+            id = doc.getObjectId("_id");
+        } else {
+            doc.put("_id", id);
+            getCollection().findOneAndReplace(new Document("_id", id), doc);
+        }
+        return this;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+
+}
