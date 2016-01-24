@@ -4,16 +4,31 @@ import exceptions.ServiceException;
 import models.User;
 import org.bson.types.ObjectId;
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class ChangeUserPasswordService.
  */
 public class ChangeUserPasswordService extends Service<Void> {
 
+    /** The password. */
     private final String password;
+    
+    /** The old password. */
     private final String oldPassword;
+    
+    /** The user id. */
     private final ObjectId userId;
+    
+    /** The user. */
     private User user;
 
+    /**
+     * Instantiates a new change user password service.
+     *
+     * @param uid the uid
+     * @param oldPassword the old password
+     * @param password the password
+     */
     public ChangeUserPasswordService(final String uid, final String oldPassword, final String password) {
         this.userId = uid != null ? new ObjectId(uid) : null;
         this.password = password;

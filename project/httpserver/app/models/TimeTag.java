@@ -14,18 +14,42 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
+/**
+ * The Class TimeTag.
+ */
 public class TimeTag {
 
+    /** The collection. */
     private static MongoCollection<Document> collection;
+    
+    /** The time. */
     private Date time;
+    
+    /** The title. */
     private String title;
+    
+    /** The content. */
     private String content;
+    
+    /** The gid. */
     private ObjectId id, gid = null;
 
+    /**
+     * Instantiates a new time tag.
+     */
     private TimeTag() {
 
     }
 
+    /**
+     * Instantiates a new time tag.
+     *
+     * @param gid the gid
+     * @param time the time
+     * @param title the title
+     * @param content the content
+     */
     public TimeTag(ObjectId gid, Date time, String title, String content) {
         this.time = time;
         this.gid = gid;
@@ -33,12 +57,23 @@ public class TimeTag {
         this.content = content;
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(TimeTag.class.getName());
         return collection;
     }
 
+    /**
+     * Load.
+     *
+     * @param doc the doc
+     * @return the time tag
+     */
     public static TimeTag load(Document doc) {
         TimeTag rec = new TimeTag();
         rec.id = doc.getObjectId("_id");
@@ -49,11 +84,23 @@ public class TimeTag {
         return rec;
     }
 
+    /**
+     * Count by group.
+     *
+     * @param owner the owner
+     * @return the long
+     */
     public static long countByGroup(ObjectId owner) {
         Document doc = new Document("gid", owner);
         return getCollection().count(doc);
     }
 
+    /**
+     * List by group.
+     *
+     * @param groupId the group id
+     * @return the list
+     */
     public static List<TimeTag> listByGroup(ObjectId groupId) {
         FindIterable<Document> iter = getCollection()
                 .find(new Document("gid", groupId));
@@ -64,6 +111,12 @@ public class TimeTag {
         return ret;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the time tag
+     */
     public static TimeTag findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
@@ -71,6 +124,13 @@ public class TimeTag {
         return doc != null ? load(doc) : null;
     }
 
+    /**
+     * Search.
+     *
+     * @param gid the gid
+     * @param query the query
+     * @return the list
+     */
     public static List<TimeTag> search(ObjectId gid, String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Document doc = new Document("gid", gid).append("title", regex);
@@ -83,6 +143,9 @@ public class TimeTag {
         return ret;
     }
 
+    /**
+     * Save.
+     */
     public void save() {
         Document doc = new Document();
         if (id != null)
@@ -102,20 +165,38 @@ public class TimeTag {
 
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Delete.
+     */
     public void delete() {
         if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
         }
     }
 
+    /**
+     * To json.
+     *
+     * @return the JSON object
+     */
     public JSONObject toJson() {
         JSONObject obj = new JSONObject();
         obj.put("id", id.toString());

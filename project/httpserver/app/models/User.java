@@ -10,27 +10,55 @@ import services.Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * The Class User.
+ */
 public class User implements Comparable<User> {
 
+    /** The collection. */
     private static MongoCollection<Document> collection;
+    
+    /** The token. */
     private String hash, salt, token;
+    
+    /** The id. */
     private ObjectId id = null;
 
+    /**
+     * Instantiates a new user.
+     */
     public User() {
 
     }
 
+    /**
+     * Instantiates a new user.
+     *
+     * @param password the password
+     */
     public User(String password) {
         setPassword(password);
         this.token = Tools.getRandomString(32);
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(User.class.getName());
         return collection;
     }
 
+    /**
+     * Load.
+     *
+     * @param doc the doc
+     * @return the user
+     */
     public static User load(Document doc) {
         User user = new User();
         user.id = doc.getObjectId("_id");
@@ -40,6 +68,12 @@ public class User implements Comparable<User> {
         return user;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the user
+     */
     public static User findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
@@ -47,6 +81,12 @@ public class User implements Comparable<User> {
         return doc != null ? load(doc) : null;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the user
+     */
     public static User findById(String id) {
         if (id != null) {
             Document doc = new Document("_id", new ObjectId(id));
@@ -93,6 +133,11 @@ public class User implements Comparable<User> {
         return "";
     }
 
+    /**
+     * Save.
+     *
+     * @return the user
+     */
     public User save() {
         Document doc = new Document();
 
@@ -110,23 +155,47 @@ public class User implements Comparable<User> {
         return this;
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Check.
+     *
+     * @param password the password
+     * @return true, if successful
+     */
     public boolean check(String password) {
         return getHash(password, this.salt).equals(this.hash);
     }
 
+    /**
+     * Sets the password.
+     *
+     * @param password the new password
+     */
     public void setPassword(String password) {
         this.salt = Tools.getRandomString(32);
         this.hash = getHash(password, salt);
     }
 
+    /**
+     * Gets the token.
+     *
+     * @return the token
+     */
     public String getToken() {
         return token;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     @Override
     public int compareTo(User o) {
         return id.compareTo(o.id);

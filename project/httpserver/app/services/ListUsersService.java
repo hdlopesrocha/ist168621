@@ -10,15 +10,21 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class ListUsersService.
  */
 public class ListUsersService extends Service<String> {
 
+    /** The caller. */
     private final ObjectId caller;
 
+    /**
+     * Instantiates a new list users service.
+     *
+     * @param caller the caller
+     */
     public ListUsersService(String caller) {
         this.caller = new ObjectId(caller);
     }
@@ -48,6 +54,9 @@ public class ListUsersService extends Service<String> {
         return array.toString();
     }
 
+    /* (non-Javadoc)
+     * @see services.Service#canExecute()
+     */
     @Override
     public boolean canExecute() {
         return caller != null;

@@ -8,12 +8,22 @@ import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
+
+/**
+ * The Class Tools.
+ */
 public class Tools {
 
+    /** The Constant FORMAT. */
     public static final DateFormat FORMAT;
 
+    /** The Constant RANDOM. */
     public static final Random RANDOM = new Random();
+    
+    /** The Constant allChars. */
     private static final String allChars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0987654321";
+    
+    /** The Constant random. */
     private static final Random random = new Random();
 
     static {
@@ -36,6 +46,12 @@ public class Tools {
         return builder.toString();
     }
 
+    /**
+     * Friendly time.
+     *
+     * @param time the time
+     * @return the string
+     */
     static public String friendlyTime(String time) {
         try {
 
@@ -57,6 +73,11 @@ public class Tools {
         return time;
     }
 
+    /**
+     * Gets the current time.
+     *
+     * @return the current time
+     */
     public static String getCurrentTime() {
         return FORMAT.format(new Date());
         //return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC).format(Instant.now());

@@ -6,16 +6,25 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class UpdateUserService.
  */
 public class UpdateUserService extends Service<Void> {
 
+    /** The attributes. */
     private List<AttributeDto> attributes;
+    
+    /** The user. */
     private ObjectId user;
 
+    /**
+     * Instantiates a new update user service.
+     *
+     * @param uid the uid
+     * @param attributes the attributes
+     */
     public UpdateUserService(final String uid, final List<AttributeDto> attributes) {
 
         this.user = uid != null ? new ObjectId(uid) : null;

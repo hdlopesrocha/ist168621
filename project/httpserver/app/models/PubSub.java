@@ -5,8 +5,16 @@ import com.mongodb.client.model.CreateCollectionOptions;
 import org.bson.Document;
 import services.Service;
 
+
+/**
+ * The Class PubSub.
+ */
 public class PubSub {
+    
+    /** The Constant keyCollection. */
     private static final MongoCollection<Document> keyCollection;
+    
+    /** The collection. */
     private static MongoCollection<Document> collection;
 
     static {
@@ -21,7 +29,6 @@ public class PubSub {
             }
         }
 
-
         if (!hasCollection) {
             System.out.println("init pubsub");
             CreateCollectionOptions options = new CreateCollectionOptions();
@@ -33,10 +40,20 @@ public class PubSub {
 
     }
 
+    /**
+     * Gets the key collection.
+     *
+     * @return the key collection
+     */
     public static MongoCollection<Document> getKeyCollection() {
         return keyCollection;
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         return collection;
     }

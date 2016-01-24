@@ -7,15 +7,28 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class CreateGroupService.
  */
 public class CreateGroupService extends Service<Group> {
 
+    /** The caller. */
     private final ObjectId caller;
+    
+    /** The attributes. */
     private final List<AttributeDto> attributes;
+    
+    /** The visibility. */
     private final Group.Visibility visibility;
 
+    /**
+     * Instantiates a new creates the group service.
+     *
+     * @param uid the uid
+     * @param visibility the visibility
+     * @param attributes the attributes
+     */
     public CreateGroupService(String uid, Group.Visibility visibility, List<AttributeDto> attributes) {
         this.caller = new ObjectId(uid);
         this.attributes = attributes;

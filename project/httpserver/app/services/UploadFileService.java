@@ -6,16 +6,22 @@ import models.KeyValueFile;
 import java.io.IOException;
 import java.util.UUID;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class SendMessageService.
+ * The Class UploadFileService.
  */
 public class UploadFileService extends Service<String> {
 
+    /** The anex. */
     private final KeyValueFile anex;
 
 
+    /**
+     * Instantiates a new upload file service.
+     *
+     * @param anex the anex
+     */
     public UploadFileService(final KeyValueFile anex) {
         this.anex = anex;
     }

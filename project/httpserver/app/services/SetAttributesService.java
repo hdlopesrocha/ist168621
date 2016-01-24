@@ -9,14 +9,24 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class SetAttributesService.
  */
 public class SetAttributesService extends Service<Search> {
 
+    /** The owner. */
     private ObjectId owner;
+    
+    /** The attributes. */
     private List<AttributeDto> attributes;
 
+    /**
+     * Instantiates a new sets the attributes service.
+     *
+     * @param owner the owner
+     * @param attributes the attributes
+     */
     public SetAttributesService(final String owner, List<AttributeDto> attributes) {
         this.owner = owner != null ? new ObjectId(owner) : null;
         this.attributes = attributes;

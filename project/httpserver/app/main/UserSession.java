@@ -23,21 +23,56 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+
+/**
+ * The Class UserSession.
+ */
 public class UserSession implements Closeable, Comparable<UserSession> {
 
+    /** The out. */
     private final WebSocket.Out<String> out;
+    
+    /** The user. */
     private final User user;
+    
+    /** The room. */
     private final Room room;
+    
+    /** The end point. */
     private final WebRtcEndpoint endPoint;
+    
+    /** The composite point. */
     private final WebRtcEndpoint compositePoint;
+    
+    /** The end points. */
     private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
+    
+    /** The composite port. */
     private final HubPort compositePort;
+    
+    /** The player lock. */
     private final Object playerLock = new Object();
+    
+    /** The player. */
     private PlayerEndpoint player;
+    
+    /** The play. */
     private boolean play = true;
+    
+    /** The time offset. */
     private long timeOffset = 0L;
+    
+    /** The play user. */
     private String playUser = "";
 
+    /**
+     * Instantiates a new user session.
+     *
+     * @param user the user
+     * @param room the room
+     * @param out the out
+     * @throws ServiceException the service exception
+     */
     public UserSession(final User user, final Room room, WebSocket.Out<String> out) throws ServiceException {
         this.out = out;
         this.user = user;
@@ -69,6 +104,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     }
 
 
+    /**
+     * Record.
+     *
+     * @param duration the duration
+     */
     public void record(int duration) {
         MyRecorder.record(endPoint, new Date(), duration, new MyRecorder.RecorderHandler() {
             @Override
@@ -87,10 +127,20 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         });
     }
 
+    /**
+     * Gets the time offset.
+     *
+     * @return the time offset
+     */
     private long getTimeOffset() {
         return timeOffset;
     }
 
+    /**
+     * Gets the content.
+     *
+     * @return the content
+     */
     public String getContent() {
         long offset = getTimeOffset();
         Date time = new Date(new Date().getTime() - offset);
@@ -131,6 +181,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
+    /**
+     * Gets the web rtc end point.
+     *
+     * @param name the name
+     * @return the web rtc end point
+     */
     private WebRtcEndpoint getWebRtcEndPoint(String name) {
         WebRtcEndpoint ep = endPoints.get(name);
         if (ep == null) {
@@ -165,6 +221,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         return ep;
     }
 
+    /**
+     * Send message.
+     *
+     * @param string the string
+     */
     public synchronized void sendMessage(final String string) {
 
         System.out.println("\nSEND:" + string);
@@ -172,7 +233,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     }
 
     /**
-     * The room to which the user is currently attending
+     * The room to which the user is currently attending.
      *
      * @return The room
      */
@@ -180,6 +241,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         return room.getGroupId();
     }
 
+    /* (non-Javadoc)
+     * @see java.io.Closeable#close()
+     */
     @Override
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
@@ -190,16 +254,30 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.release();
     }
 
+    /**
+     * Adds the candidate.
+     *
+     * @param candidate the candidate
+     * @param name the name
+     */
     public void addCandidate(IceCandidate candidate, String name) {
         WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
         // XXX [CLIENT_ICE_04] XXX
         ep.addIceCandidate(candidate);
     }
 
+    /**
+     * Gets the user.
+     *
+     * @return the user
+     */
     public User getUser() {
         return user;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     @Override
     public int compareTo(UserSession o) {
         return getUser().compareTo(o.getUser());
@@ -237,6 +315,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         return result;
     }
 
+    /**
+     * Sets the historic.
+     *
+     * @param userId the user id
+     * @param offset the offset
+     */
     public void setHistoric(String userId, long offset) {
         timeOffset = offset;
         playUser = userId;
@@ -303,6 +387,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
+    /**
+     * Sets the realtime.
+     *
+     * @param userId the new realtime
+     */
     public void setRealtime(String userId) {
         System.out.println("REALTIME");
         synchronized (playerLock) {
@@ -326,6 +415,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
+    /**
+     * Process offer.
+     *
+     * @param description the description
+     * @param name the name
+     */
     public void processOffer(String description, String name) {
         // XXX [CLIENT_ICE_04] XXX
         WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
@@ -342,6 +437,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         ep.gatherCandidates();
     }
 
+    /**
+     * Sets the play.
+     *
+     * @param play the new play
+     */
     public void setPlay(boolean play) {
         synchronized (playerLock) {
 
@@ -356,6 +456,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
     }
 
+    /**
+     * Send messages.
+     *
+     * @param end the end
+     * @param len the len
+     */
     public void sendMessages(Long end, int len) {
         ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), end, len);
         JSONArray messagesArray = new JSONArray();

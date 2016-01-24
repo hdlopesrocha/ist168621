@@ -12,15 +12,31 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+
+/**
+ * The Class KurentoManager.
+ */
 public class KurentoManager {
 
 
+    /** The Constant DEFAULT_KMS_WS_URI. */
     private final static String DEFAULT_KMS_WS_URI = "ws://localhost:8888/kurento";
+    
+    /** The Constant DEFAULT_REPOSITORY_SERVER_URI. */
     private final static String DEFAULT_REPOSITORY_SERVER_URI = "http://localhost:7676";
+    
+    /** The repository. */
     public static RepositoryRestApi repository;
+    
+    /** The kurento. */
     private static KurentoClient kurento;
+    
+    /** The rooms. */
     private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
+    /**
+     * Instantiates a new kurento manager.
+     */
     public KurentoManager() {
         System.out.println("Connecting to KMS...");
         kurento = KurentoClient.create(DEFAULT_KMS_WS_URI);
@@ -47,6 +63,12 @@ public class KurentoManager {
     }
 
 
+    /**
+     * Gets the room.
+     *
+     * @param groupId the group id
+     * @return the room
+     */
     public Room getRoom(String groupId) {
         Group group = Group.findById(new ObjectId(groupId));
         if (group == null) {
@@ -63,6 +85,11 @@ public class KurentoManager {
     }
 
 
+    /**
+     * Removes the room.
+     *
+     * @param room the room
+     */
     public void removeRoom(Room room) {
         this.rooms.remove(room.getId());
     }

@@ -7,18 +7,37 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class CreateHyperContentService.
  */
 public class CreateHyperContentService extends Service<HyperContent> {
 
+    /** The user. */
     private final User user;
+    
+    /** The group. */
     private final Group group;
+    
+    /** The start. */
     private final Date start;
+    
+    /** The end. */
     private final Date end;
+    
+    /** The content. */
     private String content = null;
 
 
+    /**
+     * Instantiates a new creates the hyper content service.
+     *
+     * @param uid the uid
+     * @param gid the gid
+     * @param start the start
+     * @param end the end
+     * @param content the content
+     */
     public CreateHyperContentService(String uid, String gid, Date start, Date end, String content) {
         this.user = User.findById(new ObjectId(uid));
         this.group = Group.findById(new ObjectId(gid));

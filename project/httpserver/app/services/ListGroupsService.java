@@ -11,15 +11,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class ListGroupsService.
  */
 public class ListGroupsService extends Service<List<Group>> {
 
+    /** The user. */
     private final User user;
 
+    /**
+     * Instantiates a new list groups service.
+     *
+     * @param uid the uid
+     */
     public ListGroupsService(String uid) {
         this.user = User.findById(new ObjectId(uid));
     }

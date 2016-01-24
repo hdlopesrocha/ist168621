@@ -10,16 +10,32 @@ import org.bson.types.ObjectId;
 import java.util.Date;
 
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class GetCurrentRecordingService.
  */
 public class GetCurrentRecordingService extends Service<Recording> {
 
+    /** The caller. */
     private final User caller;
+    
+    /** The group id. */
     private final ObjectId groupId;
+    
+    /** The user id. */
     private final ObjectId userId;
+    
+    /** The time. */
     private final Date time;
 
+    /**
+     * Instantiates a new gets the current recording service.
+     *
+     * @param callerId the caller id
+     * @param groupId the group id
+     * @param userId the user id
+     * @param time the time
+     */
     public GetCurrentRecordingService(String callerId, String groupId, String userId, Date time) {
         this.caller = User.findById(new ObjectId(callerId));
         this.userId = new ObjectId(userId);

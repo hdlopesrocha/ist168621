@@ -9,16 +9,25 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class ListGroupMembersService.
  */
 public class ListGroupMembersService extends Service<List<KeyValuePair<Membership, User>>> {
 
+    /** The user. */
     private final User user;
+    
+    /** The group. */
     private final Group group;
 
+    /**
+     * Instantiates a new list group members service.
+     *
+     * @param uid the uid
+     * @param groupId the group id
+     */
     public ListGroupMembersService(String uid, String groupId) {
         this.user = User.findById(new ObjectId(uid));
         this.group = Group.findById(new ObjectId(groupId));

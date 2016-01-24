@@ -4,18 +4,30 @@ package services;
 import models.HyperContent;
 import org.bson.types.ObjectId;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class DeleteHyperContentService.
  */
 public class DeleteHyperContentService extends Service<Void> {
 
+    /** The user. */
     private final ObjectId user;
+    
+    /** The group. */
     private ObjectId group;
+    
+    /** The content id. */
     private ObjectId contentId = null;
 
 
+    /**
+     * Instantiates a new delete hyper content service.
+     *
+     * @param uid the uid
+     * @param gid the gid
+     * @param cid the cid
+     */
     public DeleteHyperContentService(String uid, String gid, String cid) {
         this.user = new ObjectId(uid);
         this.group = new ObjectId(gid);

@@ -6,15 +6,28 @@ import models.Membership;
 import org.bson.types.ObjectId;
 
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class JoinGroupInviteService.
  */
 public class JoinGroupInviteService extends Service<Boolean> {
 
+    /** The caller. */
     private final ObjectId caller;
+    
+    /** The group id. */
     private final ObjectId groupId;
+    
+    /** The token. */
     private final String token;
 
+    /**
+     * Instantiates a new join group invite service.
+     *
+     * @param caller the caller
+     * @param groupId the group id
+     * @param token the token
+     */
     public JoinGroupInviteService(final String caller, final String groupId, final String token) {
         this.caller = new ObjectId(caller);
         this.groupId = new ObjectId(groupId);

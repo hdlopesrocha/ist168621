@@ -13,17 +13,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
 /**
  * Created by hdlopesrocha on 06-01-2016.
  */
 public class Search {
 
+    /** The collection. */
     private static MongoCollection<Document> collection;
+    
+    /** The search. */
     private List<String> search;
+    
+    /** The id. */
     private ObjectId id = null;
+    
+    /** The owner. */
     private ObjectId owner = null;
+    
+    /** The filter. */
     private Document filter = null;
 
+    /**
+     * Instantiates a new search.
+     *
+     * @param owner the owner
+     * @param attributes the attributes
+     */
     public Search(ObjectId owner, List<AttributeDto> attributes) {
 
         this.search = new ArrayList<String>();
@@ -40,16 +56,30 @@ public class Search {
         this.owner = owner;
     }
 
+    /**
+     * Instantiates a new search.
+     */
     private Search() {
 
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Search.class.getName());
         return collection;
     }
 
+    /**
+     * Load.
+     *
+     * @param doc the doc
+     * @return the search
+     */
     public static Search load(Document doc) {
         Search user = new Search();
         user.id = doc.getObjectId("_id");
@@ -59,6 +89,12 @@ public class Search {
         return user;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the search
+     */
     public static Search findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
@@ -66,6 +102,12 @@ public class Search {
         return doc != null ? load(doc) : null;
     }
 
+    /**
+     * List by owner.
+     *
+     * @param id the id
+     * @return the list
+     */
     public static List<Search> listByOwner(ObjectId id) {
         Document doc = new Document("owner", id);
         MongoCursor<Document> iter = getCollection().find(doc).iterator();
@@ -77,6 +119,12 @@ public class Search {
         return ret;
     }
 
+    /**
+     * Builds the query.
+     *
+     * @param filters the filters
+     * @return the document
+     */
     private static Document buildQuery(List<List<KeyValue<String>>> filters) {
         Document query = new Document();
 
@@ -95,6 +143,15 @@ public class Search {
         return query;
     }
 
+    /**
+     * Search.
+     *
+     * @param search the search
+     * @param offset the offset
+     * @param limit the limit
+     * @param filters the filters
+     * @return the list
+     */
     public static List<Search> search(String search, Integer offset, Integer limit,
                                       List<List<KeyValue<String>>> filters) {
         Document query = buildQuery(filters);
@@ -120,10 +177,22 @@ public class Search {
 
     }
 
+    /**
+     * Delete by owner.
+     *
+     * @param owner the owner
+     */
     public static void deleteByOwner(ObjectId owner) {
         getCollection().deleteMany(new Document("owner", owner));
     }
 
+    /**
+     * Count by value.
+     *
+     * @param search the search
+     * @param filters the filters
+     * @return the long
+     */
     public static Long countByValue(String search, List<List<KeyValue<String>>> filters) {
         Document query = buildQuery(filters);
 
@@ -134,16 +203,32 @@ public class Search {
         return getCollection().count(query);
     }
 
+    /**
+     * Count.
+     *
+     * @param filters the filters
+     * @return the long
+     */
     public static Long count(List<List<KeyValue<String>>> filters) {
         Document query = buildQuery(filters);
 
         return getCollection().count(query);
     }
 
+    /**
+     * Gets the owner.
+     *
+     * @return the owner
+     */
     public ObjectId getOwner() {
         return owner;
     }
 
+    /**
+     * Save.
+     *
+     * @return the search
+     */
     public Search save() {
         Document doc = new Document();
         doc.put("owner", owner);
@@ -161,6 +246,11 @@ public class Search {
         return this;
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public ObjectId getId() {
         return id;
     }

@@ -24,10 +24,21 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * The Class Rest.
+ */
 public class Rest extends Controller {
 
+    /** The Constant MONGODB_SDP_LOCK. */
     private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
 
+    /**
+     * Accept relation.
+     *
+     * @param uid the uid
+     * @return the result
+     */
     public Result acceptRelation(String uid) {
         if (session("uid") != null) {
             CreateRelationService service = new CreateRelationService(session("uid"), uid);
@@ -41,6 +52,12 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * Search on group.
+     *
+     * @param groupId the group id
+     * @return the result
+     */
     public Result searchOnGroup(String groupId) {
         String query = request().getQueryString("query");
 
@@ -89,6 +106,11 @@ public class Rest extends Controller {
         return ok(array.toString());
     }
 
+    /**
+     * Change password.
+     *
+     * @return the result
+     */
     public Result changePassword() {
         Map<String, String[]> info = request().body().asFormUrlEncoded();
         String oldPassword = info.get("oldPassword")[0];
@@ -105,6 +127,11 @@ public class Rest extends Controller {
         return badRequest();
     }
 
+    /**
+     * Creates the group.
+     *
+     * @return the result
+     */
     public Result createGroup() {
         if (session("uid") != null) {
             Map<String, String[]> qs = request().queryString();
@@ -126,6 +153,12 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * Deny relation.
+     *
+     * @param email the email
+     * @return the result
+     */
     public Result denyRelation(String email) {
         if (session("uid") != null) {
             DenyRelationService service = new DenyRelationService(session("uid"), email);
@@ -139,6 +172,11 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * Sets the photo headers.
+     *
+     * @param fileName the new photo headers
+     */
     private void setPhotoHeaders(String fileName) {
         String[] tokens = fileName.split("/");
 
@@ -156,6 +194,12 @@ public class Rest extends Controller {
     }
 
 
+    /**
+     * Gets the file.
+     *
+     * @param fileName the file name
+     * @return the file
+     */
     public Result getFile(String fileName) {
         fileName = fileName.replace("%20", " ");
 
@@ -176,6 +220,12 @@ public class Rest extends Controller {
         return notFound();
     }
 
+    /**
+     * Gets the photo.
+     *
+     * @param uid the uid
+     * @return the photo
+     */
     public Result getPhoto(String uid) {
         if (uid != null && uid.length() > 0) {
             try {
@@ -194,6 +244,13 @@ public class Rest extends Controller {
 
     }
 
+    /**
+     * Gets the user.
+     *
+     * @param userId the user id
+     * @return the user
+     * @throws ServiceException the service exception
+     */
     public Result getUser(String userId) throws ServiceException {
         Document attributes = new ListOwnerAttributesService(session("uid"), userId, null).execute();
         JSONObject result = new JSONObject(attributes.toJson());
@@ -202,6 +259,12 @@ public class Rest extends Controller {
     }
 
 
+    /**
+     * List group members properties.
+     *
+     * @param groupId the group id
+     * @return the result
+     */
     public Result listGroupMembersProperties(String groupId) {
         JSONObject obj = new JSONObject();
         List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
@@ -211,6 +274,11 @@ public class Rest extends Controller {
         return ok(obj.toString());
     }
 
+    /**
+     * List groups.
+     *
+     * @return the result
+     */
     public Result listGroups() {
         if (session("uid") != null) {
             ListGroupsService service = new ListGroupsService(session("uid"));
@@ -233,6 +301,11 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * List relation requests.
+     *
+     * @return the result
+     */
     public Result listRelationRequests() {
         if (session("uid") != null) {
             ListRelationRequestsService service = new ListRelationRequestsService(session("uid"));
@@ -255,6 +328,11 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * List relations.
+     *
+     * @return the result
+     */
     public Result listRelations() {
         if (session("uid") != null) {
             ListRelationsService service = new ListRelationsService(session("uid"));
@@ -275,6 +353,11 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * List users.
+     *
+     * @return the result
+     */
     public Result listUsers() {
         try {
             return ok(new ListUsersService(session("uid")).execute());
@@ -285,6 +368,11 @@ public class Rest extends Controller {
         return unauthorized();
     }
 
+    /**
+     * Login.
+     *
+     * @return the result
+     */
     public Result login() {
         try {
 
@@ -319,12 +407,23 @@ public class Rest extends Controller {
         return badRequest();
     }
 
+    /**
+     * Logout.
+     *
+     * @return the result
+     */
     public Result logout() {
         session().clear();
         return ok();
     }
 
 
+    /**
+     * Register.
+     *
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result register() throws ServiceException {
 
         MultipartFormData multipart = request().body().asMultipartFormData();
@@ -387,6 +486,11 @@ public class Rest extends Controller {
     }
 
 
+    /**
+     * Search.
+     *
+     * @return the result
+     */
     public Result search() {
         String query = request().queryString().get("s")[0];
 
@@ -421,6 +525,12 @@ public class Rest extends Controller {
         return ok("[]");
     }
 
+    /**
+     * Search group candidates.
+     *
+     * @param groupId the group id
+     * @return the result
+     */
     public Result searchGroupCandidates(String groupId) {
         if (session("uid") != null) {
             String query = request().queryString().get("s")[0];
@@ -442,6 +552,11 @@ public class Rest extends Controller {
     }
 
 
+    /**
+     * Update user.
+     *
+     * @return the result
+     */
     public Result updateUser() {
         try {
             MultipartFormData multipart = request().body().asMultipartFormData();
@@ -473,11 +588,25 @@ public class Rest extends Controller {
         return badRequest();
     }
 
+    /**
+     * Creates the group invite.
+     *
+     * @param groupId the group id
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result createGroupInvite(String groupId) throws ServiceException {
         CreateGroupInviteService service = new CreateGroupInviteService(session("uid"), groupId);
         return ok(service.execute());
     }
 
+    /**
+     * Gets the group invite.
+     *
+     * @param groupId the group id
+     * @return the group invite
+     * @throws ServiceException the service exception
+     */
     public Result getGroupInvite(String groupId) throws ServiceException {
         GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
         String token = service.execute();
@@ -487,12 +616,27 @@ public class Rest extends Controller {
         return badRequest();
     }
 
+    /**
+     * Delete group invite.
+     *
+     * @param groupId the group id
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result deleteGroupInvite(String groupId) throws ServiceException {
         DeleteGroupInviteService service = new DeleteGroupInviteService(session("uid"), groupId);
         service.execute();
         return ok();
     }
 
+    /**
+     * Join group invite.
+     *
+     * @param groupId the group id
+     * @param token the token
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result joinGroupInvite(String groupId, String token) throws ServiceException {
         JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
         if (service.execute()) {

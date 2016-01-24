@@ -12,17 +12,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class SearchGroupCandidatesService.
  */
 public class SearchGroupCandidatesService extends Service<JSONArray> {
 
+    /** The user. */
     private final ObjectId user;
+    
+    /** The group. */
     private final ObjectId group;
+    
+    /** The query. */
     private final String query;
 
+    /**
+     * Instantiates a new search group candidates service.
+     *
+     * @param userId the user id
+     * @param groupId the group id
+     * @param query the query
+     */
     public SearchGroupCandidatesService(String userId, String groupId, String query) {
         this.user = new ObjectId(userId);
         this.group = new ObjectId(groupId);

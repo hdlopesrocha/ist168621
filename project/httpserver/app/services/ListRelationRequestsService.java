@@ -7,16 +7,22 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class ListRelationRequestsService.
  */
 public class ListRelationRequestsService extends Service<List<User>> {
 
+    /** The caller. */
     private final User caller;
 
 
+    /**
+     * Instantiates a new list relation requests service.
+     *
+     * @param uid the uid
+     */
     public ListRelationRequestsService(String uid) {
         this.caller = User.findById(new ObjectId(uid));
 

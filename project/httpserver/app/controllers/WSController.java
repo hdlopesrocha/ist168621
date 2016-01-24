@@ -31,6 +31,10 @@ public class WSController extends Controller {
     public WebSocket<String> connectToRoom(String groupId) {
         final String userId = session("uid");
         return new WebSocket<String>() {
+            
+            /* (non-Javadoc)
+             * @see play.mvc.WebSocket#onReady(play.mvc.WebSocket.In, play.mvc.WebSocket.Out)
+             */
             public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
                 System.out.println("Join room " + groupId);
                 Room room = Global.manager.getRoom(groupId);

@@ -4,14 +4,24 @@ import exceptions.ServiceException;
 import models.Group;
 import org.bson.types.ObjectId;
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class CreateGroupInviteService.
  */
 public class CreateGroupInviteService extends Service<String> {
 
+    /** The caller. */
     private final ObjectId caller;
+    
+    /** The group id. */
     private final ObjectId groupId;
 
+    /**
+     * Instantiates a new creates the group invite service.
+     *
+     * @param caller the caller
+     * @param groupId the group id
+     */
     public CreateGroupInviteService(final String caller, final String groupId) {
         this.caller = new ObjectId(caller);
         this.groupId = new ObjectId(groupId);

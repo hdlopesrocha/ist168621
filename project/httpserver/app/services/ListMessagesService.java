@@ -6,18 +6,30 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class SendMessageService.
+ * The Class ListMessagesService.
  */
 public class ListMessagesService extends Service<List<Message>> {
 
+    /** The target. */
     private final ObjectId target;
+    
+    /** The end. */
     private final Long end;
+    
+    /** The len. */
     private final int len;
 
 
+    /**
+     * Instantiates a new list messages service.
+     *
+     * @param target the target
+     * @param end the end
+     * @param len the len
+     */
     public ListMessagesService(final String target, final Long end, final int len) {
         this.target = new ObjectId(target);
         this.end = end;

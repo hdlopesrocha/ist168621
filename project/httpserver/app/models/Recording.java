@@ -10,19 +10,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * The Class Recording.
+ */
 public class Recording {
 
 
+    /** The collection. */
     private static MongoCollection<Document> collection;
+    
+    /** The owner. */
     private ObjectId groupId, owner;
+    
+    /** The end. */
     private Date start, end;
+    
+    /** The url. */
     private String url;
+    
+    /** The id. */
     private ObjectId id = null;
 
+    /**
+     * Instantiates a new recording.
+     */
     private Recording() {
 
     }
 
+    /**
+     * Instantiates a new recording.
+     *
+     * @param groupId the group id
+     * @param owner the owner
+     * @param start the start
+     * @param end the end
+     * @param url the url
+     */
     public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String url) {
         this.groupId = groupId;
         this.owner = owner;
@@ -31,12 +56,23 @@ public class Recording {
         this.url = url;
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Recording.class.getName());
         return collection;
     }
 
+    /**
+     * Load.
+     *
+     * @param doc the doc
+     * @return the recording
+     */
     public static Recording load(Document doc) {
         Recording rec = new Recording();
         rec.id = doc.getObjectId("_id");
@@ -48,11 +84,24 @@ public class Recording {
         return rec;
     }
 
+    /**
+     * Count by group.
+     *
+     * @param owner the owner
+     * @return the long
+     */
     public static long countByGroup(ObjectId owner) {
         Document doc = new Document("gid", owner);
         return getCollection().count(doc);
     }
 
+    /**
+     * List by group.
+     *
+     * @param groupId the group id
+     * @param sequence the sequence
+     * @return the list
+     */
     public static List<Recording> listByGroup(ObjectId groupId, long sequence) {
         FindIterable<Document> iter = getCollection()
                 .find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
@@ -63,6 +112,12 @@ public class Recording {
         return ret;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the recording
+     */
     public static Recording findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
@@ -70,6 +125,9 @@ public class Recording {
         return doc != null ? load(doc) : null;
     }
 
+    /**
+     * Save.
+     */
     public void save() {
         Document doc = new Document();
         if (id != null)
@@ -90,44 +148,92 @@ public class Recording {
 
     }
 
+    /**
+     * Gets the start.
+     *
+     * @return the start
+     */
     public Date getStart() {
         return start;
     }
 
+    /**
+     * Sets the start.
+     *
+     * @param start the new start
+     */
     public void setStart(Date start) {
         this.start = start;
     }
 
+    /**
+     * Gets the end.
+     *
+     * @return the end
+     */
     public Date getEnd() {
         return end;
     }
 
+    /**
+     * Sets the end.
+     *
+     * @param end the new end
+     */
     public void setEnd(Date end) {
         this.end = end;
     }
 
+    /**
+     * Gets the url.
+     *
+     * @return the url
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Sets the url.
+     *
+     * @param url the new url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Delete.
+     */
     public void delete() {
         if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
         }
     }
 
+    /**
+     * Gets the owner.
+     *
+     * @return the owner
+     */
     public ObjectId getOwner() {
         return owner;
     }

@@ -1,9 +1,9 @@
 package exceptions;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class UnauthorizedException.
+ * The Class BadRequestException.
  */
 public class BadRequestException extends ServiceException {
 

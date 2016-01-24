@@ -5,15 +5,25 @@ import models.User;
 import org.bson.types.ObjectId;
 
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class CreateRelationService.
  */
 public class CreateRelationService extends Service<Void> {
 
+    /** The from. */
     private final User from;
+    
+    /** The to. */
     private final User to;
 
 
+    /**
+     * Instantiates a new creates the relation service.
+     *
+     * @param from the from
+     * @param to the to
+     */
     public CreateRelationService(String from, String to) {
         this.from = User.findById(new ObjectId(from));
         this.to = User.findById(new ObjectId(to));

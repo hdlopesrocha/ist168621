@@ -5,14 +5,24 @@ import models.User;
 import org.bson.types.ObjectId;
 
 
+
 /**
- * The Class AuthenticateUserService.
+ * The Class DenyRelationService.
  */
 public class DenyRelationService extends Service<Void> {
 
+    /** The from. */
     private final User from;
+    
+    /** The to. */
     private final User to;
 
+    /**
+     * Instantiates a new deny relation service.
+     *
+     * @param from the from
+     * @param to the to
+     */
     public DenyRelationService(String from, String to) {
         this.from = User.findById(new ObjectId(from));
         this.to = User.findById(new ObjectId(to));

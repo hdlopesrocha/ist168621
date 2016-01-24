@@ -5,17 +5,29 @@ import models.Membership;
 import models.User;
 import org.bson.types.ObjectId;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class RemoveGroupMemberService.
  */
 public class RemoveGroupMemberService extends Service<Void> {
 
+    /** The user. */
     private final User user;
+    
+    /** The member. */
     private final User member;
+    
+    /** The group. */
     private final Group group;
 
+    /**
+     * Instantiates a new removes the group member service.
+     *
+     * @param callerId the caller id
+     * @param groupId the group id
+     * @param memberId the member id
+     */
     public RemoveGroupMemberService(String callerId, String groupId, String memberId) {
         this.user = User.findById(new ObjectId(callerId));
         this.group = Group.findById(new ObjectId(groupId));

@@ -21,15 +21,35 @@ import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+
+/**
+ * The Class Room.
+ */
 public class Room implements Closeable {
 
+    /** The participants. */
     private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
+    
+    /** The media pipeline. */
     private final MediaPipeline mediaPipeline;
+    
+    /** The group. */
     private final Group group;
+    
+    /** The interval. */
     private Interval interval;
+    
+    /** The composite. */
     private Hub composite = null;
+    
+    /** The hub port. */
     private HubPort hubPort;
 
+    /**
+     * Instantiates a new room.
+     *
+     * @param mediaPipeline the media pipeline
+     */
     public Room(final MediaPipeline mediaPipeline) {
         this.mediaPipeline = mediaPipeline;
         this.mediaPipeline.addErrorListener(new EventListener<ErrorEvent>() {
@@ -66,10 +86,20 @@ public class Room implements Closeable {
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }
 
+    /**
+     * Gets the hub port.
+     *
+     * @return the hub port
+     */
     public HubPort getHubPort() {
         return hubPort;
     }
 
+    /**
+     * Record.
+     *
+     * @param duration the duration
+     */
     private void record(int duration) {
         MyRecorder.record(hubPort, new Date(), duration, new MyRecorder.RecorderHandler() {
             @Override
@@ -113,6 +143,12 @@ public class Room implements Closeable {
 
     }
 
+    /**
+     * Gets the composite port.
+     *
+     * @param id the id
+     * @return the composite port
+     */
     public HubPort getCompositePort(String id) {
         for (MediaObject port : getComposite().getChilds()) {
             if (port.getName().equals(id)) {
@@ -125,26 +161,51 @@ public class Room implements Closeable {
         return port;
     }
 
+    /**
+     * Send message.
+     *
+     * @param string the string
+     */
     public void sendMessage(final String string) {
         for (UserSession user : participants.values()) {
             user.sendMessage(string);
         }
     }
 
+    /**
+     * Gets the composite.
+     *
+     * @return the composite
+     */
     private Hub getComposite() {
         return composite;
 
     }
 
+    /**
+     * Shutdown.
+     */
     @PreDestroy
     private void shutdown() {
         this.close();
     }
 
+    /**
+     * Gets the group id.
+     *
+     * @return the group id
+     */
     public String getGroupId() {
         return group.getId().toString();
     }
 
+    /**
+     * Join.
+     *
+     * @param user the user
+     * @param out the out
+     * @return the user session
+     */
     public UserSession join(final User user, final WebSocket.Out<String> out) {
         try {
             System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
@@ -188,6 +249,12 @@ public class Room implements Closeable {
         return null;
     }
 
+    /**
+     * Leave.
+     *
+     * @param user the user
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public void leave(final UserSession user) throws IOException {
         String uid = user.getUser().getId().toString();
 
@@ -211,6 +278,8 @@ public class Room implements Closeable {
     }
 
     /**
+     * Gets the participants.
+     *
      * @return a collection with all the participants in the room
      */
     public Collection<UserSession> getParticipants() {
@@ -218,12 +287,18 @@ public class Room implements Closeable {
     }
 
     /**
+     * Gets the participant.
+     *
+     * @param uid the uid
      * @return the participant from this session
      */
     public UserSession getParticipant(final String uid) {
         return uid != null ? participants.get(uid) : null;
     }
 
+    /* (non-Javadoc)
+     * @see java.io.Closeable#close()
+     */
     @Override
     public void close() {
         System.out.println("------------- ROOM CLOSE --------------");
@@ -239,10 +314,20 @@ public class Room implements Closeable {
         Global.manager.removeRoom(this);
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public String getId() {
         return group.getId().toString();
     }
 
+    /**
+     * Gets the media pipeline.
+     *
+     * @return the media pipeline
+     */
     public MediaPipeline getMediaPipeline() {
         return mediaPipeline;
     }

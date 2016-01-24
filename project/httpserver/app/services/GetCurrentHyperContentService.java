@@ -12,19 +12,35 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class GetCurrentHyperContentService.
  */
 public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
 
+    /** The Constant PRELOAD_SIZE. */
     private static final int PRELOAD_SIZE = 5;
+    
+    /** The caller. */
     private final User caller;
+    
+    /** The group id. */
     private final ObjectId groupId;
+    
+    /** The time. */
     private final Date time;
+    
+    /** The has more. */
     private boolean hasMore;
 
+    /**
+     * Instantiates a new gets the current hyper content service.
+     *
+     * @param callerId the caller id
+     * @param groupId the group id
+     * @param time the time
+     */
     public GetCurrentHyperContentService(String callerId, String groupId, Date time) {
         this.caller = User.findById(new ObjectId(callerId));
         this.groupId = new ObjectId(groupId);
@@ -69,6 +85,11 @@ public class GetCurrentHyperContentService extends Service<List<HyperContent>> {
     }
 
 
+    /**
+     * Checks for more.
+     *
+     * @return true, if successful
+     */
     public boolean hasMore() {
         return hasMore;
     }

@@ -8,16 +8,25 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class ListTimeTagsService.
  */
 public class ListTimeTagsService extends Service<List<TimeTag>> {
 
+    /** The caller. */
     private final ObjectId caller;
+    
+    /** The gid. */
     private final ObjectId gid;
 
+    /**
+     * Instantiates a new list time tags service.
+     *
+     * @param email the email
+     * @param gid the gid
+     */
     public ListTimeTagsService(String email, String gid) {
         this.caller = new ObjectId(email);
         this.gid = new ObjectId(gid);
@@ -40,6 +49,9 @@ public class ListTimeTagsService extends Service<List<TimeTag>> {
         return tags;
     }
 
+    /* (non-Javadoc)
+     * @see services.Service#canExecute()
+     */
     @Override
     public boolean canExecute() {
         return caller != null;

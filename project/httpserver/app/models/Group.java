@@ -12,25 +12,56 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
+/**
+ * The Class Group.
+ */
 public class Group {
 
+    /** The collection. */
     private static MongoCollection<Document> collection;
+    
+    /** The id. */
     private ObjectId id = null;
+    
+    /** The invite. */
     private String invite = null;
+    
+    /** The visibility. */
     private Visibility visibility;
+    
+    /**
+     * Instantiates a new group.
+     *
+     * @param visibility the visibility
+     */
     public Group(Visibility visibility) {
         this.visibility = visibility;
     }
 
+    /**
+     * Instantiates a new group.
+     */
     private Group() {
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return the collection
+     */
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
             collection = Service.getDatabase().getCollection(Group.class.getName());
         return collection;
     }
 
+    /**
+     * Load.
+     *
+     * @param doc the doc
+     * @return the group
+     */
     private static Group load(Document doc) {
         Group user = new Group();
         user.id = doc.getObjectId("_id");
@@ -39,6 +70,12 @@ public class Group {
         return user;
     }
 
+    /**
+     * Find by id.
+     *
+     * @param id the id
+     * @return the group
+     */
     public static Group findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
@@ -46,6 +83,11 @@ public class Group {
         return doc != null ? load(doc) : null;
     }
 
+    /**
+     * List all.
+     *
+     * @return the list
+     */
     public static List<Group> listAll() {
         FindIterable<Document> iter = getCollection().find(new Document());
         List<Group> ret = new ArrayList<Group>();
@@ -55,6 +97,13 @@ public class Group {
         return ret;
     }
 
+    /**
+     * Search.
+     *
+     * @param caller the caller
+     * @param query the query
+     * @return the list
+     */
     public static List<Group> search(User caller, String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Document doc = new Document("name", regex);
@@ -67,22 +116,44 @@ public class Group {
         return ret;
     }
 
+    /**
+     * Gets the visibility.
+     *
+     * @return the visibility
+     */
     public Visibility getVisibility() {
         return visibility;
     }
 
+    /**
+     * Generate invite.
+     */
     public void generateInvite() {
         invite = Tools.getRandomString(12);
     }
 
+    /**
+     * Gets the invite.
+     *
+     * @return the invite
+     */
     public String getInvite() {
         return invite;
     }
 
+    /**
+     * Match invite.
+     *
+     * @param attempt the attempt
+     * @return true, if successful
+     */
     public boolean matchInvite(String attempt) {
         return invite != null && invite.equals(attempt);
     }
 
+    /**
+     * Save.
+     */
     public void save() {
         Document doc = new Document();
         if (id != null)
@@ -100,24 +171,45 @@ public class Group {
 
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Delete.
+     */
     public void delete() {
         if (id != null)
             getCollection().deleteOne(new Document("_id", id));
     }
 
+    /**
+     * Delete invite.
+     */
     public void deleteInvite() {
         invite = null;
     }
 
-    public enum Visibility {PUBLIC, PRIVATE}
+    /**
+     * The Enum Visibility.
+     */
+    public enum Visibility {/** The public. */
+PUBLIC, /** The private. */
+ PRIVATE}
 
 
 }

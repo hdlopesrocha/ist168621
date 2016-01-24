@@ -5,16 +5,25 @@ import models.Group;
 import org.bson.types.ObjectId;
 
 
-// TODO: Auto-generated Javadoc
+
 
 /**
- * The Class AuthenticateUserService.
+ * The Class GetGroupInviteService.
  */
 public class GetGroupInviteService extends Service<String> {
 
+    /** The caller. */
     private final ObjectId caller;
+    
+    /** The group id. */
     private final ObjectId groupId;
 
+    /**
+     * Instantiates a new gets the group invite service.
+     *
+     * @param caller the caller
+     * @param groupId the group id
+     */
     public GetGroupInviteService(final String caller, final String groupId) {
         this.caller = new ObjectId(caller);
         this.groupId = new ObjectId(groupId);

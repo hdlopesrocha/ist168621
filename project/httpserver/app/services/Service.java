@@ -8,7 +8,7 @@ import com.mongodb.gridfs.GridFS;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
  * The Class Service.
@@ -16,13 +16,30 @@ import exceptions.UnauthorizedException;
  * @param <T> the generic type
  */
 public abstract class Service<T> {
+    
+    /** The files. */
     static GridFS files;
+    
+    /** The last oid. */
     static long lastOid = 0L;
+    
+    /** The db. */
     private static DB db;
+    
+    /** The client. */
     private static MongoClient client;
+    
+    /** The database. */
     private static MongoDatabase database;
+    
+    /** The db name. */
     private static String DB_NAME = "webrtc";
 
+    /**
+     * Gets the client.
+     *
+     * @return the client
+     */
     private static MongoClient getClient() {
         if (client == null) {
             client = new MongoClient(ServerAddress.defaultHost());
@@ -30,6 +47,11 @@ public abstract class Service<T> {
         return client;
     }
 
+    /**
+     * Inits the.
+     *
+     * @param dbname the dbname
+     */
     public static void init(String dbname) {
         DB_NAME = dbname;
         db = null;
@@ -37,6 +59,11 @@ public abstract class Service<T> {
         files = new GridFS(getDB());
     }
 
+    /**
+     * Gets the db.
+     *
+     * @return the db
+     */
     @SuppressWarnings("deprecation")
     private static DB getDB() {
         if (db == null) {
@@ -45,6 +72,11 @@ public abstract class Service<T> {
         return db;
     }
 
+    /**
+     * Gets the database.
+     *
+     * @return the database
+     */
     public static MongoDatabase getDatabase() {
         if (database == null) {
             database = getClient().getDatabase(DB_NAME);
@@ -52,6 +84,9 @@ public abstract class Service<T> {
         return database;
     }
 
+    /**
+     * Reset.
+     */
     public static void reset() {
         getDatabase().drop();
     }
@@ -76,7 +111,7 @@ public abstract class Service<T> {
      * Dispatch.
      *
      * @return the t
-     * @throws ServiceException
+     * @throws ServiceException the service exception
      */
     protected abstract T dispatch() throws ServiceException;
 

@@ -12,11 +12,21 @@ import play.mvc.Result;
 import play.mvc.Results;
 import services.Service;
 
+
+/**
+ * The Class Global.
+ */
 public class Global extends GlobalSettings {
 
+    /** The manager. */
     public static KurentoManager manager;
+    
+    /** The log. */
     private static Logger log;
 
+    /* (non-Javadoc)
+     * @see play.GlobalSettings#onError(play.mvc.Http.RequestHeader, java.lang.Throwable)
+     */
     @Override
     public Promise<Result> onError(RequestHeader arg0, Throwable arg1) {
         if (arg1 instanceof ServiceException) {
@@ -26,6 +36,9 @@ public class Global extends GlobalSettings {
         return super.onError(arg0, arg1);
     }
 
+    /* (non-Javadoc)
+     * @see play.GlobalSettings#onStart(play.Application)
+     */
     @Override
     public void onStart(Application app) {
         System.out.println("Application has started");
@@ -35,6 +48,9 @@ public class Global extends GlobalSettings {
         manager = new KurentoManager();
     }
 
+    /* (non-Javadoc)
+     * @see play.GlobalSettings#onStop(play.Application)
+     */
     @Override
     public void onStop(Application app) {
 

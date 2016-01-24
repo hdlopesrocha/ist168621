@@ -4,6 +4,7 @@ import models.User;
 import org.bson.types.ObjectId;
 
 
+
 /**
  * The Class AuthenticateUserService.
  */
@@ -19,6 +20,12 @@ public class AuthenticateUserService extends Service<User> {
      */
     private String password;
 
+    /**
+     * Instantiates a new authenticate user service.
+     *
+     * @param userId the user id
+     * @param password the password
+     */
     public AuthenticateUserService(final String userId, final String password) {
         this.userId = new ObjectId(userId);
         this.password = password;

@@ -1,6 +1,6 @@
 package exceptions;
 
-// TODO: Auto-generated Javadoc
+
 
 /**
  * The Class ServiceException.

@@ -18,8 +18,17 @@ import java.util.Arrays;
 import java.util.List;
 
 
+
+/**
+ * The Class Application.
+ */
 public class Application extends Controller {
 
+    /**
+     * Index.
+     *
+     * @return the result
+     */
     public Result index() {
         if (session("uid") != null) {
             return ok(views.html.index.render());
@@ -29,6 +38,12 @@ public class Application extends Controller {
     }
 
 
+    /**
+     * Stream.
+     *
+     * @param path the path
+     * @return the result
+     */
     public Result stream(String path) {
         File file = new File(path);
         Result res = ok(file);
@@ -36,6 +51,12 @@ public class Application extends Controller {
         return res;
     }
 
+    /**
+     * Reset.
+     *
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result reset() throws ServiceException {
         System.out.println("RESET!");
         Service.reset();
@@ -109,6 +130,13 @@ public class Application extends Controller {
     }
 
 
+    /**
+     * Group.
+     *
+     * @param groupId the group id
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result group(String groupId) throws ServiceException {
         if (session("uid") != null) {
             ObjectId oid = new ObjectId(groupId);
@@ -125,15 +153,11 @@ public class Application extends Controller {
                     if (membership == null) {
                         new Membership(user.getId(), group.getId()).save();
                     }
-
                 }
-
 
                 if (membership != null || isPublic) {
                     Document service1 = new ListOwnerAttributesService(session("uid"), groupId, Arrays.asList(new String[]{"name"})).execute();
                     String name = service1.getString("name");
-
-
                     return ok(views.html.group.render(groupId, name != null ? name : "", session("uid"), token));
                 }
             }
@@ -144,6 +168,12 @@ public class Application extends Controller {
         }
     }
 
+    /**
+     * User profile.
+     *
+     * @param userId the user id
+     * @return the result
+     */
     public Result userProfile(String userId) {
         if (session("uid") != null) {
             boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId)) != null;
@@ -154,6 +184,14 @@ public class Application extends Controller {
         }
     }
 
+    /**
+     * Join.
+     *
+     * @param groupId the group id
+     * @param token the token
+     * @return the result
+     * @throws ServiceException the service exception
+     */
     public Result join(String groupId, String token) throws ServiceException {
         JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
         if (service.execute()) {
