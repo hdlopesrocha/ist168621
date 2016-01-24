@@ -42,7 +42,6 @@ public class Recording {
         rec.id = doc.getObjectId("_id");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
-
         rec.owner = doc.getObjectId("uid");
         rec.groupId = doc.getObjectId("gid");
         rec.url = doc.getString("url");

@@ -1,7 +1,8 @@
 package services;
 
+
 import exceptions.ServiceException;
-import models.Attribute;
+import models.Data;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public class ListOwnersByAttributeService extends Service<List<String>> {
 
-	private final ObjectId user;
-	private final String key;
-	private final String value;
+	private ObjectId user;
+	private String key;
+	private String value;
 
 	public ListOwnersByAttributeService(String callerId, String key, String value) {
 		this.user = new ObjectId(callerId);
@@ -23,7 +24,7 @@ public class ListOwnersByAttributeService extends Service<List<String>> {
 	@Override
 	public List<String> dispatch() throws ServiceException {
 		List<String> ret = new ArrayList<String>();
-		for(Attribute attr : Attribute.listByKeyValue(key,value)){
+		for(Data attr : Data.listByKeyValue(key,value)){
 			ret.add(attr.getOwner().toString());
 		}
 

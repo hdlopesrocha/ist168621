@@ -1,16 +1,15 @@
 package services;
 
-
 import exceptions.ServiceException;
-import models.Attribute;
+import models.Data;
 
 /**
  * The Class AuthenticateUserService.
  */
 public class GetOwnerByAttributeService extends Service<String> {
 
-	private final String key;
-	private final Object value;
+	private String key;
+	private Object value;
 
 	public GetOwnerByAttributeService(String key, Object value) {
 		this.key = key;
@@ -19,7 +18,7 @@ public class GetOwnerByAttributeService extends Service<String> {
 
 	@Override
 	public String dispatch() throws ServiceException {
-		Attribute at = Attribute.getByKeyValue(key,value);
+		Data at = Data.getByKeyValue(key,value);
 		return at!=null ? at.getOwner().toString() : null;
 	}
 

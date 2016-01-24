@@ -17,6 +17,7 @@ import play.mvc.Result;
 import services.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -180,12 +181,12 @@ public class Rest extends Controller {
     public Result getPhoto(String uid) {
         if (uid != null && uid.length() > 0) {
             try {
-                Attribute attr = new GetOwnerAttributeService(uid,"photo").execute();
-                if (attr != null && attr.getValue()!=null) {
-                    String fileName = attr.getValue().toString();
-                    System.out.println("GET " + fileName);
-                    fileName = fileName.replace("%20", " ");
-                    return redirect(fileName);
+                Document document = new ListOwnerAttributesService(session("uid"),uid, Arrays.asList(new String[] {"photo"})).execute();
+                String photo = document.getString("photo");
+                if (photo != null) {
+                    System.out.println("GET " + photo);
+                    photo = photo.replace("%20", " ");
+                    return redirect(photo);
                 }
             } catch (ServiceException e) {
                 e.printStackTrace();
@@ -196,11 +197,9 @@ public class Rest extends Controller {
     }
 
     public Result getUser(String userId) throws ServiceException {
-        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),userId).execute();
-        JSONObject result = new JSONObject();
-        for(Attribute attribute : attributes){
-            result.put(attribute.getKey(),attribute.getValue());
-        }
+        Document attributes = new ListOwnerAttributesService(session("uid"),userId,null).execute();
+        JSONObject result = new JSONObject(attributes.toJson());
+
         return ok(result.toString());
     }
 
@@ -221,20 +220,14 @@ public class Rest extends Controller {
                 List<Group> ans = service.execute();
                 JSONArray array = new JSONArray();
                 for (Group g : ans) {
-                    JSONObject obj = new JSONObject();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString(),null).execute();
+                    JSONObject obj = new JSONObject(attributes.toJson());
                     obj.put("id", g.getId());
                     obj.put("visibility", g.getVisibility());
-                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString()).execute();
-                    for(Attribute attribute : attributes){
-                        obj.put(attribute.getKey(),attribute.getValue());
-
-                    }
-
                     array.put(obj);
                 }
                 return ok(array.toString());
             } catch (ServiceException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return ok("[]");
@@ -249,14 +242,10 @@ public class Rest extends Controller {
                 JSONArray array = new JSONArray();
                 List<User> res = service.execute();
                 for (User user : res) {
-                    JSONObject obj = new JSONObject();
 
-                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString()).execute();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString(),null).execute();
+                    JSONObject obj = new JSONObject(attributes.toJson());
                     obj.put("id",user.getId().toString());
-                    for(Attribute attribute : attributes){
-                        obj.put(attribute.getKey(),attribute.getValue());
-                    }
-
                     array.put(obj);
                 }
                 return ok(array.toString());
@@ -275,12 +264,9 @@ public class Rest extends Controller {
                 JSONArray array = new JSONArray();
                 List<Relation> relations = service.execute();
                 for (Relation relation : relations) {
-                    List<Attribute> attributes = new ListOwnerAttributesService(session("uid"), relation.getTo().toString()).execute();
-                    JSONObject result = new JSONObject();
+                    Document attributes = new ListOwnerAttributesService(session("uid"), relation.getTo().toString(),null).execute();
+                    JSONObject result = new JSONObject(attributes.toJson());
                     result.put("id",relation.getTo().toString());
-                    for(Attribute attribute : attributes){
-                        result.put(attribute.getKey(),attribute.getValue());
-                    }
                     array.put(result);
                 }
                 return ok(array.toString());
@@ -400,7 +386,7 @@ public class Rest extends Controller {
             return Rest.status(409);
         }
 
-        User ret = new CreateUserService(password,attributes).execute();
+        User ret = new RegisterUserService(password,attributes).execute();
         return ok(ret.getToken());
 
     }
@@ -421,13 +407,9 @@ public class Rest extends Controller {
                 for (String user : users) {
                     ObjectId userId = new ObjectId(user);
                     if (!userId.equals(me)) {
-                        List<Attribute> attributes = new ListOwnerAttributesService(session("uid"),user).execute();
-                        JSONObject result = new JSONObject();
+                        Document attributes = new ListOwnerAttributesService(session("uid"),user,null).execute();
+                        JSONObject result = new JSONObject(attributes.toJson());
                         result.put("id", userId);
-
-                        for(Attribute attribute : attributes){
-                            result.put(attribute.getKey(),attribute.getValue());
-                        }
                         array.put(result);
                     }
                 }

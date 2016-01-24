@@ -2,6 +2,7 @@ package main;
 
 import exceptions.ServiceException;
 import models.*;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -152,13 +153,9 @@ public class Room implements Closeable {
             // add myself to the room
             participants.put(participant.getUser().getId().toString(), participant);
             JSONArray otherUsers = new JSONArray();
-            List<Attribute> attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString()).execute();
-            JSONObject myProfile = new JSONObject();
+            Document attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString(),null).execute();
+            JSONObject myProfile = new JSONObject(attributes1.toJson());
             myProfile.put("id", user.getId().toString());
-            for (Attribute attribute : attributes1) {
-                myProfile.put(attribute.getKey(), attribute.getValue());
-            }
-
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                     new JSONArray().put(myProfile.put("online", true)));
@@ -169,13 +166,10 @@ public class Room implements Closeable {
                 UserSession otherSession = participants.get(m.getKey().getUserId().toString());
                 ObjectId otherId = m.getKey().getUserId();
 
-                List<Attribute> attributes2 = new ListOwnerAttributesService(otherId.toString(),
-                        m.getValue().getId().toString()).execute();
-                JSONObject otherProfile = new JSONObject();
+                Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
+                        m.getValue().getId().toString(),null).execute();
+                JSONObject otherProfile = new JSONObject(attributes2.toJson());
                 otherProfile.put("id", otherId.toString());
-                for (Attribute attribute : attributes2) {
-                    otherProfile.put(attribute.getKey(), attribute.getValue());
-                }
 
 
                 otherProfile.put("online", otherSession != null);
@@ -201,13 +195,9 @@ public class Room implements Closeable {
         participants.remove(uid);
         try {
 
-            List<Attribute> attributes = new ListOwnerAttributesService(uid, uid).execute();
-            JSONObject result = new JSONObject();
+            Document attributes = new ListOwnerAttributesService(uid, uid,null).execute();
+            JSONObject result = new JSONObject(attributes.toJson());
             result.put("id",uid);
-            for(Attribute attribute : attributes){
-                result.put(attribute.getKey(),attribute.getValue());
-            }
-
 
             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                     new JSONArray().put(result.put("online", false)));

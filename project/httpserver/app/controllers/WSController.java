@@ -6,6 +6,7 @@ import main.Room;
 import main.Tools;
 import main.UserSession;
 import models.*;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -174,13 +175,10 @@ public class WSController extends Controller {
                                         try {
                                             service.execute();
 
-                                            List<Attribute> attributes = new ListOwnerAttributesService(userId,uid).execute();
-                                            JSONObject result = new JSONObject();
+                                            Document attributes = new ListOwnerAttributesService(userId,uid,null).execute();
+                                            JSONObject result = new JSONObject(attributes.toJson());
                                             result.put("id",uid);
 
-                                            for(Attribute attribute : attributes){
-                                                result.put(attribute.getKey(),attribute.getValue());
-                                            }
 
                                             final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                                                     new JSONArray().put(result.put("online", false)));

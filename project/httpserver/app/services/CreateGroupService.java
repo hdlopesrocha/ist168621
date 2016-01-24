@@ -37,7 +37,9 @@ public class CreateGroupService extends Service<Group> {
         Membership membership = new Membership(caller, group.getId());
         membership.save();
         attributes.add(new AttributeDto("type",Group.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC,false,false,true));
-        new SetAttributesService(group.getId().toString(),group.getId().toString(),attributes).execute();
+        new Data(group.getId(),attributes).save();
+        new Search(group.getId(),attributes).save();
+        new Permission(group.getId(),attributes).save();
         return group;
     }
 
