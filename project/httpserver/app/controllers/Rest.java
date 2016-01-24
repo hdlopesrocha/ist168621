@@ -55,10 +55,8 @@ public class Rest extends Controller {
                 array.put(msg);
             }
 
-
             SearchHyperContentService service2 = new SearchHyperContentService(session("uid"), groupId, query);
             List<HyperContent> contents = service2.execute();
-
 
             Pattern pattern = Pattern.compile("<(\\w+)>.*?</\\1>");
 
@@ -401,7 +399,10 @@ public class Rest extends Controller {
             JSONArray array = new JSONArray();
             // Search User
             {
-                SearchOwnersService service = new SearchOwnersService(session("uid"), null,null,query.toLowerCase(), new ArrayList<KeyValue<String>>());
+                List<List<KeyValue<String>>> filters = new ArrayList<>();
+
+
+                SearchDataService service = new SearchDataService(session("uid"), null,null,query.toLowerCase(), filters);
                 List<String> users = service.execute();
 
                 for (String user : users) {

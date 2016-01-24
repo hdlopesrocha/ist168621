@@ -45,24 +45,24 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
             }
         }
 
-        List<KeyValue<String>> filters = new ArrayList<KeyValue<String>>();
-        filters.add(new KeyValue<String>("type",User.class.getName()));
+        List<KeyValue<String>> filter = new ArrayList<KeyValue<String>>();
+        filter.add(new KeyValue<String>("type",User.class.getName()));
 
 
-        for(MetaData m : MetaData.search(query,null,null,filters)) {
+        List<List<KeyValue<String>>> filters = new ArrayList<>();
+        filters.add(filter);
+
+        for(Search m : Search.search(query,null,null,filters)) {
             if (relations.contains(m.getOwner())) {
                 JSONObject props = new JSONObject();
                 List<Attribute> attrs = Attribute.listByOwner(m.getOwner());
                 for (Attribute a : attrs) {
                     props.put(a.getKey(), a.getValue());
                 }
-
-
                 props.put("id", m.getOwner());
                 ans.put(props);
             }
         }
-
 
         return ans;
     }
