@@ -339,20 +339,6 @@ public class Rest extends Controller {
         return forbidden();
     }
 
-    /**
-     * List users.
-     *
-     * @return the result
-     */
-    public Result listUsers() {
-        try {
-            return ok(new ListUsersService(session("uid")).execute());
-        } catch (ServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return unauthorized();
-    }
 
     /**
      * Login.
@@ -406,44 +392,6 @@ public class Rest extends Controller {
 
 
 
-    /**
-     * Search.
-     *
-     * @return the result
-     */
-    public Result search() {
-        String query = request().queryString().get("s")[0];
-
-        try {
-            ObjectId me = new ObjectId(session("uid"));
-            JSONArray array = new JSONArray();
-            // Search User
-            {
-                List<List<KeyValue<String>>> filters = new ArrayList<>();
-
-
-                SearchDataService service = new SearchDataService(session("uid"), null, null, query.toLowerCase(), filters);
-                List<String> users = service.execute();
-
-                for (String user : users) {
-                    ObjectId userId = new ObjectId(user);
-                    if (!userId.equals(me)) {
-                        Document attributes = new ListOwnerAttributesService(session("uid"), user, null).execute();
-                        JSONObject result = new JSONObject(attributes.toJson());
-                        result.put("id", userId);
-                        array.put(result);
-                    }
-                }
-            }
-            return ok(array.toString());
-
-        } catch (ServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return ok("[]");
-    }
 
     /**
      * Search group candidates.
@@ -615,4 +563,58 @@ public class Rest extends Controller {
 
     }
 
+    public Result search() throws ServiceException {
+        Map<String, String[]> query = request().queryString();
+        Integer limit = query.containsKey("limit") ? Integer.valueOf(query.get("limit")[0]) : null;
+        Integer skip = query.containsKey("skip") ? Integer.valueOf(query.get("skip")[0]) : null;
+        String search = query.containsKey("query") ? query.get("query")[0] : null;
+
+        String[] attrs = query.containsKey("show") ? query.get("show") : null;
+        List<String> projection = new ArrayList<String>();
+        if(attrs!=null){
+            for(String attr : attrs) {
+                projection.add(attr);
+            }
+        }
+
+        String [] filtersArray =  query.containsKey("filter") ? query.get("filter") : new String[0];
+
+        List<List<KeyValue<String>>> filters = new ArrayList<List<KeyValue<String>>>();
+        for(String f : filtersArray) {
+            String[] ands = f.split("\\|");
+
+            List<KeyValue<String>> andList = new ArrayList<KeyValue<String>>();
+            for(String and : ands) {
+                String [] kvp = and.split(":");
+                String key = kvp[0];
+                String value = kvp.length == 2 ? kvp[1] : null;
+                andList.add(new KeyValue<String>(key, value));
+                System.out.println("-> " + f);
+            }
+            filters.add(andList);
+        }
+
+        SearchDataService service = new SearchDataService(session("uid"),skip,limit,search,filters);
+        List<String> owners = service.execute();
+        JSONArray array = new JSONArray();
+        for (String owner : owners) {
+
+            try {
+                ListOwnerAttributesService attributesService = new ListOwnerAttributesService(session("uid"),owner,projection);
+                Document attributes = attributesService.execute();
+                attributes.append("id",owner);
+                JSONObject doc = new JSONObject(attributes.toJson());
+                array.put(doc);
+
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject obj = new JSONObject();
+        obj.put("data", array);
+        obj.put("count", service.getCount());
+        obj.put("total", service.getTotal());
+
+        return ok(obj.toString()).as("application/json");
+    }
 }

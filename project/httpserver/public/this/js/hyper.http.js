@@ -117,11 +117,7 @@ var Signaling = (function(){
 		});
 	}
 
-	this.search = function(query,result){
-		$.get( "/api/user/search?s="+query, function( data ) {
-			result(JSON.parse(data));
-		});
-	}
+
 
 	this.listRelations = function(result){
 		$.get( "/api/relation", function( data ) {

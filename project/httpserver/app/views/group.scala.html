@@ -637,6 +637,8 @@
 		}
 		
 		function addContent(key, content) {
+
+
 			$("#mainVideoContent").append('<div id="content'+ key + '">'+content+'</div>');
 			$("#content"+key).click(function(){
 				if($(this).attr("selected")){
@@ -659,6 +661,7 @@
 
 		function renderContent() {
 			var currentTime = new Date().getTime() - current_offset;
+
 			while (localContent.length != 0) {
 				var entry = localContent[0];
 				var time = new Date(entry.time);
@@ -670,6 +673,8 @@
 					} else if (entry.type == "end") {
 						removeContent(entry.id);
 					}
+					console.log("render",entry,localContent);
+
 				} else {
 					break;
 				}
@@ -690,22 +695,28 @@
 					// all events started, check if others may start
 					Kurento.getContent();
 				}else {
-					// there is no more content, the server may advertise more content later
+					// there are ends
+					scheduleRender(currentTime);
 				}
 			} else {
 				// wait for next event
-				if(timeline.timeRunning){
-					var time = new Date(localContent[0].time);
-					if(contentTimer!=null){
-						clearTimeout(contentTimer);
-					}
-					contentTimer = setTimeout(function() {
-						contentTimer = null;
-						renderContent();
-					}, time.getTime() - currentTime);
-				}
+				scheduleRender(currentTime);
 			}
 		}
+
+        function scheduleRender(currentTime){
+            if(timeline.timeRunning){
+                var time = new Date(localContent[0].time);
+                if(contentTimer!=null){
+                    clearTimeout(contentTimer);
+                }
+                contentTimer = setTimeout(function() {
+                    contentTimer = null;
+                    renderContent();
+                }, time.getTime() - currentTime);
+            }
+        }
+
 
 		function onContentArrived(content,more) {
 			moreContent = more;
@@ -765,15 +776,16 @@
 			displayText: function(item){
 				if(item.type=="tag"){
 				    return item.title;
-			    }else {
-			        console.log(item.content);
+			    }else if(item.type=="html"){
+			        console.log("displayText",item);
+			        console.log("displayText",item.content);
 			        return item.content;
 			    }
 			},
 			highlighter: function(item){
 				if(item.type=="tag"){
 					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
-				}else {
+				}else if(item.type=="html"){
 					return "<i class='fa fa-font'></i> " + item.content;
 				}
 			},

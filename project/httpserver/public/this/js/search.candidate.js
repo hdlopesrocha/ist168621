@@ -3,10 +3,10 @@
 var SearchCandidate = new (function() {
 	
 	this.source = function(query,process){
-		Signaling.search(query, function(array) {
-			console.log(array);
-			process(array);
-		});					
+        $.get( "/api/search?query="+query, function( data ) {
+          	console.log(data);
+            process(data.data);
+        });
 	};
 	
 	this.displayText = function(item){
