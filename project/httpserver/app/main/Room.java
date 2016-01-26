@@ -75,12 +75,7 @@ public class Room implements Closeable {
             this.composite = new Composite.Builder(mediaPipeline).build();
             this.composite.setName("composite");
             this.hubPort = getCompositePort("this");
-            try {
-                this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
-                record(10000);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
+
 
         }
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
@@ -95,52 +90,78 @@ public class Room implements Closeable {
         return hubPort;
     }
 
+
+    private boolean recording = false;
+
     /**
      * Record.
      *
      * @param duration the duration
      */
-    private void record(int duration) {
-        MyRecorder.record(hubPort, new Date(), duration, new MyRecorder.RecorderHandler() {
-            @Override
-            public void onFileRecorded(Date begin, Date end, String filepath) {
-                try {
-                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), group.getId().toString(), begin,
-                            end);
-                    Recording rec = srs.execute();
-                    if (rec != null) {
+    public synchronized void record(int duration, boolean continuation) {
+        if(!recording || continuation) {
 
-                        interval.setEnd(end);
-                        interval.save();
-
-                        JSONArray array = new JSONArray();
-                        array.put(Tools.FORMAT.format(interval.getStart()));
-                        array.put(Tools.FORMAT.format(interval.getEnd()));
-
-
-                        JSONObject msg = new JSONObject();
-                        msg.put("id", "rec");
-                        msg.put(interval.getId().toString(), array);
-                        sendMessage(msg.toString());
-
-                        System.out.println("REC: " + filepath);
-                    } else {
-                        return;
-                    }
-                } catch (ServiceException e) {
-                    e.printStackTrace();
+            try {
+                if(this.interval==null) {
+                    this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
                 }
-                if (participants.size() > 0) {
-                    record(duration);
+                //record(10000);
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+
+
+
+            boolean r = false;
+            for (UserSession session : participants.values()) {
+                if (!session.isReceiveOnly()) {
+                    r = true;
+                    break;
                 }
             }
-        });
 
-        for (UserSession session : participants.values()) {
-            session.record(duration);
+            recording = r;
+            if (recording) {
+                MyRecorder.record(hubPort, new Date(), duration, new MyRecorder.RecorderHandler() {
+                    @Override
+                    public void onFileRecorded(Date begin, Date end, String filepath) {
+                        try {
+                            CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), group.getId().toString(), begin,
+                                    end);
+                            Recording rec = srs.execute();
+                            if (rec != null) {
+
+                                interval.setEnd(end);
+                                interval.save();
+
+                                JSONArray array = new JSONArray();
+                                array.put(Tools.FORMAT.format(interval.getStart()));
+                                array.put(Tools.FORMAT.format(interval.getEnd()));
+
+
+                                JSONObject msg = new JSONObject();
+                                msg.put("id", "rec");
+                                msg.put(interval.getId().toString(), array);
+                                sendMessage(msg.toString());
+
+                                System.out.println("REC: " + filepath);
+                            } else {
+                                return;
+                            }
+                        } catch (ServiceException e) {
+                            e.printStackTrace();
+                        }
+                        if (participants.size() > 0) {
+                            record(duration,true);
+                        }
+                    }
+                });
+
+                for (UserSession session : participants.values()) {
+                    session.record(duration);
+                }
+            }
         }
-
-
     }
 
     /**

@@ -65,6 +65,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /** The play user. */
     private String playUser = "";
 
+    public Boolean isReceiveOnly() {
+        return receiveOnly;
+    }
+
+    private Boolean receiveOnly = true;
+
     /**
      * Instantiates a new user session.
      *
@@ -88,8 +94,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
+
                 endPoint.connect(endPoint);
-                //  record(10000);
+
+                room.record(10000,false);
             }
         });
 
@@ -110,21 +118,23 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param duration the duration
      */
     public void record(int duration) {
-        MyRecorder.record(endPoint, new Date(), duration, new MyRecorder.RecorderHandler() {
-            @Override
-            public void onFileRecorded(Date begin, Date end, String filepath) {
-                try {
-                    CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), user.getId().toString(), begin,
-                            end);
-                    Recording rec = srs.execute();
-                    if (rec != null) {
-                        System.out.println("REC: " + filepath);
+        if(!isReceiveOnly()) {
+            MyRecorder.record(endPoint, new Date(), duration, new MyRecorder.RecorderHandler() {
+                @Override
+                public void onFileRecorded(Date begin, Date end, String filepath) {
+                    try {
+                        CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), user.getId().toString(), begin,
+                                end);
+                        Recording rec = srs.execute();
+                        if (rec != null) {
+                            System.out.println("REC: " + filepath);
+                        }
+                    } catch (ServiceException e) {
+                        e.printStackTrace();
                     }
-                } catch (ServiceException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -422,11 +432,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param name the name
      */
     public void processOffer(String description, String name) {
+        receiveOnly = description.contains("a=recvonly");
+
         // XXX [CLIENT_ICE_04] XXX
         WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
 
         // XXX [CLIENT_OFFER_04] XXX
         // XXX [CLIENT_OFFER_05] XXX
+
         String lsd = ep.processOffer(description);
         // XXX [CLIENT_OFFER_06] XXX
         JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
