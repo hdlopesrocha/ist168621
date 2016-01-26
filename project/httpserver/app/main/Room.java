@@ -96,9 +96,19 @@ public class Room implements Closeable {
     /**
      * Record.
      *
-     * @param duration the duration
      */
-    public synchronized void record(int duration, boolean continuation) {
+    public void record(){
+        record(10000,false);
+    }
+
+    /**
+     * Record.
+     *
+     * @param duration the duration
+     * @param continuation the continuation
+     */
+
+    private synchronized void record(int duration, boolean continuation) {
         if(!recording || continuation) {
 
             try {
@@ -151,9 +161,7 @@ public class Room implements Closeable {
                         } catch (ServiceException e) {
                             e.printStackTrace();
                         }
-                        if (participants.size() > 0) {
-                            record(duration,true);
-                        }
+                        record(duration,true);
                     }
                 });
 

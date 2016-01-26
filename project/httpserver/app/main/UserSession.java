@@ -96,8 +96,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             public void onEvent(MediaSessionStartedEvent arg0) {
 
                 endPoint.connect(endPoint);
-
-                room.record(10000,false);
+                room.record();
             }
         });
 
