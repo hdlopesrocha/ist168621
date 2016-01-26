@@ -5,7 +5,7 @@ var HyperTimeline = new (function() {
 
 
 	
-	this.create = function(divId, historic, realtime, onCurrentTag) {
+	this.create = function(divId, historic, realtime, onCurrentTag, onDrop) {
 
 	    var tags = [];
         var currentTag = null;
@@ -149,6 +149,7 @@ var HyperTimeline = new (function() {
 	    timeline.on('rangechanged', function(properties){
 		    
 	    	if(properties.byUser){
+
 		    	var start = properties.start;
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
@@ -160,6 +161,7 @@ var HyperTimeline = new (function() {
 					this.real_time = false ;
 					historic(this.hyper_offset);
 				}
+		    	onDrop(avg);
 	    	}
 	    });
 	    

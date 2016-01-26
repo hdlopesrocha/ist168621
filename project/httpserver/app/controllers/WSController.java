@@ -221,7 +221,8 @@ public class WSController extends Controller {
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            userSession.setHistoric(userId, args.getLong("offset"));
+                                            userSession.setOffset(args.getLong("offset"));
+                                            userSession.setHistoric(userId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();

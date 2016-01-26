@@ -327,6 +327,8 @@
                     <form class="form">
                         <div class="panel-body">
                             <label>Begin:</label>
+                            (timeline <input type="checkbox" id="beginSync"/>)
+
                             <div class='input-group date' id='datetimepicker1'>
                                 <input type='text' class="form-control" id="contentStart"/> <span
                                     class="input-group-addon"> <span
@@ -334,6 +336,9 @@
 							</span>
                             </div>
                             <label>End:</label>
+                            (timeline <input type="checkbox" id="endSync"/>)
+
+
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" id="contentEnd"/> <span
                                     class="input-group-addon"> <span
@@ -861,7 +866,37 @@
 			                                participantRemoved,localVideo);
 			$('#participantModal').modal('hide');
 		}
-		
+
+
+     function dateStr(date) {
+
+
+        var curr_year = date.getFullYear();
+
+        var curr_month = date.getMonth() + 1; //Months are zero based
+        if (curr_month < 10)
+            curr_month = "0" + curr_month;
+
+        var curr_date = date.getDate();
+        if (curr_date < 10)
+            curr_date = "0" + curr_date;
+
+        var curr_hour = date.getHours();
+        if (curr_hour < 10)
+            curr_hour = "0" + curr_hour;
+
+        var curr_min = date.getMinutes();
+        if (curr_min < 10)
+            curr_min = "0" + curr_min;
+
+        var curr_sec = date.getSeconds();
+        if (curr_sec < 10)
+            curr_sec = "0" + curr_sec;
+
+        return curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
+
+    }
+
 		$(document).ready(function() {
 			switchTab("#mytabs","#mybtns",1);
 			$('#participantModal').modal('show');
@@ -952,6 +987,15 @@
                     }else {
                         $("#currentTag").html("");
                     }
+                },function(time){
+                    console.log("onDrop",time);
+                    if($("#beginSync").is(':checked')){
+                        $("#contentStart").val(dateStr(new Date(time)));
+                    }
+                    if($("#endSync").is(':checked')){
+                        $("#contentEnd").val(dateStr(new Date(time)));
+                    }
+                    
                 }
 
 			);

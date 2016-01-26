@@ -319,10 +319,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * Sets the historic.
      *
      * @param userId the user id
-     * @param offset the offset
      */
-    public void setHistoric(String userId, long offset) {
-        timeOffset = offset;
+    public void setHistoric(String userId) {
         playUser = userId;
         Date currentTime = new Date(new Date().getTime() - timeOffset + 500);
         UserSession session = room.getParticipant(playUser);
@@ -354,20 +352,19 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         @Override
                         public void onEvent(ErrorEvent arg0) {
                             System.out.println("FAILURE: " + arg0.getDescription());
-                            setHistoric(playUser, timeOffset);
+                            setHistoric(playUser);
                         }
                     });
 
                     player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
-                            setHistoric(playUser, timeOffset);
-
+                            setHistoric(playUser);
                         }
                     });
                     player.connect(endPoint/* , MediaType.VIDEO */);
-                    // player.connect(compositePoint , MediaType.AUDIO);
                     if (play) {
+                        // player.connect(compositePoint , MediaType.AUDIO);
                         player.play();
                         JSONObject msg = new JSONObject();
                         msg.put("id", "setTime");
@@ -375,7 +372,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         sendMessage(msg.toString());
                     }
                 }
-
             } else {
                 System.out.println("No video here!");
             }
@@ -386,6 +382,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
 
     }
+
+
+
 
     /**
      * Sets the realtime.
@@ -400,9 +399,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 player.release();
                 player = null;
             }
+
+            timeOffset = 0L;
+            playUser = userId;
         }
-        timeOffset = 0L;
-        playUser = userId;
         if (userId == null) {
             compositePort.connect(endPoint);
         } else {
@@ -469,12 +469,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             List<Message> messages = messagesService.execute();
             for (Message message : messages) {
                 JSONObject messageObj = message.toJsonObject();
-
                 messagesArray.put(messageObj);
             }
 
         } catch (ServiceException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
@@ -484,4 +482,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         sendMessage(msg.toString());
     }
 
+    public void setOffset(long offset) {
+        synchronized (playerLock) {
+            this.timeOffset = offset;
+        }
+    }
 }
