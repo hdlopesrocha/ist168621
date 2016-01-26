@@ -37,20 +37,6 @@ public class Application extends Controller {
         }
     }
 
-
-    /**
-     * Stream.
-     *
-     * @param path the path
-     * @return the result
-     */
-    public Result stream(String path) {
-        File file = new File(path);
-        Result res = ok(file);
-        response().setHeader("Content-type", "video/webm");
-        return res;
-    }
-
     /**
      * Reset.
      *

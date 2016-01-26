@@ -32,6 +32,7 @@ public class Rest extends Controller {
 
     /** The Constant MONGODB_SDP_LOCK. */
     private static final ObjectId MONGODB_SDP_LOCK = new ObjectId();
+    private static final String APP_JSON = "application/json";
 
     /**
      * Accept relation.
@@ -103,7 +104,7 @@ public class Rest extends Controller {
             e.printStackTrace();
         }
 
-        return ok(array.toString());
+        return ok(array.toString()).as(APP_JSON);
     }
 
     /**
@@ -255,24 +256,9 @@ public class Rest extends Controller {
         Document attributes = new ListOwnerAttributesService(session("uid"), userId, null).execute();
         JSONObject result = new JSONObject(attributes.toJson());
 
-        return ok(result.toString());
+        return ok(result.toString()).as(APP_JSON);
     }
 
-
-    /**
-     * List group members properties.
-     *
-     * @param groupId the group id
-     * @return the result
-     */
-    public Result listGroupMembersProperties(String groupId) {
-        JSONObject obj = new JSONObject();
-        List<Membership> members = Membership.listByGroup(new ObjectId(groupId));
-        for (Membership member : members) {
-            obj.put(member.getUserId().toString(), new JSONObject(member.getProperties().toJson()));
-        }
-        return ok(obj.toString());
-    }
 
     /**
      * List groups.
@@ -418,72 +404,6 @@ public class Rest extends Controller {
     }
 
 
-    /**
-     * Register.
-     *
-     * @return the result
-     * @throws ServiceException the service exception
-     */
-    public Result register() throws ServiceException {
-
-        MultipartFormData multipart = request().body().asMultipartFormData();
-        Map<String, String[]> form = multipart.asFormUrlEncoded();
-
-        String email = form.get("email")[0];
-
-        String password = form.get("password")[0];
-        List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-        attributes.add(new AttributeDto("type", User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, false, true));
-
-
-        for (Entry<String, String[]> s : form.entrySet()) {
-            if (!s.getKey().equals("password") && !s.getKey().equals("password2")) {
-                String[] value = s.getValue();
-                Object obj = null;
-
-                if (value.length == 1) {
-                    obj = value[0];
-                } else if (value.length > 1) {
-                    JSONArray array = new JSONArray();
-                    for (int i = 0; i < value.length; ++i) {
-                        array.put(value[i]);
-                    }
-                    obj = array;
-                }
-
-                if (obj != null) {
-                    boolean searchable = false;
-                    boolean identifiable = false;
-
-                    if (s.getKey().equals("name")) {
-                        searchable = true;
-                    } else if (s.getKey().equals("email")) {
-                        searchable = identifiable = true;
-                    }
-                    attributes.add(new AttributeDto(s.getKey(), obj, AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable, searchable, false));
-                }
-            }
-        }
-
-        for (FilePart fp : multipart.getFiles()) {
-            KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-            UploadFileService service = new UploadFileService(kvf);
-            try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String existingUser = new GetOwnerByAttributeService("email", email).execute();
-        if (existingUser != null) {
-            return Rest.status(409);
-        }
-
-        User ret = new RegisterUserService(password, attributes).execute();
-        return ok(ret.getToken());
-
-    }
 
 
     /**
@@ -552,41 +472,6 @@ public class Rest extends Controller {
     }
 
 
-    /**
-     * Update user.
-     *
-     * @return the result
-     */
-    public Result updateUser() {
-        try {
-            MultipartFormData multipart = request().body().asMultipartFormData();
-            Map<String, String[]> form = multipart.asFormUrlEncoded();
-            JSONObject info = new JSONObject(form.get("json")[0]);
-            List<KeyValueFile> files = new ArrayList<KeyValueFile>();
-            for (FilePart fp : multipart.getFiles()) {
-                KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
-                files.add(kvf);
-            }
-
-
-            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-
-            UpdateUserService service = new UpdateUserService(session("uid"), attributes);
-
-            service.execute();
-            return ok();
-
-        } catch (UnauthorizedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return unauthorized();
-        } catch (ServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-        }
-        return badRequest();
-    }
 
     /**
      * Creates the group invite.
@@ -630,19 +515,104 @@ public class Rest extends Controller {
     }
 
     /**
-     * Join group invite.
+     * Update user.
      *
-     * @param groupId the group id
-     * @param token the token
+     * @return the result
+     */
+    public Result updateUser() {
+        try {
+            MultipartFormData multipart = request().body().asMultipartFormData();
+            Map<String, String[]> form = multipart.asFormUrlEncoded();
+            JSONObject info = new JSONObject(form.get("json")[0]);
+            List<KeyValueFile> files = new ArrayList<KeyValueFile>();
+            for (FilePart fp : multipart.getFiles()) {
+                KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+                files.add(kvf);
+            }
+
+
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+
+            UpdateUserService service = new UpdateUserService(session("uid"), attributes);
+
+            service.execute();
+            return ok();
+
+        } catch (UnauthorizedException e) {
+            e.printStackTrace();
+            return unauthorized();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+
+        }
+        return badRequest();
+    }
+
+    /**
+     * Register.
+     *
      * @return the result
      * @throws ServiceException the service exception
      */
-    public Result joinGroupInvite(String groupId, String token) throws ServiceException {
-        JoinGroupInviteService service = new JoinGroupInviteService(session("uid"), groupId, token);
-        if (service.execute()) {
-            return ok(groupId);
+    public Result register(String userId) throws ServiceException {
+
+        MultipartFormData multipart = request().body().asMultipartFormData();
+        Map<String, String[]> form = multipart.asFormUrlEncoded();
+
+        String email = form.get("email")[0];
+
+        String password = form.get("password")[0];
+        List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+        attributes.add(new AttributeDto("type", User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, false, true));
+
+
+        for (Entry<String, String[]> s : form.entrySet()) {
+            if (!s.getKey().equals("password") && !s.getKey().equals("password2")) {
+                String[] value = s.getValue();
+                Object obj = null;
+
+                if (value.length == 1) {
+                    obj = value[0];
+                } else if (value.length > 1) {
+                    JSONArray array = new JSONArray();
+                    for (int i = 0; i < value.length; ++i) {
+                        array.put(value[i]);
+                    }
+                    obj = array;
+                }
+
+                if (obj != null) {
+                    boolean searchable = false;
+                    boolean identifiable = false;
+
+                    if (s.getKey().equals("name")) {
+                        searchable = true;
+                    } else if (s.getKey().equals("email")) {
+                        searchable = identifiable = true;
+                    }
+                    attributes.add(new AttributeDto(s.getKey(), obj, AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable, searchable, false));
+                }
+            }
         }
-        return badRequest();
+
+        for (FilePart fp : multipart.getFiles()) {
+            KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
+            UploadFileService service = new UploadFileService(kvf);
+            try {
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String existingUser = new GetOwnerByAttributeService("email", email).execute();
+        if (existingUser != null) {
+            return Rest.status(409);
+        }
+
+        User ret = new RegisterUserService(password, attributes).execute();
+        return ok(ret.getToken());
+
     }
 
 }
