@@ -1,22 +1,18 @@
 var Signaling = (function(){
 
 	this.searchInsideGroup = function(gid,query,success){
-		$.get( "/api/group/"+gid+"/content?query="+query, function( data ) {
-			success(data);
-		});	
+		$.get( "/api/group/"+gid+"/content?query="+query,success);
 	}
 	
 	
 	this.userProfile = function(uid,success){
-		$.get( "/api/user/"+uid, function( data ) {
-			success(data);
-		});	
+		$.get( "/api/user/"+uid, success);
 	}
 
 	this.login = function(email,password,success,error){
 		$.ajax({
 			type : "POST",
-			url : "/api/user/login",
+			url : "/api/user/auth",
 			data : "email="+email+"&password="+password,
 			contentType : "application/x-www-form-urlencoded",
 			processData : false,
@@ -25,9 +21,7 @@ var Signaling = (function(){
 			error : function(e) {
 				error();
 			},
-			success : function(data) {
-				success();
-			}
+			success : success
 		});
 	}
 
@@ -35,9 +29,7 @@ var Signaling = (function(){
        $.ajax({
             url: "/api/invite/"+gid,
             type: 'DELETE',
-            success: function(data) {
-                success(data);
-            }
+            success: success
         });
 	}
 	
@@ -45,16 +37,12 @@ var Signaling = (function(){
         $.ajax({
             url: "/api/invite/"+gid,
             type: 'PUT',
-            success: function(data) {
-                success(data);
-            }
+            success: success
         });
 	}
 	
 	this.getInvite = function(gid,success){
-		$.get( "/api/invite/"+gid, function( data ) {
-			success(data);
-		});
+		$.get( "/api/invite/"+gid,success);
 	}
 	
 	this.register = function(email,password1,password2, formData, success, error){
@@ -74,9 +62,7 @@ var Signaling = (function(){
 	        error:function(e){
 		    	error();
 		    },
-		    success:function(){
-				success();
-		    }
+            success: success
 		});
 		
 	}
@@ -97,23 +83,23 @@ var Signaling = (function(){
             error:function(e){
                 error();
             },
-            success:function(){
-                success();
-            }
+            success:success
         });
 
     }
 	
 	this.logout = function(success){
-		$.get( "/api/user/logout", function( data ) {
-			success();
-		});
+	    $.ajax({
+            url: "/api/auth",
+            type: 'DELETE',
+            success: success
+        });
 	}
 	
 	this.searchGroupCandidates = function(groupId,query,result){
 		$.get( "/api/group/"+groupId+"/candidates?s="+query, function( data ) {
 			console.log("searchGroupCandidates",query,data);
-			result(JSON.parse(data));
+			result(data);
 		});
 	}
 
@@ -121,13 +107,13 @@ var Signaling = (function(){
 
 	this.listRelations = function(result){
 		$.get( "/api/relation", function( data ) {
-			result(JSON.parse(data));
+			result(data);
 		});
 	}
 	
 	this.listRequests = function(result){
 		$.get( "/api/requests", function( data ) {
-			result(JSON.parse(data));
+			result(data);
 		});
 	}
 
@@ -135,9 +121,7 @@ var Signaling = (function(){
 		$.ajax({
             url: "/api/relation/"+userId,
             type: 'DELETE',
-            success: function(result) {
-			    success();
-            }
+            success: success
         });
 	}
 	
@@ -145,17 +129,13 @@ var Signaling = (function(){
 		$.ajax({
             url: "/api/relation/"+userId,
             type: 'PUT',
-            success: function(result) {
-			    success();
-            }
+            success: success
         });
 	}
 	
 	
 	this.getSdp = function(membershipId,result){
-		$.get( "/api/group/sdp/"+membershipId, function( data ) {
-			result(JSON.parse(data));
-		});
+		$.get( "/api/group/sdp/"+membershipId, result);
 	}
 	
 	
@@ -163,19 +143,14 @@ var Signaling = (function(){
         $.ajax({
             url: "/api/group?n="+name+"&v="+visibility,
             type: 'PUT',
-            success: function(result) {
-                success();
-            }
+            success: success
+
         });
 	}
 	
 	this.listGroups = function(result){
-		$.get( "/api/group", function( data ) {
-			result(JSON.parse(data));
-		});
+		$.get( "/api/group", result);
 	}
 
-
-	
 	return this;
 })();

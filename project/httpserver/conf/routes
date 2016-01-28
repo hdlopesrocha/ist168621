@@ -11,8 +11,8 @@ GET		/join/:gid/:token				controllers.Application.join(gid : String, token : Str
 
 POST	/api/user       				controllers.Rest.register(userId = null)
 POST    /api/user/password	        	controllers.Rest.changePassword()
-POST	/api/user/login					controllers.Rest.login()
-GET		/api/user/logout				controllers.Rest.logout()
+POST	/api/user/auth					controllers.Rest.login()
+DELETE	/api/user/auth				    controllers.Rest.logout()
 GET		/api/user/:userId		    	controllers.Rest.getUser(userId : String)
 PUT     /api/user/:userId            	controllers.Rest.register(userId : String)
 

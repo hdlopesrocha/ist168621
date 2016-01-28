@@ -267,10 +267,10 @@ public class Rest extends Controller {
      */
     public Result listGroups() {
         if (session("uid") != null) {
+            JSONArray array = new JSONArray();
             ListGroupsService service = new ListGroupsService(session("uid"));
             try {
                 List<Group> ans = service.execute();
-                JSONArray array = new JSONArray();
                 for (Group g : ans) {
                     Document attributes = new ListOwnerAttributesService(session("uid"), g.getId().toString(), null).execute();
                     JSONObject obj = new JSONObject(attributes.toJson());
@@ -278,11 +278,10 @@ public class Rest extends Controller {
                     obj.put("visibility", g.getVisibility());
                     array.put(obj);
                 }
-                return ok(array.toString());
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
-            return ok("[]");
+            return ok(array.toString()).as(APP_JSON);
         }
         return forbidden();
     }
@@ -299,13 +298,12 @@ public class Rest extends Controller {
                 JSONArray array = new JSONArray();
                 List<User> res = service.execute();
                 for (User user : res) {
-
                     Document attributes = new ListOwnerAttributesService(session("uid"), user.getId().toString(), null).execute();
                     JSONObject obj = new JSONObject(attributes.toJson());
                     obj.put("id", user.getId().toString());
                     array.put(obj);
                 }
-                return ok(array.toString());
+                return ok(array.toString()).as(APP_JSON);
 
             } catch (ServiceException e) {
                 e.printStackTrace();
@@ -331,7 +329,7 @@ public class Rest extends Controller {
                     result.put("id", relation.getTo().toString());
                     array.put(result);
                 }
-                return ok(array.toString());
+                return ok(array.toString()).as(APP_JSON);
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -414,7 +412,7 @@ public class Rest extends Controller {
 
             System.out.println("SEARCH: " + groupId + " | " + query + " | " + array.toString());
 
-            return ok(array.toString());
+            return ok(array.toString()).as(APP_JSON);
         }
         return forbidden();
     }
@@ -615,6 +613,6 @@ public class Rest extends Controller {
         obj.put("count", service.getCount());
         obj.put("total", service.getTotal());
 
-        return ok(obj.toString()).as("application/json");
+        return ok(obj.toString()).as(APP_JSON);
     }
 }

@@ -112,6 +112,13 @@ public class Recording {
         return ret;
     }
 
+    public void saveUrl(String owner, String url){
+        Document query = new Document("_id",id);
+        Document upd = new Document(owner,url);
+
+
+    }
+
     /**
      * Find by id.
      *
