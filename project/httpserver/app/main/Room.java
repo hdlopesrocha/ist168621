@@ -74,8 +74,7 @@ public class Room implements Closeable {
             this.composite = new Composite.Builder(mediaPipeline).build();
             this.composite.setName("composite");
             this.hubPort = getCompositePort("this");
-
-
+            System.out.println("composite for room " + mediaPipeline.getName() + " has been created");
         }
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }

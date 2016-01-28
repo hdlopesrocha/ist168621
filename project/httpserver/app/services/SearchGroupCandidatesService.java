@@ -3,6 +3,7 @@ package services;
 import dtos.KeyValue;
 import exceptions.ServiceException;
 import models.*;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,13 +67,12 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
 
         for (Search m : Search.search(query, null, null, filters)) {
             if (relations.contains(m.getOwner())) {
-                JSONObject props = new JSONObject();
-                List<Attribute> attrs = Attribute.listByOwner(m.getOwner());
-                for (Attribute a : attrs) {
-                    props.put(a.getKey(), a.getValue());
+                Document doc =Data.findByOwner(m.getOwner(),null);
+                if(doc!=null) {
+                    JSONObject props = new JSONObject(doc.toJson());
+                    props.put("id", m.getOwner());
+                    ans.put(props);
                 }
-                props.put("id", m.getOwner());
-                ans.put(props);
             }
         }
 

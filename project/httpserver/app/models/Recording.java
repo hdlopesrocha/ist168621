@@ -110,9 +110,7 @@ public class Recording {
     }
 
     public synchronized void setUrl(String owner, String url){
-        Document query = new Document("_id",id);
-        Document set = new Document("$set",new Document("urls,"+owner,url));
-        getCollection().updateOne(query,set);
+       urls.append(owner,url);
     }
 
 

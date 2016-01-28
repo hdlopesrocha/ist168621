@@ -1,5 +1,7 @@
 package main;
 
+import org.kurento.client.ElementDisconnectedEvent;
+import org.kurento.client.EventListener;
 import org.kurento.client.MediaElement;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.repository.service.pojo.RepositoryItemRecorder;
@@ -28,7 +30,30 @@ public class MyRecorder {
                 Map<String, String> metadata = Collections.emptyMap();
                 RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
 
+                if(item==null){
+                    System.out.println("item is null");
+                }
+
+                if(endPoint==null){
+                    System.out.println("endPoint is null");
+                }
+                System.out.println("Recording...");
+
+
+
+
                 RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).build();
+
+                endPoint.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
+                    @Override
+                    public void onEvent(ElementDisconnectedEvent elementDisconnectedEvent) {
+
+                        if(elementDisconnectedEvent.getSink().equals(recorder)) {
+                            handler.onFileRecorded(new Date(), item.getId());
+                        }
+                    }
+                });
+
                 endPoint.connect(recorder);
                 recorder.record();
 
@@ -41,7 +66,7 @@ public class MyRecorder {
                 recorder.stop();
                 endPoint.disconnect(recorder);
                 recorder.release();
-                handler.onFileRecorded(new Date(), item.getId());
+
             }
         }).start();
 

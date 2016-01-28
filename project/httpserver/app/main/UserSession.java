@@ -93,7 +93,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
-
                 endPoint.connect(endPoint);
                 room.record();
             }
