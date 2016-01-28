@@ -11,7 +11,6 @@ import org.kurento.client.*;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
-import services.CreateRecordingService;
 import services.GetCurrentHyperContentService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
@@ -114,23 +113,19 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /**
      * Record.
      *
+     * @param rec
      * @param duration the duration
      */
-    public void record(int duration) {
+    public void record(Recording rec, int duration) {
         if(!isReceiveOnly()) {
-            MyRecorder.record(endPoint, new Date(), duration, new MyRecorder.RecorderHandler() {
+            MyRecorder.record(endPoint, duration, new MyRecorder.RecorderHandler() {
                 @Override
-                public void onFileRecorded(Date begin, Date end, String filepath) {
-                    try {
-                        CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), user.getId().toString(), begin,
-                                end);
-                        Recording rec = srs.execute();
-                        if (rec != null) {
-                            System.out.println("REC: " + filepath);
-                        }
-                    } catch (ServiceException e) {
-                        e.printStackTrace();
-                    }
+                public void onFileRecorded(Date end, String filepath) {
+
+                    rec.setUrl(getUser().getId().toString(),filepath);
+                    rec.save();
+                    System.out.println("REC: " + filepath);
+
                 }
             });
         }
@@ -338,7 +333,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         try {
             // saying "no video here!", for group video
             GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-                    room.getGroupId(), owner, currentTime);
+                    room.getGroupId(), currentTime);
             Recording rec = service.execute();
 
             if (rec != null) {
@@ -350,8 +345,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     }
 
                     // WEBM
-                    System.out.println("HISTORIC PLAY: " + rec.getUrl());
-                    RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(rec.getUrl());
+                    String url = rec.getUrl(owner);
+                    System.out.println("HISTORIC PLAY: " + url);
+                    RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(url);
 
                     player = new PlayerEndpoint.Builder(room.getMediaPipeline(), item.getUrl()).build();
                     // player = new

@@ -21,14 +21,12 @@ public class Recording {
     private static MongoCollection<Document> collection;
     
     /** The owner. */
-    private ObjectId groupId, owner;
-    
+    private ObjectId groupId;
+
+    private Document urls;
     /** The end. */
     private Date start, end;
-    
-    /** The url. */
-    private String url;
-    
+
     /** The id. */
     private ObjectId id = null;
 
@@ -43,17 +41,13 @@ public class Recording {
      * Instantiates a new recording.
      *
      * @param groupId the group id
-     * @param owner the owner
      * @param start the start
-     * @param end the end
-     * @param url the url
      */
-    public Recording(ObjectId groupId, ObjectId owner, Date start, Date end, String url) {
+    public Recording(ObjectId groupId, Date start) {
         this.groupId = groupId;
-        this.owner = owner;
         this.start = start;
-        this.end = end;
-        this.url = url;
+
+        this.urls = new Document();
     }
 
     /**
@@ -78,9 +72,8 @@ public class Recording {
         rec.id = doc.getObjectId("_id");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
-        rec.owner = doc.getObjectId("uid");
         rec.groupId = doc.getObjectId("gid");
-        rec.url = doc.getString("url");
+        rec.urls = (Document) doc.get("urls");
         return rec;
     }
 
@@ -93,6 +86,10 @@ public class Recording {
     public static long countByGroup(ObjectId owner) {
         Document doc = new Document("gid", owner);
         return getCollection().count(doc);
+    }
+
+    public String getUrl(String owner){
+       return urls.getString(owner);
     }
 
     /**
@@ -112,12 +109,13 @@ public class Recording {
         return ret;
     }
 
-    public void saveUrl(String owner, String url){
+    public synchronized void setUrl(String owner, String url){
         Document query = new Document("_id",id);
-        Document upd = new Document(owner,url);
-
-
+        Document set = new Document("$set",new Document("urls,"+owner,url));
+        getCollection().updateOne(query,set);
     }
+
+
 
     /**
      * Find by id.
@@ -135,16 +133,15 @@ public class Recording {
     /**
      * Save.
      */
-    public void save() {
+    public synchronized void save() {
         Document doc = new Document();
         if (id != null)
             doc.put("_id", id);
 
         doc.put("gid", groupId);
-        doc.put("uid", owner);
         doc.put("start", start);
         doc.put("end", end);
-        doc.put("url", url);
+        doc.put("urls", urls);
 
         if (id == null)
             getCollection().insertOne(doc);
@@ -164,14 +161,6 @@ public class Recording {
         return start;
     }
 
-    /**
-     * Sets the start.
-     *
-     * @param start the new start
-     */
-    public void setStart(Date start) {
-        this.start = start;
-    }
 
     /**
      * Gets the end.
@@ -189,24 +178,6 @@ public class Recording {
      */
     public void setEnd(Date end) {
         this.end = end;
-    }
-
-    /**
-     * Gets the url.
-     *
-     * @return the url
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     * Sets the url.
-     *
-     * @param url the new url
-     */
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     /**
@@ -234,15 +205,6 @@ public class Recording {
         if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
         }
-    }
-
-    /**
-     * Gets the owner.
-     *
-     * @return the owner
-     */
-    public ObjectId getOwner() {
-        return owner;
     }
 
 }

@@ -18,11 +18,10 @@ public class MyRecorder {
      * Record.
      *
      * @param endPoint the end point
-     * @param begin the begin
      * @param duration the duration
      * @param handler the handler
      */
-    public static void record(MediaElement endPoint, Date begin, int duration, RecorderHandler handler) {
+    public static void record(MediaElement endPoint, int duration, RecorderHandler handler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -42,8 +41,7 @@ public class MyRecorder {
                 recorder.stop();
                 endPoint.disconnect(recorder);
                 recorder.release();
-                final Date end = new Date();
-                handler.onFileRecorded(begin, end, item.getId());
+                handler.onFileRecorded(new Date(), item.getId());
             }
         }).start();
 
@@ -55,15 +53,14 @@ public class MyRecorder {
      * The Interface RecorderHandler.
      */
     public interface RecorderHandler {
-        
+
         /**
          * On file recorded.
          *
-         * @param begin the begin
          * @param end the end
          * @param filepath the filepath
          */
-        void onFileRecorded(Date begin, Date end, String filepath);
+        void onFileRecorded(Date end, String filepath);
     }
 
 }

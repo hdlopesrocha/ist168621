@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.kurento.client.*;
 import play.mvc.WebSocket;
 import services.CreateIntervalService;
-import services.CreateRecordingService;
 import services.ListGroupMembersService;
 import services.ListOwnerAttributesService;
 
@@ -98,18 +97,17 @@ public class Room implements Closeable {
      *
      */
     public void record(){
-        record(10000,false);
+        record(10000,null);
     }
 
     /**
      * Record.
      *
      * @param duration the duration
-     * @param continuation the continuation
      */
 
-    private synchronized void record(int duration, boolean continuation) {
-        if(!recording || continuation) {
+    private synchronized void record(int duration, Date start) {
+        if(!recording || start!=null) {
 
             try {
                 if(this.interval==null) {
@@ -132,41 +130,40 @@ public class Room implements Closeable {
 
             recording = r;
             if (recording) {
-                MyRecorder.record(hubPort, new Date(), duration, new MyRecorder.RecorderHandler() {
+                if(start==null){
+                    start = new Date();
+                }
+
+                Recording rec = new Recording(group.getId(),start);
+
+
+                MyRecorder.record(hubPort, duration, new MyRecorder.RecorderHandler() {
+
                     @Override
-                    public void onFileRecorded(Date begin, Date end, String filepath) {
-                        try {
-                            CreateRecordingService srs = new CreateRecordingService(filepath, getGroupId(), group.getId().toString(), begin,
-                                    end);
-                            Recording rec = srs.execute();
-                            if (rec != null) {
+                    public void onFileRecorded(Date end, String filepath) {
+                        rec.setEnd(end);
+                        rec.setUrl(group.getId().toString(),filepath);
+                        rec.save();
 
-                                interval.setEnd(end);
-                                interval.save();
+                        interval.setEnd(end);
+                        interval.save();
 
-                                JSONArray array = new JSONArray();
-                                array.put(Tools.FORMAT.format(interval.getStart()));
-                                array.put(Tools.FORMAT.format(interval.getEnd()));
+                        JSONArray array = new JSONArray();
+                        array.put(Tools.FORMAT.format(interval.getStart()));
+                        array.put(Tools.FORMAT.format(interval.getEnd()));
 
+                        JSONObject msg = new JSONObject();
+                        msg.put("id", "rec");
+                        msg.put(interval.getId().toString(), array);
+                        sendMessage(msg.toString());
 
-                                JSONObject msg = new JSONObject();
-                                msg.put("id", "rec");
-                                msg.put(interval.getId().toString(), array);
-                                sendMessage(msg.toString());
-
-                                System.out.println("REC: " + filepath);
-                            } else {
-                                return;
-                            }
-                        } catch (ServiceException e) {
-                            e.printStackTrace();
-                        }
-                        record(duration,true);
+                        System.out.println("REC: " + filepath);
+                        record(duration,end);
                     }
                 });
 
                 for (UserSession session : participants.values()) {
-                    session.record(duration);
+                    session.record(rec,duration);
                 }
             }
         }

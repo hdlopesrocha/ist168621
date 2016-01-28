@@ -21,10 +21,7 @@ public class GetCurrentRecordingService extends Service<Recording> {
     
     /** The group id. */
     private final ObjectId groupId;
-    
-    /** The user id. */
-    private final ObjectId userId;
-    
+
     /** The time. */
     private final Date time;
 
@@ -33,12 +30,10 @@ public class GetCurrentRecordingService extends Service<Recording> {
      *
      * @param callerId the caller id
      * @param groupId the group id
-     * @param userId the user id
      * @param time the time
      */
-    public GetCurrentRecordingService(String callerId, String groupId, String userId, Date time) {
+    public GetCurrentRecordingService(String callerId, String groupId, Date time) {
         this.caller = User.findById(new ObjectId(callerId));
-        this.userId = new ObjectId(userId);
         this.groupId = new ObjectId(groupId);
         this.time = time;
 
@@ -52,8 +47,7 @@ public class GetCurrentRecordingService extends Service<Recording> {
     @Override
     public Recording dispatch() throws BadRequestException {
 
-        FindIterable<Document> iter = Recording.getCollection().find(new Document("gid", groupId).append("uid", userId)
-                .append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
+        FindIterable<Document> iter = Recording.getCollection().find(new Document("gid", groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
 
         Document first = iter.first();
 
@@ -67,7 +61,7 @@ public class GetCurrentRecordingService extends Service<Recording> {
      */
     @Override
     public boolean canExecute() {
-        return caller != null && userId != null;
+        return caller != null;
     }
 
 }
