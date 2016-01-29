@@ -1,9 +1,8 @@
 package main;
 
-import org.kurento.client.ElementDisconnectedEvent;
-import org.kurento.client.EventListener;
-import org.kurento.client.MediaElement;
-import org.kurento.client.RecorderEndpoint;
+import org.kurento.client.*;
+import org.kurento.client.internal.server.KurentoServerException;
+import org.kurento.commons.testing.SystemCompatibilityTests;
 import org.kurento.repository.service.pojo.RepositoryItemRecorder;
 
 import java.util.Collections;
@@ -12,9 +11,9 @@ import java.util.Map;
 
 
 /**
- * The Class MyRecorder.
+ * The Class Recorder.
  */
-public class MyRecorder {
+public class Recorder {
 
     /**
      * Record.
@@ -23,12 +22,16 @@ public class MyRecorder {
      * @param duration the duration
      * @param handler the handler
      */
-    public static void record(MediaElement endPoint, int duration, RecorderHandler handler) {
+
+    private RecorderEndpoint recorder;
+    private RepositoryItemRecorder item;
+
+    public Recorder(MediaElement endPoint, int duration, RecorderHandler handler) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Map<String, String> metadata = Collections.emptyMap();
-                RepositoryItemRecorder item = KurentoManager.repository.createRepositoryItem(metadata);
+                item = KurentoManager.repository.createRepositoryItem(metadata);
 
                 if(item==null){
                     System.out.println("item is null");
@@ -39,21 +42,10 @@ public class MyRecorder {
                 }
                 System.out.println("Recording...");
 
+                recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).stopOnEndOfStream().withMediaProfile(MediaProfileSpecType.WEBM).build();
 
 
-
-                RecorderEndpoint recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).build();
-
-                endPoint.addElementDisconnectedListener(new EventListener<ElementDisconnectedEvent>() {
-                    @Override
-                    public void onEvent(ElementDisconnectedEvent elementDisconnectedEvent) {
-
-                        if(elementDisconnectedEvent.getSink().equals(recorder)) {
-                            handler.onFileRecorded(new Date(), item.getId());
-                        }
-                    }
-                });
-
+                
                 endPoint.connect(recorder);
                 recorder.record();
 
@@ -63,10 +55,15 @@ public class MyRecorder {
                     e.printStackTrace();
                 }
 
-                recorder.stop();
-                endPoint.disconnect(recorder);
-                recorder.release();
+                handler.onFileRecorded(new Date(), item.getId());
 
+                try {
+                    recorder.stop();
+                    endPoint.disconnect(recorder);
+                    recorder.release();
+                }catch (KurentoServerException e){
+                    System.out.println("recorder error!");
+                }
             }
         }).start();
 

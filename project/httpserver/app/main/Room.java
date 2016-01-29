@@ -117,8 +117,6 @@ public class Room implements Closeable {
                 e.printStackTrace();
             }
 
-
-
             boolean r = false;
             for (UserSession session : participants.values()) {
                 if (!session.isReceiveOnly()) {
@@ -134,9 +132,7 @@ public class Room implements Closeable {
                 }
 
                 Recording rec = new Recording(group.getId(),start);
-
-
-                MyRecorder.record(hubPort, duration, new MyRecorder.RecorderHandler() {
+                new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
 
                     @Override
                     public void onFileRecorded(Date end, String filepath) {
@@ -156,7 +152,7 @@ public class Room implements Closeable {
                         msg.put(interval.getId().toString(), array);
                         sendMessage(msg.toString());
 
-                        System.out.println("REC: " + filepath);
+                        System.out.println("GRP REC: " + filepath);
                         record(duration,end);
                     }
                 });

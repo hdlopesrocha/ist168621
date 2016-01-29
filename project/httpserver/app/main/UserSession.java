@@ -117,13 +117,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     public void record(Recording rec, int duration) {
         if(!isReceiveOnly()) {
-            MyRecorder.record(endPoint, duration, new MyRecorder.RecorderHandler() {
+            new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(Date end, String filepath) {
 
                     rec.setUrl(getUser().getId().toString(),filepath);
                     rec.save();
-                    System.out.println("REC: " + filepath);
+                    System.out.println("USR REC: " + filepath);
 
                 }
             });
