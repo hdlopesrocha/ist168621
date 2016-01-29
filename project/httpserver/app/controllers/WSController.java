@@ -145,13 +145,13 @@ public class WSController extends Controller {
                                     userSession.addCandidate(candidate, name);
                                 }
                                 break;
-                                case "setRealtime": {
+                                case "setRealTime": {
                                     String userId = args.optString("uid", null);
 
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            userSession.setRealtime(userId);
+                                            userSession.setRealTime(userId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();

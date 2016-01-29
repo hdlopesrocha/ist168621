@@ -334,8 +334,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
                     room.getGroupId(), currentTime);
             Recording rec = service.execute();
+            String url = null;
 
-            if (rec != null) {
+            if (rec != null && (url = rec.getUrl(owner))!=null) {
                 synchronized (playerLock) {
                     if (player != null) {
                         player.stop();
@@ -344,7 +345,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     }
 
                     // WEBM
-                    String url = rec.getUrl(owner);
                     System.out.println("HISTORIC PLAY: " + url);
                     RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(url);
 
@@ -395,7 +395,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      * @param userId the new realtime
      */
-    public void setRealtime(String userId) {
+    public void setRealTime(String userId) {
         System.out.println("REALTIME");
         synchronized (playerLock) {
             if (player != null) {

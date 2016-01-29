@@ -44,8 +44,6 @@ public class Recorder {
 
                 recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).stopOnEndOfStream().withMediaProfile(MediaProfileSpecType.WEBM).build();
 
-
-                
                 endPoint.connect(recorder);
                 recorder.record();
 

@@ -171,13 +171,13 @@ public class Room implements Closeable {
      * @return the composite port
      */
     public HubPort getCompositePort(String id) {
-        for (MediaObject port : getComposite().getChilds()) {
+        for (MediaObject port : composite.getChilds()) {
             if (port.getName().equals(id)) {
                 return (HubPort) port;
             }
         }
 
-        HubPort port = new HubPort.Builder(getComposite()).build();
+        HubPort port = new HubPort.Builder(composite).build();
         port.setName(id);
         return port;
     }
@@ -193,15 +193,6 @@ public class Room implements Closeable {
         }
     }
 
-    /**
-     * Gets the composite.
-     *
-     * @return the composite
-     */
-    private Hub getComposite() {
-        return composite;
-
-    }
 
     /**
      * Shutdown.
