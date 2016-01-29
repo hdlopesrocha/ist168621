@@ -90,7 +90,7 @@ var Signaling = (function(){
 	
 	this.logout = function(success){
 	    $.ajax({
-            url: "/api/auth",
+            url: "/api/user/auth",
             type: 'DELETE',
             success: success
         });
