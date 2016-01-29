@@ -80,6 +80,14 @@ public class WSController extends Controller {
 
                     userSession.sendMessage(userSession.getContent());
 
+                    {
+                        JSONObject serverTime = new JSONObject();
+                        serverTime.put("id","time");
+                        JSONObject data = new JSONObject();
+                        data.put("time", Tools.FORMAT.format(new Date()));
+                        serverTime.put("data",data);
+                        userSession.sendMessage(serverTime.toString());
+                    }
 
                     // When the socket is closed.
                     in.onClose(new Callback0() {

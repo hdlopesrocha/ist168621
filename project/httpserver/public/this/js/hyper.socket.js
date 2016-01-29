@@ -54,6 +54,7 @@ var Kurento = new (function() {
     var setTimeCallback = null;
     var removedUserCallback= null;
     var localVideoCallback=null;
+    var serverTimeCallback=null;
 
 
 	this.microphoneState = true;
@@ -232,7 +233,7 @@ var Kurento = new (function() {
 		return pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb) {
+	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		newRecordingCallback = nrcb;
@@ -243,6 +244,8 @@ var Kurento = new (function() {
 		setTimeCallback = stcb;
 		removedUserCallback = rucb;
 		localVideoCallback = lvcb;
+        serverTimeCallback=htcb;
+
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
 		
@@ -307,6 +310,13 @@ var Kurento = new (function() {
 						
 						talkReceivedCallback(msg.uid,msg.value);
 						break;
+
+
+					case 'time':
+						var msg = message.data;
+						serverTimeCallback(new Date(msg.time));
+						break;
+
                     case 'setTime':
                         setTimeCallback(new Date(message.time));
                         break;

@@ -854,11 +854,16 @@
 			video.src = streamUrl;
 		}
 
+        function serverTime(time){
+           timeline.sync(time);
+        }
+
+
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
 			                                intervalRecorded, messageArrived, tagArrived,
 			                                onContentArrived,talkArrived,setTime,
-			                                participantRemoved,localVideo);
+			                                participantRemoved,localVideo,serverTime);
 			$('#participantModal').modal('hide');
 		}
 
@@ -963,6 +968,9 @@
 				}
 			})(jQuery);
 
+
+
+
 			timeline = HyperTimeline.create("timeline",
 				function(offset) {
 					console.log("HISTORIC", offset);
@@ -992,7 +1000,6 @@
                     }
 
                 }
-
 			);
 		});	
 

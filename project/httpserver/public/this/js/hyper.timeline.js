@@ -3,7 +3,6 @@
 var HyperTimeline = new (function() {
 
 
-
 	
 	this.create = function(divId, historic, realTime, onCurrentTag, onDrop) {
 
@@ -11,14 +10,12 @@ var HyperTimeline = new (function() {
         var currentTag = null;
 
 		function followerWorker(timeline){
-		    var now = new Date().getTime()-timeline.hyper_offset;
+		    var now = new Date().getTime()-timeline.hyper_offset+timeline.serverOffset;
             setCurrentTag(now);
 	    	if(timeline.timeRunning){
 				var nowTime = new Date(now+1000);			// plus 1000 because it's the duration of the animation
 				timeline.moveTo(nowTime,{animation: {duration: 1000,easingFunction: "linear"}});
 	    	}
-
-
 			setTimeout(function(){followerWorker(timeline);},1000);
 		}
 
@@ -127,6 +124,13 @@ var HyperTimeline = new (function() {
             this.real_time = false ;
 
         }
+
+   timeline.serverOffset = 0;
+
+    timeline.sync = function(serverTime){
+        serverOffset = serverTime.getTime() - new Date().getTime();
+        console.log("SERVER TIME",serverTime,serverOffset);
+    }
 
 
 		timeline.setHistoric = function(date){
