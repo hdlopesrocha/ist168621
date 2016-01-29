@@ -10,6 +10,8 @@ var HyperTimeline = new (function() {
         var currentTag = null;
 
 		function followerWorker(timeline){
+            console.log("FW",timeline.hyper_offset,timeline.serverOffset );
+
 		    var now = new Date().getTime()-timeline.hyper_offset+timeline.serverOffset;
             setCurrentTag(now);
 	    	if(timeline.timeRunning){
@@ -128,8 +130,8 @@ var HyperTimeline = new (function() {
    timeline.serverOffset = 0;
 
     timeline.sync = function(serverTime){
-        serverOffset = serverTime.getTime() - new Date().getTime();
-        console.log("SERVER TIME",serverTime,serverOffset);
+        this.serverOffset = serverTime.getTime() - new Date().getTime();
+        console.log("SERVER TIME",serverTime,this.serverOffset);
     }
 
 
