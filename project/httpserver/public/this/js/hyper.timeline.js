@@ -5,7 +5,7 @@ var HyperTimeline = new (function() {
 
 
 	
-	this.create = function(divId, historic, realtime, onCurrentTag, onDrop) {
+	this.create = function(divId, historic, realTime, onCurrentTag, onDrop) {
 
 	    var tags = [];
         var currentTag = null;
@@ -135,14 +135,14 @@ var HyperTimeline = new (function() {
 
 		}
 		
-		timeline.setRealtime = function(){
-			var wasRealtime = this.real_time;
+		timeline.setRealTime = function(){
+			var wasRealTime = this.real_time;
 			this.real_time = true;
 			this.moveTo(new Date());
 			this.hyper_offset = 0;
 	    	
-	    	if(!wasRealtime){
-				realtime();
+	    	if(!wasRealTime){
+				realTime();
 	    	}
 		}
 		
@@ -155,7 +155,7 @@ var HyperTimeline = new (function() {
 		    	var avg = (start.getTime()+end.getTime())/2;
 		    	this.hyper_offset = new Date().getTime() - avg;
 				if (this.hyper_offset < 0){
-					this.setRealtime();
+					this.setRealTime();
 				}
 				else {
 					this.real_time = false ;

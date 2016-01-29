@@ -171,7 +171,7 @@ var Kurento = new (function() {
 	this.receiveRealtime = function(userId){
 		console.log("receiveRealtime",userId);
 		Kurento.webSocket.send(JSON.stringify({
-			id : "setRealtime",
+			id : "setRealTime",
 			uid:userId
 		}));
 	}
