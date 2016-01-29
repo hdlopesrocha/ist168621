@@ -27,6 +27,14 @@ var remote_constraints = {
 	'offerToReceiveVideo':true 
 };
 
+var screen_constraints = {
+    audio: false,
+    video: {
+        mediaSource: "window" || "screen"
+    }
+};
+
+
 function logError(err) {
 	console.log(err);
 }
@@ -338,7 +346,8 @@ var Kurento = new (function() {
 					newVideoCallback(URL.createObjectURL(stq));
 				};
 
-				
+				// XXX [CLIENT_OFFER_01] XXX
+
 				if(mode==0){
 					navigator.mediaDevices.getUserMedia({"audio":true, "video":true }).then(function(stream) {
                         localVideoCallback(window.URL.createObjectURL(stream));
@@ -358,9 +367,8 @@ var Kurento = new (function() {
                         }, logError,remote_constraints);
                     }).catch(logError);
 				}
-				// XXX [CLIENT_OFFER_01] XXX
 				else if(mode==1 ){
-					navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(stream) {
+					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
 						localVideoCallback(window.URL.createObjectURL(stream));
 
 						Kurento.peerConnection.addStream(stream);
