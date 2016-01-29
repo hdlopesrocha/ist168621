@@ -355,7 +355,7 @@ var Kurento = new (function() {
 				
 				// XXX [CLIENT_OFFER_01] XXX
 				else if(mode==0 ){
-					navigator.getUserMedia({"audio" : true,	"video" : true }, function(stream) {
+					navigator.mediaDevices.getUserMedia({audio : true,	video : true }, function(stream) {
 						localVideoCallback(window.URL.createObjectURL(stream));
                         primaryStream = stream;
 						Kurento.audioFunction(stream);
