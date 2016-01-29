@@ -2,17 +2,13 @@
 
 var HyperTimeline = new (function() {
 
-
-	
 	this.create = function(divId, historic, realTime, onCurrentTag, onDrop) {
 
 	    var tags = [];
         var currentTag = null;
 
 		function followerWorker(timeline){
-            console.log("FW",timeline.hyper_offset,timeline.serverOffset );
-
-		    var now = new Date().getTime()-timeline.hyper_offset+timeline.serverOffset;
+		    var now = timeline.getCurrentTime() -timeline.hyper_offset;
             setCurrentTag(now);
 	    	if(timeline.timeRunning){
 				var nowTime = new Date(now+1000);			// plus 1000 because it's the duration of the animation
@@ -100,7 +96,7 @@ var HyperTimeline = new (function() {
 	    var timeline =  new vis.Timeline(main, items,groups, options);
 	    timeline.real_time = true;
 	    timeline.hyper_offset = 0;
-		timeline.addCustomTime(new Date(),"time");
+		timeline.addCustomTime(timeline.getCurrentTime(),"time");
 	  
 		timeline.on('rangechange', function(properties){
     		var start = properties.start;
@@ -121,18 +117,17 @@ var HyperTimeline = new (function() {
 		timeline.setTime = function(date){
             var date = new Date(date);
 
-            this.hyper_offset = new Date().getTime() -date.getTime();
+            this.hyper_offset = timeline.getCurrentTime().getTime() -date.getTime();
             this.moveTo(date,{animation: {duration: 500,easingFunction: "linear"}});
             this.real_time = false ;
 
         }
 
-   timeline.serverOffset = 0;
 
-    timeline.sync = function(serverTime){
-        this.serverOffset = serverTime.getTime() - new Date().getTime();
-        console.log("SERVER TIME",serverTime,this.serverOffset);
-    }
+        timeline.sync = function(serverTime){
+            this.setCurrentTime(serverTime);
+            console.log("SERVER TIME",serverTime,new Date());
+        }
 
 
 		timeline.setHistoric = function(date){
@@ -144,7 +139,7 @@ var HyperTimeline = new (function() {
 		timeline.setRealTime = function(){
 			var wasRealTime = this.real_time;
 			this.real_time = true;
-			this.moveTo(new Date());
+			this.moveTo(timeline.getCurrentTime());
 			this.hyper_offset = 0;
 	    	
 	    	if(!wasRealTime){
@@ -159,7 +154,7 @@ var HyperTimeline = new (function() {
 		    	var start = properties.start;
 		    	var end = properties.end;
 		    	var avg = (start.getTime()+end.getTime())/2;
-		    	this.hyper_offset = new Date().getTime() - avg;
+		    	this.hyper_offset = timeline.getCurrentTime().getTime() - avg;
 				if (this.hyper_offset < 0){
 					this.setRealTime();
 				}
@@ -230,7 +225,7 @@ var HyperTimeline = new (function() {
 	    	
 	    	var customTime = this.getCustomTime("time");
 	    	
-	    	this.hyper_offset = new Date().getTime() - customTime.getTime();
+	    	this.hyper_offset = timeline.getCurrentTime().getTime() - customTime.getTime();
 	    	this.moveTo(customTime,{animation: false});
 	    	this.timeRunning = !this.timeRunning;
 	    }
@@ -275,7 +270,6 @@ var HyperTimeline = new (function() {
 
 	    }
 	    
-	    
 	    timeline.getMyTime = function(){
 	    	return this.getCustomTime("time");
 	    }
@@ -283,9 +277,7 @@ var HyperTimeline = new (function() {
 		followerWorker(timeline);
 	    return timeline;
 	}
-	
-	
-	
+
 	return this;
 })();
 
