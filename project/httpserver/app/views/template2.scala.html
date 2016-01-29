@@ -48,31 +48,7 @@
                 </a>
             </li>
             <div id="friend-list">
-
-                <li>
-                    <a href="#">
-                        <span class="fa-stack fa-lg pull-left">
-                            <i class="fa fa-dashboard fa-stack-1x"></i>
-                        </span>Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="fa-stack fa-lg pull-left">
-                            <i class="fa fa-globe fa-stack-1x"></i>
-                        </span>Shortcuts
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="fa-stack fa-lg pull-left">
-                            <i class="fa fa-map-marker fa-stack-1x"></i>
-                        </span>AlertsMap
-                    </a>
-                </li>
             </div>
-
-
         </ul>
 
         <div id="menu-toggle"></div>
@@ -101,24 +77,23 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/"><i class="fa fa-home"></i></a></li>
 
-                            <li>
-                                <a style="padding:8px 0px 0px 0px">
-                                    <form role="search">
-
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search"
-                                                   id="searchText"
-                                                   data-provide="typeahead" autocomplete="off"/>
-								<span class="input-group-addon">
-									<i class="glyphicon glyphicon-search"></i>
-								</span>
-                                        </div>
-
-                                    </form>
-                                </a>
-                            </li>
-
                         </ul>
+
+
+
+                        <div class="col-sm-3 col-md-3">
+                            <form class="navbar-form" role="search">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Search" name="q" type="text" id="searchText" data-provide="typeahead" autocomplete="off" >
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+
                         <ul class="nav navbar-nav navbar-right">
                             @if(session.get("uid")!=null){
 
