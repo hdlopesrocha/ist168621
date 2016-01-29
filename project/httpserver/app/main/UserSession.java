@@ -38,14 +38,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private final Room room;
     
     /** The end point. */
-    private final WebRtcEndpoint endPoint;
-    
-    /** The composite point. */
-    private final WebRtcEndpoint compositePoint;
-    
-    /** The end points. */
-    private final Map<String, WebRtcEndpoint> endPoints = new TreeMap<String, WebRtcEndpoint>();
-    
+    private WebRtcEndpoint endPoint;
+
     /** The composite port. */
     private final HubPort compositePort;
     
@@ -84,8 +78,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         this.room = room;
 
         // XXX [ICE_01] XXX
-        endPoint = getWebRtcEndPoint("main");
-        compositePoint = getWebRtcEndPoint("mixer");
+
+        endPoint = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
+        endPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
+            @Override
+            public void onEvent(OnIceCandidateEvent event) {
+                JSONObject response = new JSONObject();
+                response.put("id", "iceCandidate");
+                response.put("data", new JSONObject(JsonUtils.toJson(event.getCandidate())));
+
+                try {
+                    sendMessage(response.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        endPoint.addErrorListener(new EventListener<ErrorEvent>() {
+            @Override
+            public void onEvent(ErrorEvent arg0) {
+                System.out.println("ERROR: " + arg0.getDescription());
+            }
+        });
+
+        endPoint.setStunServerAddress("64.233.184.127");
+        endPoint.setStunServerPort(19302);
+
 
         compositePort = room.getCompositePort(user.getId().toString());
 
@@ -98,13 +117,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
         });
 
-        compositePoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
-            @Override
-            public void onEvent(MediaSessionStartedEvent arg0) {
-                endPoint.connect(compositePort/* , MediaType.AUDIO */);
-                compositePort.connect(compositePoint, MediaType.AUDIO);
-            }
-        });
+
 
     }
 
@@ -184,45 +197,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     }
 
-    /**
-     * Gets the web rtc end point.
-     *
-     * @param name the name
-     * @return the web rtc end point
-     */
-    private WebRtcEndpoint getWebRtcEndPoint(String name) {
-        WebRtcEndpoint ep = endPoints.get(name);
-        if (ep == null) {
-            ep = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
-            ep.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-                @Override
-                public void onEvent(OnIceCandidateEvent event) {
-                    JSONObject response = new JSONObject();
-                    response.put("id", "iceCandidate");
-                    response.put("name", name);
-                    response.put("data", new JSONObject(JsonUtils.toJson(event.getCandidate())));
 
-                    try {
-                        sendMessage(response.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            ep.addErrorListener(new EventListener<ErrorEvent>() {
-                @Override
-                public void onEvent(ErrorEvent arg0) {
-                    System.out.println("ERROR: " + arg0.getDescription());
-                }
-            });
-
-            ep.setStunServerAddress("64.233.184.127");
-            ep.setStunServerPort(19302);
-            endPoints.put(name, ep);
-        }
-        return ep;
-    }
 
     /**
      * Send message.
@@ -251,9 +226,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
         endPoint.disconnect(compositePort);
-        compositePort.disconnect(compositePoint);
         compositePort.release();
-        compositePoint.release();
         endPoint.release();
     }
 
@@ -261,12 +234,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * Adds the candidate.
      *
      * @param candidate the candidate
-     * @param name the name
      */
-    public void addCandidate(IceCandidate candidate, String name) {
-        WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
+    public void addCandidate(IceCandidate candidate) {
         // XXX [CLIENT_ICE_04] XXX
-        ep.addIceCandidate(candidate);
+        endPoint.addIceCandidate(candidate);
     }
 
     /**
@@ -423,25 +394,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * Process offer.
      *
      * @param description the description
-     * @param name the name
      */
-    public void processOffer(String description, String name) {
+    public void processOffer(String description) {
         receiveOnly = description.contains("a=recvonly");
 
         // XXX [CLIENT_ICE_04] XXX
-        WebRtcEndpoint ep = endPoints.get(name == null ? "main" : name);
-
         // XXX [CLIENT_OFFER_04] XXX
         // XXX [CLIENT_OFFER_05] XXX
 
-        String lsd = ep.processOffer(description);
+        String lsd = endPoint.processOffer(description);
         // XXX [CLIENT_OFFER_06] XXX
         JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
 
-        JSONObject msg = new JSONObject().put("id", "answer").put("data", data).put("name", name);
+        JSONObject msg = new JSONObject().put("id", "answer").put("data", data);
         // XXX [CLIENT_OFFER_07] XXX
         sendMessage(msg.toString());
-        ep.gatherCandidates();
+        endPoint.gatherCandidates();
     }
 
     /**

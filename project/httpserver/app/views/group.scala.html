@@ -265,7 +265,6 @@
                 </div>
             </div>
         </div>
-        <video id='onlyAudio' autoplay class="hidden"></video>
         <div class="col-md-4">
             <div class="panel panel-info">
                 <div class="btn-group pull-right">
@@ -468,11 +467,7 @@
 			timeline.setTime(time);
 		}
 
-		function mixedStream(streamUrl) {
-			var video = document.getElementById("onlyAudio");
-			video.src = streamUrl;
-			return video;
-		}
+
 
 		function participantInfo(info) {
 			var userId = info.id;
@@ -861,8 +856,8 @@
 
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
-			                                mixedStream, intervalRecorded, messageArrived,
-			                                tagArrived, onContentArrived,talkArrived,setTime,
+			                                intervalRecorded, messageArrived, tagArrived,
+			                                onContentArrived,talkArrived,setTime,
 			                                participantRemoved,localVideo);
 			$('#participantModal').modal('hide');
 		}
