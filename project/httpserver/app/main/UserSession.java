@@ -82,7 +82,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
         endPoint = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
         endPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
-            @Override
             public void onEvent(OnIceCandidateEvent event) {
                 JSONObject response = new JSONObject();
                 response.put("id", "iceCandidate");
@@ -114,7 +113,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
                 endPoint.connect(compositePort);
-                endPoint.connect(endPoint);
+                compositePort.connect(endPoint);
                 room.record();
             }
         });
@@ -309,7 +308,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             String groupUrl=null;
 
             if(rec!=null){
-                ownerUrl = rec.getUrl(userId);
+                ownerUrl = rec.getUrl(userId !=null ? userId : room.getId());
                 groupUrl = rec.getUrl(room.getId());
             }
 
@@ -405,7 +404,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         } else {
             UserSession session = room.getParticipant(playUser);
             if (session != null) {
-                session.endPoint.connect(endPoint);
+                session.endPoint.connect(endPoint,MediaType.VIDEO);
+                session.endPoint.connect(compositePort,MediaType.AUDIO);
             }
         }
         // mixerPort.connect(endPoint, MediaType.AUDIO);
