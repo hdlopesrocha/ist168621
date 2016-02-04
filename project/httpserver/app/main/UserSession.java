@@ -323,7 +323,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                     RepositoryItemPlayer itemAudio = KurentoManager.repository.getReadEndpoint(groupUrl);
                     PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemAudio.getUrl()).build();
-                    
+
                     tempVideo.addErrorListener(new EventListener<ErrorEvent>() {
                         @Override
                         public void onEvent(ErrorEvent arg0) {
@@ -338,20 +338,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             setHistoric(playUser);
                         }
                     });
-
-
+                    
                     if (playerVideo != null) {
                         playerVideo.stop();
                         playerVideo.release();
-                        playerVideo = tempVideo;
                     }
 
                     if (playerAudio != null) {
                         playerAudio.stop();
                         playerAudio.release();
-                        playerAudio = tempAudio;
                     }
-
+                    playerVideo = tempVideo;
+                    playerAudio = tempAudio;
                     playerVideo.connect(endPoint, MediaType.VIDEO);
                     playerAudio.connect(endPoint, MediaType.AUDIO);
 
