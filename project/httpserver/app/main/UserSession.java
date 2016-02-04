@@ -19,8 +19,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 /**
@@ -43,12 +41,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /** The composite port. */
     private final HubPort compositePort;
     
-    /** The player lock. */
+    /** The playerVideo lock. */
     private final Object playerLock = new Object();
     
-    /** The player. */
-    private PlayerEndpoint player;
-    
+    /** The playerVideo. */
+    private PlayerEndpoint playerVideo;
+
+    /** The playerVideo. */
+    private PlayerEndpoint playerAudio;
+
     /** The play. */
     private boolean play = true;
     
@@ -297,33 +298,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void setHistoric(String userId) {
         playUser = userId;
         Date currentTime = new Date(new Date().getTime() - timeOffset + 500);
-        UserSession session = room.getParticipant(playUser);
-        String owner = session != null ? session.getUser().getId().toString() : room.getGroupId();
 
         try {
             // saying "no video here!", for group video
             GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
                     room.getGroupId(), currentTime);
             Recording rec = service.execute();
-            String url = null;
+            String ownerUrl=null;
+            String groupUrl=null;
 
-            if (rec != null && (url = rec.getUrl(owner))!=null) {
+            if(rec!=null){
+                ownerUrl = rec.getUrl(userId);
+                groupUrl = rec.getUrl(room.getId());
+            }
+
+
+            if (ownerUrl!=null && groupUrl!=null) {
                 synchronized (playerLock) {
-                    if (player != null) {
-                        player.stop();
-                        player.release();
-                        player = null;
-                    }
 
                     // WEBM
-                    System.out.println("HISTORIC PLAY: " + url);
-                    RepositoryItemPlayer item = KurentoManager.repository.getReadEndpoint(url);
+                    System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
+                    RepositoryItemPlayer itemVideo = KurentoManager.repository.getReadEndpoint(ownerUrl);
+                    PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemVideo.getUrl()).build();
 
-                    player = new PlayerEndpoint.Builder(room.getMediaPipeline(), item.getUrl()).build();
-                    // player = new
-                    // PlayerEndpoint.Builder(room.getMediaPipeline(),
-                    // uri).build();
-                    player.addErrorListener(new EventListener<ErrorEvent>() {
+                    RepositoryItemPlayer itemAudio = KurentoManager.repository.getReadEndpoint(groupUrl);
+                    PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemAudio.getUrl()).build();
+                    
+                    tempVideo.addErrorListener(new EventListener<ErrorEvent>() {
                         @Override
                         public void onEvent(ErrorEvent arg0) {
                             System.out.println("FAILURE: " + arg0.getDescription());
@@ -331,16 +332,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         }
                     });
 
-                    player.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+                    tempVideo.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
                             setHistoric(playUser);
                         }
                     });
-                    player.connect(endPoint/* , MediaType.VIDEO */);
+
+
+                    if (playerVideo != null) {
+                        playerVideo.stop();
+                        playerVideo.release();
+                        playerVideo = tempVideo;
+                    }
+
+                    if (playerAudio != null) {
+                        playerAudio.stop();
+                        playerAudio.release();
+                        playerAudio = tempAudio;
+                    }
+
+                    playerVideo.connect(endPoint, MediaType.VIDEO);
+                    playerAudio.connect(endPoint, MediaType.AUDIO);
+
                     if (play) {
-                        // player.connect(compositePoint , MediaType.AUDIO);
-                        player.play();
+                        // playerVideo.connect(compositePoint , MediaType.AUDIO);
+                        playerVideo.play();
+                        playerAudio.play();
                         JSONObject msg = new JSONObject();
                         msg.put("id", "setTime");
                         msg.put("time", Tools.FORMAT.format(rec.getStart()));
@@ -369,12 +387,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void setRealTime(String userId) {
         System.out.println("REALTIME");
         synchronized (playerLock) {
-            if (player != null) {
-                player.stop();
-                player.release();
-                player = null;
+            if (playerVideo != null) {
+                playerVideo.stop();
+                playerVideo.release();
+                playerVideo = null;
             }
 
+            if (playerAudio != null) {
+                playerAudio.stop();
+                playerAudio.release();
+                playerAudio = null;
+            }
             timeOffset = 0L;
             playUser = userId;
         }
@@ -420,13 +443,22 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public void setPlay(boolean play) {
         synchronized (playerLock) {
 
-            if (player != null) {
+            if (playerVideo != null) {
                 if (play) {
-                    player.play();
+                    playerVideo.play();
                 } else {
-                    player.pause();
+                    playerVideo.pause();
                 }
             }
+
+            if (playerAudio != null) {
+                if (play) {
+                    playerAudio.play();
+                } else {
+                    playerAudio.pause();
+                }
+            }
+
             this.play = play;
         }
     }
