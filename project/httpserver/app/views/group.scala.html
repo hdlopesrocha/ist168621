@@ -230,7 +230,7 @@
             <div class="panel panel-info ">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default" onclick="toggleAutoSelect()">
-                        <i id="autoSelect" class="fa fa-thumb-off"></i>
+                        <i id="autoSelect" class="fa fa-thumb-tack text-off"></i>
                     </button>
                     <button class="btn btn-default" onclick="toggleMicrophone()">
                         <i id="soundIcon" class="fa fa-microphone text-success"></i>
@@ -402,7 +402,7 @@
 		
 		function toggleAutoSelect(){
 			autoSelect = !autoSelect;
-			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-tack":"fa fa-thumb-off");
+			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack":"fa fa-thumb-tack text-off");
 
 		}
 
