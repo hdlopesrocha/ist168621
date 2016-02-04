@@ -68,6 +68,7 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
         for (Search m : Search.search(query, null, null, filters)) {
             if (relations.contains(m.getOwner())) {
                 Document doc =Data.findByOwner(m.getOwner(),null);
+                doc = (Document) doc.get("data");
                 if(doc!=null) {
                     JSONObject props = new JSONObject(doc.toJson());
                     props.put("id", m.getOwner());
