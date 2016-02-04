@@ -113,6 +113,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
+                endPoint.connect(compositePort);
                 endPoint.connect(endPoint);
                 room.record();
             }
@@ -338,7 +339,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             setHistoric(playUser);
                         }
                     });
-                    
+
                     if (playerVideo != null) {
                         playerVideo.stop();
                         playerVideo.release();
