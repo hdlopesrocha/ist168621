@@ -227,47 +227,45 @@ public class Room implements Closeable {
      */
     public UserSession join(final User user, final WebSocket.Out<String> out) {
         try {
-           synchronized (participants) {
-               System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
-               final UserSession participant = new UserSession(user, this, out);
-               final String userId = user.getId().toString();
+            synchronized (participants) {
+                System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
+                final UserSession participant = new UserSession(user, this, out);
+                final String userId = user.getId().toString();
 
-               // add myself to the room
-               participants.add(participant);
-               JSONArray otherUsers = new JSONArray();
-               Document attributes1 = new ListOwnerAttributesService(userId, userId, null).execute();
-               JSONObject myProfile = new JSONObject(attributes1.toJson());
-               myProfile.put("id", userId);
+                // add myself to the room
+                participants.add(participant);
+                JSONArray otherUsers = new JSONArray();
+                Document attributes1 = new ListOwnerAttributesService(userId, userId, null).execute();
+                JSONObject myProfile = new JSONObject(attributes1.toJson());
+                myProfile.put("id", userId);
 
-               final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                       new JSONArray().put(myProfile.put("online", true)));
+                final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                        new JSONArray().put(myProfile.put("online", true)));
 
-               ListGroupMembersService service = new ListGroupMembersService(userId, getGroupId());
-
-               for (KeyValuePair<Membership, User> m : service.execute()) {
-                    for(UserSession otherSession : participants) {
-                        if(otherSession.getUser().getId().equals(m.getValue().getId())) {
-                            ObjectId otherId = m.getKey().getUserId();
-
-                            Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
-                                    m.getValue().getId().toString(), null).execute();
-                            JSONObject otherProfile = new JSONObject(attributes2.toJson());
-                            otherProfile.put("id", otherId.toString());
-
-
-                            otherProfile.put("online", otherSession != null);
-                            if (otherSession != null && !participant.equals(otherSession)) {
-                                otherSession.sendMessage(myAdvertise.toString());
-                            }
-                            otherUsers.put(otherProfile);
+                ListGroupMembersService service = new ListGroupMembersService(userId, getGroupId());
+                for (KeyValuePair<Membership, User> m : service.execute()) {
+                    UserSession otherSession = null;
+                    for (UserSession os : participants) {
+                        if (otherSession.getUser().getId().equals(m.getValue().getId())) {
+                            otherSession = os;
                         }
                     }
-               }
-               final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
-               participant.sendMessage(currentParticipants.toString());
+                    ObjectId otherId = m.getKey().getUserId();
+                    Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
+                            m.getValue().getId().toString(), null).execute();
+                    JSONObject otherProfile = new JSONObject(attributes2.toJson());
+                    otherProfile.put("id", otherId.toString());
+                    otherProfile.put("online", otherSession != null);
+                    if (otherSession != null && !participant.equals(otherSession)) {
+                        otherSession.sendMessage(myAdvertise.toString());
+                    }
+                    otherUsers.put(otherProfile);
+                }
+                final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+                participant.sendMessage(currentParticipants.toString());
 
-            return participant;
-           }
+                return participant;
+            }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -285,7 +283,6 @@ public class Room implements Closeable {
         synchronized (participants) {
             participants.remove(user);
             try {
-
                 Document attributes = new ListOwnerAttributesService(uid, uid, null).execute();
                 JSONObject result = new JSONObject(attributes.toJson());
                 result.put("id", uid);

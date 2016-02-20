@@ -109,7 +109,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerPort(19302);
 
 
-        compositePort = room.getCompositePort(user.getId().toString());
+        compositePort = room.getCompositePort(temporaryID.toString());
 
 
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
