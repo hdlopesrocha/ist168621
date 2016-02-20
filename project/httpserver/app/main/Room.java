@@ -246,7 +246,7 @@ public class Room implements Closeable {
                 for (KeyValuePair<Membership, User> m : service.execute()) {
                     UserSession otherSession = null;
                     for (UserSession os : participants) {
-                        if (otherSession.getUser().getId().equals(m.getValue().getId())) {
+                        if (os.getUser().getId().equals(m.getValue().getId())) {
                             otherSession = os;
                         }
                     }
