@@ -111,7 +111,6 @@ public class WSController extends Controller {
                             switch (id) {
                                 case "createMessage": {
                                     String data = args.getString("data");
-
                                     CreateMessageService messageService = new CreateMessageService(
                                             user.getId().toString(), groupId, data);
                                     try {
@@ -138,14 +137,12 @@ public class WSController extends Controller {
                                 break;
                                 case "offer": {
                                     JSONObject data = args.getJSONObject("data");
-
                                     String rsd = data.getString("sdp");
                                     userSession.processOffer(rsd);
                                 }
                                 break;
                                 case "iceCandidate": {
                                     JSONObject jCand = args.getJSONObject("candidate");
-
                                     IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
                                             jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
                                     userSession.addCandidate(candidate);
@@ -153,7 +150,6 @@ public class WSController extends Controller {
                                 break;
                                 case "setRealTime": {
                                     String userId = args.optString("uid", null);
-
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -171,27 +167,18 @@ public class WSController extends Controller {
                                     } catch (ServiceException e) {
                                         e.printStackTrace();
                                     }
-
                                     final JSONObject myAdvertise = new JSONObject().put("id", "removedUser").put("uid", uid);
-
                                     room.sendMessage(myAdvertise.toString());
                                 }
-
-
                                 break;
-
-
                                 case "addUser": {
                                     String uid = args.optString("uid", null);
                                     AddGroupMemberService service = new AddGroupMemberService(userId, groupId, uid);
                                     try {
                                         service.execute();
-
                                         Document attributes = new ListOwnerAttributesService(userId, uid, null).execute();
                                         JSONObject result = new JSONObject(attributes.toJson());
                                         result.put("id", uid);
-
-
                                         final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
                                                 new JSONArray().put(result.put("online", false)));
                                         room.sendMessage(myAdvertise.toString());
@@ -220,10 +207,8 @@ public class WSController extends Controller {
                                     room.sendMessage(msg.toString());
                                 }
                                 break;
-
                                 case "setHistoric": {
                                     String userId = args.optString("uid", null);
-
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -241,21 +226,16 @@ public class WSController extends Controller {
                                         String content = args.getString("content");
                                         CreateTimeTagService service = new CreateTimeTagService(groupId, time, title, content);
                                         TimeTag tag = service.execute();
-
                                         JSONObject msg = new JSONObject();
                                         msg.put("id", "tag");
                                         msg.put("data", tag.toJson());
                                         room.sendMessage(msg.toString());
-
                                     } catch (ServiceException | JSONException | ParseException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
-
                                 break;
                                 case "createContent": {
-
                                     try {
                                         Date start = Tools.FORMAT.parse(args.getString("start"));
                                         Date end = Tools.FORMAT.parse(args.getString("end"));
@@ -266,30 +246,22 @@ public class WSController extends Controller {
                                     } catch (ServiceException | ParseException e) {
                                         e.printStackTrace();
                                     }
-
                                     // System.out.println("content");
-                                    for (UserSession us : room.getParticipants()) {
-                                        us.sendMessage(us.getContent());
-                                    }
+                                    room.sendContents();
 
                                 }
                                 break;
                                 case "deleteContent": {
                                     String contentId = args.getString("cid");
                                     try {
-
                                         DeleteHyperContentService service = new DeleteHyperContentService(userId,
                                                 groupId, contentId);
                                         service.execute();
                                     } catch (ServiceException e) {
                                         e.printStackTrace();
                                     }
-
                                     // System.out.println("content");
-                                    for (UserSession us : room.getParticipants()) {
-                                        us.sendMessage(us.getContent());
-                                    }
-
+                                   room.sendContents();
                                 }
                                 break;
                                 default:

@@ -19,6 +19,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -64,6 +65,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     }
 
     private Boolean receiveOnly = true;
+
+    private UUID temporaryID = UUID.randomUUID();
 
     /**
      * Instantiates a new user session.
@@ -255,7 +258,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     @Override
     public int compareTo(UserSession o) {
-        return getUser().compareTo(o.getUser());
+        return temporaryID.compareTo(o.temporaryID);
     }
 
     /*
@@ -272,9 +275,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             return false;
         }
         UserSession other = (UserSession) obj;
-        boolean eq = user.equals(other.getUser());
-        eq &= getGroupId().equals(other.getGroupId());
-        return eq;
+        return temporaryID.equals(other.temporaryID);
     }
 
     /*

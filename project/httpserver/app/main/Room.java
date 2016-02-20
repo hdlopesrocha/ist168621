@@ -17,6 +17,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -27,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 public class Room implements Closeable {
 
     /** The participants. */
-    private final ConcurrentMap<String, UserSession> participants = new ConcurrentHashMap<String, UserSession>();
+    private final Set<UserSession> participants = new HashSet<UserSession>();
     
     /** The media pipeline. */
     private final MediaPipeline mediaPipeline;
@@ -118,10 +120,12 @@ public class Room implements Closeable {
             }
 
             boolean r = false;
-            for (UserSession session : participants.values()) {
-                if (!session.isReceiveOnly()) {
-                    r = true;
-                    break;
+            synchronized (participants) {
+                for (UserSession session : participants) {
+                    if (!session.isReceiveOnly()) {
+                        r = true;
+                        break;
+                    }
                 }
             }
 
@@ -156,9 +160,10 @@ public class Room implements Closeable {
                         record(duration,end);
                     }
                 });
-
-                for (UserSession session : participants.values()) {
-                    session.record(rec,duration);
+                synchronized (participants) {
+                    for (UserSession session : participants) {
+                        session.record(rec, duration);
+                    }
                 }
             }
         }
@@ -188,8 +193,10 @@ public class Room implements Closeable {
      * @param string the string
      */
     public void sendMessage(final String string) {
-        for (UserSession user : participants.values()) {
-            user.sendMessage(string);
+        synchronized (participants) {
+            for (UserSession user : participants) {
+                user.sendMessage(string);
+            }
         }
     }
 
@@ -220,41 +227,47 @@ public class Room implements Closeable {
      */
     public UserSession join(final User user, final WebSocket.Out<String> out) {
         try {
-            System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
-            final UserSession participant = new UserSession(user, this, out);
-            // add myself to the room
-            participants.put(participant.getUser().getId().toString(), participant);
-            JSONArray otherUsers = new JSONArray();
-            Document attributes1 = new ListOwnerAttributesService(user.getId().toString(), user.getId().toString(), null).execute();
-            JSONObject myProfile = new JSONObject(attributes1.toJson());
-            myProfile.put("id", user.getId().toString());
+           synchronized (participants) {
+               System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
+               final UserSession participant = new UserSession(user, this, out);
+               final String userId = user.getId().toString();
 
-            final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                    new JSONArray().put(myProfile.put("online", true)));
+               // add myself to the room
+               participants.add(participant);
+               JSONArray otherUsers = new JSONArray();
+               Document attributes1 = new ListOwnerAttributesService(userId, userId, null).execute();
+               JSONObject myProfile = new JSONObject(attributes1.toJson());
+               myProfile.put("id", userId);
 
-            ListGroupMembersService service = new ListGroupMembersService(user.getId().toString(), getGroupId());
+               final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                       new JSONArray().put(myProfile.put("online", true)));
 
-            for (KeyValuePair<Membership, User> m : service.execute()) {
-                UserSession otherSession = participants.get(m.getKey().getUserId().toString());
-                ObjectId otherId = m.getKey().getUserId();
+               ListGroupMembersService service = new ListGroupMembersService(userId, getGroupId());
 
-                Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
-                        m.getValue().getId().toString(), null).execute();
-                JSONObject otherProfile = new JSONObject(attributes2.toJson());
-                otherProfile.put("id", otherId.toString());
+               for (KeyValuePair<Membership, User> m : service.execute()) {
+                    for(UserSession otherSession : participants) {
+                        if(otherSession.getUser().getId().equals(m.getValue().getId())) {
+                            ObjectId otherId = m.getKey().getUserId();
+
+                            Document attributes2 = new ListOwnerAttributesService(otherId.toString(),
+                                    m.getValue().getId().toString(), null).execute();
+                            JSONObject otherProfile = new JSONObject(attributes2.toJson());
+                            otherProfile.put("id", otherId.toString());
 
 
-                otherProfile.put("online", otherSession != null);
-                if (otherSession != null && !otherId.equals(user.getId())) {
-                    otherSession.sendMessage(myAdvertise.toString());
-
-                }
-                otherUsers.put(otherProfile);
-            }
-            final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
-            participant.sendMessage(currentParticipants.toString());
+                            otherProfile.put("online", otherSession != null);
+                            if (otherSession != null && !participant.equals(otherSession)) {
+                                otherSession.sendMessage(myAdvertise.toString());
+                            }
+                            otherUsers.put(otherProfile);
+                        }
+                    }
+               }
+               final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+               participant.sendMessage(currentParticipants.toString());
 
             return participant;
+           }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -269,23 +282,24 @@ public class Room implements Closeable {
      */
     public void leave(final UserSession user) throws IOException {
         String uid = user.getUser().getId().toString();
+        synchronized (participants) {
+            participants.remove(user);
+            try {
 
-        participants.remove(uid);
-        try {
+                Document attributes = new ListOwnerAttributesService(uid, uid, null).execute();
+                JSONObject result = new JSONObject(attributes.toJson());
+                result.put("id", uid);
 
-            Document attributes = new ListOwnerAttributesService(uid, uid, null).execute();
-            JSONObject result = new JSONObject(attributes.toJson());
-            result.put("id", uid);
-
-            final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
-                    new JSONArray().put(result.put("online", false)));
-            sendMessage(myAdvertise.toString());
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        user.close();
-        if (participants.size() == 0) {
-            close();
+                final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                        new JSONArray().put(result.put("online", false)));
+                sendMessage(myAdvertise.toString());
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+            user.close();
+            if (participants.size() == 0) {
+                close();
+            }
         }
     }
 
@@ -294,8 +308,8 @@ public class Room implements Closeable {
      *
      * @return a collection with all the participants in the room
      */
-    public Collection<UserSession> getParticipants() {
-        return participants.values();
+    private Collection<UserSession> getParticipants() {
+        return participants;
     }
 
     /**
@@ -305,7 +319,16 @@ public class Room implements Closeable {
      * @return the participant from this session
      */
     public UserSession getParticipant(final String uid) {
-        return uid != null ? participants.get(uid) : null;
+        if(uid!=null) {
+            synchronized (participants) {
+                for (UserSession session : participants) {
+                    if (uid.equals(session.getUser().getId().toString())) {
+                        return session;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /* (non-Javadoc)
@@ -314,14 +337,16 @@ public class Room implements Closeable {
     @Override
     public void close() {
         System.out.println("------------- ROOM CLOSE --------------");
-        for (final UserSession user : participants.values()) {
-            try {
-                user.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        synchronized (participants) {
+            for (final UserSession user : participants) {
+                try {
+                    user.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            participants.clear();
         }
-        participants.clear();
         mediaPipeline.release();
         Global.manager.removeRoom(this);
     }
@@ -344,4 +369,11 @@ public class Room implements Closeable {
         return mediaPipeline;
     }
 
+    public void sendContents() {
+        synchronized (participants) {
+            for (UserSession us : participants) {
+                us.sendMessage(us.getContent());
+            }
+        }
+    }
 }

@@ -61,7 +61,6 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
         List<KeyValue<String>> filter = new ArrayList<KeyValue<String>>();
         filter.add(new KeyValue<String>("type", User.class.getName()));
 
-
         List<List<KeyValue<String>>> filters = new ArrayList<>();
         filters.add(filter);
 
