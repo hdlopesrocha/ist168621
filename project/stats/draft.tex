@@ -1,0 +1,61 @@
+
+\documentclass[
+10pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+]{scrartcl}
+
+\usepackage{amsmath} 
+\usepackage{adjustbox}
+\usepackage{textcomp}
+\usepackage{environ}
+\usepackage{tikz}
+\usepackage{graphics}
+\usepackage{pgfplots} 
+\pgfplotsset{compat=1.9}
+
+\title{Draft for master thesis} % The article title
+
+\author{Henrique Rocha} 
+\date{} 
+\begin{document}
+
+	\maketitle % Print the title/author/date block
+
+	%----------------------------------------------------------------------------------------
+	%	INTRODUCTION
+	%----------------------------------------------------------------------------------------
+
+	\section{Test}
+
+\subsection{Usability Test}
+
+	\subsubsection{Task 1 (Video)}
+		Register User, add the coordinator as a friend, create a room, add the coordinator to the room wait for the coordinator to join the room and change for the individual view.
+		
+	\subsubsection{Task 2 (Tags)}
+		The coordinator creates previously a room with existing content, namely, tags and subtitles.
+		The user task is to enter in the public room and search by "Cauchy Rule" get an url for that time and send it back to the other users.
+		Next the user should create a tag on exact arrival time (when he entered the room).
+		
+		
+	\subsubsection{Task 3 (Content)}
+		The user must create a subtitle with 10s duration at the time of arrival with the content "I've just arrived" and search for the previously created tag
+
+	\subsubsection{Task 4 (Colaborative)}
+
+			
+\subsection{Performance Test}
+
+	\begin{center}
+	\input{points3.tex}
+	\end{center}
+
+	\begin{center}
+	\input{points2.tex}
+	\end{center}
+
+	\begin{center}
+	\input{points.tex}
+	\end{center}
+\end{document}
