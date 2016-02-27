@@ -23,8 +23,7 @@ import services.*;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class WSController extends Controller {
 
@@ -104,10 +103,13 @@ public class WSController extends Controller {
                     // For each event received on the socket,
                     in.onMessage(new Callback<String>() {
                         public void invoke(String event) {
-                            System.out.println("\nRECV: " + event);
+
                             JSONObject args = new JSONObject(event);
                             String id = args.getString("id");
 
+
+                            if(!"talk".equals(id))
+                                System.out.println("\nRECV: " + event);
                             switch (id) {
                                 case "createMessage": {
                                     String data = args.getString("data");
@@ -272,8 +274,66 @@ public class WSController extends Controller {
                 } else {
                     out.close();
                 }
+            }
+        };
+    }
+
+    private Set<WSPair> wspairs = new HashSet<WSPair>();
+
+    private class WSPair implements Comparable<WSPair> {
+        private WebSocket.In<String> in ;
+        private WebSocket.Out<String> out ;
+        private UUID uuid;
+
+        public WSPair(WebSocket.In<String> in, WebSocket.Out<String> out) {
+            this.in = in;
+            this.out = out;
+            this.uuid = UUID.randomUUID();
+        }
+
+        @Override
+        public int compareTo(WSPair o) {
+            return uuid.compareTo(o.uuid);
+        }
 
 
+
+    }
+
+
+    public WebSocket<String> together(String groupId) {
+        final String userId = session("uid");
+        return new WebSocket<String>() {
+
+            public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
+                final WSPair wsPair = new WSPair(in, out);
+
+                synchronized (wspairs){
+                    wspairs.add(wsPair);
+                }
+                // When the socket is closed.
+                in.onClose(new Callback0() {
+                    public void invoke() {
+                        synchronized (wspairs){
+                            wspairs.remove(wsPair);
+                        }
+
+                        System.out.println("Disconnected");
+                    }
+                });
+                // For each event received on the socket,
+                in.onMessage(new Callback<String>() {
+                    public void invoke(String event) {
+                        System.out.println("\nRECV: " + event);
+                        synchronized (wspairs){
+                            for(WSPair wsp : wspairs){
+                                if(!wsp.equals(wsPair)){
+                                    wsp.out.write(event);
+                                }
+                            }
+                        }
+                    }
+                });
             }
         };
     }

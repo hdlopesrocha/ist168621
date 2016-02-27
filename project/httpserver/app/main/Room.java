@@ -62,22 +62,12 @@ public class Room implements Closeable {
             }
         });
 
-        for (MediaObject obj : mediaPipeline.getChilds()) {
-            if (obj.getName().equals("composite")) {
-                this.composite = (Hub) obj;
-                for (MediaObject child : obj.getChilds()) {
-                    child.release();
-                }
-            }
-        }
         this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 
-        if (this.composite == null) {
-            this.composite = new Composite.Builder(mediaPipeline).build();
-            this.composite.setName("composite");
-            this.hubPort = getCompositePort("this");
-            System.out.println("composite for room " + mediaPipeline.getName() + " has been created");
-        }
+        this.composite = getHub(mediaPipeline);
+        System.out.println("composite for room " + mediaPipeline.getName() + " has been created");
+        this.hubPort = getCompositePort("this");
+
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }
 
@@ -167,6 +157,22 @@ public class Room implements Closeable {
                 }
             }
         }
+    }
+
+
+    public Hub getHub(MediaPipeline pipeline){
+        for (MediaObject obj : pipeline.getChilds()) {
+            if (obj.getName().equals("composite")) {
+                for (MediaObject child : obj.getChilds()) {
+                    child.release();
+                }
+                return  (Hub) obj;
+
+            }
+        }
+        Composite ans =  new Composite.Builder(mediaPipeline).build();
+        ans.setName("composite");
+        return ans;
     }
 
     /**

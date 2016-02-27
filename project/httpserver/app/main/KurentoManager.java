@@ -4,8 +4,9 @@ import models.Group;
 import org.bson.types.ObjectId;
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;
-import org.kurento.repository.rest.RepositoryRestApi;
-import org.kurento.repository.rest.RepositoryRestApiProvider;
+import org.kurento.repository.RepositoryClient;
+import org.kurento.repository.RepositoryClientProvider;
+
 
 import java.util.Collections;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class KurentoManager {
     private final static String DEFAULT_REPOSITORY_SERVER_URI = "http://localhost:7676";
     
     /** The repository. */
-    public static RepositoryRestApi repository;
+    public static RepositoryClient repository;
     
     /** The kurento. */
     private static KurentoClient kurento;
@@ -40,7 +41,7 @@ public class KurentoManager {
     public KurentoManager() {
         System.out.println("Connecting to KMS...");
         kurento = KurentoClient.create(DEFAULT_KMS_WS_URI);
-        repository = RepositoryRestApiProvider.create(DEFAULT_REPOSITORY_SERVER_URI);
+        repository = RepositoryClientProvider.create(DEFAULT_REPOSITORY_SERVER_URI);
 
         if (repository != null) {
             try {

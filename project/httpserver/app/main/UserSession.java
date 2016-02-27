@@ -298,7 +298,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     public void setHistoric(String userId) {
         playUser = userId;
-        Date currentTime = new Date(new Date().getTime() - timeOffset + 500);
+        Date currentTime = new Date(new Date().getTime() - timeOffset + 10);
 
         try {
             // saying "no video here!", for group video
@@ -307,7 +307,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             Recording rec = service.execute();
             String ownerUrl=null;
             String groupUrl=null;
-
             if(rec!=null){
                 ownerUrl = rec.getUrl(userId !=null ? userId : room.getId());
                 groupUrl = rec.getUrl(room.getId());
@@ -319,8 +318,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                     // WEBM
                     System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
-                    RepositoryItemPlayer itemVideo = KurentoManager.repository.getReadEndpoint(ownerUrl);
+                    RepositoryItemPlayer itemVideo =  KurentoManager.repository.getReadEndpoint(ownerUrl);
                     PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemVideo.getUrl()).build();
+
 
                     RepositoryItemPlayer itemAudio = KurentoManager.repository.getReadEndpoint(groupUrl);
                     PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemAudio.getUrl()).build();
@@ -351,17 +351,35 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     }
                     playerVideo = tempVideo;
                     playerAudio = tempAudio;
-                    playerVideo.connect(endPoint, MediaType.VIDEO);
-                    playerAudio.connect(endPoint, MediaType.AUDIO);
+
 
                     if (play) {
-                        // playerVideo.connect(compositePoint , MediaType.AUDIO);
-                        playerVideo.play();
+                        playerAudio.connect(endPoint, MediaType.AUDIO);
+                        playerVideo.connect(endPoint, MediaType.VIDEO);
                         playerAudio.play();
-                        JSONObject msg = new JSONObject();
-                        msg.put("id", "setTime");
-                        msg.put("time", Tools.FORMAT.format(rec.getStart()));
-                        sendMessage(msg.toString());
+                        playerVideo.play();
+
+                        if(playerVideo.getVideoInfo().getIsSeekable()) {
+                            Long position = currentTime.getTime()-rec.getStart().getTime();
+                            if(position >= playerVideo.getVideoInfo().getDuration()){
+                                position = playerVideo.getVideoInfo().getDuration() -1;
+                            }else if(position<0){
+                                position = 0l;
+                            }
+
+
+
+                            playerVideo.setPosition(position);
+                            if(playerAudio.getVideoInfo().getIsSeekable()) {
+                                playerAudio.setPosition(position);
+                            }
+                        }
+                        else {
+                            JSONObject msg = new JSONObject();
+                            msg.put("id", "setTime");
+                            msg.put("time", Tools.FORMAT.format(rec.getStart()));
+                            sendMessage(msg.toString());
+                        }
                     }
                 }
             } else {

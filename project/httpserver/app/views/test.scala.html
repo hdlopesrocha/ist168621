@@ -1,0 +1,57 @@
+@()
+
+@template(1){
+
+}{
+<h1>Test</h1>
+
+<textarea type="text" id="textOt"  class="form-control">
+    This is just a simple test.
+</textarea>
+<br>
+<div id="ops">
+
+</div>
+<script>
+
+    function wsurl(s) {
+        var l = window.location;
+        return ((l.protocol === "https:") ? "wss://" : "ws://") + l.hostname + (((l.port != 80) && (l.port != 443)) ? ":" + l.port : "") + s;
+    }
+
+    $(document).ready(function(){
+        var ws = new WebSocket(wsurl("/ws/together/test"));
+        var editor = CodeMirror.fromTextArea(document.getElementById("textOt"), {
+          lineNumbers: true,
+          mode: "text/html",
+          matchBrackets: true
+        });
+
+        var adapter = new ot.CodeMirrorAdapter(editor);
+        console.log(adapter);
+        ws.onopen = function (event) {
+
+        };
+
+        ws.onmessage = function (event) {
+            console.log("to",ot.TextOperation);
+            var ops = JSON.parse(event.data);
+
+            var op = ot.TextOperation.fromJSON(ops);
+
+            console.log(op);
+            adapter.applyOperation(op);
+        }
+
+	    console.log(ot);
+
+        adapter.registerCallbacks({
+            change: function (a,b) {
+                console.log(a);
+                ws.send(JSON.stringify(a.toJSON()));
+            }
+        });
+    });
+</script>
+
+}

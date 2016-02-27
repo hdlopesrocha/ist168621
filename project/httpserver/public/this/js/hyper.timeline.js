@@ -3,7 +3,6 @@
 var HyperTimeline = new (function() {
 
 	this.create = function(divId, historic, realTime, onCurrentTag, onDrop) {
-
 	    var tags = [];
         var currentTag = null;
 
@@ -17,7 +16,6 @@ var HyperTimeline = new (function() {
 			setTimeout(function(){followerWorker(timeline);},1000);
 		}
 
-
 	    function setCurrentTag(now){
               var minTag =null;
                 var minDiff=null;
@@ -29,7 +27,6 @@ var HyperTimeline = new (function() {
                         minDiff=dif;
                     }
                 }
-
                 if(currentTag!=minTag){
                     currentTag = minTag;
                     onCurrentTag(minTag);
@@ -39,7 +36,6 @@ var HyperTimeline = new (function() {
 /*		
 		this.onAdd = function (item, callback){
 			console.log(this);
-			
 			item.group = 'tag';
 			item.editable = true;
 			var date = item.start._i;

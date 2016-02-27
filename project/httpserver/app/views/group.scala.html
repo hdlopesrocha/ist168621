@@ -317,7 +317,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="panel panel-info not-fullscreen">
                 <div class="panel-heading" data-toggle="collapse"
                      data-target="#collapse5">
@@ -378,6 +378,37 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-info not-fullscreen">
+                <div class="panel-heading" data-toggle="collapse"
+                     data-target="#collapse5">
+                    <h4 class="panel-title">Collaborative editor</h4>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse in">
+                    <form class="form">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>Content:</label>
+                                <textarea class="form-control" rows="5" id="collabText" name="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btn-group input-group pull-right">
+                                <button type="button" class="btn btn-success"
+                                        onclick="createContent()">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                    Save
+                                </button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <script>

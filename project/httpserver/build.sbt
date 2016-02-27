@@ -21,6 +21,6 @@ resolvers += (
   "Local Maven Repository" at "file:///" + Path.userHome.absolutePath + "/.m2/repository"
   )
 
-libraryDependencies += "org.kurento" % "kurento-java" % "6.2.0"
-libraryDependencies += "org.kurento" % "kurento-client" % "6.2.0"
-libraryDependencies += "org.kurento" % "kurento-repository-server" % "6.0.0"
+libraryDependencies += "org.kurento" % "kurento-java" % "6.3.0"
+libraryDependencies += "org.kurento" % "kurento-client" % "6.3.0"
+libraryDependencies += "org.kurento" % "kurento-repository-client" % "6.3.0"
