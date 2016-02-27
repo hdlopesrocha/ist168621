@@ -396,7 +396,7 @@
                         <div class="panel-footer">
                             <div class="btn-group input-group pull-right">
                                 <button type="button" class="btn btn-success"
-                                        onclick="createContent()">
+                                        onclick="saveCollab()">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                                     Save
                                 </button>
@@ -411,7 +411,7 @@
     </div>
 </div>
 <script>
- var adapter = null;
+        var adapter = null;
 		var group = true;
 		var selectedUser = null;
 		var savedUser = "@userId";
@@ -427,10 +427,18 @@
 		var contentTimer = null;
 		var autoSelect = false;
 		var fullscreen = false;
+
 		function setTimeLink(){
 			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
 		}
-		
+
+		function saveCollab(){
+            var value = adapter.cm.getValue();
+
+            Kurento.saveCollaborativeContent(value);
+            console.log(value);
+		}
+
 		function toggleAutoSelect(){
 			autoSelect = !autoSelect;
 			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack":"fa fa-thumb-tack text-off");
@@ -862,18 +870,14 @@
 			});
 		}
 
-
 		function participantRemoved(uid) {
             $("#vidMember"+uid).remove();
             participants[uid]=false;
             if(uid=="@userId"){
                 document.location = "/";
             }
-
 		}
 
-
-		
 		function onKurentoOpen(){
 			console.log("WebSocket Ok!");
 			var attrs = parseQuery(document.location.search);
@@ -899,7 +903,7 @@
         function onCoordinationRequest(sid){
             var op = ot.TextOperation().insert(adapter.cm.getValue());
             console.log("CoOp",op);
-            Kurento.sendOperation(JSON.stringify(op.toJSON()),sid);
+            Kurento.sendOperation(op.toJSON(),sid);
         }
 
 
@@ -963,7 +967,7 @@
             adapter = new ot.CodeMirrorAdapter(editor);
             adapter.registerCallbacks({
                 change: function (a,b) {
-                    Kurento.sendOperation(JSON.stringify(a.toJSON()),null);
+                    Kurento.sendOperation(a.toJSON(),null);
                 }
             });
 

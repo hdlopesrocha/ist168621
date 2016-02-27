@@ -97,6 +97,17 @@ public class WSController extends Controller {
                             obj.put("id","coordinate");
                             obj.put("sid",userSession.getSid().toString());
                             coordinator.sendMessage(obj.toString());
+                        }else {
+                            JSONObject obj = new JSONObject();
+                            obj.put("id","operation");
+                            JSONArray data = new JSONArray();
+                            try {
+                                data.put(new GetCollaborativeContentService(userId,groupId).execute());
+                            } catch (ServiceException e) {
+                                data.put("");
+                            }
+                            obj.put("data",data);
+                            userSession.sendMessage(obj.toString());
                         }
                     }
 
@@ -283,6 +294,15 @@ public class WSController extends Controller {
                                         sess.sendMessage(event);
                                     } else {
                                         room.sendMessage(userSession, event);
+                                    }
+                                }
+                                break;
+                                case "saveCollab":{
+                                    String data = args.getString("data");
+                                    try {
+                                        new SetCollaborativeContentService(userId,groupId,data).execute();
+                                    } catch (ServiceException e) {
+                                        e.printStackTrace();
                                     }
                                 }
                                 break;

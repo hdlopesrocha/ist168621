@@ -33,13 +33,6 @@ public class Recorder {
                 Map<String, String> metadata = Collections.emptyMap();
                 item = KurentoManager.repository.createRepositoryItem(metadata);
 
-                if(item==null){
-                    System.out.println("item is null");
-                }
-
-                if(endPoint==null){
-                    System.out.println("endPoint is null");
-                }
                 System.out.println("Recording...");
 
                 recorder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl()).stopOnEndOfStream().withMediaProfile(MediaProfileSpecType.WEBM).build();

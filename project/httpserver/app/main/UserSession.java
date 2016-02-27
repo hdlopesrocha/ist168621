@@ -8,6 +8,7 @@ import models.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
+import org.kurento.commons.testing.SystemCompatibilityTests;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
@@ -319,6 +320,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     // WEBM
                     System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
                     RepositoryItemPlayer itemVideo =  KurentoManager.repository.getReadEndpoint(ownerUrl);
+                    System.out.println("URL: "+itemVideo.getUrl());
                     PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemVideo.getUrl()).build();
 
 

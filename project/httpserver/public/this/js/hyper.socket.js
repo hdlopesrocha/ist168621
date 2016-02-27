@@ -70,6 +70,9 @@ var Kurento = new (function() {
 	this.microphoneState = true;
 	this.soundDetected = false;
 
+
+
+
 	this.toggleMicrophone = function() {
 		this.microphoneState = !this.microphoneState;
 
@@ -154,7 +157,14 @@ var Kurento = new (function() {
 			content: content
 		}));
 	}
-	
+
+	this.saveCollaborativeContent = function(content){
+        Kurento.webSocket.send(JSON.stringify({
+			id : "saveCollab",
+			data: content
+		}));
+	}
+
 	this.createTag = function(time,title,content){
 		Kurento.webSocket.send(JSON.stringify({
 			id : "createTag",
@@ -345,7 +355,7 @@ var Kurento = new (function() {
                         setTimeCallback(new Date(message.time));
                         break;
                     case 'operation':
-                        operationTransformationCallback(ot.TextOperation.fromJSON(JSON.parse(message.data)));
+                        operationTransformationCallback(ot.TextOperation.fromJSON(message.data));
                         break;
 
                     case 'coordinate':
