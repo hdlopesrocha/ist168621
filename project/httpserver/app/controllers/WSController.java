@@ -88,6 +88,18 @@ public class WSController extends Controller {
                         userSession.sendMessage(serverTime.toString());
                     }
 
+
+
+                    {
+                        UserSession coordinator = room.getCoordinator(userSession);
+                        if(coordinator!=null){
+                            JSONObject obj = new JSONObject();
+                            obj.put("id","coordinate");
+                            obj.put("sid",userSession.getSid().toString());
+                            coordinator.sendMessage(obj.toString());
+                        }
+                    }
+
                     // When the socket is closed.
                     in.onClose(new Callback0() {
                         public void invoke() {
@@ -264,6 +276,14 @@ public class WSController extends Controller {
                                     }
                                     // System.out.println("content");
                                    room.sendContents();
+                                }
+                                case "operation" : {
+                                    if (args.has("sid")) {
+                                        UserSession sess = room.getUser(UUID.fromString(args.getString("sid")));
+                                        sess.sendMessage(event);
+                                    } else {
+                                        room.sendMessage(userSession, event);
+                                    }
                                 }
                                 break;
                                 default:

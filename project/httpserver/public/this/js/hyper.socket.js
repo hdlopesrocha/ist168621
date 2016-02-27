@@ -63,6 +63,8 @@ var Kurento = new (function() {
     var removedUserCallback= null;
     var localVideoCallback=null;
     var serverTimeCallback=null;
+    var operationTransformationCallback=null;
+    var coordinationRequestCallback=null;
 
 
 	this.microphoneState = true;
@@ -176,7 +178,19 @@ var Kurento = new (function() {
 			data:play
 		}));
 	}
-	
+
+    this.sendOperation = function(op,sid){
+        console.log("sendOperation",op,sid);
+        var obj = {
+          id : "operation",
+          data:op
+        };
+        if(sid!=null){
+            obj.sid = sid;
+        }
+        Kurento.webSocket.send(JSON.stringify(obj));
+    }
+
 	this.receiveRealtime = function(userId){
 		console.log("receiveRealtime",userId);
 		Kurento.webSocket.send(JSON.stringify({
@@ -241,7 +255,7 @@ var Kurento = new (function() {
 		return pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb) {
+	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb,otcb,crcb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		newRecordingCallback = nrcb;
@@ -253,6 +267,8 @@ var Kurento = new (function() {
 		removedUserCallback = rucb;
 		localVideoCallback = lvcb;
         serverTimeCallback=htcb;
+        operationTransformationCallback = otcb;
+        coordinationRequestCallback = crcb;
 
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -328,8 +344,13 @@ var Kurento = new (function() {
                     case 'setTime':
                         setTimeCallback(new Date(message.time));
                         break;
+                    case 'operation':
+                        operationTransformationCallback(ot.TextOperation.fromJSON(JSON.parse(message.data)));
+                        break;
 
-
+                    case 'coordinate':
+                        coordinationRequestCallback(message.sid);
+                        break;
 					default:
 						break;					
 				}

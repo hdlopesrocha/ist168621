@@ -66,7 +66,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     private Boolean receiveOnly = true;
 
-    private UUID temporaryID = UUID.randomUUID();
+    private UUID sid = UUID.randomUUID();
 
     /**
      * Instantiates a new user session.
@@ -109,7 +109,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerPort(19302);
 
 
-        compositePort = room.getCompositePort(temporaryID.toString());
+        compositePort = room.getCompositePort(sid.toString());
 
 
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
@@ -258,7 +258,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     @Override
     public int compareTo(UserSession o) {
-        return temporaryID.compareTo(o.temporaryID);
+        return sid.compareTo(o.sid);
     }
 
     /*
@@ -275,7 +275,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             return false;
         }
         UserSession other = (UserSession) obj;
-        return temporaryID.equals(other.temporaryID);
+        return sid.equals(other.sid);
     }
 
     /*
@@ -421,7 +421,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         if (userId == null) {
             compositePort.connect(endPoint);
         } else {
-            UserSession session = room.getParticipant(playUser);
+            UserSession session = room.getUser(playUser);
             if (session != null) {
                 session.endPoint.connect(endPoint,MediaType.VIDEO);
                 session.endPoint.connect(compositePort,MediaType.AUDIO);
@@ -511,5 +511,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         synchronized (playerLock) {
             this.timeOffset = offset;
         }
+    }
+
+    public UUID getSid() {
+        return sid;
     }
 }

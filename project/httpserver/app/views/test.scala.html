@@ -8,10 +8,6 @@
 <textarea type="text" id="textOt"  class="form-control">
     This is just a simple test.
 </textarea>
-<br>
-<div id="ops">
-
-</div>
 <script>
 
     function wsurl(s) {
@@ -28,7 +24,6 @@
         });
 
         var adapter = new ot.CodeMirrorAdapter(editor);
-        console.log(adapter);
         ws.onopen = function (event) {
 
         };
@@ -36,10 +31,7 @@
         ws.onmessage = function (event) {
             console.log("to",ot.TextOperation);
             var ops = JSON.parse(event.data);
-
             var op = ot.TextOperation.fromJSON(ops);
-
-            console.log(op);
             adapter.applyOperation(op);
         }
 
@@ -47,7 +39,6 @@
 
         adapter.registerCallbacks({
             change: function (a,b) {
-                console.log(a);
                 ws.send(JSON.stringify(a.toJSON()));
             }
         });

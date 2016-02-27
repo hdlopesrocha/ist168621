@@ -16,4 +16,5 @@
 - contributions to strophe.js (fixed duplicated user register not giving error)
 - contributions to typeahead.js (fixed item access VS text representation access)
 
-
+- describe operation transformations
+- how is implemented our collab text edit

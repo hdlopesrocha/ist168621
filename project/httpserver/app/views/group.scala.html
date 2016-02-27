@@ -390,8 +390,7 @@
                     <form class="form">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label>Content:</label>
-                                <textarea class="form-control" rows="5" id="collabText" name="content"></textarea>
+                                <textarea class="form-control"  id="collabText" name="content"></textarea>
                             </div>
                         </div>
                         <div class="panel-footer">
@@ -412,6 +411,7 @@
     </div>
 </div>
 <script>
+ var adapter = null;
 		var group = true;
 		var selectedUser = null;
 		var savedUser = "@userId";
@@ -891,12 +891,24 @@
            timeline.sync(time);
         }
 
+        function operationTransformationArrived(operation){
+            console.log(operation);
+            adapter.applyOperation(operation);
+        }
+
+        function onCoordinationRequest(sid){
+            var op = ot.TextOperation().insert(adapter.cm.getValue());
+            console.log("CoOp",op);
+            Kurento.sendOperation(JSON.stringify(op.toJSON()),sid);
+        }
+
 
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
 			                                intervalRecorded, messageArrived, tagArrived,
 			                                onContentArrived,talkArrived,setTime,
-			                                participantRemoved,localVideo,serverTime);
+			                                participantRemoved,localVideo,serverTime,
+			                                operationTransformationArrived,onCoordinationRequest);
 			$('#participantModal').modal('hide');
 		}
 
@@ -940,7 +952,22 @@
 
 			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
-			
+
+            var editor = CodeMirror.fromTextArea(document.getElementById("collabText"), {
+              lineNumbers: true,
+              mode: "text/html",
+              theme: "neo",
+              matchBrackets: true
+            });
+
+            adapter = new ot.CodeMirrorAdapter(editor);
+            adapter.registerCallbacks({
+                change: function (a,b) {
+                    Kurento.sendOperation(JSON.stringify(a.toJSON()),null);
+                }
+            });
+
+
 			
 			$("#createTagForm").submit(function(event){
 				event.preventDefault();
@@ -1035,6 +1062,7 @@
                 }
 			);
 		});	
+
 
 
 </script>

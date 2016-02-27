@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
+import org.kurento.client.EventListener;
 import play.mvc.WebSocket;
 import services.CreateIntervalService;
 import services.ListGroupMembersService;
@@ -15,10 +16,7 @@ import services.ListOwnerAttributesService;
 import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -28,6 +26,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class Room implements Closeable {
 
+    private  final static  Random RANDOM = new Random();
     /** The participants. */
     private final Set<UserSession> participants = new HashSet<UserSession>();
     
@@ -206,6 +205,16 @@ public class Room implements Closeable {
         }
     }
 
+    public void sendMessage(final UserSession ignore,final String string) {
+        synchronized (participants) {
+            for (UserSession user : participants) {
+                if(user!=ignore) {
+                    user.sendMessage(string);
+                }
+            }
+        }
+    }
+
 
     /**
      * Shutdown.
@@ -321,7 +330,7 @@ public class Room implements Closeable {
      * @param uid the uid
      * @return the participant from this session
      */
-    public UserSession getParticipant(final String uid) {
+    public UserSession getUser(final String uid) {
         if(uid!=null) {
             synchronized (participants) {
                 for (UserSession session : participants) {
@@ -333,6 +342,20 @@ public class Room implements Closeable {
         }
         return null;
     }
+
+    public UserSession getUser(final UUID sid) {
+        if(sid!=null) {
+            synchronized (participants) {
+                for (UserSession session : participants) {
+                    if (sid.equals(session.getSid())) {
+                        return session;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
     /* (non-Javadoc)
      * @see java.io.Closeable#close()
@@ -377,6 +400,21 @@ public class Room implements Closeable {
             for (UserSession us : participants) {
                 us.sendMessage(us.getContent());
             }
+        }
+    }
+
+    public UserSession getCoordinator(UserSession ignore) {
+        synchronized (participants){
+            List<UserSession> candidates = new ArrayList<UserSession>();
+            for (UserSession us : participants) {
+                if(us!=ignore){
+                    candidates.add(us);
+                }
+            }
+            if(candidates.size()>0){
+                return candidates.get(RANDOM.nextInt(candidates.size()));
+            }
+            return null;
         }
     }
 }
