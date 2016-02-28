@@ -3,11 +3,35 @@
 
 }{
 
+<style>
+    #qrCode canvas {
+        width:100%!important;
+    }
+
+</style>
 <script type="text/javascript" src="/assets/this/js/adapter.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
 <script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 <!-- <script type="text/javascript" src="/assets/this/js/screen.js"></script> -->
+
+<div id="qrCodeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">QR Code</h4>
+            </div>
+            <div class="modal-body">
+                <div id="qrCode">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <div id="timeQueryStringModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -307,7 +331,10 @@
                                    onkeydown="if(event.keyCode==13){sendMessage();}"/>
 						<span class="input-group-btn">
 							<button class="btn btn-info" type="button" id="sendMessageButton"
-                                    onclick="sendMessage()">Send
+                                    onclick="sendMessage()">
+
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+
                             </button>
 						</span>
                         </div>
@@ -358,18 +385,24 @@
                             <div class="btn-group input-group pull-right">
                                 <button type="button" class="btn btn-danger"
                                         onclick="clearContent()">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    Clear
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+
+                                </button>
+                                <button type="button" class="btn btn-info"
+                                        onclick="generateQRCode()">
+                                    <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+
                                 </button>
                                 <button type="button" class="btn btn-info"
                                         onclick="previewContent()">
                                     <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                    Preview
+
                                 </button>
+
                                 <button type="button" class="btn btn-success"
                                         onclick="createContent()">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                                    Save
+
                                 </button>
                             </div>
                             <div class="clearfix"></div>
@@ -398,7 +431,7 @@
                                 <button type="button" class="btn btn-success"
                                         onclick="saveCollab()">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                                    Save
+
                                 </button>
                             </div>
                             <div class="clearfix"></div>
@@ -478,7 +511,17 @@
 				Kurento.receiveMore(oldestMsg, 1);
 			}
 		}
-		
+
+		function generateQRCode(){
+		    $("#qrCode").html("");
+		    $("#qrCode").qrcode({
+                "size": 800,
+                "color": "#3a3",
+                "text": getContent()
+            });
+			$("#qrCodeModal").modal("show");
+		}
+
 		function intervalRecorded(array) {
 			console.log("REC", array);
 			for ( var id in array) {
