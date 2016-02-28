@@ -700,7 +700,7 @@
 		}
 
 		function renderContent() {
-			var currentTime = new Date().getTime() - current_offset;
+			var currentTime = timeline.getCurrentTime() - current_offset;
 
 			while (localContent.length != 0) {
 				var entry = localContent[0];
