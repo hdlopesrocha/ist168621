@@ -420,7 +420,6 @@
 		var firstRecording = true;
 		var participants = {};
 		var timeline = null;
-		var current_offset = 0;
 		var oldestMsg = null;
 		var localContent = [];
 		var moreContent = true;
@@ -604,7 +603,7 @@
 			if (real_time) {
 				Kurento.receiveRealtime(selectedUser);
 			} else {
-				Kurento.receiveHistoric(selectedUser, current_offset);
+				Kurento.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
 		}
 
@@ -619,7 +618,7 @@
 			if (real_time) {
 				Kurento.receiveRealtime(selectedUser);
 			} else {
-				Kurento.receiveHistoric(selectedUser, current_offset);
+				Kurento.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
 		}
 
@@ -700,7 +699,7 @@
 		}
 
 		function renderContent() {
-			var currentTime = timeline.getCurrentTime() - current_offset;
+			var currentTime = timeline.getCurrentTime() - timeline.hyper_offset;
 
 			while (localContent.length != 0) {
 				var entry = localContent[0];
@@ -1044,8 +1043,7 @@
 				function(offset) {
 					console.log("HISTORIC", offset);
 					// current request
-					current_offset = offset;
-					Kurento.receiveHistoric(selectedUser, current_offset);
+					Kurento.receiveHistoric(selectedUser, offset);
 					real_time = false;
 
 				}, function() {

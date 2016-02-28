@@ -148,14 +148,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
     }
 
-    /**
-     * Gets the time offset.
-     *
-     * @return the time offset
-     */
-    private long getTimeOffset() {
-        return timeOffset;
-    }
 
     /**
      * Gets the content.
@@ -163,8 +155,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @return the content
      */
     public String getContent() {
-        long offset = getTimeOffset();
-        Date time = new Date(new Date().getTime() - offset);
+        Date time = new Date(new Date().getTime() - timeOffset);
         JSONArray jArr = new JSONArray();
         boolean hasMore = false;
         try {
