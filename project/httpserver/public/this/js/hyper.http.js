@@ -132,13 +132,7 @@ var Signaling = (function(){
             success: success
         });
 	}
-	
-	
-	this.getSdp = function(membershipId,result){
-		$.get( "/api/group/sdp/"+membershipId, result);
-	}
-	
-	
+
 	this.createGroup = function(name,visibility,success){
         $.ajax({
             url: "/api/group?n="+name+"&v="+visibility,

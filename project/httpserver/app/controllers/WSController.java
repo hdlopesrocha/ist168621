@@ -260,6 +260,19 @@ public class WSController extends Controller {
                                     }
                                 }
                                 break;
+                                case "removeTag":{
+                                    String tagId = args.getString("tid");
+                                    try {
+                                        new DeleteTimeTagService(groupId,tagId).execute();
+                                        JSONObject msg = new JSONObject();
+                                        msg.put("id", "removeTag");
+                                        msg.put("tid", tagId);
+                                        room.sendMessage(msg.toString());
+                                    } catch (ServiceException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                break;
                                 case "createContent": {
                                     try {
                                         Date start = Tools.FORMAT.parse(args.getString("start"));

@@ -824,6 +824,7 @@
 			    }
 			},
 			highlighter: function(item){
+			    console.log("highlighter",item);
 				if(item.type=="tag"){
 					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else if(item.type=="html"){
@@ -906,13 +907,17 @@
             Kurento.sendOperation(op.toJSON(),sid);
         }
 
+        function onTagRemoved(tagId){
+            timeline.removeTag(tagId);
+        }
 
 		function kurentoStart(mode){
 			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
 			                                intervalRecorded, messageArrived, tagArrived,
 			                                onContentArrived,talkArrived,setTime,
 			                                participantRemoved,localVideo,serverTime,
-			                                operationTransformationArrived,onCoordinationRequest);
+			                                operationTransformationArrived,onCoordinationRequest,
+			                                onTagRemoved);
 			$('#participantModal').modal('hide');
 		}
 
@@ -1063,6 +1068,9 @@
                         $("#contentEnd").val(dateStr(new Date(time)));
                     }
 
+                },function(tagId){
+                    console.log("REMOVE TAG",tagId);
+                    Kurento.removeTag(tagId);
                 }
 			);
 		});	

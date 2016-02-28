@@ -2,7 +2,7 @@
 
 var HyperTimeline = new (function() {
 
-	this.create = function(divId, historic, realTime, onCurrentTag, onDrop) {
+	this.create = function(divId, historic, realTime, onCurrentTag, onDrop,onTagRemoved) {
 	    var tags = [];
         var currentTag = null;
 
@@ -62,6 +62,12 @@ var HyperTimeline = new (function() {
 	      		remove:true,
 	      		updateGroup:false, 
 	      		updateTime:true 
+	      	},
+	      	onRemove:function (item, callback) {
+                if(item.id){
+                    onTagRemoved( item.id);
+                }
+                callback(null); // send back adjusted item
 	      	}
 	     // clickToUse: true
 	    };

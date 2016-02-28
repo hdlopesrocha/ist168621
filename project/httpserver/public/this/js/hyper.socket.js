@@ -65,8 +65,7 @@ var Kurento = new (function() {
     var serverTimeCallback=null;
     var operationTransformationCallback=null;
     var coordinationRequestCallback=null;
-
-
+    var removedTagCallback = null;
 	this.microphoneState = true;
 	this.soundDetected = false;
 
@@ -162,6 +161,13 @@ var Kurento = new (function() {
         Kurento.webSocket.send(JSON.stringify({
 			id : "saveCollab",
 			data: content
+		}));
+	}
+
+	this.removeTag = function(tid){
+		Kurento.webSocket.send(JSON.stringify({
+			id : "removeTag",
+			tid: tid
 		}));
 	}
 
@@ -265,7 +271,7 @@ var Kurento = new (function() {
 		return pc;
 	}
 	
-	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb,otcb,crcb) {
+	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb,otcb,crcb,rtcb) {
 		newParticipantsCallback = npcb;
 		newVideoCallback = nvcb;
 		newRecordingCallback = nrcb;
@@ -279,6 +285,8 @@ var Kurento = new (function() {
         serverTimeCallback=htcb;
         operationTransformationCallback = otcb;
         coordinationRequestCallback = crcb;
+        removedTagCallback = rtcb;
+
 
 		if ("WebSocket" in window) {
 			Kurento.webSocket = new WebSocket(wsurl("/ws/room/" + groupId));
@@ -336,16 +344,15 @@ var Kurento = new (function() {
 						var msg = message.data;
 						tagArrivedCallback(msg.id,msg.time,msg.title,msg.content);
 
-						
+
+						break;
+			        case 'removeTag':
+						removedTagCallback(message.tid);
 						break;
 					case 'talk':
 						var msg = message.data;
-
-						
 						talkReceivedCallback(msg.uid,msg.value);
 						break;
-
-
 					case 'time':
 						var msg = message.data;
 						serverTimeCallback(new Date(msg.time));

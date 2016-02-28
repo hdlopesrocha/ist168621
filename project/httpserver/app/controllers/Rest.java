@@ -4,6 +4,7 @@ import dtos.AttributeDto;
 import dtos.KeyValue;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
+import main.Tools;
 import models.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -73,28 +74,47 @@ public class Rest extends Controller {
                 array.put(msg);
             }
 
+            String [] tokens = query.split(" ");
+
             SearchHyperContentService service2 = new SearchHyperContentService(session("uid"), groupId, query);
             List<HyperContent> contents = service2.execute();
 
-            Pattern pattern = Pattern.compile("<(\\w+)>.*?</\\1>");
 
             for (HyperContent content : contents) {
                 JSONObject msg = content.toJson();
                 msg.put("type", "html");
+                String html = content.getContent();
+                String text = Tools.getTextFromHtml(html);
 
-                String text = content.getContent();
-                Matcher m = pattern.matcher(text);
+                int pos = text.toLowerCase().indexOf(tokens[0].toLowerCase());
+                int min = pos - 20;
+                int max = pos + 20;
+                boolean rmin = false;
+                boolean rmax = false;
 
-
-                String newText = "";
-                while (m.find()) {
-                    newText += m.group();
+                if (min < 0) {
+                    min = 0;
+                } else {
+                    rmin = true;
                 }
 
+                if (max >= text.length()) {
+                    max = text.length();
+                } else {
+                    rmax = true;
+                }
 
-                msg.put("content", newText);
+                text = text.substring(min, max);
+                String result = "";
+                if (rmin) {
+                    result += "...";
+                }
+                result += text;
+                if (rmax) {
+                    result += "...";
+                }
 
-
+                msg.put("content", result);
                 array.put(msg);
             }
 

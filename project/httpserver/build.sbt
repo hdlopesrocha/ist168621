@@ -21,6 +21,8 @@ resolvers += (
   "Local Maven Repository" at "file:///" + Path.userHome.absolutePath + "/.m2/repository"
   )
 
+libraryDependencies += "org.json" % "json" % "20160212"
+libraryDependencies += "org.jsoup" % "jsoup" % "1.8.3"
 libraryDependencies += "org.kurento" % "kurento-java" % "6.3.0"
 libraryDependencies += "org.kurento" % "kurento-client" % "6.3.0"
 libraryDependencies += "org.kurento" % "kurento-repository-client" % "6.3.0"

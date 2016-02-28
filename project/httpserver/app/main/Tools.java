@@ -1,5 +1,7 @@
 package main;
 
+import org.jsoup.Jsoup;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -7,6 +9,8 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -46,6 +50,21 @@ public class Tools {
         return builder.toString();
     }
 
+    private static Pattern HTML_PATTERN = Pattern.compile("<(\\w+)>.*?</\\1>");
+
+    public static String getTextFromHtml(String html){
+/*
+        Matcher m = HTML_PATTERN.matcher(html);
+        String text = "";
+        while (m.find()) {
+            text += m.group();
+        }
+        return text;
+*/
+
+        return Jsoup.parse(html).text();
+    }
+
     /**
      * Friendly time.
      *
@@ -83,4 +102,8 @@ public class Tools {
         //return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC).format(Instant.now());
     }
 
+    public static int clamp(int min, int x, int max) {
+        return (x<min? min :(x>=max? max : x));
+
+    }
 }
