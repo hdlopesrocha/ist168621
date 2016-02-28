@@ -555,13 +555,15 @@
 		}
 		
 		function messageArrived(userId, time, text, name, mid, seq) {
+			console.log("messageArrived",seq,oldestMsg);
+
 			var html = '<li class="media"><div class="media-body"><div class="media">'
 					+ '<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>'
 					+ '<div class="media-body">' + text + '<br />'
 					+' <small class="text-muted">' + name + ' | ' + time + '</small>' 
 					+ '<hr /></div></div></div></li>';
 
-			if (!oldestMsg || seq < oldestMsg) {
+			if (oldestMsg==null || seq < oldestMsg) {
 				oldestMsg = seq;
 				var oldHeight = $("#messagesList").height();
 				$("#messagesList").prepend(html);

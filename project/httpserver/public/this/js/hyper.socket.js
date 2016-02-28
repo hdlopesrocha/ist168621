@@ -336,6 +336,7 @@ var Kurento = new (function() {
 					case 'msg':
 						for(var i in message.data){
 							var msg = message.data[i];
+							console.log("msg",msg);
 							newMessageCallback(msg.source,msg.time,msg.text,msg.name, msg.id, msg.seq);
 						}
 						
