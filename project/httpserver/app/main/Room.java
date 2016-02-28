@@ -160,15 +160,6 @@ public class Room implements Closeable {
 
 
     public Hub getHub(MediaPipeline pipeline){
-        for (MediaObject obj : pipeline.getChilds()) {
-            if (obj.getName().equals("composite")) {
-                for (MediaObject child : obj.getChilds()) {
-                    child.release();
-                }
-                return  (Hub) obj;
-
-            }
-        }
         Composite ans =  new Composite.Builder(mediaPipeline).build();
         ans.setName("composite");
         return ans;
@@ -181,12 +172,6 @@ public class Room implements Closeable {
      * @return the composite port
      */
     public HubPort getCompositePort(String id) {
-        for (MediaObject port : composite.getChilds()) {
-            if (port.getName().equals(id)) {
-                return (HubPort) port;
-            }
-        }
-
         HubPort port = new HubPort.Builder(composite).build();
         port.setName(id);
         return port;

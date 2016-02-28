@@ -8,7 +8,6 @@ import models.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
-import org.kurento.commons.testing.SystemCompatibilityTests;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
@@ -69,7 +68,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     private UUID sid = UUID.randomUUID();
 
-    private ZBarFilter qrQodeFilter;
+    private ZBarFilter qrCodeFilter;
     /**
      * Instantiates a new user session.
      *
@@ -110,16 +109,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerAddress("64.233.184.127");
         endPoint.setStunServerPort(19302);
 
-        qrQodeFilter = new ZBarFilter.Builder(room.getMediaPipeline()).build();
+        qrCodeFilter = new ZBarFilter.Builder(room.getMediaPipeline()).build();
 
 
-        qrQodeFilter.addCodeFoundListener(new EventListener<CodeFoundEvent>() {
+        qrCodeFilter.addCodeFoundListener(new EventListener<CodeFoundEvent>() {
             @Override
             public void onEvent(CodeFoundEvent event) {
                 System.out.println("============================="+event.getCodeType()+"|"+ event.getValue());
             }
-
         });
+
 
         compositePort = room.getCompositePort(sid.toString());
 
@@ -127,11 +126,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
+                if(!isReceiveOnly()) {
+                    endPoint.connect(qrCodeFilter);
+                }
                 endPoint.connect(compositePort);
                 compositePort.connect(endPoint);
-                if(!isReceiveOnly()) {
-                    endPoint.connect(qrQodeFilter);
-                }
+
                 room.record();
             }
         });
@@ -235,7 +235,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     @Override
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
-        qrQodeFilter.release();
+        qrCodeFilter.release();
         endPoint.disconnect(compositePort);
         compositePort.release();
         endPoint.release();
