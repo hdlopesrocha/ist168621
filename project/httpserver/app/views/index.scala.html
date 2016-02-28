@@ -83,7 +83,7 @@
         $('#searchNav').show();
         $('#searchText').typeahead(SearchGeneric);
 
-        Signaling.listGroups(function(array) {
+        HyperHttp.listGroups(function(array) {
             console.log("listGroups",array);
 
             for ( var i in array) {
@@ -96,7 +96,7 @@
     });
 
 	function group_create(name) {
-		Signaling.createGroup(name, "PRIVATE",function() {
+		HyperHttp.createGroup(name, "PRIVATE",function() {
 			document.location = "/";
 		});
 	}

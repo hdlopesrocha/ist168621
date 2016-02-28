@@ -96,7 +96,7 @@
 
 				$("#fullscreen").hide();
 				$("#logout-button").click(function(){
-					Signaling.logout(function(){
+					HyperHttp.logout(function(){
 						document.location = document.location;
 					})
 				});	

@@ -1,10 +1,9 @@
-var Signaling = (function(){
+var HyperHttp = (function(){
 
 	this.searchInsideGroup = function(gid,query,success){
 		$.get( "/api/group/"+gid+"/content?query="+query,success);
 	}
-	
-	
+		
 	this.userProfile = function(uid,success){
 		$.get( "/api/user/"+uid, success);
 	}
@@ -49,7 +48,6 @@ var Signaling = (function(){
 		formData.append("email",email);
 		formData.append("password",password1);
 		
-		
 		$.ajax({   
 		    type: "POST",
 		    url: "/api/user",
@@ -64,13 +62,10 @@ var Signaling = (function(){
 		    },
             success: success
 		});
-		
 	}
-
 
 	this.updateUser = function(userId,email, formData, success, error){
         formData.append("email",email);
-
         $.ajax({
             type: "PUT",
             url: "/api/user/"+userId,
@@ -85,7 +80,6 @@ var Signaling = (function(){
             },
             success:success
         });
-
     }
 	
 	this.logout = function(success){
@@ -102,8 +96,6 @@ var Signaling = (function(){
 			result(data);
 		});
 	}
-
-
 
 	this.listRelations = function(result){
 		$.get( "/api/relation", function( data ) {

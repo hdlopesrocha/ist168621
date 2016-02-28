@@ -467,7 +467,7 @@
 		function saveCollab(){
             var value = adapter.cm.getValue();
 
-            Kurento.saveCollaborativeContent(value);
+            HyperWebSocket.saveCollaborativeContent(value);
             console.log(value);
 		}
 
@@ -498,7 +498,7 @@
 		}
 		
 		function toggleMicrophone(){
-			var microphoneState = Kurento.toggleMicrophone();
+			var microphoneState = HyperWebSocket.toggleMicrophone();
 			if(microphoneState){
 				$("#soundIcon").attr("class","fa fa-microphone text-success");
 			} else {
@@ -508,7 +508,7 @@
 		
 		function receiveMore() {
 			if (oldestMsg) {
-				Kurento.receiveMore(oldestMsg, 1);
+				HyperWebSocket.receiveMore(oldestMsg, 1);
 			}
 		}
 
@@ -625,7 +625,7 @@
 
 		function sendMessage() {
 			var text = $("#messageText").val();
-			Kurento.sendMessage(text);
+			HyperWebSocket.sendMessage(text);
 			$("#messageText").val("");
 
 		}
@@ -634,11 +634,11 @@
 			timeline.togglePlayStop(function() {
 				$("#playStop").html('<i class="fa fa-pause"></i>');
 				$("#playStop").attr('class', 'btn btn-warning');
-				Kurento.setPlay(true);
+				HyperWebSocket.setPlay(true);
 			}, function() {
 				$("#playStop").html('<i class="fa fa-play"></i>');
 				$("#playStop").attr('class', 'btn btn-success');
-				Kurento.setPlay(false);
+				HyperWebSocket.setPlay(false);
 			});
 		}
 
@@ -646,9 +646,9 @@
 			savedUser = selectedUser = userId;
 			setVideoIcon();
 			if (real_time) {
-				Kurento.receiveRealtime(selectedUser);
+				HyperWebSocket.receiveRealtime(selectedUser);
 			} else {
-				Kurento.receiveHistoric(selectedUser, timeline.hyper_offset);
+				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
 		}
 
@@ -661,9 +661,9 @@
 			selectedUser = selectedUser!=null ? null: savedUser;
 			setVideoIcon();
 			if (real_time) {
-				Kurento.receiveRealtime(selectedUser);
+				HyperWebSocket.receiveRealtime(selectedUser);
 			} else {
-				Kurento.receiveHistoric(selectedUser, timeline.hyper_offset);
+				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
 		}
 
@@ -676,7 +676,7 @@
 
 				var title = tag.title;
 				var content = tag.content;
-				Kurento.createTag(time, title, content);
+				HyperWebSocket.createTag(time, title, content);
 				timeline.removeTag(tag.id);
 			}
 			unsaved_tags = [];
@@ -688,7 +688,7 @@
 			$("#previewContent").html("");
 			
 			$(".selectedDelete").each(function(index){
-				Kurento.deleteContent($(this).attr("cid"));
+				HyperWebSocket.deleteContent($(this).attr("cid"));
 			});
 
 		}
@@ -699,7 +699,7 @@
 			var content = getContent();
 			
 			if(content){
-				Kurento.createContent(start.toISOString(),end.toISOString(),content);
+				HyperWebSocket.createContent(start.toISOString(),end.toISOString(),content);
 			}
 			clearContent();
 		}
@@ -777,7 +777,7 @@
 			} else if (!hasStarts) {	
 				if(moreContent){
 					// all events started, check if others may start
-					Kurento.getContent();
+					HyperWebSocket.getContent();
 				}else {
 					// there are ends
 					scheduleRender(currentTime);
@@ -817,7 +817,7 @@
 	    var candidateSearch = new (function() {
 
             this.source = function(query,process){
-       			Signaling.searchGroupCandidates("@groupId", query, function(array){
+       			HyperHttp.searchGroupCandidates("@groupId", query, function(array){
        			    console.log(array);
                     process(array);
        			});
@@ -838,7 +838,7 @@
 
             this.updater = function(item){
                 console.log(item);
-               	Kurento.addUserGroup(item.id);
+               	HyperWebSocket.addUserGroup(item.id);
 			    $("#addMembersModal").modal("hide");
                 return item;
             }
@@ -854,7 +854,7 @@
 
 		var generalSearch = {
 			source: function(query,process){
-				Signaling.searchInsideGroup("@groupId",query, function( array ) {
+				HyperHttp.searchInsideGroup("@groupId",query, function( array ) {
 					process(array);
 				});			
 			},
@@ -894,13 +894,13 @@
 		}
 		
 		function createInvite2(){
-			Signaling.createInvite("@groupId",function(token){
+			HyperHttp.createInvite("@groupId",function(token){
 				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);	
 			});
 		}
 
 		function deleteInvite2(){
-			Signaling.deleteInvite("@groupId",function(){
+			HyperHttp.deleteInvite("@groupId",function(){
 				$("#invite").val("");	
 			});
 		}
@@ -910,7 +910,7 @@
 			$("#removeUserName").html(name);
 			$("#removeUserId").val(uid);
 			$("#removeUserButton").click(function(){
-				Kurento.removeUserGroup(uid);
+				HyperWebSocket.removeUserGroup(uid);
 				$("#removeMemberModal").modal("hide");
 			});
 		}
@@ -948,7 +948,7 @@
         function onCoordinationRequest(sid){
             var op = ot.TextOperation().insert(adapter.cm.getValue());
             console.log("CoOp",op);
-            Kurento.sendOperation(op.toJSON(),sid);
+            HyperWebSocket.sendOperation(op.toJSON(),sid);
         }
 
         function onTagRemoved(tagId){
@@ -956,7 +956,7 @@
         }
 
 		function kurentoStart(mode){
-			Kurento.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
+			HyperWebSocket.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
 			                                intervalRecorded, messageArrived, tagArrived,
 			                                onContentArrived,talkArrived,setTime,
 			                                participantRemoved,localVideo,serverTime,
@@ -1016,7 +1016,7 @@
             adapter = new ot.CodeMirrorAdapter(editor);
             adapter.registerCallbacks({
                 change: function (a,b) {
-                    Kurento.sendOperation(a.toJSON(),null);
+                    HyperWebSocket.sendOperation(a.toJSON(),null);
                 }
             });
 
@@ -1088,13 +1088,13 @@
 				function(offset) {
 					console.log("HISTORIC", offset);
 					// current request
-					Kurento.receiveHistoric(selectedUser, offset);
+					HyperWebSocket.receiveHistoric(selectedUser, offset);
 					real_time = false;
 
 				}, function() {
 					console.log("REALTIME");
 					// realtime request
-					Kurento.receiveRealtime(selectedUser);
+					HyperWebSocket.receiveRealtime(selectedUser);
 					real_time = true;
 				}, function(tag){
 				    if(tag!=null){
@@ -1113,7 +1113,7 @@
 
                 },function(tagId){
                     console.log("REMOVE TAG",tagId);
-                    Kurento.removeTag(tagId);
+                    HyperWebSocket.removeTag(tagId);
                 }
 			);
 		});	
