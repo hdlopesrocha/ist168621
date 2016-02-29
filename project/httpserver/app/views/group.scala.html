@@ -116,7 +116,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="panel panel-red" onclick="kurentoStart(0)">
+                        <div class="panel panel-red" onclick="hyperStart(0)">
                             <div class="panel-heading" style="text-align: center;">
                                 <i class="fa fa-video-camera" style="font-size: 6em;"></i>
                             </div>
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <div class="panel panel-green" onclick="kurentoStart(1)">
+                        <div class="panel panel-green" onclick="hyperStart(1)">
                             <div class="panel-heading " style="text-align: center;">
                                 <i class="fa fa-desktop" style="font-size: 6em;"></i>
                             </div>
@@ -146,7 +146,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <div class="panel panel-primary" onclick="kurentoStart(2)">
+                        <div class="panel panel-primary" onclick="hyperStart(2)">
                             <div class="panel-heading " style="text-align: center;">
                                 <i class="fa fa-eye" style="font-size: 6em;"></i>
                             </div>
@@ -174,9 +174,6 @@
                             </a>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -454,9 +451,6 @@
 		var participants = {};
 		var timeline = null;
 		var oldestMsg = null;
-		var localContent = [];
-		var moreContent = true;
-		var contentTimer = null;
 		var autoSelect = false;
 		var fullscreen = false;
 
@@ -508,16 +502,6 @@
 			if (oldestMsg) {
 				HyperWebSocket.receiveMore(oldestMsg, 1);
 			}
-		}
-
-		function generateQRCode(){
-		    $("#qrCode").html("");
-		    $("#qrCode").qrcode({
-                "size": 800,
-                "color": "#3a3",
-                "text": getContent()
-            });
-			$("#qrCodeModal").modal("show");
 		}
 
 		function sendMessage() {
@@ -580,121 +564,7 @@
 			$("#saveButton").addClass("hidden");
 		}
 
-		function clearContent(){
-			$("#contentText").val("");
-			$("#previewContent").html("");
 
-			$(".selectedDelete").each(function(index){
-				HyperWebSocket.deleteContent($(this).attr("cid"));
-			});
-
-		}
-
-		function createContent(){
-			var start = parseTime($("#contentStart").val());
-			var end = parseTime($("#contentEnd").val());
-			var content = getContent();
-
-			if(content){
-				HyperWebSocket.createContent(start.toISOString(),end.toISOString(),content);
-			}
-			clearContent();
-		}
-
-		function getContent(){
-			var content = $("#contentText").val();
-			if(!content || content.length==0){
-				return null;
-			}
-
-			if($("#contentCaption").is(':checked')){
-				content = '<div class="caption"><span>'+content+'</span></div>';
-			}
-			return content;
-		}
-
-		function previewContent(){
-			$("#previewContent").html(getContent());
-		}
-
-		function addContent(key, content) {
-			$("#mainVideoContent").append('<div id="content'+ key + '">'+content+'</div>');
-			$("#content"+key).click(function(){
-				if($(this).attr("selected")){
-					$(this).attr("selected",false);
-					$(this).attr("class","");
-				}else {
-					$(this).attr("selected",true);
-					$(this).attr("class","selectedDelete");
-					$(this).attr("cid",key);
-				}
-			});
-		}
-
-
-
-		function removeContent(key) {
-			$("#content" + key).remove();
-			delete localContent[key];
-		}
-
-		function renderContent() {
-			var currentTime = timeline.getCurrentTime() - timeline.hyper_offset;
-
-			while (localContent.length != 0) {
-				var entry = localContent[0];
-				var time = new Date(entry.time);
-
-				if (time.getTime() <= currentTime) {
-					localContent.shift();
-					if (entry.type == "start") {
-						addContent(entry.id, entry.content);
-					} else if (entry.type == "end") {
-						removeContent(entry.id);
-					}
-					console.log("render",entry,localContent);
-
-				} else {
-					break;
-				}
-			}
-			var hasStarts = false;
-			for ( var i in localContent) {
-				var entry = localContent[i];
-				if (entry.type == "start") {
-					hasStarts = true;
-					break;
-				}
-
-			}
-			if (localContent.length == 0) {
-				// no content, keep calm
-			} else if (!hasStarts) {
-				if(moreContent){
-					// all events started, check if others may start
-					HyperWebSocket.getContent();
-				}else {
-					// there are ends
-					scheduleRender(currentTime);
-				}
-			} else {
-				// wait for next event
-				scheduleRender(currentTime);
-			}
-		}
-
-        function scheduleRender(currentTime){
-            if(timeline.timeRunning){
-                var time = new Date(localContent[0].time);
-                if(contentTimer!=null){
-                    clearTimeout(contentTimer);
-                }
-                contentTimer = setTimeout(function() {
-                    contentTimer = null;
-                    renderContent();
-                }, time.getTime() - currentTime);
-            }
-        }
 
 
 
@@ -799,11 +669,7 @@
 			});
 		}
 
-
-
-
-
-		function kurentoStart(mode){
+		function hyperStart(mode){
 			HyperWebSocket.start("@groupId",mode, function(){
                 console.log("WebSocket Ok!");
                 var attrs = parseQuery(document.location.search);
@@ -814,13 +680,10 @@
 			$('#participantModal').modal('hide');
 		}
 
-
-
 		$(document).ready(function() {
 			$('#participantModal').modal('show');
 			$('#searchNav').show();
 			$('#searchText').typeahead(generalSearch);
-
 			$('#searchCandidateText').typeahead(candidateSearch);
 
 			setVideoIcon();
@@ -840,8 +703,6 @@
                 }
             });
 
-
-
 			$("#createTagForm").submit(function(event){
 				event.preventDefault();
 				$("#createTagModal").modal('hide');
@@ -857,8 +718,6 @@
 				timeline.addTag(id, title);
 				$("#saveButton").removeClass("hidden");
 			});
-
-
 
 			$("#refresh-button").click(function() {
 				document.location = document.location;
@@ -901,9 +760,6 @@
 				}
 			})(jQuery);
 
-
-
-
 			timeline = HyperTimeline.create("timeline",
 				function(offset) {
 					console.log("HISTORIC", offset);
@@ -942,5 +798,6 @@
 
 </script>
 <script type="text/javascript" src="/assets/this/js/group.handler.js"></script>
+<script type="text/javascript" src="/assets/this/js/group.content.js"></script>
 
 }
