@@ -11,7 +11,21 @@ body,html {
 .badge-danger {
     background-color: #D43F3A;
 }
+
+.fixedLayer {
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+#dynamicContent div {
+//    position:absolute;
+//    width:100%;
+//    height:100%;
+}
+
 /* ======================================================*/
+
 
 .fullscreen {
 	position: fixed;

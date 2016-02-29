@@ -39,7 +39,7 @@ function previewContent(){
 }
 
 function addContent(key, content) {
-    $("#mainVideoContent").append('<div id="content'+ key + '">'+content+'</div>');
+    $("#dynamicContent").append('<div id="content'+ key + '">'+content+'</div>');
     $("#content"+key).click(function(){
         if($(this).attr("selected")){
             $(this).attr("selected",false);

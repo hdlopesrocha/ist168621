@@ -97,7 +97,7 @@ HyperWebSocket.setVoiceDetectedHandler(function(userId,value){
 
 HyperWebSocket.setOnHyperContentArrivedHandler(function(content,more) {
     moreContent = more;
-    $("#mainVideoContent div").not('.fixedLayer').remove();
+    $("#dynamicContent div").remove();
     console.log(content);
     localContent = content.sort(function(a, b) {
         return new Date(a.time).getTime() - new Date(b.time).getTime();

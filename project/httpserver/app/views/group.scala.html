@@ -15,6 +15,26 @@
 <script type="text/javascript" src="/assets/this/js/scripts.js"></script>
 <!-- <script type="text/javascript" src="/assets/this/js/screen.js"></script> -->
 
+<div id="modalAlert" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="alertBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+   function popup(content){
+        $("#modalAlert").modal("show");
+        $("#alertBody").html(content);
+   }
+
+
+
+</script>
+
 <div id="qrCodeModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -280,6 +300,7 @@
                             <div id="mainVideoContent">
                                 <div id="qrContent" class="fixedLayer"></div>
                                 <div id="previewContent" class="fixedLayer"></div>
+                                <div id="dynamicContent" class="fixedLayer"></div>
                             </div>
                             <video id='ownvideo' autoplay muted></video>
                             <video id='myvideo' autoplay></video>
@@ -689,6 +710,9 @@
 
 			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
+
+
+$('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
 
             var editor = CodeMirror.fromTextArea(document.getElementById("collabText"), {
               lineNumbers: true,
