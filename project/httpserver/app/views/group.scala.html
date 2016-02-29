@@ -9,7 +9,7 @@
     }
 
 </style>
-<script type="text/javascript" src="/assets/this/js/adapter.js"></script>
+<script type="text/javascript" src="/assets/adapter/adapter.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
 <script type="text/javascript" src="/assets/this/js/scripts.js"></script>
@@ -448,7 +448,7 @@
 		var group = true;
 		var selectedUser = null;
 		var savedUser = "@userId";
-		var real_time = true;
+		var realTime = true;
 		var unsaved_tags = [];
 		var firstRecording = true;
 		var participants = {};
@@ -466,7 +466,6 @@
 
 		function saveCollab(){
             var value = adapter.cm.getValue();
-
             HyperWebSocket.saveCollaborativeContent(value);
             console.log(value);
 		}
@@ -474,13 +473,12 @@
 		function toggleAutoSelect(){
 			autoSelect = !autoSelect;
 			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack":"fa fa-thumb-tack text-off");
-
 		}
 
 		function returnToHome(){
 		    document.location = "/";
 		}
-		
+
 		function toggleVideoSize(){
 			fullscreen = !fullscreen;
 			if(fullscreen){
@@ -494,9 +492,9 @@
 				$("#minimizeVideo").hide();
 				$(".not-fullscreen").show();
 
-			}	
+			}
 		}
-		
+
 		function toggleMicrophone(){
 			var microphoneState = HyperWebSocket.toggleMicrophone();
 			if(microphoneState){
@@ -505,7 +503,7 @@
 				$("#soundIcon").attr("class","fa fa-microphone-slash text-danger");
 			}
 		}
-		
+
 		function receiveMore() {
 			if (oldestMsg) {
 				HyperWebSocket.receiveMore(oldestMsg, 1);
@@ -520,107 +518,6 @@
                 "text": getContent()
             });
 			$("#qrCodeModal").modal("show");
-		}
-
-		function intervalRecorded(array) {
-			console.log("REC", array);
-			for ( var id in array) {
-				var start = array[id][0];
-				var end = array[id][1];
-				timeline.setRecord(id, start, end);
-			}
-			if (firstRecording) {
-				firstRecording = false;
-
-				timeline.fit({
-					animation : false
-				});
-			}
-		}
-
-		function videoStream(streamUrl) {
-			var video = document.getElementById("myvideo");
-			video.src = streamUrl;
-			return video;
-		}
-
-		function setTime(time) {
-			console.log("setTime",time);
-			timeline.setTime(time);
-		}
-
-
-
-		function participantInfo(info) {
-			var userId = info.id;
-			var name = info.name;
-			var photo = info.photo;
-			var online = info.online;
-			console.log("*",info);
-			if (!participants[userId]) {
-				participants[userId] = true;
-			
-				var del_button = "<i style='color:red' onclick='removeMemberConfirmation(\""+ userId+ "\",\""+name+"\")' class='fa fa-times'></i>";
-				var onclick = 'onclick=\'selectUser("'+userId+'")\'';
-				var style='style="background-image:url('+photo+');height:40px;width:40px" class="pull-left media-object circular"';
-				var audio ='<i style="top:-12px;left:-24px;position:relative" id="mic'+userId+'" class="fa fa-microphone text-off"></i>';
-				
-				$("#videoMembers").append(
-					'<div id="vidMember'+userId+'" '+ onclick+'>'+
-					'<a '+style+'>'+audio+'</a>'+
-					'<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
-				);		
-			}
-			
-			if(online){
-				$("#vidMember" + userId).attr('class', "media circular-online");
-			}else {
-				$("#vidMember" + userId).attr('class', "media circular-offline");
-				$("#mic"+userId).attr("class","fa fa-microphone text-off");
-			}
-		}
-
-		function tagArrived(id, time, title, content) {
-			console.log(id, time, title, content);
-			timeline.loadTag(id, time, title, content);
-		}
-
-
-		function talkArrived(userId,value){
-			if(value){
-				if(autoSelect){
-					selectUser(userId);
-				}
-				$("#mic"+userId).attr("class","fa fa-microphone text-success");
-			}else {
-				$("#mic"+userId).attr("class","fa fa-microphone text-off");
-			}
-		}
-		
-		function messageArrived(userId, time, text, name, mid, seq) {
-			console.log("messageArrived",seq,oldestMsg);
-
-			var html = '<li class="media"><div class="media-body"><div class="media">'
-					+ '<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>'
-					+ '<div class="media-body">' + text + '<br />'
-					+' <small class="text-muted">' + name + ' | ' + time + '</small>' 
-					+ '<hr /></div></div></div></li>';
-
-			if (oldestMsg==null || seq < oldestMsg) {
-				oldestMsg = seq;
-				var oldHeight = $("#messagesList").height();
-				$("#messagesList").prepend(html);
-				var newHeight = $("#messagesList").height();
-				$("div").scrollTop(newHeight - oldHeight);
-
-			} else {
-				$("#messagesList").append(html);
-				$("div").scrollTop($("#messagesList").height());
-			}
-
-			if (!$('#messagesPanel').hasScrollBar()) {
-				receiveMore();
-			}
 		}
 
 		function sendMessage() {
@@ -645,23 +542,23 @@
 		function selectUser(userId){
 			savedUser = selectedUser = userId;
 			setVideoIcon();
-			if (real_time) {
-				HyperWebSocket.receiveRealtime(selectedUser);
+			if (realTime) {
+				HyperWebSocket.receiveRealTime(selectedUser);
 			} else {
 				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
 		}
 
-		
+
 		function setVideoIcon(){
 			$("#toggleVideo").attr("class",selectedUser==null ? "fa fa-users":"fa fa-user");
 		}
-		
+
 		function toggleVideo() {
 			selectedUser = selectedUser!=null ? null: savedUser;
 			setVideoIcon();
-			if (real_time) {
-				HyperWebSocket.receiveRealtime(selectedUser);
+			if (realTime) {
+				HyperWebSocket.receiveRealTime(selectedUser);
 			} else {
 				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
 			}
@@ -686,24 +583,24 @@
 		function clearContent(){
 			$("#contentText").val("");
 			$("#previewContent").html("");
-			
+
 			$(".selectedDelete").each(function(index){
 				HyperWebSocket.deleteContent($(this).attr("cid"));
 			});
 
 		}
-		
+
 		function createContent(){
 			var start = parseTime($("#contentStart").val());
-			var end = parseTime($("#contentEnd").val());			
+			var end = parseTime($("#contentEnd").val());
 			var content = getContent();
-			
+
 			if(content){
 				HyperWebSocket.createContent(start.toISOString(),end.toISOString(),content);
 			}
 			clearContent();
 		}
-		
+
 		function getContent(){
 			var content = $("#contentText").val();
 			if(!content || content.length==0){
@@ -715,14 +612,12 @@
 			}
 			return content;
 		}
-		
+
 		function previewContent(){
 			$("#previewContent").html(getContent());
 		}
-		
+
 		function addContent(key, content) {
-
-
 			$("#mainVideoContent").append('<div id="content'+ key + '">'+content+'</div>');
 			$("#content"+key).click(function(){
 				if($(this).attr("selected")){
@@ -735,8 +630,8 @@
 				}
 			});
 		}
-		
-		
+
+
 
 		function removeContent(key) {
 			$("#content" + key).remove();
@@ -773,8 +668,8 @@
 
 			}
 			if (localContent.length == 0) {
-				// no content, keep calm 
-			} else if (!hasStarts) {	
+				// no content, keep calm
+			} else if (!hasStarts) {
 				if(moreContent){
 					// all events started, check if others may start
 					HyperWebSocket.getContent();
@@ -801,17 +696,6 @@
             }
         }
 
-
-		function onContentArrived(content,more) {
-			moreContent = more;
-			$("#mainVideoContent div").not(':first').remove();
-
-			console.log(content);
-			localContent = content.sort(function(a, b) {
-				return new Date(a.time).getTime() - new Date(b.time).getTime();
-			});
-			renderContent();
-		}
 
 
 	    var candidateSearch = new (function() {
@@ -856,7 +740,7 @@
 			source: function(query,process){
 				HyperHttp.searchInsideGroup("@groupId",query, function( array ) {
 					process(array);
-				});			
+				});
 			},
 			displayText: function(item){
 				if(item.type=="tag"){
@@ -892,19 +776,19 @@
 		function copyLink(){
 			$("#timeQueryString").select();
 		}
-		
+
 		function createInvite2(){
 			HyperHttp.createInvite("@groupId",function(token){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);	
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);
 			});
 		}
 
 		function deleteInvite2(){
 			HyperHttp.deleteInvite("@groupId",function(){
-				$("#invite").val("");	
+				$("#invite").val("");
 			});
 		}
-		
+
 		function removeMemberConfirmation(uid,name){
 			$("#removeMemberModal").modal("show");
 			$("#removeUserName").html(name);
@@ -915,88 +799,24 @@
 			});
 		}
 
-		function participantRemoved(uid) {
-            $("#vidMember"+uid).remove();
-            participants[uid]=false;
-            if(uid=="@userId"){
-                document.location = "/";
-            }
-		}
 
-		function onKurentoOpen(){
-			console.log("WebSocket Ok!");
-			var attrs = parseQuery(document.location.search);
-			if(attrs.time){
-				timeline.setHistoric(new Date(attrs.time));
-			}
-		}
 
-		function localVideo(streamUrl){
-      			var video = document.getElementById("ownvideo");
-			video.src = streamUrl;
-		}
 
-        function serverTime(time){
-           timeline.sync(time);
-        }
-
-        function operationTransformationArrived(operation){
-            console.log(operation);
-            adapter.applyOperation(operation);
-        }
-
-        function onCoordinationRequest(sid){
-            var op = ot.TextOperation().insert(adapter.cm.getValue());
-            console.log("CoOp",op);
-            HyperWebSocket.sendOperation(op.toJSON(),sid);
-        }
-
-        function onTagRemoved(tagId){
-            timeline.removeTag(tagId);
-        }
 
 		function kurentoStart(mode){
-			HyperWebSocket.start("@groupId",mode,  onKurentoOpen ,participantInfo, videoStream,
-			                                intervalRecorded, messageArrived, tagArrived,
-			                                onContentArrived,talkArrived,setTime,
-			                                participantRemoved,localVideo,serverTime,
-			                                operationTransformationArrived,onCoordinationRequest,
-			                                onTagRemoved);
+			HyperWebSocket.start("@groupId",mode, function(){
+                console.log("WebSocket Ok!");
+                var attrs = parseQuery(document.location.search);
+                if(attrs.time){
+                    timeline.setHistoric(new Date(attrs.time));
+                }
+		    });
 			$('#participantModal').modal('hide');
 		}
 
 
-     function dateStr(date) {
-
-
-        var curr_year = date.getFullYear();
-
-        var curr_month = date.getMonth() + 1; //Months are zero based
-        if (curr_month < 10)
-            curr_month = "0" + curr_month;
-
-        var curr_date = date.getDate();
-        if (curr_date < 10)
-            curr_date = "0" + curr_date;
-
-        var curr_hour = date.getHours();
-        if (curr_hour < 10)
-            curr_hour = "0" + curr_hour;
-
-        var curr_min = date.getMinutes();
-        if (curr_min < 10)
-            curr_min = "0" + curr_min;
-
-        var curr_sec = date.getSeconds();
-        if (curr_sec < 10)
-            curr_sec = "0" + curr_sec;
-
-        return curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
-
-    }
 
 		$(document).ready(function() {
-			switchTab("#mytabs","#mybtns",1);
 			$('#participantModal').modal('show');
 			$('#searchNav').show();
 			$('#searchText').typeahead(generalSearch);
@@ -1021,7 +841,7 @@
             });
 
 
-			
+
 			$("#createTagForm").submit(function(event){
 				event.preventDefault();
 				$("#createTagModal").modal('hide');
@@ -1037,21 +857,21 @@
 				timeline.addTag(id, title);
 				$("#saveButton").removeClass("hidden");
 			});
-			
-			
-			
+
+
+
 			$("#refresh-button").click(function() {
 				document.location = document.location;
 			});
-			
+
 			$("#home-button").click(function() {
 				document.location = "/";
 			});
-	
+
 			@if(inviteToken!=null){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");	
+				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");
 			}
-		
+
 			$('#datetimepicker1').datetimepicker({
 				format : 'DD/MM/YYYY HH:mm:ss',
 				defaultDate : new Date(),
@@ -1089,13 +909,13 @@
 					console.log("HISTORIC", offset);
 					// current request
 					HyperWebSocket.receiveHistoric(selectedUser, offset);
-					real_time = false;
+					realTime = false;
 
 				}, function() {
 					console.log("REALTIME");
 					// realtime request
-					HyperWebSocket.receiveRealtime(selectedUser);
-					real_time = true;
+					HyperWebSocket.receiveRealTime(selectedUser);
+					realTime = true;
 				}, function(tag){
 				    if(tag!=null){
                         $("#currentTag").html(tag.text);
@@ -1116,9 +936,11 @@
                     HyperWebSocket.removeTag(tagId);
                 }
 			);
-		});	
+		});
 
 
 
 </script>
+<script type="text/javascript" src="/assets/this/js/group.handler.js"></script>
+
 }

@@ -3,7 +3,7 @@ var HyperHttp = (function(){
 	this.searchInsideGroup = function(gid,query,success){
 		$.get( "/api/group/"+gid+"/content?query="+query,success);
 	}
-		
+
 	this.userProfile = function(uid,success){
 		$.get( "/api/user/"+uid, success);
 	}

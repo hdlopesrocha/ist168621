@@ -1,10 +1,3 @@
-function switchTab(classTab, classBtn, number) {
-	$(classTab).children().hide();
-	$(classTab + " div:nth-child(" + number + ")").show();
-	$(classBtn).children().attr("class", "btn btn-default");
-	$(classBtn + " button:nth-child(" + number + ")").attr("class",
-			"btn btn-primary");
-}
 
 function friendlyTime(str) {
 	var t = new Date(str);
@@ -36,6 +29,33 @@ function parseTime(time){
 	return new Date(vec[2],vec[1]-1,vec[0],vec[3],vec[4],vec[5]);
 }
 
+function dateStr(date) {
+    var curr_year = date.getFullYear();
+
+    var curr_month = date.getMonth() + 1; //Months are zero based
+    if (curr_month < 10)
+        curr_month = "0" + curr_month;
+
+    var curr_date = date.getDate();
+    if (curr_date < 10)
+        curr_date = "0" + curr_date;
+
+    var curr_hour = date.getHours();
+    if (curr_hour < 10)
+        curr_hour = "0" + curr_hour;
+
+    var curr_min = date.getMinutes();
+    if (curr_min < 10)
+        curr_min = "0" + curr_min;
+
+    var curr_sec = date.getSeconds();
+    if (curr_sec < 10)
+        curr_sec = "0" + curr_sec;
+
+    return curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
+
+}
+
 $(document).ready(
 	function() {
 		$('[data-toggle=offcanvas]').click(function() {
@@ -48,3 +68,5 @@ $(document).ready(
 				});
 	}
 );
+
+

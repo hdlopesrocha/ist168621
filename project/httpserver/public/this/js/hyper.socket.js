@@ -3,18 +3,20 @@ navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMed
 
 var HyperWebSocket = new (function() {
     var primaryStream = null;
-    var newParticipantsCallback = null;
-    var newVideoCallback = null;
-    var newRecordingCallback = null;
-    var tagArrivedCallback = null;
-    var contentArrivedCallback = null;
-    var setTimeCallback = null;
-    var removedUserCallback= null;
-    var localVideoCallback=null;
-    var serverTimeCallback=null;
-    var operationTransformationCallback=null;
-    var coordinationRequestCallback=null;
-    var removedTagCallback = null;
+    var participantPresenceHandler = null;
+    var remoteVideoHandler = null;
+    var timeTagArrivedHandler = null;
+    var hyperContentArrivedHandler = null;
+    var lookAtTimeHandler = null;
+    var removedUserHandler= null;
+    var voiceDetectedHandler = null;
+    var messageArrivedHandler = null;
+    var videoRecordingHandler = null;
+    var localVideoHandler=null;
+    var serverTimeHandler=null;
+    var operationTransformationHandler=null;
+    var coordinationRequestHandler=null;
+    var removedTagHandler = null;
 	var microphoneState = true;
 	var soundDetected = false;
 	var pc = null;
@@ -24,6 +26,10 @@ var HyperWebSocket = new (function() {
     var audio_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     var remote_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     var screen_constraints = { audio: false,video: { mediaSource: "window" || "screen"}};
+
+    // ===============================================
+    // ================== UTILITIES ==================
+    // ===============================================
 
     function logError(err) {
         console.log(err);
@@ -87,6 +93,10 @@ var HyperWebSocket = new (function() {
 		microphone.connect(javascriptNode);
 		javascriptNode.connect(audioContext.destination);
 	}
+
+    // ===============================================
+    // ================ SEND MESSAGES ================
+    // ===============================================
 
 	this.talk = function(value){
 		ws.send(JSON.stringify({
@@ -167,8 +177,8 @@ var HyperWebSocket = new (function() {
         ws.send(JSON.stringify(obj));
     }
 
-	this.receiveRealtime = function(userId){
-		console.log("receiveRealtime",userId);
+	this.receiveRealTime = function(userId){
+		console.log("receiveRealTime",userId);
 		ws.send(JSON.stringify({
 			id : "setRealTime",
 			uid:userId
@@ -207,21 +217,71 @@ var HyperWebSocket = new (function() {
 		}));
 	}
 
-	this.start = function(groupId,mode,kscb,npcb,nvcb,nrcb,nmcb,tacb,cacb,trcb,stcb,rucb,lvcb,htcb,otcb,crcb,rtcb) {
-		newParticipantsCallback = npcb;
-		newVideoCallback = nvcb;
-		newRecordingCallback = nrcb;
-		newMessageCallback = nmcb;
-		tagArrivedCallback = tacb;
-		contentArrivedCallback = cacb;
-		talkReceivedCallback = trcb;
-		setTimeCallback = stcb;
-		removedUserCallback = rucb;
-		localVideoCallback = lvcb;
-        serverTimeCallback=htcb;
-        operationTransformationCallback = otcb;
-        coordinationRequestCallback = crcb;
-        removedTagCallback = rtcb;
+    // =================================================
+    // ============== SET HANDLER METHODS ==============
+    // =================================================
+
+	this.setOnRemovedTagHandler= function(handler){
+	    removedTagHandler = handler;
+	}
+
+    this.setOnCoordinationRequestHandler = function(handler){
+        coordinationRequestHandler = handler;
+    }
+
+    this.setOnOperationTransformationReceivedHandler = function(handler){
+        operationTransformationHandler = handler;
+    }
+
+    this.setServerTimeSynchronizationHandler = function(handler){
+        serverTimeHandler = handler;
+    }
+
+    this.setOnLocalVideoAvailableHandler = function(handler){
+		localVideoHandler = handler;
+    }
+
+    this.setOnUserRemovedHandler = function(handler){
+        removedUserHandler = handler;
+    }
+
+    this.setOnLookAtTimeRequestHandler = function(handler){
+        lookAtTimeHandler = handler;
+    }
+
+    this.setVoiceDetectedHandler = function(handler){
+        voiceDetectedHandler = handler;
+    }
+
+    this.setOnHyperContentArrivedHandler = function(handler){
+        hyperContentArrivedHandler = handler;
+    }
+
+    this.setOnTimeTagArrivedHandler = function(handler){
+        timeTagArrivedHandler = handler;
+    }
+
+    this.setOnMessageArrivedHandler = function(handler){
+        messageArrivedHandler = handler;
+    }
+
+    this.setOnNewVideoRecordingArrivedHandler = function(handler){
+        videoRecordingHandler = handler;
+    }
+
+    this.setOnRemoteVideoAvailableHandler = function(handler){
+		remoteVideoHandler = handler;
+    }
+
+    this.setParticipantPresenceHandler = function(handler){
+        participantPresenceHandler = handler;
+    }
+
+    // =================================================
+    // ========== WEBRTC and RECEIVE MESSAGES ==========
+    // =================================================
+
+	this.start = function(groupId,mode,kscb) {
 
         function wsurl(s) {
             var l = window.location;
@@ -259,55 +319,77 @@ var HyperWebSocket = new (function() {
 					break;		
 					case 'participants':
 						console.log(id,message);
-						for(var userId in message.data){
-							newParticipantsCallback(message.data[userId]);
+						if(participantPresenceHandler){
+    						for(var userId in message.data){
+							    participantPresenceHandler(message.data[userId]);
+							}
 						}
 					break;
 					case 'removedUser':
-                        removedUserCallback(message.uid);
+					    if(removedUserHandler){
+                            removedUserHandler(message.uid);
+                        }
 					break;
 					case 'content':
-						contentArrivedCallback(message.data,message.more);
+					    if(hyperContentArrivedHandler){
+						    hyperContentArrivedHandler(message.data,message.more);
+						}
 					break;
 					case 'rec':
-						delete message.id;
-						newRecordingCallback(message);						
+						if(videoRecordingHandler){
+						    delete message.id;
+       					    videoRecordingHandler(message);
+						}
 						break;
 					case 'msg':
 						for(var i in message.data){
 							var msg = message.data[i];
 							console.log("msg",msg);
-							newMessageCallback(msg.source,msg.time,msg.text,msg.name, msg.id, msg.seq);
+							if(messageArrivedHandler){
+							    messageArrivedHandler(msg.source,msg.time,msg.text,msg.name, msg.id, msg.seq);
+						    }
 						}
 						
 						break;
 					case 'tag':
-						var msg = message.data;
-						tagArrivedCallback(msg.id,msg.time,msg.title,msg.content);
-
-
+					    if(timeTagArrivedHandler){
+                            var msg = message.data;
+                            timeTagArrivedHandler(msg.id,msg.time,msg.title,msg.content);
+                        }
 						break;
 			        case 'removeTag':
-						removedTagCallback(message.tid);
+			            if (removedTagHandler){
+						    removedTagHandler(message.tid);
+						}
 						break;
 					case 'talk':
-						var msg = message.data;
-						talkReceivedCallback(msg.uid,msg.value);
+						if(voiceDetectedHandler){
+                            var msg = message.data;
+                            voiceDetectedHandler(msg.uid,msg.value);
+						}
 						break;
 					case 'time':
-						var msg = message.data;
-						serverTimeCallback(new Date(msg.time));
+						if(serverTimeHandler){
+						    var msg = message.data;
+						    serverTimeHandler(new Date(msg.time));
+						}
 						break;
 
                     case 'setTime':
-                        setTimeCallback(new Date(message.time));
+                        if(lookAtTimeHandler){
+                            lookAtTimeHandler(new Date(message.time));
+                        }
                         break;
                     case 'operation':
-                        operationTransformationCallback(ot.TextOperation.fromJSON(message.data));
+                        if(operationTransformationHandler){
+                            operationTransformationHandler(ot.TextOperation.fromJSON(message.data));
+                        }
                         break;
 
                     case 'coordinate':
-                        coordinationRequestCallback(message.sid);
+                        if(coordinationRequestHandler){
+                            coordinationRequestHandler(message.sid);
+                        }
                         break;
 					default:
 						break;					
@@ -343,14 +425,18 @@ var HyperWebSocket = new (function() {
 					console.log(e);
 					stq = e.stream;
 					console.log(stq);
-					newVideoCallback(URL.createObjectURL(stq));
+					if(remoteVideoHandler){
+					    remoteVideoHandler(URL.createObjectURL(stq));
+					}
 				};
 
 				// XXX [CLIENT_OFFER_01] XXX
 
 				if(mode==0){
 					navigator.mediaDevices.getUserMedia({"audio":true, "video":true }).then(function(stream) {
-                        localVideoCallback(window.URL.createObjectURL(stream));
+                        if(localVideoHandler){
+                            localVideoHandler(window.URL.createObjectURL(stream));
+                        }
                         primaryStream = stream;
                         HyperWebSocket.audioFunction(stream);
                         pc.addStream(stream);
@@ -369,7 +455,9 @@ var HyperWebSocket = new (function() {
 				}
 				else if(mode==1 ){
 					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
-						localVideoCallback(window.URL.createObjectURL(stream));
+						if(localVideoHandler){
+						    localVideoHandler(window.URL.createObjectURL(stream));
+						}
 
 						pc.addStream(stream);
 						pc.createOffer(function (lsd) {
@@ -409,8 +497,5 @@ var HyperWebSocket = new (function() {
 			console.log("no websocket support!");
 		}
 	};
-
 	return this;
 })();
-console.log(this);
-console.log(HyperWebSocket);

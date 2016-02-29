@@ -215,8 +215,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param string the string
      */
     public synchronized void sendMessage(final String string) {
-
-        System.out.println("\nSEND:" + string);
+        System.out.println("SEND:" + string);
         out.write(string);
     }
 
