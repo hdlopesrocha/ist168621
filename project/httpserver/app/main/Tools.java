@@ -1,7 +1,11 @@
 package main;
 
+import org.apache.commons.codec.binary.Hex;
 import org.jsoup.Jsoup;
 
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -105,5 +109,18 @@ public class Tools {
     public static int clamp(int min, int x, int max) {
         return (x<min? min :(x>=max? max : x));
 
+    }
+
+    public static String md5(String content) {
+        try {
+            final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.reset();
+            messageDigest.update(content.getBytes(Charset.forName("UTF8")));
+            final byte[] resultByte = messageDigest.digest();
+             return new String(Hex.encodeHex(resultByte));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

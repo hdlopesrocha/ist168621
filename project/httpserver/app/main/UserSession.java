@@ -8,6 +8,7 @@ import models.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
+import org.kurento.client.EventListener;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
@@ -17,9 +18,9 @@ import services.ListMessagesService;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 
 /**
@@ -69,6 +70,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private UUID sid = UUID.randomUUID();
 
     private ZBarFilter qrCodeFilter;
+    private Date lastQRCode;
+    private Set<String> currentQRCodes = new HashSet<String>();
     /**
      * Instantiates a new user session.
      *
@@ -111,11 +114,45 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
         qrCodeFilter = new ZBarFilter.Builder(room.getMediaPipeline()).build();
 
-
         qrCodeFilter.addCodeFoundListener(new EventListener<CodeFoundEvent>() {
             @Override
             public void onEvent(CodeFoundEvent event) {
-                System.out.println("============================="+event.getCodeType()+"|"+ event.getValue());
+                final String content = event.getValue();
+                final String hash = Tools.md5(content);
+                if(hash!=null) {
+                    synchronized (currentQRCodes) {
+                        if (!currentQRCodes.contains(hash)) {
+                            currentQRCodes.add(hash);
+                            JSONObject msg = new JSONObject();
+                            msg.put("id", "qrCode");
+                            msg.put("data", content);
+                            msg.put("hash", hash);
+                            room.sendMessage(msg.toString());
+                        }
+                    }
+                    System.out.println("=============================" + event.getCodeType() + "|" + event.getValue());
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Date currentQRCode = new Date();
+                            lastQRCode = currentQRCode;
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            if (lastQRCode == currentQRCode) {
+                                synchronized (currentQRCodes) {
+                                    currentQRCodes.remove(hash);
+                                    JSONObject msg = new JSONObject();
+                                    msg.put("id", "qrCode");
+                                    msg.put("hash", hash);
+                                    room.sendMessage(msg.toString());
+                                }
+                            }
+                        }
+                    }).start();
+                }
             }
         });
 

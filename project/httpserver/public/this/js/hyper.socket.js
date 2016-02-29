@@ -10,6 +10,7 @@ var HyperWebSocket = new (function() {
     var lookAtTimeHandler = null;
     var removedUserHandler= null;
     var voiceDetectedHandler = null;
+    var qrCodeHandler = null;
     var messageArrivedHandler = null;
     var videoRecordingHandler = null;
     var localVideoHandler=null;
@@ -277,6 +278,10 @@ var HyperWebSocket = new (function() {
         participantPresenceHandler = handler;
     }
 
+    this.setOnQrCodeEventHandler = function(handler){
+        qrCodeHandler = handler;
+    }
+
     // =================================================
     // ========== WEBRTC and RECEIVE MESSAGES ==========
     // =================================================
@@ -391,6 +396,12 @@ var HyperWebSocket = new (function() {
                             coordinationRequestHandler(message.sid);
                         }
                         break;
+                    case 'qrCode':
+                        if(qrCodeHandler){
+                            qrCodeHandler(message.hash,message.data);
+                        }
+                        break
+
 					default:
 						break;					
 				}

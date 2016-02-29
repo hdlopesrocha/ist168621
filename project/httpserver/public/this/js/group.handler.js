@@ -1,3 +1,9 @@
+HyperWebSocket.setOnQrCodeEventHandler(function(hash,data){
+    console.log(hash,data);
+
+    $("#qrContent").html(data? data : "");
+});
+
 HyperWebSocket.setParticipantPresenceHandler(function (info) {
     var userId = info.id;
     var name = info.name;
@@ -91,7 +97,7 @@ HyperWebSocket.setVoiceDetectedHandler(function(userId,value){
 
 HyperWebSocket.setOnHyperContentArrivedHandler(function(content,more) {
     moreContent = more;
-    $("#mainVideoContent div").not(':first').remove();
+    $("#mainVideoContent div").not('.fixedLayer').remove();
     console.log(content);
     localContent = content.sort(function(a, b) {
         return new Date(a.time).getTime() - new Date(b.time).getTime();

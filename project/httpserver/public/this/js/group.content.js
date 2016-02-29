@@ -9,7 +9,6 @@ function clearContent(){
     $(".selectedDelete").each(function(index){
         HyperWebSocket.deleteContent($(this).attr("cid"));
     });
-
 }
 
 function createContent(){
