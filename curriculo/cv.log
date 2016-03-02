@@ -1,4 +1,4 @@
-This is LuaTeX, Version beta-0.76.0-2013121407 (rev 4627)  (format=lualatex 2016.1.10)  20 JAN 2016 18:25
+This is LuaTeX, Version beta-0.76.0-2013121407 (rev 4627)  (format=lualatex 2016.2.21)  2 MAR 2016 00:59
  restricted \write18 enabled.
 **cv.tex
 (./cv.tex
@@ -852,9 +852,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-regula
 r.luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 21 (SourceSansPro-Regular) defines feature mkmk for script l
+luaotfload: font no 21 (SourceSansPro-Regular) defines feature ss04 for script l
 atn
-luaotfload: font no 21 (SourceSansPro-Regular) defines feature mkmk for script l
+luaotfload: font no 21 (SourceSansPro-Regular) defines feature ss04 for script l
 atn
 \g_fontspec_family_SourceSansPro_int=\count334
 luaotfload | load : auto-selecting default features for script: dflt
@@ -891,9 +891,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-extral
 ight.luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature mkmk for scrip
+luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature ss04 for scrip
 t latn
-luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature mkmk for scrip
+luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature ss04 for scrip
 t latn
 \g_fontspec_family_SourceSansPro ExtraLight_int=\count335
 luaotfload | load : auto-selecting default features for script: dflt
@@ -911,9 +911,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-black.
 luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 26 (SourceSansPro-Black) defines feature mkmk for script lat
+luaotfload: font no 26 (SourceSansPro-Black) defines feature ss04 for script lat
 n
-luaotfload: font no 26 (SourceSansPro-Black) defines feature mkmk for script lat
+luaotfload: font no 26 (SourceSansPro-Black) defines feature ss04 for script lat
 n
 \g_fontspec_family_SourceSansPro Black_int=\count336
 luaotfload | load : auto-selecting default features for script: dflt
@@ -931,9 +931,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-light.
 luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 27 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 27 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 27 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 27 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 \g_fontspec_family_SourceSansPro Light_int=\count337
 luaotfload | load : auto-selecting default features for script: dflt
@@ -1509,6 +1509,34 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 Package hyperref Info: Option `colorlinks' set `false' on input line 361.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count489
+\lst@gtempboxa=\box291
+\lst@token=\toks34
+\lst@length=\count490
+\lst@currlwidth=\dimen367
+\lst@column=\count491
+\lst@pos=\count492
+\lst@lostspace=\dimen368
+\lst@width=\dimen369
+\lst@newlines=\count493
+\lst@lineno=\count494
+\lst@maxwidth=\dimen370
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
+\c@lstnumber=\count495
+\lst@skipnumbers=\count496
+\lst@framebox=\box292
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2013/08/26 1.5b listings configuration
+))
+Package: listings 2013/08/26 1.5b (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2013/08/26 1.5b listings language file
+)
 .................................................
 . lualatex-math info: "patch-macro"
 . 
@@ -1520,49 +1548,49 @@ Package biblatex Info: ... file 'english.lbx' found.
 (/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2013/11/25 v2.8a biblatex localization (PK/JW/AB)
 )
-\@quotelevel=\count489
-\@quotereset=\count490
+\@quotelevel=\count497
+\@quotereset=\count498
  (./cv.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for EU2/lmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 4.
-LaTeX Font Info:    Try loading font information for T3+cmr on input line 4.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for EU2/lmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 26.
+LaTeX Font Info:    Try loading font information for T3+cmr on input line 26.
 
 (/usr/share/texmf/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-\AtBeginShipoutBox=\box291
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+\AtBeginShipoutBox=\box293
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count491
-\scratchdimen=\dimen367
-\scratchbox=\box292
-\nofMPsegments=\count492
-\nofMParguments=\count493
-\everyMPshowfont=\toks34
-\MPscratchCnt=\count494
-\MPscratchDim=\dimen368
-\MPnumerator=\count495
-\makeMPintoPDFobject=\count496
-\everyMPtoPDFconversion=\toks35
+\scratchcounter=\count499
+\scratchdimen=\dimen371
+\scratchbox=\box294
+\nofMPsegments=\count500
+\nofMParguments=\count501
+\everyMPshowfont=\toks35
+\MPscratchCnt=\count502
+\MPscratchDim=\dimen372
+\MPnumerator=\count503
+\makeMPintoPDFobject=\count504
+\everyMPtoPDFconversion=\toks36
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1585,9 +1613,9 @@ back to file:(load luc: /home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature ssty for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
  math
-\g_fontspec_family_latinmodern-math.otf_int=\count497
+\g_fontspec_family_latinmodern-math.otf_int=\count505
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
@@ -1616,25 +1644,25 @@ luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 31 (LatinModernMath-Regular) defines feature ssty for script
+luaotfload: font no 31 (LatinModernMath-Regular) defines feature aalt for script
  math
 LaTeX Font Info:    Encoding `OT1' has changed to `EU2' for symbol font
-(Font)              `operators' in the math version `normal' on input line 4.
+(Font)              `operators' in the math version `normal' on input line 26.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> EU2/latinmodern-math.otf(0)/m/n on input
- line 4.
+ line 26.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU2' for symbol font
-(Font)              `operators' in the math version `bold' on input line 4.
+(Font)              `operators' in the math version `bold' on input line 26.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmr/bx/n --> EU2/latinmodern-math.otf(0)/bx/n on inp
-ut line 4.
+ut line 26.
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature ssty for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
  math
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
@@ -1657,22 +1685,22 @@ luaotfload: font no 29 (LatinModernMath-Regular) does not define feature smcp fo
 r script math with language dflt
 luaotfload: no font with id 29
 LaTeX Font Info:    Encoding `OMS' has changed to `EU2' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 4.
+(Font)              `symbols' in the math version `normal' on input line 26.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/cmsy/m/n --> EU2/latinmodern-math.otf(1)/m/n on inpu
-t line 4.
+t line 26.
 LaTeX Font Info:    Encoding `OMS' has changed to `EU2' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 4.
+(Font)              `symbols' in the math version `bold' on input line 26.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/cmsy/b/n --> EU2/latinmodern-math.otf(1)/bx/n on inp
-ut line 4.
+ut line 26.
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature ssty for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
  math
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
@@ -1695,16 +1723,16 @@ luaotfload: font no 29 (LatinModernMath-Regular) does not define feature smcp fo
 r script math with language dflt
 luaotfload: no font with id 29
 LaTeX Font Info:    Encoding `OMX' has changed to `EU2' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 4.
-
+(Font)              `largesymbols' in the math version `normal' on input line 26
+.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/cmex/m/n --> EU2/latinmodern-math.otf(2)/m/n on inpu
-t line 4.
+t line 26.
 LaTeX Font Info:    Encoding `OMX' has changed to `EU2' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 4.
+(Font)              `largesymbols' in the math version `bold' on input line 26.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> EU2/latinmodern-math.otf(2)/bx/n on inp
-ut line 4.
+ut line 26.
  ABD: EveryShipout initializing macros
 Package biblatex Info: LuaTeX detected.
 (biblatex)             Assuming input encoding 'utf8'.
@@ -1714,8 +1742,8 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'cv.bbl' not found.
 
 No file cv.bbl.
-Package biblatex Info: Reference section=0 on input line 4.
-Package biblatex Info: Reference segment=0 on input line 4.
+Package biblatex Info: Reference section=0 on input line 26.
+Package biblatex Info: Reference segment=0 on input line 26.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1750,21 +1778,22 @@ Package biblatex Info: Reference segment=0 on input line 4.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 4.
+Package hyperref Info: Link coloring OFF on input line 26.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count498
+\c@section@level=\count506
 )
-LaTeX Info: Redefining \ref on input line 4.
-LaTeX Info: Redefining \pageref on input line 4.
-LaTeX Info: Redefining \nameref on input line 4.
+LaTeX Info: Redefining \ref on input line 26.
+LaTeX Info: Redefining \pageref on input line 26.
+LaTeX Info: Redefining \nameref on input line 26.
 
 (./cv.out) (./cv.out)
 \@outlinefile=\write5
+\c@lstlisting=\count507
 luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: latn
@@ -1787,37 +1816,37 @@ luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.00015pt on input line 27.
+(Font)              scaled to size 10.00015pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.00006pt on input line 27.
+(Font)              scaled to size 7.00006pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.00008pt on input line 27.
+(Font)              scaled to size 5.00008pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 9.99985pt on input line 27.
+(Font)              scaled to size 9.99985pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.99986pt on input line 27.
+(Font)              scaled to size 6.99986pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
 LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 4.99992pt on input line 27.
+(Font)              scaled to size 4.99992pt on input line 49.
 luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
@@ -1834,9 +1863,9 @@ luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload: font no 53 (SourceSansPro-Light) defines feature smcp for script lat
@@ -1853,112 +1882,178 @@ luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-Overfull \hbox (51.21506pt too wide) in alignment at lines 41--59
+Overfull \hbox (51.21506pt too wide) in alignment at lines 63--81
  [] [] 
  []
 
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 
 LaTeX Font Warning: Font shape `EU2/SourceSansProLight(0)/m/it' undefined
 (Font)              using `EU2/SourceSansProLight(0)/m/n' instead on input line 
-69.
+92.
 
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 9.00014pt on input line 92.
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
+LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.00009pt on input line 92.
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
+LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.99986pt on input line 92.
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
+LaTeX Font Info:    Font shape `EU2/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.99991pt on input line 92.
+luaotfload | load : auto-selecting default features for script: math
+luaotfload | load : no defaults for script "math", falling back to "dflt"
+luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
+back to file:
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-Overfull \hbox (51.21506pt too wide) in alignment at lines 64--97
- [] [] 
- []
-
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
 n
-Overfull \hbox (51.21506pt too wide) in alignment at lines 101--127
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+Overfull \hbox (51.21506pt too wide) in alignment at lines 86--151
  [] [] 
  []
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./grades_bachelor.tex
-luaotfload | load : auto-selecting default features for script: latn
-luaotfload | load : no defaults for script "latn", falling back to "dflt")
-Overfull \hbox (3.81631pt too wide) in paragraph at lines 136--136
-[][]\EU2/SourceSansProBlack(0)/m/n/14.4 Mas-ter - Telecom-mu-ni-ca-tions and In
--for-mat-ics En-gi-neer-
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature ss04 for script lat
+n
+Overfull \hbox (51.21506pt too wide) in alignment at lines 156--182
+ [] [] 
  []
 
-(./grades_master.tex [2])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 140.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 140.
+LaTeX Font Info:    Try loading font information for EU2+lmtt on input line 197.
+
+(/usr/share/texlive/texmf-dist/tex/latex/euenc/eu2lmtt.fd
+File: eu2lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+luaotfload | load : auto-selecting default features for script: latn
+luaotfload | load : no defaults for script "latn", falling back to "dflt"(load l
+uc: /home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/lmmono10-regula
+r.luc)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 201.
+
+[2]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 201.
  (./cv.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 140.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 140.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 201.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 201.
 Package rerunfilecheck Info: File `cv.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1969,26 +2064,27 @@ Package logreq Info: Writing requests to 'cv.run.xml'.
  )
 
 Here is how much of LuaTeX's memory you used:
- 38156 strings out of 493803
- 100000,1373583 words of node,token memory allocated
+ 39576 strings out of 493803
+ 156257,1373583 words of node,token memory allocated
  424 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 1 kern, 4 attribute, 70 glue_spec, 4 attrib
 ute_list, 1 write nodes
-   avail lists: 1:51,2:8329,3:4475,4:1336,5:328,6:2863,7:33,8:14,9:520,10:983,11
-:509,12:229
- 40525 multiletter control sequences out of 65536+600000
- 54 fonts using 12769183 bytes
- 74i,6n,68p,890b,659s stack positions out of 5000i,500n,10000p,200000b,100000s
-</usr/share/texlive/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.ot
-f></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPr
-o-Light.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/So
-urceSansPro-Black.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/source
-sanspro/SourceSansPro-Regular.otf></usr/share/texlive/texmf-dist/fonts/opentype/
-adobe/sourcesanspro/SourceSansPro-ExtraLight.otf>
-Output written on cv.pdf (3 pages, 43852 bytes).
+   avail lists: 1:109,2:12694,3:10828,4:2300,5:814,6:6519,7:115,8:10,9:575,10:98
+3,11:509,12:229
+ 41874 multiletter control sequences out of 65536+600000
+ 63 fonts using 17388703 bytes
+ 74i,8n,68p,890b,659s stack positions out of 5000i,500n,10000p,200000b,100000s
+</usr/share/texmf/fonts/opentype/public/lm/lmmono10-regular.otf></usr/share/texl
+ive/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></usr/share/te
+xlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Light.otf></us
+r/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Blac
+k.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSa
+nsPro-Regular.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesans
+pro/SourceSansPro-ExtraLight.otf>
+Output written on cv.pdf (2 pages, 51415 bytes).
 
-PDF statistics: 70 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 131072)
+PDF statistics: 77 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
+ 9 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

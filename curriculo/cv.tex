@@ -1,6 +1,28 @@
 %!TEX TS-program = xelatex
 \documentclass[]{friggeri-cv}
 \addbibresource{bibliography.bib}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
 \begin{document}
 \header{Henrique}{Rocha}
        {Telecommunications and Informatics}
@@ -25,7 +47,7 @@
     english (fluent)
   \section{programming}
     {\color{red} $\varheartsuit$} Java
-	 (Android, PlayFramework, LWJGL, MapReduce, GWT, AWS), C, C++ (OpenGL), C\# (XNA, Windows Forms, WPF, lpsolve), VB, Python, Scala, Scheme, HTML, CSS (Bootstrap), JavaScript (jQuery, AJAX, WebGL, WebRTC), PHP (Wordpress), GLSL, HLSL.  
+	 (Android, PlayFramework, LWJGL, MapReduce, GWT, AWS, JavaFX, Kurento Media Server, Jetty and Jersey), C, C++ (OpenGL), C\# (XNA, Windows Forms, WPF, lpsolve), VB, Python, Scala, Scheme, HTML, CSS (Bootstrap), JavaScript (jQuery, AJAX, WebGL, WebRTC), PHP (Wordpress), GLSL, HLSL.  
    \section{databases}
 	DynamoDB, MongoDB, MySQL, Neo4j, PostgreSQL, SQLite.
    \section{soft skills}
@@ -62,26 +84,58 @@
 
 
 \begin{entrylist}
+
   \entry
-    {11 2014\\(ongoing)}
-    {Web Development}
-    {Bullray}
-    {\emph{Development of an architecture for a chat application. Experience with Android, PlayFramework and MongoDB.}}
+    {01 2016\\(ongoing)}
+    {Applications Development}
+    {Bullray-CIT\\1000€/month (part time)}
+    {\emph{Development of a user interface for a bank's security device that is synchronized with servers. Microcontroller sensors information receival through \underline{USB} (\underline{org.usb4java}), user interface with \underline{JavaFX} and network camera discovery through nmap (using \underline{org.nmap4j}) } }
+
+ \entry
+    {11 2015\\(2 months)}
+    {Android Development}
+    {Bullray-CIT\\1000€/month (part time)}
+    {\emph{Optimization and bug resolution of an \underline{Android} application that uploads GPS, camera and microphone data in background.}}
+ 
+
+\entry
+    {08 2015\\(standby)}
+    {Systems Development}
+    {Bullray-CIT\\1000€/month (part time)}
+    {\emph{Development and configuration of a streaming server that supports receiving and recording video from authenticated users through \underline{ffmpeg}. I tried \underline{FFServer}, \underline{nginx with rtmp module} and \underline{Wowza Streaming Server}, the final decision was \underline{Kurento Media Server} with an \underline{RTP} endpoint for receiving video from network cameras and a \underline{WebRTC} endpoint for delivering the video to web browsers. }}
+
+\entry
+    {03 2015\\(ongoing)}
+    {Master Thesis}
+    {IST}
+    {\emph{Development of an interactive multi user video chat that supports recording, content overlay and a collaborative text editor. Used \underline{Kurento Media Server} for mixing streams into a single one and detecting QR codes. Experience with \underline{ot.js} for operation transformations (collaborative component). Other libraries used, \underline{jquery.qrcode}, \underline{vis.js}, \underline{bootstrap-typeahead}, \underline{codemirror.js} and \underline{adapter.js} }. Little experience with \underline{strophe.js} for communication between web browsers and \underline{XMPP} servers. }
+    
+  \entry
+    {02 2015\\(ongoing)}
+    {Full-Stack Web Development}
+    {Bullray-CIT\\1000€/month (part time)}
+    {\emph{Development of a solution for a generic incident handling server, support for real time monitoring through \underline{WebSockets}. Experience with \underline{PlayFramework}, \underline{MongoDB} (with the official Java Driver), \underline{Maven}, \underline{jQuery} and \underline{Bootstrap}.}}
+    
+  \entry
+    {11 2014\\(4 months)}
+    {Full-Stack Web Development}
+    {Bullray-CIT\\1000€/month (part time)}
+    {\emph{Development of an architecture for a chat application. Experience with \underline{Android}, \underline{PlayFramework}, \underline{MongoDB} (with Morphia), \underline{jQuery} and \underline{Bootstrap}. Message synchronization through HTTP long polling.}}
   \entry
     {04 2014\\(6 months)}
     {Scientific Initiation Scholarship}
-    {INESC}
-    {\emph{Frontend Development for Provide Results's Bimk project. Experience with PlayFramework, Revit API and GIT.}}
+    {INESC\\385€/month (part time)}
+    {\emph{Frontend Development for Provide Results's Bimk project. Experience with \underline{PlayFramework}, \underline{Revit API} and \underline{GIT}.}}
   \entry
     {09 2013\\(6 months)}
     {Scientific Initiation Scholarship}
-    {CEG-IST}
-    {\emph{Programming Decision Analysis Software (MACBETH). Development of an algorithm to suggest judgements based on past decisions using \emph{lpsolve}.}}
+    {CEG-IST\\385€/month (part time)}
+    {\emph{Programming a Decision Analysis Software (MACBETH) with \underline{WPF}. Development of an algorithm to suggest judgements based on past decisions using \underline{lpsolve}.}}
   \entry
     {08 2013\\(2 weeks)}
     {Summer Work}
     {LCG}
-    {\emph{Frontend development for Decision Analysis Software using \emph{ASP.NET}. }}
+    {\emph{Frontend development for a Decision Analysis Software using \underline{ASP.NET}. }}
   \entry
     {11 2012}
     {Pizza Night Competition}
@@ -90,11 +144,12 @@
   \entry
     {08 2006\\(1 month)}
     {Garbage Collector}
-    {Jovens em Movimento, Oeiras}
+    {Jovens em Movimento, Oeiras\\120€/month(full time)}
     {Cleaning and maintenance of public spaces.}
 
 
 \end{entrylist}
+%\newpage
 
 \section{applications}
 
@@ -103,7 +158,7 @@
     {2015}
     {Bomb Raider}
     {\href{http://play.google.com/store/apps/details?id=pt.ist.bombraider}{Google Play}}
-    {Bomb Raider is a simple singleplayer and multiplayer game where the goal is destroying all enemies in the map.}
+    {Bomb Raider is a simple singleplayer and multiplayer game where the goal is destroying all enemies in the map. I used \underline{OpenGLES} and \underline{WiFi-Direct} to develop this \underline{Android} game.}
 
   \entry
     {2013}
@@ -115,26 +170,32 @@
     {2012}
     {Infinity Edge (Windows Phone 7)}
     {\href{http://www.windowsphone.com/en-us/store/app/infinity-edge/05516463-3a89-4351-996e-62e5b4519aeb}{windows marketplace}}
-    {First Person Shooter with spaceships.}
+    {First Person Shooter with spaceships made on my free time. I had experience with \underline{XNA} and \underline{HLSL}.}
 
   \entry
     {2011}
     {Era of Empires}
     {\href{http://web.ist.utl.pt/ist168621/?page=8}{Personal Project}}
-    {3D environment generator and Real Time Strategy game engine.}
+    {3D environment generator and Real Time Strategy game engine using \underline{OpenGL}.}
 
 
 \end{entrylist}
 
 \section{interests}
-    3D Studio Max, Photoshop, Game Development, Web Design, Network Security, Jogging and Yoga.
+    3D Studio Max, Photoshop, Game Development, Web Design, Network Security, Jogging, Karate and Yoga.
 
-\newpage
-\section{grades}
-\subsection{Bachelor - Communication Networks Engineering}
-\input{grades_bachelor.tex}
-\subsection{Master - Telecommunications and Informatics Engineering}
-\input{grades_master.tex}
+	My mother said I should have a girlfriend...
+	
+%\newpage
+%\section{grades}
+%\subsection{Bachelor - Communication Networks Engineering}
+%\input{grades_bachelor.tex}
+%\subsection{Master - Telecommunications and Informatics Engineering}
+%\input{grades_master.tex}
 
 
+\begin{lstlisting}
+System.out.println("... but I love programming.");
+return 0; // ends gracefully
+\end{lstlisting}
 \end{document}

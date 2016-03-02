@@ -18,8 +18,6 @@ import services.ListMessagesService;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 
@@ -80,6 +78,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param out the out
      * @throws ServiceException the service exception
      */
+    private final EventListener<CodeFoundEvent> codeListener;
+    private ListenerSubscription codeSubscritption;
+
     public UserSession(final User user, final Room room, WebSocket.Out<String> out) throws ServiceException {
         this.out = out;
         this.user = user;
@@ -112,25 +113,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerAddress("64.233.184.127");
         endPoint.setStunServerPort(19302);
 
-        qrCodeFilter = new ZBarFilter.Builder(room.getMediaPipeline()).build();
+        qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
 
-        qrCodeFilter.addCodeFoundListener(new EventListener<CodeFoundEvent>() {
+
+
+
+       codeListener = new EventListener<CodeFoundEvent>() {
             @Override
             public void onEvent(CodeFoundEvent event) {
+                System.out.println(".");
                 final String content = event.getValue();
                 final String hash = Tools.md5(content);
                 if(hash!=null) {
+                    boolean containsQR = false;
                     synchronized (currentQRCodes) {
-                        if (!currentQRCodes.contains(hash)) {
-                            currentQRCodes.add(hash);
-                            JSONObject msg = new JSONObject();
-                            msg.put("id", "qrCode");
-                            msg.put("data", content);
-                            msg.put("hash", hash);
-                            room.sendMessage(msg.toString());
-                        }
+                        containsQR = currentQRCodes.contains(hash);
                     }
-                    System.out.println("=============================" + event.getCodeType() + "|" + event.getValue());
+                    if (!containsQR) {
+                        synchronized (currentQRCodes) {
+                            currentQRCodes.add(hash);
+                        }
+                        JSONObject msg = new JSONObject();
+                        msg.put("id", "qrCode");
+                        msg.put("data", content);
+                        msg.put("hash", hash);
+                        room.sendMessage(msg.toString());
+                    }
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -144,17 +153,19 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             if (lastQRCode == currentQRCode) {
                                 synchronized (currentQRCodes) {
                                     currentQRCodes.remove(hash);
-                                    JSONObject msg = new JSONObject();
-                                    msg.put("id", "qrCode");
-                                    msg.put("hash", hash);
-                                    room.sendMessage(msg.toString());
                                 }
+                                JSONObject msg = new JSONObject();
+                                msg.put("id", "qrCode");
+                                msg.put("hash", hash);
+                                room.sendMessage(msg.toString());
                             }
                         }
                     }).start();
                 }
             }
-        });
+        };
+
+        codeSubscritption =  qrCodeFilter.addCodeFoundListener(codeListener);
 
 
         compositePort = room.getCompositePort(sid.toString());
@@ -163,9 +174,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
-                if(!isReceiveOnly()) {
-                    endPoint.connect(qrCodeFilter);
-                }
+                endPoint.connect(qrCodeFilter, MediaType.VIDEO);
                 endPoint.connect(compositePort);
                 compositePort.connect(endPoint);
 
@@ -401,6 +410,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     if (play) {
                         playerAudio.connect(endPoint, MediaType.AUDIO);
                         playerVideo.connect(endPoint, MediaType.VIDEO);
+                        playerVideo.connect(qrCodeFilter, MediaType.VIDEO);
+
                         playerAudio.play();
                         playerVideo.play();
 
@@ -464,12 +475,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             playUser = userId;
         }
         if (userId == null) {
+
             compositePort.connect(endPoint);
+            compositePort.connect(qrCodeFilter, MediaType.VIDEO);
+
         } else {
             UserSession session = room.getUser(playUser);
             if (session != null) {
                 session.endPoint.connect(endPoint,MediaType.VIDEO);
                 session.endPoint.connect(compositePort,MediaType.AUDIO);
+                session.endPoint.connect(qrCodeFilter, MediaType.VIDEO);
+
             }
         }
         // mixerPort.connect(endPoint, MediaType.AUDIO);
