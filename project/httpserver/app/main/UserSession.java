@@ -472,7 +472,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             JSONObject msg = new JSONObject();
                             msg.put("id", "setTime");
                             msg.put("time", Tools.FORMAT.format(rec.getStart()));
+                            timeOffset = new Date().getTime()- rec.getStart().getTime();
+
                             sendMessage(msg.toString());
+
+
+
                         }
                     }
                 }

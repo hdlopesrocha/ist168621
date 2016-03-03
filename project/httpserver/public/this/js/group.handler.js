@@ -108,6 +108,7 @@ HyperWebSocket.setOnHyperContentArrivedHandler(function(content,more) {
 HyperWebSocket.setOnLookAtTimeRequestHandler(function(time) {
     console.log("setTime",time);
     timeline.setTime(time);
+    HyperWebSocket.getContent();
 });
 
 HyperWebSocket.setOnUserRemovedHandler(function (uid) {

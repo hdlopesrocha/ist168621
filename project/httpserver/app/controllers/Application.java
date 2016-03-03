@@ -136,6 +136,14 @@ public class Application extends Controller {
 
         new CreateTimeTagService(group0.getId().toString(),start,"Vetores (alguns exemplos)").execute();
 
+        String html = "<div class='caption'><span>Em geometria analítica, um vetor (português brasileiro) ou vector (português europeu) é uma classe de equipolência de segmentos de reta orientados, que possuem todos a mesma intensidade (denominada norma ou módulo), mesma direção e mesmo sentido.</span></div>";
+        new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),start,new Date(start.getTime()+10000),html).execute();
+
+
+        String html2 = "<h1><a href='https://pt.wikipedia.org/wiki/Vetor_%28matem%C3%A1tica%29'><img src='/assets/images/wiki.png'/><br>ler mais</a></h1></div>";
+        new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),new Date(start.getTime()+11000),new Date(start.getTime()+20000),html2).execute();
+
+
         session().clear();
         return redirect("/");
     }
