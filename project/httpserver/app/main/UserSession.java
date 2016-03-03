@@ -5,6 +5,7 @@ import models.HyperContent;
 import models.Message;
 import models.Recording;
 import models.User;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kurento.client.*;
@@ -12,6 +13,7 @@ import org.kurento.client.EventListener;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
+import services.CreateHyperContentService;
 import services.GetCurrentHyperContentService;
 import services.GetCurrentRecordingService;
 import services.ListMessagesService;
@@ -68,8 +70,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private UUID sid = UUID.randomUUID();
 
     private ZBarFilter qrCodeFilter;
-    private Date lastQRCode;
-    private Set<String> currentQRCodes = new HashSet<String>();
+    private Object lastQRCode;
+    private Map<String,Date> currentQRCodes = new TreeMap<String,Date>();
     /**
      * Instantiates a new user session.
      *
@@ -127,11 +129,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 if(hash!=null) {
                     boolean containsQR = false;
                     synchronized (currentQRCodes) {
-                        containsQR = currentQRCodes.contains(hash);
+                        containsQR = currentQRCodes.containsKey(hash);
                     }
                     if (!containsQR) {
                         synchronized (currentQRCodes) {
-                            currentQRCodes.add(hash);
+                            Date startTime = new Date(new Date().getTime() - timeOffset);
+
+                            currentQRCodes.put(hash,startTime);
                         }
                         JSONObject msg = new JSONObject();
                         msg.put("id", "qrCode");
@@ -143,7 +147,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Date currentQRCode = new Date();
+                            Object currentQRCode = new Object();
                             lastQRCode = currentQRCode;
                             try {
                                 Thread.sleep(2000);
@@ -151,13 +155,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                 e.printStackTrace();
                             }
                             if (lastQRCode == currentQRCode) {
+                                Date startTime;
+                                Date endTime = new Date(new Date().getTime() - timeOffset);
                                 synchronized (currentQRCodes) {
-                                    currentQRCodes.remove(hash);
+                                    startTime = currentQRCodes.remove(hash);
                                 }
                                 JSONObject msg = new JSONObject();
                                 msg.put("id", "qrCode");
                                 msg.put("hash", hash);
                                 room.sendMessage(msg.toString());
+
+                                CreateHyperContentService service = new CreateHyperContentService(getUser().getId().toString(),
+                                        getGroupId(), startTime, endTime, content);
+                                try {
+                                    service.execute();
+                                    room.sendContents();
+                                } catch (ServiceException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
                         }
                     }).start();
@@ -351,7 +368,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     public void setHistoric(String userId) {
         playUser = userId;
-        Date currentTime = new Date(new Date().getTime() - timeOffset + 10);
+        Date currentTime = new Date(new Date().getTime() - timeOffset + 250);
 
         try {
             // saying "no video here!", for group video
@@ -368,22 +385,45 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
             if (ownerUrl!=null && groupUrl!=null) {
                 synchronized (playerLock) {
-
-                    // WEBM
                     System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
-                    RepositoryItemPlayer itemVideo =  KurentoManager.repository.getReadEndpoint(ownerUrl);
-                    System.out.println("URL: "+itemVideo.getUrl());
-                    PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemVideo.getUrl()).build();
 
 
-                    RepositoryItemPlayer itemAudio = KurentoManager.repository.getReadEndpoint(groupUrl);
-                    PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(), itemAudio.getUrl()).build();
+                    String videoUrl = ownerUrl;
+                    if(ObjectId.isValid(videoUrl)){
+                        RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
+                        videoUrl= item.getUrl();
+                    }else{
+                        videoUrl="file:"+videoUrl;
+                    }
+
+
+
+                    System.out.println("URL: "+videoUrl);
+                    PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
+
+
+
+                    String audioUrl = groupUrl;
+                    if(ObjectId.isValid(audioUrl)){
+                        RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
+                        audioUrl= item.getUrl();
+                    }else{
+                        audioUrl="file:"+audioUrl;
+                    }
+
+                    PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
 
                     tempVideo.addErrorListener(new EventListener<ErrorEvent>() {
                         @Override
                         public void onEvent(ErrorEvent arg0) {
                             System.out.println("FAILURE: " + arg0.getDescription());
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             setHistoric(playUser);
+
                         }
                     });
 
@@ -410,7 +450,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     if (play) {
                         playerAudio.connect(endPoint, MediaType.AUDIO);
                         playerVideo.connect(endPoint, MediaType.VIDEO);
-                        playerVideo.connect(qrCodeFilter, MediaType.VIDEO);
 
                         playerAudio.play();
                         playerVideo.play();
@@ -423,14 +462,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                 position = 0l;
                             }
 
-
-
                             playerVideo.setPosition(position);
                             if(playerAudio.getVideoInfo().getIsSeekable()) {
                                 playerAudio.setPosition(position);
                             }
                         }
                         else {
+                            System.out.println("not seekable!");
                             JSONObject msg = new JSONObject();
                             msg.put("id", "setTime");
                             msg.put("time", Tools.FORMAT.format(rec.getStart()));
@@ -477,14 +515,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         if (userId == null) {
 
             compositePort.connect(endPoint);
-            compositePort.connect(qrCodeFilter, MediaType.VIDEO);
 
         } else {
             UserSession session = room.getUser(playUser);
             if (session != null) {
                 session.endPoint.connect(endPoint,MediaType.VIDEO);
                 session.endPoint.connect(compositePort,MediaType.AUDIO);
-                session.endPoint.connect(qrCodeFilter, MediaType.VIDEO);
 
             }
         }

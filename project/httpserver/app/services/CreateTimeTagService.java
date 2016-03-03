@@ -17,10 +17,7 @@ public class CreateTimeTagService extends Service<TimeTag> {
     
     /** The title. */
     private final String title;
-    
-    /** The content. */
-    private final String content;
-    
+
     /** The time. */
     private final Date time;
 
@@ -30,13 +27,11 @@ public class CreateTimeTagService extends Service<TimeTag> {
      * @param gid the gid
      * @param time the time
      * @param title the title
-     * @param content the content
      */
-    public CreateTimeTagService(String gid, Date time, String title, String content) {
+    public CreateTimeTagService(String gid, Date time, String title) {
         this.gid = new ObjectId(gid);
         this.time = time;
         this.title = title;
-        this.content = content;
     }
 
     /* (non-Javadoc)
@@ -44,7 +39,7 @@ public class CreateTimeTagService extends Service<TimeTag> {
      */
     @Override
     public TimeTag dispatch() throws ServiceException {
-        TimeTag tag = new TimeTag(gid, time, title, content);
+        TimeTag tag = new TimeTag(gid, time, title);
         tag.save();
         return tag;
     }

@@ -133,7 +133,7 @@ var HyperTimeline = new (function() {
 
 
 		timeline.setHistoric = function(date){
-			setTime(date);
+			timeline.setTime(date);
 			historic(this.hyper_offset);
 
 		}

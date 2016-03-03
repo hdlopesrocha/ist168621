@@ -28,10 +28,7 @@ public class TimeTag {
     
     /** The title. */
     private String title;
-    
-    /** The content. */
-    private String content;
-    
+
     /** The gid. */
     private ObjectId id, gid = null;
 
@@ -48,13 +45,11 @@ public class TimeTag {
      * @param gid the gid
      * @param time the time
      * @param title the title
-     * @param content the content
      */
-    public TimeTag(ObjectId gid, Date time, String title, String content) {
+    public TimeTag(ObjectId gid, Date time, String title) {
         this.time = time;
         this.gid = gid;
         this.title = title;
-        this.content = content;
     }
 
     /**
@@ -80,7 +75,6 @@ public class TimeTag {
         rec.time = doc.getDate("time");
         rec.gid = doc.getObjectId("gid");
         rec.title = doc.getString("title");
-        rec.content = doc.getString("content");
         return rec;
     }
 
@@ -154,7 +148,6 @@ public class TimeTag {
         doc.put("gid", gid);
         doc.put("time", time);
         doc.put("title", title);
-        doc.put("content", content);
 
         if (id == null)
             getCollection().insertOne(doc);
@@ -201,7 +194,6 @@ public class TimeTag {
         JSONObject obj = new JSONObject();
         obj.put("id", id.toString());
         obj.put("title", title);
-        obj.put("content", content);
         obj.put("time", Tools.FORMAT.format(time));
         return obj;
     }

@@ -578,8 +578,7 @@
 				var time = new Date(visTag.start);
 
 				var title = tag.title;
-				var content = tag.content;
-				HyperWebSocket.createTag(time, title, content);
+				HyperWebSocket.createTag(time, title);
 				timeline.removeTag(tag.id);
 			}
 			unsaved_tags = [];
@@ -733,12 +732,10 @@ $('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
 				$("#createTagModal").modal('hide');
 				var id = makeid();
 				var title = $("#tagTitle").val();
-				var content = "";
 
 				unsaved_tags.push({
 					id : id,
-					title : title,
-					content : content
+					title : title
 				});
 				timeline.addTag(id, title);
 				$("#saveButton").removeClass("hidden");

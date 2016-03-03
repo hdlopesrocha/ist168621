@@ -248,8 +248,7 @@ public class WSController extends Controller {
                                     try {
                                         Date time = Tools.FORMAT.parse(args.getString("time"));
                                         String title = args.getString("title");
-                                        String content = args.getString("content");
-                                        CreateTimeTagService service = new CreateTimeTagService(groupId, time, title, content);
+                                        CreateTimeTagService service = new CreateTimeTagService(groupId, time, title);
                                         TimeTag tag = service.execute();
                                         JSONObject msg = new JSONObject();
                                         msg.put("id", "tag");
@@ -281,12 +280,10 @@ public class WSController extends Controller {
                                         CreateHyperContentService service = new CreateHyperContentService(userId,
                                                 groupId, start, end, content);
                                         service.execute();
+                                        room.sendContents();
                                     } catch (ServiceException | ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    // System.out.println("content");
-                                    room.sendContents();
-
                                 }
                                 break;
                                 case "deleteContent": {

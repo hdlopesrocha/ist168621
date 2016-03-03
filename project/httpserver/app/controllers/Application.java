@@ -2,19 +2,20 @@ package controllers;
 
 import dtos.AttributeDto;
 import exceptions.ServiceException;
-import models.Group;
-import models.Membership;
-import models.Relation;
-import models.User;
+import models.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.bson.types.Symbol;
+import play.api.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.*;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -117,6 +118,24 @@ public class Application extends Controller {
 
         AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), user2.getId().toString());
         joinService.execute();
+
+        Date end = new Date();
+        Date start = new Date(end.getTime()-120000);
+
+
+        Interval interval = new CreateIntervalService(group0.getId().toString(), start).execute();
+        interval.setEnd(end);
+
+        interval.save();
+        URL url = this.getClass().getClassLoader().getResource("video.mp4");
+
+        Recording rec = new Recording(group0.getId(),start);
+        rec.setEnd(end);
+        rec.setUrl(group0.getId().toString(),url.getFile());
+        rec.save();
+
+        new CreateTimeTagService(group0.getId().toString(),start,"Vetores (alguns exemplos)").execute();
+
         session().clear();
         return redirect("/");
     }

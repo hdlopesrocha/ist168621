@@ -142,12 +142,11 @@ var HyperWebSocket = new (function() {
 		}));
 	}
 
-	this.createTag = function(time,title,content){
+	this.createTag = function(time,title){
 		ws.send(JSON.stringify({
 			id : "createTag",
 			time: time,
-			title: title,
-			content: content
+			title: title
 		}));
 	}
 	
