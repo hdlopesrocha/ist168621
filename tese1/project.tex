@@ -129,50 +129,26 @@ mymilestone right shift=0pt
 %RP acrescenta número de aluno, nome do mestrado e ``cadeira de projecto''
 \maketitle              % typeset the title of the contribution
 
-\begin{abstract}
-The Hyper-linked communications concept applies much of the hypermedia concepts, widely used on Web content, to communication and collaboration services. This paradigm allows to synchronize, structure and navigate communication content, providing a way to integrate social media content and collaborative tools into voice and video calls.
-Voice and image together can express emotions and expose creativity like no other medium can. With hypermedia concepts, we can add more value to voice and video communications.
 
-
-\ac{WebRTC} technology allows real-time communications between web browsers without the need to install and use additional applications or plug-ins. The nature of web browser applications already follow the hypermedia concept, which makes \ac{WebRTC} the ideal technology to apply the hyper-linked communications concepts.
-The native support of \ac{WebRTC} in operating systems extends its usage to outside the web browser, allowing to explore functionalities that browsers are poor to support such as video recording and massive information storage.
-
-Our goal in this project is to develop an application that leverages the Hyper-linked communications concept to enable collaborative real-time audio and video communication, enriched with other media types, that can be accessed live or accessed latter.
-This application will target the web browser platform, resorting to \ac{WebRTC}.
-
-In this document, we present the current State Of The Art in hyper-linked communications and related technologies, propose an architecture to implement an hyper-linked communication application based on \ac{WebRTC} and provide a plan for its implementation and evaluation.
-
-
-\keywords{WebRTC, asynchronous, communications, collaboration}
-\end{abstract}
-
-\section{Introduction}
-  \input{intro.tex}
-
-\section{Related Work}\label{related}
- This section is structured as follows.
- Section \ref{early} describes the problems that real-time communications face on nowadays internet, namely the \ac{IPv4} address exhaustion and the client server model constraints. 
- Section \ref{rtc} describes the \ac{WebRTC} technology and the protocols needed to implement our project. 
- Section \ref{signaling} addresses the signaling component of chat applications, which is not defined on \ac{WebRTC} specifications. 
- Section \ref{hypermedia} presents the evolution of multimedia content until the hypermedia, its capabilities, synchronization mechanisms and interactivity. 
- Section \ref{collab} explores streaming protocols for non-interactive multimedia and how to introduce the interactive component, another important aspects are the ability to control the time flux of a stream and collaborative application development.
-%RP este detalhe sobre a estrutura da sec. do estado da arte vai para o início dessa secção.
-        
-  \input{state01.tex}
-  \input{state02.tex}
-  \input{state03.tex}
-  \input{state04.tex}
+\input{01_abstract.tex}
+\input{02_introduction.tex}
+\input{03_problem.tex}
+\input{04_goals.tex}
+\input{05_structure.tex}
+\input{06_related_work.tex}
+\input{07_related_work_nat.tex}
+\input{08_related_work_rtc.tex}
+\input{09_related_work_signaling.tex}
+\input{10_related_work_hypermedia.tex}
+\input{11_related_work_collaboration.tex}
+%\input{XX_implementation_model.tex}
 
 \section{Proposed Architecture}\label{arch} % English
   \input{arch01.tex}
 
 \section{Methodology}\label{meth} % Section
 
-
-
-		\input{method.tex}
-
-
+\input{method.tex}
 
 	\subsection{Planned Schedule} % English
 		\input{schd01.tex}
@@ -184,13 +160,6 @@ The development of \ac{WebRTC} by the World Wide Web Consortium (W3C) allows web
 
   A prototype will be implemented in order to validate these concepts.
 In order to implement it, significant challenges, such as the need to record interactive audio and video streams, will have to be overcome, making this a challenging project.
-
-%\subsection{Summary} % English
-%Neste secção deve-se fazer o resumo do trabalho efectuado, retomando a ideia, as contribuições definidas e a forma como estas se materializaram
-
-%\subsection{Conclusions} % English
-%Nesta secção devem ser retiradas conclusões do trabalho realizado, em face dos resultados obtidos \cite{exemplo}.
-
 
 \bibliographystyle{splncs03}
 \bibliography{references}

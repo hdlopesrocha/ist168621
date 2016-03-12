@@ -1,8 +1,9 @@
 package main;
 
-import org.kurento.client.*;
+import org.kurento.client.MediaElement;
+import org.kurento.client.MediaProfileSpecType;
+import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.internal.server.KurentoServerException;
-import org.kurento.commons.testing.SystemCompatibilityTests;
 import org.kurento.repository.service.pojo.RepositoryItemRecorder;
 
 import java.util.Collections;

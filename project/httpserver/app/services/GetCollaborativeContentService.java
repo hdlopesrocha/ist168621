@@ -1,17 +1,9 @@
 package services;
 
-import com.mongodb.client.FindIterable;
 import exceptions.BadRequestException;
 import models.CollaborativeContent;
-import models.HyperContent;
 import models.User;
-import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 
 /**

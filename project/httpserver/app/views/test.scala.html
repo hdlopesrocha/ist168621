@@ -16,14 +16,25 @@
     }
 
     $(document).ready(function(){
-        var ws = new WebSocket(wsurl("/ws/together/test"));
+
+        var socket = io({transports: ['websocket'],path:'/ws/ot/test'});
+        socket.connect();
+        socket.emit('add user', 'xpto');
+
+
+        console.log(socket);
         var editor = CodeMirror.fromTextArea(document.getElementById("textOt"), {
           lineNumbers: true,
           mode: "text/html",
           matchBrackets: true
         });
 
-        var adapter = new ot.CodeMirrorAdapter(editor);
+        var socketAdapter = new ot.SocketIOAdapter(socket);
+        var editorAdapter = new ot.CodeMirrorAdapter(editor);
+        var client = new ot.Client(0);
+        var editorClient = new ot.EditorClient(0,[client],socketAdapter,editorAdapter);
+
+/*
         ws.onopen = function (event) {
 
         };
@@ -32,16 +43,17 @@
             console.log("to",ot.TextOperation);
             var ops = JSON.parse(event.data);
             var op = ot.TextOperation.fromJSON(ops);
-            adapter.applyOperation(op);
+            editorAdapter.applyOperation(op);
         }
 
 	    console.log(ot);
 
-        adapter.registerCallbacks({
+        editorAdapter.registerCallbacks({
             change: function (a,b) {
                 ws.send(JSON.stringify(a.toJSON()));
             }
         });
+*/
     });
 </script>
 

@@ -7,7 +7,6 @@ import org.kurento.client.MediaPipeline;
 import org.kurento.repository.RepositoryClient;
 import org.kurento.repository.RepositoryClientProvider;
 
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

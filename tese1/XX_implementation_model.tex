@@ -1,0 +1,30 @@
+The model is the most important component of our solution, a badly designed model can imply serious deficulties when implementing new features that are not part of the plans, sometimes we had to redesign the model in order to support new features.
+
+\subsubsection {Generic model for common operations}
+
+For designing our model we have taken into account generic programming techniques. We observed that operations like searching for an object was quite repeated amongst different types of objects. 
+
+Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes indepently from the object type. To this generic set of properties we call \textbf{Data} and each object of this type has a reference to the owner, which is a unique identification number.
+
+The identication number by itself is not sufficient to identify an object, objects from different types can have the same identification number. In order to solve this problem, when an object is created, its correspondent \textbf{Data} must contain the owner's object type. 
+
+When an attribute is created it must be specified if the attribute is searchable, otherwise it could be simple to search for attributes that could reveal sensible information about it. For example if we consider that a user could have a health related attribute, searching by a disease would reveal which users could suffer from a certain disease, the leak of that kind of information could, for instance, change the agreement between users and health insurance companies.
+
+Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification let us create abstract authentication services, for example a user can login into our system by providing any attribute that identifies himself, for example the e-mail but others are possible like the username or cellphone number. 
+
+Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it's possible to search for the administrative role and return users and groups of users that contains that property.
+
+Our model supports defining read and write permissions for each attribute, for example an attribute can be set to public read access or private write access to a set of entities. Implicitly if an entity can write an attribute it can also read it.
+
+\subsubsection{User model}
+\subsubsection{Relation model}
+\subsubsection{Group model}
+\subsubsection{Membership model}
+\subsubsection{File storage}
+
+\subsubsection{Message model}
+\subsubsection{Time Tag model}
+\subsubsection{Hyper Content model}
+\subsubsection{Collaborative Content model}
+\subsubsection{Recording model}
+\subsubsection{Interval model}

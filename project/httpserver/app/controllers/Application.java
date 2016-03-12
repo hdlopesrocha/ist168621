@@ -1,17 +1,15 @@
 package controllers;
 
 import dtos.AttributeDto;
+import dtos.PermissionDto;
 import exceptions.ServiceException;
 import models.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.bson.types.Symbol;
-import play.api.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.*;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,34 +55,34 @@ public class Application extends Controller {
         User user1, user2, user3, user4;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "hdlopesrocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
-            attributes.add(new AttributeDto("name", "Henrique Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
-            user1 = new RegisterUserService("qazokm", attributes).execute();
+            attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false, false, false));
+            user1 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>() ,attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "nbhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
-            attributes.add(new AttributeDto("name", "Nikhil Bhatt", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
-            user2 = new RegisterUserService("qazokm", attributes).execute();
+            attributes.add(new AttributeDto("email", "nbhatt", true, true, false));
+            attributes.add(new AttributeDto("name", "Nikhil Bhatt", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", false, false, false));
+            user2 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "grocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
-            attributes.add(new AttributeDto("name", "Gonçalo Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
-            user3 = new RegisterUserService("qazokm", attributes).execute();
+            attributes.add(new AttributeDto("email", "grocha", true, true, false));
+            attributes.add(new AttributeDto("name", "Gonçalo Rocha", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", false, false, false));
+            user3 = new RegisterUserService("qazokm", new ArrayList<PermissionDto>(),attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "dvd-r", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, true, true, false));
-            attributes.add(new AttributeDto("name", "David Rocha", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
-            user4 = new RegisterUserService("qazokm", attributes).execute();
+            attributes.add(new AttributeDto("email", "dvd-r", true, true, false));
+            attributes.add(new AttributeDto("name", "David Rocha", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", false, false, false));
+            user4 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
         }
 
 
@@ -99,49 +97,94 @@ public class Application extends Controller {
 
 
         List<AttributeDto> attributes0 = new ArrayList<AttributeDto>();
-        attributes0.add(new AttributeDto("name", "WebRTC", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
-        Group group0 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, attributes0).execute();
+        attributes0.add(new AttributeDto("name", "WebRTC", false, true, false));
+        Group group0 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, new ArrayList<PermissionDto>(), attributes0).execute();
 
 
         List<AttributeDto> attributes1 = new ArrayList<AttributeDto>();
-        attributes1.add(new AttributeDto("name", "Group1", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
-        new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes1).execute();
+        attributes1.add(new AttributeDto("name", "Group1", false, true, false));
+        new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes1).execute();
 
         List<AttributeDto> attributes2 = new ArrayList<AttributeDto>();
-        attributes2.add(new AttributeDto("name", "Group2", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
-        new CreateGroupService(user2.getId().toString(), Group.Visibility.PRIVATE, attributes2).execute();
+        attributes2.add(new AttributeDto("name", "Group2", false, true, false));
+        new CreateGroupService(user2.getId().toString(), Group.Visibility.PRIVATE, new ArrayList<PermissionDto>(), attributes2).execute();
 
         List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
-        attributes3.add(new AttributeDto("name", "Group3", AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
-        new CreateGroupService(user3.getId().toString(), Group.Visibility.PUBLIC, attributes3).execute();
+        attributes3.add(new AttributeDto("name", "Group3", false, true, false));
+        new CreateGroupService(user3.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes3).execute();
 
 
         AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), user2.getId().toString());
         joinService.execute();
 
         Date end = new Date();
-        Date start = new Date(end.getTime()-120000);
+        Date start = new Date(end.getTime()-835000);
 
 
         Interval interval = new CreateIntervalService(group0.getId().toString(), start).execute();
         interval.setEnd(end);
-
         interval.save();
-        URL url = this.getClass().getClassLoader().getResource("video.mp4");
-
-        Recording rec = new Recording(group0.getId(),start);
-        rec.setEnd(end);
-        rec.setUrl(group0.getId().toString(),url.getFile());
-        rec.save();
-
-        new CreateTimeTagService(group0.getId().toString(),start,"Vetores (alguns exemplos)").execute();
-
-        String html = "<div class='caption'><span>Em geometria analítica, um vetor (português brasileiro) ou vector (português europeu) é uma classe de equipolência de segmentos de reta orientados, que possuem todos a mesma intensidade (denominada norma ou módulo), mesma direção e mesmo sentido.</span></div>";
-        new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),start,new Date(start.getTime()+10000),html).execute();
 
 
-        String html2 = "<h1><a href='https://pt.wikipedia.org/wiki/Vetor_%28matem%C3%A1tica%29'><img src='/assets/images/wiki.png'/><br>ler mais</a></h1></div>";
-        new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),new Date(start.getTime()+11000),new Date(start.getTime()+20000),html2).execute();
+        for(int i=0; i < 84 ; ++i) {
+            String formatted = String.format("%02d", i);
+            URL url = this.getClass().getClassLoader().getResource("video"+formatted+".mp4");
+            Date da = new Date(start.getTime()+i*10000);
+            Recording rec = new Recording(group0.getId(), da);
+            rec.setEnd(new Date(da.getTime()+10000));
+            rec.setUrl(group0.getId().toString(), url.getFile());
+            rec.save();
+        }
+
+        new CreateTimeTagService(group0.getId().toString(),start,"OSI Model").execute();
+
+        Integer [] time = new Integer[8];
+        String [] captions = new String[8];
+
+
+
+        captions[1] = "Application Layer";
+        time[1] = 31;
+
+        captions[2] = "Presentation Layer";
+        time[2] = 1*60+13;
+
+        captions[3] = "Session Layer";
+        time[3] = 1*60+38;
+
+        captions[4] = "Transport Layer";
+        time[4] = 2*60+12;
+
+        captions[5] = "Network Layer";
+        time[5] = 2*60+39;
+
+        captions[6] = "Data Link Layer";
+        time[6] = 3*60+04;
+
+        captions[7] = "Physical Layer";
+        time[7] = 3*60+28;
+
+        captions[0] = "<br><ul>";
+        time[0] = 12;
+
+        for(int i =1 ; i < 8 ;++i) {
+            Date da = new Date(start.getTime()+time[i]*1000);
+            captions[0] += "<li> <a onclick='timeline.setHistoric(new Date("+da.getTime()+"))'>"+captions[i]+"</a></li>";
+            captions[i] = "<div class='caption'><span>"+captions[i]+"</span></div>";
+
+        }
+
+        captions[0] += "</ul>";
+
+        for(int i =0 ; i < 8 ;++i){
+            Date da = new Date(start.getTime()+time[i]*1000);
+            Date db = new Date(da.getTime()+5000);
+
+            new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),da,db,captions[i]).execute();
+        }
+
+
+
 
 
         session().clear();

@@ -17,8 +17,6 @@ import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 
 /**
@@ -44,6 +42,12 @@ public class Room implements Closeable {
     
     /** The hub port. */
     private HubPort hubPort;
+
+    public Object getOperationLock() {
+        return operationLock;
+    }
+
+    private Object operationLock = new Object();
 
     /**
      * Instantiates a new room.

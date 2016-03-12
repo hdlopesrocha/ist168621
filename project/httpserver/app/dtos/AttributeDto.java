@@ -15,38 +15,26 @@ public class AttributeDto {
     /** The aggregator. */
     private final boolean aggregator;
     
-    /** The visibility. */
-    private Visibility visibility;
-    
     /** The key. */
     private String key;
     
     /** The value. */
     private Object value;
 
-    ;
-    
-    /** The access. */
-    private Access access;
 
-    ;
 
     /**
      * Instantiates a new attribute dto.
      *
      * @param key the key
      * @param value the value
-     * @param access the access
-     * @param visibility the visibility
      * @param identifiable the identifiable
      * @param searchable the searchable
      * @param aggregator the aggregator
      */
-    public AttributeDto(String key, Object value, Access access, Visibility visibility, boolean identifiable, boolean searchable, boolean aggregator) {
+    public AttributeDto(String key, Object value, boolean identifiable, boolean searchable, boolean aggregator) {
         this.key = key;
         this.value = value;
-        this.visibility = visibility;
-        this.access = access;
         this.identifiable = identifiable;
         this.searchable = searchable;
         this.aggregator = aggregator;
@@ -79,23 +67,7 @@ public class AttributeDto {
         return aggregator;
     }
 
-    /**
-     * Gets the visibility.
-     *
-     * @return the visibility
-     */
-    public Visibility getVisibility() {
-        return visibility;
-    }
 
-    /**
-     * Gets the access.
-     *
-     * @return the access
-     */
-    public Access getAccess() {
-        return access;
-    }
 
     /**
      * Gets the key.
@@ -123,12 +95,6 @@ READ, /** The write. */
  WRITE, /** The none. */
  NONE}
 
-    /**
-     * The Enum Visibility.
-     */
-    public enum Visibility {/** The public. */
-PUBLIC, /** The private. */
- PRIVATE}
 
 
 }

@@ -27,6 +27,8 @@ import java.util.*;
 
 public class WSController extends Controller {
 
+
+
     public WebSocket<String> connectToRoom(String groupId) {
         final String userId = session("uid");
         return new WebSocket<String>() {
@@ -299,20 +301,24 @@ public class WSController extends Controller {
                                    room.sendContents();
                                 }
                                 case "operation" : {
-                                    if (args.has("sid")) {
-                                        UserSession sess = room.getUser(UUID.fromString(args.getString("sid")));
-                                        sess.sendMessage(event);
-                                    } else {
-                                        room.sendMessage(userSession, event);
+                                    synchronized (room.getOperationLock()) {
+                                        if (args.has("sid")) {
+                                            UserSession sess = room.getUser(UUID.fromString(args.getString("sid")));
+                                            sess.sendMessage(event);
+                                        } else {
+                                            room.sendMessage(userSession, event);
+                                        }
                                     }
                                 }
                                 break;
                                 case "saveCollab":{
-                                    String data = args.getString("data");
-                                    try {
-                                        new SetCollaborativeContentService(userId,groupId,data).execute();
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
+                                    synchronized (room.getOperationLock()) {
+                                        String data = args.getString("data");
+                                        try {
+                                            new SetCollaborativeContentService(userId, groupId, data).execute();
+                                        } catch (ServiceException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                                 break;
@@ -353,6 +359,7 @@ public class WSController extends Controller {
 
     public WebSocket<String> together(String groupId) {
         final String userId = session("uid");
+        System.out.println("WebSocket requested!");
         return new WebSocket<String>() {
 
             public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {

@@ -2,17 +2,12 @@ package models;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import main.Tools;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.json.JSONObject;
 import services.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 
 /**

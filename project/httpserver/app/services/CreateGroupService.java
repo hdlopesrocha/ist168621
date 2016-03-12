@@ -1,11 +1,12 @@
 package services;
 
 import dtos.AttributeDto;
+import dtos.PermissionDto;
 import exceptions.ServiceException;
 import models.*;
 import org.bson.types.ObjectId;
 
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -22,6 +23,7 @@ public class CreateGroupService extends Service<Group> {
     /** The visibility. */
     private final Group.Visibility visibility;
 
+    private final List<PermissionDto> permissions;
     /**
      * Instantiates a new creates the group service.
      *
@@ -29,10 +31,11 @@ public class CreateGroupService extends Service<Group> {
      * @param visibility the visibility
      * @param attributes the attributes
      */
-    public CreateGroupService(String uid, Group.Visibility visibility, List<AttributeDto> attributes) {
+    public CreateGroupService(String uid, Group.Visibility visibility, List<PermissionDto> permissions, List<AttributeDto> attributes) {
         this.caller = new ObjectId(uid);
         this.attributes = attributes;
         this.visibility = visibility;
+        this.permissions = permissions;
     }
 
     /*
@@ -46,10 +49,26 @@ public class CreateGroupService extends Service<Group> {
         group.save();
         Membership membership = new Membership(caller, group.getId());
         membership.save();
-        attributes.add(new AttributeDto("type", Group.class.getName(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, true));
+        attributes.add(new AttributeDto("type", Group.class.getName(), false, false, true));
+        permissions.add(new PermissionDto("type", new HashSet<String>(),new HashSet<String>()));
         new Data(group.getId(), attributes).save();
         new Search(group.getId(), attributes).save();
-        new Permission(group.getId(), attributes).save();
+
+        Map<String,Permission.Entry> realPermissions = new TreeMap<>();
+        for(PermissionDto p : permissions){
+            Set<ObjectId> readSet = new HashSet<>();
+            Set<ObjectId> writeSet = new HashSet<>();
+            for(String str : p.getReadSet()){
+                readSet.add(new ObjectId(str));
+            }
+            for(String str : p.getWriteSet()){
+                writeSet.add(new ObjectId(str));
+            }
+            realPermissions.put(p.getKey(), new Permission.Entry(readSet,writeSet));
+
+        }
+
+        new Permission(group.getId(),realPermissions, attributes).save();
         return group;
     }
 

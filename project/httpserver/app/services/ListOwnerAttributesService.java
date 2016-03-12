@@ -1,6 +1,7 @@
 package services;
 
 
+import dtos.PermissionDto;
 import exceptions.ServiceException;
 import models.Data;
 import models.Permission;
@@ -8,7 +9,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.List;
-
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -56,11 +58,11 @@ public class ListOwnerAttributesService extends Service<Document> {
             doc = (Document) doc.get("data");
 
             if (permission != null) {
-                Document dPerm = permission.getData();
-                for (String key : dPerm.keySet()) {
-                    List<ObjectId> aPerms = (List<ObjectId>) dPerm.get(key);
+                Map<String, Permission.Entry> dPerm = permission.getData();
+                for (Map.Entry<String, Permission.Entry> perm : dPerm.entrySet()) {
+                    Set<ObjectId> aPerms = perm.getValue().getReadSet();
                     if (!aPerms.contains(caller)) {
-                        doc.remove(key);
+                        doc.remove(perm.getKey());
                     }
                 }
 

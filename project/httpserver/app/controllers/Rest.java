@@ -2,6 +2,7 @@ package controllers;
 
 import dtos.AttributeDto;
 import dtos.KeyValue;
+import dtos.PermissionDto;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import main.Tools;
@@ -17,13 +18,8 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import services.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -161,9 +157,14 @@ public class Rest extends Controller {
             Group.Visibility visibility = Group.Visibility.valueOf(qs.get("v")[0]);
 
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("name", name, AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, true, false));
+            List<PermissionDto> permissions = new ArrayList<PermissionDto>();
 
-            CreateGroupService service = new CreateGroupService(session("uid"), visibility, attributes);
+            attributes.add(new AttributeDto("name", name, false, true, false));
+            Set<String> readSet = new HashSet<>();
+            Set<String> writeSet = new HashSet<String>();
+            writeSet.add(session("uid"));
+            permissions.add(new PermissionDto("name",readSet,writeSet));
+            CreateGroupService service = new CreateGroupService(session("uid"), visibility,permissions, attributes);
             try {
                 service.execute();
             } catch (ServiceException e) {
@@ -529,7 +530,7 @@ public class Rest extends Controller {
 
         String password = form.get("password")[0];
         List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-        attributes.add(new AttributeDto("type", User.class.getName(), AttributeDto.Access.WRITE, AttributeDto.Visibility.PUBLIC, false, false, true));
+        List<PermissionDto> permissions = new ArrayList<PermissionDto>();
 
 
         for (Entry<String, String[]> s : form.entrySet()) {
@@ -556,7 +557,7 @@ public class Rest extends Controller {
                     } else if (s.getKey().equals("email")) {
                         searchable = identifiable = true;
                     }
-                    attributes.add(new AttributeDto(s.getKey(), obj, AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, identifiable, searchable, false));
+                    attributes.add(new AttributeDto(s.getKey(), obj, identifiable, searchable, false));
                 }
             }
         }
@@ -565,7 +566,7 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), AttributeDto.Access.READ, AttributeDto.Visibility.PUBLIC, false, false, false));
+                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), false, false, false));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -576,7 +577,7 @@ public class Rest extends Controller {
             return Rest.status(409);
         }
 
-        User ret = new RegisterUserService(password, attributes).execute();
+        User ret = new RegisterUserService(password,permissions, attributes).execute();
         return ok(ret.getToken());
 
     }

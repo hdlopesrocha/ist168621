@@ -473,20 +473,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             msg.put("id", "setTime");
                             msg.put("time", Tools.FORMAT.format(rec.getStart()));
                             timeOffset = new Date().getTime()- rec.getStart().getTime();
-
                             sendMessage(msg.toString());
-
-
-
                         }
                     }
                 }
             } else {
                 System.out.println("No video here!");
             }
-
         } catch (ServiceException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

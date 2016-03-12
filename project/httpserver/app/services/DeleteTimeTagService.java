@@ -4,8 +4,6 @@ import exceptions.ServiceException;
 import models.TimeTag;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
-
 
 /**
  * The Class CreateTimeTagService.
