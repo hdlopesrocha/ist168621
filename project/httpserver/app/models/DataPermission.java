@@ -17,30 +17,7 @@ import java.util.*;
 public class DataPermission {
 
 
-    public static class Entry {
-        private Set<ObjectId> readSet;	// empty means all can read
-        private Set<ObjectId> writeSet;	// empty means no one can write
 
-        public Entry(List<ObjectId> readSet, List<ObjectId> writeSet) {
-            this.readSet = new HashSet<>();
-            this.writeSet = new HashSet<>();
-            this.readSet.addAll(readSet);
-            this.writeSet.addAll(writeSet);
-        }
-
-        public Entry(Set<ObjectId> readSet, Set<ObjectId> writeSet) {
-            this.readSet = readSet;
-            this.writeSet = writeSet;
-        }
-
-        public Set<ObjectId> getReadSet() {
-            return readSet;
-        }
-
-        public Set<ObjectId> getWriteSet() {
-            return writeSet;
-        }
-    }
 
     /** The id. */
     private ObjectId id = null;
@@ -49,7 +26,8 @@ public class DataPermission {
     private ObjectId owner = null;
     
     /** The data. */
-    private Map<String, Entry> permissions = null;
+    private Document readPermissions = null;
+    private Document writePermissions = null;
 
 
 
@@ -60,13 +38,13 @@ public class DataPermission {
      * @param permissions the permissions
      * @param attributes the attributes
      */
-    public DataPermission(ObjectId owner, Map<String,Entry> permissions, List<AttributeDto> attributes) {
-		List<String> invalidPermisssions = new ArrayList<String>();
-        this.permissions = new TreeMap<String, Entry>();
+    public DataPermission(ObjectId owner, Map<String,PermissionEntry> permissions, List<AttributeDto> attributes) {
+        this.readPermissions = new Document();
+        this.writePermissions = new Document();
 
 		
-		for(Map.Entry<String, Entry> permission : permissions.entrySet()){
-            Entry entry = permission.getValue();
+		for(Map.Entry<String, PermissionEntry> permission : permissions.entrySet()){
+            PermissionEntry entry = permission.getValue();
 			boolean contains = false;
 			for(AttributeDto attr : attributes){
 				if(permission.getKey().equals(attr.getKey())){
@@ -75,8 +53,10 @@ public class DataPermission {
 				}
 			}
 			if(contains){
-				this.permissions.put(permission.getKey(),entry);
-			}	
+                readPermissions.put(permission.getKey(),entry.getReadSet());
+                writePermissions.put(permission.getKey(),entry.getWriteSet());
+
+            }
 		}
 		
 
@@ -140,15 +120,8 @@ public class DataPermission {
         user.owner = doc.getObjectId("owner");
 
         Document data = (Document) doc.get("data");
-        user.permissions = new TreeMap<String, Entry>();
-        if(data!=null) {
-            for (String key : data.keySet()) {
-                Document elem = (Document) data.get(key);
-                List<ObjectId> readSet = (List<ObjectId>) elem.get("r");
-                List<ObjectId> writeSet = (List<ObjectId>) elem.get("w");
-                user.permissions.put(key,new Entry(readSet, writeSet));
-            }
-        }
+
+
 
         return user;
     }
@@ -162,15 +135,9 @@ public class DataPermission {
         Document doc = new Document();
         doc.put("owner", owner);
 
-        Document data = new Document();
-        for(Map.Entry<String, Entry> p : permissions.entrySet()){
-            Entry entry = p.getValue();
-            Document elem = new Document();
-            elem.put("r",entry.getReadSet());
-            elem.put("w",entry.getWriteSet());
-            data.put(p.getKey(),elem);
-        }
-        doc.put("data", data);
+
+        doc.put("rp", readPermissions);
+        doc.put("wp", writePermissions);
 
 
         if (id == null) {
@@ -207,52 +174,6 @@ public class DataPermission {
 
 
     /**
-     * List by owner.
-     *
-     * @param id the id
-     * @return the list
-     */
-    public static List<DataPermission> listByOwner(ObjectId id) {
-        Document doc = new Document("owner", id);
-        MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<DataPermission> ret = new ArrayList<DataPermission>();
-        while (iter.hasNext()) {
-            ret.add(DataPermission.load(iter.next()));
-        }
-
-        return ret;
-    }
-    
-    /**
-     * Find by owner.
-     *
-     * @param id the id
-     * @param projection the projection
-     * @return the document
-     */
-    public static Document findByOwner(ObjectId id, Document projection) {
-        Document doc = new Document("owner", id);
-        FindIterable<Document> find = getCollection().find(doc);
-
-        if(projection!=null){
-            find.projection(projection);
-        }
-        doc = find.first();
-        return doc != null ? doc : null;
-    }
-
-
-
-    /**
-     * Delete by owner.
-     *
-     * @param owner the owner
-     */
-    public static void deleteByOwner(ObjectId owner) {
-        getCollection().deleteMany(new Document("owner", owner));
-    }
-
-    /**
      * Find by owner.
      *
      * @param id the id
@@ -265,12 +186,5 @@ public class DataPermission {
         return doc != null ? load(doc) : null;
     }
 
-    /**
-     * Gets the data.
-     *
-     * @return the data
-     */
-    public Map<String,Entry> getData() {
-        return permissions;
-    }
+
 }
