@@ -25,6 +25,9 @@ public class User implements Comparable<User> {
     /** The id. */
     private ObjectId id = null;
 
+    private static MessageDigest messageDigest = null;
+
+
     /**
      * Instantiates a new user.
      */
@@ -97,6 +100,13 @@ public class User implements Comparable<User> {
         return null;
     }
 
+    private static MessageDigest getMessageDigest() throws NoSuchAlgorithmException {
+        if(messageDigest==null){
+            messageDigest = MessageDigest.getInstance("SHA1");
+        }
+        return messageDigest;
+    }
+
     /**
      * Sha1.
      *
@@ -104,10 +114,10 @@ public class User implements Comparable<User> {
      * @return the string
      * @throws NoSuchAlgorithmException the no such algorithm exception
      */
-    private static String sha1(final String input)
+    private static String sha1(final byte [] input)
             throws NoSuchAlgorithmException {
-        final MessageDigest mDigest = MessageDigest.getInstance("SHA1");
-        final byte[] result = mDigest.digest(input.getBytes());
+        final MessageDigest mDigest = getMessageDigest();
+        final byte[] result = mDigest.digest(input);
         final StringBuffer sb = new StringBuffer();
         for (int i = 0; i < result.length; i++) {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16)
@@ -126,7 +136,7 @@ public class User implements Comparable<User> {
      */
     private static String getHash(final String password, final String salt) {
         try {
-            return sha1(salt + password);
+            return sha1((salt + password).getBytes());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,7 @@ package services;
 
 import com.mongodb.client.FindIterable;
 import exceptions.BadRequestException;
-import models.Recording;
+import models.RecordingChunk;
 import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * The Class GetCurrentRecordingService.
  */
-public class GetCurrentRecordingService extends Service<Recording> {
+public class GetCurrentRecordingService extends Service<RecordingChunk> {
 
     /** The caller. */
     private final User caller;
@@ -45,13 +45,13 @@ public class GetCurrentRecordingService extends Service<Recording> {
      * @see services.Service#dispatch()
      */
     @Override
-    public Recording dispatch() throws BadRequestException {
+    public RecordingChunk dispatch() throws BadRequestException {
 
-        FindIterable<Document> iter = Recording.getCollection().find(new Document("gid", groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(new Document("gid", groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
 
         Document first = iter.first();
 
-        return first != null ? Recording.load(first) : null;
+        return first != null ? RecordingChunk.load(first) : null;
     }
 
     /*

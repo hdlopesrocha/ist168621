@@ -53,7 +53,7 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
         Set<ObjectId> relations = new HashSet<ObjectId>();
 
         for (Relation u : new ListRelationsService(user.toString()).execute()) {
-            if (Membership.findByUserGroup(u.getTo(), group) == null) {
+            if (GroupMembership.findByUserGroup(u.getTo(), group) == null) {
                 relations.add(u.getTo());
             }
         }
@@ -64,7 +64,7 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
         List<List<KeyValue<String>>> filters = new ArrayList<>();
         filters.add(filter);
 
-        for (Search m : Search.search(query, null, null, filters)) {
+        for (Data m : Data.search(query, null, null, filters)) {
             if (relations.contains(m.getOwner())) {
                 Document doc =Data.findByOwner(m.getOwner(),null);
                 doc = (Document) doc.get("data");

@@ -1,7 +1,7 @@
 package services;
 
 import exceptions.ServiceException;
-import models.Interval;
+import models.RecordingInterval;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * The Class CreateIntervalService.
  */
-public class CreateIntervalService extends Service<Interval> {
+public class CreateIntervalService extends Service<RecordingInterval> {
 
     /** The Constant LOCK. */
     private static final Object LOCK = new Object();
@@ -22,7 +22,7 @@ public class CreateIntervalService extends Service<Interval> {
     private final Date start;
 
     /** The inter. */
-    private Interval inter = null;
+    private RecordingInterval inter = null;
 
 
     /**
@@ -41,7 +41,7 @@ public class CreateIntervalService extends Service<Interval> {
      *
      * @return the interval
      */
-    public Interval getInterval() {
+    public RecordingInterval getInterval() {
         return inter;
     }
 
@@ -51,9 +51,9 @@ public class CreateIntervalService extends Service<Interval> {
      * @see services.Service#dispatch()
      */
     @Override
-    public Interval dispatch() throws ServiceException {
+    public RecordingInterval dispatch() throws ServiceException {
         synchronized (LOCK) {
-            inter = new Interval(groupId, start, start);
+            inter = new RecordingInterval(groupId, start, start);
             inter.save();
             return inter;
         }

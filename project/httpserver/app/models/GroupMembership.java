@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The Class Membership.
  */
-public class Membership {
+public class GroupMembership {
 
 
     /** The collection. */
@@ -23,14 +23,13 @@ public class Membership {
     /** The user id. */
     private ObjectId id = null, groupId = null, userId = null;
     
-    /** The properties. */
-    private Document properties = new Document();
+
 
 
     /**
      * Instantiates a new membership.
      */
-    private Membership() {
+    private GroupMembership() {
     }
 
 
@@ -40,7 +39,7 @@ public class Membership {
      * @param userId the user id
      * @param groupId the group id
      */
-    public Membership(ObjectId userId, ObjectId groupId) {
+    public GroupMembership(ObjectId userId, ObjectId groupId) {
         this.userId = userId;
         this.groupId = groupId;
     }
@@ -52,7 +51,7 @@ public class Membership {
      */
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(Membership.class.getName());
+            collection = Service.getDatabase().getCollection(GroupMembership.class.getName());
         return collection;
     }
 
@@ -62,13 +61,11 @@ public class Membership {
      * @param doc the doc
      * @return the membership
      */
-    private static Membership load(Document doc) {
-        Membership user = new Membership();
+    private static GroupMembership load(Document doc) {
+        GroupMembership user = new GroupMembership();
         user.setId(doc.getObjectId("_id"));
         user.setUserId(doc.getObjectId("uid"));
         user.setGroupId(doc.getObjectId("gid"));
-        if (doc.containsKey("prop"))
-            user.setProperties((Document) doc.get("prop"));
         return user;
     }
 
@@ -78,11 +75,11 @@ public class Membership {
      * @param id the id
      * @return the list
      */
-    public static List<Membership> listByUser(ObjectId id) {
+    public static List<GroupMembership> listByUser(ObjectId id) {
         Document doc = new Document("uid", id);
         FindIterable<Document> iter = getCollection().find(doc);
         Iterator<Document> i = iter.iterator();
-        List<Membership> ans = new ArrayList<Membership>();
+        List<GroupMembership> ans = new ArrayList<GroupMembership>();
         while (i.hasNext()) {
             ans.add(load(i.next()));
         }
@@ -96,7 +93,7 @@ public class Membership {
      * @param gid the gid
      * @return the membership
      */
-    public static Membership findByUserGroup(ObjectId uid, ObjectId gid) {
+    public static GroupMembership findByUserGroup(ObjectId uid, ObjectId gid) {
         Document doc = new Document("gid", gid).append("uid", uid);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
@@ -109,11 +106,11 @@ public class Membership {
      * @param id the id
      * @return the list
      */
-    public static List<Membership> listByGroup(ObjectId id) {
+    public static List<GroupMembership> listByGroup(ObjectId id) {
         Document doc = new Document("gid", id);
         FindIterable<Document> iter = getCollection().find(doc);
         Iterator<Document> i = iter.iterator();
-        List<Membership> ans = new ArrayList<Membership>();
+        List<GroupMembership> ans = new ArrayList<GroupMembership>();
         while (i.hasNext()) {
             ans.add(load(i.next()));
         }
@@ -126,7 +123,7 @@ public class Membership {
      * @param id the id
      * @return the membership
      */
-    public static Membership findById(ObjectId id) {
+    public static GroupMembership findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
@@ -142,7 +139,6 @@ public class Membership {
             doc.put("_id", id);
         doc.put("gid", groupId);
         doc.put("uid", userId);
-        doc.put("prop", properties);
 
 
         if (id == null)
@@ -151,24 +147,6 @@ public class Membership {
             getCollection().replaceOne(new Document("_id", id), doc);
 
         id = doc.getObjectId("_id");
-    }
-
-    /**
-     * Gets the properties.
-     *
-     * @return the properties
-     */
-    public Document getProperties() {
-        return properties;
-    }
-
-    /**
-     * Sets the properties.
-     *
-     * @param properties the new properties
-     */
-    private void setProperties(Document properties) {
-        this.properties = properties;
     }
 
     /**

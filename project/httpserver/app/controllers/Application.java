@@ -121,7 +121,7 @@ public class Application extends Controller {
         Date start = new Date(end.getTime()-835000);
 
 
-        Interval interval = new CreateIntervalService(group0.getId().toString(), start).execute();
+        RecordingInterval interval = new CreateIntervalService(group0.getId().toString(), start).execute();
         interval.setEnd(end);
         interval.save();
 
@@ -130,7 +130,7 @@ public class Application extends Controller {
             String formatted = String.format("%02d", i);
             URL url = this.getClass().getClassLoader().getResource("video"+formatted+".mp4");
             Date da = new Date(start.getTime()+i*10000);
-            Recording rec = new Recording(group0.getId(), da);
+            RecordingChunk rec = new RecordingChunk(group0.getId(), da);
             rec.setEnd(new Date(da.getTime()+10000));
             rec.setUrl(group0.getId().toString(), url.getFile());
             rec.save();
@@ -207,13 +207,13 @@ public class Application extends Controller {
             GetGroupInviteService service = new GetGroupInviteService(session("uid"), groupId);
             String token = service.execute();
             if (group != null && user != null) {
-                Membership membership = Membership.findByUserGroup(user.getId(), group.getId());
+                GroupMembership membership = GroupMembership.findByUserGroup(user.getId(), group.getId());
                 boolean isPublic = false;
 
                 if (group.getVisibility().equals(Group.Visibility.PUBLIC)) {
                     isPublic = true;
                     if (membership == null) {
-                        new Membership(user.getId(), group.getId()).save();
+                        new GroupMembership(user.getId(), group.getId()).save();
                     }
                 }
 

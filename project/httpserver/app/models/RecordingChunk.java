@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The Class Recording.
  */
-public class Recording {
+public class RecordingChunk {
 
 
     /** The collection. */
@@ -33,7 +33,7 @@ public class Recording {
     /**
      * Instantiates a new recording.
      */
-    private Recording() {
+    private RecordingChunk() {
 
     }
 
@@ -43,7 +43,7 @@ public class Recording {
      * @param groupId the group id
      * @param start the start
      */
-    public Recording(ObjectId groupId, Date start) {
+    public RecordingChunk(ObjectId groupId, Date start) {
         this.groupId = groupId;
         this.start = start;
 
@@ -57,7 +57,7 @@ public class Recording {
      */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(Recording.class.getName());
+            collection = Service.getDatabase().getCollection(RecordingChunk.class.getName());
         return collection;
     }
 
@@ -67,8 +67,8 @@ public class Recording {
      * @param doc the doc
      * @return the recording
      */
-    public static Recording load(Document doc) {
-        Recording rec = new Recording();
+    public static RecordingChunk load(Document doc) {
+        RecordingChunk rec = new RecordingChunk();
         rec.id = doc.getObjectId("_id");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
@@ -99,12 +99,12 @@ public class Recording {
      * @param sequence the sequence
      * @return the list
      */
-    public static List<Recording> listByGroup(ObjectId groupId, long sequence) {
+    public static List<RecordingChunk> listByGroup(ObjectId groupId, long sequence) {
         FindIterable<Document> iter = getCollection()
                 .find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
-        List<Recording> ret = new ArrayList<Recording>();
+        List<RecordingChunk> ret = new ArrayList<RecordingChunk>();
         for (Document doc : iter) {
-            ret.add(Recording.load(doc));
+            ret.add(RecordingChunk.load(doc));
         }
         return ret;
     }
@@ -121,7 +121,7 @@ public class Recording {
      * @param id the id
      * @return the recording
      */
-    public static Recording findById(ObjectId id) {
+    public static RecordingChunk findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();

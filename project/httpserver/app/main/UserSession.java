@@ -3,7 +3,7 @@ package main;
 import exceptions.ServiceException;
 import models.HyperContent;
 import models.Message;
-import models.Recording;
+import models.RecordingChunk;
 import models.User;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -210,7 +210,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param rec
      * @param duration the duration
      */
-    public void record(Recording rec, int duration) {
+    public void record(RecordingChunk rec, int duration) {
         if(!isReceiveOnly()) {
             new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
@@ -374,7 +374,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             // saying "no video here!", for group video
             GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
                     room.getGroupId(), currentTime);
-            Recording rec = service.execute();
+            RecordingChunk rec = service.execute();
             String ownerUrl=null;
             String groupUrl=null;
             if(rec!=null){

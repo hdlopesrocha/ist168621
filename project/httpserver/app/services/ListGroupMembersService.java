@@ -2,7 +2,7 @@ package services;
 
 import models.Group;
 import models.KeyValuePair;
-import models.Membership;
+import models.GroupMembership;
 import models.User;
 import org.bson.types.ObjectId;
 
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The Class ListGroupMembersService.
  */
-public class ListGroupMembersService extends Service<List<KeyValuePair<Membership, User>>> {
+public class ListGroupMembersService extends Service<List<KeyValuePair<GroupMembership, User>>> {
 
     /** The user. */
     private final User user;
@@ -39,10 +39,10 @@ public class ListGroupMembersService extends Service<List<KeyValuePair<Membershi
      * @see services.Service#dispatch()
      */
     @Override
-    public List<KeyValuePair<Membership, User>> dispatch() {
-        List<KeyValuePair<Membership, User>> ans = new ArrayList<KeyValuePair<Membership, User>>();
-        for (Membership m : Membership.listByGroup(group.getId())) {
-            ans.add(new KeyValuePair<Membership, User>(m, User.findById(m.getUserId())));
+    public List<KeyValuePair<GroupMembership, User>> dispatch() {
+        List<KeyValuePair<GroupMembership, User>> ans = new ArrayList<KeyValuePair<GroupMembership, User>>();
+        for (GroupMembership m : GroupMembership.listByGroup(group.getId())) {
+            ans.add(new KeyValuePair<GroupMembership, User>(m, User.findById(m.getUserId())));
         }
         return ans;
     }

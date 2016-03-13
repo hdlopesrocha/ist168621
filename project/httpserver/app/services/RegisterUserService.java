@@ -5,8 +5,7 @@ import dtos.AttributeDto;
 import dtos.PermissionDto;
 import exceptions.ServiceException;
 import models.Data;
-import models.Permission;
-import models.Search;
+import models.DataPermission;
 import models.User;
 import org.bson.types.ObjectId;
 
@@ -48,10 +47,9 @@ private List<PermissionDto> permissions;
         permissions.add(new PermissionDto("type",new HashSet<String>(),new HashSet<String>()));
         User user = new User(password);
         user.save();
-        new Search(user.getId(), attributes).save();
 
 
-        Map<String,Permission.Entry> realPermissions = new TreeMap<>();
+        Map<String, DataPermission.Entry> realPermissions = new TreeMap<>();
         for(PermissionDto p : permissions){
             Set<ObjectId> readSet = new HashSet<>();
             Set<ObjectId> writeSet = new HashSet<>();
@@ -61,11 +59,11 @@ private List<PermissionDto> permissions;
             for(String str : p.getWriteSet()){
                 writeSet.add(new ObjectId(str));
             }
-            realPermissions.put(p.getKey(), new Permission.Entry(readSet,writeSet));
+            realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
 
         }
 
-        new Permission(user.getId(),realPermissions, attributes).save();
+        new DataPermission(user.getId(),realPermissions, attributes).save();
         new Data(user.getId(), attributes).save();
 
         return user;

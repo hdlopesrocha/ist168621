@@ -5,7 +5,7 @@ import main.Global;
 import main.Room;
 import main.Tools;
 import main.UserSession;
-import models.Interval;
+import models.RecordingInterval;
 import models.Message;
 import models.TimeTag;
 import models.User;
@@ -44,10 +44,10 @@ public class WSController extends Controller {
                     // Join room
                     final UserSession userSession = room.join(user, out);
                     {
-                        List<Interval> intervals = Interval.listByGroup(new ObjectId(groupId));
+                        List<RecordingInterval> intervals = RecordingInterval.listByGroup(new ObjectId(groupId));
                         JSONObject msg = new JSONObject();
                         msg.put("id", "rec");
-                        for (Interval interval : intervals) {
+                        for (RecordingInterval interval : intervals) {
                             Date start = interval.getStart();
                             Date end = interval.getEnd();
 

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The Class Interval.
  */
-public class Interval {
+public class RecordingInterval {
 
     /** The collection. */
     private static MongoCollection<Document> collection;
@@ -23,12 +23,12 @@ public class Interval {
     private Date start, end;
     
     /** The gid. */
-    private ObjectId id, gid = null;
+    private ObjectId id, groupId = null;
 
     /**
      * Instantiates a new interval.
      */
-    private Interval() {
+    private RecordingInterval() {
 
     }
 
@@ -37,8 +37,8 @@ public class Interval {
      *
      * @param gid the gid
      */
-    public Interval(ObjectId gid) {
-        this.gid = gid;
+    public RecordingInterval(ObjectId gid) {
+        this.groupId = gid;
 
     }
 
@@ -49,9 +49,9 @@ public class Interval {
      * @param start the start
      * @param end the end
      */
-    public Interval(ObjectId gid, Date start, Date end) {
+    public RecordingInterval(ObjectId gid, Date start, Date end) {
         this.start = start;
-        this.gid = gid;
+        this.groupId = gid;
         this.end = end;
     }
 
@@ -62,7 +62,7 @@ public class Interval {
      */
     private static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(Interval.class.getName());
+            collection = Service.getDatabase().getCollection(RecordingInterval.class.getName());
         return collection;
     }
 
@@ -72,11 +72,11 @@ public class Interval {
      * @param doc the doc
      * @return the interval
      */
-    private static Interval load(Document doc) {
-        Interval rec = new Interval();
+    private static RecordingInterval load(Document doc) {
+        RecordingInterval rec = new RecordingInterval();
         rec.id = doc.getObjectId("_id");
         rec.end = doc.getDate("end");
-        rec.gid = doc.getObjectId("gid");
+        rec.groupId = doc.getObjectId("gid");
         rec.start = doc.getDate("start");
         return rec;
     }
@@ -98,12 +98,12 @@ public class Interval {
      * @param groupId the group id
      * @return the list
      */
-    public static List<Interval> listByGroup(ObjectId groupId) {
+    public static List<RecordingInterval> listByGroup(ObjectId groupId) {
         FindIterable<Document> iter = getCollection()
                 .find(new Document("gid", groupId));
-        List<Interval> ret = new ArrayList<Interval>();
+        List<RecordingInterval> ret = new ArrayList<RecordingInterval>();
         for (Document doc : iter) {
-            ret.add(Interval.load(doc));
+            ret.add(RecordingInterval.load(doc));
         }
         return ret;
     }
@@ -114,7 +114,7 @@ public class Interval {
      * @param id the id
      * @return the interval
      */
-    public static Interval findById(ObjectId id) {
+    public static RecordingInterval findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
@@ -129,7 +129,7 @@ public class Interval {
         if (id != null)
             doc.put("_id", id);
 
-        doc.put("gid", gid);
+        doc.put("gid", groupId);
         doc.put("start", start);
         doc.put("end", end);
 

@@ -1,6 +1,6 @@
 package services;
 
-import models.Membership;
+import models.GroupMembership;
 import org.bson.types.ObjectId;
 
 
@@ -38,8 +38,8 @@ public class AddGroupMemberService extends Service<Void> {
      */
     @Override
     public Void dispatch() {
-        if (Membership.findByUserGroup(member, group) == null) {
-            new Membership(member, group).save();
+        if (GroupMembership.findByUserGroup(member, group) == null) {
+            new GroupMembership(member, group).save();
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class AddGroupMemberService extends Service<Void> {
     public boolean canExecute() {
         boolean ret = user != null && group != null && member != null;
         if (ret) {
-            return Membership.findByUserGroup(user, group) != null;
+            return GroupMembership.findByUserGroup(user, group) != null;
         }
         return false;
     }

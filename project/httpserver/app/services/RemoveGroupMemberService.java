@@ -1,7 +1,7 @@
 package services;
 
 import models.Group;
-import models.Membership;
+import models.GroupMembership;
 import models.User;
 import org.bson.types.ObjectId;
 
@@ -41,11 +41,11 @@ public class RemoveGroupMemberService extends Service<Void> {
      */
     @Override
     public Void dispatch() {
-        Membership m = Membership.findByUserGroup(member.getId(), group.getId());
+        GroupMembership m = GroupMembership.findByUserGroup(member.getId(), group.getId());
         if (m != null) {
             m.delete();
         }
-        if (Membership.listByGroup(group.getId()).size() == 0) {
+        if (GroupMembership.listByGroup(group.getId()).size() == 0) {
             group.delete();
         }
         return null;
@@ -60,7 +60,7 @@ public class RemoveGroupMemberService extends Service<Void> {
     public boolean canExecute() {
         boolean ret = user != null && group != null && member != null;
         if (ret) {
-            return Membership.findByUserGroup(user.getId(), group.getId()) != null;
+            return GroupMembership.findByUserGroup(user.getId(), group.getId()) != null;
         }
 
         return false;

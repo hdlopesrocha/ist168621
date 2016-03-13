@@ -4,7 +4,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import dtos.AttributeDto;
-import dtos.PermissionDto;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import services.Service;
@@ -15,7 +14,7 @@ import java.util.*;
 /**
  * The Class Permission.
  */
-public class Permission {
+public class DataPermission {
 
 
     public static class Entry {
@@ -61,7 +60,7 @@ public class Permission {
      * @param permissions the permissions
      * @param attributes the attributes
      */
-    public Permission(ObjectId owner, Map<String,Entry> permissions, List<AttributeDto> attributes) {
+    public DataPermission(ObjectId owner, Map<String,Entry> permissions, List<AttributeDto> attributes) {
 		List<String> invalidPermisssions = new ArrayList<String>();
         this.permissions = new TreeMap<String, Entry>();
 
@@ -105,14 +104,14 @@ public class Permission {
      */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(Permission.class.getName());
+            collection = Service.getDatabase().getCollection(DataPermission.class.getName());
         return collection;
     }
 
     /**
      * Instantiates a new permission.
      */
-    private Permission(){
+    private DataPermission(){
 
     }
 
@@ -135,8 +134,8 @@ public class Permission {
      * @param doc the doc
      * @return the permission
      */
-    public static Permission load(Document doc) {
-        Permission user = new Permission();
+    public static DataPermission load(Document doc) {
+        DataPermission user = new DataPermission();
         user.id = doc.getObjectId("_id");
         user.owner = doc.getObjectId("owner");
 
@@ -159,7 +158,7 @@ public class Permission {
      *
      * @return the permission
      */
-    public Permission save() {
+    public DataPermission save() {
         Document doc = new Document();
         doc.put("owner", owner);
 
@@ -199,7 +198,7 @@ public class Permission {
      * @param id the id
      * @return the permission
      */
-    public static Permission findById(ObjectId id) {
+    public static DataPermission findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
@@ -213,12 +212,12 @@ public class Permission {
      * @param id the id
      * @return the list
      */
-    public static List<Permission> listByOwner(ObjectId id) {
+    public static List<DataPermission> listByOwner(ObjectId id) {
         Document doc = new Document("owner", id);
         MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<Permission> ret = new ArrayList<Permission>();
+        List<DataPermission> ret = new ArrayList<DataPermission>();
         while (iter.hasNext()) {
-            ret.add(Permission.load(iter.next()));
+            ret.add(DataPermission.load(iter.next()));
         }
 
         return ret;
@@ -259,7 +258,7 @@ public class Permission {
      * @param id the id
      * @return the permission
      */
-    public static Permission findByOwner(ObjectId id) {
+    public static DataPermission findByOwner(ObjectId id) {
         Document doc = new Document("owner", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();

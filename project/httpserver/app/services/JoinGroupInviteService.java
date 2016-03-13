@@ -2,7 +2,7 @@ package services;
 
 import exceptions.ServiceException;
 import models.Group;
-import models.Membership;
+import models.GroupMembership;
 import org.bson.types.ObjectId;
 
 
@@ -47,8 +47,8 @@ public class JoinGroupInviteService extends Service<Boolean> {
         if (group != null) {
             ans = group.matchInvite(token);
             if (ans) {
-                if (Membership.findByUserGroup(caller, groupId) == null) {
-                    new Membership(caller, groupId).save();
+                if (GroupMembership.findByUserGroup(caller, groupId) == null) {
+                    new GroupMembership(caller, groupId).save();
                 }
             }
         }

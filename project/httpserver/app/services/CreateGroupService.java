@@ -47,14 +47,13 @@ public class CreateGroupService extends Service<Group> {
     public Group dispatch() throws ServiceException {
         Group group = new Group(visibility);
         group.save();
-        Membership membership = new Membership(caller, group.getId());
+        GroupMembership membership = new GroupMembership(caller, group.getId());
         membership.save();
         attributes.add(new AttributeDto("type", Group.class.getName(), false, false, true));
         permissions.add(new PermissionDto("type", new HashSet<String>(),new HashSet<String>()));
         new Data(group.getId(), attributes).save();
-        new Search(group.getId(), attributes).save();
 
-        Map<String,Permission.Entry> realPermissions = new TreeMap<>();
+        Map<String, DataPermission.Entry> realPermissions = new TreeMap<>();
         for(PermissionDto p : permissions){
             Set<ObjectId> readSet = new HashSet<>();
             Set<ObjectId> writeSet = new HashSet<>();
@@ -64,11 +63,11 @@ public class CreateGroupService extends Service<Group> {
             for(String str : p.getWriteSet()){
                 writeSet.add(new ObjectId(str));
             }
-            realPermissions.put(p.getKey(), new Permission.Entry(readSet,writeSet));
+            realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
 
         }
 
-        new Permission(group.getId(),realPermissions, attributes).save();
+        new DataPermission(group.getId(),realPermissions, attributes).save();
         return group;
     }
 

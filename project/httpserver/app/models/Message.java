@@ -28,7 +28,7 @@ public class Message {
     private Date time;
     
     /** The text. */
-    private String text;
+    private String content;
     
     /** The id. */
     private ObjectId id = null;
@@ -53,7 +53,7 @@ public class Message {
     public Message(ObjectId groupId, ObjectId userId, Date time, String text) {
         this.target = groupId;
         this.source = userId;
-        this.text = text;
+        this.content = text;
         this.time = time;
     }
 
@@ -80,7 +80,7 @@ public class Message {
         rec.source = doc.getObjectId("source");
         rec.target = doc.getObjectId("target");
         rec.time = doc.getDate("time");
-        rec.text = doc.getString("text");
+        rec.content = doc.getString("text");
         rec.sequence = doc.getLong("seq");
         return rec;
     }
@@ -142,7 +142,7 @@ public class Message {
         doc.put("target", target);
         doc.put("source", source);
         doc.put("time", time);
-        doc.put("text", text);
+        doc.put("text", content);
         doc.put("seq", sequence);
 
 
@@ -181,7 +181,7 @@ public class Message {
             }
         }
         messageObj.put("time", Tools.FORMAT.format(time));
-        messageObj.put("text", text);
+        messageObj.put("text", content);
         messageObj.put("seq", sequence);
         messageObj.put("source", source.toString());
         return messageObj;
@@ -220,7 +220,7 @@ public class Message {
      * @return the text
      */
     public String getText() {
-        return text;
+        return content;
     }
 
     /**

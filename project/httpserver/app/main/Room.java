@@ -35,7 +35,7 @@ public class Room implements Closeable {
     private final Group group;
     
     /** The interval. */
-    private Interval interval;
+    private RecordingInterval interval;
     
     /** The composite. */
     private Hub composite = null;
@@ -128,7 +128,7 @@ public class Room implements Closeable {
                     start = new Date();
                 }
 
-                Recording rec = new Recording(group.getId(),start);
+                RecordingChunk rec = new RecordingChunk(group.getId(),start);
                 new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
 
                     @Override
@@ -247,7 +247,7 @@ public class Room implements Closeable {
                         new JSONArray().put(myProfile.put("online", true)));
 
                 ListGroupMembersService service = new ListGroupMembersService(userId, getGroupId());
-                for (KeyValuePair<Membership, User> m : service.execute()) {
+                for (KeyValuePair<GroupMembership, User> m : service.execute()) {
                     UserSession otherSession = null;
                     for (UserSession os : participants) {
                         if (os.getUser().getId().equals(m.getValue().getId())) {

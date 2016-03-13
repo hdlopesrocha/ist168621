@@ -25,7 +25,7 @@ public class Group {
     private ObjectId id = null;
     
     /** The invite. */
-    private String invite = null;
+    private String inviteToken = null;
     
     /** The visibility. */
     private Visibility visibility;
@@ -65,7 +65,7 @@ public class Group {
     private static Group load(Document doc) {
         Group user = new Group();
         user.id = doc.getObjectId("_id");
-        user.invite = doc.getString("invite");
+        user.inviteToken = doc.getString("invite");
         user.visibility = Visibility.valueOf(doc.getString("visibility"));
         return user;
     }
@@ -129,7 +129,7 @@ public class Group {
      * Generate invite.
      */
     public void generateInvite() {
-        invite = Tools.getRandomString(12);
+        inviteToken = Tools.getRandomString(12);
     }
 
     /**
@@ -138,7 +138,7 @@ public class Group {
      * @return the invite
      */
     public String getInvite() {
-        return invite;
+        return inviteToken;
     }
 
     /**
@@ -148,7 +148,7 @@ public class Group {
      * @return true, if successful
      */
     public boolean matchInvite(String attempt) {
-        return invite != null && invite.equals(attempt);
+        return inviteToken != null && inviteToken.equals(attempt);
     }
 
     /**
@@ -159,7 +159,7 @@ public class Group {
         if (id != null)
             doc.put("_id", id);
 
-        doc.put("invite", invite);
+        doc.put("invite", inviteToken);
         doc.put("visibility", visibility.toString());
 
         if (id == null)
@@ -201,7 +201,7 @@ public class Group {
      * Delete invite.
      */
     public void deleteInvite() {
-        invite = null;
+        inviteToken = null;
     }
 
     /**

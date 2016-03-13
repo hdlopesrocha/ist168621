@@ -8,10 +8,12 @@
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
 \usepackage{makeidx}  % allows for indexgeneration
-\usepackage{subfig}  % allows for indexgeneration
 \usepackage{color}  % allows for indexgeneration
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{float}
 \usepackage{mathtools}
 \usepackage{acronym}
@@ -82,8 +84,8 @@
 \newacro{XMPP}{Extensible Messaging and Presence Protocol}
 
 %\overfullrule=2cm
-
-
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \newganttchartelement*{mymilestone}{
 mymilestone/.style={
@@ -141,8 +143,10 @@ mymilestone right shift=0pt
 \input{09_related_work_signaling.tex}
 \input{10_related_work_hypermedia.tex}
 \input{11_related_work_collaboration.tex}
-%\input{XX_implementation_model.tex}
-
+{\color{red}
+\input{XX_implementation_model.tex}
+\input{XX_arch.tex}
+}
 \section{Proposed Architecture}\label{arch} % English
   \input{arch01.tex}
 

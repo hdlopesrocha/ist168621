@@ -1,10 +1,9 @@
 package services;
 
 
-import dtos.PermissionDto;
 import exceptions.ServiceException;
 import models.Data;
-import models.Permission;
+import models.DataPermission;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -51,15 +50,15 @@ public class ListOwnerAttributesService extends Service<Document> {
      */
     @Override
     public Document dispatch() throws ServiceException {
-        Permission permission = Permission.findByOwner(user);
+        DataPermission permission = DataPermission.findByOwner(user);
         Document doc = (Document) Data.findByOwner(user, projection);
 
         if (doc != null) {
             doc = (Document) doc.get("data");
 
             if (permission != null) {
-                Map<String, Permission.Entry> dPerm = permission.getData();
-                for (Map.Entry<String, Permission.Entry> perm : dPerm.entrySet()) {
+                Map<String, DataPermission.Entry> dPerm = permission.getData();
+                for (Map.Entry<String, DataPermission.Entry> perm : dPerm.entrySet()) {
                     Set<ObjectId> aPerms = perm.getValue().getReadSet();
                     if (!aPerms.contains(caller)) {
                         doc.remove(perm.getKey());

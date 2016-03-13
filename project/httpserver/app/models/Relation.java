@@ -20,7 +20,7 @@ public class Relation {
     private static MongoCollection<Document> collection;
     
     /** The id. */
-    private ObjectId from = null, to = null, id = null;
+    private ObjectId source = null, target = null, id = null;
 
     /**
      * Instantiates a new relation.
@@ -36,8 +36,8 @@ public class Relation {
      */
     public Relation(ObjectId fi, ObjectId ti) {
 
-        this.to = ti;
-        this.from = fi;
+        this.target = ti;
+        this.source = fi;
 
     }
 
@@ -140,8 +140,8 @@ public class Relation {
         if (id != null)
             doc.put("_id", id);
 
-        doc.put("fi", from);
-        doc.put("ti", to);
+        doc.put("fi", source);
+        doc.put("ti", target);
 
 
         if (id == null)
@@ -159,7 +159,7 @@ public class Relation {
      * @return the from
      */
     public ObjectId getFrom() {
-        return from;
+        return source;
     }
 
     /**
@@ -168,7 +168,7 @@ public class Relation {
      * @param from the new from
      */
     private void setFrom(ObjectId from) {
-        this.from = from;
+        this.source = from;
     }
 
     /**
@@ -177,7 +177,7 @@ public class Relation {
      * @return the to
      */
     public ObjectId getTo() {
-        return to;
+        return target;
     }
 
     /**
@@ -186,7 +186,7 @@ public class Relation {
      * @param to the new to
      */
     private void setTo(ObjectId to) {
-        this.to = to;
+        this.target = to;
     }
 
     /**
