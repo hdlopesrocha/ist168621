@@ -32,7 +32,7 @@ public class GetOwnerByAttributeService extends Service<String> {
     @Override
     public String dispatch() throws ServiceException {
         Data at = Data.getByKeyValue(key, value);
-        return at != null ? at.getOwner().toString() : null;
+        return at != null && at.isIdentifier(key) ? at.getOwner().toString() : null;
     }
 
     /* (non-Javadoc)

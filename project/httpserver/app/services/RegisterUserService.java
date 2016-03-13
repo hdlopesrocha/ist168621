@@ -45,6 +45,9 @@ private List<PermissionDto> permissions;
     public synchronized User dispatch() throws ServiceException {
         attributes.add(new AttributeDto("type", User.class.getName(), false, false, true));
         permissions.add(new PermissionDto("type",new HashSet<String>(),new HashSet<String>()));
+
+
+
         User user = new User(password);
         user.save();
 
@@ -76,7 +79,14 @@ private List<PermissionDto> permissions;
      */
     @Override
     public boolean canExecute() {
-
+        for(AttributeDto attr : attributes){
+            if(attr.isIdentifiable()){
+                Data data = Data.getByKeyValue(attr.getKey(),attr.getValue());
+                if(data!=null){
+                    return false;
+                }
+            }
+        }
         return password != null;
     }
 

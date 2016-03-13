@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import dtos.AttributeDto;
 import dtos.KeyValue;
 import org.bson.Document;
-import org.bson.json.JsonParseException;
 import org.bson.types.ObjectId;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -23,13 +22,16 @@ public class Data {
     private ObjectId id = null;
 
     /** The data. */
-    private Document data = null;
+    private Document properties = null;
 
     /** The owner. */
     private ObjectId owner = null;
 
     /** The search. */
-    private List<String> search;
+    private List<String> searchableValues;
+
+    private List<String> identifiableKeys;
+
 
     /**
      * Instantiates a new data.
@@ -41,20 +43,25 @@ public class Data {
      */
     public Data(ObjectId owner, List<AttributeDto> attributes) {
         this.id = getIdFromOwner(owner);
-        this.data = new Document();
-
-        this.search = new ArrayList<String>();
+        this.properties = new Document();
+        this.searchableValues = new ArrayList<String>();
+        this.identifiableKeys = new ArrayList<String>();
 
         for (AttributeDto attr : attributes) {
             if (attr.isSearchable()) {
-                search.add(attr.getValue().toString().toLowerCase());
+                searchableValues.add(attr.getValue().toString().toLowerCase());
+            }
+            if (attr.isIdentifiable()) {
+                identifiableKeys.add(attr.getKey());
             }
         }
+
+
 
         for (AttributeDto attr : attributes) {
             Object value = attr.getValue();
 
-            data.append(attr.getKey(), value);
+            properties.append(attr.getKey(), value);
         }
         this.owner = owner;
     }
@@ -101,21 +108,30 @@ public class Data {
         user.id = doc.getObjectId("_id");
 
         user.owner = doc.getObjectId("owner");
-        user.data = (Document) doc.get("data");
-        user.search = (List<String>) doc.get("search");
+        user.properties = (Document) doc.get("data");
+        user.searchableValues = (List<String>) doc.get("search");
+        user.identifiableKeys = (List<String>) doc.get("iks");
+
         return user;
     }
 
+    public boolean isIdentifier(String key) {
+        return identifiableKeys.contains(key);
+    }
+
+
     /**
      * Save.
+
      *
      * @return the data
      */
     public Data save() {
         Document doc = new Document();
-        doc.put("data", data);
+        doc.put("data", properties);
         doc.put("owner", owner);
-        doc.put("search", search);
+        doc.put("search", searchableValues);
+        doc.put("iks", identifiableKeys);
 
         if (id == null) {
             getCollection().insertOne(doc);
@@ -373,6 +389,6 @@ public class Data {
      * @return the data
      */
     public Document getData() {
-        return data;
+        return properties;
     }
 }

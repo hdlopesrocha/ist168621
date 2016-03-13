@@ -18,7 +18,7 @@ import java.util.Set;
 public class ListOwnerAttributesService extends Service<Document> {
 
     /** The user. */
-    private ObjectId user;
+    private ObjectId owner;
     
     /** The caller. */
     private ObjectId caller;
@@ -30,11 +30,11 @@ public class ListOwnerAttributesService extends Service<Document> {
      * Instantiates a new list owner attributes service.
      *
      * @param caller the caller
-     * @param userId the user id
+     * @param caller the caller id
      * @param projection the projection
      */
-    public ListOwnerAttributesService(String caller, String userId, List<String> projection) {
-        this.user = new ObjectId(userId);
+    public ListOwnerAttributesService(String caller, String owner, List<String> projection) {
+        this.owner = new ObjectId(owner);
         this.caller = new ObjectId(caller);
         if (projection != null) {
             this.projection = new Document();
@@ -50,21 +50,18 @@ public class ListOwnerAttributesService extends Service<Document> {
      */
     @Override
     public Document dispatch() throws ServiceException {
-        DataPermission permission = DataPermission.findByOwner(user);
-        Document doc = (Document) Data.findByOwner(user, projection);
+        DataPermission permission = DataPermission.findByOwner(owner);
+        Document doc = Data.findByOwner(owner, projection);
 
         if (doc != null) {
             doc = (Document) doc.get("data");
 
             if (permission != null) {
-                Map<String, DataPermission.Entry> dPerm = permission.getData();
-                for (Map.Entry<String, DataPermission.Entry> perm : dPerm.entrySet()) {
-                    Set<ObjectId> aPerms = perm.getValue().getReadSet();
-                    if (!aPerms.contains(caller)) {
-                        doc.remove(perm.getKey());
+                for(String key : doc.keySet()){
+                    if(!permission.hasReadPermission(caller,key)){
+                        doc.remove(key);
                     }
                 }
-
             }
         }
         return doc;
