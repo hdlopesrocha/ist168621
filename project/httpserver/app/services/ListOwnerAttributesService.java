@@ -7,6 +7,7 @@ import models.DataPermission;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class ListOwnerAttributesService extends Service<Document> {
             doc = (Document) doc.get("data");
 
             if (permission != null) {
-                for(String key : doc.keySet()){
+                for(String key : new ArrayList<>(doc.keySet())){
                     if(!permission.hasReadPermission(caller,key)){
                         doc.remove(key);
                     }

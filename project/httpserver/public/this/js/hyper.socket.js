@@ -101,27 +101,27 @@ var HyperWebSocket = new (function() {
 
 	this.talk = function(value){
 		ws.send(JSON.stringify({
-			id: "talk",
+			cmd: "talk",
 			value:value
 		}));
 	}
 
 	this.deleteContent = function(cid){
 		ws.send(JSON.stringify({
-			id: "deleteContent",
+			cmd: "deleteContent",
 			cid:cid
 		}));
 	}
 	
 	this.getContent = function(){
 		ws.send(JSON.stringify({
-			id: "getContent",
+			cmd: "getContent",
 		}));
 	}
 	
 	this.createContent = function(start,end,content){
 		ws.send(JSON.stringify({
-			id : "createContent",
+			cmd : "createContent",
 			start: start,
 			end: end,
 			content: content
@@ -130,21 +130,21 @@ var HyperWebSocket = new (function() {
 
 	this.saveCollaborativeContent = function(content){
         ws.send(JSON.stringify({
-			id : "saveCollab",
+			cmd : "saveCollab",
 			data: content
 		}));
 	}
 
 	this.removeTag = function(tid){
 		ws.send(JSON.stringify({
-			id : "removeTag",
+			cmd : "removeTag",
 			tid: tid
 		}));
 	}
 
 	this.createTag = function(time,title){
 		ws.send(JSON.stringify({
-			id : "createTag",
+			cmd : "createTag",
 			time: time,
 			title: title
 		}));
@@ -152,7 +152,7 @@ var HyperWebSocket = new (function() {
 	
 	this.receiveMore = function(end,len){
 		ws.send(JSON.stringify({
-			id : "getMessages",
+			cmd : "getMessages",
 			len: len,
 			end: end
 		}));
@@ -160,7 +160,7 @@ var HyperWebSocket = new (function() {
 	
 	this.setPlay=function(play){
 		ws.send(JSON.stringify({
-			id : "play",
+			cmd : "play",
 			data:play
 		}));
 	}
@@ -168,7 +168,7 @@ var HyperWebSocket = new (function() {
     this.sendOperation = function(op,sid){
         console.log("sendOperation",op,sid);
         var obj = {
-          id : "operation",
+          cmd : "operation",
           data:op
         };
         if(sid!=null){
@@ -180,7 +180,7 @@ var HyperWebSocket = new (function() {
 	this.receiveRealTime = function(userId){
 		console.log("receiveRealTime",userId);
 		ws.send(JSON.stringify({
-			id : "setRealTime",
+			cmd : "setRealTime",
 			uid:userId
 		}));
 	}
@@ -188,7 +188,7 @@ var HyperWebSocket = new (function() {
 	this.addUserGroup = function(userId){
 		console.log("addUser",userId);
 		ws.send(JSON.stringify({
-			id : "addUser",
+			cmd : "addUser",
 			uid:userId
 		}));
 	}
@@ -196,7 +196,7 @@ var HyperWebSocket = new (function() {
 
     this.removeUserGroup = function(userId){
         ws.send(JSON.stringify({
-            id : "removeUser",
+            cmd : "removeUser",
             uid:userId
         }));
     }
@@ -204,7 +204,7 @@ var HyperWebSocket = new (function() {
 	this.receiveHistoric = function(userId,offset){
 		console.log("receiveHistoric",userId);
 		ws.send(JSON.stringify({
-			id : "setHistoric",
+			cmd : "setHistoric",
 			uid:userId,
 			offset:offset
 		}));
@@ -212,7 +212,7 @@ var HyperWebSocket = new (function() {
 	
 	this.sendMessage = function(text){
 		ws.send(JSON.stringify({
-			id: "createMessage",
+			cmd: "createMessage",
 			data: text
 		}));
 	}
@@ -301,9 +301,9 @@ var HyperWebSocket = new (function() {
 			
 			ws.onmessage = function(data) {
 				var message = JSON.parse(data.data);
-				var id = message.id;
+				var cmd = message.cmd;
 				
-				switch(id){
+				switch(cmd){
 					case 'iceCandidate':
 						// console.log(id,message);
 						var candidate = new RTCIceCandidate(message.data);
@@ -322,7 +322,6 @@ var HyperWebSocket = new (function() {
 						},logError);
 					break;		
 					case 'participants':
-						console.log(id,message);
 						if(participantPresenceHandler){
     						for(var userId in message.data){
 							    participantPresenceHandler(message.data[userId]);
@@ -341,24 +340,24 @@ var HyperWebSocket = new (function() {
 					break;
 					case 'rec':
 						if(videoRecordingHandler){
-						    delete message.id;
+						    delete message.cmd;
        					    videoRecordingHandler(message);
 						}
 						break;
 					case 'msg':
 						for(var i in message.data){
-							var msg = message.data[i];
-							console.log("msg",msg);
+							var item = message.data[i];
+							console.log("msg",item);
 							if(messageArrivedHandler){
-							    messageArrivedHandler(msg.source,msg.time,msg.text,msg.name, msg.id, msg.seq);
+							    messageArrivedHandler(item.source,item.time,item.text,item.name, item.id, item.seq);
 						    }
 						}
 						
 						break;
 					case 'tag':
 					    if(timeTagArrivedHandler){
-                            var msg = message.data;
-                            timeTagArrivedHandler(msg.id,msg.time,msg.title,msg.content);
+                            var item = message.data;
+                            timeTagArrivedHandler(item.id,item.time,item.title);
                         }
 						break;
 			        case 'removeTag':
@@ -374,8 +373,8 @@ var HyperWebSocket = new (function() {
 						break;
 					case 'time':
 						if(serverTimeHandler){
-						    var msg = message.data;
-						    serverTimeHandler(new Date(msg.time));
+						    var item = message.data;
+						    serverTimeHandler(new Date(item.time));
 						}
 						break;
 

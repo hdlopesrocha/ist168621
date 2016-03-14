@@ -19,7 +19,7 @@ routesGenerator := InjectedRoutesGenerator
 
 resolvers += (
   "Local Maven Repository" at "file:///" + Path.userHome.absolutePath + "/.m2/repository"
-  )
+)
 
 libraryDependencies += "org.json" % "json" % "20160212"
 libraryDependencies += "org.jsoup" % "jsoup" % "1.8.3"

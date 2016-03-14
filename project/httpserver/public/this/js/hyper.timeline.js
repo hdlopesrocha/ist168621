@@ -232,7 +232,7 @@ var HyperTimeline = new (function() {
 	    	this.timeRunning = !this.timeRunning;
 	    }
 
-		timeline.loadTag= function(id,time, title,content){
+		timeline.loadTag= function(id,time, title){
 			var start = new Date(time);
 			tags.push({text:title,time:start,id:id});
 			this.items.add({

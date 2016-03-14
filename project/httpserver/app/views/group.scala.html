@@ -709,9 +709,7 @@
 
 			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
-
-
-$('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
+            $('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
 
             var editor = CodeMirror.fromTextArea(document.getElementById("collabText"), {
               lineNumbers: true,

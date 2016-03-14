@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                           	controllers.Application.index()
-GET     /test                           controllers.Application.test()
 GET     /reset                          controllers.Application.reset()
 GET		/user/:userId					controllers.Application.userProfile(userId : String)
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
@@ -41,4 +40,3 @@ GET		/file/*id						controllers.Rest.getFile(id : String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.versioned(path="/public", file: Asset)
 GET   	/ws/room/:name					controllers.WSController.connectToRoom(name : String)
-GET   	/ws/ot/:name/				controllers.WSController.together(name : String)

@@ -79,9 +79,9 @@ HyperWebSocket.setOnMessageArrivedHandler(function(userId, time, text, name, mid
     }
 });
 
-HyperWebSocket.setOnTimeTagArrivedHandler(function(id, time, title, content) {
-    console.log(id, time, title, content);
-    timeline.loadTag(id, time, title, content);
+HyperWebSocket.setOnTimeTagArrivedHandler(function(id, time, title) {
+    console.log(id, time, title);
+    timeline.loadTag(id, time, title);
 });
 
 HyperWebSocket.setVoiceDetectedHandler(function(userId,value){

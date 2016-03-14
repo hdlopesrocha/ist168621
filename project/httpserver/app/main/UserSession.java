@@ -94,7 +94,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
             public void onEvent(OnIceCandidateEvent event) {
                 JSONObject response = new JSONObject();
-                response.put("id", "iceCandidate");
+                response.put("cmd", "iceCandidate");
                 response.put("data", new JSONObject(JsonUtils.toJson(event.getCandidate())));
 
                 try {
@@ -138,7 +138,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             currentQRCodes.put(hash,startTime);
                         }
                         JSONObject msg = new JSONObject();
-                        msg.put("id", "qrCode");
+                        msg.put("cmd", "qrCode");
                         msg.put("data", content);
                         msg.put("hash", hash);
                         room.sendMessage(msg.toString());
@@ -161,7 +161,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                     startTime = currentQRCodes.remove(hash);
                                 }
                                 JSONObject msg = new JSONObject();
-                                msg.put("id", "qrCode");
+                                msg.put("cmd", "qrCode");
                                 msg.put("hash", hash);
                                 room.sendMessage(msg.toString());
 
@@ -263,7 +263,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
 
         JSONObject jRoot = new JSONObject();
-        jRoot.put("id", "content");
+        jRoot.put("cmd", "content");
         jRoot.put("data", jArr);
         jRoot.put("more", hasMore);
         return jRoot.toString();
@@ -470,7 +470,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         else {
                             System.out.println("not seekable!");
                             JSONObject msg = new JSONObject();
-                            msg.put("id", "setTime");
+                            msg.put("cmd", "setTime");
                             msg.put("time", Tools.FORMAT.format(rec.getStart()));
                             timeOffset = new Date().getTime()- rec.getStart().getTime();
                             sendMessage(msg.toString());
@@ -543,7 +543,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         // XXX [CLIENT_OFFER_06] XXX
         JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
 
-        JSONObject msg = new JSONObject().put("id", "answer").put("data", data);
+        JSONObject msg = new JSONObject().put("cmd", "answer").put("data", data);
         // XXX [CLIENT_OFFER_07] XXX
         sendMessage(msg.toString());
         endPoint.gatherCandidates();
@@ -598,7 +598,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
 
         JSONObject msg = new JSONObject();
-        msg.put("id", "msg");
+        msg.put("cmd", "msg");
         msg.put("data", messagesArray);
         sendMessage(msg.toString());
     }

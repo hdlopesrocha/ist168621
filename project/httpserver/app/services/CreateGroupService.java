@@ -64,7 +64,6 @@ public class CreateGroupService extends Service<Group> {
                 writeSet.add(new ObjectId(str));
             }
             realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
-
         }
 
         new DataPermission(group.getId(),realPermissions, attributes).save();

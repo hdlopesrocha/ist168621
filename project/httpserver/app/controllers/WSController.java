@@ -46,7 +46,7 @@ public class WSController extends Controller {
                     {
                         List<RecordingInterval> intervals = RecordingInterval.listByGroup(new ObjectId(groupId));
                         JSONObject msg = new JSONObject();
-                        msg.put("id", "rec");
+                        msg.put("cmd", "rec");
                         for (RecordingInterval interval : intervals) {
                             Date start = interval.getStart();
                             Date end = interval.getEnd();
@@ -69,7 +69,7 @@ public class WSController extends Controller {
                         List<TimeTag> tags = service.execute();
                         for (TimeTag tag : tags) {
                             JSONObject msg = new JSONObject();
-                            msg.put("id", "tag");
+                            msg.put("cmd", "tag");
                             msg.put("data", tag.toJson());
                             room.sendMessage(msg.toString());
                         }
@@ -83,7 +83,7 @@ public class WSController extends Controller {
 
                     {
                         JSONObject serverTime = new JSONObject();
-                        serverTime.put("id","time");
+                        serverTime.put("cmd","time");
                         JSONObject data = new JSONObject();
                         data.put("time", Tools.FORMAT.format(new Date()));
                         serverTime.put("data",data);
@@ -96,12 +96,12 @@ public class WSController extends Controller {
                         UserSession coordinator = room.getCoordinator(userSession);
                         if(coordinator!=null){
                             JSONObject obj = new JSONObject();
-                            obj.put("id","coordinate");
+                            obj.put("cmd","coordinate");
                             obj.put("sid",userSession.getSid().toString());
                             coordinator.sendMessage(obj.toString());
                         }else {
                             JSONObject obj = new JSONObject();
-                            obj.put("id","operation");
+                            obj.put("cmd","operation");
                             JSONArray data = new JSONArray();
                             try {
                                 data.put(new GetCollaborativeContentService(userId,groupId).execute());
@@ -130,12 +130,12 @@ public class WSController extends Controller {
                         public void invoke(String event) {
 
                             JSONObject args = new JSONObject(event);
-                            String id = args.getString("id");
+                            String cmd = args.getString("cmd");
 
 
-                            if(!"talk".equals(id))
+                            if(!"talk".equals(cmd))
                                 System.out.println("\nRECV: " + event);
-                            switch (id) {
+                            switch (cmd) {
                                 case "createMessage": {
                                     String data = args.getString("data");
                                     CreateMessageService messageService = new CreateMessageService(
@@ -146,7 +146,7 @@ public class WSController extends Controller {
                                         JSONObject messageObj = message.toJsonObject();
                                         messagesArray.put(messageObj);
                                         JSONObject msg = new JSONObject();
-                                        msg.put("id", "msg");
+                                        msg.put("cmd", "msg");
                                         msg.put("data", messagesArray);
                                         room.sendMessage(msg.toString());
 
@@ -194,7 +194,7 @@ public class WSController extends Controller {
                                     } catch (ServiceException e) {
                                         e.printStackTrace();
                                     }
-                                    final JSONObject myAdvertise = new JSONObject().put("id", "removedUser").put("uid", uid);
+                                    final JSONObject myAdvertise = new JSONObject().put("cmd", "removedUser").put("uid", uid);
                                     room.sendMessage(myAdvertise.toString());
                                 }
                                 break;
@@ -205,8 +205,8 @@ public class WSController extends Controller {
                                         service.execute();
                                         Document attributes = new ListOwnerAttributesService(userId, uid, null).execute();
                                         JSONObject result = new JSONObject(attributes.toJson());
-                                        result.put("id", uid);
-                                        final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                                        result.put("cmd", uid);
+                                        final JSONObject myAdvertise = new JSONObject().put("cmd", "participants").put("data",
                                                 new JSONArray().put(result.put("online", false)));
                                         room.sendMessage(myAdvertise.toString());
                                     } catch (ServiceException e) {
@@ -226,7 +226,7 @@ public class WSController extends Controller {
                                 case "talk": {
                                     Boolean value = args.optBoolean("value", false);
                                     JSONObject msg = new JSONObject();
-                                    msg.put("id", "talk");
+                                    msg.put("cmd", "talk");
                                     JSONObject data = new JSONObject();
                                     data.put("uid", user.getId().toString());
                                     data.put("value", value);
@@ -253,7 +253,7 @@ public class WSController extends Controller {
                                         CreateTimeTagService service = new CreateTimeTagService(groupId, time, title);
                                         TimeTag tag = service.execute();
                                         JSONObject msg = new JSONObject();
-                                        msg.put("id", "tag");
+                                        msg.put("cmd", "tag");
                                         msg.put("data", tag.toJson());
                                         room.sendMessage(msg.toString());
                                     } catch (ServiceException | JSONException | ParseException e) {
@@ -266,7 +266,7 @@ public class WSController extends Controller {
                                     try {
                                         new DeleteTimeTagService(groupId,tagId).execute();
                                         JSONObject msg = new JSONObject();
-                                        msg.put("id", "removeTag");
+                                        msg.put("cmd", "removeTag");
                                         msg.put("tid", tagId);
                                         room.sendMessage(msg.toString());
                                     } catch (ServiceException e) {
@@ -334,64 +334,6 @@ public class WSController extends Controller {
         };
     }
 
-    private Set<WSPair> wspairs = new HashSet<WSPair>();
-
-    private class WSPair implements Comparable<WSPair> {
-        private WebSocket.In<String> in ;
-        private WebSocket.Out<String> out ;
-        private UUID uuid;
-
-        public WSPair(WebSocket.In<String> in, WebSocket.Out<String> out) {
-            this.in = in;
-            this.out = out;
-            this.uuid = UUID.randomUUID();
-        }
-
-        @Override
-        public int compareTo(WSPair o) {
-            return uuid.compareTo(o.uuid);
-        }
 
 
-
-    }
-
-
-    public WebSocket<String> together(String groupId) {
-        final String userId = session("uid");
-        System.out.println("WebSocket requested!");
-        return new WebSocket<String>() {
-
-            public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
-                final WSPair wsPair = new WSPair(in, out);
-
-                synchronized (wspairs){
-                    wspairs.add(wsPair);
-                }
-                // When the socket is closed.
-                in.onClose(new Callback0() {
-                    public void invoke() {
-                        synchronized (wspairs){
-                            wspairs.remove(wsPair);
-                        }
-
-                        System.out.println("Disconnected");
-                    }
-                });
-                // For each event received on the socket,
-                in.onMessage(new Callback<String>() {
-                    public void invoke(String event) {
-                        System.out.println("\nRECV: " + event);
-                        synchronized (wspairs){
-                            for(WSPair wsp : wspairs){
-                                if(!wsp.equals(wsPair)){
-                                    wsp.out.write(event);
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        };
-    }
 }

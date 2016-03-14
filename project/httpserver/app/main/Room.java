@@ -243,7 +243,7 @@ public class Room implements Closeable {
                 JSONObject myProfile = new JSONObject(attributes1.toJson());
                 myProfile.put("id", userId);
 
-                final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                final JSONObject myAdvertise = new JSONObject().put("cmd", "participants").put("data",
                         new JSONArray().put(myProfile.put("online", true)));
 
                 ListGroupMembersService service = new ListGroupMembersService(userId, getGroupId());
@@ -265,7 +265,7 @@ public class Room implements Closeable {
                     }
                     otherUsers.put(otherProfile);
                 }
-                final JSONObject currentParticipants = new JSONObject().put("id", "participants").put("data", otherUsers);
+                final JSONObject currentParticipants = new JSONObject().put("cmd", "participants").put("data", otherUsers);
                 participant.sendMessage(currentParticipants.toString());
 
                 return participant;
@@ -291,7 +291,7 @@ public class Room implements Closeable {
                 JSONObject result = new JSONObject(attributes.toJson());
                 result.put("id", uid);
 
-                final JSONObject myAdvertise = new JSONObject().put("id", "participants").put("data",
+                final JSONObject myAdvertise = new JSONObject().put("cmd", "participants").put("data",
                         new JSONArray().put(result.put("online", false)));
                 sendMessage(myAdvertise.toString());
             } catch (ServiceException e) {
