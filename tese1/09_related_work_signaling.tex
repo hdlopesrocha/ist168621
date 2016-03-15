@@ -54,9 +54,30 @@ WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \e
   %RP falta um `` bi-directional communication OVER HTTP is achieved through''?
   %RP BOSH já foi explicado antes pelo que não vale a pena voltar a falar em long-pooling
   This kind of communication is also possible through WebSockets \cite{rfc7395}.
-  Today, multiple XMPP server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}(accessed June 1, 2015).}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}(accessed June 1, 2015).}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}(accessed June 1, 2015).} and \emph{Prosody}\footnote{\url{http://prosody.im/}(accessed June 1, 2015).}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}(accessed June 1, 2015).}.
+  Today, multiple \ac{XMPP} server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}(accessed June 1, 2015).}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}(accessed June 1, 2015).}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}(accessed June 1, 2015).} and \emph{Prosody}\footnote{\url{http://prosody.im/}(accessed June 1, 2015).}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}(accessed June 1, 2015).}.
   %RP fazes muitos paragrafos. Um paragrafo por tecnologia é normalmente suficiente se não forem muito grandes.
   
+{\color{blue}
+
+    One of the advantages that \ac{XMPP} based applications offer is the possibility to send messages across different servers, an \ac{XMPP} user is identified by its \textit{Jabber ID} which is definined by the pair username and server name in the form \textit{username@server}.
+
+    The user profile is represented in terms of Data Forms\cite{xep0004} protocol and managed (registration and update) through \textit{Info/Query} (IQ) \cite{rfc3920} requests to the \ac{XMPP} server which responds with an IQ response containing information to retrieve the registration fields needed to fill its profile (eg username, password, telephone). 
+
+    An important aspect of this model is the ability to define a user as a set of attributes that can change dinamically in order to fit the IM applications needs. 
+
+    The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance.
+
+    Typically a web application consists in multiple web pages which are navigated by users. Each time a webpage is accessed, either from a new context or a transition from a previous page, its context is cleared except for local storage and cookies, the javascript context is cleared, including the \ac{XMPP} connections performed by \emph{strophe.js}, an automatic mechanism is required for avoiding the user implicit reauthentication.
+
+    One solution for reauthentication can be achieved by storing the user's JabberID and password on local storage and everytime a page is accessed the authentication is performed without the users knlowledge. Clearly this solution represents security flaws, the local storage can be easily accessed (HOW? explain!) locally or by performing a cross site scripting attack and reveal all the local storage, the same problem arises if the credentials are stored on cookies.
+
+    An alternative solution is known as Session Attachment \footnote{\url{https://metajack.im/2008/10/03/getting-attached-to-strophe/}}, which requires that a \textit{session identifier}(SID) together with a \textit{initial request identifier (RID)} is passed to strophe.js in order to re-connect to the same stream on \ac{XMPP} server. Either SID and RID are unpredictable and, particularly, \textit{RID} changes on every request which is worthless if a user mantains more than one tab opened, for example for multiple conversations at the same time.
+
+    Another alternative would be the development of our solution in a single web page, which would increse drastically the complexity of our web application.
+
+    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that XMPP already implemment, but from all the \ac{XMPP} features, we don't need all of them, in fact we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
+}
+
   Another interesting approach for signaling would be \ac{SigOfly} which allows inter-domain real-time communications, while abstracting the protocol used~\cite{sigofly}.
 %RP o ~ antes do cite faz com que não haja um espaço mas não haja uma mudança de linha entre a última palavra e a citação
   \ac{SigOfly} provides inter-domain communication by making use of the \emph{Identity Providers} of each peer. 

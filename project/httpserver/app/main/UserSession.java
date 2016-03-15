@@ -530,16 +530,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /**
      * Process offer.
      *
-     * @param description the description
+     * @param rsd the description
      */
-    public void processOffer(String description) {
-        receiveOnly = description.contains("a=recvonly");
+    public void processOffer(String rsd) {
+        receiveOnly = rsd.contains("a=recvonly");
 
         // XXX [CLIENT_ICE_04] XXX
         // XXX [CLIENT_OFFER_04] XXX
         // XXX [CLIENT_OFFER_05] XXX
 
-        String lsd = endPoint.processOffer(description);
+        String lsd = endPoint.processOffer(rsd);
         // XXX [CLIENT_OFFER_06] XXX
         JSONObject data = new JSONObject().put("sdp", lsd).put("type", "answer");
 

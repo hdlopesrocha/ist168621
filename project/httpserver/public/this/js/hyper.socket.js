@@ -22,12 +22,13 @@ var HyperWebSocket = new (function() {
 	var soundDetected = false;
 	var pc = null;
 	var ws = null;
-    var local_none = {'offerToReceiveAudio':true,'offerToReceiveVideo':true};
-    var screen_user = {video: {mediaSource: 'window' || 'screen'}};
+    var local_none = {offerToReceiveAudio:true,offerToReceiveVideo:true};
+    var screen_user = {video: {mediaSource: 'window' || 'screen'}, audio: false};
+    var camera_user = {audio:true, video:true };
+
+
     var audio_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     var remote_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
-    var screen_constraints = { audio: false,video: { mediaSource: "window" || "screen"}};
-
     // ===============================================
     // ================== UTILITIES ==================
     // ===============================================
@@ -409,19 +410,19 @@ var HyperWebSocket = new (function() {
 				kscb();
 
                 // XXX [CLIENT_ICE_01] XXX
-                pc = new RTCPeerConnection({
+                pc = new RTCPeerConnection(/*{
                     iceServers : [ {
                         urls : "stun:stun.l.google.com:19302"
                     }, {
                         urls : "stun:23.21.150.121"
                     } ]
-                });
+                }*/);
 
                 // XXX [CLIENT_ICE_02] XXX
                 pc.onicecandidate = function(event) {
                     if (event.candidate) {
                         var msg = {
-                            id : "iceCandidate",
+                            cmd : "iceCandidate",
                             candidate : event.candidate
                         }
                         // XXX [CLIENT_ICE_03] XXX
@@ -441,13 +442,16 @@ var HyperWebSocket = new (function() {
 
 				// XXX [CLIENT_OFFER_01] XXX
 
-				if(mode==0){
-					navigator.mediaDevices.getUserMedia({"audio":true, "video":true }).then(function(stream) {
+				if(mode==0 || mode==1){
+					navigator.mediaDevices.getUserMedia(mode==0 ? camera_user: screen_user).then(function(stream) {
                         if(localVideoHandler){
                             localVideoHandler(window.URL.createObjectURL(stream));
                         }
                         primaryStream = stream;
-                        HyperWebSocket.audioFunction(stream);
+                        console.log(stream);
+                        if(mode==0){
+                            HyperWebSocket.audioFunction(stream);
+                        }
                         pc.addStream(stream);
                         pc.createOffer(function (lsd) {
                             console.log("createOfferToSendReceive",lsd);
@@ -455,38 +459,19 @@ var HyperWebSocket = new (function() {
                             pc.setLocalDescription(lsd, function() {
                                 // XXX [CLIENT_OFFER_03] XXX
                                 ws.send(JSON.stringify({
-                                    id : "offer",
+                                    cmd : "offer",
                                     data : lsd
                                 }));
                             }, logError);
                         }, logError,remote_constraints);
                     }).catch(logError);
 				}
-				else if(mode==1 ){
-					navigator.mediaDevices.getUserMedia(screen_constraints).then(function(stream) {
-						if(localVideoHandler){
-						    localVideoHandler(window.URL.createObjectURL(stream));
-						}
-
-						pc.addStream(stream);
-						pc.createOffer(function (lsd) {
-							console.log("createOfferToSendReceive",lsd);
-							// XXX [CLIENT_OFFER_02] XXX
-							pc.setLocalDescription(lsd, function() {
-								// XXX [CLIENT_OFFER_03] XXX
-								ws.send(JSON.stringify({
-									id : "offer",
-									data : lsd
-								}));
-							}, logError);
-						}, logError,remote_constraints);
-					}).catch(logError);
-				} else if(mode==2){
+				else if(mode==2){
 					pc.createOffer(function (lsd) {
 						console.log("createOfferToReceive",lsd);
 						pc.setLocalDescription(lsd, function() {
 							ws.send(JSON.stringify({
-								id : "offer",
+								cmd : "offer",
 								data : lsd
 							}));
 						}, logError);

@@ -20,9 +20,15 @@
 \usepackage{pgfgantt}
 \usepackage{adjustbox}
 \usepackage{rotating}
+\usepackage{listings}
 \usepackage{dirtytalk}
 \usepackage[graphicx]{realboxes}
 \definecolor{fade}{rgb}{0.8,0.8,0.8}
+
+\usepackage{xcolor}
+
+
+\input{json.tex}
 
 \setcounter{secnumdepth}{3}
 \newacro{AES}{Advanced Encryption Standard}
@@ -43,6 +49,7 @@
 \newacro{IPv6}{Internet Protocol Version 6}
 \newacro{IP}{Internet Protocol}
 \newacro{JSON}{JavaScript Object Notation}
+\newacro{KMS}{Kurento Media Server}
 \newacro{MPEG}{Moving Picture Experts Group}
 \newacro{MVC}{Model-View-Controller}
 \newacro{NAT}{Network Address Translation}
@@ -74,6 +81,7 @@
 \newacro{TMN}{This Means Nothing}
 \newacro{TURN}{Traversal Using Relays around NAT}
 \newacro{UDP}{User Datagram Protocol}
+\newacro{URL}{Uniform Resource Locator}
 \newacro{VoIP}{Voice Over IP}
 \newacro{WebRTC}{Web Real-Time Communication}
 \newacro{WebVTT}{Web Video Text Tracks}
@@ -85,8 +93,8 @@
 
 %\overfullrule=2cm
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes,shadows,arrows}
-
+\usetikzlibrary{positioning,shapes,shadows,arrows,matrix}
+\usepackage{pgf-umlsd}
 \newganttchartelement*{mymilestone}{
 mymilestone/.style={
 shape=isosceles triangle,
@@ -143,12 +151,11 @@ mymilestone right shift=0pt
 \input{09_related_work_signaling.tex}
 \input{10_related_work_hypermedia.tex}
 \input{11_related_work_collaboration.tex}
-{\color{red}
+%{\color{red}
 \input{XX_implementation_model.tex}
 \input{XX_implementation_signaling.tex}
 \input{XX_arch.tex}
-
-}
+%}
 \section{Proposed Architecture}\label{arch} % English
   \input{arch01.tex}
 
