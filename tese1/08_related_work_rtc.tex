@@ -31,11 +31,19 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 The main difference is the inclusion of a sequence number per packet that is used for packet re-ordering on reception and protects from duplicated packets. If a packet sequence number is less than the expected sequence number the packet is discarded. If a packet sequence number is greater than the expected sequence number the packet may be enqueued or discarded. By knowing the sequence of messages that are sent and received in \ac{DTLS}, timers are used for packet retransmission avoiding acknowledgment messages.
 %RP TLS?
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.6\textwidth]{figures/basic_protocols.png}
+\begin{table}[]
+\centering
+    \begin{tabular}{*4{>{\centering\arraybackslash}m{1in}|}@{}m{0pt}@{}}
+    \cline{2-5}
+                                            & \textbf{TCP}           & \textbf{UDP}              & \textbf{SCTP}            &\\[14pt]\hline
+\multicolumn{1}{|c|}{\textbf{Reliability}}           & reliable      & unreliable       & configurable    &\\[14pt]\hline
+\multicolumn{1}{|c|}{\textbf{Delivery}}              & ordered       & unordered        & configurable    &\\[14pt]\hline
+\multicolumn{1}{|c|}{\textbf{Transmission}}          & byte-oriented & message-oriented & message-oriented&\\[14pt]\hline
+\multicolumn{1}{|c|}{\textbf{Flow control}}          & yes           & no               & yes             &\\[14pt]\hline
+\multicolumn{1}{|c|}{\textbf{Congestion control}} 	& yes           & no               & yes             &\\[14pt]\hline
+\end{tabular}
 	\caption{Overview of transport protocols}
-\end{figure}
+\end{table}
 
 \ac{WebRTC}'s \emph{DataChannel} is built on top of \ac{SCTP}, which is encapsulated by \ac{DTLS}. \ac{DTLS} encapsulation provides confidentiality, authentication and integrity to the transfered data. A \emph{Data Channel} has one incoming stream and one outgoing stream, providing bidirectional communication. Each data channel direction can be configured for reliable or unreliable transmission, the same can be done for order delivery and priority. which can also be defined for improving the quality of service of a particular stream over the others.
 

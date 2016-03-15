@@ -34,10 +34,13 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 	Multi-party video calls can be achieved on \ac{WebRTC} by streaming video from each participant to all the other participants. Although this works, the bigger a conference room is, the bigger is the bandwidth used to stream video to all participants within the conference room.
         In this scenario, a more efficient alternative to peer-to-peer is the use of a Multipoint Control Unit (MCU).
 
-	\emph{Jitsi Video Bridge} \footnote{\url{http://jitsi.org/Projects/JitsiVideobridge}(accessed June 2, 2015).} receives one stream from every participant on a conference, either from a \emph{jitsi} client or a \ac{WebRTC} application, and redirects it to all the other conference participants, reducing the amount of data that each peer sends. Although all the participants still need to download all the streams from the \emph{Jitsi Video Bridge} server, typically download rates are much bigger than upload rates, making this solution more feasible.
+	\emph{Jitsi Video Bridge} \footnote{\url{http://jitsi.org/Projects/JitsiVideobridge}(accessed June 2, 2015).} receives one stream from every participant on a conference, either from a \emph{jitsi} client or a \emph{WebRTC} application, and redirects it to all the other conference participants, reducing the amount of data that each peer sends. Although all the participants still need to download all the streams from the \emph{Jitsi Video Bridge} server, typically download rates are much bigger than upload rates, making this solution more feasible.
 	\emph{Jitsi Video Bridge} uses \ac{XMPP} as a signaling protocol and its \emph{colibri} extension \cite{xep0340} to reserve channels for video transmission. Despite this choice for signaling protocol, \emph{Jitsi Video Bridge} also supports \ac{SIP}.
 
-
+	{\color{blue}
+	\ac{KMS} supports transcoding, group communications, recording, mixing, broadcasting, aplying filters, image and sound analysis, for example it allows face and qrcode detection. \ac{KMS} functionalites are exposed through \emph{JSON-RPC} over \emph{WebSocket}, there are three clients available: JavaScript Client for web browsers, Java Client for Java EE Servers and JavaScript Cleint for Node.js servers. 
+	\ac{KMS} suports streaming over \emph{WebRTC}, \ac{HTTP} and \ac{RTP} endpoints. Another important component of \ac{KMS} is \emph{Kurento Repository} which suports recording and playing directly from \emph{MongoDB}, that is important for providing a scalable media storage. Unlinke \emph{Jitsi Video Bridge}, \ac{KMS} does not enforce a specific signaling protocol.
+	}
 
 \subsubsection{Media Types}\label{mediatype}~\\
 	Media Types can be distinguished by two criteria, the first one describes a media as discrete or continuous, the second one describes it as interactive or non-interactive. A discrete media is characterized by not depending from time, and continuous media as depending on it. Interactive media is characterized by its state being changed by external events such as user interactions.
@@ -92,7 +95,7 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 
 	\emph{ShareJS}\footnote{\url{http://sharejs.org/}(accessed June 2, 2015).} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integration is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
 
-	\emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users.}
+	\emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, all the synchronization work is performed by the clients. Altough the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}, if we would not choose \emph{NodeJS} for server implementation we would need read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
 
 	\emph{Goodow}\footnote{\url{http://realtimeplayground.goodow.com/}(accessed June 2, 2015).} is a collaborative framework with its own server implementation, it supports four types of collaborative elements: String, Lists, Maps and Custom objects.
         %RP estes 3 últimos parágrafos estão desligados do resto. O que pretendes apresentar?
@@ -102,6 +105,5 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 
 {\color{green} For ease of development we decided to use the same backend for \ac{OT} since our web server relies on \emph{Play Framework} with Java and \emph{ShareJS} relies on \emph{NodeJS}\footnote{\url{https://nodejs.org/en/(accessed March 10, 2016)}} }
 
-{\color{green} \emph{TogetherJS} requires a simple server (also known as hub) that echoes messages between clients, all the synchronization work is performed by the clients. Altough the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}, we would need read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
 
         %RP falta falar um pouco das ferramentas de colaboração já existentes? Wave, Hangouts, skype, etc? Acho que isto merecia uma secção à parte, mesmo que mais curta.
