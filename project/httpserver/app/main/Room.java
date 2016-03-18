@@ -145,7 +145,7 @@ public class Room implements Closeable {
                         array.put(Tools.FORMAT.format(interval.getEnd()));
 
                         JSONObject msg = new JSONObject();
-                        msg.put("id", "rec");
+                        msg.put("cmd", "rec");
                         msg.put(interval.getId().toString(), array);
                         sendMessage(msg.toString());
 

@@ -49,7 +49,7 @@ public class Application extends Controller {
         System.out.println("RESET!");
         Service.reset();
 
-        User user1, user2, user3, user4;
+        User user1, user2, user3, user4 ,td1,td2;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false));
@@ -82,6 +82,25 @@ public class Application extends Controller {
             user4 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
         }
 
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "talkdesk1", true, true, false));
+            attributes.add(new AttributeDto("name", "Talkdesk 1", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/td1.png", false, false, false));
+            td1 = new RegisterUserService("talkdesk",new ArrayList<PermissionDto>() ,attributes).execute();
+        }
+
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "talkdesk2", true, true, false));
+            attributes.add(new AttributeDto("name", "Talkdesk 2", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/td2.png", false, false, false));
+            td2 = new RegisterUserService("talkdesk",new ArrayList<PermissionDto>() ,attributes).execute();
+        }
+
+        new CreateRelationService(td1.getId().toString(), td2.getId().toString()).execute();
+        new CreateRelationService(td2.getId().toString(), td1.getId().toString()).execute();
+
 
         new CreateRelationService(user1.getId().toString(), user2.getId().toString()).execute();
         new CreateRelationService(user2.getId().toString(), user1.getId().toString()).execute();
@@ -113,6 +132,10 @@ public class Application extends Controller {
 
         AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), user2.getId().toString());
         joinService.execute();
+
+        new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), td1.getId().toString()).execute();
+        new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), td2.getId().toString()).execute();
+
 
         Date end = new Date();
         Date start = new Date(end.getTime()-835000);

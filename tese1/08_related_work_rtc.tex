@@ -7,11 +7,34 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 
 %RP indicar que agora também já temos webrtc fora do browser devido ao seu sucesso e ao facto de reunir tecnologia state of the art?
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{figures/webrtc_stack.png}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+%\renewcommand{\arraystretch}{2}
+
+\begin{table}[]
+\centering
+\label{my-label}
+    \begin{tabularx}{\textwidth}{*8{Y}@{}m{0pt}@{}} 
+    	\cline{5-8}
+		&&&\multicolumn{1}{c|}{} & \multicolumn{2}{c|}{~~~~~~MediaStream~~~~~~} & \multicolumn{2}{c|}{~~~~~~DataChannel~~~~~~} 										&\\[12pt]
+		\hline 
+		\multicolumn{1}{|c|}{XHR} & \multicolumn{1}{c|}{SSE} & \multicolumn{2}{c|}{WebSocket} & \multicolumn{2}{c|}{SRTP} & \multicolumn{2}{c|}{SCTP} 				&\\[12pt]
+		\cline{1-3}\cline{6-8} 
+		\multicolumn{3}{|c|}{HTTP 1.X/2.0} & \multicolumn{1}{c|}{~~~~~~~~~~~~~~~~~~} & \multicolumn{1}{c}{~~~~~~~~~~~~~~~~} & \multicolumn{3}{|c|}{Session (DTLS)} 	&\\[12pt]
+		\hline
+		\multicolumn{4}{|c|}{Session (TLS) - optional} & \multicolumn{4}{c|}{ICE, STUN, TURN} 																		&\\[12pt]
+		\hline
+		\multicolumn{4}{|c|}{Transport (TCP)} & \multicolumn{4}{c|}{Transport (UDP)} 																				&\\[12pt]
+		\hline
+		\multicolumn{8}{|c|}{Network (IP)}  																														&\\[12pt]
+		\hline
+	\end{tabularx}
 	\caption{WebRTC protocol Stack}
-\end{figure}
+
+\end{table}
+
+
+
+
 
 \ac{WebRTC} defines three main \ac{API}s: MediaStream, PeerConnection and DataChannel. 
 
@@ -30,20 +53,25 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 \ac{DTLS} is similar to \ac{TLS}, but is used on top of \ac{UDP}.
 The main difference is the inclusion of a sequence number per packet that is used for packet re-ordering on reception and protects from duplicated packets. If a packet sequence number is less than the expected sequence number the packet is discarded. If a packet sequence number is greater than the expected sequence number the packet may be enqueued or discarded. By knowing the sequence of messages that are sent and received in \ac{DTLS}, timers are used for packet retransmission avoiding acknowledgment messages.
 %RP TLS?
-
+%\def\tabularxcolumn#1{m{#1}}
 \begin{table}[]
 \centering
-    \begin{tabular}{*4{>{\centering\arraybackslash}m{1in}|}@{}m{0pt}@{}}
-    \cline{2-5}
-                                            & \textbf{TCP}           & \textbf{UDP}              & \textbf{SCTP}            &\\[14pt]\hline
-\multicolumn{1}{|c|}{\textbf{Reliability}}           & reliable      & unreliable       & configurable    &\\[14pt]\hline
-\multicolumn{1}{|c|}{\textbf{Delivery}}              & ordered       & unordered        & configurable    &\\[14pt]\hline
-\multicolumn{1}{|c|}{\textbf{Transmission}}          & byte-oriented & message-oriented & message-oriented&\\[14pt]\hline
-\multicolumn{1}{|c|}{\textbf{Flow control}}          & yes           & no               & yes             &\\[14pt]\hline
-\multicolumn{1}{|c|}{\textbf{Congestion control}} 	& yes           & no               & yes             &\\[14pt]\hline
-\end{tabular}
+    \begin{tabularx}{\textwidth}{X|Y|Y|Y|@{}m{0pt}@{}}
+\cline{2-4}
+                                                     & \textbf{TCP}  & \textbf{UDP}     & \textbf{SCTP}    &\\[12pt]\hline
+\multicolumn{1}{|c|}{\textbf{Reliability}}           & reliable      & unreliable       & configurable     &\\[12pt]\hline
+\multicolumn{1}{|c|}{\textbf{Delivery}}              & ordered       & unordered        & configurable     &\\[12pt]\hline
+\multicolumn{1}{|c|}{\textbf{Transmission}}          & byte-oriented & message-oriented & message-oriented &\\[12pt]\hline
+\multicolumn{1}{|c|}{\textbf{Flow control}}          & yes           & no               & yes              &\\[12pt]\hline
+\multicolumn{1}{|c|}{\textbf{Congestion control}} 	 & yes           & no               & yes              &\\[12pt]\hline
+\end{tabularx}
 	\caption{Overview of transport protocols}
 \end{table}
+
+
+
+
+
 
 \ac{WebRTC}'s \emph{DataChannel} is built on top of \ac{SCTP}, which is encapsulated by \ac{DTLS}. \ac{DTLS} encapsulation provides confidentiality, authentication and integrity to the transfered data. A \emph{Data Channel} has one incoming stream and one outgoing stream, providing bidirectional communication. Each data channel direction can be configured for reliable or unreliable transmission, the same can be done for order delivery and priority. which can also be defined for improving the quality of service of a particular stream over the others.
 

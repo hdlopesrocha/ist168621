@@ -1,0 +1,52 @@
+\subsection{Stream Recording}
+	In this section we describe our approaches for the stream recording implementation, namely recording on the client side and server side.
+
+\subsubsection{Client side recording}
+	In order to record used shared streams, our first approach consisted on recording video and audio streams into blobs of limited duration. Because each user was recording directly from their shared local resources, we achieved the best stream quality.
+
+	After recording, each block was uploaded to our server through \ac{HTTP} and saved into the filesystem, the block metadata was created and inserted on our database. Each block metadata contained the file's location for the recorded block, the starting date, duration, user identification and group identification. When the file was completely saved the metadata was advertised to the remaining users. This metadata was simply used to refresh the user interface, the metadata was completely discard after that because an huge amount of small blocks metadata would use more and more memory as time went by. 
+
+	The process to play a video was quite simple, the user specified which user and date was intended to play, the server calculated the intersection between the requested date and the block bounds and returned the file to the client.
+
+	Altough this idea was fairly simple, we couldn't achieve seamless sequential block switching. Downloading the video file always toke a noticeable amount of time. To solve this problem while we were playing a block, the next one was downloading in parallel so when the current block finished playing we would have an available block to play. 
+
+	Block switching became more acceptable, but switching the url always produced a flash. We solved this problem by having two layers and set the url to the back layer, the front layer freezed with the last frame, then we changed the back layer to front. 
+
+	After we implemented our recording solution using this approach, we tested localy and remotely. For remote connections we observed a fairly high bandwidth usage mainly because blocks were both sent and received at maximum quality. 
+
+\subsubsection{Server side recording to filesystem}
+
+	Before recording any type of stream we had to analyse the user media offer in order to check if a video as realy being received by \ac{KMS}, otherwise if we would not verify the user's offer, the recording video would be black.
+
+	The streaming content received on \ac{KMS} was already compressed due to \ac{WebRTC}'s exchanged \ac{QoS} metrics data. As a direct consequence our recorder solution used on most cases less disk space per block, but would never use more storage than client side recording. \ac{KMS} allows recording files using \ac{WebM} and \ac{mp4} containers.
+
+	With server side recording, the user would maintain always the same stream url even if it is playing realtime video or reproducing recorded video. When a user desires to play recorded video, a websocket message is sent specifying the time and the intended user id, the group identification is not sent because it is already associated to the websocket. The server performs the same calculations in order to find a block that intersects the requested time, plays it and when finished the next part is automatically played wihtout the user intervention.
+
+	We observed differences in image quality when switching parts, that was even noticeable if we set a short block duration. We also noticed a small gap on audio when switching blocks but it was acceptable and speech recognition was not very affected. 
+
+	Back when we were implementing our solution, \ac{KMS} had not support for seeking videos, which meant that blocks would would always start playing from their beggining. This lead to a playing time error that could be at most half the duration of a block {\color{red}[time figure with t/2 maximum error]}. 
+
+	For playing video with an higher velocity we used \emph{ffmpeg}\footnote{\url{https://www.ffmpeg.org/(accessed: 17 March 2016)}} to convert the block into a new video with the desired velocity and seek time. Because the media duration is known, when the video started to being convert the headers located at the begining of the file were already written and that made it possible to stream while converting.
+
+	{\color{red} [TALK ABOUT COMPLEXITY OF DECODE VS DECODE+MANIPULATE+ENCODE]}
+
+	Although we implemented a solution that worked, we imediately noticed that \emph{ffmpeg} would take some time to initialize and that lead to pauses between switching parts.
+
+	Later the \emph{Kurento} team released a version with support for seeking videos but we had to suspend the implementation of the fast forwarding feature as currently \ac{KMS} is not supporting that.
+
+	We could implement fast forwarding without real time conversion by creating multiple versions of the same video with different velocities after the recording of a block. When a user needed to play he would also need to specify one of the available velocities. We did not followed this approach has it would require a bigger disk space usage. 
+
+\subsubsection{Server side recording to database}
+
+	One of our concerns during the development of our solution was the storage scalability. Saving files directly into filesystem would require an extra effort to distribute and replicate files among servers. For that purpose \emph{Kurento} team developed \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} which is based on \emph{MongoDB}.
+
+	One of the features that \emph{Kurento Repository} provides is the ability to play directly from the database without having to download the entire file to \ac{KMS}. The same is true for recording, but because the file headers are in the beggining and the file is written until is stops, the headers don't contain the necessary information for seeking the file.
+
+	Although we gain with scalability with this approach, we lose access over the file for changing it to fit our needs, namely for using \emph{ffmpeg} or other video manipulation tool.
+
+	Although we did not implemented recorded file seeking, that could be achieved by waiting for full file recording and then proceed to database insertion with the correct headers. Another approach would be the specification of the file duration before recording so the correct file headers could be written a priori. Both approaches were not possible to implement using just the \emph{Kurento} clients, we would need change the source code of \emph{Kurento} in order to add those new features.
+
+
+
+
+

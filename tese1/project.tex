@@ -25,6 +25,7 @@
 \usepackage{dirtytalk}
 \usepackage[graphicx]{realboxes}
 \definecolor{fade}{rgb}{0.8,0.8,0.8}
+\usepackage{tabularx} % in the preamble
 
 \usepackage{xcolor}
 
@@ -92,6 +93,10 @@
 \newacro{XML}{eXtensible Markup Language}
 \newacro{XMPP}{Extensible Messaging and Presence Protocol}
 
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{\linewidth/#1}}
+
+
 %\overfullrule=2cm
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,shadows,arrows,matrix}
@@ -155,6 +160,7 @@ mymilestone right shift=0pt
 %{\color{red}
 \input{XX_implementation_model.tex}
 \input{XX_implementation_signaling.tex}
+\input{XX_implementation_recording.tex}
 \input{XX_arch.tex}
 %}
 \section{Proposed Architecture}\label{arch} % English

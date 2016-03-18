@@ -306,16 +306,16 @@ var HyperWebSocket = new (function() {
 				
 				switch(cmd){
 					case 'iceCandidate':
-						// console.log(id,message);
+						console.log(cmd,message);
 						var candidate = new RTCIceCandidate(message.data);
 				
 						pc.addIceCandidate(candidate, function() {
-							// console.log(candidate);
+
 						}, logError);
 					break;
 					case 'answer':
 
-						// console.log(id, message);
+						console.log(cmd, message);
 						var rsd = new RTCSessionDescription(message.data);
 						// XXX [CLIENT_OFFER_08] XXX
 						pc.setRemoteDescription(rsd, function(){
@@ -410,13 +410,12 @@ var HyperWebSocket = new (function() {
 				kscb();
 
                 // XXX [CLIENT_ICE_01] XXX
-                pc = new RTCPeerConnection(/*{
-                    iceServers : [ {
-                        urls : "stun:stun.l.google.com:19302"
-                    }, {
-                        urls : "stun:23.21.150.121"
-                    } ]
-                }*/);
+                pc = new RTCPeerConnection({
+                    iceServers : [
+                        { urls : "stun:stun.l.google.com:19302" },
+                        { urls : "stun:23.21.150.121" }
+                    ]
+                });
 
                 // XXX [CLIENT_ICE_02] XXX
                 pc.onicecandidate = function(event) {
