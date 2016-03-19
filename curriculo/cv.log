@@ -1,4 +1,4 @@
-This is LuaTeX, Version beta-0.76.0-2013121407 (rev 4627)  (format=lualatex 2016.2.21)  2 MAR 2016 17:32
+This is LuaTeX, Version beta-0.76.0-2013121407 (rev 4627)  (format=lualatex 2016.2.21)  18 MAR 2016 20:20
  restricted \write18 enabled.
 **cv.tex
 (./cv.tex
@@ -536,7 +536,7 @@ luaotfload:  then use the possibly updated libraries. The merged
 luaotfload:  version is not supported as it is a frozen instance.
 luaotfload:  Problems can be reported to the ConTeXt mailing list."
 luaotfload: pop namespace from font loader -- non-destructive
-luaotfload: fontloader loaded in 0.030 seconds
+luaotfload: fontloader loaded in 0.060 seconds
 luatexbase-mcb: inserting 'luaotfload.node_processor'
 at position 1 in 'pre_linebreak_filter'
 luatexbase-mcb: inserting 'luaotfload.node_processor'
@@ -852,9 +852,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-regula
 r.luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 21 (SourceSansPro-Regular) defines feature kern for script l
+luaotfload: font no 21 (SourceSansPro-Regular) defines feature mkmk for script l
 atn
-luaotfload: font no 21 (SourceSansPro-Regular) defines feature kern for script l
+luaotfload: font no 21 (SourceSansPro-Regular) defines feature mkmk for script l
 atn
 \g_fontspec_family_SourceSansPro_int=\count334
 luaotfload | load : auto-selecting default features for script: dflt
@@ -891,9 +891,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-extral
 ight.luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature kern for scrip
+luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature mkmk for scrip
 t latn
-luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature kern for scrip
+luaotfload: font no 25 (SourceSansPro-ExtraLight) defines feature mkmk for scrip
 t latn
 \g_fontspec_family_SourceSansPro ExtraLight_int=\count335
 luaotfload | load : auto-selecting default features for script: dflt
@@ -911,9 +911,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-black.
 luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 26 (SourceSansPro-Black) defines feature kern for script lat
+luaotfload: font no 26 (SourceSansPro-Black) defines feature mkmk for script lat
 n
-luaotfload: font no 26 (SourceSansPro-Black) defines feature kern for script lat
+luaotfload: font no 26 (SourceSansPro-Black) defines feature mkmk for script lat
 n
 \g_fontspec_family_SourceSansPro Black_int=\count336
 luaotfload | load : auto-selecting default features for script: dflt
@@ -931,9 +931,9 @@ luaotfload | load : auto-selecting default features for script: dflt(load luc: /
 home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts/otf/sourcesanspro-light.
 luc)
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 27 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 27 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 27 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 27 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 \g_fontspec_family_SourceSansPro Light_int=\count337
 luaotfload | load : auto-selecting default features for script: dflt
@@ -1613,7 +1613,7 @@ back to file:(load luc: /home/hdlopesrocha/.texmf-var/luatex-cache/generic/fonts
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature dtls for script
  math
 \g_fontspec_family_latinmodern-math.otf_int=\count505
 luaotfload | load : auto-selecting default features for script: dflt
@@ -1644,7 +1644,7 @@ luaotfload | load : auto-selecting default features for script: math
 luaotfload | load : no defaults for script "math", falling back to "dflt"
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 31 (LatinModernMath-Regular) defines feature aalt for script
+luaotfload: font no 31 (LatinModernMath-Regular) defines feature dtls for script
  math
 LaTeX Font Info:    Encoding `OT1' has changed to `EU2' for symbol font
 (Font)              `operators' in the math version `normal' on input line 26.
@@ -1662,7 +1662,7 @@ back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature dtls for script
  math
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
@@ -1700,7 +1700,7 @@ back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
 back to file:
-luaotfload: font no 29 (LatinModernMath-Regular) defines feature aalt for script
+luaotfload: font no 29 (LatinModernMath-Regular) defines feature dtls for script
  math
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling 
@@ -1863,9 +1863,9 @@ luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload: font no 53 (SourceSansPro-Light) defines feature smcp for script lat
@@ -1882,15 +1882,15 @@ luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 Overfull \hbox (51.21506pt too wide) in alignment at lines 63--81
  [] [] 
@@ -1898,9 +1898,9 @@ Overfull \hbox (51.21506pt too wide) in alignment at lines 63--81
 
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 
 LaTeX Font Warning: Font shape `EU2/SourceSansProLight(0)/m/it' undefined
@@ -1943,102 +1943,100 @@ luaotfload | load : path lookup of "latinmodern-math.otf" unsuccessful, falling
 back to file:
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: latn
 luaotfload | load : no defaults for script "latn", falling back to "dflt"
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 Overfull \hbox (51.21506pt too wide) in alignment at lines 86--151
  [] [] 
  []
+
+
+Overfull \vbox (7.33926pt too high) has occurred while \output is active []
+
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
-n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 luaotfload | load : auto-selecting default features for script: dflt
 luaotfload | load : auto-selecting default features for script: dflt
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
-luaotfload: font no 53 (SourceSansPro-Light) defines feature kern for script lat
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload | load : auto-selecting default features for script: dflt
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
+n
+luaotfload: font no 53 (SourceSansPro-Light) defines feature mkmk for script lat
 n
 Overfull \hbox (51.21506pt too wide) in alignment at lines 156--188
  [] [] 
@@ -2070,15 +2068,15 @@ Package logreq Info: Writing requests to 'cv.run.xml'.
  )
 
 Here is how much of LuaTeX's memory you used:
- 39576 strings out of 493803
- 156257,1373583 words of node,token memory allocated
+ 39572 strings out of 493803
+ 156258,1373583 words of node,token memory allocated
  423 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 1 kern, 4 attribute, 70 glue_spec, 4 attrib
 ute_list, 1 write nodes
-   avail lists: 1:109,2:12694,3:10827,4:2301,5:814,6:6519,7:109,8:10,9:575,10:98
-3,11:509,12:229
+   avail lists: 1:96,2:12180,3:10133,4:2208,5:798,6:6189,7:105,8:9,9:559,10:983,
+11:509,12:229
  41871 multiletter control sequences out of 65536+600000
- 63 fonts using 17389139 bytes
+ 63 fonts using 17388703 bytes
  74i,8n,68p,890b,659s stack positions out of 5000i,500n,10000p,200000b,100000s
 </usr/share/texmf/fonts/opentype/public/lm/lmmono10-regular.otf></usr/share/texl
 ive/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></usr/share/te
@@ -2087,10 +2085,10 @@ r/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Blac
 k.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSa
 nsPro-Regular.otf></usr/share/texlive/texmf-dist/fonts/opentype/adobe/sourcesans
 pro/SourceSansPro-ExtraLight.otf>
-Output written on cv.pdf (2 pages, 51179 bytes).
+Output written on cv.pdf (2 pages, 47544 bytes).
 
-PDF statistics: 77 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
+PDF statistics: 76 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  8 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
