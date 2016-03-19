@@ -60,6 +60,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     
     /** The play user. */
     private String playUser = "";
+    private ObjectId playingId;
 
     public Boolean isReceiveOnly() {
         return receiveOnly;
@@ -366,14 +367,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      * @param userId the user id
      */
-    public void setHistoric(String userId) {
+    public void setHistoric(String userId, ObjectId interval, Long sequence) {
         playUser = userId;
-        Date currentTime = new Date(new Date().getTime() - timeOffset + 250);
+        Date currentTime = new Date(new Date().getTime() - timeOffset);
 
         try {
             // saying "no video here!", for group video
             GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
-                    room.getGroupId(), currentTime);
+                    room.getGroupId(),interval, currentTime,sequence);
             RecordingChunk rec = service.execute();
             String ownerUrl=null;
             String groupUrl=null;
@@ -383,10 +384,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
 
 
-            if (ownerUrl!=null && groupUrl!=null) {
+            if (ownerUrl!=null && groupUrl!=null && rec!=null && !rec.getId().equals(playingId)) {
+                playingId = rec.getId();
                 synchronized (playerLock) {
                     System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
-
 
                     String videoUrl = ownerUrl;
                     if(ObjectId.isValid(videoUrl)){
@@ -394,12 +395,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         videoUrl= item.getUrl();
                     }
 
-
-
                     System.out.println("URL: "+videoUrl);
                     PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
-
-
 
                     String audioUrl = groupUrl;
                     if(ObjectId.isValid(audioUrl)){
@@ -418,20 +415,30 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            setHistoric(playUser);
-
+                            setHistoric(playUser, rec.getInterval(),rec.getSequence()+1);
                         }
                     });
 
                     tempVideo.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
-                            setHistoric(playUser);
+                            setHistoric(playUser,rec.getInterval(),rec.getSequence()+1);
                         }
                     });
 
+                    // stop old video
+                    if (playerVideo != null) {
+                        playerVideo.stop();
+                        playerVideo.release();
+                    }
+                    // stop old audio
+                    if (playerAudio != null) {
+                        playerAudio.stop();
+                        playerAudio.release();
+                    }
 
-
+                    playerVideo = tempVideo;
+                    playerAudio = tempAudio;
 
 
                     if (play) {
@@ -465,22 +472,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         }
                     }
 
-                    // stop old video
-                    if (playerVideo != null) {
-                        playerVideo.stop();
-                        playerVideo.release();
-                    }
-                    // stop old audio
-                    if (playerAudio != null) {
-                        playerAudio.stop();
-                        playerAudio.release();
-                    }
-                    playerVideo = tempVideo;
-                    playerAudio = tempAudio;
+
+
 
                 }
             } else {
-                System.out.println("No video here!");
+                if(rec==null) {
+                    playingId = null;
+                    System.out.println("No video here!");
+                }else {
+                    System.out.println("Already playing!");
+                }
             }
         } catch (ServiceException e) {
             e.printStackTrace();
@@ -536,6 +538,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     public void processOffer(String rsd) {
         receiveOnly = rsd.contains("a=recvonly");
+
 
         // XXX [CLIENT_ICE_04] XXX
         // XXX [CLIENT_OFFER_04] XXX

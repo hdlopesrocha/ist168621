@@ -240,7 +240,7 @@ public class WSController extends Controller {
                                         @Override
                                         public void run() {
                                             userSession.setOffset(args.getLong("offset"));
-                                            userSession.setHistoric(userId);
+                                            userSession.setHistoric(userId,null,null);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();

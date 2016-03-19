@@ -27,6 +27,9 @@ public class RecordingChunk {
     /** The end. */
     private Date start, end;
 
+    private Long sequence = null;
+
+    private ObjectId interval;
     /** The id. */
     private ObjectId id = null;
 
@@ -43,11 +46,12 @@ public class RecordingChunk {
      * @param groupId the group id
      * @param start the start
      */
-    public RecordingChunk(ObjectId groupId, Date start) {
+    public RecordingChunk(ObjectId groupId, ObjectId interval, Date start, Long sequence) {
         this.groupId = groupId;
         this.start = start;
-
+        this.sequence = sequence;
         this.urls = new Document();
+        this.interval = interval;
     }
 
     /**
@@ -70,6 +74,9 @@ public class RecordingChunk {
     public static RecordingChunk load(Document doc) {
         RecordingChunk rec = new RecordingChunk();
         rec.id = doc.getObjectId("_id");
+        rec.sequence = doc.getLong("seq");
+        rec.interval = doc.getObjectId("int");
+
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
         rec.groupId = doc.getObjectId("gid");
@@ -140,6 +147,8 @@ public class RecordingChunk {
         doc.put("start", start);
         doc.put("end", end);
         doc.put("urls", urls);
+        doc.put("seq",sequence);
+        doc.put("int",interval);
 
         if (id == null)
             getCollection().insertOne(doc);
@@ -205,4 +214,11 @@ public class RecordingChunk {
         }
     }
 
+    public Long getSequence() {
+        return sequence;
+    }
+
+    public ObjectId getInterval() {
+        return interval;
+    }
 }

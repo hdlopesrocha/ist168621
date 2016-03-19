@@ -39,7 +39,7 @@ public class Room implements Closeable {
     
     /** The composite. */
     private Hub composite = null;
-    
+    private long sequence = 0;
     /** The hub port. */
     private HubPort hubPort;
 
@@ -128,7 +128,7 @@ public class Room implements Closeable {
                     start = new Date();
                 }
 
-                RecordingChunk rec = new RecordingChunk(group.getId(),start);
+                RecordingChunk rec = new RecordingChunk(group.getId(), interval.getId(),start,sequence++);
                 new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
 
                     @Override

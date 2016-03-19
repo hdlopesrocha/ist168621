@@ -25,6 +25,9 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
     /** The time. */
     private final Date time;
 
+    private Long sequence;
+    private ObjectId interval;
+
     /**
      * Instantiates a new gets the current recording service.
      *
@@ -32,11 +35,12 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      * @param groupId the group id
      * @param time the time
      */
-    public GetCurrentRecordingService(String callerId, String groupId, Date time) {
+    public GetCurrentRecordingService(String callerId, String groupId, ObjectId interval, Date time, Long sequence) {
         this.caller = User.findById(new ObjectId(callerId));
         this.groupId = new ObjectId(groupId);
         this.time = time;
-
+        this.sequence = sequence;
+        this.interval = interval;
     }
 
     /*
@@ -46,8 +50,15 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      */
     @Override
     public RecordingChunk dispatch() throws BadRequestException {
+        Document query = new Document("gid", groupId);
+        if(sequence!=null && interval!=null){
+            query.append("seq",sequence).append("int",interval);
+        }else {
+            query.append("end", new Document("$gte", time)).append("start", new Document("$lt", time));
+        }
 
-        FindIterable<Document> iter = RecordingChunk.getCollection().find(new Document("gid", groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time)));
+
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query);
 
         Document first = iter.first();
 
