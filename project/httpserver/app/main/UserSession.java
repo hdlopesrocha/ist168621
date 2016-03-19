@@ -392,8 +392,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     if(ObjectId.isValid(videoUrl)){
                         RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
                         videoUrl= item.getUrl();
-                    }else{
-                        videoUrl="file:"+videoUrl;
                     }
 
 
@@ -407,8 +405,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     if(ObjectId.isValid(audioUrl)){
                         RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
                         audioUrl= item.getUrl();
-                    }else{
-                        audioUrl="file:"+audioUrl;
                     }
 
                     PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
@@ -434,37 +430,29 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         }
                     });
 
-                    if (playerVideo != null) {
-                        playerVideo.stop();
-                        playerVideo.release();
-                    }
 
-                    if (playerAudio != null) {
-                        playerAudio.stop();
-                        playerAudio.release();
-                    }
-                    playerVideo = tempVideo;
-                    playerAudio = tempAudio;
+
 
 
                     if (play) {
-                        playerAudio.connect(endPoint, MediaType.AUDIO);
-                        playerVideo.connect(endPoint, MediaType.VIDEO);
 
-                        playerAudio.play();
-                        playerVideo.play();
+                        tempAudio.play();
+                        tempVideo.play();
 
-                        if(playerVideo.getVideoInfo().getIsSeekable()) {
+                        tempAudio.connect(endPoint, MediaType.AUDIO);
+                        tempVideo.connect(endPoint, MediaType.VIDEO);
+
+                        if(tempVideo.getVideoInfo().getIsSeekable()) {
                             Long position = currentTime.getTime()-rec.getStart().getTime();
-                            if(position >= playerVideo.getVideoInfo().getDuration()){
-                                position = playerVideo.getVideoInfo().getDuration() -1;
+                            if(position >= tempVideo.getVideoInfo().getDuration()){
+                                position = tempVideo.getVideoInfo().getDuration() -1;
                             }else if(position<0){
                                 position = 0l;
                             }
 
-                            playerVideo.setPosition(position);
-                            if(playerAudio.getVideoInfo().getIsSeekable()) {
-                                playerAudio.setPosition(position);
+                            tempVideo.setPosition(position);
+                            if(tempAudio.getVideoInfo().getIsSeekable()) {
+                                tempAudio.setPosition(position);
                             }
                         }
                         else {
@@ -476,6 +464,20 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             sendMessage(msg.toString());
                         }
                     }
+
+                    // stop old video
+                    if (playerVideo != null) {
+                        playerVideo.stop();
+                        playerVideo.release();
+                    }
+                    // stop old audio
+                    if (playerAudio != null) {
+                        playerAudio.stop();
+                        playerAudio.release();
+                    }
+                    playerVideo = tempVideo;
+                    playerAudio = tempAudio;
+
                 }
             } else {
                 System.out.println("No video here!");
