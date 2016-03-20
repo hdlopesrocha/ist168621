@@ -1,33 +1,3 @@
-\chapter{Architecture}
-\label{chapter:architecture}
-%Esta secção deve englobar:
-
-%\begin{itemize}
-%    \item Uma análise de requisitos, onde devem “abrir” portas para as principais
-%        características da vossa arquitectura.
-%    \item Uma descrição de alto nível da arquitectura do vosso sistema. Esta descrição
-%        pode ser:
-%        \begin{itemize}
-%            \item A arquitectura de rede, explicando os principais componentes e as
-%                funções que executam.
-%            \item A arquitectura de SW da aplicação, explicando os principais
-%                componentes e as funções que executam.
-%        \end{itemize}
-%    \item Descrições detalhadas de todos os componentes da vossa arquitectura.
-%    \item As escolhas que efectuarem em termos de arquitectura global e de detalhe,
-%        devem ser justificadas, face aos requisitos que identificaram.
-%\end{itemize}
-
-%Sempre que possível, ilustrem a arquitectura com figuras, que descrevam
-%sucintamente o modelo como na Figure~\ref{fig:logoCNM}.
-
-%\begin{figure}[!htb]
-%  \centering
-%  \includegraphics[width=0.25\textwidth]{Figures/logoCNM.png}
-%  \caption[Caption for figure in TOC]{Caption for figure.}
-%  \label{fig:logoCNM}
-%\end{figure}
-
 Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration in real-time.
 
 The requirements for our web application are:
@@ -43,7 +13,8 @@ The requirements for our web application are:
  \item File sharing and collaborative edition.
 \end{itemize}
 
-\section{Modules}
+%RP ainda não detalhaste as funcionalidades que queres incluir na aplicação. Até aqui tem sido tudo muito vago. convém agora datalhares as funcioalidades que vais implementar.
+\subsection{Modules}
 
 \begin{figure}[H]
 	\centering
@@ -62,11 +33,15 @@ Chat rooms can be public or private. Public chat rooms are moderated by a group 
 
 Each room will be associated to multiple Media-Types, interactive and non-interactive, discrete and continuous. This media types can be structured with chains of events. Some components of the user interface may not be synchronized to all participants, for example an help or suggestion window.  
 
+ %RP não queres falar da comunicação com outros peers?
+ %RP há conversas p2p ou todos os clientes ligam ao stream server? Acho que podes dar mais detalhes nesta fase
+
+ %RP antes de passar para a implementação deves falar em maior detalhe destes componentes. Como interagem entre si. Qual a informação que cada um guarda troca com os outros.
+ %RP quais os requisitos de tecnologia para cada componente.
+ %RP precisas de fornecer muitos mais detalhes. A arquitectura deverá ter várias páginas. A tua ainda só tem meia e passas logo para a implementação do protótipo.
  
-\section{Implementation Proposal}
+\subsection{Implementation Proposal}
 The infrastructure is composed by: Ice Server, Web Server, Stream Server, Signaling Server and Test Clients.
-
-
 
 \begin{figure}[H]
 	\centering
@@ -84,28 +59,22 @@ The \ac{ICE} server is not required to be on our infrastructure, as a public \ac
 
 On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} will be installed as web browsers. Libraries such as \emph{jQuery}, \emph{Bootstrap}, \emph{Strophe}, \emph{Modernizr} and \emph{TogetherJS} will be downloaded from the Web Server and executed on the client side.
 
-
-\begin{table}[H]
-\centering
-
-    \begin{tabular}{cccccccc@{}m{0pt}@{}}
-	\hline 
-\multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
-\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{ot.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}} &\\[12pt]\hline
-\multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
-\end{tabular}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/apparch.png}
 	\caption{App Architecture}
 	        \label{fig:apparch}
-\end{table}
 
+\end{figure}
+%RP apresentar figura
 Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies. \emph{Modernizr} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
 The \emph{Strophe} library will be essential to communicate with the \ac{XMPP} server.
+%RP era este o sentido da frase? Ou entre cliente e servidor apenas?
 
 
 \emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not provide object storage giving us the ability to choose how to store collaborative objects. We assume that \emph{JavaScript} objects are enough for implementing our application but \emph{TogetherJS} provides the flexibility to change our storage model.
+%RP relê a frase. É mesmo isto que queres dizer? ``does not implement''
 
 The synchronization between multimedia elements will be performed trough chains of \emph{JavasSript} events, other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
-
-
-
+%RP já não vais usar smil? Como fazes a sincronização. Explica, sff.

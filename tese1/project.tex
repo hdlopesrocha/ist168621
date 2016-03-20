@@ -4,10 +4,10 @@
 %\usepackage[latin1]{inputenc}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
-
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage{kmath}  % allows for indexgeneration
 \usepackage{color}  % allows for indexgeneration
 \usepackage{url}
 \usepackage{array}
@@ -26,7 +26,6 @@
 \usepackage[graphicx]{realboxes}
 \definecolor{fade}{rgb}{0.8,0.8,0.8}
 \usepackage{tabularx} % in the preamble
-
 \usepackage{xcolor}
 
 
@@ -99,7 +98,8 @@
 
 %\overfullrule=2cm
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes,shadows,arrows,matrix}
+\usetikzlibrary{positioning,shapes,shadows,arrows,matrix,decorations.pathreplacing}
+
 \usepackage{pgf-umlsd}
 \newganttchartelement*{mymilestone}{
 mymilestone/.style={

@@ -1,0 +1,146 @@
+\section{Hypermedia: more than words, more than images}
+\label{hypermedia}
+
+Since the early days of video technology, one of the problems raised consisted on how to add more information onto video without generating multiple versions. This section examines technologies that allows different ways to present multimedia content in such a way that it change based on synchronization amongst other multimedia elements or user interaction.
+
+\emph{Hypertext} is a type of text that provides links to texts or other types of content, these links are known by \emph{hyperlinks}. \emph{Hypermedia} is an evolution of \emph{hypertext}, it includes audio, images, text and video. 
+
+\emph{Hypermedia} concept brings the possibility to organize and overlay multimedia elements into a nonlinear linear structure.
+
+In the beginning of analog video technology, the navigation over it was quite limited to simple operations such as play, stop, rewind and fast-forward. As video started to be digitalized, new operations over video emerged, such as random jumps and chapter navigation through interactive menus present on \ac{DVD}.
+
+%RP depois disto falta uma introdução a explicar que precisas de controlar a apresentação e execução de diversos conteúdos e que para isso vais precisar de uma tecnologia que permite sincronizar e controlar. Esta secção examina isso.
+
+Some \ac{MPEG} implementations, like \cite{embedded}, added hypermedia information to empty space present on \ac{MPEG} frames in order to provide interactive television, modifying the \ac{MPEG} encoder and decoder in order to handle hypermedia content.
+%RP esta última frase, com detalhes de implementação fica algo deslocada antes de apresentares os exemplos de hypermedia. Talvez deslocar para mais tarde.
+Hypermedia is a concept that holds the promise of future technology and features but it is also already present in our daily lives.
+%RP por exemplo na publicidade no youtube
+
+  Subtitles are an example of information that might be required.
+  The need to translate movies, raised the problem whether it is appropriate to change the original video or audio. For example, subtitles should be an entity independent from the video, in order to be personalized or replaced easily.
+
+  \ac{SAMI}, and \ac{SRT} are two of the multiple formats for subtitles commonly supported by video players. Although those formats have styling available, they are quite limited to text. 
+
+  Hyper-video is a kind of video that contains links to any kind of hypermedia, including links to skip part of it. An example of hypermedia application could be a search engine over hypermedia content, like subtitles, in order to jump to a specific time in a video or audio track. \emph{HyperCafe} \cite{hypercafe} was an experimental project to expose hyper-video concepts that consisted of an interactive film that enabled switching between different conversations taking place inside a cafe.
+ 
+  Detail-on-demand is a subset of hyper-video that allow us to obtain additional information about something that appears along the video, like obtaining information about a painting that appears in a particular segment. \emph{Hyper-Hitchcock}\cite{hitchcock} is an editor and player of detail-on-demand video.
+
+  In order to navigate through a dynamic video, we must be aware of time synchronization and the multiple time flows, it ils important that all time, causality and behavior rules are well defined.
+  %RP one must be aware? O utilizador? Ou queres dizer que é preciso definir as relações? O que falas a seguir é sobre linguagens para isso.
+  
+  \emph{HyVAL}\cite{hyval} is an \ac{XML} based language that was proposed for modeling composition, synchronization and interaction of hypermedia. HyVAL defines defines video structure, internal video and external media objects. 
+  \emph{HyVAL} uses a primary video stream, around which all other elements are organized and synchronized.
+  \emph{HyVAL}'s video structure object defines a structure derived from traditional video, which divides video into segments, scenes, shots and frames hierarchically. 
+  This approach is quite restrictive if we want to apply hyper-video concepts to videos that don't follow this structure. External media objects are linked by primary video, those objects can represent other videos, images, text, animation and sound.
+  %RP não percebo bem a última frase. O que é primary video?
+
+  \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. With \ac{SMIL} it is possible to synchronize multiple videos, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyper-links, among multiple other features.
+  %RP synchronize multiple sections of video? vários videos apresentados em simultâneo?
+
+  \ac{SMIL} is an \ac{XML} based language that defines twelve modules: \emph{Animation}, \emph{Content Control}, \emph{Layout}, \emph{Linking}, \emph{Media Objects}, \emph{SmilText}, \emph{Metainformation}, \emph{Structure}, \emph{Timing}, \emph{Time Manipulations}, \emph{State} and \emph{Transitions}.
+
+
+\begin{itemize}
+
+  \item The \textbf{Animation} module contains elements and attributes that define a time based mechanism for composing the effects of animations. For example, this module can perform changes on \ac{XML} or \ac{CSS} attributes like color and dimensions.  
+
+  \item The \textbf{Content Control} module contains elements and attributes that provide optimized alternatives for content delivery. For example, it could be used to change audio language in function of user's nationality, for videos with multiple audio channels.
+
+  \item The \textbf{Layout} module contains elements and attributes for coloring and positioning media content. Other layout mechanisms are also possible, such as \ac{CSS}.
+
+  \item The\textbf{Linking} module contains elements and attributes for navigational \emph{hyperlinking}. Navigation can be triggered by events or user interaction.
+
+  \item The \textbf{Media Object} module contains elements and attributes for referencing rendering behavior of external multimedia or control objects.
+
+  \item The \textbf{SmilText} module contains elements and attributes that define and control timed text. For example, this module could be used to create labels and captions.
+
+  \item The \textbf{Metainformation} module contains elements and attributes that allows describing the \ac{SMIL} document. For example, this module could be used to define movie details such as category, director, writers and cast.
+
+  \item The \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \emph{head} element that contains non temporal behavior information defined by  \emph{Metainformation}, \emph{Layout} and \emph{Content Control} modules. This module also defines the \emph{body} element, where all temporal related module information is contained.
+
+  \item The \textbf{Timing} module is the most important module on \ac{SMIL} specification. Due to its complexity, it is divided into seventeen sub-modules for coordination and synchronization of media over time. The three main elements are \emph{seq}, \emph{excl} and \emph{par}, that, respectively, play child elements in sequence, one at a time and all at the same time. 
+
+  \item The \textbf{Time Manipulations} module adds time behavior attributes to \ac{SMIL} elements, such as speed, rate or time.
+
+  \item The \textbf{State} module defines attributes that define the state of \ac{SMIL} elements, such as element visibility, current element time, amount of repeated loops, playing state and many others.
+
+  \item The \textbf{Transitions} module defines attributes and elements for transitions across multiple \ac{SMIL} elements according to the \emph{Timing} module.
+
+\end{itemize}
+
+The \ac{DOM} is a standard \ac{API} that allows easy management of documents that are organized in a tree structure, by providing \ac{CRUD} operations over its elements and their attributes. \ac{DOM} makes it easy to inter-operate between imperative and declarative programming languages\cite{dom}.
+%RP não arranjas uma referência para o dom?
+
+Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowing \ac{CRUD} operations over \ac{SMIL} documents is an important feature for extending \ac{SMIL} capabilities, for example for creating non-linear animations and triggering external events like \emph{JavaScript} functions.  
+
+
+  \ac{SMIL}'s modules can be used to synchronize and animate \ac{XHTML} and \ac{SVG} elements.
+  %RP ``are used'' ou ``can be used''?
+  
+  \ac{SMIL} fits our goals for creating a multimedia rich hyper-call, but it lacks on browser compatibility. Ambulant \cite{ambulant} was one of the SMIL players that were developed for browsers, although this player implements most of \ac{SMIL} 3.0 \cite{smil3} specifications, it needs to be installed on browsers as a plug-in.
+
+  SmillingWeb \cite{smillingweb} attempts to implement a cross platform multimedia player designed for \ac{SMIL} 3.0 presentations with \emph{JavaScript} and \emph{jQuery} which, unlike \cite{ambulant}, doesn't require a plug-in to be installed and shouldn't have incompatibility issues. 
+  SmillingWeb already takes advantage of \ac{HTML}5 and \ac{CSS}3.
+  It takes into account unsupported web browsers through the use of \emph{Modernizr}\footnote{\url{http://modernizr.com/}(accessed June 2, 2015).}, a simple \emph{JavaScript} library that may require plug-ins if new features aren't supported.  
+  But SmillingWeb just implements a subset of \ac{SMIL} 3.0 and their scheduler engine loads the \ac{SMIL} file only once, which could raise problems when dealing with \ac{SMIL} changes due to real time communications.
+  Another problem with SmillingWeb is pre-loading and playing elements at the correct interval of time, which is not always possible due to high latency networks leading to  pauses during playback.
+
+% XXX
+  %RP fazes uma mudanças de tema muito bruscas. Podes usar \subsubsection ou \paragraph para dividir isto melhor. E uma frase entre temas a servir de ``cola'' ou ``separação'' também não fica mal
+
+
+  An alternative to \ac{SMIL}'s \emph{Layout} module is to use \ac{HTML} which is a markup language based on \ac{XML} that is used for creating web pages. \ac{HTML} alone is a very poor language when we are focused on visual appealing and interactive web pages. Languages like \ac{CSS} and \emph{JavaScript} are typically used along with \ac{HTML} for improving the interaction and appearance of a web page. 
+
+
+  %RP esta parte está um pouco confusa. Primeiro falas de smil, depois de html, depois de smil novamente. Devias agrupar tudo. Devias agrupar as soluçoes por tecnologia. Se preciso, primeiro fala de html, css, etc, e depois de smil e das implementação de smil (incluindo as que são implementadas em html e js).
+  
+  \ac{CSS}'s goal is to separate the structure of an \ac{XML} document from its appearance. \ac{CSS} defines styles for \ac{XML} tags based on their name, class, identifier or position.
+  Besides static styling \ac{CSS} also supports animation and transitions leading to more dynamic content.
+  %RP Tens muitas alturas em que não começas frases novas. Usas virgulas para separar conteúdo que não faz sentido ficar na mesma frase pois começa com um novo sujeito seguido de verbo.
+
+  \emph{JavaScript} is an imperative object-oriented language based on \emph{ECMAScript}. It is used mainly on client-side and executed by a web browser. \emph{JavaScript} has its own implementation of \ac{DOM} and one of its advantages is the ability to download and execute code on the fly without the need of pre-installed plug-ins.
+
+  \emph{JavaScript} has compatibility issues among the different web browsers, leading to different behaviors. To solve that problem, there are libraries written in \emph{JavasSript}, namely \emph{jQuery}, that implements the same functionality for multiple browsers, masking most of the incompatibility issues.
+
+%RP explicar melhor. Não vejo como low-latency pode ser mau
+  %HR troquei-me todo
+  With the emergence of \ac{HTML}5, tags like \emph{video}, \emph{audio} and \emph{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \emph{canvas} that allows drawing graphics with \emph{JavaScript} on a rectangle within a web page.
+
+  For example, with \ac{API}s like WebGL\footnote{\url{http://khronos.org/webgl/}(accessed June 2, 2015).}, it is now possible to manipulate a three dimensional environment in the context of a hyper-call. Another example would be a collaborative spreadsheet using \ac{WebRTC}. With this, hyper-calls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
+ %XXX
+  %RP porque escolheste falar aogra de webgl se não falas antes?
+%HR já troquei, o WebGL usa o canvas do HTML5, talvez seja este o local mais adequado
+
+
+  \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently, \ac{SVG} allows adding movement and animating attributes of elements. When embedded on \ac{HTML}5, it allows dynamic changes to inner content in real-time through the \ac{DOM} \ac{API}. Besides that, it also allows calling \emph{JavaScript} functions on events such as animation end, mouse over and mouse click.
+  
+  Back in 1995, \emph{flash}\footnote{\url{http://www.adobe.com/products/flash.html}(accessed June 2, 2015).} was developed for web-based animations. Introducing video support in 2002, \emph{flash} started to grow after that. Competitor's players, at that time were focused on playing video and audio, while \emph{flash} had vector graphics and focused on streaming \emph{on-demand} video across multiple platforms. \emph{VP6} was their choice of video codec, providing half the video size (in Byte) for the same quality and providing video quality adjusted to \emph{Internet} connection latency. 
+  In 2010, \emph{Adobe Flash} was the most widely used applications for reproducing live broadcast and recorded video \cite{flashvideo}, it supports progressive video download using \ac{HTTP} and streaming using \ac{RTMP}.
+  %RP ``was'' quando? Em 2010? Ontem?
+  %HR exacto.
+
+  \ac{RTMP} is a \ac{TCP} based protocol used for streaming audio, video and data between a \ac{FMS} and \emph{flash} players. A bidirectional connection is established between the two in order to allow real time communications. A \emph{flash} player can stream a webcam video to a \ac{FMS} using \ac{RTMP} or it can request a video stream to \ac{FMS} that can either be a pre-recorded stream, live stream or data. Multiple \ac{FMS} servers can be used in parallel to increase capacity and handle more streams simultaneously.
+  %RP chained ou usados em paralelo?
+
+  \ac{FMS} can stream video and audio to one or more subscribers by sending a separate copy for each subscriber. With \ac{RTMFP} it is possible to stream video directly between \emph{flash} players, allowing a publisher to break up a stream into pieces that can be cooperatively distributed in a P2P mesh. \ac{RTMFP} uses \ac{UDP} to speed packet delivery, which although it is not reliable, is well suited for video streaming. Like \ac{WebRTC}, \emph{flash} players also need to apply techniques like \ac{STUN} and \ac{TURN} for \ac{NAT} traversal.
+  %RP as vezes fazes \emph{flash} e outras vezes não. Convém ser coerente.
+
+  Although \ac{HTML}5, \emph{JavaScript}, \ac{CSS} and \ac{WebRTC} implement some of \emph{flash}'s features, it doesn't mean that \emph{flash} will be replaced soon.
+  Instead, both technologies can be used to develop rich \emph{Internet} applications.
+  It is also important to note that \ac{HTML}5 is better supported in mobile devices than \emph{Adobe Flash}. 
+
+  Like \emph{Flash}, \emph{Microsoft Silverlight}\footnote{\url{http://www.microsoft.com/silverlight/}(accessed June 2, 2015).} is a cross browser plug-in and platform that is used to develop rich \emph{Internet} applications. It supports vector graphics, animation and video. Compared to \emph{flash}, which uses \emph{ActionScript}, \emph{Silverlight} applications can use languages like C\#, \emph{VisualBasic} and \ac{XAML}. \emph{Silverlight} uses a technique called \emph{Smooth Streaming} from \emph{IIS Media Service} that consists on delivering video in real-time with adjusted quality in function of bandwidth variations and \ac{CPU} usage.
+
+  Using technologies that relies only on web standards, like \ac{CSS}, \ac{HTML}5, \emph{JavaScript} and \ac{SVG}, will make possible to develop an application that solves our problem with the advantage of being compatible with a greater amount of web browsers.
+  %RP não concordo com frase. O que o uso de tecnologias standard faz é garantir que a app é suportada em vários dispositivos. Também podes dizer as essas tecnologias já permitem desenvolver a applicação que tens em mente, mas isso é outra coisa.
+  %RP evita ser tão ``vendedor''. Não digas coisas como ``to a new level'' mas cinge-te a afirmaçãos objectivas.
+
+
+  %In this project our goal is to enrich hyper-calls with no limits, every user should be free to choose how it wants to be contacted and how he wants to share its contents.
+  %RP O ``no limits'' é muito vago. Tens de ser mais objectivo.
+  %HR tanto esta como a seguinte frase foram escritas praticamente no inicio do estado de arte, nem faz sentido estarem aqui. 
+
+  %In order to give users a personalized communication channel, each user must have a personal web page where its available plug-ins could be downloaded from other peers, after that, they can talk in the same language whatever it is.
+%RP acho que aqui já estás a falar de detalhes de implementação que o leitor não tem possibilidade de perceber antes de descreveres as funcionalidades de aplicação e a sua arquitectura.
+
+
