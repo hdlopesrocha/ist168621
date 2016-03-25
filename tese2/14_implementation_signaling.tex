@@ -1,6 +1,8 @@
 \section{Signaling Protocol}
 
-The signaling protocol could be implemented using \ac{HTTP} messages but they would transport extra information such as \ac{HTTP} headers and would follow a request response signaling mechnism which would not be the best option, as multiple ice candidates can arrive at any time. For that reason bi-directional communications were prefered.
+The signaling protocol could be implemented using \ac{HTTP} messages but they would transport extra information such as \ac{HTTP} headers and would follow a request response signaling mechnism which would not be the best option, as multiple ice candidates can arrive at any time. Using a \ac{REST} \ac{API} over \ac{HTTP} for signaling and allowing other methods to be called at the same time would lead to open multiple \ac{TCP} connections at the same time.
+
+Instead if we create a \emph{WebSocket} \ac{API} we only need one \ac{TCP} connection and at the same provide bi-directional communications without additional headers.
 
 Our signaling protocol consists in send and receiving JSON formated messages over WebSockets by both the server and the client. 
 
@@ -55,7 +57,7 @@ With the media session established, the server starts to record any received str
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.5pc}
+    \begin{subfigure}{}
     	\includegraphics[width=1.0\textwidth]{figures/signaling}
     \end{subfigure}
     \caption{Signaling sequence diagram}

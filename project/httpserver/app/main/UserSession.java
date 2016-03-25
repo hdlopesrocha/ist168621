@@ -471,10 +471,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             sendMessage(msg.toString());
                         }
                     }
-
-
-
-
                 }
             } else {
                 if(rec==null) {

@@ -34,33 +34,52 @@ The requirements for our web application are:
 
 \begin{itemize}
  \item Text, Audio and Video communication using \ac{WebRTC}.
- \item Enrich communications by overlaying multiple media types.
- \item Create annotations over video and voice content.
- \item Search and navigate through annotations.
- \item Structure presentation of the content.
- \item Ability to perform tasks on real-time collaborative environment.
  \item Ability to record and playback interactive multimedia.
- \item File sharing and collaborative edition.
+ \item Create annotations over video and voice content.
+ \item Enrich communications by overlaying multiple media types.
+ \item Search and navigate through annotations and contents.
+ \item Ability to create and share time links among users.
+ \item Mix multiple user streams into a single stream.
+ \item Sound detection for showing the current speaker.
+ \item Structure presentation of the content.
+ \item Collaborative text edition.
+ \item Easy interface for content creation and synchronization. 
 \end{itemize}
+
+	Clients can discover chat rooms and other clients by querying the signaling server, they can create rooms for multi-party communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{DataChannel}, namely for audio, video and text communication.
+
+	Chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is formed by the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a list of clients or can be accessed by clients that have a link for that chat room.
 
 \section{Modules}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/archs.png}
+	\includegraphics[width=0.7\textwidth]{figures/modules.pdf}
 	\caption{System Modules}
         \label{fig:modules}
 \end{figure}
 %RP as figuras têm de ser apresentadas. Figure~\ref{fig:modules} presents ...
-Figure~\ref{fig:modules} presents the structure of our system which is divided into five modules. 
+	Figure~\ref{fig:modules} presents the structure of our system which is divided into six modules:
 
- The Web Server sends Web Pages, containing the other modules information, to the client, after this, the client contacts all the other modules. The \ac{ICE} server will be used for \ac{NAT} traversal. The Stream Server will be used to record streams for further playback. The signaling server will be responsible for user and calls management and presence information. The web server will provide libraries to the client in order to interact with the other modules.
+\begin{itemize}
 
-Clients can discover chat rooms and other clients by querying the signaling server, they can create rooms for multi-party communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{DataChannel}, namely for audio, video and text communication.
+\item \underline{Application module} - responsible to provide information about the relevant modules (\emph{NAT Traversal} and \emph{Signaling}) and user interface to the \emph{Client}.
 
-Chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is formed by the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a list of clients or can be accessed by clients that have a link for that chat room.
+\item \underline{Signaling module} - responsible for \emph{Client} and \emph{Stream} coordination.
 
-Each room will be associated to multiple Media-Types, interactive and non-interactive, discrete and continuous. This media types can be structured with chains of events. Some components of the user interface may not be synchronized to all participants, for example an help or suggestion window.  
+ \item \underline{NAT Traversal module} - used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
+
+ \item \underline{Stream module} - responsible to deliver and receive multimedia content from the \emph{Client}. 
+
+ \item \underline{Storage module} - responsible store all the model information and media recorded. 
+
+ \item \underline{Client module} - responsible for the interaction with the user.
+
+\end{itemize}
+
+
+
+% Each room will be associated to multiple Media-Types, interactive and non-interactive, discrete and continuous. This media types can be structured with chains of events. Some components of the user interface may not be synchronized to all participants, for example an help or suggestion window.  
 
  
 \section{Implementation Proposal}
@@ -70,20 +89,27 @@ The infrastructure is composed by: Ice Server, Web Server, Stream Server, Signal
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/arch.png}
+	\includegraphics[width=\textwidth]{figures/infrastructure.pdf}
 	\caption{System Infrastructure}
 \end{figure}
 
-Although the core infrastructure is important and crucial for the implementation of our web application, there is no preference for a specific software running on the web server. An important requirement for the Web Server is the WebSockets support, The \emph{LAMP} stack was considered, although the chosen technology for web development is the \emph{Play Framework} with \emph{Java}, which has a more evident separation between \emph{Model}, \emph{View} and \emph{Controller} components.
+In order to simplify our solution, we propose both the \emph{Application} and \emph{Signaling} modules implementation within the same server application so it could be easy to control which resources the client has permission to access. 
+ 
+We have taken into account the compatibility between the streaming server, database and the operation transformation solutions in order choose the appropriate framework to implement our web server.
 
-For the signaling server there is also no preference between \ac{SIP} and \ac{XMPP}, as both support presence information feature. \ac{SigOfly} could be adopted as well, but using it would be irrelevant for the final result of this project. For the sake of simplicity and easy deployment, the chosen platform is the \emph{Ejabberd} \ac{XMPP} application server, since it implements \cite{xep0206} which is crucial for web applications. \emph{Ejabberd}, as said before, is also the \ac{XMPP} server that implements more extensions. Initially, for simplicity, \emph{Ejabberd} will be configured as a single node instead a member of a cluster. 
+Based on our study about signaling protocols we decided to exclude \ac{XMPP} due to the development difficulties that it exposes when using multiple web pages, namely the user re-authentication performed each time a page is loaded and the single tab usage limitation. By consequence we have not choosen \emph{Jitsi Video Brigde} as it uses \ac{XMPP}.
 
-The streaming server will be the \emph{Jitsi Videobridge} as the \emph{Jitsi} team is working with \ac{WebRTC} and their code is open source.
+By excluding \emph{Jitsi Video Brigde} we have decided that our solution must use \ac{KMS}. Our web server could be implemented more easily with \emph{NodeJS} or \emph{Java} due to the fact \ac{KMS} provides clients for both technologies but others could be used as \ac{KMS} also exposes their \ac{API} via \emph{WebSockets}.
 
-The \ac{ICE} server is not required to be on our infrastructure, as a public \ac{ICE} server could be used. If \ac{TURN} is used, the network speed could drop due to resource sharing with other users. An \ac{ICE} server will be installed in order to prevent the influence of other users on our application.
+By default, \emph{Kurento Repository} is implemented over \emph{MongoDB}, for convenience our storage model will also use the same database. 
 
-On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} will be installed as web browsers. Libraries such as \emph{jQuery}, \emph{Bootstrap}, \emph{Strophe}, \emph{Modernizr} and \emph{TogetherJS} will be downloaded from the Web Server and executed on the client side.
+For the web server we could choose \emph{NodeJS} or any \emph{Java} based web framework. One of our criteria for choosing the web framework is the ability to follow the \ac{MVC} paradigm which can help us to organize our code. Without any strong reason we have decided to implement our webserver with \emph{PlayFramework}\footnote{\url{https://www.playframework.com/}(acessed March 25, 2016)} using \emph{Java}.
 
+For the collaborative text editor, we have choosen \emph{OT.js} due to its indenpendence from server implementation and storage choice.
+
+For the \emph{NAT Traversal} module an \ac{ICE} server is not required to be on our infrastructure, as a public \ac{STUN} server can be used for testing our solution. 
+
+On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} should be installed as web browsers. Libraries such as \emph{jQuery}, \emph{Bootstrap}, \emph{Adapter.js}, \emph{OT.js} can be downloaded from the Web Server and executed on the client side.
 
 \begin{table}[H]
 \centering
@@ -98,14 +124,7 @@ On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} wi
 	        \label{fig:apparch}
 \end{table}
 
-Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies. \emph{Modernizr} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
+Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies. \emph{Adapter.js} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
-The \emph{Strophe} library will be essential to communicate with the \ac{XMPP} server.
 
-
-\emph{TogetherJS} will be used for the collaborative component of our web application. Other libraries were considered but, as said before, \emph{TogetherJS} does not provide object storage giving us the ability to choose how to store collaborative objects. We assume that \emph{JavaScript} objects are enough for implementing our application but \emph{TogetherJS} provides the flexibility to change our storage model.
-
-The synchronization between multimedia elements will be performed trough chains of \emph{JavasSript} events, other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
-
-
-
+The synchronization between multimedia elements will be performed trough chains of \emph{JavasSript} events or by specifying the interval of time which time content must be visible. Other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.

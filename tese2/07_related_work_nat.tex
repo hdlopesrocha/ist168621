@@ -1,12 +1,14 @@
 \section{Early days of the Internet and its remaining flaws}\label{early}
 
-The need to build a global communications network in an age when almost nobody had access to that technology and the number of future users was unpredictable, lead to some protocols not being suitable for the huge growth of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. One way to overcome this problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible for redirecting messages to members of its group using their private addresses, each connection in the private network is identified publicly by the same \ac{IP} address with a different port.
+The need to build a global communications network in an age when almost nobody had access to that technology and the unpredictability of the number of future users, lead to some protocols not being suitable for the explosive growth and proliferation of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. {\color{blue} Today we live in the \emph{Internet of Things} era, users and companies may have multiple devices that require internet connectivity, from personal computers, smart phones, tablets, traffic sensors, public vigillance systems, health monitoring tools and so on, all those devices combined cannot be publicly addressed by \ac{IPv4}.} 
+
+One way to overcome the \ac{IPv4} address scarcity problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible for redirecting messages to members of its group using their private addresses, each connection in the private network is identified publicly by the same \ac{IP} address with a different port.
 %RP o porto não identifica uma máquina (membro da rede privada) mas uma ligação.
 This technique is known as \ac{NAT}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{figures/nat.png}
+	\includegraphics[width=0.7\textwidth]{figures/nat.pdf}
 	\caption{Network Address Translation}
 \end{figure}
 %RP na figura devias indicar que uns tem ips publicos e outros privados. Alternativamente, colocavas metade da nat box dentro da núvem para indicar que esta pertence à Internet e os pc não. 
@@ -35,8 +37,8 @@ Applications based on multimedia and peer-to-peer file sharing have been one of 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.30\textwidth]{figures/multinat.png}
-	\caption{Multiple level \ac{NAT}s}
+	\includegraphics[width=0.45\textwidth]{figures/multinat.pdf}
+	\caption{Multiple level NATs}
 \end{figure}
 
 %RP file sharing não precisa de real-time
@@ -44,10 +46,10 @@ Applications based on multimedia and peer-to-peer file sharing have been one of 
 %HR XXX I was here
 %RP explicar o que são multiple level pois não falaste disto antes? São ``nested''?
 
-\ac{STUN} servers are quite simple. They receive requests from \ac{NAT}ed clients, with the source address of a request being the public address that \ac{NAT} mapped to the client. \ac{STUN} servers will then reply to the client, providing the mapped public address, so it knows its associated public \ac{IP} address and port. Symmetric \ac{NAT} changes \ac{IP} port for each different connection, for that reason, when the \ac{STUN} servers reply with the \ac{IP} address and port of their connection, it will be useless for clients to use in other connection connections. That is why Symmetric \ac{NAT} represents a problem for peer-to-peer communications.   
+\ac{STUN} servers are quite simple. They receive requests from \ac{NAT}ed clients, with the source address of a request being the public address that \ac{NAT} mapped to the client. \ac{STUN} servers will then reply to the client, providing the mapped public address, so it knows its associated public \ac{IP} address and port. Symmetric \ac{NAT} changes \ac{IP} port for each different connection, for that reason, when the \ac{STUN} servers reply with the \ac{IP} address and port of their connection, it will be useless for clients to use them on other application connections. That is why Symmetric \ac{NAT} represents a problem for peer-to-peer communications.   
 %RP os problemas que relatas têm a ver com P2P ou real-time?
 
-\ac{TURN} uses public servers to relay traffic between private endpoints.
+On the other hand, \ac{TURN} uses public servers to relay traffic between private endpoints.
 It may use a \ac{P2P} network relay to find the best peer, but after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \emph{full cone}. \ac{ICE} is a technique that uses \ac{STUN} when direct communications are possible and \ac{TURN} while a direct communication isn't possible.
 %RP ainda não explicaste o que é o ICE
 %RP explicar que para usar TURN as aplicações têm de estar cientes disso.

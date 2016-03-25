@@ -77,12 +77,12 @@ var HyperWebSocket = new (function() {
 				if(perc>0.05){
 					if(!soundDetected){
 						soundDetected = true;
-						HyperWebSocket.talk(true);
+						this.talk(true);
 					}
 				}else {
 					if(soundDetected){
 						soundDetected = false;
-						HyperWebSocket.talk(false);
+						this.talk(false);
 					}	
 				}
 			}
@@ -90,7 +90,7 @@ var HyperWebSocket = new (function() {
 			if(soundProc>4){
 				soundProc = 0;
 			}
-		};
+		}.bind(this);
 		
 		microphone.connect(javascriptNode);
 		javascriptNode.connect(audioContext.destination);
@@ -463,7 +463,7 @@ var HyperWebSocket = new (function() {
                                 }));
                             }, logError);
                         }, logError,remote_constraints);
-                    }).catch(logError);
+                    }.bind(this)).catch(logError);
 				}
 				else if(mode==2){
 					pc.createOffer(function (lsd) {

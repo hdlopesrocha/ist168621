@@ -1,0 +1,73 @@
+\section{Hyper Content}
+	In this section we describe the algorithm we created to show synchronized interactive content to clients.
+
+	\subsection{Synchronization}
+
+	In our solution content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}, this content is displayed on defined intervals of time.
+
+	Multiple contents can be displayed at the same time, in order to achieve that, we define layers below the video with the same size. Each layer is associated to the content.
+
+	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of content instead all of them, which would be very ineficcient.
+
+	The content to display for each user depends on the user's position on the timeline, this position is given by an offset between the current time and the navigated time. If the user is watchiing the content in realtime this offset is constant so there is no need to synchronize this value.
+
+	Each content is divided into two components, the \emph{start} and the \emph{end} which are sent to users. The \emph{start} component contains a timestamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the timestamp and the content identifcation number. 
+
+	The content to return is given by the union of two content subsets:
+	\begin{itemize}
+		\item The intersection of the content interval and user's time.
+		\item A subset of contents which starting time is immediately following the user's time.
+	\end{itemize}
+
+	The second subset is used for predicting which content the user will watch and avoid requests during its events.
+
+	The content description messages that are sent to each user contains the contant itself on the form of a list of events and an atrtibute that specifies if the server has more content to return.
+
+	When a user enters the conference room, imediatelly after the \emph{WebSocket} creation the server sends him the current content.
+
+	The user receives the content, sorts all components by time and creates a set of events. All the events before the user's time are rendered and removed from the set of events. A timer is schedulled for the first component on the event set and the process repeats while the set is not empty.
+
+	If the set is empty, there two options, if the server contained more content a new request for content is made and the proccess starts from the beggining, namely the server sends the correpondent content again. If the server has no more content the process is stopped until it sends more.
+
+	The users will receive their contents from the server on five different situations:
+
+	\begin{itemize}
+		\item Conference room entrance (advertised by server).
+		\item Set of events empty and server has more content (client requested).
+		\item Content is created (advertised by server).
+		\item Content is removed (advertised by server).
+		\item User navigates to different point in time (client requested).
+	\end{itemize}
+
+	\subsection{Content creation}
+
+	In order to create content the user has the option to write simple movie captions without wrtting any code, otherwise, as mentioned before, it can write \ac{HTML}, \ac{CSS} and \emph{JavaScript}. The definition of the content's starting and ending time by the user it's not an easy task. Defining the content's time to appear in realtime would require a previous user plan. Otherwise the user could make a speech and add the content for later reproduction.
+
+	In order to help the content creator to show and synchronize its content in realtime we allow the user to encode its content into \emph{QR codes} and show it to the camera in real time.
+
+	\ac{KMS} lets registring event handlers for \emph{QR code} detection. The component that detects \emph{QR codes} on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \emph{QR code} enters or leaves the screen. We had to implement our own mechnism for detecting those events.
+
+	Each user session in the server maintains a map with the contents that are present on the screen. In order to aplly our algorithm more efficiently we calculate the content's hash through the \emph{md5} method.
+
+	If the hash is not present in the map it means the \emph{QR code} was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in realtime. By doing an analogy to the \emph{Nyquist} theorem we know that if the same \emph{QR code} is not detected after a time bigger then two periods we can conclude that the \emph{QR code} leaved the screen and we add the correspondent content into our database.
+
+	Our main content synchronization mechanism is time based but with some programming knowledge it is possible to insert \emph{JavaScript} code that fires events on user interaction. For example, after a teacher's lecture, it is possible to show a quiz to the users in order to understand what they learned and then submit the data to the server for further analysis.
+
+	\subsection{Security Concerns}
+
+	Our solution is flexible on what kind of interactions are possible to the users in real time but allowing users to write \emph{Javascript} that is executed on the other users browser would attackers to misuse their resources and access to critical information.
+
+	We could solve this problem easily by escaping any \emph{script} tag present on the content, but we would sacrifice the kind of interactions that are possible. 
+
+	By not allowing javascript we would need to implement all actions a priori and fire them when a type of message is received. We decided to ignore the security vulnarabilities that are exposed by evaluating \emph{javascript} because in order to offer the same interactions we would have to do an exaustive functionaly requirements gathering.
+
+	Another way to solve this problem, which is not within the goals of this thesis, is to analyse the javascript code and detect if it is malicious.
+
+
+	\subsection{Tags creation}
+
+	Tags are simpler way save points in time and share them with other users. When a user enters in a conference room the server sends all tags so they can be displayed directly into the user timeline. Each time a tag is created all users are advertised so they can update their interfaces.
+
+	\subsection{Content Search}
+
+	Users can easily search for tags and contents and travel to their correspondent times. In the case of hyper content after handling the result from database we ignore \ac{HTML} tags, extract the text with \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed 21 March 2016)} and apply the query again. We extract the text from \ac{HTML} because accidentatly searching for text contained in \ac{HTML} tags would lead to incorrect results.

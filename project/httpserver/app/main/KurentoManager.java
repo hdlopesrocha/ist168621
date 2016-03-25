@@ -75,6 +75,14 @@ public class KurentoManager {
             return null;
         }
         Room room = rooms.get(groupId);
+        try {
+            if (room != null) {
+                room.getMediaPipeline().getName();
+            }
+        }catch (Exception e){
+            room = null;
+        }
+
         if (room == null) {
             MediaPipeline mp = kurento.createMediaPipeline();
             mp.setName(groupId);

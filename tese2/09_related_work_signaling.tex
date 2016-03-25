@@ -4,11 +4,13 @@
 
   Signaling is the process by which applications exchange connection information about peers and servers, their capabilities and meta-data.
   \ac{WebRTC} doesn't implement signaling, as different applications may require different protocols, and there is no single answer that fits all problems.
-  Multiple options are available for signaling, which can be performed using \ac{SIP}, \ac{XMPP}, \emph{WebSockets}, \emph{Socket.io} or by implementing a custom protocol.
+  Multiple options are available for signaling, which can be performed using \ac{SIP}, \ac{XMPP}, \emph{WebSockets}, \emph{Socket.io}\footnote{\url{http://socket.io/}(accessed June 1, 2015).} or by implementing a custom protocol.
+
+  \subsection{WebRTC}
 
   \ac{WebRTC} uses \ac{SDP} \cite{rfc4566} to define peer connection properties such as types of supported media, codecs, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
 
-  One of \ac{WebRTC} signaling's requisites is bi-directional communication over \ac{HTTP}.
+  One of \ac{WebRTC} signaling's requisites is bi-directional communication.
 %RP acrescentei o webrtc pois isto não é um requisito geral de signaling. era o que querias dizer?
 %HR sim é isso
   \ac{HTTP} uses a request-response paradigm, where a request is sent by the client, followed by a server response.
@@ -24,11 +26,11 @@ Polling consists on sending periodic messages to which the server responds immed
 %RP  Real time communications are unpredictable. Normalmente falamos de audio e video, que são previsíveis. Estás a referir-te às comunicações em si ou ao signaling e estabelecimento?
 
 A technique called long polling consists on making the server hold the request until there is fresh information or expiring it after some time.
-As soon as it receives the reply, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which add data overhead, especially for short messages.
+As soon as it receives the reply, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which add data overhead and can be noticed especially for short sized messages.
 
-The WebSocket protocol allows bidirectional communications over a full-duplex socket channel \cite{rfc6455}.
+The \emph{WebSocket} protocol allows bi-directional communications over a full-duplex socket channel \cite{rfc6455}, by other words it supports sending and receiving data simultaneously.
 %RP coloca as citações no final da frase. Pode haver excepções onde a citação apenas cobre parte da frase ou precisas de colocar várias a dizer coisas diferentes.
-WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, but the remainder messages are exchanged without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io}\footnote{\url{http://socket.io/}(accessed June 1, 2015).} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}(accessed June 1, 2015).} fall back to using \ac{HTTP} when there is no support for WebSockets. 
+ \emph{WebSocket} handshake phase specifies a \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, but the remainder messages are exchanged without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}(accessed June 1, 2015).} fall back to using \ac{HTTP} long polling when there is no support for \emph{WebSockets}. 
 
   \ac{BOSH}\cite{xep0124} is a technique based on long polling that uses two socket connections and allows sending client messages to the server while a previous request is held.
   The \ac{BOSH} specification assumes that a connection manager is implemented to handle \ac{HTTP} connections. This connection manager is basically a translator from \ac{HTTP} to raw message so that the server may be implemented as if this communication is performed over \ac{TCP}.
@@ -37,19 +39,23 @@ WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \e
   If the server is holding a request, it maintains a second connection to receive more requests from the same client. The request on hold returns immediately with a possible empty body leaving its socket free, while the second connection serves the polling loop. The exchange of roles of those two connections allow to pull data from multiple contexts instead of being locked in just one.
   %RP estas duas frases dizem o mesmo da perspectiva do cliente e do servidor. Não consegues simplificar numa só?
 
-  \ac{SIP} \cite{rfc3261} is a protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as a signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice call's applications over \ac{IP} networks.
+  \subsection{Session Initiation Protocol}
+
+  \ac{SIP} \cite{rfc3261} is a protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as a signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls between the telephone network and applications over \ac{IP} networks.
 
   The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}(accessed June 1, 2015).} proposed the creation of \ac{SIP} extensions, namely presence information \cite{rfc5263} and instant messaging \cite{rfc3428}.
 
   \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with the \ac{PSTN}.
-  Service providers are making their \ac{SIP} infrastructures available through WebSockets.
+  Service providers are making their \ac{SIP} infrastructures available through WebSockets\footnote{\url{https://tools.ietf.org/html/draft-ietf-sipcore-sip-websocket-10} (accessed March 25, 2016)}.
 %RP a frase anterior é estranha
   Frameworks like \emph{jsSIP}\footnote{\url{http://jssip.net/}(accessed June 1, 2015).}, \emph{QoffeeSIP}\footnote{\url{http://qoffeesip.quobis.com/}(accessed June 1, 2015).} and \emph{sipML5}\footnote{\url{http://sipml5.org/}(accessed June 1, 2015).} are used on the client side to parse and encode \ac{SIP} messages, making \ac{SIP} accessible to web based applications. 
 %RP quando usas footnotes para indicar sites deves acrescentar ``last accessed (data)''. Isto é importante pois os sites são documentos efémeros que podem dizer uma coisa diferente mais tarde.
   \ac{SIP} with \emph{WebSockets} can be used as a signaling method for \ac{WebRTC} applications, it allows web browsers to have audio, video and \ac{SMS} capabilities like mobile phones. For instance, it's possible to inter-operate web communications with \ac{SIP} networks, mobile and fixed phones.
 
+\subsection{Extensible Messaging and Presence Protocol}
+
   \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
-  \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \cite{xep0096}, which adds file transfer capabilities between two entities and \cite{xep0045} which enables multi-user chat.
+  \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \emph{XEP-0096}\cite{xep0096}, which adds file transfer capabilities between two entities and \emph{XEP-0045}\cite{xep0045} which enables multi-user chat.
   \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH} \cite{xep0206}.
   %RP falta um `` bi-directional communication OVER HTTP is achieved through''?
   %RP BOSH já foi explicado antes pelo que não vale a pena voltar a falar em long-pooling
@@ -59,11 +65,11 @@ WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \e
   
 {\color{blue}
 
-    One of the advantages that \ac{XMPP} based applications offer is the possibility to send messages across different servers, an \ac{XMPP} user is identified by its \textit{Jabber ID} which is definined by the pair username and server name in the form \textit{username@server}.
+    One of the advantages that \ac{XMPP} based applications offer is the possibility to send messages across different servers. An \ac{XMPP} user is identified by its \textit{Jabber ID} which is definined by the pair username and server name in the form \textit{username@server}.
 
     The user profile is represented in terms of Data Forms\cite{xep0004} protocol and managed (registration and update) through \textit{Info/Query} (IQ) \cite{rfc3920} requests to the \ac{XMPP} server which responds with an IQ response containing information to retrieve the registration fields needed to fill its profile (eg username, password, telephone). 
 
-    An important aspect of this model is the ability to define a user as a set of attributes that can change dinamically in order to fit the IM applications needs. 
+    An important aspect of this model is the ability to define a user as a set of attributes that can change dinamically in order to fit the \ac{IM} applications needs. 
 
     The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance.
 
@@ -75,8 +81,11 @@ WebSocket handshake phase specifies a \ac{HTTP} header in order to upgrade to \e
 
     Another alternative would be the development of our solution in a single web page, which would increse drastically the complexity of our web application.
 
-    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that XMPP already implemment, but from all the \ac{XMPP} features, we don't need all of them, in fact we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
+    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that \ac{XMPP} already implemment, but from all the \ac{XMPP} features, we don't need all of them, in fact we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
 }
+
+  \subsection{Signaling-On-the-fly}
+
 
   Another interesting approach for signaling would be \ac{SigOfly} which allows inter-domain real-time communications, while abstracting the protocol used~\cite{sigofly}.
 %RP o ~ antes do cite faz com que não haja um espaço mas não haja uma mudança de linha entre a última palavra e a citação

@@ -93,19 +93,31 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
     Other Google products, such as Google Docs, are also using this type of technology. In 2010 Google stopped the development of Google Wave and released the main components as Open Source code to Apache, the project is currently known as \emph{Apache Wave} and the reference implementation is named as \emph{Wave in a Box}.
                 %RP acho que o google wave merecia uma descrição mais detalhada. Mas não era aqui. Vê o comentário no final
 
-	\emph{ShareJS}\footnote{\url{http://sharejs.org/}(accessed June 2, 2015).} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integration is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
+    Among other platforms and libraries we present \emph{ShareJS}\footnote{\url{http://sharejs.org/}(accessed June 2, 2015).}, \emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).}, \emph{Goodow}\footnote{\url{http://realtimeplayground.goodow.com/}(accessed June 2, 2015).}, \emph{Etherpad Lite}\footnote{\url{https://github.com/ether/etherpad-lite}(Accessed 20 March 2016)} and \emph{otJS}\footnote{\url{http://operational-transformation.github.io}(accessed March 10, 2016)}.
 
-	\emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, all the synchronization work is performed by the clients. Altough the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}, if we would not choose \emph{NodeJS} for server implementation we would need read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
+	\emph{ShareJS} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integration is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
 
-	\emph{Goodow}\footnote{\url{http://realtimeplayground.goodow.com/}(accessed June 2, 2015).} is a collaborative framework with its own server implementation, it supports four types of collaborative elements: String, Lists, Maps and Custom objects.
+	\emph{TogetherJS} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, all the synchronization work is performed by the clients. Altough the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}, if we would not choose \emph{NodeJS} for server implementation we would need read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
+
+	\emph{Goodow} is a collaborative framework with its own server implementation, it supports four types of collaborative elements: String, Lists, Maps and Custom objects.
         %RP estes 3 últimos parágrafos estão desligados do resto. O que pretendes apresentar?
 	
-	{\color{blue}\emph{OT.js}\footnote{\url{http://operational-transformation.github.io}(accessed March 10, 2016)} is a \emph{JavaScript} library that only implements operation transformations on client side over plain text. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage, besides this drawback this library is very flexible because it's not tied to a specific database.}
+
+	{\color{blue}\emph{Etherpad Lite} is a collaborative text editor implemented with \emph{NodeJS} that allows not only the text operations but also to associate authorships to pieces of text. It supports adding functionality trought plugins\footnote{\url{http://static.etherpad.org/plugins.html}(Accessed 20 March 2016)}, for example:
+		\begin{itemize}
+		\item exporting and importing document formats such as \emph{DOC}, \emph{PDF}, \emph{ODT} and \emph{DOCX}.
+		\item painting and drawing.
+		\item video and audio chat using WebRTC.
+		\item create slideshows.
+		\item spell checking.
+		\item text to speech.
+		\end{itemize}
+	}
+
+
+
+	{\color{blue}\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations on client side over plain text. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage, besides this drawback this library is very flexible because it's not tied to a specific database or server side technology.}
 	
-
-{\color{green} For ease of development we decided to use the same backend for \ac{OT} since our web server relies on \emph{Play Framework} with Java and \emph{ShareJS} relies on \emph{NodeJS}\footnote{\url{https://nodejs.org/en/(accessed March 10, 2016)}} }
-
-
 
 
 \begin{table}[H]
@@ -118,7 +130,7 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 ShareJS          & yes                 & yes                  & text+objects        \\ \hline
 TogetherJS       & yes                 & no                   & text+objects        \\ \hline
 Goodow           & yes                 & yes                  & text+objects        \\ \hline
-%Etherpad        & yes                 & yes                  & text (not sure)     \\ \hline
+Etherpad Lite    & yes                 & yes                  & extendable 			    \\ \hline
 OT.js            & no                  & no                   & text                \\ \hline
 \end{tabular}
 \caption{Comparision between Operational Transformation libraries}
