@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=6cm,
+	    title={Net Usage},
+	    xlabel={Time [seconds]},
+	    ylabel={NET [kB/s]},
+	    xmin=0, xmax=800,
+	    ymin=0, ymax=1000,
+	    xtick={0,100,...,2000},
+	    ytick={0,100,...,2000},
+	    extra x ticks={10,70,...,1000},
+    	extra x tick labels={,,},
+		extra tick style={
+			grid=major,
+			major grid style={yellow,thick,solid},
+			tick label style={rotate=90,anchor=east}
+		},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	]
+	
+	\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-25,y index=1] {false/sent_eth0.csv};
+	\addlegendentry{Sent(eth0)}
+
+	\addplot[smooth,color=red] table[x expr=\thisrowno{0}-25,y index=1] {false/recv_eth0.csv};
+	\addlegendentry{Recv(eth0)}
+
+	\addplot[smooth,color=green] table[x expr=\thisrowno{0}-25,y index=1] {false/recv_lo.csv};
+	\addlegendentry{Sent/Recv(lo)}
+
+	\end{axis}
+\end{tikzpicture}
+

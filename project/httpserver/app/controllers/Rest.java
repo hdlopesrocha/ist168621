@@ -62,9 +62,9 @@ public class Rest extends Controller {
         JSONArray array = new JSONArray();
         try {
             SearchTimeTagsService service = new SearchTimeTagsService(session("uid"), groupId, query);
-            List<TimeTag> tags = service.execute();
+            List<TimeAnnotation> tags = service.execute();
 
-            for (TimeTag tag : tags) {
+            for (TimeAnnotation tag : tags) {
                 JSONObject msg = tag.toJson();
                 msg.put("type", "tag");
                 array.put(msg);

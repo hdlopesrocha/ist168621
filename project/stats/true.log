@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.2.21)  26 MAR 2016 09:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.2.21)  26 MAR 2016 09:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**draft.tex
-(./draft.tex
+**true.tex
+(./true.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -719,8 +719,8 @@ File: tikzlibraryplotmarks.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 (/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
 File: pgflibraryplotmarks.code.tex 2010/10/15 v2.10 (rcs-revision 1.12)
 )))
-(./draft.aux)
-\openout1 = `draft.aux'.
+(./true.aux)
+\openout1 = `true.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
 LaTeX Font Info:    ... okay on input line 21.
@@ -806,12 +806,23 @@ ABD: EveryShipout initializing macros
 Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.9}).
 
-(./points3.tex
-PGFPlots: reading {false/sent_eth0.csv}
-PGFPlots: reading {false/recv_eth0.csv}
-PGFPlots: reading {false/recv_lo.csv}
+(./true_cpu.tex
+PGFPlots: reading {true/cpu_7_mongod.csv}
+PGFPlots: reading {true/cpu_67_kurento-media-server.csv}
+PGFPlots: reading {true/cpu_35_kurento-repo.csv}
+PGFPlots: reading {true/cpu_233_bash.csv}
 
-Overfull \hbox (12.34265pt too wide) in paragraph at lines 35--36
+Overfull \hbox (12.34021pt too wide) in paragraph at lines 39--40
+ [] 
+ []
+
+) (./true_mem.tex
+PGFPlots: reading {true/res_7_mongod.csv}
+PGFPlots: reading {true/res_67_kurento-media-server.csv}
+PGFPlots: reading {true/res_35_kurento-repo.csv}
+PGFPlots: reading {true/res_233_bash.csv}
+
+Overfull \hbox (12.34021pt too wide) in paragraph at lines 38--39
  [] 
  []
 
@@ -820,44 +831,33 @@ Overfull \hbox (12.34265pt too wide) in paragraph at lines 35--36
 
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./points2.tex
-PGFPlots: reading {false/res_7_mongod.csv}
-PGFPlots: reading {false/res_67_kurento-media-server.csv}
-PGFPlots: reading {false/res_35_kurento-repo.csv}
-PGFPlots: reading {false/res_233_bash.csv}
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./true_net.tex
+PGFPlots: reading {true/sent_eth0.csv}
+PGFPlots: reading {true/recv_eth0.csv}
+PGFPlots: reading {true/recv_lo.csv}
 
-Overfull \hbox (12.34265pt too wide) in paragraph at lines 38--39
+Overfull \hbox (12.34021pt too wide) in paragraph at lines 35--36
  [] 
  []
 
-) (./points.tex
-PGFPlots: reading {false/cpu_7_mongod.csv}
-PGFPlots: reading {false/cpu_67_kurento-media-server.csv}
-PGFPlots: reading {false/cpu_35_kurento-repo.csv}
-PGFPlots: reading {false/cpu_233_bash.csv}
-
-Overfull \hbox (4.56485pt too wide) in paragraph at lines 39--40
- [] 
- []
-
-) [2] [3] (./draft.aux) ) 
+) [2] (./true.aux) ) 
 Here is how much of TeX's memory you used:
- 21716 strings out of 493304
- 501757 string characters out of 6139871
- 1723341 words of memory out of 5000000
- 24736 multiletter control sequences out of 15000+600000
+ 22172 strings out of 493304
+ 509874 string characters out of 6139871
+ 2130818 words of memory out of 5000000
+ 25193 multiletter control sequences out of 15000+600000
  6712 words of font info for 25 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 65i,17n,81p,725b,1934s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on draft.pdf (3 pages, 277501 bytes).
+ 65i,17n,81p,724b,1934s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+Output written on true.pdf (2 pages, 353918 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 34 PDF objects out of 1000 (max. 8388607)
+ 24 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

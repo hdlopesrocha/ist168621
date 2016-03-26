@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=6cm,
+	    title={Cpu Usage},
+	    xlabel={Time [seconds]},
+	    ylabel={CPU [percentage]},
+	    xmin=0, xmax=800,
+	    ymin=0, ymax=600,
+	    xtick={0,100,...,2000},
+	    ytick={0,100,...,2000},
+	    extra x ticks={10,70,...,1000},
+    	extra x tick labels={,,},
+		extra tick style={
+			grid=major,
+			major grid style={yellow,thick,solid},
+			tick label style={rotate=90,anchor=east}
+		},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	] 
+	
+
+		\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-25,y index=1] {false/cpu_7_mongod.csv};
+		\addlegendentry{Mongod}
+
+		\addplot[smooth,color=red] table[x expr=\thisrowno{0}-25,y index=1] {false/cpu_67_kurento-media-server.csv};
+		\addlegendentry{Kurento Media Server}
+
+		\addplot[smooth,color=green] table[x expr=\thisrowno{0}-25,y index=1] {false/cpu_35_kurento-repo.csv};
+		\addlegendentry{Kurento Repository}
+
+		\addplot[smooth,color=magenta] table[x expr=\thisrowno{0}-25,y index=1] {false/cpu_233_bash.csv};
+		\addlegendentry{Java}
+
+	\end{axis}
+\end{tikzpicture}
+

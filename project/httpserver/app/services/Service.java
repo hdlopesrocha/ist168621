@@ -19,10 +19,7 @@ public abstract class Service<T> {
     
     /** The files. */
     static GridFS files;
-    
-    /** The last oid. */
-    static long lastOid = 0L;
-    
+
     /** The db. */
     private static DB db;
     
@@ -40,7 +37,7 @@ public abstract class Service<T> {
      *
      * @return the client
      */
-    private static MongoClient getClient() {
+    private synchronized static MongoClient getClient() {
         if (client == null) {
             client = new MongoClient(ServerAddress.defaultHost());
         }
@@ -65,7 +62,7 @@ public abstract class Service<T> {
      * @return the db
      */
     @SuppressWarnings("deprecation")
-    private static DB getDB() {
+    private synchronized static DB getDB() {
         if (db == null) {
             db = Service.getClient().getDB(DB_NAME);
         }
@@ -77,7 +74,7 @@ public abstract class Service<T> {
      *
      * @return the database
      */
-    public static MongoDatabase getDatabase() {
+    public synchronized static MongoDatabase getDatabase() {
         if (database == null) {
             database = getClient().getDatabase(DB_NAME);
         }

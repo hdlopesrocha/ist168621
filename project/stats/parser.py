@@ -7,7 +7,6 @@ data_proc = {}
 data_netw = {}
 timestamp = -1
 
-
 i = 0
 for line in sys.stdin:
 	if i>2:
@@ -45,37 +44,33 @@ for line in sys.stdin:
 
 				obj = {'virt':virt,'cpu':cpu,'time':time,'res':res}
 				data_proc[pid]['samples'].append(obj)
-
 	i = i + 1
 
 for field in ['cpu','virt','res']:
-	print ""
-	print "======================= " + field + " ======================="
-	print ""
 	for p in data_proc:
 		proc = data_proc[p]
-		line = str(p)+" "+proc['name'] +" * "
-
+		name = proc["name"]
+		
 		if len(proc['samples'])>10:
+			fo = open(field+"_"+str(p)+"_"+name+".csv", "wb")
 			for sample in proc['samples']:
 				x = sample['time']
 				y = sample[field]
-				line = line + "("+str(x)+","+str(y)+")"
-			print line
 
+				fo.write(str(x)+" "+str(y)+"\n");
+			fo.close()
+		
 for field in ['sent','recv']:
-	print ""
-	print "======================= " + field + " ======================="
-	print ""
 	for p in data_netw:
 		proc = data_netw[p]
-		line = p+" * "
 
 		if len(proc['samples'])>10:
+			fo = open(field+"_"+p+".csv", "wb")
 			for sample in proc['samples']:
 				x = sample['time']
 				y = sample[field]
-				line = line + "("+str(x)+","+str(y)+")"
-			print line
+
+				fo.write(str(x)+" "+str(y)+"\n");
+			fo.close()
 
 

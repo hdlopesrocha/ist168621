@@ -1,7 +1,7 @@
 package services;
 
 import exceptions.ServiceException;
-import models.TimeTag;
+import models.TimeAnnotation;
 import org.bson.types.ObjectId;
 
 
@@ -34,7 +34,7 @@ public class DeleteTimeTagService extends Service<Void> {
     public Void dispatch() throws ServiceException {
         ObjectId tid = ObjectId.isValid(tagId) ? new ObjectId(tagId):null;
         if(tid!=null) {
-            TimeTag tag = TimeTag.findById(tid);
+            TimeAnnotation tag = TimeAnnotation.findById(tid);
             tag.delete();
         }
         return null;

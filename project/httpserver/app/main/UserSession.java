@@ -28,6 +28,8 @@ import java.util.*;
  */
 public class UserSession implements Closeable, Comparable<UserSession> {
 
+    private static final boolean QR_ENABLED = false;
+
     /** The out. */
     private final WebSocket.Out<String> out;
     
@@ -88,8 +90,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param out the out
      * @throws ServiceException the service exception
      */
-    private final EventListener<CodeFoundEvent> codeListener;
-    private ListenerSubscription codeSubscritption;
+    private EventListener<CodeFoundEvent> codeListener;
 
     public UserSession(final User user, final Room room, WebSocket.Out<String> out) throws ServiceException {
         this.out = out;
@@ -123,75 +124,73 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerAddress("64.233.184.127");
         endPoint.setStunServerPort(19302);
 
-        qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
+        if(QR_ENABLED) {
+            qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
 
 
-
-
-       codeListener = new EventListener<CodeFoundEvent>() {
-            @Override
-            public void onEvent(CodeFoundEvent event) {
-                System.out.println(".");
-                final String content = event.getValue();
-                final String hash = Tools.md5(content);
-                if(hash!=null) {
-                    boolean containsQR = false;
-                    synchronized (currentQRCodes) {
-                        containsQR = currentQRCodes.containsKey(hash);
-                    }
-                    if (!containsQR) {
+            codeListener = new EventListener<CodeFoundEvent>() {
+                @Override
+                public void onEvent(CodeFoundEvent event) {
+                    System.out.println(".");
+                    final String content = event.getValue();
+                    final String hash = Tools.md5(content);
+                    if (hash != null) {
+                        boolean containsQR = false;
                         synchronized (currentQRCodes) {
-                            Date startTime = new Date(new Date().getTime() - timeOffset);
-
-                            currentQRCodes.put(hash,startTime);
+                            containsQR = currentQRCodes.containsKey(hash);
                         }
-                        JSONObject msg = new JSONObject();
-                        msg.put("cmd", "qrCode");
-                        msg.put("data", content);
-                        msg.put("hash", hash);
-                        room.sendMessage(msg.toString());
-                    }
+                        if (!containsQR) {
+                            synchronized (currentQRCodes) {
+                                Date startTime = new Date(new Date().getTime() - timeOffset);
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Object currentQRCode = new Object();
-                            lastQRCode = currentQRCode;
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                currentQRCodes.put(hash, startTime);
                             }
-                            if (lastQRCode == currentQRCode) {
-                                Date startTime;
-                                Date endTime = new Date(new Date().getTime() - timeOffset);
-                                synchronized (currentQRCodes) {
-                                    startTime = currentQRCodes.remove(hash);
-                                }
-                                JSONObject msg = new JSONObject();
-                                msg.put("cmd", "qrCode");
-                                msg.put("hash", hash);
-                                room.sendMessage(msg.toString());
+                            JSONObject msg = new JSONObject();
+                            msg.put("cmd", "qrCode");
+                            msg.put("data", content);
+                            msg.put("hash", hash);
+                            room.sendMessage(msg.toString());
+                        }
 
-                                CreateHyperContentService service = new CreateHyperContentService(getUser().getId().toString(),
-                                        getGroupId(), startTime, endTime, content);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Object currentQRCode = new Object();
+                                lastQRCode = currentQRCode;
                                 try {
-                                    service.execute();
-                                    room.sendContents();
-                                } catch (ServiceException e) {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
+                                if (lastQRCode == currentQRCode) {
+                                    Date startTime;
+                                    Date endTime = new Date(new Date().getTime() - timeOffset);
+                                    synchronized (currentQRCodes) {
+                                        startTime = currentQRCodes.remove(hash);
+                                    }
+                                    JSONObject msg = new JSONObject();
+                                    msg.put("cmd", "qrCode");
+                                    msg.put("hash", hash);
+                                    room.sendMessage(msg.toString());
+
+                                    CreateHyperContentService service = new CreateHyperContentService(getUser().getId().toString(),
+                                            getGroupId(), startTime, endTime, content);
+                                    try {
+                                        service.execute();
+                                        room.sendContents();
+                                    } catch (ServiceException e) {
+                                        e.printStackTrace();
+                                    }
 
 
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
                 }
-            }
-        };
-
-        codeSubscritption =  qrCodeFilter.addCodeFoundListener(codeListener);
-
+            };
+            qrCodeFilter.addCodeFoundListener(codeListener);
+        }
 
         compositePort = room.getCompositePort(sid.toString());
 
@@ -199,7 +198,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
-                endPoint.connect(qrCodeFilter, MediaType.VIDEO);
+                if(QR_ENABLED) {
+                    endPoint.connect(qrCodeFilter, MediaType.VIDEO);
+                }
                 endPoint.connect(compositePort);
                 compositePort.connect(endPoint);
 
@@ -306,7 +307,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     @Override
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
-        qrCodeFilter.release();
+        if(QR_ENABLED) {
+            qrCodeFilter.release();
+        }
         endPoint.disconnect(compositePort);
         compositePort.release();
         endPoint.release();

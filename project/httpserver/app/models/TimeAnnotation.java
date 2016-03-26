@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * The Class TimeTag.
  */
-public class TimeTag {
+public class TimeAnnotation {
 
     /** The collection. */
     private static MongoCollection<Document> collection;
@@ -35,7 +35,7 @@ public class TimeTag {
     /**
      * Instantiates a new time tag.
      */
-    private TimeTag() {
+    private TimeAnnotation() {
 
     }
 
@@ -46,7 +46,7 @@ public class TimeTag {
      * @param time the time
      * @param title the title
      */
-    public TimeTag(ObjectId gid, Date time, String title) {
+    public TimeAnnotation(ObjectId gid, Date time, String title) {
         this.time = time;
         this.gid = gid;
         this.title = title;
@@ -59,7 +59,7 @@ public class TimeTag {
      */
     public static MongoCollection<Document> getCollection() {
         if (collection == null)
-            collection = Service.getDatabase().getCollection(TimeTag.class.getName());
+            collection = Service.getDatabase().getCollection(TimeAnnotation.class.getName());
         return collection;
     }
 
@@ -69,8 +69,8 @@ public class TimeTag {
      * @param doc the doc
      * @return the time tag
      */
-    public static TimeTag load(Document doc) {
-        TimeTag rec = new TimeTag();
+    public static TimeAnnotation load(Document doc) {
+        TimeAnnotation rec = new TimeAnnotation();
         rec.id = doc.getObjectId("_id");
         rec.time = doc.getDate("time");
         rec.gid = doc.getObjectId("gid");
@@ -95,12 +95,12 @@ public class TimeTag {
      * @param groupId the group id
      * @return the list
      */
-    public static List<TimeTag> listByGroup(ObjectId groupId) {
+    public static List<TimeAnnotation> listByGroup(ObjectId groupId) {
         FindIterable<Document> iter = getCollection()
                 .find(new Document("gid", groupId));
-        List<TimeTag> ret = new ArrayList<TimeTag>();
+        List<TimeAnnotation> ret = new ArrayList<TimeAnnotation>();
         for (Document doc : iter) {
-            ret.add(TimeTag.load(doc));
+            ret.add(TimeAnnotation.load(doc));
         }
         return ret;
     }
@@ -111,7 +111,7 @@ public class TimeTag {
      * @param id the id
      * @return the time tag
      */
-    public static TimeTag findById(ObjectId id) {
+    public static TimeAnnotation findById(ObjectId id) {
         Document doc = new Document("_id", id);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
@@ -125,14 +125,14 @@ public class TimeTag {
      * @param query the query
      * @return the list
      */
-    public static List<TimeTag> search(ObjectId gid, String query) {
+    public static List<TimeAnnotation> search(ObjectId gid, String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Document doc = new Document("gid", gid).append("title", regex);
         FindIterable<Document> iter = getCollection().find(doc);
         Iterator<Document> i = iter.iterator();
-        List<TimeTag> ret = new ArrayList<TimeTag>();
+        List<TimeAnnotation> ret = new ArrayList<TimeAnnotation>();
         while (i.hasNext()) {
-            ret.add(TimeTag.load(i.next()));
+            ret.add(TimeAnnotation.load(i.next()));
         }
         return ret;
     }

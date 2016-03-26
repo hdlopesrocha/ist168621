@@ -1,7 +1,7 @@
 package services;
 
 import exceptions.ServiceException;
-import models.TimeTag;
+import models.TimeAnnotation;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * The Class CreateTimeTagService.
  */
-public class CreateTimeTagService extends Service<TimeTag> {
+public class CreateTimeTagService extends Service<TimeAnnotation> {
 
     /** The gid. */
     private final ObjectId gid;
@@ -38,8 +38,8 @@ public class CreateTimeTagService extends Service<TimeTag> {
      * @see services.Service#dispatch()
      */
     @Override
-    public TimeTag dispatch() throws ServiceException {
-        TimeTag tag = new TimeTag(gid, time, title);
+    public TimeAnnotation dispatch() throws ServiceException {
+        TimeAnnotation tag = new TimeAnnotation(gid, time, title);
         tag.save();
         return tag;
     }

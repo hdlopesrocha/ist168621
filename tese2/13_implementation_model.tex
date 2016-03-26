@@ -135,9 +135,9 @@ A message is composed by its content, sequence number, time of creation and sour
 
 \subsection{Hyper content model}
 
-During a group conversation it is possible to tag points in time for making it easy to access that time either by searching or sharing with other users.
+During a group conversation it is possible to create time annotations for making it easy to access that time either by searching or sharing with other users.
 
-A time tag contains a title, the correspondent group identification number and the time itself.
+A time annotation contains a title, the correspondent group identification number and the time itself.
 
 The hyper content is used to synchronize content among users during a conversation. Every hyper content must have a start and ending time, the correspondent group identification number and the content itself in the form of text.
 
@@ -158,7 +158,7 @@ The hyper content is used to synchronize content among users during a conversati
 
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{TimeTag}}                   \\ \hline
+            \multicolumn{2}{|c|}{\textbf{TimeAnnotation}}                   \\ \hline
             $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
             $\medbullet$ groupId            & ObjectId                         \\ 
             $\medbullet$ title & Text                           \\ 

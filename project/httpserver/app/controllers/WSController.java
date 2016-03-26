@@ -7,7 +7,7 @@ import main.Tools;
 import main.UserSession;
 import models.RecordingInterval;
 import models.Message;
-import models.TimeTag;
+import models.TimeAnnotation;
 import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -66,8 +66,8 @@ public class WSController extends Controller {
 
                     try {
                         ListTimeTagsService service = new ListTimeTagsService(userId, groupId);
-                        List<TimeTag> tags = service.execute();
-                        for (TimeTag tag : tags) {
+                        List<TimeAnnotation> tags = service.execute();
+                        for (TimeAnnotation tag : tags) {
                             JSONObject msg = new JSONObject();
                             msg.put("cmd", "tag");
                             msg.put("data", tag.toJson());
@@ -251,7 +251,7 @@ public class WSController extends Controller {
                                         Date time = Tools.FORMAT.parse(args.getString("time"));
                                         String title = args.getString("title");
                                         CreateTimeTagService service = new CreateTimeTagService(groupId, time, title);
-                                        TimeTag tag = service.execute();
+                                        TimeAnnotation tag = service.execute();
                                         JSONObject msg = new JSONObject();
                                         msg.put("cmd", "tag");
                                         msg.put("data", tag.toJson());

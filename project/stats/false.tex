@@ -1,0 +1,45 @@
+
+\documentclass[
+10pt, % Main document font size
+a4paper, % Paper type, use 'letterpaper' for US Letter paper
+oneside, % One page layout (no page indentation)
+]{scrartcl}
+
+\usepackage{amsmath} 
+\usepackage{adjustbox}
+\usepackage{textcomp}
+\usepackage{environ}
+\usepackage{tikz}
+\usepackage{graphics}
+\usepackage{pgfplots} 
+\pgfplotsset{compat=1.9}
+
+\title{Draft for master thesis} % The article title
+
+\author{Henrique Rocha} 
+\date{} 
+\begin{document}
+
+	\maketitle % Print the title/author/date block
+
+	%----------------------------------------------------------------------------------------
+	%	INTRODUCTION
+	%----------------------------------------------------------------------------------------
+
+	\section{Test}
+
+			
+\subsection{Performance Test}
+
+	\begin{center}
+		\input{false_cpu.tex}
+	\end{center}
+
+	\begin{center}
+		\input{false_mem.tex}
+	\end{center}
+
+	\begin{center}
+		\input{false_net.tex}
+	\end{center}
+\end{document}

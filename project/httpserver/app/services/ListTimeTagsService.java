@@ -1,7 +1,7 @@
 package services;
 
 import com.mongodb.client.FindIterable;
-import models.TimeTag;
+import models.TimeAnnotation;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * The Class ListTimeTagsService.
  */
-public class ListTimeTagsService extends Service<List<TimeTag>> {
+public class ListTimeTagsService extends Service<List<TimeAnnotation>> {
 
     /** The caller. */
     private final ObjectId caller;
@@ -38,11 +38,11 @@ public class ListTimeTagsService extends Service<List<TimeTag>> {
      * @see services.Service#dispatch()
      */
     @Override
-    public List<TimeTag> dispatch() {
-        FindIterable<Document> iter = TimeTag.getCollection().find(new Document("gid", gid));
-        List<TimeTag> tags = new ArrayList<TimeTag>();
+    public List<TimeAnnotation> dispatch() {
+        FindIterable<Document> iter = TimeAnnotation.getCollection().find(new Document("gid", gid));
+        List<TimeAnnotation> tags = new ArrayList<TimeAnnotation>();
         for (Document doc : iter) {
-            TimeTag tag = TimeTag.load(doc);
+            TimeAnnotation tag = TimeAnnotation.load(doc);
             tags.add(tag);
         }
 

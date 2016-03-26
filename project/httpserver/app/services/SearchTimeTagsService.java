@@ -1,6 +1,6 @@
 package services;
 
-import models.TimeTag;
+import models.TimeAnnotation;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * The Class SearchTimeTagsService.
  */
-public class SearchTimeTagsService extends Service<List<TimeTag>> {
+public class SearchTimeTagsService extends Service<List<TimeAnnotation>> {
 
     /** The caller. */
     private final ObjectId caller;
@@ -40,9 +40,9 @@ public class SearchTimeTagsService extends Service<List<TimeTag>> {
      * @see services.Service#dispatch()
      */
     @Override
-    public List<TimeTag> dispatch() {
+    public List<TimeAnnotation> dispatch() {
 
-        return TimeTag.search(gid, query);
+        return TimeAnnotation.search(gid, query);
     }
 
     /* (non-Javadoc)
