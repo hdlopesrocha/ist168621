@@ -580,12 +580,7 @@
 			$("#saveButton").addClass("hidden");
 		}
 
-
-
-
-
 	    var candidateSearch = new (function() {
-
             this.source = function(query,process){
        			HyperHttp.searchGroupCandidates("@groupId", query, function(array){
        			    console.log(array);
@@ -750,7 +745,6 @@
 				format : 'DD/MM/YYYY HH:mm:ss',
 				defaultDate : new Date(),
 				showTodayButton:true
-
 			});
 			$('#datetimepicker2').datetimepicker({
 				format : 'DD/MM/YYYY HH:mm:ss',

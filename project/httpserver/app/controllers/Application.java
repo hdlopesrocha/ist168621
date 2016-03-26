@@ -3,6 +3,7 @@ package controllers;
 import dtos.AttributeDto;
 import dtos.PermissionDto;
 import exceptions.ServiceException;
+import main.Tools;
 import models.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,7 +30,7 @@ public class Application extends Controller {
      * @return the result
      */
     public Result index() {
-        if (session("uid") != null) {
+        if (Tools.userExists(session("uid"))) {
             return ok(views.html.index.render());
         } else {
             return ok(views.html.sign.render());
@@ -52,17 +53,17 @@ public class Application extends Controller {
         User user1, user2, user3, user4 ,td1,td2;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false));
-            attributes.add(new AttributeDto("name", "Henrique Rocha", false, true, false));
+            attributes.add(new AttributeDto("email", "test", true, true, false));
+            attributes.add(new AttributeDto("name", "test", false, true, false));
             attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false, false, false));
-            user1 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>() ,attributes).execute();
+            user1 = new RegisterUserService("test",new ArrayList<PermissionDto>() ,attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "nbhatt", true, true, false));
-            attributes.add(new AttributeDto("name", "Nikhil Bhatt", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user2.jpeg", false, false, false));
+            attributes.add(new AttributeDto("email", "rjflp", true, true, false));
+            attributes.add(new AttributeDto("name", "Ricardo Pereira", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/ricardo.png", false, false, false));
             user2 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
         }
 
@@ -70,18 +71,18 @@ public class Application extends Controller {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("email", "grocha", true, true, false));
             attributes.add(new AttributeDto("name", "Gonçalo Rocha", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user3.jpeg", false, false, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/goncalo.jpg", false, false, false));
             user3 = new RegisterUserService("qazokm", new ArrayList<PermissionDto>(),attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "dvd-r", true, true, false));
-            attributes.add(new AttributeDto("name", "David Rocha", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user4.jpeg", false, false, false));
+            attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", false, true, false));
+            attributes.add(new AttributeDto("photo", "/assets/images/me.png", false, false, false));
             user4 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
         }
-
+/*
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("email", "talkdesk1", true, true, false));
@@ -100,23 +101,33 @@ public class Application extends Controller {
 
         new CreateRelationService(td1.getId().toString(), td2.getId().toString()).execute();
         new CreateRelationService(td2.getId().toString(), td1.getId().toString()).execute();
-
+*/
 
         new CreateRelationService(user1.getId().toString(), user2.getId().toString()).execute();
         new CreateRelationService(user2.getId().toString(), user1.getId().toString()).execute();
 
-        new CreateRelationService(user1.getId().toString(), user3.getId().toString()).execute();
-        new CreateRelationService(user3.getId().toString(), user1.getId().toString()).execute();
+    //    new CreateRelationService(user1.getId().toString(), user3.getId().toString()).execute();
+    //    new CreateRelationService(user3.getId().toString(), user1.getId().toString()).execute();
 
 //        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
         new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
 
 
-        List<AttributeDto> attributes0 = new ArrayList<AttributeDto>();
-        attributes0.add(new AttributeDto("name", "WebRTC", false, true, false));
-        Group group0 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PRIVATE, new ArrayList<PermissionDto>(), attributes0).execute();
+        List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
+        attributes3.add(new AttributeDto("name", "Task 3", false, true, false));
+        Group group3 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes3).execute();
+
+        List<AttributeDto> attributes4 = new ArrayList<AttributeDto>();
+        attributes4.add(new AttributeDto("name", "Task 4", false, true, false));
+        Group group4 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes4).execute();
+
+        List<AttributeDto> attributes5 = new ArrayList<AttributeDto>();
+        attributes5.add(new AttributeDto("name", "Task 5", false, true, false));
+        Group group5 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes5).execute();
 
 
+
+/*
         List<AttributeDto> attributes1 = new ArrayList<AttributeDto>();
         attributes1.add(new AttributeDto("name", "Group1", false, true, false));
         new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes1).execute();
@@ -128,20 +139,27 @@ public class Application extends Controller {
         List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
         attributes3.add(new AttributeDto("name", "Group3", false, true, false));
         new CreateGroupService(user3.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes3).execute();
+*/
 
+        new AddGroupMemberService(user1.getId().toString(), group3.getId().toString(), user2.getId().toString()).execute();
+        new AddGroupMemberService(user1.getId().toString(), group3.getId().toString(), user4.getId().toString()).execute();
 
-        AddGroupMemberService joinService = new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), user2.getId().toString());
-        joinService.execute();
+        new AddGroupMemberService(user1.getId().toString(), group4.getId().toString(), user2.getId().toString()).execute();
+        new AddGroupMemberService(user1.getId().toString(), group4.getId().toString(), user4.getId().toString()).execute();
 
+        new AddGroupMemberService(user1.getId().toString(), group5.getId().toString(), user2.getId().toString()).execute();
+        new AddGroupMemberService(user1.getId().toString(), group5.getId().toString(), user4.getId().toString()).execute();
+
+/*
         new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), td1.getId().toString()).execute();
         new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), td2.getId().toString()).execute();
-
+*/
 
         Date end = new Date();
         Date start = new Date(end.getTime()-835000);
 
 
-        RecordingInterval interval = new CreateIntervalService(group0.getId().toString(), start).execute();
+        RecordingInterval interval = new CreateIntervalService(group3.getId().toString(), start).execute();
         interval.setEnd(end);
         interval.save();
 
@@ -150,13 +168,13 @@ public class Application extends Controller {
             String formatted = String.format("%02d", i);
             URL url = this.getClass().getClassLoader().getResource("video"+formatted+".mp4");
             Date da = new Date(start.getTime()+i*10000);
-            RecordingChunk rec = new RecordingChunk(group0.getId(),interval.getId(), da,(long)i);
+            RecordingChunk rec = new RecordingChunk(group3.getId(),interval.getId(), da,(long)i);
             rec.setEnd(new Date(da.getTime()+10000));
-            rec.setUrl(group0.getId().toString(), "file://"+ url.getFile());
+            rec.setUrl(group3.getId().toString(), "file://"+ url.getFile());
             rec.save();
         }
 
-        new CreateTimeTagService(group0.getId().toString(),start,"OSI Model").execute();
+        new CreateTimeTagService(group3.getId().toString(),start,"OSI Model").execute();
 
         Integer [] time = new Integer[8];
         String [] captions = new String[8];
@@ -200,7 +218,7 @@ public class Application extends Controller {
             Date da = new Date(start.getTime()+time[i]*1000);
             Date db = new Date(da.getTime()+5000);
 
-            new CreateHyperContentService(user1.getId().toString(),group0.getId().toString(),da,db,captions[i]).execute();
+            new CreateHyperContentService(user1.getId().toString(),group3.getId().toString(),da,db,captions[i]).execute();
         }
 
 
@@ -220,7 +238,7 @@ public class Application extends Controller {
      * @throws ServiceException the service exception
      */
     public Result group(String groupId) throws ServiceException {
-        if (session("uid") != null) {
+        if (Tools.userExists(session("uid"))) {
             ObjectId oid = new ObjectId(groupId);
             Group group = Group.findById(oid);
             User user = User.findById(new ObjectId(session("uid")));
@@ -257,7 +275,7 @@ public class Application extends Controller {
      * @return the result
      */
     public Result userProfile(String userId) {
-        if (session("uid") != null) {
+        if (Tools.userExists(session("uid"))) {
             boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId)) != null;
             boolean to = Relation.findByEndpoint(new ObjectId(userId), new ObjectId(session("uid"))) != null;
             return ok(views.html.profile.render(userId, from, to));

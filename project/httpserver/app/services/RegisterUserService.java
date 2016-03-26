@@ -4,6 +4,7 @@ package services;
 import dtos.AttributeDto;
 import dtos.PermissionDto;
 import exceptions.ServiceException;
+import main.Tools;
 import models.Data;
 import models.DataPermission;
 import models.User;
@@ -44,28 +45,11 @@ private List<PermissionDto> permissions;
     @Override
     public synchronized User dispatch() throws ServiceException {
         attributes.add(new AttributeDto("type", User.class.getName(), false, false, true));
-        permissions.add(new PermissionDto("type",new HashSet<String>(),new HashSet<String>()));
-
-
+        permissions.add(new PermissionDto("type",null,new HashSet<String>()));
 
         User user = new User(password);
         user.save();
-
-
-        Map<String, DataPermission.Entry> realPermissions = new TreeMap<>();
-        for(PermissionDto p : permissions){
-            Set<ObjectId> readSet = new HashSet<>();
-            Set<ObjectId> writeSet = new HashSet<>();
-            for(String str : p.getReadSet()){
-                readSet.add(new ObjectId(str));
-            }
-            for(String str : p.getWriteSet()){
-                writeSet.add(new ObjectId(str));
-            }
-            realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
-
-        }
-
+        Map<String, DataPermission.Entry> realPermissions = Tools.buildPermissions(permissions);
         new DataPermission(user.getId(),realPermissions, attributes).save();
         new Data(user.getId(), attributes).save();
 

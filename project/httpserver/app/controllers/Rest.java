@@ -566,7 +566,7 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), service.execute(), false, false, false));
+                attributes.add(new AttributeDto(kvf.getKey(), "/file/"+service.execute(), false, false, false));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -578,6 +578,7 @@ public class Rest extends Controller {
         }
 
         User ret = new RegisterUserService(password,permissions, attributes).execute();
+        session("uid",ret.getId().toString());
         return ok(ret.getToken());
 
     }

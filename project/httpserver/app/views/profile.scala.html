@@ -30,17 +30,20 @@
                 </div>
                 <div class="panel-footer">
                         <span class="pull-right">
-                            @if(!from && !to){
-                                <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Add friend</div>
-                            }
-                            @if(!from && to){
-                                <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Accept friend</div>
-                            }
-                            @if(from && !to){
-                                <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Cancel friendship</div>
-                            }
-                            @if(from && to){
-                                <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Reject friendship</div>
+                            @if(userId!=session.get("uid")){
+
+                                @if(!from && !to){
+                                    <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Add friend</div>
+                                }
+                                @if(!from && to){
+                                    <div class="btn btn-success btn-sm" onclick='user_add("@userId")'>Accept friend</div>
+                                }
+                                @if(from && !to){
+                                    <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Cancel friendship</div>
+                                }
+                                @if(from && to){
+                                    <div class="btn btn-danger btn-sm" onclick='user_del("@userId")'>Reject friendship</div>
+                                }
                             }
                         </span>
                     <div class="clearfix"></div>

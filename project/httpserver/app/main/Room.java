@@ -103,19 +103,12 @@ public class Room implements Closeable {
     private synchronized void record(int duration, Date start) {
         if(!recording || start!=null) {
 
-            try {
-                if(this.interval==null) {
-                    this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
-                }
-                //record(10000);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
+
 
             boolean r = false;
             synchronized (participants) {
                 for (UserSession session : participants) {
-                    if (!session.isReceiveOnly()) {
+                    if (session.hasVideo() || session.hasAudio()) {
                         r = true;
                         break;
                     }
@@ -124,6 +117,15 @@ public class Room implements Closeable {
 
             recording = r;
             if (recording) {
+                try {
+                    if(this.interval==null) {
+                        this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
+                    }
+                    //record(10000);
+                } catch (ServiceException e) {
+                    e.printStackTrace();
+                }
+
                 if(start==null){
                     start = new Date();
                 }

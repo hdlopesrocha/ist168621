@@ -3,6 +3,7 @@ package services;
 import dtos.AttributeDto;
 import dtos.PermissionDto;
 import exceptions.ServiceException;
+import main.Tools;
 import models.*;
 import org.bson.types.ObjectId;
 
@@ -50,22 +51,10 @@ public class CreateGroupService extends Service<Group> {
         GroupMembership membership = new GroupMembership(caller, group.getId());
         membership.save();
         attributes.add(new AttributeDto("type", Group.class.getName(), false, false, true));
-        permissions.add(new PermissionDto("type", new HashSet<String>(),new HashSet<String>()));
+        permissions.add(new PermissionDto("type", null,new HashSet<String>()));
         new Data(group.getId(), attributes).save();
 
-        Map<String, DataPermission.Entry> realPermissions = new TreeMap<>();
-        for(PermissionDto p : permissions){
-            Set<ObjectId> readSet = new HashSet<>();
-            Set<ObjectId> writeSet = new HashSet<>();
-            for(String str : p.getReadSet()){
-                readSet.add(new ObjectId(str));
-            }
-            for(String str : p.getWriteSet()){
-                writeSet.add(new ObjectId(str));
-            }
-            realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
-        }
-
+        Map<String, DataPermission.Entry> realPermissions = Tools.buildPermissions(permissions);
         new DataPermission(group.getId(),realPermissions, attributes).save();
         return group;
     }

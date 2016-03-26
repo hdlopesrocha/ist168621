@@ -62,11 +62,18 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private String playUser = "";
     private ObjectId playingId;
 
-    public Boolean isReceiveOnly() {
-        return receiveOnly;
+    public boolean hasAudio() {
+        return hasAudio;
     }
 
-    private Boolean receiveOnly = true;
+
+    public boolean hasVideo() {
+        return hasVideo;
+    }
+
+    private Boolean hasAudio = true;
+    private Boolean hasVideo = true;
+
 
     private UUID sid = UUID.randomUUID();
 
@@ -212,7 +219,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param duration the duration
      */
     public void record(RecordingChunk rec, int duration) {
-        if(!isReceiveOnly()) {
+        if(hasVideo()) {
             new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(Date end, String filepath) {
@@ -225,6 +232,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             });
         }
     }
+
 
 
     /**
@@ -533,7 +541,35 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param rsd the description
      */
     public void processOffer(String rsd) {
-        receiveOnly = rsd.contains("a=recvonly");
+        String [] lines = rsd.split("\n");
+
+        boolean isAudio = false;
+
+        for(String line : lines) {
+            if (line.startsWith("m")) {
+                isAudio = line.contains("audio");
+            }
+
+            if (line.startsWith("a")) {
+                if (line.contains("recvonly")) {
+                    if (isAudio) {
+                        hasAudio = false;
+                    } else {
+                        hasVideo = false;
+                    }
+
+                }
+                if (line.contains("send")) {
+                    if (isAudio) {
+                        hasAudio = true;
+                    } else {
+                        hasVideo = true;
+                    }
+                }
+            }
+        }
+
+
 
 
         // XXX [CLIENT_ICE_04] XXX

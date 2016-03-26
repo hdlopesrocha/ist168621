@@ -20,8 +20,7 @@
             </div>
             <div class="modal-footer">
                 <div class="input-group pull-right">
-                    <div class="btn btn-success"
-                         onclick="group_create($('#group_name').val())">Create
+                    <div class="btn btn-success" id="createRoomSubmit">Create
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -35,8 +34,7 @@
         <div class="col-md-6">
             <div class="panel panel-info">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal"
-                            data-target="#createRoomModal">
+                    <button type="button" class="btn btn-success"  onclick="showCreateGroupModal('PRIVATE')">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
@@ -55,8 +53,7 @@
         <div class="col-md-6">
             <div class="panel panel-info">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal"
-                            data-target="#createRoomModal">
+                    <button type="button" class="btn btn-success" onclick="showCreateGroupModal('PUBLIC')">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
@@ -74,6 +71,22 @@
     </div>
 </div>
 <script>
+
+    function showCreateGroupModal(visibility){
+        $('#createRoomModal').modal('show');
+
+        $('#createRoomSubmit').click(function(){
+            var name = $('#group_name').val();
+            if(name){
+                HyperHttp.createGroup(name, visibility,function() {
+                    document.location = "/";
+                });
+            }
+            else {
+                alert("Invalid room name!");
+            }
+        });
+    }
 
     function gotoUser(uid){
         document.location = "/user/"+uid;
@@ -94,13 +107,6 @@
             }
         });
     });
-
-	function group_create(name) {
-		HyperHttp.createGroup(name, "PRIVATE",function() {
-			document.location = "/";
-		});
-	}
-
 
 
 </script>
