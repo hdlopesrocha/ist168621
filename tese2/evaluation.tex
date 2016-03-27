@@ -1,24 +1,74 @@
 \chapter{Evaluation}
 \label{chapter:evaluation}
+  In the previous chapter we described how we implemented our solution namely the data model that we used, the description of the signaling protocol, how we performed stream recording, how we overlayed interactive content to video and lastly how we deployed our solution. 
+
+  In this chapter we describe how we tested our solution, show and analyse the results in order to validate the contributions of this thesis.
 
 \section{Tests Objectives}
-Nesta secção devem descrever os objectivos dos testes que realizaram, explicitando
-a razão pela qual os testes são relevantes face à validação das contribuições da
-tese.
+
+  We have tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's usability.
+
+  We have also tested the performance of our solution by measuring the used resources. Those performance tests are crucial to ensure that our solution is in fact stable and users can use it timelessly without decreasing the quality of their experience. 
+
 
 \section{Tests Scenarios}
-Nesta secção devem descrever o cenário de teste, incluindo, por exemplo, a
-definição da rede, o modelo de tráfego, as características de cada elemento....
-A descrição deve ser feita, de forma a que os testes possam ser reprodutíveis.
-Se os testes forem feitos em ambiente real devem ser descritas as características
-dos equipamentos, memória, CPU, disco, SO, etc....
 
-Devem também descrever as características das experiências, do ponto de vista
-estatístico. Número de testes realizados, grandezas que vão ser medidas, formas de
-medição dos valores, etc...
+  In this section we describe both performance and usability test scenarios that we have applied.
 
-Sempre que possível, ilustrem o cenário de testes com figuras e com tabelas, que
-descrevam sucintamente o modelo.
+  \subsection {Performance Tests}
+      In order to benchmark our system, we have implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects with a periodicity of one second; CPU, physical memory information realtive to each running process and network usage relative to each interface. 
+
+      We would like to collect network information relative to each process, which \emph{nethogs}\footnote{\url{https://raboof.github.io/nethogs/} (Accessed March 27, 2016)} provide but it could not capture the network usage of some processes. Although this would be useful for a deep analysis, we know which network interfaces are used to establish connections between processes as we show on table \ref{table:interfacemap}.
+
+  \begin{table}[H]
+\centering
+\caption{Mapping of connections by network interface}
+\label{table:interfacemap}
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Interface}} & \multicolumn{1}{c|}{\textbf{Connection}}         \\ \hline
+Loopback & Web Server $\leftrightarrow$ MongoDB  \\ \hline
+Loopback & Web Server $\leftrightarrow$ Kurento Media Server  \\ \hline
+Loopback & Kurento Repository $\leftrightarrow$ MongoDB  \\ \hline
+Loopback & Kurento Repository $\leftrightarrow$ Kurento Media Server  \\ \hline
+Ethernet & Web Server $\leftrightarrow$ Client\\ \hline
+Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
+\end{tabular}
+\end{table}
+
+
+      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer specifications, entering sequentially on the conference room, the second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute.
+
+  \subsection {Usability Tests}
+
+      In order to the usability of our solution, we haver performed usability tests with the help of real users with different backgrounds and ages.
+
+      We handled a guide to the users with five tasks to perform, the metrics we used for each task were: number of clicks, number of errors including a description and time spent. 
+
+      The tasks we asked to the user are:
+
+      \begin{enumerate}
+      \item Login into the system with the provided credentials and accept the received friendship request. Find the coordinator's brother and add him as a friend.
+
+      \item Create a private conference room, enter and share your screen, add the coordinator to the conference room and chat with him. After that use the collaborative editor in order to write at the same time as the coordinator. Lastly save the editor and leave the conference room.
+
+      \item Enter in the conference room correspondent to the third task as an observer and navigate to the specified annotation. Watch the video until a list of topics is overlayed in the video and choose one of them and leave the conference room.
+
+      \item Enter in the conference room correspondent to the fourth task by sharing your camera and create a time annotaion in the instant of time when you entered, navigate to the current time, search for the annotation and leave the conference room.
+
+      \item Enter in the conference room correspondent to the fourth task by sharing your camera and add a subtitle in the video, preview it, specify an interval of time and save it. Then show the provided \emph{QR code} to the camera and leave the leave the conference room.
+      \end{enumerate}
+
+      The goal of the first task consists on evaluating the interface for authentication and friendship management.
+
+      The second task is used to make the users familiar with our tools for collaborative content edition.
+
+      The goal of the third task is the demonstrate the navigation functionalities and synchronized interactive content superposition.
+
+      The fourth task is used to analyse the behaviour and difficulties of the user when creating a time annotation.
+
+      The goal of the fifth task is to create synchronized overlayed content, demonstrate the difficulties of such task and present an easier way to synchronize content.
+
 
 \section{Test Results}
 Nesta secção devem apresentar os resultados dos testes, quer sobre a forma

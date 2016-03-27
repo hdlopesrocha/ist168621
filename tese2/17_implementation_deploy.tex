@@ -1,0 +1,73 @@
+\section{Solution deployment}
+	\label{section:deployment}
+
+	In this section we describe the hardware and software we have used to deploy our solution. 
+
+	\subsection{Hardware}
+
+	The hardware was gently provided by INESC-ID\footnote{\url{http://www.inesc-id.pt/} (Accessed March 26, 2016)}, the specifications of the server that we used are specified on table \ref{table:hwspecs}.
+
+	\begin{table}[H]
+\centering
+\caption{Hardware specifications}
+\label{table:hwspecs}
+\begin{tabular}{|l|l|}
+\hline
+Server & Supermicro SuperServer 6027R-72RF\footnotemark \\ \hline
+CPU & 2 x Intel Xeon E5-2640V2, LGA 2011, 2.0GHz, 8C/16T \\ \hline
+RAM & 8 x DDR3 REG16G-1600DDR3, 16GB, DDR3-1600, Registered ECC, memory \\ \hline
+Network cards & 2 x Intel Corporation I350 Gigabit Network Connection (rev 01)  \\ \hline
+Disks & \begin{tabular}[c]{@{}l@{}}2x SAMSUNG SSD 840 PRO 256GB SATA III (Drive 0 - RAID 1 - 237.486 GB)\\
+4x WESTERN DIGITAL 3TB SATA III 64MB RED (Drive 1 - RAID 5 - 8.185TB)\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+ \footnotetext{\url{http://www.supermicro.com/products/system/2U/6027/SYS-6027R-72RF.cfm} (Acessed March 26, 2016)}
+
+\subsection{Operating System}
+	
+Below we present an overview of the operating system configurations of the machine we used for deployment.
+
+	\begin{table}[H]
+\centering
+\caption{Operating system specifications}
+\label{table:osspecs}
+\begin{tabular}{|l|l|}
+\hline
+Operating System & Linux version 3.16.0-4-amd64 \\ \hline
+Distribution & Debian GNU/Linux 8 (jessie)\footnotemark \\ \hline
+Swap & 16GB (Drive 0)\\ \hline
+Root & 40GB (Drive0)\\ \hline
+EFI & 200MB (Drive 0)\\ \hline
+Bcache & Remaining space (Drive 0 \& Drive 1) \\ \hline
+\end{tabular}
+\end{table}
+
+\footnotetext{\url{https://www.debian.org/} (Accessed March 26, 2016)}
+
+\subsection{Software}
+	INESC-ID provided us a restricted linux account without administration permissions, which we prevented us the installation of our solution directly on the machine because we would need administrative priviledges to install all the software that our solution depends on. Although that limitation, they provided access to Docker\footnote{\url{https://www.docker.com/} (Accessed March 27, 2016)} which run on host operating system as an isolated process in userspace.
+
+	Inside a Docker container we have the administrative priviledges to install all the software dependencies.
+
+	We present, on table \ref{table:softspecs}, the software we have installed inside our docker container including the versions that are in use.
+
+	\begin{table}[H]
+\centering
+\caption{Installed Software}
+\label{table:softspecs}
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Version}}         \\ \hline
+Ubuntu Server\footnotemark & 14.04 LTS   \\ \hline
+Oracle Java & 1.8.0\_77   \\ \hline
+MongoDB & 3.0.10   \\ \hline
+Kurento Media Server & 6.4.0 \\ \hline
+Kurento Repository & 6.3.1 \\ \hline
+Python & 2.7.6 \\ \hline
+\end{tabular}
+\end{table}
+ \footnotetext{\url{http://www.ubuntu.com/} (Accessed March 27, 2016)}
+
+
+
