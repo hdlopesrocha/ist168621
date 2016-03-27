@@ -54,7 +54,7 @@ The requirements for our web application are:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/modules.pdf}
+	\includegraphics[width=0.8\textwidth]{figures/modules.pdf}
 	\caption{System Modules}
         \label{fig:modules}
 \end{figure}
@@ -113,14 +113,14 @@ On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} sh
 
 \begin{table}[H]
 \centering
-
+	\caption{Application Architecture}
+	\label{table:apparch}
     \begin{tabular}{cccccccc@{}m{0pt}@{}}
 	\hline 
 \multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
-\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{ot.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}} &\\[12pt]\hline
+\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
 \multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
 \end{tabular}
-	\caption{App Architecture}
 	        \label{fig:apparch}
 \end{table}
 

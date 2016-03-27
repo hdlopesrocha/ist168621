@@ -5,7 +5,7 @@
 	    title={Cpu Usage},
 	    xlabel={Time [seconds]},
 	    ylabel={CPU [percentage]},
-	    xmin=0, xmax=800,
+	    xmin=-10, xmax=790,
 	    ymin=0, ymax=600,
 	    xtick={0,100,...,2000},
 	    ytick={0,100,...,2000},
@@ -23,16 +23,16 @@
 	] 
 	
 
-		\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-25,y index=1] {test_without_qrcode/cpu_7_mongod.csv};
+		\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/cpu_7_mongod.csv};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=red] table[x expr=\thisrowno{0}-25,y index=1] {test_without_qrcode/cpu_67_kurento-media-server.csv};
+		\addplot[smooth,color=red] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/cpu_67_kurento-media-server.csv};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=green] table[x expr=\thisrowno{0}-25,y index=1] {test_without_qrcode/cpu_35_kurento-repo.csv};
+		\addplot[smooth,color=green] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/cpu_35_kurento-repo.csv};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=magenta] table[x expr=\thisrowno{0}-25,y index=1] {test_without_qrcode/cpu_233_bash.csv};
+		\addplot[smooth,color=magenta] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/cpu_233_bash.csv};
 		\addlegendentry{Java}
 
 	\end{axis}

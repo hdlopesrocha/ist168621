@@ -7,9 +7,9 @@
 	    ylabel={Transfer rate [kB/s]},
 	    xmin=-10, xmax=790,
 	    ymin=0, ymax=2000,
-	    xtick={0,100,...,2000},
-	    ytick={0,100,...,2000},
-	    extra x ticks={10,70,...,1000},
+	    xtick={0,60,...,2000},
+	    ytick={0,200,...,2000},
+	    extra x ticks={0,60,...,2000},
     	extra x tick labels={,,},
 		extra tick style={
 			grid=major,
@@ -22,13 +22,13 @@
 	    grid style=dashed,
 	]
 	
-	\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/sent_eth0.csv};
+	\addplot[color=blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_sent_eth0.csv};
 	\addlegendentry{Sent(eth0)}
 
-	\addplot[smooth,color=red] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/recv_eth0.csv};
+	\addplot[color=red] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_recv_eth0.csv};
 	\addlegendentry{Recv(eth0)}
 
-	\addplot[smooth,color=green] table[x expr=\thisrowno{0}-35,y index=1] {stats/test_without_qrcode/recv_lo.csv};
+	\addplot[color=green] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_sent_lo.csv};
 	\addlegendentry{Sent/Recv(lo)}
 
 	\end{axis}

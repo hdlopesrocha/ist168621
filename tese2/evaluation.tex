@@ -29,15 +29,14 @@
 \multicolumn{1}{|c|}{\textbf{Interface}} & \multicolumn{1}{c|}{\textbf{Connection}}         \\ \hline
 Loopback & Web Server $\leftrightarrow$ MongoDB  \\ \hline
 Loopback & Web Server $\leftrightarrow$ Kurento Media Server  \\ \hline
-Loopback & Kurento Repository $\leftrightarrow$ MongoDB  \\ \hline
-Loopback & Kurento Repository $\leftrightarrow$ Kurento Media Server  \\ \hline
+Loopback & Kurento Media Server $\leftrightarrow$ Kurento Repository $\leftrightarrow$ MongoDB  \\ \hline
 Ethernet & Web Server $\leftrightarrow$ Client\\ \hline
 Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 \end{tabular}
 \end{table}
 
 
-      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer specifications, entering sequentially on the conference room, the second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute.
+      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer and network specifications, entering sequentially on the conference room, the second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute in total of thirteen minutes (780 seconds).
 
   \subsection {Usability Tests}
 
@@ -63,7 +62,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
       The second task is used to make the users familiar with our tools for collaborative content edition.
 
-      The goal of the third task is the demonstrate the navigation functionalities and synchronized interactive content superposition.
+      The goal of the third task is to demonstrate the navigation functionalities and synchronized interactive content superposition.
 
       The fourth task is used to analyse the behaviour and difficulties of the user when creating a time annotation.
 
@@ -71,23 +70,42 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 
 \section{Test Results}
-Nesta secção devem apresentar os resultados dos testes, quer sobre a forma
-de tabelas, quer sobre a forma de gráficos. As tabelas e os gráficos devem ser
-apresentados e depois analisados, detalhadamente.
-\ldots
+  \subsection {Performance Tests}
+  
+      We are presenting in this sections the results of our performance tests after implementing our solution.
 
-Here is an example of a table~\ref{table:simple}.
+      Every time a user shares its camera or its screen in the context of a conference room, its offered video is sent to the server and independently from watching an individual stream or the mixed version the server just sends a unique stream back to the user.
 
-\begin{table}[!htb]
+      From the media server prespective if there are $n$ clients connected each of them sending and receiving one stream, it is expected that server sends and receives also $n$ streams. By so we expect that the amount of network increases lineraly as users join a confrence room.
+
+      Figure \ref{fig:test_full_features_net} confirms our expectations, each vertical yellow line represents each event, the first seven events are users entering the conference room the next ones represent users leaving the conversation. 
+      
+
+
+\begin{figure}[H]
   \begin{center}
-  \caption[Table caption shown in TOC]{Table caption}
-    \begin{tabular}{|c|c|}
-      \hline
-      item 1 & item 2 \\
-      \hline
-      item 3 & item 4 \\
-      \hline
-    \end{tabular}
+    \input{stats/test_full_features_net.tex}
   \end{center}
-  \label{table:simple}
-\end{table}
+  \caption{Network usage after implementing all features}
+  \label{fig:test_full_features_net}
+\end{figure}
+
+      The blue peaks are caused by the signaling phase and web page downloads, including resources such as images, stylesheets and javascript files. 
+      The green peaks are caused by that being transfered between \ac{KMS} and \emph{MongoDB} through \emph{Kurento Repository} each peak occurs each time a block of video is recorded which in this case is every ten seconds. 
+      The recordings are synchronized so all user and mixed blocks starts and ends at the same time, that's why the amount of work done every ten seconds acumulates and because this is poerformed locally the maximum transfer rate is limited by the performance of the memory as buffers are writen to buffers then to disks. 
+      Client's sent data transfer rate has no significant peaks as signaling information contains few information.
+
+      Figure \ref{fig:summary_full_net} shows the average transmission rate per interval of consecutive events. 
+
+\begin{figure}[H]
+  \begin{center}
+    \input{stats/summary_full_net.tex}
+  \end{center}
+  \caption{Average network usage per interval of events after implementing all features}
+  \label{fig:summary_full_net}
+\end{figure}
+
+If we consider all streams equal and an incoming stream uses $x$KB/s, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
+
+With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine.
+

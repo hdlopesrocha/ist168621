@@ -11,6 +11,7 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 
 \begin{table}[]
 \centering
+\caption{WebRTC protocol Stack}
 \label{my-label}
     \begin{tabularx}{\textwidth}{*8{Y}@{}m{0pt}@{}} 
     	\cline{5-8}
@@ -27,7 +28,6 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 		\multicolumn{8}{|c|}{Network (IP)}  																														&\\[12pt]
 		\hline
 	\end{tabularx}
-	\caption{WebRTC protocol Stack}
 
 \end{table}
 
@@ -51,6 +51,8 @@ The main difference is the inclusion of a sequence number per packet that is use
 %\def\tabularxcolumn#1{m{#1}}
 \begin{table}[]
 \centering
+	\caption{Overview of transport protocols}
+	\label{my-label}
     \begin{tabularx}{\textwidth}{X|Y|Y|Y|@{}m{0pt}@{}}
 \cline{2-4}
                                                      & \textbf{TCP}  & \textbf{UDP}     & \textbf{SCTP}    &\\[12pt]\hline
@@ -60,7 +62,6 @@ The main difference is the inclusion of a sequence number per packet that is use
 \multicolumn{1}{|c|}{\textbf{Flow control}}          & yes           & no               & yes              &\\[12pt]\hline
 \multicolumn{1}{|c|}{\textbf{Congestion control}} 	 & yes           & no               & yes              &\\[12pt]\hline
 \end{tabularx}
-	\caption{Overview of transport protocols}
 \end{table}
 
 
