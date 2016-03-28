@@ -20,7 +20,7 @@
 
       We would like to collect network information relative to each process, which \emph{nethogs}\footnote{\url{https://raboof.github.io/nethogs/} (Accessed March 27, 2016)} provide but it could not capture the network usage of some processes. Although this would be useful for a deep analysis, we know which network interfaces are used to establish connections between processes as we show on table \ref{table:interfacemap}.
 
-  \begin{table}[H]
+  \begin{table}[!htb]
 \centering
 \caption{Mapping of connections by network interface}
 \label{table:interfacemap}
@@ -82,7 +82,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
       
 
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \begin{center}
     \input{stats/test_full_features_net.tex}
   \end{center}
@@ -97,7 +97,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
       Figure \ref{fig:summary_full_net} shows the average transmission rate per interval of consecutive events. 
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \begin{center}
     \input{stats/summary_full_net.tex}
   \end{center}
@@ -109,3 +109,57 @@ If we consider all streams equal and an incoming stream uses $x$KB/s, with $n$ i
 
 With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine.
 
+Figure \ref{fig:test_full_features_mem} shows the memory usage during our performance test case. Both \ac{JVM}, \emph{MongoDB} and \ac{KMS} performs their own memory management by holding and recycling objects when needed. The expected and observed behaviour of the memory usage is growth memory usage while the users are entering in the conference room and a memory usage stabilization aftwerwards.
+
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_full_features_mem.tex}
+  \end{center}
+  \caption{Memory usage after implementing all features}
+  \label{fig:test_full_features_mem}
+\end{figure}
+
+\emph{MongoDB} memory usage keeps increasing because it trys to fit part of the database on ram for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case and stabilization at the end.
+
+Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage during our performance test case. As we can see, the amount of \ac{CPU} increases and decreases linearly in function of the amount of conference participants. 
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_full_features_cpu.tex}
+  \end{center}
+  \caption{Percentage of CPU used during the performance tests}
+  \label{fig:test_full_features_cpu}
+\end{figure}
+
+Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic proccessing peaks every ten seconds that are due to block recording. 
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_full_features_cpu_zoom.tex}
+  \end{center}
+  \caption{Percentage of CPU used during the performance tests}
+  \label{fig:test_full_features_cpu_zoom}
+\end{figure}
+
+   Figure \ref{fig:summary_full_cpu} shows the average used \ac{CPU} per interval of consecutive events. 
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/summary_full_cpu.tex}
+  \end{center}
+  \caption{Average percentage of CPU used per interval of events after implementing all features (zoomed)}
+  \label{fig:summary_full_cpu}
+\end{figure}
+
+  Just for testing purposes we have done the same performance tests without detecting \emph{QR codes} in order to understand how \ac{CPU} intensive is this task. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \emph{QR code} detection disabled.
+
+  \begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_without_qrcode_cpu.tex}
+  \end{center}
+  \caption{Percentage of CPU used during the performance tests without QR code detection}
+  \label{fig:test_without_qrcode_cpu}
+\end{figure}
+
+We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by \ac{CPU}. Without this feature the network and memory usage had insignificate changes compared to \ac{CPU} usage.

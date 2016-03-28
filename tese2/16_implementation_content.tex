@@ -39,6 +39,37 @@
 		\item User navigates to different point in time (client requested).
 	\end{itemize}
 
+	Listing \ref{lst:pseudo_render} presents the pseudo code for our content scheduler.
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Pseudo code for hyper content scheduler},label={lst:pseudo_render},language=JavaScript]
+function scheduleContent() {
+    var navigatedTime = getCurrentTime() - getUserOffset();
+    while ( hasLocalEvents() ) {
+        if ( firstEventIsOlderThanNavigatedTime() ) {
+            if ( firstEventIsStart() ) {
+            	addHtmlLayer(event);
+            } else {
+            	removeHtmlLayer(event);
+            }
+            removeFirstEvent();
+        } else {
+            break;
+        }
+    }
+    if ( hasNoLocalEvents() ) {
+    	return;	// nothing to do
+    } 
+    if ( hasNoStartEvents() && serverHasMoreContent() ) { 
+       	requestContentFromServer(navigatedTime);
+    } else {
+        waitUntilNextEvent();
+        scheduleContent();
+    }
+}
+\end{lstlisting}
+\end{minipage}
+
 	\subsection{Content creation}
 
 	In order to create content the user has the option to write simple movie captions without wrtting any code, otherwise, as mentioned before, it can write \ac{HTML}, \ac{CSS} and \emph{JavaScript}. The definition of the content's starting and ending time by the user it's not an easy task. Defining the content's time to appear in realtime would require a previous user plan. Otherwise the user could make a speech and add the content for later reproduction.

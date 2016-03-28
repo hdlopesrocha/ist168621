@@ -7,7 +7,7 @@
 
 	The hardware was gently provided by INESC-ID\footnote{\url{http://www.inesc-id.pt/} (Accessed March 26, 2016)}, the specifications of the server that we used are specified on table \ref{table:hwspecs}.
 
-	\begin{table}[H]
+	\begin{table}[!htb]
 \centering
 \caption{Hardware specifications}
 \label{table:hwspecs}
@@ -28,7 +28,7 @@ Disks & \begin{tabular}[c]{@{}l@{}}2x SAMSUNG SSD 840 PRO 256GB SATA III (Drive 
 	
 On table \ref{table:osspecs} we present an overview of the operating system configurations of the machine we used for deployment.
 
-	\begin{table}[H]
+	\begin{table}[!htb]
 \centering
 \caption{Operating system specifications}
 \label{table:osspecs}
@@ -54,7 +54,7 @@ Bcache & Remaining space (Drive 0 \& Drive 1) \\ \hline
 
 	We present, on table \ref{table:softspecs}, the software we have installed inside our docker container including the versions that are in use.
 
-	\begin{table}[H]
+	\begin{table}[!htb]
 \centering
 \caption{Installed Software}
 \label{table:softspecs}
@@ -63,6 +63,7 @@ Bcache & Remaining space (Drive 0 \& Drive 1) \\ \hline
 \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{c|}{\textbf{Version}}         \\ \hline
 Ubuntu Server\footnotemark & 14.04 LTS   \\ \hline
 Oracle Java & 1.8.0\_77   \\ \hline
+Play Framework & 2.5.0  \\ \hline
 MongoDB & 3.0.10   \\ \hline
 Kurento Media Server & 6.4.0 \\ \hline
 Kurento Repository & 6.3.1 \\ \hline

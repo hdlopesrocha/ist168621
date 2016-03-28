@@ -33,6 +33,7 @@ var HyperWebSocket = new (function() {
     // ================== UTILITIES ==================
     // ===============================================
 
+
     function logError(err) {
         console.log(err);
     }
@@ -295,114 +296,131 @@ var HyperWebSocket = new (function() {
 
 		if ("WebSocket" in window) {
 			ws = new WebSocket(wsurl("/ws/room/" + groupId));
-		
+
+            ws.callbacks = [];
+		    ws.onCmd = function(cmd,callback){
+                ws.callbacks.push({cmd:cmd,callback:callback});
+                return ws;
+		    };
+
 			ws.onerror = function() {
 				console.log("Error!");
 			};
-			
+
+			ws.onCmd('iceCandidate',function(message){
+	            console.log(message);
+				var candidate = new RTCIceCandidate(message.data);
+				pc.addIceCandidate(candidate, function() {
+
+				}, logError);
+			});
+
+		    ws.onCmd('answer',function(message){
+                console.log(message);
+                var rsd = new RTCSessionDescription(message.data);
+                // XXX [CLIENT_OFFER_08] XXX
+                pc.setRemoteDescription(rsd, function(){
+                    // console.log("setRemoteSessionDescription",rsd);
+                },logError);
+			});
+
+		    ws.onCmd('participants',function(message){
+	            if(participantPresenceHandler){
+    				for(var userId in message.data){
+					    participantPresenceHandler(message.data[userId]);
+					}
+				}
+			});
+
+		    ws.onCmd('removedUser',function(message){
+	            if(removedUserHandler){
+                    removedUserHandler(message.uid);
+                }
+			});
+
+	        ws.onCmd('content',function(message){
+                if(hyperContentArrivedHandler){
+                    hyperContentArrivedHandler(message.data,message.more);
+                }
+			});
+
+	        ws.onCmd('rec',function(message){
+                if(videoRecordingHandler){
+                    delete message.cmd;
+                    videoRecordingHandler(message);
+                }
+			});
+
+	        ws.onCmd('msg',function(message){
+                for(var i in message.data){
+                    var item = message.data[i];
+                    console.log("msg",item);
+                    if(messageArrivedHandler){
+                        messageArrivedHandler(item.source,item.time,item.text,item.name, item.id, item.seq);
+                    }
+                }
+			});
+
+	        ws.onCmd('tag',function(message){
+                if(timeTagArrivedHandler){
+                     var item = message.data;
+                     timeTagArrivedHandler(item.id,item.time,item.title);
+                }
+			});
+
+	        ws.onCmd('removeTag',function(message){
+                if (removedTagHandler){
+                    removedTagHandler(message.tid);
+                }
+			});
+
+	        ws.onCmd('talk',function(message){
+                if(voiceDetectedHandler){
+                    var msg = message.data;
+                    voiceDetectedHandler(msg.uid,msg.value);
+                }
+			});
+
+            ws.onCmd('time',function(message){
+                if(serverTimeHandler){
+                    var item = message.data;
+                    serverTimeHandler(new Date(item.time));
+                }
+            });
+
+            ws.onCmd('setTime',function(message){
+                if(lookAtTimeHandler){
+                   lookAtTimeHandler(new Date(message.time));
+                }
+            });
+
+            ws.onCmd('operation',function(message){
+                if(operationTransformationHandler){
+                    operationTransformationHandler(ot.TextOperation.fromJSON(message.data));
+                }
+            });
+
+            ws.onCmd('coordinate',function(message){
+                if(coordinationRequestHandler){
+                    coordinationRequestHandler(message.sid);
+                }
+            });
+
+            ws.onCmd('qrCode',function(message){
+                if(qrCodeHandler){
+                    qrCodeHandler(message.hash,message.data);
+                }
+            });
+
 			ws.onmessage = function(data) {
 				var message = JSON.parse(data.data);
 				var cmd = message.cmd;
-				
-				switch(cmd){
-					case 'iceCandidate':
-						console.log(cmd,message);
-						var candidate = new RTCIceCandidate(message.data);
-				
-						pc.addIceCandidate(candidate, function() {
 
-						}, logError);
-					break;
-					case 'answer':
-
-						console.log(cmd, message);
-						var rsd = new RTCSessionDescription(message.data);
-						// XXX [CLIENT_OFFER_08] XXX
-						pc.setRemoteDescription(rsd, function(){
-							// console.log("setRemoteSessionDescription",rsd);
-						},logError);
-					break;		
-					case 'participants':
-						if(participantPresenceHandler){
-    						for(var userId in message.data){
-							    participantPresenceHandler(message.data[userId]);
-							}
-						}
-					break;
-					case 'removedUser':
-					    if(removedUserHandler){
-                            removedUserHandler(message.uid);
-                        }
-					break;
-					case 'content':
-					    if(hyperContentArrivedHandler){
-						    hyperContentArrivedHandler(message.data,message.more);
-						}
-					break;
-					case 'rec':
-						if(videoRecordingHandler){
-						    delete message.cmd;
-       					    videoRecordingHandler(message);
-						}
-						break;
-					case 'msg':
-						for(var i in message.data){
-							var item = message.data[i];
-							console.log("msg",item);
-							if(messageArrivedHandler){
-							    messageArrivedHandler(item.source,item.time,item.text,item.name, item.id, item.seq);
-						    }
-						}
-						
-						break;
-					case 'tag':
-					    if(timeTagArrivedHandler){
-                            var item = message.data;
-                            timeTagArrivedHandler(item.id,item.time,item.title);
-                        }
-						break;
-			        case 'removeTag':
-			            if (removedTagHandler){
-						    removedTagHandler(message.tid);
-						}
-						break;
-					case 'talk':
-						if(voiceDetectedHandler){
-                            var msg = message.data;
-                            voiceDetectedHandler(msg.uid,msg.value);
-						}
-						break;
-					case 'time':
-						if(serverTimeHandler){
-						    var item = message.data;
-						    serverTimeHandler(new Date(item.time));
-						}
-						break;
-
-                    case 'setTime':
-                        if(lookAtTimeHandler){
-                            lookAtTimeHandler(new Date(message.time));
-                        }
-                        break;
-                    case 'operation':
-                        if(operationTransformationHandler){
-                            operationTransformationHandler(ot.TextOperation.fromJSON(message.data));
-                        }
-                        break;
-
-                    case 'coordinate':
-                        if(coordinationRequestHandler){
-                            coordinationRequestHandler(message.sid);
-                        }
-                        break;
-                    case 'qrCode':
-                        if(qrCodeHandler){
-                            qrCodeHandler(message.hash,message.data);
-                        }
-                        break
-
-					default:
-						break;					
+				for(var i in  ws.callbacks){
+                    var item = ws.callbacks[i];
+                    if(item.cmd == cmd){
+                        item.callback(message);
+                    }
 				}
 			};
 			
@@ -428,7 +446,6 @@ var HyperWebSocket = new (function() {
                         ws.send(JSON.stringify(msg));
                     }
                 }
-
 
 	            pc.onaddstream = function (e) {
 					console.log(e);

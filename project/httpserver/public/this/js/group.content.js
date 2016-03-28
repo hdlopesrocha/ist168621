@@ -59,11 +59,9 @@ function removeContent(key) {
 
 function renderContent() {
     var currentTime = timeline.getCurrentTime() - timeline.hyper_offset;
-
     while (localContent.length != 0) {
         var entry = localContent[0];
         var time = new Date(entry.time);
-
         if (time.getTime() <= currentTime) {
             localContent.shift();
             if (entry.type == "start") {
@@ -72,7 +70,6 @@ function renderContent() {
                 removeContent(entry.id);
             }
             console.log("render",entry,localContent);
-
         } else {
             break;
         }
@@ -84,18 +81,14 @@ function renderContent() {
             hasStarts = true;
             break;
         }
-
     }
     if (localContent.length == 0) {
         // no content, keep calm
-    } else if (!hasStarts) {
-        if(moreContent){
-            // all events started, check if others may start
-            HyperWebSocket.getContent();
-        }else {
-            // there are ends
-            scheduleRender(currentTime);
-        }
+        return;
+    }
+    if (!hasStarts && moreContent) {
+        // all events started, check if others may start
+        HyperWebSocket.getContent();
     } else {
         // wait for next event
         scheduleRender(currentTime);

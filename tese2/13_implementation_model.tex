@@ -7,7 +7,7 @@ For designing our model we have taken into account generic programming technique
 
 Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes indepently from the object type. To this generic set of properties we call data and each object of this type has a reference to the owner, which is a unique identification number.
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Generic data model}
 \label{my-label}
@@ -48,7 +48,7 @@ The permission object is a mask of the data object, for each existing attribute 
 
 The user model is not tied to the user attributes, the information maintained in this model is just used for authentication purposes. Passwords are not stored in plaintext, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. We use \emph{SHA-1} and a random salt per user with 32 characters long.
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{User model}
 \label{my-label}
@@ -65,7 +65,7 @@ The user model is not tied to the user attributes, the information maintained in
 
 A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$, where $e_1$ is the source and $e_2$ is the target. This relation is said bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Relation model}
 \label{my-label}
@@ -84,7 +84,7 @@ A user can only interact with friends or with group members. In order to validat
 
 A group can be public or private. If the group is public then it is visible to all users that mantain a friendship with a member of this group. If the group is private then it is only visible to their members.
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Group model}
 \label{my-label}
@@ -118,7 +118,7 @@ Entities that have a membership with a group can create more memberships by shar
 
 A message is composed by its content, sequence number, time of creation and source and target identification numbers. The message's target can reference any of object but our application is only covering messages to groups.
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Message model}
 \label{my-label}
@@ -142,7 +142,7 @@ A time annotation contains a title, the correspondent group identification numbe
 The hyper content is used to synchronize content among users during a conversation. Every hyper content must have a start and ending time, the correspondent group identification number and the content itself in the form of text.
 
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Hyper content model}
 \label{my-label}
@@ -175,7 +175,7 @@ The hyper content is used to synchronize content among users during a conversati
 Within a conversation, users can write documents collaboratively. Each document has a content and a reference to the correspondent group. 
 
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
     \caption{Collaborative content model}
     \label{my-label}
@@ -193,7 +193,7 @@ Within a conversation, users can write documents collaboratively. Each document 
 During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and a mapping between entity that was recorded and the correspondent video url.
 
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
     \caption{Recording model}
     \label{my-label}
