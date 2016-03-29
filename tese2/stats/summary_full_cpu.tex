@@ -22,16 +22,16 @@
 	    grid style=dashed,
 	]
 	
-		\addplot[color=blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_mongo.csv};
+		\addplot[color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_mongo.csv};
 		\addlegendentry{Mongod}
 
-		\addplot[color=red] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kms.csv};
+		\addplot[color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kms.csv};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[color=green] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kr.csv};
+		\addplot[color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kr.csv};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[color=magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_play.csv};
+		\addplot[color=Magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_play.csv};
 		\addlegendentry{Java}
 
 

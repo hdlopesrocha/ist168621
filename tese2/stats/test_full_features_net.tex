@@ -22,13 +22,13 @@
 	    grid style=dashed,
 	]
 	
-	\addplot[smooth,color=blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/sent_eth0.csv};
+	\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/sent_eth0.csv};
 	\addlegendentry{Sent(eth0)}
 
-	\addplot[smooth,color=red] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/recv_eth0.csv};
+	\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/recv_eth0.csv};
 	\addlegendentry{Recv(eth0)}
 
-	\addplot[smooth,color=green] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/recv_lo.csv};
+	\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/recv_lo.csv};
 	\addlegendentry{Sent/Recv(lo)}
 
 	\end{axis}

@@ -430,8 +430,7 @@ var HyperWebSocket = new (function() {
                 // XXX [CLIENT_ICE_01] XXX
                 pc = new RTCPeerConnection({
                     iceServers : [
-                        { urls : "stun:stun.l.google.com:19302" },
-                        { urls : "stun:23.21.150.121" }
+                        { urls : "stun:64.233.184.127:19302" }
                     ]
                 });
 

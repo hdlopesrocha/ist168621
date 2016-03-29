@@ -637,7 +637,7 @@
 				if(item.type=="tag"){
 					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else if(item.type=="html"){
-					return "<i class='fa fa-font'></i> " + item.content;
+					return "<i class='fa fa-font'></i> " + item.content+ " <small>("+friendlyTime(item.time)+")</small>";
 				}
 			},
 			matcher: function(item){

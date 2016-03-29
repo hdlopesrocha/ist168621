@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class UserSession implements Closeable, Comparable<UserSession> {
 
-    private static final boolean QR_ENABLED = false;
+    private static final boolean QR_ENABLED = true;
 
     /** The out. */
     private final WebSocket.Out<String> out;
@@ -80,8 +80,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private UUID sid = UUID.randomUUID();
 
     private ZBarFilter qrCodeFilter;
-    private Object lastQRCode;
-    private Map<String,Date> currentQRCodes = new TreeMap<String,Date>();
+    private Map<String,Object> currentQRCodes = new TreeMap<String,Object>();
     /**
      * Instantiates a new user session.
      *
@@ -134,17 +133,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     System.out.println(".");
                     final String content = event.getValue();
                     final String hash = Tools.md5(content);
+                    final Date startTime = new Date(new Date().getTime() - timeOffset);
+
                     if (hash != null) {
                         boolean containsQR = false;
                         synchronized (currentQRCodes) {
                             containsQR = currentQRCodes.containsKey(hash);
                         }
-                        if (!containsQR) {
-                            synchronized (currentQRCodes) {
-                                Date startTime = new Date(new Date().getTime() - timeOffset);
 
-                                currentQRCodes.put(hash, startTime);
-                            }
+                        if (!containsQR) {
                             JSONObject msg = new JSONObject();
                             msg.put("cmd", "qrCode");
                             msg.put("data", content);
@@ -152,21 +149,27 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             room.sendMessage(msg.toString());
                         }
 
+                        synchronized (currentQRCodes) {
+                            currentQRCodes.put(hash,startTime);
+                        }
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                Object currentQRCode = new Object();
-                                lastQRCode = currentQRCode;
                                 try {
                                     Thread.sleep(2000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                if (lastQRCode == currentQRCode) {
-                                    Date startTime;
+                                Object newestQRCode;
+                                synchronized (currentQRCodes) {
+                                    newestQRCode = currentQRCodes.get(hash);
+                                }
+
+                                if (startTime != newestQRCode) {
                                     Date endTime = new Date(new Date().getTime() - timeOffset);
                                     synchronized (currentQRCodes) {
-                                        startTime = currentQRCodes.remove(hash);
+                                        currentQRCodes.remove(hash);
                                     }
                                     JSONObject msg = new JSONObject();
                                     msg.put("cmd", "qrCode");
