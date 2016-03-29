@@ -430,9 +430,24 @@ var HyperWebSocket = new (function() {
                 // XXX [CLIENT_ICE_01] XXX
                 pc = new RTCPeerConnection({
                     iceServers : [
-                        { urls : "stun:64.233.184.127:19302" }
+                        {
+                            urls : "stun:stun.iptel.org"
+                        },
+                        {
+                            urls : "stun:stun.ekiga.net"
+                        },
+                        {
+                            urls : "stun:stun.fwdnet.net"
+                        },
+                        {
+                            urls : "stun:stun.ideasip.com"
+                        }
                     ]
                 });
+
+                // stun -i wlan0 -p 3478 -v citysdk.tagus.ist.utl.pt
+                // stun -i wlan0 -p 19302 -v 64.233.184.127
+
 
                 // XXX [CLIENT_ICE_02] XXX
                 pc.onicecandidate = function(event) {

@@ -120,8 +120,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
         });
 
-        endPoint.setStunServerAddress("64.233.184.127");
-        endPoint.setStunServerPort(19302);
+        endPoint.setStunServerAddress("stun.iptel.org");
+     //   endPoint.setStunServerPort(19302);
+
+    //    endPoint.setTurnUrl("citysdk.tagus.ist.utl.pt:3478");
+
 
         if(QR_ENABLED) {
             qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
