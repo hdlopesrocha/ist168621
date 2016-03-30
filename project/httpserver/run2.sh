@@ -1,0 +1,1 @@
+./bin/httpserver -Dplay.crypto.secret="QCY?tAnfk?aZ?iwrNwnxIlR6CTf:G3gf:90Latabg@5241ABR5W:1uDFN];Ik@n" -Dhttp.port=9080 -Dhttps.port=9443 -Dhttps.keyStore=conf/keystore.jks -Dhttps.keyStorePassword=123456789

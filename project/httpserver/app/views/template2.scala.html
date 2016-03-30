@@ -32,6 +32,24 @@
 </head>
 <body>
 
+<div id="searchPeopleModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Find People</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">User:</label>
+                    <input class="form-control" placeholder="Search" name="q" type="text" id="searchPeople" data-provide="typeahead" autocomplete="off" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div id="wrapper">
 
@@ -44,6 +62,7 @@
                     HyperChat
                 </a>
             </li>
+            <div style="color:white;padding:18px;"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;FRIENDS</div>
             <div id="friend-list">
             </div>
         </ul>
@@ -92,16 +111,14 @@
 
                             @actionBar
 
-                            <li id="requestButton" class="dropdown">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle dropdown-user" data-toggle="dropdown"
                                    aria-expanded="false">
-                                    <i class="fa fa-user-plus"></i>
+                                    Friendship Requests <i class="fa fa-user-plus"></i>
                                     <div style="display:inline" id="requestCount"></div>
                                 </a>
                                 <ul class="dropdown-menu" id="requestList">
-                                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a></li>
 
-                                    <li class="divider"></li>
                                 </ul>
                             </li>
                             <li id="logout-button">
@@ -131,24 +148,33 @@
     }
 
 
-    $( document ).ready(function() {
+   function showSearchOPeople(){
+        $('#searchPeopleModal').modal('show');
+    }
+
+	$(document).ready(function() {
+        $('#searchPeople').typeahead(SearchPeople);
+
          $("#menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
          });
 
 
        HyperHttp.listRequests(function(array) {
             console.log("listRequests",array);
             var html = "";
+
+
             for ( var i in array) {
                 html += '<li><a href="/user/'+array[i].id+'"><i class="fa fa-fw fa-user"></i> '+array[i].name+'</a></li>';
             }
 
+            html += '<li onclick="showSearchOPeople()"><a><i class="fa fa-fw fa-plus"></i> Find people...</a></li>';
+
+
             $("#requestList").html(html);
-            if(!array.length){
-                $("#requestButton").toggleClass("disabled");
-            }else {
+            if(array.length) {
                 $("#requestCount").html("<span class='badge badge-danger'>"+array.length+"</span>");
             }
         });
@@ -184,6 +210,8 @@
     <script type="text/javascript" src="/assets/operation-transformation/ot.js"></script>
     <script type="text/javascript" src="/assets/jquery/jquery.qrcode-0.12.0.min.js"></script>
     <script type="text/javascript" src="/assets/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
+
 </body>
 
 

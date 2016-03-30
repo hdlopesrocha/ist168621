@@ -181,25 +181,25 @@ public class Application extends Controller {
 
 
 
-        captions[1] = "Application Layer";
+        captions[1] = "1 - Application Layer";
         time[1] = 31;
 
-        captions[2] = "Presentation Layer";
+        captions[2] = "2 - Presentation Layer";
         time[2] = 1*60+13;
 
-        captions[3] = "Session Layer";
+        captions[3] = "3 - Session Layer";
         time[3] = 1*60+38;
 
-        captions[4] = "Transport Layer";
+        captions[4] = "4 - Transport Layer";
         time[4] = 2*60+12;
 
-        captions[5] = "Network Layer";
+        captions[5] = "5 - Network Layer";
         time[5] = 2*60+39;
 
-        captions[6] = "Data Link Layer";
+        captions[6] = "6 - Data Link Layer";
         time[6] = 3*60+04;
 
-        captions[7] = "Physical Layer";
+        captions[7] = "7 - Physical Layer";
         time[7] = 3*60+28;
 
         captions[0] = "<br><ul>";
@@ -207,7 +207,7 @@ public class Application extends Controller {
 
         for(int i =1 ; i < 8 ;++i) {
             Date da = new Date(start.getTime()+time[i]*1000);
-            captions[0] += "<li> <a onclick='timeline.setHistoric(new Date("+da.getTime()+"))'>"+captions[i]+"</a></li>";
+            captions[0] += "<li><a style='font-size:24px;color:yellow;' onclick='timeline.setHistoric(new Date("+da.getTime()+"))'>"+captions[i]+"</a></li>";
             captions[i] = "<div class='caption'><span>"+captions[i]+"</span></div>";
 
         }
@@ -216,7 +216,7 @@ public class Application extends Controller {
 
         for(int i =0 ; i < 8 ;++i){
             Date da = new Date(start.getTime()+time[i]*1000);
-            Date db = new Date(da.getTime()+5000);
+            Date db = new Date(da.getTime()+15000);
 
             new CreateHyperContentService(user1.getId().toString(),group3.getId().toString(),da,db,captions[i]).execute();
         }

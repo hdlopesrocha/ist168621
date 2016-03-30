@@ -160,10 +160,9 @@ public class Rest extends Controller {
             List<PermissionDto> permissions = new ArrayList<PermissionDto>();
 
             attributes.add(new AttributeDto("name", name, false, true, false));
-            Set<String> readSet = new HashSet<>();
             Set<String> writeSet = new HashSet<String>();
             writeSet.add(session("uid"));
-            permissions.add(new PermissionDto("name",readSet,writeSet));
+            permissions.add(new PermissionDto("name",null,writeSet));
             CreateGroupService service = new CreateGroupService(session("uid"), visibility,permissions, attributes);
             try {
                 service.execute();

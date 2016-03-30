@@ -25,9 +25,6 @@
         $("#modalAlert").modal("show");
         $("#alertBody").html(content);
    }
-
-
-
 </script>
 
 <div id="qrCodeModal" class="modal fade" role="dialog">
@@ -228,23 +225,23 @@
                 <div class="btn-group pull-right">
                     <div class="form-inline">
                         <div class="btn btn-warning" onclick="playStop()" id="playStop">
-                            <i class="fa fa-pause"></i>
+                            Pause <i class="fa fa-pause"></i>
                         </div>
                         <div class="btn btn-primary" onclick="timeline.setRealTime()"
                              id="goToPresent">
-                            <i class="fa fa-step-forward"></i>
+                            Real-Time <i class="fa fa-step-forward"></i>
                         </div>
                         <div class="btn btn-info" onclick="setTimeLink()"
                              data-toggle="modal" data-target="#timeQueryStringModal">
-                            <i class="fa fa-link"></i>
+                            Link <i class="fa fa-link"></i>
                         </div>
                         <div class="btn btn-success"
                              data-toggle="modal" data-target="#createTagModal">
-                            <i class="fa fa-tag"></i>
+                            Annotation <i class="fa fa-tag"></i>
                         </div>
                         <div class="btn btn-primary hidden" onclick="saveTags()"
                              id="saveButton">
-                            <i class="fa fa-floppy-o"></i>
+                            Save <i class="fa fa-floppy-o"></i>
                         </div>
                     </div>
                 </div>
@@ -309,7 +306,7 @@
                 <div class="btn-group pull-right">
                     <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
                             data-target="#addMembersModal">
-                        <i class="fa fa-plus"></i>
+                        Add user <i class="fa fa-plus"></i>
                     </button>
                 </div>
                 <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
@@ -347,7 +344,7 @@
 							<button class="btn btn-info" type="button" id="sendMessageButton"
                                     onclick="sendMessage()">
 
-                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                               SEND <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
 
                             </button>
 						</span>
@@ -399,23 +396,23 @@
                             <div class="btn-group input-group pull-right">
                                 <button type="button" class="btn btn-danger"
                                         onclick="clearContent()">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 
                                 </button>
                                 <button type="button" class="btn btn-info"
                                         onclick="generateQRCode()">
-                                    <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+                                    QRcode <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
 
                                 </button>
                                 <button type="button" class="btn btn-info"
                                         onclick="previewContent()">
-                                    <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    Preview <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 
                                 </button>
 
                                 <button type="button" class="btn btn-success"
                                         onclick="createContent()">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                    Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 
                                 </button>
                             </div>
@@ -444,7 +441,7 @@
                             <div class="btn-group input-group pull-right">
                                 <button type="button" class="btn btn-success"
                                         onclick="saveCollab()">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                   Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 
                                 </button>
                             </div>
@@ -806,7 +803,7 @@
 
 
 </script>
-<script type="text/javascript" src="/assets/adapter/adapter.screenshare.js"></script>-->
+<script type="text/javascript" src="/assets/adapter/adapter.screenshare.js"></script>
 <!--<script type="text/javascript" src="/assets/adapter/adapter.js"></script>-->
 <script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
 <script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>

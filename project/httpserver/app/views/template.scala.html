@@ -83,24 +83,21 @@
 
 <div class="page-container">
     <div class="container-fluid">
-
         @content
     </div>
 </div>
 
 <script type="text/javascript">
 
+    $( document ).ready(function() {
 
-		
-			$( document ).ready(function() {
-
-				$("#fullscreen").hide();
-				$("#logout-button").click(function(){
-					HyperHttp.logout(function(){
-						document.location = document.location;
-					})
-				});	
-			});		
+        $("#fullscreen").hide();
+        $("#logout-button").click(function(){
+            HyperHttp.logout(function(){
+                document.location = document.location;
+            })
+        });
+    });
 
 
 </script>
@@ -114,5 +111,7 @@
 <script type="text/javascript" src="/assets/operation-transformation/ot.js"></script>
 <script type="text/javascript" src="/assets/jquery/jquery.qrcode-0.12.0.min.js"></script>
 <script type="text/javascript" src="/assets/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
+
 </body>
 </html>

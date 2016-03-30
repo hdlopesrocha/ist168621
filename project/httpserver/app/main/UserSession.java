@@ -139,7 +139,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     final Date startTime = new Date(new Date().getTime() - timeOffset);
 
                     if (hash != null) {
-                        boolean containsQR = false;
+                        boolean containsQR;
                         synchronized (currentQRCodes) {
                             containsQR = currentQRCodes.containsKey(hash);
                         }
@@ -169,8 +169,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                     newestQRCode = currentQRCodes.get(hash);
                                 }
 
-                                if (startTime != newestQRCode) {
-                                    Date endTime = new Date(new Date().getTime() - timeOffset);
+                                if (startTime == newestQRCode) {
                                     synchronized (currentQRCodes) {
                                         currentQRCodes.remove(hash);
                                     }
@@ -179,6 +178,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                     msg.put("hash", hash);
                                     room.sendMessage(msg.toString());
 
+
+                                    Date endTime = new Date(new Date().getTime() - timeOffset);
                                     CreateHyperContentService service = new CreateHyperContentService(getUser().getId().toString(),
                                             getGroupId(), startTime, endTime, content);
                                     try {
@@ -187,8 +188,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                     } catch (ServiceException e) {
                                         e.printStackTrace();
                                     }
-
-
                                 }
                             }
                         }).start();
