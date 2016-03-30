@@ -96,6 +96,12 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    var timeline =  new vis.Timeline(main, items,groups, options);
+
+var date = new Date();
+        timeline.setWindow(date.getTime()-120*1000, date.getTime()+120*1000, {
+            animation: false
+        });
+
 	    timeline.real_time = true;
 	    timeline.hyper_offset = 0;
 		timeline.addCustomTime(timeline.getCurrentTime(),"time");

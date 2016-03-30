@@ -209,7 +209,6 @@ public class Application extends Controller {
             Date da = new Date(start.getTime()+time[i]*1000);
             captions[0] += "<li><a style='font-size:24px;color:yellow;' onclick='timeline.setHistoric(new Date("+da.getTime()+"))'>"+captions[i]+"</a></li>";
             captions[i] = "<div class='caption'><span>"+captions[i]+"</span></div>";
-
         }
 
         captions[0] += "</ul>";
@@ -217,7 +216,6 @@ public class Application extends Controller {
         for(int i =0 ; i < 8 ;++i){
             Date da = new Date(start.getTime()+time[i]*1000);
             Date db = new Date(da.getTime()+15000);
-
             new CreateHyperContentService(user1.getId().toString(),group3.getId().toString(),da,db,captions[i]).execute();
         }
 

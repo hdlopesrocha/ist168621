@@ -47,9 +47,9 @@ HyperWebSocket.setOnNewVideoRecordingArrivedHandler(function (array) {
     }
     if (firstRecording) {
         firstRecording = false;
-        timeline.fit({
+        /*timeline.fit({
             animation : false
-        });
+        });*/
     }
 });
 
