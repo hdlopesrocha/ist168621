@@ -250,6 +250,8 @@ var HyperTimeline = new (function() {
         }
 
         timeline.iterateTempTags = function(callback){
+            console.log("iterateTempTags", tempTags);
+
             for(var i in tempTags){
                 var tag =tempTags[i];
                 tag.id = i;
@@ -260,6 +262,7 @@ var HyperTimeline = new (function() {
 
 
 		timeline.loadTag= function(id,time, title){
+			timeline.removeTag(id);
 			var start = new Date(time);
 			tags.push({text:title,time:start,id:id});
 			this.items.add({
@@ -286,7 +289,9 @@ var HyperTimeline = new (function() {
 				className: 'default',
 				group:'tag'
 			});
-			tempTags[id] = { title : title, time : start};
+
+
+			tempTags[id] = { title : title, time : new Date(start)};
 			onDirty();
 	    }
 

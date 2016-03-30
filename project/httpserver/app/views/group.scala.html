@@ -102,7 +102,7 @@
                 <label>Add Members manually</label>
 
 
-                <form role="search" class="form">
+                <div role="search" class="form">
 
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search"
@@ -113,7 +113,7 @@
                         </span>
                     </div>
 
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -239,10 +239,10 @@
                              data-toggle="modal" data-target="#createTagModal">
                             Annotation <i class="fa fa-tag"></i>
                         </div>
-                        <div class="btn btn-primary hidden" onclick="saveTags()"
+                        <!--<div class="btn btn-primary hidden" onclick="saveTags()"
                              id="saveButton">
                             Save <i class="fa fa-floppy-o"></i>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="panel-heading" data-toggle="collapse"
@@ -263,7 +263,7 @@
             <div class="panel panel-info ">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default" onclick="toggleAutoSelect()">
-                        <i id="autoSelect" class="fa fa-thumb-tack text-off"></i>
+                        <i id="autoSelect" class="fa fa-thumb-tack"></i>
                     </button>
                     <button class="btn btn-default" onclick="toggleMicrophone()">
                         <i id="soundIcon" class="fa fa-microphone text-success"></i>
@@ -337,14 +337,21 @@
                     </div>
                     <div class="panel-footer">
                         <div class="input-group">
+                          	<span class="input-group-btn">
+                            <input type="file" style="display:none" id="anex" name="anex"/>
+							<button class="btn btn-info" type="button" id="sendAnexButton"
+                                    onclick="sendAnex()">
+                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+
+                            </button>
+						</span>
                             <input type="text" class="form-control"
                                    placeholder="Enter Message" id="messageText"
                                    onkeydown="if(event.keyCode==13){sendMessage();}"/>
 						<span class="input-group-btn">
-							<button class="btn btn-info" type="button" id="sendMessageButton"
+                            <button class="btn btn-info" type="button" id="sendMessageButton"
                                     onclick="sendMessage()">
-
-                               SEND <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
 
                             </button>
 						</span>
@@ -474,12 +481,15 @@
 		function saveCollab(){
             var value = adapter.cm.getValue();
             HyperWebSocket.saveCollaborativeContent(value);
+            toastr.remove();
+            toastr.success('Collaborative Editor!', 'Saved document successfully!');
+
             console.log(value);
 		}
 
 		function toggleAutoSelect(){
 			autoSelect = !autoSelect;
-			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack":"fa fa-thumb-tack text-off");
+			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
 		}
 
 		function returnToHome(){
@@ -502,6 +512,11 @@
 			}
 		}
 
+        function sendAnex(){
+            $("#anex").click();
+
+        }
+
 		function toggleMicrophone(){
 			var microphoneState = HyperWebSocket.toggleMicrophone();
 			if(microphoneState){
@@ -519,8 +534,10 @@
 
 		function sendMessage() {
 			var text = $("#messageText").val();
-			HyperWebSocket.sendMessage(text);
-			$("#messageText").val("");
+			if(text && text.length>0){
+                HyperWebSocket.sendMessage(text);
+                $("#messageText").val("");
+			}
 
 		}
 
@@ -570,7 +587,7 @@
 				}
 			});
 			timeline.removeTempTags();
-			$("#saveButton").addClass("hidden");
+		//	$("#saveButton").addClass("hidden");
 		}
 
 	    var candidateSearch = new (function() {
@@ -690,6 +707,14 @@
 			$('#searchText').typeahead(generalSearch);
 			$('#searchCandidateText').typeahead(candidateSearch);
 
+
+    $("#anex").change(function() {
+        var form = new FormData();
+        form.append("anex", $("#anex")[0].files[0]);
+        HyperHttp.uploadFile(form, function(data){
+             HyperWebSocket.sendMessage("<a href='/file/"+data.anex.url+"'>"+data.anex.filename+"</a>");
+        },function(){});
+    });
 			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
             $('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
@@ -784,13 +809,11 @@
 
                 }, function(){
                     console.log("onDirty");
-				    $("#saveButton").removeClass("hidden");
-
-
+				   // $("#saveButton").removeClass("hidden");
+                    saveTags();
                 }
 			);
 		});
-
 
 
 </script>

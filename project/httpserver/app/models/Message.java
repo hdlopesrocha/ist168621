@@ -147,7 +147,8 @@ public class Message {
 
 
         if (id == null) {
-            doc.put("seq", generateSequence());
+            sequence = generateSequence();
+            doc.put("seq", sequence);
             getCollection().insertOne(doc);
         } else
             getCollection().replaceOne(new Document("_id", id), doc);

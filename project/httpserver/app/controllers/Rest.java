@@ -50,6 +50,29 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+
+    public Result uploadFile() throws ServiceException {
+        MultipartFormData form = request().body().asMultipartFormData();
+        JSONObject ans = new JSONObject();
+
+            if(session("uid")!=null){
+                for(FilePart fp : form.getFiles()){
+                    KeyValueFile kvf = new KeyValueFile(fp.getKey(),fp.getFilename(),fp.getFile());
+                    UploadFileService service = new UploadFileService(kvf);
+                    String url = service.execute();
+                    JSONObject obj =  new JSONObject();
+                    obj.put("filename",kvf.getName());
+                    obj.put("url",url);
+                    ans.put(kvf.getKey(),obj);
+                }
+
+
+            }
+
+
+        return ok(ans.toString()).as(APP_JSON);
+    }
+
     /**
      * Search on group.
      *
@@ -613,7 +636,7 @@ public class Rest extends Controller {
             filters.add(andList);
         }
 
-        SearchDataService service = new SearchDataService(session("uid"),skip,limit,search,filters);
+        SearchDataService service = new SearchDataService(session("uid"),skip,limit,search.toLowerCase(),filters);
         List<String> owners = service.execute();
         JSONArray array = new JSONArray();
         for (String owner : owners) {

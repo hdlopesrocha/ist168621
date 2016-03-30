@@ -18,6 +18,8 @@ function createContent(){
 
     if(content){
         HyperWebSocket.createContent(start.toISOString(),end.toISOString(),content);
+        toastr.remove();
+        toastr.success('Content Editor!', 'Saved content successfully!');
     }
     clearContent();
 }

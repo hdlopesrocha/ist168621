@@ -64,6 +64,24 @@ var HyperHttp = (function(){
 		});
 	}
 
+
+	this.uploadFile = function(formData, success, error){
+		$.ajax({
+		    type: "POST",
+		    url: "/file",
+		    data: formData,
+	        encType: "multipart/form-data",
+		    contentType: false,
+	        processData: false,
+	        cache: false,
+	        async : true,
+	        error:function(e){
+		    	error();
+		    },
+            success: success
+		});
+	}
+
 	this.updateUser = function(userId,email, formData, success, error){
         formData.append("email",email);
         $.ajax({
