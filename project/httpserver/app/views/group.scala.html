@@ -197,18 +197,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Create TAG</h4>
+                <h4 class="modal-title">Create Time Annotation</h4>
             </div>
             <form id="createTagForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label">TAG Name:</label>
+                        <label class="control-label">Annotation Name:</label>
                         <input class="form-control" type="text" id="tagTitle"/>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="input-group pull-right">
-                        <input type="submit" class="btn btn-success" id="addMembers"/>
+                        <input type="submit" class="btn btn-success" id="createTag"/>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -460,7 +460,6 @@
 		var selectedUser = null;
 		var savedUser = "@userId";
 		var realTime = true;
-		var unsaved_tags = [];
 		var firstRecording = true;
 		var participants = {};
 		var timeline = null;
@@ -563,17 +562,14 @@
 		}
 
 		function saveTags() {
-			console.log(unsaved_tags);
-			for ( var i in unsaved_tags) {
-				var tag = unsaved_tags[i];
-				var visTag = timeline.getRecord(tag.id);
-				var time = new Date(visTag.start);
-
-				var title = tag.title;
-				HyperWebSocket.createTag(time, title);
-				timeline.removeTag(tag.id);
-			}
-			unsaved_tags = [];
+			timeline.iterateTempTags(function(tag){
+			    if(tag.title!=null){
+				    HyperWebSocket.createTag(tag.id, tag.time, tag.title);
+				}else {
+                    HyperWebSocket.removeTag(tag.id);
+				}
+			});
+			timeline.removeTempTags();
 			$("#saveButton").addClass("hidden");
 		}
 
@@ -715,15 +711,8 @@
 			$("#createTagForm").submit(function(event){
 				event.preventDefault();
 				$("#createTagModal").modal('hide');
-				var id = makeid();
 				var title = $("#tagTitle").val();
-
-				unsaved_tags.push({
-					id : id,
-					title : title
-				});
-				timeline.addTag(id, title);
-				$("#saveButton").removeClass("hidden");
+				timeline.addTempTag(title);
 			});
 
 			$("#refresh-button").click(function() {
@@ -793,9 +782,11 @@
                         $("#contentEnd").val(dateStr(new Date(time)));
                     }
 
-                },function(tagId){
-                    console.log("REMOVE TAG",tagId);
-                    HyperWebSocket.removeTag(tagId);
+                }, function(){
+                    console.log("onDirty");
+				    $("#saveButton").removeClass("hidden");
+
+
                 }
 			);
 		});

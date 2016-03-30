@@ -174,7 +174,7 @@ public class Application extends Controller {
             rec.save();
         }
 
-        new CreateTimeTagService(group3.getId().toString(),start,"OSI Model").execute();
+        new SetTimeTagService(group3.getId().toString(),null,start,"OSI Model").execute();
 
         Integer [] time = new Integer[8];
         String [] captions = new String[8];

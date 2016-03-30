@@ -144,9 +144,10 @@ var HyperWebSocket = new (function() {
 		}));
 	}
 
-	this.createTag = function(time,title){
+	this.createTag = function(id,time,title){
 		ws.send(JSON.stringify({
 			cmd : "createTag",
+			id:id,
 			time: time,
 			title: title
 		}));

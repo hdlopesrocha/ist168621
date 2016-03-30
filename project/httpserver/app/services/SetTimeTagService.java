@@ -10,13 +10,16 @@ import java.util.Date;
 /**
  * The Class CreateTimeTagService.
  */
-public class CreateTimeTagService extends Service<TimeAnnotation> {
+public class SetTimeTagService extends Service<TimeAnnotation> {
 
     /** The gid. */
     private final ObjectId gid;
     
     /** The title. */
     private final String title;
+
+    /** The title. */
+    private final ObjectId tid;
 
     /** The time. */
     private final Date time;
@@ -28,9 +31,10 @@ public class CreateTimeTagService extends Service<TimeAnnotation> {
      * @param time the time
      * @param title the title
      */
-    public CreateTimeTagService(String gid, Date time, String title) {
+    public SetTimeTagService(String gid, String tid, Date time, String title) {
         this.gid = new ObjectId(gid);
         this.time = time;
+        this.tid = tid !=null && ObjectId.isValid(tid) ? new ObjectId(tid) : null;
         this.title = title;
     }
 
@@ -39,8 +43,19 @@ public class CreateTimeTagService extends Service<TimeAnnotation> {
      */
     @Override
     public TimeAnnotation dispatch() throws ServiceException {
-        TimeAnnotation tag = new TimeAnnotation(gid, time, title);
+
+        TimeAnnotation tag = null;
+        if(tid!=null){
+            tag = TimeAnnotation.findById(tid);
+        }
+
+        if(tag==null) {
+            tag = new TimeAnnotation(gid, time, title);
+        }else {
+            tag.setTime(time);
+        }
         tag.save();
+
         return tag;
     }
 

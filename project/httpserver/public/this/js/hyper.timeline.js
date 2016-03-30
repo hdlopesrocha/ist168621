@@ -2,8 +2,19 @@
 
 var HyperTimeline = new (function() {
 
-	this.create = function(divId, historic, realTime, onCurrentTag, onDrop,onTagRemoved) {
+    function makeid() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 10; i++)
+            text += possible.charAt(Math.floor(Math.random()
+                    * possible.length));
+        return text;
+    }
+
+
+	this.create = function(divId, historic, realTime, onCurrentTag, onDrop, onDirty) {
 	    var tags = [];
+	    var tempTags = {};
         var currentTag = null;
 
 		function followerWorker(timeline){
@@ -33,18 +44,7 @@ var HyperTimeline = new (function() {
                 }
 	    }
 
-/*		
-		this.onAdd = function (item, callback){
-			console.log(this);
-			item.group = 'tag';
-			item.editable = true;
-			var date = item.start._i;
-			item.start = new Date(date.getTime()-10000);
-			item.end =  new Date(date.getTime()+10000);	
-			item.className= 'vis-tag';
-			callback(item);
-		};
-*/		
+
 	    var main = document.getElementById(divId);
 	    var options = {
 	    	stack: false,
@@ -64,10 +64,14 @@ var HyperTimeline = new (function() {
 	      		updateTime:true 
 	      	},
 	      	onRemove:function (item, callback) {
-                if(item.id){
-                    onTagRemoved( item.id);
-                }
-                callback(null); // send back adjusted item
+               tempTags[item.id] = {title:null};
+               onDirty();
+               callback(item); // send back adjusted item
+	      	},
+	      	onMove: function(item, callback){
+               console.log("onMove", item);
+               tempTags[item.id] = {title:item.content,time:item.start};
+               onDirty();
 	      	}
 	     // clickToUse: true
 	    };
@@ -75,7 +79,7 @@ var HyperTimeline = new (function() {
 	    var groups = [
 	          {
                 id: 'tag',
-                content: 'Tags',
+                content: 'Annotations',
                 className:'tagsGroup'
               },
               {
@@ -96,8 +100,9 @@ var HyperTimeline = new (function() {
 	    
 	    
 	    var timeline =  new vis.Timeline(main, items,groups, options);
+        var date = new Date();
 
-var date = new Date();
+
         timeline.setWindow(date.getTime()-120*1000, date.getTime()+120*1000, {
             animation: false
         });
@@ -237,6 +242,22 @@ var date = new Date();
 	    	this.moveTo(customTime,{animation: false});
 	    	this.timeRunning = !this.timeRunning;
 	    }
+        timeline.removeTempTags = function(){
+           for(var i in tempTags){
+                timeline.removeTag(i);
+           }
+           tempTags = {};
+        }
+
+        timeline.iterateTempTags = function(callback){
+            for(var i in tempTags){
+                var tag =tempTags[i];
+                tag.id = i;
+                callback(tag);
+            }
+        }
+
+
 
 		timeline.loadTag= function(id,time, title){
 			var start = new Date(time);
@@ -245,34 +266,31 @@ var date = new Date();
 				id : id,
 				content : title,
 				start:start,
-				//start : new Date(start+3*len/8),
-				//end :  new Date(start+5*len/8),			
-	 	      //  selectable:true,
-		      //  editable:true,
 				className: 'info',
 				group:'tag'
 			});
 		}
 
 	    
-	    timeline.addTag= function(id, content){
+	    timeline.addTempTag= function(title){
 	    	var start = (this.range.start +this.range.end)/2;
 	    	//var end = this.range.end;
 	    	//var len = end - start;
-	    	
+	    	var id = makeid();
 	    	this.items.add({
 				id : id,
-				content : content,
+				content : title,
 				start:start,
-				//start : new Date(start+3*len/8),
-				//end :  new Date(start+5*len/8),			
 	 	        selectable:true,
 		        editable:true,
 				className: 'default',
 				group:'tag'
 			});
+			tempTags[id] = { title : title, time : start};
+			onDirty();
 	    }
-	    
+
+
 	    timeline.removeTag= function(id){
 			this.items.remove(id);
 

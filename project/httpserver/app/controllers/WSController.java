@@ -250,7 +250,8 @@ public class WSController extends Controller {
                                     try {
                                         Date time = Tools.FORMAT.parse(args.getString("time"));
                                         String title = args.getString("title");
-                                        CreateTimeTagService service = new CreateTimeTagService(groupId, time, title);
+                                        String tid = args.optString("id",null);
+                                        SetTimeTagService service = new SetTimeTagService(groupId,tid, time, title);
                                         TimeAnnotation tag = service.execute();
                                         JSONObject msg = new JSONObject();
                                         msg.put("cmd", "tag");
