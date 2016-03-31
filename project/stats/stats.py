@@ -23,7 +23,6 @@ while True:
 		recv = 0
 		sent = 0
 		
-
 		if interface in ivalues:
 			ivalue = ivalues[interface]
 			recv = sample.bytes_recv - ivalue.bytes_recv

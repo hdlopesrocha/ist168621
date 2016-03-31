@@ -22,16 +22,16 @@
 	    grid style=dashed,
 	] 
 
-		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/res_7_mongod.csv};
+		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}/1000000] {stats/test_full_features/res_7_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/res_67_kurento-media-server.csv};
+		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}/1000000] {stats/test_full_features/res_67_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/res_35_kurento-repo.csv};
+		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}/1000000] {stats/test_full_features/res_35_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/res_233_bash.csv};
+		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}/1000000] {stats/test_full_features/res_233_bash.dat};
 		\addlegendentry{Java}
 
 	\end{axis}

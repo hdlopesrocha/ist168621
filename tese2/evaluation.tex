@@ -105,7 +105,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
   \label{fig:summary_full_net}
 \end{figure}
 
-If we consider all streams equal and an incoming stream uses $x$KB/s, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
+If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
 
 With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine.
 
@@ -120,7 +120,7 @@ Figure \ref{fig:test_full_features_mem} shows the memory usage during our perfor
   \label{fig:test_full_features_mem}
 \end{figure}
 
-\emph{MongoDB} memory usage keeps increasing because it trys to fit part of the database on ram for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case and stabilization at the end.
+\emph{MongoDB} memory usage keeps increasing because it trys to fit part of the database on \ac{RAM} for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case. When the conference room is empty no there are no video recordings, which explains the memory stabilization at the end.
 
 Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage during our performance test case. As we can see, the amount of \ac{CPU} increases and decreases linearly in function of the amount of conference participants. 
 
@@ -163,3 +163,88 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
 \end{figure}
 
 We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by \ac{CPU}. Without this feature the network and memory usage had insignificate changes compared to \ac{CPU} usage.
+
+
+  \subsection {Usability Tests}
+
+In this section we present the results of our usability tests. The first time we tested our solution by providing tasks to users, we have observed that our solution was not perfect. We have faced usability problems during our tests, he had to improve our solution's usability and start the tests again.
+
+  \subsubsection {First phase}
+
+In the first testing phase we have performed just three tests with users and ceased for improvements. 
+
+Both users that tested our solution had difficulties on the first task when finding new friendship requests and adding new friends, as friendship request were possible to access only from the top bar and new user profiles were only accessible through the search bar. In order to solve this problem we have added a menu for adding new users in the friends list and another near the friends list as it can be seen on figure \ref{fig:test_ui_01_02_03}.
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.2\linewidth}
+\centering
+
+    \includegraphics[width=\textwidth]{figures/test_ui_01.png}
+        a) Friend list path
+\label{fig:minipage1}
+\end{minipage}
+\begin{minipage}[b]{0.35\linewidth}
+    \centering
+
+    \includegraphics[width=\textwidth]{figures/test_ui_02.png}
+         b) Friend requests path
+\label{fig:minipage2}
+\end{minipage}
+\begin{minipage}[b]{0.2\linewidth}
+    \centering
+
+    \includegraphics[width=\textwidth]{figures/test_ui_03.png}
+         c) Search bar path
+\label{fig:minipage2}
+\end{minipage}
+
+    \caption{Multiple paths for finding people}
+    \label{fig:test_ui_01_02_03}
+\end{figure}
+
+On the second task one user clicked on the friends list for adding a friend to room and by consequence made him leave the conference room to the user profile. We solved this problem by showing a popup with the user profile and an additional button to add the user to the conference room as it can be seen on figure \ref{fig:test_ui_04}.
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.7\linewidth}
+\centering
+
+    \includegraphics[width=\textwidth]{figures/test_ui_04.png}
+\end{minipage}
+
+
+    \caption{Adding user to conference room from user profile}
+    \label{fig:test_ui_04}
+\end{figure}
+
+On the third task we noticed that both users were not expecting to search the content directly from the search bar, instead they used the timeline.
+
+On the fourth task both users didn't placed their annotations on wright place, we only provide one way to place annotations, which is by dragging them on the timeline. 
+After creating an annotation users also didn't understand that they had to save their changes on the timeline, we solved this problem by saving automatically each time the user changed any annotation, the old user interface can be seen on figure \ref{fig:test_ui_05}.
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.3\linewidth}
+\centering
+
+    \includegraphics[width=\textwidth]{figures/test_ui_05.png}
+\end{minipage}
+
+
+    \caption{Save button that was removed}
+    \label{fig:test_ui_05}
+\end{figure}
+
+Both users had success with fifth task but they revealed difficulties choosing the time interval for the hyper content, we are aware that this is a difficult task and that's why we have introduced the \emph{QR code} content creation mechanism which was very easy to learn.
+
+We have also gathered comments and suggestions after letting the users explore our system, extra improvements were made such as:
+
+\begin{itemize}
+\item Giving feedback to user when saving content and collaborative editors.
+\item Support file upload on our chat.
+\item Starting with our timeline more zoomed in order to give more sensation of time.
+\item Create content with starting time and duration insted ending time.
+\end{itemize}
+
+  \subsubsection {Second phase}

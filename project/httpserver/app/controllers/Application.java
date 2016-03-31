@@ -266,21 +266,6 @@ public class Application extends Controller {
         }
     }
 
-    /**
-     * User profile.
-     *
-     * @param userId the user id
-     * @return the result
-     */
-    public Result userProfile(String userId) {
-        if (Tools.userExists(session("uid"))) {
-            boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId)) != null;
-            boolean to = Relation.findByEndpoint(new ObjectId(userId), new ObjectId(session("uid"))) != null;
-            return ok(views.html.profile.render(userId, from, to));
-        } else {
-            return ok(views.html.sign.render());
-        }
-    }
 
     /**
      * Join.

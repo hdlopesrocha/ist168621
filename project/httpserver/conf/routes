@@ -5,7 +5,6 @@
 # Home page
 GET     /                           	controllers.Application.index()
 GET     /reset                          controllers.Application.reset()
-GET		/user/:userId					controllers.Application.userProfile(userId : String)
 GET     /group/:groupId             	controllers.Application.group(groupId : String)
 GET		/join/:gid/:token				controllers.Application.join(gid : String, token : String)
 
@@ -18,6 +17,7 @@ PUT     /api/user/:userId            	controllers.Rest.register(userId : String)
 
 GET     /api/requests       			controllers.Rest.listRelationRequests()
 GET     /api/relation				    controllers.Rest.listRelations()
+GET     /api/relation/:userId		    controllers.Rest.relationState(userId : String)
 DELETE  /api/relation/:userId		    controllers.Rest.denyRelation(userId : String)
 PUT     /api/relation/:userId		    controllers.Rest.acceptRelation(userId : String)
 

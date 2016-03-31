@@ -11,7 +11,7 @@ HyperWebSocket.setParticipantPresenceHandler(function (info) {
     var online = info.online;
     console.log("*",info);
     if (!participants[userId]) {
-        participants[userId] = true;
+        participants[userId] = {id:userId,name:name,photo:photo};
         var del_button = "<i style='color:red' onclick='removeMemberConfirmation(\""+ userId+ "\",\""+name+"\")' class='fa fa-times'></i>";
         var onclick = 'onclick=\'selectUser("'+userId+'")\'';
         var style='style="background-image:url('+photo+');height:40px;width:40px" class="pull-left media-object circular"';
@@ -109,14 +109,6 @@ HyperWebSocket.setOnLookAtTimeRequestHandler(function(time) {
     console.log("setTime",time);
     timeline.setTime(time);
     HyperWebSocket.getContent();
-});
-
-HyperWebSocket.setOnUserRemovedHandler(function (uid) {
-    $("#vidMember"+uid).remove();
-    participants[uid]=false;
-    if(uid=="@userId"){
-        document.location = "/";
-    }
 });
 
 HyperWebSocket.setOnLocalVideoAvailableHandler(function(streamUrl){

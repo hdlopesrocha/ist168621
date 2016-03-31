@@ -31,7 +31,45 @@
     <script src="/assets/jquery-ui/jquery-ui-sliderAccess.js" type="text/javascript"></script> -->
 
 </head>
+<script>
+    var userProfileExtraAction = null;
+</script>
 <body>
+
+<div id="userProfileModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User profile</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 " align="center">
+                        <img alt="User Pic" id="userPhoto" class="img-circle img-responsive">
+                    </div>
+
+                    <div class=" col-md-9 col-lg-9 ">
+                        <table class="table table-user-information">
+                            <tbody id="userProperties">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="pull-right" id="relationAction">
+
+
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="searchPeopleModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -49,7 +87,23 @@
         </div>
     </div>
 </div>
+<style>
+    .sidebar-nav ul {
+        padding: 0px;
+    }
 
+    .sidebar-nav * {
+        color:white;
+    }
+
+    .sidebar-nav span {
+        display:inline-flex;
+        width: 16px;
+        height: 16px;
+        margin: 0px 17px 0px 17px;
+    }
+
+</style>
 
 
 <div id="wrapper">
@@ -63,9 +117,12 @@
                     HyperChat
                 </a>
             </li>
-            <div style="color:white;padding:18px;display:none;" id="friendRequestsLabel"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;FRIENDSHIP REQUESTS</div>
-            <div id="request-list"></div>
-            <div style="color:white;padding:18px;"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp;&nbsp;FRIENDS</div>
+
+            <li><span><i class="fa fa-user-plus"></i></span>FRIENDSHIP REQUESTS</li>
+            <div id="request-list" ></div>
+            <li onclick="showSearchOPeople()"><a><span><i class="fa fa-search"></i></span>Find people...</a></li>
+
+            <li><span><i class="fa fa-users"></i></span>FRIENDS</li>
             <div id="friend-list"></div>
         </ul>
 
@@ -114,16 +171,16 @@
                             @actionBar
 
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle dropdown-user" data-toggle="dropdown"
+                                <a href="#" class="dropdown-toggle dropdown-user" data-toggle="dropdown"  title="Friendship Requests"
                                    aria-expanded="false">
-                                    Friendship Requests <i class="fa fa-user-plus"></i>
+                                    <i class="fa fa-user-plus"></i>
                                     <div style="display:inline" id="requestCount"></div>
                                 </a>
                                 <ul class="dropdown-menu" id="requestList">
 
                                 </ul>
                             </li>
-                            <li id="logout-button">
+                            <li id="logout-button"   title="Logout">
                                 <a><i class="fa fa-sign-out"></i></a>
                             </li>
 
@@ -145,13 +202,67 @@
 </div>
     <script type="text/javascript">
 
-    function gotoUser(uid){
-        document.location = "/user/"+uid;
-    }
+
 
    function showSearchOPeople(){
         $('#searchPeopleModal').modal('show');
     }
+
+
+
+    function showUserProfile(userId){
+        $('#searchPeopleModal').modal('hide');
+       	$("#userProfileModal").modal("show");
+        HyperHttp.userProfile(userId,function(user) {
+            var html = "";
+            for(var attr in user){
+                html += "<tr><td>"+ attr  + "</td><td>" + user[attr] + "</td></tr>";
+            }
+
+            $("#userProperties").html(html);
+            $('#userPhoto').attr("src",user.photo);
+        });
+
+        HyperHttp.relationState(userId,function(data) {
+            var success = function() {
+                showUserProfile(userId);
+		    }
+            var from = data.from;
+            var to = data.to;
+            var elem = $("<div></div>");
+            if(from){
+                elem.attr("class","btn btn-danger btn-sm");
+                elem.click(function(){
+		            HyperHttp.rejectRelation(userId, success);
+                });
+
+                if(to){
+                    elem.html("Reject friendship");
+                }else {
+                    elem.html("Cancel friendship");
+                }
+            }else {
+                elem.attr("class","btn btn-success btn-sm");
+                elem.click(function(){
+		            HyperHttp.addRelation(userId, success);
+                });
+
+                if(to){
+                    elem.html("Accept friend");
+                }else {
+                    elem.html("Add friend");
+                }
+            }
+
+
+            $("#relationAction").html(elem);
+            if(userProfileExtraAction){
+                userProfileExtraAction(userId);
+            }
+        });
+    }
+
+
 
 	$(document).ready(function() {
         $('#searchPeople').typeahead(SearchPeople);
@@ -170,12 +281,11 @@
             for ( var i in array) {
                 var user = array[i];
 
-                html += '<li><a href="/user/'+user.id+'"><i class="fa fa-fw fa-user"></i> '+user.name+'</a></li>';
-                html2 += "<li onclick='gotoUser(\""+ user.id+"\")' style='margin-top: 0px;'><a><span style='background-image: url(\""+user.photo+"\"); width: 20px; height: 20px;margin:0px 16px 0px 0px' class='fa-stack circular'></span>" + user.name + "</a></li>";
-                $("#friendRequestsLabel").show();
+                html += "<li onclick='showUserProfile(\""+user.id+"\")'><a><i class='fa fa-fw fa-user'></i> "+user.name+"</a></li>";
+                html2 += "<li onclick='showUserProfile(\""+ user.id+"\")'><a><span style='background-image: url(\""+user.photo+"\");' class='fa-stack circular'></span>" + user.name + "</a></li>";
             }
 
-            html += '<li onclick="showSearchOPeople()"><a><i class="fa fa-fw fa-plus"></i> Find people...</a></li>';
+            html += '<li onclick="showSearchOPeople()" style="cursor:pointer;"><a><i class="fa fa-fw fa-search"></i> Find people...</a></li>';
 
             $("#request-list").html(html2);
 
@@ -189,7 +299,7 @@
             var html = "";
             for ( var i in array) {
                 var user = array[i];
-                html += "<li onclick='gotoUser(\""+ user.id+"\")' style='margin-top: 0px;'><a><span style='background-image: url(\""+user.photo+"\"); width: 20px; height: 20px;margin:0px 16px 0px 0px' class='fa-stack circular'></span>" + user.name + "</a></li>";
+                html += "<li onclick='showUserProfile(\""+ user.id+"\")' ><a><span style='background-image: url(\""+user.photo+"\");' class='fa-stack circular'></span>" + user.name + "</a></li>";
             }
             $("#friend-list").html(html);
         });

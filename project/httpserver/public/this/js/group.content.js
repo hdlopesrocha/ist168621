@@ -12,8 +12,14 @@ function clearContent(){
 }
 
 function createContent(){
-    var start = parseTime($("#contentStart").val());
-    var end = parseTime($("#contentEnd").val());
+    var start = $("#contentStart").data("DateTimePicker").date().toDate();
+    var duration = $("#contentDuration").data("DateTimePicker").date().toDate();
+    var dur = duration.getSeconds() + duration.getMinutes()*60 + duration.getHours()*3600;
+
+    console.log("CC",start,dur);
+
+
+    var end = new Date(start.getTime()+dur*1000);
     var content = getContent();
 
     if(content){

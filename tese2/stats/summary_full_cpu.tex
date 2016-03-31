@@ -4,9 +4,9 @@
 	   	height=6cm,
 	    title={CPU usage},
 	    xlabel={Time [seconds]},
-	    ylabel={Transfer rate [kB/s]},
+	    ylabel={CPU [percentage]},
 	    xmin=-10, xmax=850,
-	    ymin=0, ymax=1400,
+	    ymin=0, ymax=1200,
 	    xtick={0,60,...,2000},
 	    ytick={0,200,...,2000},
 	    extra x ticks={0,60,...,2000},
@@ -22,16 +22,16 @@
 	    grid style=dashed,
 	]
 	
-		\addplot[color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_mongo.csv};
+		\addplot[color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_mongo.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kms.csv};
+		\addplot[color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kms.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kr.csv};
+		\addplot[color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_kr.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[color=Magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_play.csv};
+		\addplot[color=Magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/summary_full_cpu_play.dat};
 		\addlegendentry{Java}
 
 

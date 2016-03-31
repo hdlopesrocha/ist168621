@@ -134,7 +134,15 @@ var HyperHttp = (function(){
             success: success
         });
 	}
-	
+
+	this.relationState = function(userId, success){
+        $.ajax({
+            url: "/api/relation/"+userId,
+            type: 'GET',
+            success: success
+        });
+    }
+
 	this.addRelation = function(userId, success){
 		$.ajax({
             url: "/api/relation/"+userId,

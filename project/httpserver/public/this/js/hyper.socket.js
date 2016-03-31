@@ -75,7 +75,7 @@ var HyperWebSocket = new (function() {
 					maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
 					perc = currentAudioLevel/maxAudioLevel;
 				}
-				if(perc>0.05){
+				if(perc>0.10){
 					if(!soundDetected){
 						soundDetected = true;
 						this.talk(true);

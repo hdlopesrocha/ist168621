@@ -1,6 +1,25 @@
 @(groupId : String, groupName : String, userId : String, inviteToken : String) @template2(1){
 
 
+<li>
+    <a href="#collaborativeEditorAnchor" title="Collaborative Editor"><i class="fa fa-pencil-square-o"></i></a>
+</li>
+<li>
+    <a href="#contentEditorAnchor" title="Content Editor"><i class="fa fa-object-group"></i></a>
+</li>
+<li>
+    <a href="#chatAnchor" title="Chat"><i class="fa fa fa-comment"></i></a>
+</li>
+<li>
+    <a href="#videoAnchor" title="Video"><i class="fa fa-video-camera"></i></a>
+</li>
+<li>
+    <a href="#addMembers" title="Group members"><i class="fa fa-users"></i></a>
+</li>
+<li>
+    <a href="#timelineAnchor" title="Timeline"><i class="fa fa-clock-o"></i></a>
+</li>
+
 }{
 
 <style>
@@ -56,10 +75,15 @@
                 <div class="form-group">
                     <label>URL:</label>
                     <input type="text" class="form-control" id="timeQueryString">
+                    <input type="hidden" id="timeQueryValue"/>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-default btn-info" onclick="copyLink()">Select</button>
+                <button type="submit" class="btn btn-default btn-info" onclick="sendLink()">Send  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                </button>
+
+                <button type="submit" class="btn btn-default btn-info" onclick="copyLink()">Copy <i class="fa fa-clipboard"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -219,6 +243,7 @@
 
 
 <div class="center">
+
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-info not-fullscreen">
@@ -245,9 +270,9 @@
                         </div>-->
                     </div>
                 </div>
-                <div class="panel-heading" data-toggle="collapse"
+                <div class="panel-heading" data-toggle="collapse" id="timelineAnchor"
                      data-target="#collapse3">
-                    <h4 class="panel-title">Timeline</h4>
+                    <h4 class="panel-title"><i class="fa fa-clock-o"></i> Timeline</h4>
                 </div>
                 <div id="collapse3" class="panel-collapse collapse in">
                     <div class="panel panel-default container-full"
@@ -277,9 +302,9 @@
                         <i class="fa fa-expand"></i>
                     </button>
                 </div>
-                <div class="panel-heading" data-toggle="collapse"
+                <div class="panel-heading" data-toggle="collapse" id="videoAnchor"
                      data-target="#collapse0">
-                    <h4 class="panel-title">Video</h4>
+                    <h4 class="panel-title"><i class="fa fa-video-camera"></i> Video</h4>
                 </div>
                 <div id="collapse0" class="panel-collapse collapse in">
                     <div class="panel-body" id="videoPanel">
@@ -306,11 +331,11 @@
                 <div class="btn-group pull-right">
                     <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
                             data-target="#addMembersModal">
-                        Add user <i class="fa fa-plus"></i>
+                        Add member <i class="fa fa-plus"></i>
                     </button>
                 </div>
                 <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
-                    <h4 class="panel-title">Users</h4>
+                    <h4 class="panel-title"><i class="fa fa-users"></i> Group members</h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
                     <div class="panel-body">
@@ -325,9 +350,9 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse"
+                <div class="panel-heading" data-toggle="collapse" id="chatAnchor"
                      data-target="#collapse2">
-                    <h4 class="panel-title">Recent chat history</h4>
+                    <h4 class="panel-title"><i class="fa fa-comment"></i> Recent chat history</h4>
                 </div>
                 <div id="collapse2" class="panel-collapse collapse in">
                     <div class="panel-body" style="max-height: 336px; overflow: auto;"
@@ -364,9 +389,9 @@
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse"
+                <div class="panel-heading" data-toggle="collapse" id="contentEditorAnchor"
                      data-target="#collapse5">
-                    <h4 class="panel-title">Content editor</h4>
+                    <h4 class="panel-title"><i class="fa fa-object-group"></i> Content editor</h4>
                 </div>
                 <div id="collapse5" class="panel-collapse collapse in">
                     <form class="form">
@@ -374,18 +399,17 @@
                             <label>Begin:</label>
                             (timeline <input type="checkbox" id="beginSync"/>)
 
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" id="contentStart"/> <span
+                            <div class='input-group date' id='contentStart'>
+                                <input type='text' class="form-control" /> <span
                                     class="input-group-addon"> <span
                                     class="glyphicon glyphicon-calendar"></span>
 							</span>
                             </div>
-                            <label>End:</label>
-                            (timeline <input type="checkbox" id="endSync"/>)
+                            <label>Duration:</label>
 
 
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" id="contentEnd"/> <span
+                            <div class='input-group date' id='contentDuration'>
+                                <input type='text' class="form-control" /> <span
                                     class="input-group-addon"> <span
                                     class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -433,9 +457,9 @@
 
         <div class="col-md-4">
             <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse"
+                <div class="panel-heading" data-toggle="collapse" id="collaborativeEditorAnchor"
                      data-target="#collapse6">
-                    <h4 class="panel-title">Collaborative editor</h4>
+                    <h4 class="panel-title"><i class="fa fa-pencil-square-o"></i> Collaborative editor</h4>
                 </div>
                 <div id="collapse6" class="panel-collapse collapse in">
                     <form class="form">
@@ -474,15 +498,56 @@
 		var autoSelect = false;
 		var fullscreen = false;
 
+        function goTo(time){
+            timeline.setTime(time);
+            HyperWebSocket.getContent();
+        }
+
+
+		function sendLink(){
+		    $("#timeQueryStringModal").modal("hide");
+			toastr.remove();
+            toastr.success('Time HyperLink', 'Sent successfully!');
+            var time = $("#timeQueryValue").val();
+            HyperWebSocket.sendMessage("<a onclick='goTo(\""+time+"\")'>"+friendlyTime(time)+"</a>");
+
+		}
+
+
+        function userProfileExtraAction(userId){
+            var user = participants[userId];
+            var elem = $("<div></div>");
+            elem.attr("class",user? "btn btn-danger btn-sm":"btn btn-success btn-sm");
+            elem.html(user? "Remove from room":"Add to room");
+
+            elem.click(function(){
+   			    $("#userProfileModal").modal("hide");
+
+                if(user){
+                    removeMemberConfirmation(userId,user.name);
+                }
+                else {
+                    HyperWebSocket.addUserGroup(userId);
+                    toastr.remove();
+                    toastr.success('Member management', 'User added successfully!');
+                }
+            });
+
+            $("#relationAction").prepend(elem);
+
+        }
+
 		function setTimeLink(){
-			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +timeline.getMyTime().toISOString() );
+		    var val = timeline.getMyTime().toISOString();
+		    $("#timeQueryValue").val(val);
+			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +val );
 		}
 
 		function saveCollab(){
             var value = adapter.cm.getValue();
             HyperWebSocket.saveCollaborativeContent(value);
             toastr.remove();
-            toastr.success('Collaborative Editor!', 'Saved document successfully!');
+            toastr.success('Collaborative Editor', 'Saved document successfully!');
 
             console.log(value);
 		}
@@ -630,7 +695,15 @@
 		var generalSearch = {
 			source: function(query,process){
 				HyperHttp.searchInsideGroup("@groupId",query, function( array ) {
-					process(array);
+                     $.get( "/api/search?query="+query, function( data ) {
+                       //  console.log(data);
+                      //   process(data.data);
+
+        				process(array.concat(data.data));
+
+                     });
+
+
 				});
 			},
 			displayText: function(item){
@@ -640,6 +713,8 @@
 			        console.log("displayText",item);
 			        console.log("displayText",item.content);
 			        return item.content;
+			    }else {
+                    return SearchGeneric.displayText(item);
 			    }
 			},
 			highlighter: function(item){
@@ -648,6 +723,8 @@
 					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
 				}else if(item.type=="html"){
 					return "<i class='fa fa-font'></i> " + item.content+ " <small>("+friendlyTime(item.time)+")</small>";
+				}else {
+                    return SearchGeneric.highlighter(item);
 				}
 			},
 			matcher: function(item){
@@ -660,12 +737,30 @@
 				else if(item.type=="html"){
 					timeline.setHistoric(item.time);
 				}
-				return item;
+				return SearchGeneric.updater(item);
+;
 			}
 		};
 
 		function copyLink(){
 			$("#timeQueryString").select();
+            // copy the selection
+            var succeed;
+            try {
+                  succeed = document.execCommand("copy");
+            } catch(e) {
+                succeed = false;
+            }
+            if(succeed){
+           		toastr.remove();
+                toastr.success('Time HyperLink', 'Link copied to clipboard!');
+            }else {
+     		    toastr.remove();
+                toastr.error('Time HyperLink', 'Could not copy link to clipboard');
+            }
+
+		    $("#timeQueryStringModal").modal("hide");
+
 		}
 
 		function createInvite2(){
@@ -686,11 +781,22 @@
 			$("#removeUserId").val(uid);
 			$("#removeUserButton").click(function(){
 				HyperWebSocket.removeUserGroup(uid);
+		        toastr.remove();
+                toastr.success('Member management', 'User removed successfully!');
 				$("#removeMemberModal").modal("hide");
 			});
 		}
 
 		function hyperStart(mode){
+
+            HyperWebSocket.setOnUserRemovedHandler(function (uid) {
+                $("#vidMember"+uid).remove();
+                participants[uid]=null;
+                if(uid=="@userId"){
+                    document.location = "/";
+                }
+            });
+
 			HyperWebSocket.start("@groupId",mode, function(){
                 console.log("WebSocket Ok!");
                 var attrs = parseQuery(document.location.search);
@@ -733,6 +839,10 @@
                 }
             });
 
+
+
+
+
 			$("#createTagForm").submit(function(event){
 				event.preventDefault();
 				$("#createTagModal").modal('hide');
@@ -752,14 +862,15 @@
 				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");
 			}
 
-			$('#datetimepicker1').datetimepicker({
+			$('#contentStart').datetimepicker({
 				format : 'DD/MM/YYYY HH:mm:ss',
 				defaultDate : new Date(),
-				showTodayButton:true
+				showTodayButton:true,
+
 			});
-			$('#datetimepicker2').datetimepicker({
-				format : 'DD/MM/YYYY HH:mm:ss',
-				defaultDate : new Date(new Date().getTime()+1000),
+			$('#contentDuration').datetimepicker({
+				format : 'HH:mm:ss',
+				defaultDate : new Date(10000),
 				showTodayButton:true
 
 			});
@@ -801,10 +912,10 @@
                 },function(time){
                     console.log("onDrop",time);
                     if($("#beginSync").is(':checked')){
-                        $("#contentStart").val(dateStr(new Date(time)));
-                    }
-                    if($("#endSync").is(':checked')){
-                        $("#contentEnd").val(dateStr(new Date(time)));
+                        $('#contentStart').data("DateTimePicker").date(moment(time));
+
+
+                      //  $("#contentStart").val(dateStr(new Date(time)));
                     }
 
                 }, function(){

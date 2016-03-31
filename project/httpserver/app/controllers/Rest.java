@@ -50,25 +50,41 @@ public class Rest extends Controller {
         return forbidden();
     }
 
+    /**
+     * User profile.
+     *
+     * @param userId the user id
+     * @return the result
+     */
+    public Result relationState(String userId) {
+        if (Tools.userExists(session("uid"))) {
+            boolean from = Relation.findByEndpoint(new ObjectId(session("uid")), new ObjectId(userId)) != null;
+            boolean to = Relation.findByEndpoint(new ObjectId(userId), new ObjectId(session("uid"))) != null;
+            JSONObject ans = new JSONObject();
+            ans.put("from",from);
+            ans.put("to",to);
+
+            return ok(ans.toString()).as(APP_JSON);
+        } else {
+            return forbidden();
+        }
+    }
 
     public Result uploadFile() throws ServiceException {
         MultipartFormData form = request().body().asMultipartFormData();
         JSONObject ans = new JSONObject();
 
-            if(session("uid")!=null){
-                for(FilePart fp : form.getFiles()){
-                    KeyValueFile kvf = new KeyValueFile(fp.getKey(),fp.getFilename(),fp.getFile());
-                    UploadFileService service = new UploadFileService(kvf);
-                    String url = service.execute();
-                    JSONObject obj =  new JSONObject();
-                    obj.put("filename",kvf.getName());
-                    obj.put("url",url);
-                    ans.put(kvf.getKey(),obj);
-                }
-
-
+        if(session("uid")!=null){
+            for(FilePart fp : form.getFiles()){
+                KeyValueFile kvf = new KeyValueFile(fp.getKey(),fp.getFilename(),fp.getFile());
+                UploadFileService service = new UploadFileService(kvf);
+                String url = service.execute();
+                JSONObject obj =  new JSONObject();
+                obj.put("filename",kvf.getName());
+                obj.put("url",url);
+                ans.put(kvf.getKey(),obj);
             }
-
+        }
 
         return ok(ans.toString()).as(APP_JSON);
     }
@@ -604,6 +620,10 @@ public class Rest extends Controller {
         return ok(ret.getToken());
 
     }
+
+
+
+
 
     public Result search() throws ServiceException {
         Map<String, String[]> query = request().queryString();
