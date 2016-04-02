@@ -1,11 +1,11 @@
 \section{Model}
-The model is the most important component of our solution, a badly designed model can imply serious deficulties when implementing new features that are not part of the plans, sometimes we had to redesign the model in order to support new features.
+The model is the most important component of our solution, a badly designed model can imply serious difficulties when implementing new features that are not part of the plans, sometimes we had to redesign the model in order to support new features.
 
 \subsection {Generic model}
 
 For designing our model we have taken into account generic programming techniques. We observed that operations like searching for an object was quite repeated amongst different types of objects. 
 
-Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes indepently from the object type. To this generic set of properties we call data and each object of this type has a reference to the owner, which is a unique identification number.
+Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently from the object type. To this generic set of properties we call data and each object of this type has a reference to the owner, which is a unique identification number.
 
 \begin{table}[!htb]
 \centering
@@ -36,7 +36,7 @@ The identication number by itself is not sufficient to identify an object, objec
 
 When an attribute is created it must be specified if the attribute is searchable, otherwise it could be simple to search for attributes that could reveal sensible information about it. For example if we consider that a user could have a health related attribute, searching by a disease would reveal which users could suffer from a certain disease, the leak of that kind of information could, for instance, change the agreement between users and health insurance companies.
 
-Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification let us create abstract authentication services, for example a user can login into our system by providing any attribute that identifies himself, for example the e-mail but others are possible like the username or cellphone number. 
+Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification let us create abstract authentication services, for example a user can login into our system by providing any attribute that identifies himself, for example the e-mail but others are possible like the user name or cellphone number. 
 
 % Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it's possible to search for the administrative role and return users and groups of users that contains that property. <= [currently this operation is possible but it is not specified]
 
@@ -46,7 +46,7 @@ The permission object is a mask of the data object, for each existing attribute 
 
 \subsection{User model}
 
-The user model is not tied to the user attributes, the information maintained in this model is just used for authentication purposes. Passwords are not stored in plaintext, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. We use \emph{SHA-1} and a random salt per user with 32 characters long.
+The user model is not tied to the user attributes, the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. We use \emph{SHA-1} and a random salt per user with 32 characters long.
 
 \begin{table}[!htb]
 \centering
@@ -82,7 +82,7 @@ A user can only interact with friends or with group members. In order to validat
 
 \subsection{Group model}
 
-A group can be public or private. If the group is public then it is visible to all users that mantain a friendship with a member of this group. If the group is private then it is only visible to their members.
+A group can be public or private. If the group is public then it is visible to all users that maintain a friendship with a member of this group. If the group is private then it is only visible to their members.
 
 \begin{table}[!htb]
 \centering
@@ -190,7 +190,7 @@ Within a conversation, users can write documents collaboratively. Each document 
 
 \subsection{Recording model}
 
-During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and a mapping between entity that was recorded and the correspondent video url.
+During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and a mapping between entity that was recorded and the correspondent video \ac{URL}.
 
 
 \begin{table}[!htb]

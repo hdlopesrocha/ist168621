@@ -46,11 +46,11 @@ Bcache & Remaining space (Drive 0 \& Drive 1) \\ \hline
 \footnotetext{\url{https://www.debian.org/} (Accessed March 26, 2016)}
 
 \subsection{Software}
-	INESC-ID provided us a restricted linux account without administration permissions, which we prevented us the installation of our solution directly on the machine because we would need administrative priviledges to install all the software that our solution depends on. Although that limitation, they provided access to Docker\footnote{\url{https://www.docker.com/} (Accessed March 27, 2016)} which run on host operating system as an isolated process in userspace.
+	\emph{INESC-ID} provided us a restricted \emph{Linux} account without administration permissions, which we prevented us the installation of our solution directly on the machine because we would need administrative privileges to install all the software that our solution depends on. Although that limitation, they provided access to Docker\footnote{\url{https://www.docker.com/} (Accessed March 27, 2016)} which run on host operating system as an isolated process in user space.
 
-	Inside a Docker container we have the administrative priviledges to install all the software dependencies.
+	Inside a Docker container we have the administrative privileges to install all the software dependencies.
 
-	We could use one docker image for each component but in order to reduce the network usage we prefered to install all the components within the same image. At the same we provide an all-in-one easy to deploy solution as all the \ac{IP}s are local.
+	We could use one docker image for each component but in order to reduce the network usage we preferred to install all the components within the same image. At the same we provide an all-in-one easy to deploy solution as all the \ac{IP}s are local.
 
 	We present, on table \ref{table:softspecs}, the software we have installed inside our docker container including the versions that are in use.
 

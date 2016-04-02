@@ -5,7 +5,7 @@
 
 	\subsection{Content creation}
 
-	In order to create content the user has the option to write simple movie captions without wrtting any code, otherwise, as mentioned before, it can write \ac{HTML}, \ac{CSS} and \emph{JavaScript}. The definition of the content's starting and ending time by the user it's not an easy task. Defining the content's time to appear in realtime would require a previous user plan. Otherwise the user could make a speech and add the content for later reproduction.
+	In order to create content the user has the option to write simple movie captions without writing any code, otherwise, as mentioned before, it can write \ac{HTML}, \ac{CSS} and \emph{JavaScript}. The definition of the content's starting and ending time by the user it's not an easy task. Defining the content's time to appear in real-time would require a previous user plan. Otherwise the user could make a speech and add the content for later reproduction.
 
 	Figure \ref{fig:creation} shows the user interface for creating interactive hyper content manually.
 
@@ -29,13 +29,13 @@
 }
 \end{lstlisting}
 \end{minipage}
-	In order to help the content creator to show and synchronize its content in realtime we allow the user to encode its content into \emph{QR codes} and show it to the camera in real time.
+	In order to help the content creator to show and synchronize its content in real-time we allow the user to encode its content into \emph{QR codes} and show it to the camera in real time.
 
-	\ac{KMS} lets registring event handlers for \emph{QR code} detection. The component that detects \emph{QR codes} on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \emph{QR code} enters or leaves the screen. We had to implement our own mechnism for detecting those events.
+	\ac{KMS} lets registering event handlers for \emph{QR code} detection. The component that detects \emph{QR codes} on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \emph{QR code} enters or leaves the screen. We had to implement our own mechanism for detecting those events.
 
-	Each user session in the server maintains a map with the contents that are present on the screen. In order to aplly our algorithm more efficiently we calculate the content's hash through the \emph{md5} method.
+	Each user session in the server maintains a map with the contents that are present on the screen. In order to apply our algorithm more efficiently we calculate the content's hash through the \emph{md5} method.
 
-	If the hash is not present in the map it means the \emph{QR code} was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in realtime. By doing an analogy to the \emph{Nyquist} theorem we know that if the same \emph{QR code} is not detected after a time bigger then two periods we can conclude that the \emph{QR code} leaved the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \emph{QR code} leaving detection.
+	If the hash is not present in the map it means the \emph{QR code} was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in real-time. By doing an analogy to the \emph{Nyquist} theorem we know that if the same \emph{QR code} is not detected after a time bigger then two periods we can conclude that the \emph{QR code} leaved the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \emph{QR code} leaving detection.
 
 \begin{minipage}[!htb]{\linewidth}
 \begin{lstlisting}[caption={Pseudo code for QR code leaving detection},label={lst:pseudo_qrcode},language=JavaScript]
@@ -70,11 +70,11 @@ function onCodeFound(content) {
 
 	Multiple contents can be displayed at the same time, in order to achieve that, we define layers above the video with the same size. Each layer is associated to the content.
 
-	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of content instead all of them, which would be very ineficcient.
+	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of content instead all of them, which would be very inefficient.
 
-	The content to display for each user depends on the user's position on the timeline, this position is given by an offset between the current time and the navigated time. If the user is watchiing the content in realtime this offset is constant so there is no need to synchronize this value.
+	The content to display for each user depends on the user's position on the time-line, this position is given by an offset between the current time and the navigated time. If the user is watching the content in real-time this offset is constant so there is no need to synchronize this value.
 
-	Each content is divided into two components, the \emph{start} and the \emph{end} which are sent to users. The \emph{start} component contains a timestamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the timestamp and the content identifcation number. 
+	Each content is divided into two components, the \emph{start} and the \emph{end} which are sent to users. The \emph{start} component contains a time stamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the time stamp and the content identification number. 
 
 	The content to return is given by the union of two content subsets:
 	\begin{itemize}
@@ -84,7 +84,7 @@ function onCodeFound(content) {
 
 	The second subset is used for predicting which content the user will watch and avoid requests during its events.
 
-	The content description messages that are sent to each user contains the contant itself on the form of a list of events and an atrtibute that specifies if the server has more content to return.
+	The content description messages that are sent to each user contains the constant itself on the form of a list of events and an attribute that specifies if the server has more content to return.
 
 	Listing \ref{lst:sentcontent} shows the structure of the content sent to users.
 
@@ -108,11 +108,11 @@ function onCodeFound(content) {
 \end{lstlisting}
 \end{minipage}
 
-	When a user enters the conference room, imediatelly after the \emph{WebSocket} creation the server sends him the current content.
+	When a user enters the conference room, immediately after the \emph{WebSocket} creation the server sends him the current content.
 
-	The user receives the content, sorts all components by time and creates a set of events. All the events before the user's time are rendered and removed from the set of events. A timer is schedulled for the first component on the event set and the process repeats while the set is not empty.
+	The user receives the content, sorts all components by time and creates a set of events. All the events before the user's time are rendered and removed from the set of events. A timer is scheduled for the first component on the event set and the process repeats while the set is not empty.
 
-	If the set is empty, there two options, if the server contained more content a new request for content is made and the proccess starts from the beggining, namely the server sends the correpondent content again. If the server has no more content the process is stopped until it sends more.
+	If the set is empty, there two options, if the server contained more content a new request for content is made and the process starts from the beginning, namely the server sends the correspondent content again. If the server has no more content the process is stopped until it sends more.
 
 	The users will receive their contents from the server on five different situations:
 
@@ -159,35 +159,35 @@ function scheduleContent() {
 
 	\subsection{Security Concerns}
 
-	Our solution is flexible on what kind of interactions are possible to the users in real time but allowing users to write \emph{Javascript} that is executed on the other users browser would attackers to misuse their resources and access to critical information.
+	Our solution is flexible on what kind of interactions are possible to the users in real time but allowing users to write \emph{JavaScript} that is executed on the other users browser would attackers to misuse their resources and access to critical information.
 
 	We could solve this problem easily by escaping any \emph{script} tag present on the content, but we would sacrifice the kind of interactions that are possible. 
 
-	By not allowing javascript we would need to implement all actions a priori and fire them when a type of message is received. We decided to ignore the security vulnarabilities that are exposed by evaluating \emph{javascript} because in order to offer the same interactions we would have to do an exaustive functionaly requirements gathering.
+	By not allowing \emph{JavaScript} we would need to implement all actions a priori and fire them when a type of message is received. We decided to ignore the security vulnerabilities that are exposed by evaluating \emph{JavaScript} because in order to offer the same interactions we would have to do an exhaustive functional requirements gathering.
 
-	Another way to solve this problem, which is not within the goals of this thesis, is to analyse the javascript code and detect if it is malicious.
+	Another way to solve this problem, which is not within the goals of this thesis, is to analyze the \emph{JavaScript} code and detect if it is malicious.
 
 	\subsection{Time Manipulation}
 
-	We have used \emph{vis.js} to display out timeline. This library was created for content navigation through time, but it was not designed to be always moving automatically, we have created a background timer that performs the animation of moving the window of time bounds and user navigated time marker.
+	We have used \emph{vis.js} to display out time-line. This library was created for content navigation through time, but it was not designed to be always moving automatically, we have created a background timer that performs the animation of moving the window of time bounds and user navigated time marker.
 
-	Figure \ref{fig:timeline} shows the the graphic appearance of our interactive timeline, in order to navigate through time the user must drag and drop the timeline horizontaly, when the user drops the timeline an event handler is called with the new user's time offset which will be used to send a message to the server in order to choose the correspondent content to display. 
+	Figure \ref{fig:timeline} shows the the graphic appearance of our interactive time-line, in order to navigate through time the user must drag and drop the time-line horizontally, when the user drops the time-line an event handler is called with the new user's time offset which will be used to send a message to the server in order to choose the correspondent content to display. 
 
 	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=\textwidth]{figures/timeline.png}
-		\caption{Interactive timeline}
+		\caption{Interactive time-line}
 		\label{fig:timeline}
 	\end{figure}
 
-	We have noticed the server time being different from client time and this created graphic inconsistencies such as showing existing recorded blocks of movie in the future. To solve this problem the server sends its time to client imediately after the websocket creation, we synchronize the timeline with the server and although it may exist a small error due to network transmission time the graphical error is negligible. 
+	We have noticed the server time being different from client time and this created graphic inconsistencies such as showing existing recorded blocks of movie in the future. To solve this problem the server sends its time to client immediately after the \emph{webSocket} creation, we synchronize the time-line with the server and although it may exist a small error due to network transmission time the graphical error is negligible. 
 
 
 	\subsection{Time annotations creation}
 
-	Time annotations are simpler way save points in time and share them with other users. When a user enters in a conference room the server sends all annotations so they can be displayed directly into the user timeline. Each time annotation is created all users are advertised so they can update their interfaces.
+	Time annotations are simpler way save points in time and share them with other users. When a user enters in a conference room the server sends all annotations so they can be displayed directly into the user time-line. Each time annotation is created all users are advertised so they can update their interfaces.
 
-	Figure \ref{fig:annotation} shows the creation and placement of annotations on the timeline, to save the annotation the user must click on the floppy icon in order to save it and advertise the conference participants. 
+	Figure \ref{fig:annotation} shows the creation and placement of annotations on the time-line, to save the annotation the user must click on the floppy icon in order to save it and advertise the conference participants. 
 
 	\begin{figure}[!htb]
 		\centering
@@ -196,7 +196,7 @@ function scheduleContent() {
 		\label{fig:annotation}
 	\end{figure}
 
-	Besides the ability to create tags it is also possible to create time hyperlinks, see figure \ref{fig:timelink}, that can be sent to other users externaly so they can navigate directly to the content when entering in the conference room.
+	Besides the ability to create tags it is also possible to create time hyper-links, see figure \ref{fig:timelink}, that can be sent to other users externally so they can navigate directly to the content when entering in the conference room.
 
 
 	\begin{figure}[!htb]
@@ -209,7 +209,7 @@ function scheduleContent() {
 
 	\subsection{Content Search}
 
-	Users can easily search for annotations and contents and travel to their correspondent times. In the case of hyper content after handling the result from database we ignore \ac{HTML} tags, extract the text with \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed 21 March 2016)} and apply the query again. We extract the text from \ac{HTML} because accidentatly searching for text contained in \ac{HTML} tags would lead to incorrect results.
+	Users can easily search for annotations and contents and travel to their correspondent times. In the case of hyper content after handling the result from database we ignore \ac{HTML} tags, extract the text with \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed 21 March 2016)} and apply the query again. We extract the text from \ac{HTML} because accidentally searching for text contained in \ac{HTML} tags would lead to incorrect results.
 
 	Figure \ref{fig:search} shows how the search results are displayed to the user. Each result entry contains an icon specifying the type of result (hyper content, time annotation, ...).
 

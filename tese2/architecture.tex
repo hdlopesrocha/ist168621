@@ -28,7 +28,7 @@
 %  \label{fig:logoCNM}
 %\end{figure}
 
-Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration in real-time.
+Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real-time.
 
 The requirements for our web application are:
 
@@ -46,13 +46,15 @@ The requirements for our web application are:
  \item Easy interface for content creation and synchronization. 
 \end{itemize}
 
-	Clients can discover chat rooms and other clients by querying the signaling server, they can create rooms for multi-party communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{DataChannel}, namely for audio, video and text communication.
+	Moreover we allow clients to discover chat rooms and other clients by navigating on the web pages provided by our web server. In addition users can create rooms for multi-party audio and video communication communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{PeerConnection}.
 
-	Chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is formed by the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a list of clients or can be accessed by clients that have a link for that chat room.
+	Furthermore, chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially is only the room creator, this type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will be visible for a defined list of clients or can be accessed by clients that have a link for that conference room.
 
 \section{Modules}
 
-\begin{figure}[H]
+	In this section we present the modules of our application.
+
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/modules.pdf}
 	\caption{System Modules}
@@ -83,7 +85,7 @@ The requirements for our web application are:
 
  
 \section{Implementation Proposal}
-The infrastructure is composed by: Ice Server, Web Server, Stream Server, Signaling Server and Test Clients.
+The infrastructure is composed by: web server, stream server, signaling server, database and video repository.
 
 
 
@@ -93,23 +95,29 @@ The infrastructure is composed by: Ice Server, Web Server, Stream Server, Signal
 	\caption{System Infrastructure}
 \end{figure}
 
-In order to simplify our solution, we propose both the \emph{Application} and \emph{Signaling} modules implementation within the same server application so it could be easy to control which resources the client has permission to access. 
- 
-We have taken into account the compatibility between the streaming server, database and the operation transformation solutions in order choose the appropriate framework to implement our web server.
+In order to simplify our solution, we propose both the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules implementation within the same server application so it could be easy to deploy as a single image. To this set of modules we often call \emph{backend}.
 
-Based on our study about signaling protocols we decided to exclude \ac{XMPP} due to the development difficulties that it exposes when using multiple web pages, namely the user re-authentication performed each time a page is loaded and the single tab usage limitation. By consequence we have not choosen \emph{Jitsi Video Brigde} as it uses \ac{XMPP}.
+Having established that the \emph{backend} modules are placed in the same machine, that helps controlling which resources the client has permission to access as those modules are seen as a private network.
 
-By excluding \emph{Jitsi Video Brigde} we have decided that our solution must use \ac{KMS}. Our web server could be implemented more easily with \emph{NodeJS} or \emph{Java} due to the fact \ac{KMS} provides clients for both technologies but others could be used as \ac{KMS} also exposes their \ac{API} via \emph{WebSockets}.
+To qualify the above we provide public access to \ac{HTTP} server ports, maintaining the access to other components restricted through firewall rules. In relation to the database there is no directly access from outside, all the database information is accessed via our application server which validates the permissions of users when acting above our system.
+
+On the other hand, the access to our streaming servers is also restricted but clients can connect to them after concluding the signaling phase. This signaling phase may or not proceed in function of the client access permissions, for example if a user is trying to access a private conference room that is not member of or has no invitation link, the signaling server rejects to start the signaling phase and the user cannot access to the streaming server.
+
+Furthermore, we have taken into account the compatibility between the streaming server, database and the operation transformation solutions in order choose the appropriate framework to implement our web server.
+
+As a result of our study about signaling protocols we have decided to exclude \ac{XMPP} due to the development difficulties that it exposes when using multiple web pages, namely the user re-authentication performed each time a page is loaded and the single tab usage limitation. By consequence we have not chosen \emph{Jitsi Video Brigde} as it uses \ac{XMPP}.
+
+Accordingly, by excluding \emph{Jitsi Video Brigde} we have decided that our solution must use \ac{KMS}. Our web server could be implemented easily with \emph{NodeJS} or \emph{Java} due to the fact \ac{KMS} provides clients for both technologies but others could be used as \ac{KMS} also exposes their \ac{API} via \emph{WebSockets}.
 
 By default, \emph{Kurento Repository} is implemented over \emph{MongoDB}, for convenience our storage model will also use the same database. 
 
-For the web server we could choose \emph{NodeJS} or any \emph{Java} based web framework. One of our criteria for choosing the web framework is the ability to follow the \ac{MVC} paradigm which can help us to organize our code. Without any strong reason we have decided to implement our webserver with \emph{PlayFramework}\footnote{\url{https://www.playframework.com/}(acessed March 25, 2016)} using \emph{Java}.
+Due to the fact we are going to use \ac{KMS} as streaming server solution, we could choose \emph{NodeJS} or any \emph{Java} based web framework for implementing our web application server. One of our criteria for choosing the web framework is the ability to follow the \ac{MVC} paradigm which can help us to organize our code. Without any strong reason we have decided to implement our web server with \emph{PlayFramework}\footnote{\url{https://www.playframework.com/}(acessed March 25, 2016)} using \emph{Java}.
 
-For the collaborative text editor, we have choosen \emph{OT.js} due to its indenpendence from server implementation and storage choice.
+Importantly, for the collaborative text editor, we have chosen \emph{OT.js} due to its server and storage implementation choice independence.
 
-For the \emph{NAT Traversal} module an \ac{ICE} server is not required to be on our infrastructure, as a public \ac{STUN} server can be used for testing our solution. 
+For the \emph{NAT Traversal} module an \ac{ICE} server is not required to be on our infrastructure, as a public \ac{STUN} server can be used for testing our solution although we recognize that for a production environment we would need to maintain our own \ac{TURN} servers in order to ensure connectivity to all clients.
 
-On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} should be installed as web browsers. Libraries such as \emph{jQuery}, \emph{Bootstrap}, \emph{Adapter.js}, \emph{OT.js} can be downloaded from the Web Server and executed on the client side.
+Not less important, on the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} should be installed as web browsers. Libraries such as \emph{jQuery}, \emph{Bootstrap}, \emph{Adapter.js}, \emph{OT.js} can be downloaded from the web server and executed on the client side.
 
 \begin{table}[H]
 \centering
@@ -124,7 +132,7 @@ On the client computers, both \emph{Mozilla Firefox} and \emph{Google Chrome} sh
 	        \label{fig:apparch}
 \end{table}
 
-Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies. \emph{Adapter.js} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
+Figure~\ref{fig:apparch} presents the application architecture and the underlying technologies seen from the user's perspective. \emph{Adapter.js} and \emph{jQuery} will ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
 
 The synchronization between multimedia elements will be performed trough chains of \emph{JavasSript} events or by specifying the interval of time which time content must be visible. Other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
