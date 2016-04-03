@@ -42,13 +42,12 @@ public class Room implements Closeable {
     private long sequence = 0;
     /** The hub port. */
     private HubPort hubPort;
-
+    private Recorder recorder;
     public Object getOperationLock() {
         return operationLock;
     }
 
     private Object operationLock = new Object();
-
     /**
      * Instantiates a new room.
      *
@@ -67,20 +66,11 @@ public class Room implements Closeable {
 
         this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
 
-        this.composite = getHub(mediaPipeline);
+        this.composite = getHub();
         System.out.println("composite for room " + mediaPipeline.getName() + " has been created");
         this.hubPort = getCompositePort("this");
 
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
-    }
-
-    /**
-     * Gets the hub port.
-     *
-     * @return the hub port
-     */
-    public HubPort getHubPort() {
-        return hubPort;
     }
 
 
@@ -131,8 +121,7 @@ public class Room implements Closeable {
                 }
 
                 RecordingChunk rec = new RecordingChunk(group.getId(), interval.getId(),start,sequence++);
-                new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
-
+                recorder = new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
                     @Override
                     public void onFileRecorded(Date end, String filepath) {
                         rec.setEnd(end);
@@ -165,7 +154,7 @@ public class Room implements Closeable {
     }
 
 
-    public Hub getHub(MediaPipeline pipeline){
+    public Hub getHub(){
         Composite ans =  new Composite.Builder(mediaPipeline).build();
         ans.setName("composite");
         return ans;
@@ -206,14 +195,6 @@ public class Room implements Closeable {
         }
     }
 
-
-    /**
-     * Shutdown.
-     */
-    @PreDestroy
-    private void shutdown() {
-        this.close();
-    }
 
     /**
      * Gets the group id.
@@ -306,14 +287,7 @@ public class Room implements Closeable {
         }
     }
 
-    /**
-     * Gets the participants.
-     *
-     * @return a collection with all the participants in the room
-     */
-    private Collection<UserSession> getParticipants() {
-        return participants;
-    }
+
 
     /**
      * Gets the participant.
@@ -364,6 +338,12 @@ public class Room implements Closeable {
             }
             participants.clear();
         }
+        if(recorder!=null){
+            recorder.stop();
+        }
+
+        hubPort.release();
+        composite.release();
         mediaPipeline.release();
         Global.manager.removeRoom(this);
     }

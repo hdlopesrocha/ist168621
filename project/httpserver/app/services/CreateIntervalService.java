@@ -21,8 +21,6 @@ public class CreateIntervalService extends Service<RecordingInterval> {
     /** The start. */
     private final Date start;
 
-    /** The inter. */
-    private RecordingInterval inter = null;
 
 
     /**
@@ -36,14 +34,6 @@ public class CreateIntervalService extends Service<RecordingInterval> {
         this.start = start;
     }
 
-    /**
-     * Gets the interval.
-     *
-     * @return the interval
-     */
-    public RecordingInterval getInterval() {
-        return inter;
-    }
 
     /*
      * (non-Javadoc)
@@ -53,7 +43,7 @@ public class CreateIntervalService extends Service<RecordingInterval> {
     @Override
     public RecordingInterval dispatch() throws ServiceException {
         synchronized (LOCK) {
-            inter = new RecordingInterval(groupId, start, start);
+            RecordingInterval inter = new RecordingInterval(groupId, start, start);
             inter.save();
             return inter;
         }

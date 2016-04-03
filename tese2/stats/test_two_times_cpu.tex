@@ -5,9 +5,9 @@
 	    title={CPU usage},
 	    xlabel={Time [seconds]},
 	    ylabel={CPU [percentage]},
-	    xmin=-10, xmax=850,
+	    xmin=-10, xmax=1690,
 	    ymin=0, ymax=1200,
-	    xtick={0,60,...,2000},
+	    xtick={0,120,...,2000},
 	    ytick={0,200,...,2000},
 	    extra x ticks={0,60,...,2000},
     	extra x tick labels={,,},
@@ -20,21 +20,21 @@
      legend style={legend pos=north west,font=\tiny},
 	    ymajorgrids=true,
 	    grid style=dashed,
-	]
-	
-		\addplot[color=Blue] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/summary_cpu_mongo.dat};
+	] 
+
+		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-96,y index=1] {stats/test_two_times/cpu_7_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[color=Red] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/summary_cpu_kms.dat};
+		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-96,y index=1] {stats/test_two_times/cpu_67_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[color=Green] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/summary_cpu_kr.dat};
+		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-96,y index=1] {stats/test_two_times/cpu_35_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[color=Magenta] table[x expr=\thisrowno{0}-122,y index=1] {stats/test_full_features/summary_cpu_play.dat};
+		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-96,y index=1] {stats/test_two_times/cpu_233_bash.dat};
 		\addlegendentry{Java}
 
-
 	\end{axis}
+
 \end{tikzpicture}
 

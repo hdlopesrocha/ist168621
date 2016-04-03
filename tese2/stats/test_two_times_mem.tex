@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=6cm,
+	    title={Memory Usage},
+	    xlabel={Time [seconds]},
+	    ylabel={Memory [MB]},
+	    xmin=-10, xmax=1690,
+	    ymin=0, ymax=1800,
+	    xtick={0,120,...,2000},
+	    ytick={0,200,...,2000},
+	    extra x ticks={0,60,...,2000},
+    	extra x tick labels={,,},
+		extra tick style={
+			grid=major,
+			major grid style={yellow,thick,solid},
+			tick label style={rotate=90,anchor=east}
+		},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	] 
+
+		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-96,y expr=\thisrowno{1}/1000000] {stats/test_two_times/res_7_mongod.dat};
+		\addlegendentry{Mongod}
+
+		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-96,y expr=\thisrowno{1}/1000000] {stats/test_two_times/res_67_kurento-media-server.dat};
+		\addlegendentry{Kurento Media Server}
+
+		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-96,y expr=\thisrowno{1}/1000000] {stats/test_two_times/res_35_kurento-repo.dat};
+		\addlegendentry{Kurento Repository}
+
+		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-96,y expr=\thisrowno{1}/1000000] {stats/test_two_times/res_233_bash.dat};
+		\addlegendentry{Java}
+
+	\end{axis}
+\end{tikzpicture}
+
+

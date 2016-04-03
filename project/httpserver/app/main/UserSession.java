@@ -78,7 +78,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
     private UUID sid = UUID.randomUUID();
-
+    private Recorder recorder;
     private ZBarFilter qrCodeFilter;
     private Map<String,Object> currentQRCodes = new TreeMap<String,Object>();
     /**
@@ -120,8 +120,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
         });
 
-        endPoint.setStunServerAddress("stun.iptel.org");
-     //   endPoint.setStunServerPort(19302);
+        endPoint.setStunServerAddress("74.125.206.127");
+        endPoint.setStunServerPort(19302);
 
     //    endPoint.setTurnUrl("citysdk.tagus.ist.utl.pt:3478");
 
@@ -208,7 +208,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 }
                 endPoint.connect(compositePort);
                 compositePort.connect(endPoint);
-
                 room.record();
             }
         });
@@ -226,14 +225,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     public void record(RecordingChunk rec, int duration) {
         if(hasVideo()) {
-            new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
+            recorder = new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(Date end, String filepath) {
-
                     rec.setUrl(getUser().getId().toString(),filepath);
                     rec.save();
-                    System.out.println("USR REC: " + filepath);
-
                 }
             });
         }
@@ -315,6 +311,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         if(QR_ENABLED) {
             qrCodeFilter.release();
         }
+        if(recorder!=null){
+            recorder.stop();
+        }
+
+
         endPoint.disconnect(compositePort);
         compositePort.release();
         endPoint.release();
@@ -422,7 +423,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                     PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
 
-                    tempVideo.addErrorListener(new EventListener<ErrorEvent>() {
+                    tempAudio.addErrorListener(new EventListener<ErrorEvent>() {
                         @Override
                         public void onEvent(ErrorEvent arg0) {
                             System.out.println("FAILURE: " + arg0.getDescription());
@@ -435,7 +436,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         }
                     });
 
-                    tempVideo.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+                    tempAudio.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
                             setHistoric(playUser,rec.getInterval(),rec.getSequence()+1);
