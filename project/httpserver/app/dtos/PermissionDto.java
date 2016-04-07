@@ -1,6 +1,5 @@
 package dtos;
 
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -4,7 +4,6 @@ import exceptions.ServiceException;
 import models.HyperContent;
 import models.Message;
 import models.RecordingChunk;
-import models.User;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,67 +32,37 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /** The out. */
     private final WebSocket.Out<String> out;
     
-    /** The user. */
-    private final User user;
-    
-    /** The room. */
     private final Room room;
-    
-    /** The end point. */
-    private WebRtcEndpoint endPoint;
 
-    /** The composite port. */
-    private final HubPort compositePort;
-    
-    /** The playerVideo lock. */
     private final Object playerLock = new Object();
-    
-    /** The playerVideo. */
-    private PlayerEndpoint playerVideo;
 
-    /** The playerVideo. */
-    private PlayerEndpoint playerAudio;
-
-    /** The play. */
     private boolean play = true;
-    
-    /** The time offset. */
     private long timeOffset = 0L;
-    
-    /** The play user. */
     private String playUser = "";
     private ObjectId playingId;
-
-    public boolean hasAudio() {
-        return hasAudio;
-    }
-
-
-    public boolean hasVideo() {
-        return hasVideo;
-    }
-
+    private String userId;
     private Boolean hasAudio = true;
     private Boolean hasVideo = true;
-
-
     private UUID sid = UUID.randomUUID();
+
     private Recorder recorder;
-    private ZBarFilter qrCodeFilter;
+    private final ZBarFilter qrCodeFilter;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    private final WebRtcEndpoint endPoint;
+    private final HubPort compositePort;
+    private PlayerEndpoint playerVideo;
+    private PlayerEndpoint playerAudio;
+
     private Map<String,Object> currentQRCodes = new TreeMap<String,Object>();
-    /**
-     * Instantiates a new user session.
-     *
-     * @param user the user
-     * @param room the room
-     * @param out the out
-     * @throws ServiceException the service exception
-     */
     private EventListener<CodeFoundEvent> codeListener;
 
-    public UserSession(final User user, final Room room, WebSocket.Out<String> out) throws ServiceException {
+    public UserSession(final String userId, final Room room, WebSocket.Out<String> out) throws ServiceException {
         this.out = out;
-        this.user = user;
+        this.userId = userId;
         this.room = room;
 
         // XXX [ICE_01] XXX
@@ -180,7 +149,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
 
                                     Date endTime = new Date(new Date().getTime() - timeOffset);
-                                    CreateHyperContentService service = new CreateHyperContentService(getUser().getId().toString(),
+                                    CreateHyperContentService service = new CreateHyperContentService(userId,
                                             getGroupId(), startTime, endTime, content);
                                     try {
                                         service.execute();
@@ -203,7 +172,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
-                if(QR_ENABLED) {
+                if(qrCodeFilter!=null) {
                     endPoint.connect(qrCodeFilter, MediaType.VIDEO);
                 }
                 endPoint.connect(compositePort);
@@ -228,13 +197,20 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             recorder = new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(Date end, String filepath) {
-                    rec.setUrl(getUser().getId().toString(),filepath);
+                    rec.setUrl(userId,filepath);
                     rec.save();
                 }
             });
         }
     }
 
+    public boolean hasAudio() {
+        return hasAudio;
+    }
+
+    public boolean hasVideo() {
+        return hasVideo;
+    }
 
 
     /**
@@ -247,7 +223,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         JSONArray jArr = new JSONArray();
         boolean hasMore = false;
         try {
-            GetCurrentHyperContentService service = new GetCurrentHyperContentService(user.getId().toString(),
+            GetCurrentHyperContentService service = new GetCurrentHyperContentService(getUserId(),
                     room.getGroupId(), time);
             List<HyperContent> result = service.execute();
             hasMore = service.hasMore();
@@ -308,15 +284,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     @Override
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
-        if(QR_ENABLED) {
+
+
+        if(qrCodeFilter!=null) {
             qrCodeFilter.release();
         }
         if(recorder!=null){
-            recorder.stop();
+            recorder.release();
         }
 
 
-        endPoint.disconnect(compositePort);
         compositePort.release();
         endPoint.release();
 
@@ -332,14 +309,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.addIceCandidate(candidate);
     }
 
-    /**
-     * Gets the user.
-     *
-     * @return the user
-     */
-    public User getUser() {
-        return user;
-    }
 
     /* (non-Javadoc)
      * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -373,10 +342,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      */
     @Override
     public int hashCode() {
-        int result = 1;
-        result = 31 * result + user.getId().hashCode();
-        result = 31 * result + getGroupId().hashCode();
-        return result;
+        return sid.hashCode();
     }
 
     /**
@@ -390,14 +356,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
         try {
             // saying "no video here!", for group video
-            GetCurrentRecordingService service = new GetCurrentRecordingService(user.getId().toString(),
+            GetCurrentRecordingService service = new GetCurrentRecordingService(getUserId(),
                     room.getGroupId(),interval, currentTime,sequence);
             RecordingChunk rec = service.execute();
             String ownerUrl=null;
             String groupUrl=null;
             if(rec!=null){
-                ownerUrl = rec.getUrl(userId !=null ? userId : room.getId());
-                groupUrl = rec.getUrl(room.getId());
+                ownerUrl = rec.getUrl(userId !=null ? userId : room.getGroupId());
+                groupUrl = rec.getUrl(room.getGroupId());
             }
 
 
@@ -445,12 +411,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                     // stop old video
                     if (playerVideo != null) {
-                        playerVideo.stop();
                         playerVideo.release();
                     }
                     // stop old audio
                     if (playerAudio != null) {
-                        playerAudio.stop();
                         playerAudio.release();
                     }
 
@@ -515,13 +479,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         System.out.println("REALTIME");
         synchronized (playerLock) {
             if (playerVideo != null) {
-                playerVideo.stop();
                 playerVideo.release();
                 playerVideo = null;
             }
 
             if (playerAudio != null) {
-                playerAudio.stop();
                 playerAudio.release();
                 playerAudio = null;
             }
@@ -529,7 +491,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             playUser = userId;
         }
         if (userId == null) {
-
             compositePort.connect(endPoint);
 
         } else {
@@ -638,7 +599,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 JSONObject messageObj = message.toJsonObject();
                 messagesArray.put(messageObj);
             }
-
         } catch (ServiceException e1) {
             e1.printStackTrace();
         }

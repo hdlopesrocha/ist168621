@@ -99,7 +99,7 @@ public class KurentoManager {
      * @param room the room
      */
     public void removeRoom(Room room) {
-        this.rooms.remove(room.getId());
+        this.rooms.remove(room.getGroupId());
     }
 
 }

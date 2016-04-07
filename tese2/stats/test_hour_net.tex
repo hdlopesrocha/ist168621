@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=8cm,
+	    title={Network usage},
+	    xlabel={Time [seconds]},
+	    ylabel={Transfer rate [mbps]},
+	    xmin=0, xmax=3600,
+	    ymin=0, ymax=24,
+	    xtick={0,500,...,5000},
+	    ytick={0,5,...,100},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	]
+	
+	\addplot[smooth,color=Blue,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/sent_eth0.dat};
+	\addlegendentry{Sent(eth0)}
+
+	\addplot[smooth,color=Red,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_eth0.dat};
+	\addlegendentry{Recv(eth0)}
+
+	\addplot[smooth,color=Green,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_lo.dat};
+	\addlegendentry{Sent/Recv(lo)}
+
+	\end{axis}
+\end{tikzpicture}
+

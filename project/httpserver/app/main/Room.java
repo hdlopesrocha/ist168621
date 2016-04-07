@@ -13,7 +13,6 @@ import services.CreateIntervalService;
 import services.ListGroupMembersService;
 import services.ListOwnerAttributesService;
 
-import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.*;
@@ -32,7 +31,7 @@ public class Room implements Closeable {
     private final MediaPipeline mediaPipeline;
     
     /** The group. */
-    private final Group group;
+    private final String groupId;
     
     /** The interval. */
     private RecordingInterval interval;
@@ -41,12 +40,8 @@ public class Room implements Closeable {
     private Hub composite = null;
     private long sequence = 0;
     /** The hub port. */
-    private HubPort hubPort;
+    private HubPort compositePort;
     private Recorder recorder;
-    public Object getOperationLock() {
-        return operationLock;
-    }
-
     private Object operationLock = new Object();
     /**
      * Instantiates a new room.
@@ -64,11 +59,11 @@ public class Room implements Closeable {
             }
         });
 
-        this.group = Group.findById(new ObjectId(mediaPipeline.getName()));
+        this.groupId = mediaPipeline.getName();
 
-        this.composite = getHub();
+        this.composite = getComposite();
         System.out.println("composite for room " + mediaPipeline.getName() + " has been created");
-        this.hubPort = getCompositePort("this");
+        this.compositePort = getCompositePort("this");
 
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }
@@ -109,7 +104,7 @@ public class Room implements Closeable {
             if (recording) {
                 try {
                     if(this.interval==null) {
-                        this.interval = new CreateIntervalService(group.getId().toString(), new Date()).execute();
+                        this.interval = new CreateIntervalService(groupId, new Date()).execute();
                     }
                     //record(10000);
                 } catch (ServiceException e) {
@@ -120,12 +115,12 @@ public class Room implements Closeable {
                     start = new Date();
                 }
 
-                RecordingChunk rec = new RecordingChunk(group.getId(), interval.getId(),start,sequence++);
-                recorder = new Recorder(hubPort, duration, new Recorder.RecorderHandler() {
+                RecordingChunk rec = new RecordingChunk(new ObjectId(groupId), interval.getId(),start,sequence++);
+                recorder = new Recorder(compositePort, duration, new Recorder.RecorderHandler() {
                     @Override
                     public void onFileRecorded(Date end, String filepath) {
                         rec.setEnd(end);
-                        rec.setUrl(group.getId().toString(),filepath);
+                        rec.setUrl(groupId,filepath);
                         rec.save();
 
                         interval.setEnd(end);
@@ -154,7 +149,7 @@ public class Room implements Closeable {
     }
 
 
-    public Hub getHub(){
+    private Hub getComposite(){
         Composite ans =  new Composite.Builder(mediaPipeline).build();
         ans.setName("composite");
         return ans;
@@ -196,28 +191,22 @@ public class Room implements Closeable {
     }
 
 
-    /**
-     * Gets the group id.
-     *
-     * @return the group id
-     */
-    public String getGroupId() {
-        return group.getId().toString();
+    public Object getOperationLock() {
+        return operationLock;
     }
+
 
     /**
      * Join.
      *
-     * @param user the user
      * @param out the out
      * @return the user session
      */
-    public UserSession join(final User user, final WebSocket.Out<String> out) {
+    public UserSession join(final String userId, final WebSocket.Out<String> out) {
         try {
             synchronized (participants) {
-                System.out.println(user.getId().toString() + " joining " + mediaPipeline.getName());
-                final UserSession participant = new UserSession(user, this, out);
-                final String userId = user.getId().toString();
+                System.out.println(userId + " joining " + mediaPipeline.getName());
+                final UserSession participant = new UserSession(userId, this, out);
 
                 // add myself to the room
                 participants.add(participant);
@@ -233,7 +222,7 @@ public class Room implements Closeable {
                 for (KeyValuePair<GroupMembership, User> m : service.execute()) {
                     UserSession otherSession = null;
                     for (UserSession os : participants) {
-                        if (os.getUser().getId().equals(m.getValue().getId())) {
+                        if (os.getUserId().equals(m.getValue().getId())) {
                             otherSession = os;
                         }
                     }
@@ -266,7 +255,7 @@ public class Room implements Closeable {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public void leave(final UserSession user) throws IOException {
-        String uid = user.getUser().getId().toString();
+        String uid = user.getUserId();
         synchronized (participants) {
             participants.remove(user);
             try {
@@ -299,7 +288,7 @@ public class Room implements Closeable {
         if(uid!=null) {
             synchronized (participants) {
                 for (UserSession session : participants) {
-                    if (uid.equals(session.getUser().getId().toString())) {
+                    if (uid.equals(session.getUserId())) {
                         return session;
                     }
                 }
@@ -339,22 +328,24 @@ public class Room implements Closeable {
             participants.clear();
         }
         if(recorder!=null){
-            recorder.stop();
+            recorder.release();
         }
 
-        hubPort.release();
+        compositePort.release();
         composite.release();
         mediaPipeline.release();
         Global.manager.removeRoom(this);
     }
 
+
+
     /**
-     * Gets the id.
+     * Gets the group id.
      *
-     * @return the id
+     * @return the group id
      */
-    public String getId() {
-        return group.getId().toString();
+    public String getGroupId() {
+        return groupId;
     }
 
     /**

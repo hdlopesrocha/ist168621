@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=6cm,
+	    title={Memory Usage},
+	    xlabel={Time [seconds]},
+	    ylabel={Memory [MB]},
+	    xmin=0, xmax=3600,
+	    ymin=0, ymax=4000,
+	    xtick={0,500,...,5000},
+	    ytick={0,500,...,4000},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	] 
+
+		\addplot[smooth,color=Blue,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_8_mongod.dat};
+		\addlegendentry{Mongod}
+
+		\addplot[smooth,color=Red,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_91_kurento-media-server.dat};
+		\addlegendentry{Kurento Media Server}
+
+		\addplot[smooth,color=Green,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_36_kurento-repo.dat};
+		\addlegendentry{Kurento Repository}
+
+		\addplot[smooth,color=Magenta,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_228_bash.dat};
+		\addlegendentry{Java}
+
+	\end{axis}
+\end{tikzpicture}
+
+

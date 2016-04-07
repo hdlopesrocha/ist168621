@@ -1,17 +1,17 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import dtos.AttributeDto;
 import dtos.KeyValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import services.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * The Class Data.

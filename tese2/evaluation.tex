@@ -46,7 +46,8 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 \subsection{Test Results}
   
-      We are presenting in this sections the results of our performance tests after implementing our solution.
+      We are presenting in this section the results of our performance tests after implementing our solution.
+\subsubsection{Network usage}
 
       Every time a user shares its camera or its screen in the context of a conference room, its offered video is sent to the server and independently from watching an individual stream or the mixed version the server just sends a unique stream back to the user.
 
@@ -83,6 +84,19 @@ If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ i
 
 With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine.
 
+On the other hand figure \ref{fig:test_client_net} shows the respective network usage on the client side during our test case. We observe that int he first seconds the client adjusts the video quality that sends to \ac{KMS}, whenever a new client enters in the conference we observer that \ac{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room, after a while \ac{KMS} realizes that its network can handle the increase of clients and sends the video with a better quality to every participant. When a user leaves the conference room \ac{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
+
+  \begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_client_net.tex}
+  \end{center}
+  \caption{Client Network usage during our test case}
+  \label{fig:test_client_net}
+\end{figure}
+
+\subsubsection{Memory usage}
+
+
 Figure \ref{fig:test_full_features_mem} shows the memory usage during our performance test case. Both \ac{JVM}, \emph{MongoDB} and \ac{KMS} performs their own memory management by holding and recycling objects when needed. The expected and observed behavior of the memory usage is growth memory usage while the users are entering in the conference room and a memory usage stabilization afterwards.
 
 
@@ -95,6 +109,24 @@ Figure \ref{fig:test_full_features_mem} shows the memory usage during our perfor
 \end{figure}
 
 \emph{MongoDB} memory usage keeps increasing because it tries to fit part of the database on \ac{RAM} for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case. When the conference room is empty no there are no video recordings, which explains the memory stabilization at the end.
+
+\emph{KMS} memory usage was increasing and in fact we did not expected that, we have done more tests and we have observed that by disabling the recorder feature memory usage kept linearly related to the amount of clients present on the room. Therefore, we have verified our implementation and we have concluded that nothing was wrong with our code, we have confirmed that every allocated resource was indeed released after the end of recording. As a result of our intensive tests and consecutive failures we suspected that the problem was not ours.
+
+Hence, in order to confirm our suspicions, we have decided to read the implementation of \ac{KMS} and we have found that \ac{KMS} was not releasing the memory if the recorder was stopped by us. Subsequently, we have changed the source code and submitted to \emph{Kurento} team through a \emph{GIT}'s \emph{"pull request"}.
+
+
+Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performance test case taking into account the patch that we applied to \ac{KMS}.
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_ram_fixed_mem.tex}
+  \end{center}
+  \caption{Memory usage after fixing recorder memory leak}
+  \label{fig:test_ram_fixed_mem}
+\end{figure}
+
+\subsubsection{CPU usage}
+
 
 Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage during our performance test case. As we can see, the amount of \ac{CPU} increases and decreases linearly in function of the amount of conference participants. 
 
@@ -138,7 +170,10 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
 
 We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by \ac{CPU}. Without this feature the network and memory usage had insignificant changes compared to \ac{CPU} usage.
 
+\subsubsection{Two consecutive test cases}
 
+
+We have also performed two consecutive test cases in order to understand if we the influence of the first test case over the second, as observed in figure \ref{fig:test_two_times_cpu}, there is no \ac{CPU} influence between two test cases.
 
   \begin{figure}[!htb]
   \begin{center}
@@ -148,6 +183,7 @@ We conclude that \emph{QR code} detection is a very intensive task, approximatel
   \label{fig:test_two_times_cpu}
 \end{figure}
 
+On the other hand due to memory recycling techniques we can observe in figure \ref{fig:test_two_times_mem} that some of the memory that was allocated in the first test was reused in the second case.
 
 \begin{figure}[!htb]
   \begin{center}
@@ -156,6 +192,24 @@ We conclude that \emph{QR code} detection is a very intensive task, approximatel
   \caption{Memory usage during two consecutive test cases}
   \label{fig:test_two_times_mem}
 \end{figure}
+
+\subsubsection{One hour test case}
+
+
+   Figure \ref{fig:test_hour_mem} shows the memory used by our solution with seven clients simultaneously on the same conference room during one hour. As we can observe \ac{KMS} memory usage stabilizes.
+
+
+  \begin{figure}[!htb]
+  \begin{center}
+    \input{stats/test_hour_mem.tex}
+  \end{center}
+  \caption{Memory usage during one hour with seven clients}
+  \label{fig:test_hour_mem}
+\end{figure}
+
+
+
+
 
 \section {Usability Tests}
      In this section we describe usability test scenarios that we have applied and their respective results.

@@ -5,10 +5,9 @@ import main.Global;
 import main.Room;
 import main.Tools;
 import main.UserSession;
-import models.RecordingInterval;
 import models.Message;
+import models.RecordingInterval;
 import models.TimeAnnotation;
-import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -23,7 +22,9 @@ import services.*;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class WSController extends Controller {
 
@@ -39,10 +40,9 @@ public class WSController extends Controller {
             public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
                 System.out.println("Join room " + groupId);
                 Room room = Global.manager.getRoom(groupId);
-                User user = User.findById(new ObjectId(userId));
                 if (room != null) {
                     // Join room
-                    final UserSession userSession = room.join(user, out);
+                    final UserSession userSession = room.join(userId, out);
                     {
                         List<RecordingInterval> intervals = RecordingInterval.listByGroup(new ObjectId(groupId));
                         JSONObject msg = new JSONObject();
@@ -139,7 +139,7 @@ public class WSController extends Controller {
                                 case "createMessage": {
                                     String data = args.getString("data");
                                     CreateMessageService messageService = new CreateMessageService(
-                                            user.getId().toString(), groupId, data);
+                                            userId, groupId, data);
                                     try {
                                         Message message = messageService.execute();
                                         JSONArray messagesArray = new JSONArray();
@@ -228,7 +228,7 @@ public class WSController extends Controller {
                                     JSONObject msg = new JSONObject();
                                     msg.put("cmd", "talk");
                                     JSONObject data = new JSONObject();
-                                    data.put("uid", user.getId().toString());
+                                    data.put("uid", userId);
                                     data.put("value", value);
                                     msg.put("data", data);
                                     room.sendMessage(msg.toString());

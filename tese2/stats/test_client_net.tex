@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+	\begin{axis}[
+	    width=\textwidth,
+	   	height=6cm,
+	    title={Network usage},
+	    xlabel={Time [seconds]},
+	    ylabel={Transfer rate [kbps]},
+	    xmin=-10, xmax=790,
+	    ymin=0, ymax=1000,
+	    xtick={0,60,...,2000},
+	    ytick={0,100,...,5000},
+	    extra x ticks={0,60,...,2000},
+    	extra x tick labels={,,},
+		extra tick style={
+			grid=major,
+			major grid style={yellow,thick,solid},
+			tick label style={rotate=90,anchor=east}
+		},
+     legend cell align=left,
+     legend style={legend pos=north west,font=\tiny},
+	    ymajorgrids=true,
+	    grid style=dashed,
+	]
+	
+	\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/send.dat};
+	\addlegendentry{Sent(eth0)}
+
+	\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/recv.dat};
+	\addlegendentry{Recv(eth0)}
+
+
+	\end{axis}
+\end{tikzpicture}
+

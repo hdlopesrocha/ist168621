@@ -1,27 +1,23 @@
 package main;
 
-import jdk.nashorn.internal.runtime.ECMAException;
-import org.kurento.client.Continuation;
 import org.kurento.client.MediaElement;
 import org.kurento.client.MediaProfileSpecType;
 import org.kurento.client.RecorderEndpoint;
 import org.kurento.client.internal.server.KurentoServerException;
-import org.kurento.commons.testing.SystemCompatibilityTests;
 import org.kurento.repository.service.pojo.RepositoryItemRecorder;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
  * The Class Recorder.
  */
 public class Recorder {
-
-
-    private static boolean useRepo = true;
 
     /**
      * Record.
@@ -30,7 +26,7 @@ public class Recorder {
      * @param duration the duration
      * @param handler the handler
      */
-
+    private static boolean useRepo = true;
     private RecorderEndpoint recorder;
     private RepositoryItemRecorder item;
     private File tempFile;
@@ -44,60 +40,42 @@ public class Recorder {
             public void run() {
                 try {
                     synchronized (endPoint) {
-
                         RecorderEndpoint.Builder builder;
                         if (useRepo) {
-                            item = KurentoManager.repository.createRepositoryItem(Collections.emptyMap());
+                            item = KurentoManager.repository.createRepositoryItem( Collections.emptyMap());
                             builder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), item.getUrl());
                         } else {
                             tempFile = File.createTempFile("hyper", ".webm");
                             builder = new RecorderEndpoint.Builder(endPoint.getMediaPipeline(), "file://" + tempFile.getAbsolutePath());
                         }
 
-
-                        builder.stopOnEndOfStream().withMediaProfile(MediaProfileSpecType.WEBM);
+                        builder.withMediaProfile(MediaProfileSpecType.WEBM).stopOnEndOfStream();
                         recorder = builder.build();
                         endPoint.connect(recorder);
                         recorder.record();
-
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                stop();
+                                release();
                             }
                         },duration);
-
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }).start();
-
-
     }
 
-    public void stop(){
+
+    public synchronized void release() {
         try {
-            timer.cancel();
-            timer.purge();
-            recorder.stop(new Continuation<Void>() {
-                @Override
-                public void onSuccess(Void result) throws Exception {
-                    System.out.println("recorder release!");
-                    recorder.release();
-                }
-
-                @Override
-                public void onError(Throwable cause) throws Exception {
-                    System.out.println("recorder release!");
-                    recorder.release();
-                }
-            });
-
-            //endPoint.disconnect(recorder);
-
+            if (timer != null) {
+                timer.cancel();
+                timer.purge();
+                timer = null;
+                recorder.release();
+            }
             if (useRepo) {
                 handler.onFileRecorded(new Date(), item.getId());
             } else {
@@ -106,7 +84,7 @@ public class Recorder {
 
         } catch (KurentoServerException e) {
             System.out.println("recorder error!");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

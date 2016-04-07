@@ -1,5 +1,4 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 var HyperWebSocket = new (function() {
     var primaryStream = null;
