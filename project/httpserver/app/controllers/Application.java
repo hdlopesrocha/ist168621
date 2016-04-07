@@ -170,7 +170,7 @@ public class Application extends Controller {
             Date da = new Date(start.getTime()+i*10000);
             RecordingChunk rec = new RecordingChunk(group3.getId(),interval.getId(), da,(long)i);
             rec.setEnd(new Date(da.getTime()+10000));
-            rec.setUrl(group3.getId().toString(), "file://"+ url.getFile());
+            rec.setUrl(new RecordingUrl(group3.getId().toString(),"group","file://"+ url.getFile()));
             rec.save();
         }
 

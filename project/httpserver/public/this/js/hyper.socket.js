@@ -1,10 +1,12 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
+navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 var HyperWebSocket = new (function() {
     var primaryStream = null;
     var participantPresenceHandler = null;
     var remoteVideoHandler = null;
     var timeTagArrivedHandler = null;
+    var channelsArrivedHandler = null;
     var hyperContentArrivedHandler = null;
     var lookAtTimeHandler = null;
     var removedUserHandler= null;
@@ -24,7 +26,6 @@ var HyperWebSocket = new (function() {
     var local_none = {offerToReceiveAudio:true,offerToReceiveVideo:true};
     var screen_user = {video: {mediaSource: 'window' || 'screen'}, audio: false};
     var camera_user = {audio:true, video:true };
-
 
     var audio_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     var remote_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
@@ -68,12 +69,14 @@ var HyperWebSocket = new (function() {
 		javascriptNode.onaudioprocess = function(event){
 			if(soundProc==0){
 				var perc = 0;
-				if(microphoneState){
-					var inputLevels = event.inputBuffer.getChannelData(0);
-					var currentAudioLevel = average(inputLevels);
-					maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
-					perc = currentAudioLevel/maxAudioLevel;
-				}
+                var inputLevels = event.inputBuffer.getChannelData(0);
+                var currentAudioLevel = average(inputLevels);
+
+                maxAudioLevel = Math.max(maxAudioLevel, currentAudioLevel);
+                if(maxAudioLevel){
+                    perc = currentAudioLevel/maxAudioLevel;
+                }
+
 				if(perc>0.10){
 					if(!soundDetected){
 						soundDetected = true;
@@ -87,7 +90,7 @@ var HyperWebSocket = new (function() {
 				}
 			}
 			soundProc=soundProc+1;
-			if(soundProc>4){
+			if(soundProc>10){
 				soundProc = 0;
 			}
 		}.bind(this);
@@ -179,14 +182,6 @@ var HyperWebSocket = new (function() {
         ws.send(JSON.stringify(obj));
     }
 
-	this.receiveRealTime = function(userId){
-		console.log("receiveRealTime",userId);
-		ws.send(JSON.stringify({
-			cmd : "setRealTime",
-			uid:userId
-		}));
-	}
-	
 	this.addUserGroup = function(userId){
 		console.log("addUser",userId);
 		ws.send(JSON.stringify({
@@ -203,13 +198,32 @@ var HyperWebSocket = new (function() {
         }));
     }
 
-	this.receiveHistoric = function(userId,offset){
+
+
+	this.receiveRealTime = function(userId,sessionId){
+		console.log("receiveRealTime",userId);
+		var msg = {
+            cmd : "setRealTime",
+            uid:userId
+        };
+		if(sessionId){
+		    msg.sid = sessionId;
+		}
+		ws.send(JSON.stringify(msg));
+	}
+
+
+	this.receiveHistoric = function(userId,offset,sessionId){
 		console.log("receiveHistoric",userId);
-		ws.send(JSON.stringify({
-			cmd : "setHistoric",
-			uid:userId,
-			offset:offset
-		}));
+		var msg = {
+            cmd : "setHistoric",
+            uid:userId,
+            offset:offset
+        };
+    	if(sessionId){
+		    msg.sid = sessionId;
+		}
+		ws.send(JSON.stringify(msg));
 	}
 	
 	this.sendMessage = function(text){
@@ -238,6 +252,11 @@ var HyperWebSocket = new (function() {
     this.setServerTimeSynchronizationHandler = function(handler){
         serverTimeHandler = handler;
     }
+
+
+    this.setChannelsArrivedHandler = function (handler) {
+        channelsArrivedHandler = handler;
+    };
 
     this.setOnLocalVideoAvailableHandler = function(handler){
 		localVideoHandler = handler;
@@ -350,6 +369,11 @@ var HyperWebSocket = new (function() {
                     videoRecordingHandler(message);
                 }
 			});
+
+            ws.onCmd('channels', function(message){
+                channelsArrivedHandler(message.data);
+
+            });
 
 	        ws.onCmd('msg',function(message){
                 for(var i in message.data){

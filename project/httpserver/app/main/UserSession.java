@@ -4,6 +4,7 @@ import exceptions.ServiceException;
 import models.HyperContent;
 import models.Message;
 import models.RecordingChunk;
+import models.RecordingUrl;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,14 +47,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private UUID sid = UUID.randomUUID();
 
     private Recorder recorder;
-    private final ZBarFilter qrCodeFilter;
+    private ZBarFilter qrCodeFilter;
 
     public String getUserId() {
         return userId;
     }
 
-    private final WebRtcEndpoint endPoint;
-    private final HubPort compositePort;
+    private WebRtcEndpoint endPoint;
+    private HubPort compositePort;
     private PlayerEndpoint playerVideo;
     private PlayerEndpoint playerAudio;
 
@@ -64,9 +65,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         this.out = out;
         this.userId = userId;
         this.room = room;
+        initEndpoint();
+    }
 
+    private void initEndpoint(){
         // XXX [ICE_01] XXX
-
         endPoint = new WebRtcEndpoint.Builder(room.getMediaPipeline()).build();
         endPoint.addOnIceCandidateListener(new EventListener<OnIceCandidateEvent>() {
             public void onEvent(OnIceCandidateEvent event) {
@@ -92,99 +95,92 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.setStunServerAddress("74.125.206.127");
         endPoint.setStunServerPort(19302);
 
-    //    endPoint.setTurnUrl("citysdk.tagus.ist.utl.pt:3478");
-
-
-        if(QR_ENABLED) {
-            qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
-
-
-            codeListener = new EventListener<CodeFoundEvent>() {
-                @Override
-                public void onEvent(CodeFoundEvent event) {
-                    System.out.println(".");
-                    final String content = event.getValue();
-                    final String hash = Tools.md5(content);
-                    final Date startTime = new Date(new Date().getTime() - timeOffset);
-
-                    if (hash != null) {
-                        boolean containsQR;
-                        synchronized (currentQRCodes) {
-                            containsQR = currentQRCodes.containsKey(hash);
-                        }
-
-                        if (!containsQR) {
-                            JSONObject msg = new JSONObject();
-                            msg.put("cmd", "qrCode");
-                            msg.put("data", content);
-                            msg.put("hash", hash);
-                            room.sendMessage(msg.toString());
-                        }
-
-                        synchronized (currentQRCodes) {
-                            currentQRCodes.put(hash,startTime);
-                        }
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Object newestQRCode;
-                                synchronized (currentQRCodes) {
-                                    newestQRCode = currentQRCodes.get(hash);
-                                }
-
-                                if (startTime == newestQRCode) {
-                                    synchronized (currentQRCodes) {
-                                        currentQRCodes.remove(hash);
-                                    }
-                                    JSONObject msg = new JSONObject();
-                                    msg.put("cmd", "qrCode");
-                                    msg.put("hash", hash);
-                                    room.sendMessage(msg.toString());
-
-
-                                    Date endTime = new Date(new Date().getTime() - timeOffset);
-                                    CreateHyperContentService service = new CreateHyperContentService(userId,
-                                            getGroupId(), startTime, endTime, content);
-                                    try {
-                                        service.execute();
-                                        room.sendContents();
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }).start();
-                    }
-                }
-            };
-            qrCodeFilter.addCodeFoundListener(codeListener);
-        }
+        //    endPoint.setTurnUrl("citysdk.tagus.ist.utl.pt:3478");
 
         compositePort = room.getCompositePort(sid.toString());
-
-
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
             public void onEvent(MediaSessionStartedEvent arg0) {
-                if(qrCodeFilter!=null) {
-                    endPoint.connect(qrCodeFilter, MediaType.VIDEO);
+                if(QR_ENABLED) {
+                    initQRCodeReader();
                 }
                 endPoint.connect(compositePort);
                 compositePort.connect(endPoint);
                 room.record();
             }
         });
-
-
-
     }
 
+    private void initQRCodeReader(){
+        qrCodeFilter = new ZBarFilter.Builder(endPoint.getMediaPipeline()).build();
+        codeListener = new EventListener<CodeFoundEvent>() {
+            @Override
+            public void onEvent(CodeFoundEvent event) {
+                System.out.println(".");
+                final String content = event.getValue();
+                final String hash = Tools.md5(content);
+                final Date startTime = new Date(new Date().getTime() - timeOffset);
+
+                if (hash != null) {
+                    boolean containsQR;
+                    synchronized (currentQRCodes) {
+                        containsQR = currentQRCodes.containsKey(hash);
+                    }
+
+                    if (!containsQR) {
+                        JSONObject msg = new JSONObject();
+                        msg.put("cmd", "qrCode");
+                        msg.put("data", content);
+                        msg.put("hash", hash);
+                        room.sendMessage(msg.toString());
+                    }
+
+                    synchronized (currentQRCodes) {
+                        currentQRCodes.put(hash,startTime);
+                    }
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            Object newestQRCode;
+                            synchronized (currentQRCodes) {
+                                newestQRCode = currentQRCodes.get(hash);
+                            }
+
+                            if (startTime == newestQRCode) {
+                                synchronized (currentQRCodes) {
+                                    currentQRCodes.remove(hash);
+                                }
+                                JSONObject msg = new JSONObject();
+                                msg.put("cmd", "qrCode");
+                                msg.put("hash", hash);
+                                room.sendMessage(msg.toString());
+
+
+                                Date endTime = new Date(new Date().getTime() - timeOffset);
+                                CreateHyperContentService service = new CreateHyperContentService(userId,
+                                        getGroupId(), startTime, endTime, content);
+                                try {
+                                    service.execute();
+                                    room.sendContents();
+                                } catch (ServiceException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }).start();
+                }
+            }
+        };
+        qrCodeFilter.addCodeFoundListener(codeListener);
+        endPoint.connect(qrCodeFilter, MediaType.VIDEO);
+
+    }
 
     /**
      * Record.
@@ -197,7 +193,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             recorder = new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(Date end, String filepath) {
-                    rec.setUrl(userId,filepath);
+                    rec.setUrl(new RecordingUrl(getUserId(),getSid(),filepath));
                     rec.save();
                 }
             });
@@ -284,19 +280,45 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     @Override
     public void close() throws IOException {
         System.out.println("!!!!!!!!!!!!!!!!! CLOSING SESSION !!!!!!!!!!!!!!!!!");
-
-
         if(qrCodeFilter!=null) {
             qrCodeFilter.release();
         }
         if(recorder!=null){
             recorder.release();
         }
-
-
         compositePort.release();
         endPoint.release();
+    }
 
+    public void sendChannels(){
+        JSONArray channels = new JSONArray();
+
+        if(timeOffset==0L) {
+            channels = room.getCurrentChannels();
+        }else {
+            Date currentTime = new Date(new Date().getTime() - timeOffset);
+            GetCurrentRecordingService service = new GetCurrentRecordingService(getUserId(),
+                    getGroupId(),null, currentTime,null);
+            try {
+                RecordingChunk rec = service.execute();
+                if (rec!=null) {
+                    for (RecordingUrl ru : rec.getUrls()) {
+                        JSONObject obj = new JSONObject();
+                        obj.put("sid",ru.getSid());
+                        obj.put("uid",ru.getUid());
+                        channels.put(obj);
+                    }
+                }
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        JSONObject ans = new JSONObject();
+        ans.put("cmd","channels");
+        ans.put("data",channels);
+        sendMessage(ans.toString());
     }
 
     /**
@@ -350,20 +372,26 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      * @param userId the user id
      */
-    public void setHistoric(String userId, ObjectId interval, Long sequence) {
+    public void setHistoric(String userId, ObjectId interval, Long sequence, String sessionId) {
+
         playUser = userId;
         Date currentTime = new Date(new Date().getTime() - timeOffset);
-
         try {
-            // saying "no video here!", for group video
             GetCurrentRecordingService service = new GetCurrentRecordingService(getUserId(),
                     room.getGroupId(),interval, currentTime,sequence);
             RecordingChunk rec = service.execute();
             String ownerUrl=null;
             String groupUrl=null;
             if(rec!=null){
-                ownerUrl = rec.getUrl(userId !=null ? userId : room.getGroupId());
-                groupUrl = rec.getUrl(room.getGroupId());
+                List<RecordingUrl> userRecs = rec.getUrl(userId !=null ? userId : room.getGroupId(),sessionId);
+                List<RecordingUrl> groupRecs = rec.getUrl(room.getGroupId(),sessionId);
+
+                if(userRecs.size()>0){
+                    ownerUrl =  userRecs.get(0).getUrl();
+                }
+                if(groupRecs.size()>0){
+                    groupUrl = groupRecs.get(0).getUrl();
+                }
             }
 
 
@@ -398,14 +426,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            setHistoric(playUser, rec.getInterval(),rec.getSequence()+1);
+                            setHistoric(playUser, rec.getInterval(),rec.getSequence()+1,sessionId);
                         }
                     });
 
                     tempAudio.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
-                            setHistoric(playUser,rec.getInterval(),rec.getSequence()+1);
+                            setHistoric(playUser,rec.getInterval(),rec.getSequence()+1,sessionId);
                         }
                     });
 
@@ -464,9 +492,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-
+        sendChannels();
     }
-
 
 
 
@@ -475,7 +502,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      * @param userId the new realtime
      */
-    public void setRealTime(String userId) {
+    public void setRealTime(String userId, String sessionId) {
         System.out.println("REALTIME");
         synchronized (playerLock) {
             if (playerVideo != null) {
@@ -501,6 +528,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
             }
         }
+        sendChannels();
         // mixerPort.connect(endPoint, MediaType.AUDIO);
 
     }
@@ -615,7 +643,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         }
     }
 
-    public UUID getSid() {
-        return sid;
+    public String getSid() {
+        return sid.toString();
     }
 }

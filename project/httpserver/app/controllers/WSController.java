@@ -43,6 +43,7 @@ public class WSController extends Controller {
                 if (room != null) {
                     // Join room
                     final UserSession userSession = room.join(userId, out);
+                    userSession.sendChannels();
                     {
                         List<RecordingInterval> intervals = RecordingInterval.listByGroup(new ObjectId(groupId));
                         JSONObject msg = new JSONObject();
@@ -97,7 +98,7 @@ public class WSController extends Controller {
                         if(coordinator!=null){
                             JSONObject obj = new JSONObject();
                             obj.put("cmd","coordinate");
-                            obj.put("sid",userSession.getSid().toString());
+                            obj.put("sid",userSession.getSid());
                             coordinator.sendMessage(obj.toString());
                         }else {
                             JSONObject obj = new JSONObject();
@@ -177,10 +178,13 @@ public class WSController extends Controller {
                                 break;
                                 case "setRealTime": {
                                     String userId = args.optString("uid", null);
+                                    String sessionId = args.optString("sid", null);
+
+
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            userSession.setRealTime(userId);
+                                            userSession.setRealTime(userId,sessionId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();
@@ -240,7 +244,8 @@ public class WSController extends Controller {
                                         @Override
                                         public void run() {
                                             userSession.setOffset(args.getLong("offset"));
-                                            userSession.setHistoric(userId,null,null);
+                                            String sessionId = args.optString("sid", null);
+                                            userSession.setHistoric(userId,null,null,sessionId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();

@@ -12,15 +12,17 @@ HyperWebSocket.setParticipantPresenceHandler(function (info) {
     console.log("*",info);
     if (!participants[userId]) {
         participants[userId] = {id:userId,name:name,photo:photo};
-        var del_button = "<i style='color:red' onclick='removeMemberConfirmation(\""+ userId+ "\",\""+name+"\")' class='fa fa-times'></i>";
-        var onclick = 'onclick=\'selectUser("'+userId+'")\'';
+        var del_button = '<button onclick="removeMemberConfirmation(\''+ userId+ '\',\''+name+'\')" type="button" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button>';
+
+
         var style='style="background-image:url('+photo+');height:40px;width:40px" class="pull-left media-object circular"';
         var audio ='<i style="top:-12px;left:-24px;position:relative" id="mic'+userId+'" class="fa fa-microphone text-off"></i>';
+        var channel = '<div style="display:inline" id="channel'+userId+'" class="channel"></div>';
 
         $("#videoMembers").append(
             '<div id="vidMember'+userId+'" '+ onclick+'>'+
             '<a '+style+'>'+audio+'</a>'+
-            '<div class="media-body"><h5>'+name+' '+del_button+'</h5><small class="text-muted">Active From 3 hours</small></div></div>'
+            '<div class="media-body">'+name+'<br>'+del_button+channel+'</div></div>'
         );
     }
 
@@ -51,6 +53,18 @@ HyperWebSocket.setOnNewVideoRecordingArrivedHandler(function (array) {
             animation : false
         });*/
     }
+});
+
+HyperWebSocket.setChannelsArrivedHandler(function (array) {
+    console.log("channels", array);
+    var users = {};
+    $(".channel").html("");
+
+    for(var i in array){
+        var channel = array[i];
+        $("#channel"+channel.uid).append('<button onclick=\'selectUser("'+channel.uid+'","'+channel.sid+'")\' type="button" class="btn btn-default btn-xs"><i class="fa fa-video-camera"></i></button>');
+    }
+
 });
 
 HyperWebSocket.setOnMessageArrivedHandler(function(userId, time, text, name, mid, seq) {

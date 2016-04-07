@@ -2,13 +2,13 @@ package models;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import dtos.KeyValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import services.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.print.Doc;
+import java.util.*;
 
 
 /**
@@ -23,7 +23,7 @@ public class RecordingChunk {
     /** The owner. */
     private ObjectId groupId;
 
-    private Document urls;
+    private List<Document> urls;
     /** The end. */
     private Date start, end;
 
@@ -40,6 +40,8 @@ public class RecordingChunk {
 
     }
 
+
+
     /**
      * Instantiates a new recording.
      *
@@ -50,7 +52,7 @@ public class RecordingChunk {
         this.groupId = groupId;
         this.start = start;
         this.sequence = sequence;
-        this.urls = new Document();
+        this.urls = new ArrayList<Document>();
         this.interval = interval;
     }
 
@@ -80,7 +82,7 @@ public class RecordingChunk {
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
         rec.groupId = doc.getObjectId("gid");
-        rec.urls = (Document) doc.get("urls");
+        rec.urls = (List<Document>) doc.get("urls");
         return rec;
     }
 
@@ -95,8 +97,32 @@ public class RecordingChunk {
         return getCollection().count(doc);
     }
 
-    public String getUrl(String owner){
-       return urls.getString(owner);
+
+    public List<RecordingUrl> getUrls(){
+        List<RecordingUrl> ans = new ArrayList<RecordingUrl>();
+        for(Document doc : urls){
+            RecordingUrl ru = new RecordingUrl(doc);
+            ans.add(ru);
+        }
+
+        return ans;
+    }
+
+
+    public List<RecordingUrl> getUrl(String owner, String sid){
+        List<RecordingUrl> ans = new ArrayList<RecordingUrl>();
+        for(Document doc : urls){
+            RecordingUrl ru = new RecordingUrl(doc);
+            if(ru.getUid()!=null && ru.getUid().equals(owner)){
+                if(ru.getSid().equals(sid)) {
+                    ans.add(0, ru);
+                }else {
+                    ans.add(ru);
+                }
+            }
+        }
+
+        return ans;
     }
 
     /**
@@ -116,8 +142,8 @@ public class RecordingChunk {
         return ret;
     }
 
-    public synchronized void setUrl(String owner, String url){
-       urls.append(owner,url);
+    public synchronized void setUrl(RecordingUrl ru){
+       urls.add(ru.toDocument());
     }
 
 

@@ -618,13 +618,13 @@
 			});
 		}
 
-		function selectUser(userId){
+		function selectUser(userId,sessionId){
 			savedUser = selectedUser = userId;
 			setVideoIcon();
 			if (realTime) {
-				HyperWebSocket.receiveRealTime(selectedUser);
+				HyperWebSocket.receiveRealTime(selectedUser,sessionId);
 			} else {
-				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
+				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,sessionId);
 			}
 		}
 

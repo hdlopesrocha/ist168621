@@ -17,7 +17,7 @@ import java.util.Date;
 public class GetCurrentRecordingService extends Service<RecordingChunk> {
 
     /** The caller. */
-    private final User caller;
+    private final ObjectId caller;
     
     /** The group id. */
     private final ObjectId groupId;
@@ -36,7 +36,7 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      * @param time the time
      */
     public GetCurrentRecordingService(String callerId, String groupId, ObjectId interval, Date time, Long sequence) {
-        this.caller = User.findById(new ObjectId(callerId));
+        this.caller = new ObjectId(callerId);
         this.groupId = new ObjectId(groupId);
         this.time = time;
         this.sequence = sequence;

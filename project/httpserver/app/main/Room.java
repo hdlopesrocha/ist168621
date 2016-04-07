@@ -10,6 +10,7 @@ import org.kurento.client.*;
 import org.kurento.client.EventListener;
 import play.mvc.WebSocket;
 import services.CreateIntervalService;
+import services.GetCurrentRecordingService;
 import services.ListGroupMembersService;
 import services.ListOwnerAttributesService;
 
@@ -43,6 +44,9 @@ public class Room implements Closeable {
     private HubPort compositePort;
     private Recorder recorder;
     private Object operationLock = new Object();
+
+
+
     /**
      * Instantiates a new room.
      *
@@ -67,6 +71,21 @@ public class Room implements Closeable {
 
         System.out.println("ROOM " + mediaPipeline.getName() + " has been created");
     }
+
+    public JSONArray getCurrentChannels(){
+        JSONArray ans = new JSONArray();
+
+        for (UserSession session : participants) {
+            if(session.hasVideo() || session.hasAudio()) {
+                JSONObject obj = new JSONObject();
+                obj.put("uid", session.getUserId());
+                obj.put("sid", session.getSid());
+                ans.put(obj);
+            }
+        }
+        return ans;
+    }
+
 
 
     private boolean recording = false;
@@ -120,7 +139,7 @@ public class Room implements Closeable {
                     @Override
                     public void onFileRecorded(Date end, String filepath) {
                         rec.setEnd(end);
-                        rec.setUrl(groupId,filepath);
+                        rec.setUrl(new RecordingUrl(groupId,"group",filepath));
                         rec.save();
 
                         interval.setEnd(end);
@@ -147,6 +166,7 @@ public class Room implements Closeable {
             }
         }
     }
+
 
 
     private Hub getComposite(){
@@ -222,7 +242,7 @@ public class Room implements Closeable {
                 for (KeyValuePair<GroupMembership, User> m : service.execute()) {
                     UserSession otherSession = null;
                     for (UserSession os : participants) {
-                        if (os.getUserId().equals(m.getValue().getId())) {
+                        if (os.getUserId().equals(m.getValue().getId().toString())) {
                             otherSession = os;
                         }
                     }
