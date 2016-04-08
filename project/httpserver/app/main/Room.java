@@ -259,7 +259,9 @@ public class Room implements Closeable {
                 }
                 final JSONObject currentParticipants = new JSONObject().put("cmd", "participants").put("data", otherUsers);
                 participant.sendMessage(currentParticipants.toString());
-
+                for(UserSession us : participants){
+                    us.sendChannels();
+                }
                 return participant;
             }
         } catch (ServiceException e) {
@@ -290,10 +292,18 @@ public class Room implements Closeable {
                 e.printStackTrace();
             }
             user.close();
+            for(UserSession us : participants){
+                us.sendChannels();
+            }
+
             if (participants.size() == 0) {
                 close();
             }
+
+
+
         }
+
     }
 
 

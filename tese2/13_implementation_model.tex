@@ -190,8 +190,9 @@ Within a conversation, users can write documents collaboratively. Each document 
 
 \subsection{Recording model}
 
-During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and a mapping between entity that was recorded and the correspondent video \ac{URL}.
+During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and list of \ac{URL}s with the correspondent owner identification number and \emph{WebSocket} session id.
 
+In order to allow different devices within the same user, storing just the \ac{URL} with an associated user id is not enough as in this case it is needed one more parameter to differentiate the different \emph{webSocket} sessions opened by the same user. For this reason we had to associate a random session identification number to each \emph{webSocket}.
 
 \begin{table}[!htb]
 \centering

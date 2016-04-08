@@ -238,3 +238,21 @@ function scheduleContent() {
 		\label{fig:search}
 \end{figure}
 
+	\subsection{Switching views}
+
+		We provide a way for users to select the composite view of the conference room or the video shared by a particular user device as it can be seen on figure \ref{fig:devices}. 
+
+		In order to maintain a list of available user devices that can be played at the navigated time if a user plays or ends playing a block of recorded video it obtains at the same time a list of all devices available for each user at that time.
+
+		On the other hand, if a user changes to real time, the list of devices is extracted from the set of \emph{webSockets} that are associated to the respective conference room. This list of devices is also sent to the users that are also in real time mode whenever a new user enters or leaves the conference room.
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/devices.png}
+		\caption{Multiple devices per user}
+		\label{fig:devices}
+	\end{figure}
+
+		We also provide an automatic mechanism for switching the view to the current speaker. With respect to sound analysis, the sound samples are analyzed on the client side through the web audio \ac{API}.
+
+		Our speech detector is straightforward, we could perform a spectral analysis in order to understand if the analyzed sound contains frequencies in the range of the human voice but instead we just capture sound samples in real time and calculate the maximum sound amplitude. If a sound sample has an amplitude bigger than a factor of the maximum amplitude (we have used an empirical value of 10\%) we say that the user is speaking and therefore we send a message to the server if the speaking state has changed. Subsequently, the server receives the user speaking state and sends it to the other users so they can request a different view.

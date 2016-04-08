@@ -43,7 +43,6 @@ public class WSController extends Controller {
                 if (room != null) {
                     // Join room
                     final UserSession userSession = room.join(userId, out);
-                    userSession.sendChannels();
                     {
                         List<RecordingInterval> intervals = RecordingInterval.listByGroup(new ObjectId(groupId));
                         JSONObject msg = new JSONObject();

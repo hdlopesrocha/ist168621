@@ -290,7 +290,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         endPoint.release();
     }
 
-    public void sendChannels(){
+    public JSONObject sendChannels(){
         JSONArray channels = new JSONArray();
 
         if(timeOffset==0L) {
@@ -386,11 +386,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 List<RecordingUrl> userRecs = rec.getUrl(userId !=null ? userId : room.getGroupId(),sessionId);
                 List<RecordingUrl> groupRecs = rec.getUrl(room.getGroupId(),sessionId);
 
-                if(userRecs.size()>0){
-                    ownerUrl =  userRecs.get(0).getUrl();
-                }
+
                 if(groupRecs.size()>0){
                     groupUrl = groupRecs.get(0).getUrl();
+                }
+
+                if(userRecs.size()>0){
+                    ownerUrl =  userRecs.get(0).getUrl();
+                }else {
+                    ownerUrl = groupUrl;
                 }
             }
 

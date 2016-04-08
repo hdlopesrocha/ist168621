@@ -222,17 +222,24 @@ body,html {
   border-color: #c9433f;
 }
 
+
+.vis-line  {
+    z-index: 999999999;
+}
 .tagsGroup .vis-item.vis-selected {
   color: #9f9f9f;
   background-color: #efefef;
   border-color: #bfbfbf;
 }
 
-.recsGroup .vis-item.vis-selected
-{
+.recsGroup .vis-item.vis-selected {
   color: #9f9f9f;
   background-color: #d9534f;
   border-color: #c9433f;
+}
+
+.vis-item {
+    padding:0px 16px;
 }
 
 .vis-item.default {
@@ -253,14 +260,6 @@ body,html {
   border-color: #4ca84c;
 }
 
-.vis-item {
-/*	height: 100% !important;*/
-/*	top: 0px !important;*/
-}
-
-.vis-group, .vis-center {
-/*	height: 32px !important;*/
-}
 
 .vis-timeline {
 	border: none !important;
