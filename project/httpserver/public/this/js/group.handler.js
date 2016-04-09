@@ -55,7 +55,7 @@ HyperWebSocket.setOnNewVideoRecordingArrivedHandler(function (array) {
     }
 });
 
-HyperWebSocket.setChannelsArrivedHandler(function (array) {
+HyperWebSocket.setChannelsArrivedHandler(function (array,play) {
     console.log("channels", array);
     var users = {};
     $(".channel").html("");

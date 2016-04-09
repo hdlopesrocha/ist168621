@@ -95,7 +95,7 @@ public class Room implements Closeable {
      *
      */
     public void record(){
-        record(10000,null);
+        record(10000,false);
     }
 
     /**
@@ -104,8 +104,8 @@ public class Room implements Closeable {
      * @param duration the duration
      */
 
-    private synchronized void record(int duration, Date start) {
-        if(!recording || start!=null) {
+    private synchronized void record(int duration, boolean continuation) {
+        if(!recording || continuation) {
 
 
 
@@ -130,16 +130,16 @@ public class Room implements Closeable {
                     e.printStackTrace();
                 }
 
-                if(start==null){
-                    start = new Date();
-                }
+                Date start = new Date();
 
-                RecordingChunk rec = new RecordingChunk(new ObjectId(groupId), interval.getId(),start,sequence++);
+                ObjectId gid = new ObjectId(groupId);
                 recorder = new Recorder(compositePort, duration, new Recorder.RecorderHandler() {
                     @Override
-                    public void onFileRecorded(Date end, String filepath) {
-                        rec.setEnd(end);
-                        rec.setUrl(new RecordingUrl(groupId,"group",filepath));
+                    public void onFileRecorded(String filepath) {
+                        Date end = new Date();
+
+                        RecordingChunk rec = new RecordingChunk(gid,gid,start,end,"group",filepath);
+
                         rec.save();
 
                         interval.setEnd(end);
@@ -155,12 +155,12 @@ public class Room implements Closeable {
                         sendMessage(msg.toString());
 
                         System.out.println("GRP REC: " + filepath);
-                        record(duration,end);
+                        record(duration,true);
                     }
                 });
                 synchronized (participants) {
                     for (UserSession session : participants) {
-                        session.record(rec, duration);
+                        session.record(duration);
                     }
                 }
             }
@@ -314,17 +314,24 @@ public class Room implements Closeable {
      * @param uid the uid
      * @return the participant from this session
      */
-    public UserSession getUser(final String uid) {
+    public UserSession getEndPoint(final String uid, final String sid) {
+        UserSession alternativeSession = null;
+
+
+
         if(uid!=null) {
             synchronized (participants) {
                 for (UserSession session : participants) {
                     if (uid.equals(session.getUserId())) {
-                        return session;
+                        if(sid!=null && sid.equals(session.getSid())) {
+                            return session;
+                        }
+                        alternativeSession = session;
                     }
                 }
             }
         }
-        return null;
+        return alternativeSession;
     }
 
     public UserSession getUser(final UUID sid) {

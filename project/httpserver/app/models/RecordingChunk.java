@@ -23,13 +23,16 @@ public class RecordingChunk {
     /** The owner. */
     private ObjectId groupId;
 
-    private List<Document> urls;
+    /** The owner. */
+    private ObjectId owner;
+    private String url;
+    private String sessionId;
+
     /** The end. */
     private Date start, end;
 
     private Long sequence = null;
 
-    private ObjectId interval;
     /** The id. */
     private ObjectId id = null;
 
@@ -48,12 +51,14 @@ public class RecordingChunk {
      * @param groupId the group id
      * @param start the start
      */
-    public RecordingChunk(ObjectId groupId, ObjectId interval, Date start, Long sequence) {
+    public RecordingChunk(ObjectId groupId, ObjectId owner, Date start, Date end, String sid, String url) {
         this.groupId = groupId;
+        this.owner = owner;
         this.start = start;
-        this.sequence = sequence;
-        this.urls = new ArrayList<Document>();
-        this.interval = interval;
+        this.end = end;
+        this.url = url;
+        this.sessionId = sid;
+        this.sequence = countByGroup(groupId,owner,sid);
     }
 
     /**
@@ -62,8 +67,11 @@ public class RecordingChunk {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(RecordingChunk.class.getName());
+            collection.createIndex(new Document("gid",1));
+
+        }
         return collection;
     }
 
@@ -77,12 +85,12 @@ public class RecordingChunk {
         RecordingChunk rec = new RecordingChunk();
         rec.id = doc.getObjectId("_id");
         rec.sequence = doc.getLong("seq");
-        rec.interval = doc.getObjectId("int");
-
+        rec.owner = doc.getObjectId("owner");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
         rec.groupId = doc.getObjectId("gid");
-        rec.urls = (List<Document>) doc.get("urls");
+        rec.url = doc.getString("url");
+        rec.sessionId = doc.getString("sid");
         return rec;
     }
 
@@ -92,12 +100,12 @@ public class RecordingChunk {
      * @param owner the owner
      * @return the long
      */
-    public static long countByGroup(ObjectId owner) {
-        Document doc = new Document("gid", owner);
+    public static long countByGroup(ObjectId groupId , ObjectId owner, String sid) {
+        Document doc = new Document("gid", groupId).append("owner",owner).append("sid",sid);
         return getCollection().count(doc);
     }
 
-
+/*
     public List<RecordingUrl> getUrls(){
         List<RecordingUrl> ans = new ArrayList<RecordingUrl>();
         for(Document doc : urls){
@@ -125,27 +133,12 @@ public class RecordingChunk {
         return ans;
     }
 
-    /**
-     * List by group.
-     *
-     * @param groupId the group id
-     * @param sequence the sequence
-     * @return the list
-     */
-    public static List<RecordingChunk> listByGroup(ObjectId groupId, long sequence) {
-        FindIterable<Document> iter = getCollection()
-                .find(new Document("gid", groupId).append("seq", new Document("$gt", sequence)));
-        List<RecordingChunk> ret = new ArrayList<RecordingChunk>();
-        for (Document doc : iter) {
-            ret.add(RecordingChunk.load(doc));
-        }
-        return ret;
-    }
 
     public synchronized void setUrl(RecordingUrl ru){
        urls.add(ru.toDocument());
     }
 
+*/
 
 
     /**
@@ -168,13 +161,14 @@ public class RecordingChunk {
         Document doc = new Document();
         if (id != null)
             doc.put("_id", id);
-
+        doc.put("owner", owner);
         doc.put("gid", groupId);
         doc.put("start", start);
         doc.put("end", end);
-        doc.put("urls", urls);
         doc.put("seq",sequence);
-        doc.put("int",interval);
+        doc.put("url",url);
+        doc.put("sid",sessionId);
+
 
         if (id == null)
             getCollection().insertOne(doc);
@@ -195,11 +189,16 @@ public class RecordingChunk {
     }
 
 
+    public String getUrl() {
+        return url;
+    }
+
     /**
      * Gets the end.
      *
      * @return the end
      */
+
     public Date getEnd() {
         return end;
     }
@@ -244,7 +243,11 @@ public class RecordingChunk {
         return sequence;
     }
 
-    public ObjectId getInterval() {
-        return interval;
+    public String getSid() {
+        return sessionId;
+    }
+
+    public ObjectId getOwner() {
+        return owner;
     }
 }

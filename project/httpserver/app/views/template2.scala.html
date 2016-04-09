@@ -226,6 +226,8 @@
         HyperHttp.relationState(userId,function(data) {
             var success = function() {
                 showUserProfile(userId);
+                $('#userProfileModal').modal('hide');
+
 		    }
             var from = data.from;
             var to = data.to;
@@ -234,6 +236,7 @@
                 elem.attr("class","btn btn-danger btn-sm");
                 elem.click(function(){
 		            HyperHttp.rejectRelation(userId, success);
+
                 });
 
                 if(to){
@@ -324,7 +327,11 @@
     <script type="text/javascript" src="/assets/this/js/hyper.http.js"></script>
     <script type="text/javascript" src="/assets/typeahead/bootstrap3-typeahead.js"></script>
     <script type="text/javascript" src="/assets/operation-transformation/ot.js"></script>
-    <script type="text/javascript" src="/assets/jquery/jquery.qrcode-0.12.0.min.js"></script>
+<script type="text/javascript" src="/assets/jquery/jquery.qrcode-0.12.0.min.js"></script>
+<script type="text/javascript" src="/assets/jquery/jquery-sortable.js"></script>
+
+
+
     <script type="text/javascript" src="/assets/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/assets/this/js/search.generic.js"></script>
 <script type="text/javascript" src="/assets/toastr/toastr.min.js"></script>

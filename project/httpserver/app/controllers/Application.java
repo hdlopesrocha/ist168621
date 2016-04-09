@@ -168,9 +168,9 @@ public class Application extends Controller {
             String formatted = String.format("%02d", i);
             URL url = this.getClass().getClassLoader().getResource("video"+formatted+".mp4");
             Date da = new Date(start.getTime()+i*10000);
-            RecordingChunk rec = new RecordingChunk(group3.getId(),interval.getId(), da,(long)i);
-            rec.setEnd(new Date(da.getTime()+10000));
-            rec.setUrl(new RecordingUrl(group3.getId().toString(),"group","file://"+ url.getFile()));
+            Date db = new Date(da.getTime()+10000);
+
+            RecordingChunk rec = new RecordingChunk(group3.getId(), group3.getId(),da,db,"group","file://"+ url.getFile());
             rec.save();
         }
 

@@ -58,8 +58,11 @@ public class TimeAnnotation {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(TimeAnnotation.class.getName());
+            collection.createIndex(new Document("gid",1));
+            collection.createIndex(new Document("title","text"));
+        }
         return collection;
     }
 

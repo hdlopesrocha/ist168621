@@ -100,13 +100,10 @@
 				//grab all form data  
 				var success = function(){
 					document.location = "/";
-				} 
+				}
 				var error = function(){
 					alert("fail");
-				} 
-
-				
-				
+				}
 				var email = this.elements["email"].value;
 				var password1 = this.elements["password"].value;
 				var password2 = this.elements["password2"].value;
@@ -115,10 +112,8 @@
 				var formData = new FormData();
 				formData.append("name",name);
 				formData.append("photo",photo);
-				
 				HyperHttp.register(email,password1,password2,formData,success,error);
 				event.preventDefault();
-
 			});
 		});
 

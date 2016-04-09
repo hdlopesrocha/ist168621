@@ -176,14 +176,12 @@ public class WSController extends Controller {
                                 }
                                 break;
                                 case "setRealTime": {
-                                    String userId = args.optString("uid", null);
-                                    String sessionId = args.optString("sid", null);
-
-
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            userSession.setRealTime(userId,sessionId);
+                                            String owner = args.optString("uid",null);
+                                            String sessionId = args.optString("sid", null);
+                                            userSession.setRealTime(owner,sessionId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();
@@ -238,13 +236,17 @@ public class WSController extends Controller {
                                 }
                                 break;
                                 case "setHistoric": {
-                                    String userId = args.optString("uid", null);
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            userSession.setOffset(args.getLong("offset"));
+                                            String owner = args.optString("uid",null);
                                             String sessionId = args.optString("sid", null);
-                                            userSession.setHistoric(userId,null,null,sessionId);
+                                            if(owner==null){
+                                                owner = room.getGroupId();
+                                                sessionId = "group";
+                                            }
+                                            userSession.setOffset(args.getLong("offset"));
+                                            userSession.setHistoric(owner,null,sessionId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();

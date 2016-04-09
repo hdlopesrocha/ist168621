@@ -84,8 +84,12 @@ public class Data {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(Data.class.getName());
+            collection.createIndex(new Document("owner",1));
+            collection.createIndex(new Document("search","text"));
+
+        }
         return collection;
     }
 

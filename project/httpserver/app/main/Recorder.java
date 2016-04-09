@@ -77,9 +77,9 @@ public class Recorder {
                 recorder.release();
             }
             if (useRepo) {
-                handler.onFileRecorded(new Date(), item.getId());
+                handler.onFileRecorded(item.getId());
             } else {
-                handler.onFileRecorded(new Date(), "file://" + tempFile.getAbsolutePath());
+                handler.onFileRecorded("file://" + tempFile.getAbsolutePath());
             }
 
         } catch (KurentoServerException e) {
@@ -97,10 +97,9 @@ public class Recorder {
         /**
          * On file recorded.
          *
-         * @param end the end
          * @param filepath the filepath
          */
-        void onFileRecorded(Date end, String filepath);
+        void onFileRecorded(String filepath);
     }
 
 }

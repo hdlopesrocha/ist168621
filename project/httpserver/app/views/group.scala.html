@@ -150,7 +150,7 @@
                 <h4 class="modal-title">What do you want to do?</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row" >
                     <div class="col-md-3">
                         <div class="panel panel-red" onclick="hyperStart(0)">
                             <div class="panel-heading" style="text-align: center;">
@@ -284,7 +284,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-lg-6">
             <div class="panel panel-info ">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default" onclick="toggleAutoSelect()">
@@ -294,8 +294,8 @@
                         <i id="soundIcon" class="fa fa-microphone text-success"></i>
                     </button>
                     <button type="button" class="btn btn-primary"
-                            onclick="toggleVideo()">
-                        <i id="toggleVideo" class="fa fa-users"></i>
+                            onclick="selectUser(null,null)">
+                        <i class="fa fa-users"></i>
                     </button>
                     <button type="button" class="btn btn-primary"
                             onclick="toggleVideoSize()">
@@ -325,69 +325,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-info">
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
-                            data-target="#addMembersModal">
-                        Add member <i class="fa fa-plus"></i>
-                    </button>
-                </div>
-                <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
-                    <h4 class="panel-title"><i class="fa fa-users"></i> Group members</h4>
-                </div>
-                <div id="collapse1" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="media-body" id="videoMembers"></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse" id="chatAnchor"
-                     data-target="#collapse2">
-                    <h4 class="panel-title"><i class="fa fa-comment"></i> Recent chat history</h4>
-                </div>
-                <div id="collapse2" class="panel-collapse collapse in">
-                    <div class="panel-body" style="max-height: 336px; overflow: auto;"
-                         id="messagesPanel">
-                        <ul class="media-list" id="messagesList">
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="input-group">
-                          	<span class="input-group-btn">
-                            <input type="file" style="display:none" id="anex" name="anex"/>
-							<button class="btn btn-info" type="button" id="sendAnexButton"
-                                    onclick="sendAnex()">
-                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
 
-                            </button>
-						</span>
-                            <input type="text" class="form-control"
-                                   placeholder="Enter Message" id="messageText"
-                                   onkeydown="if(event.keyCode==13){sendMessage();}"/>
-						<span class="input-group-btn">
-                            <button class="btn btn-info" type="button" id="sendMessageButton"
-                                    onclick="sendMessage()">
-                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-
-                            </button>
-						</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
             <div class="panel panel-info not-fullscreen">
                 <div class="panel-heading" data-toggle="collapse" id="contentEditorAnchor"
                      data-target="#collapse5">
@@ -453,9 +391,66 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3">
+            <div class="panel panel-info not-fullscreen">
+                <div class="panel-heading" data-toggle="collapse" id="chatAnchor"
+                     data-target="#collapse2">
+                    <h4 class="panel-title"><i class="fa fa-comment"></i> Recent chat history</h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse in">
+                    <div class="panel-body" style="max-height: 336px; overflow: auto;"
+                         id="messagesPanel">
+                        <ul class="media-list" id="messagesList">
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                          	<span class="input-group-btn">
+                            <input type="file" style="display:none" id="anex" name="anex"/>
+							<button class="btn btn-info" type="button" id="sendAnexButton"
+                                    onclick="sendAnex()">
+                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
 
+                            </button>
+						</span>
+                            <input type="text" class="form-control"
+                                   placeholder="Enter Message" id="messageText"
+                                   onkeydown="if(event.keyCode==13){sendMessage();}"/>
+						<span class="input-group-btn">
+                            <button class="btn btn-info" type="button" id="sendMessageButton"
+                                    onclick="sendMessage()">
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
 
-        <div class="col-md-4">
+                            </button>
+						</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
+                            data-target="#addMembersModal">
+                        Add member <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
+                    <h4 class="panel-title"><i class="fa fa-users"></i> Group members</h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-body" id="videoMembers"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
             <div class="panel panel-info not-fullscreen">
                 <div class="panel-heading" data-toggle="collapse" id="collaborativeEditorAnchor"
                      data-target="#collapse6">
@@ -472,7 +467,7 @@
                             <div class="btn-group input-group pull-right">
                                 <button type="button" class="btn btn-success"
                                         onclick="saveCollab()">
-                                   Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                    Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 
                                 </button>
                             </div>
@@ -483,13 +478,17 @@
             </div>
         </div>
 
+
+
+
+
     </div>
 </div>
 <script>
         var adapter = null;
 		var group = true;
 		var selectedUser = null;
-		var savedUser = "@userId";
+		var selectedSession = null;
 		var realTime = true;
 		var firstRecording = true;
 		var participants = {};
@@ -503,14 +502,12 @@
             HyperWebSocket.getContent();
         }
 
-
 		function sendLink(){
 		    $("#timeQueryStringModal").modal("hide");
 			toastr.remove();
             toastr.success('Time HyperLink', 'Sent successfully!');
             var time = $("#timeQueryValue").val();
             HyperWebSocket.sendMessage("<a onclick='goTo(\""+time+"\")'>"+friendlyTime(time)+"</a>");
-
 		}
 
 
@@ -619,29 +616,16 @@
 		}
 
 		function selectUser(userId,sessionId){
-			savedUser = selectedUser = userId;
-			setVideoIcon();
+			selectedUser = userId;
+			selectedSession = sessionId;
 			if (realTime) {
-				HyperWebSocket.receiveRealTime(selectedUser,sessionId);
+				HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
 			} else {
-				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,sessionId);
+				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,selectedSession);
 			}
 		}
 
 
-		function setVideoIcon(){
-			$("#toggleVideo").attr("class",selectedUser==null ? "fa fa-users":"fa fa-user");
-		}
-
-		function toggleVideo() {
-			selectedUser = selectedUser!=null ? null: savedUser;
-			setVideoIcon();
-			if (realTime) {
-				HyperWebSocket.receiveRealTime(selectedUser);
-			} else {
-				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset);
-			}
-		}
 
 		function saveTags() {
 			timeline.iterateTempTags(function(tag){
@@ -821,7 +805,6 @@
              HyperWebSocket.sendMessage("<a href='/file/"+data.anex.url+"'>"+data.anex.filename+"</a>");
         },function(){});
     });
-			setVideoIcon();
 			$("#navbar-list").append("<li><a>@groupName</a></li>");
             $('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
 
@@ -895,13 +878,13 @@
 				function(offset) {
 					console.log("HISTORIC", offset);
 					// current request
-					HyperWebSocket.receiveHistoric(selectedUser, offset);
+					HyperWebSocket.receiveHistoric(selectedUser, offset, selectedSession);
 					realTime = false;
 
 				}, function() {
 					console.log("REALTIME");
 					// realtime request
-					HyperWebSocket.receiveRealTime(selectedUser);
+					HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
 					realTime = true;
 				}, function(tag){
 				    if(tag!=null){

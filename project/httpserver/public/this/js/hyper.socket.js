@@ -371,7 +371,7 @@ var HyperWebSocket = new (function() {
 			});
 
             ws.onCmd('channels', function(message){
-                channelsArrivedHandler(message.data);
+                channelsArrivedHandler(message.data,message.play);
 
             });
 

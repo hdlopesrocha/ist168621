@@ -18,15 +18,19 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
 
     /** The caller. */
     private final ObjectId caller;
-    
+
     /** The group id. */
+    private final ObjectId owner;
+
+    /** The group id. */
+
     private final ObjectId groupId;
 
     /** The time. */
     private final Date time;
+    private final String sid;
 
     private Long sequence;
-    private ObjectId interval;
 
     /**
      * Instantiates a new gets the current recording service.
@@ -35,12 +39,15 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      * @param groupId the group id
      * @param time the time
      */
-    public GetCurrentRecordingService(String callerId, String groupId, ObjectId interval, Date time, Long sequence) {
+    public GetCurrentRecordingService(String callerId, String groupId, String owner, String sid, Date time, Long sequence) {
         this.caller = new ObjectId(callerId);
         this.groupId = new ObjectId(groupId);
+
+        System.out.println(owner+"|"+sid);
+        this.owner = new ObjectId(owner);
+        this.sid = sid;
         this.time = time;
         this.sequence = sequence;
-        this.interval = interval;
     }
 
     /*
@@ -50,20 +57,49 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      */
     @Override
     public RecordingChunk dispatch() throws BadRequestException {
-        Document query = new Document("gid", groupId);
-        if(sequence!=null && interval!=null){
-            query.append("seq",sequence).append("int",interval);
+
+        RecordingChunk ans = getResult1();
+        if(ans==null){
+            // try different session
+            ans = getResult2();
+        }
+        if(ans==null){
+            // try group
+            ans = getResult3();
+        }
+        return ans;
+
+    }
+
+    private RecordingChunk getResult1(){
+        Document query = new Document("gid", groupId).append("owner",owner).append("sid",sid);
+        if(sequence!=null){
+            query.append("seq",sequence);
         }else {
             query.append("end", new Document("$gte", time)).append("start", new Document("$lt", time));
         }
 
-
         FindIterable<Document> iter = RecordingChunk.getCollection().find(query);
-
         Document first = iter.first();
-
         return first != null ? RecordingChunk.load(first) : null;
     }
+
+    private RecordingChunk getResult2(){
+        Document query = new Document("gid", groupId).append("owner",owner).append("end", new Document("$gte", time)).append("start", new Document("$lt", time));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query);
+        Document first = iter.first();
+        return first != null ? RecordingChunk.load(first) : null;
+    }
+
+    private RecordingChunk getResult3(){
+        Document query = new Document("gid", groupId).append("owner",groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query);
+        Document first = iter.first();
+        return first != null ? RecordingChunk.load(first) : null;
+    }
+
+
+
 
     /*
      * (non-Javadoc)

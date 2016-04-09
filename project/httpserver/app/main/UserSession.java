@@ -4,7 +4,6 @@ import exceptions.ServiceException;
 import models.HyperContent;
 import models.Message;
 import models.RecordingChunk;
-import models.RecordingUrl;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,10 +12,7 @@ import org.kurento.client.EventListener;
 import org.kurento.jsonrpc.JsonUtils;
 import org.kurento.repository.service.pojo.RepositoryItemPlayer;
 import play.mvc.WebSocket;
-import services.CreateHyperContentService;
-import services.GetCurrentHyperContentService;
-import services.GetCurrentRecordingService;
-import services.ListMessagesService;
+import services.*;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -39,7 +35,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     private boolean play = true;
     private long timeOffset = 0L;
-    private String playUser = "";
+    private String playSid;
     private ObjectId playingId;
     private String userId;
     private Boolean hasAudio = true;
@@ -65,6 +61,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         this.out = out;
         this.userId = userId;
         this.room = room;
+        playSid = "group";
         initEndpoint();
     }
 
@@ -185,15 +182,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /**
      * Record.
      *
-     * @param rec
-     * @param duration the duration
+      * @param duration the duration
      */
-    public void record(RecordingChunk rec, int duration) {
+    public void record(int duration) {
         if(hasVideo()) {
+           final Date start = new Date();
             recorder = new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
-                public void onFileRecorded(Date end, String filepath) {
-                    rec.setUrl(new RecordingUrl(getUserId(),getSid(),filepath));
+                public void onFileRecorded(String filepath) {
+                    Date end = new Date();
+                    RecordingChunk rec = new RecordingChunk(new ObjectId(room.getGroupId()),new ObjectId(userId),start,end,getSid(),filepath);
                     rec.save();
                 }
             });
@@ -297,18 +295,17 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             channels = room.getCurrentChannels();
         }else {
             Date currentTime = new Date(new Date().getTime() - timeOffset);
-            GetCurrentRecordingService service = new GetCurrentRecordingService(getUserId(),
-                    getGroupId(),null, currentTime,null);
+            ListCurrentRecordingsService service = new ListCurrentRecordingsService(getUserId(),
+                    getGroupId(), currentTime);
             try {
-                RecordingChunk rec = service.execute();
-                if (rec!=null) {
-                    for (RecordingUrl ru : rec.getUrls()) {
-                        JSONObject obj = new JSONObject();
-                        obj.put("sid",ru.getSid());
-                        obj.put("uid",ru.getUid());
-                        channels.put(obj);
-                    }
+                List<RecordingChunk> recs = service.execute();
+                for (RecordingChunk ru : recs) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("sid",ru.getSid());
+                    obj.put("uid",ru.getOwner());
+                    channels.put(obj);
                 }
+
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -318,7 +315,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         JSONObject ans = new JSONObject();
         ans.put("cmd","channels");
         ans.put("data",channels);
+        ans.put("play",playSid);
         sendMessage(ans.toString());
+        return ans;
     }
 
     /**
@@ -370,41 +369,44 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /**
      * Sets the historic.
      *
-     * @param userId the user id
      */
-    public void setHistoric(String userId, ObjectId interval, Long sequence, String sessionId) {
+    public void setHistoric(String owner, Long sequence, String sessionId) {
 
-        playUser = userId;
+        playSid = sessionId;
         Date currentTime = new Date(new Date().getTime() - timeOffset);
         try {
-            GetCurrentRecordingService service = new GetCurrentRecordingService(getUserId(),
-                    room.getGroupId(),interval, currentTime,sequence);
-            RecordingChunk rec = service.execute();
-            String ownerUrl=null;
-            String groupUrl=null;
-            if(rec!=null){
-                List<RecordingUrl> userRecs = rec.getUrl(userId !=null ? userId : room.getGroupId(),sessionId);
-                List<RecordingUrl> groupRecs = rec.getUrl(room.getGroupId(),sessionId);
+            RecordingChunk videoRec;
+            RecordingChunk audioRec;
 
+            GetCurrentRecordingService audioService = new GetCurrentRecordingService(getUserId(),
+                    room.getGroupId(), room.getGroupId(),"group", currentTime,sequence);
+            audioRec = audioService.execute();
 
-                if(groupRecs.size()>0){
-                    groupUrl = groupRecs.get(0).getUrl();
-                }
+            if(getGroupId().equals(owner)){
+                videoRec =audioRec;
+            }else {
+                GetCurrentRecordingService videoService = new GetCurrentRecordingService(getUserId(),
+                        room.getGroupId(), owner, sessionId, currentTime, sequence);
+                videoRec = videoService.execute();
+            }
 
-                if(userRecs.size()>0){
-                    ownerUrl =  userRecs.get(0).getUrl();
-                }else {
-                    ownerUrl = groupUrl;
-                }
+            String videoUrl=null;
+            String audioUrl=null;
+            if(audioRec != null){
+                audioUrl = audioRec.getUrl();
+            }
+
+            if(videoRec != null){
+                videoUrl = videoRec.getUrl();
             }
 
 
-            if (ownerUrl!=null && groupUrl!=null && rec!=null && !rec.getId().equals(playingId)) {
-                playingId = rec.getId();
-                synchronized (playerLock) {
-                    System.out.println("HISTORIC PLAY: " + ownerUrl+ " / "+ groupUrl);
 
-                    String videoUrl = ownerUrl;
+            if (videoUrl!=null && audioUrl!=null && !videoRec.getId().equals(playingId)) {
+                playingId = videoRec.getId();
+                synchronized (playerLock) {
+                    System.out.println("HISTORIC PLAY: " + videoUrl+ " / "+ audioUrl);
+
                     if(ObjectId.isValid(videoUrl)){
                         RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
                         videoUrl= item.getUrl();
@@ -413,7 +415,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     System.out.println("URL: "+videoUrl);
                     PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
 
-                    String audioUrl = groupUrl;
                     if(ObjectId.isValid(audioUrl)){
                         RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
                         audioUrl= item.getUrl();
@@ -430,14 +431,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            setHistoric(playUser, rec.getInterval(),rec.getSequence()+1,sessionId);
+                            setHistoric(owner,audioRec.getSequence()+1,audioRec.getSid());
                         }
                     });
 
                     tempAudio.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
                         @Override
                         public void onEvent(EndOfStreamEvent arg0) {
-                            setHistoric(playUser,rec.getInterval(),rec.getSequence()+1,sessionId);
+                            setHistoric(owner,audioRec.getSequence()+1,audioRec.getSid());
                         }
                     });
 
@@ -463,7 +464,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         tempVideo.connect(endPoint, MediaType.VIDEO);
 
                         if(tempVideo.getVideoInfo().getIsSeekable()) {
-                            Long position = currentTime.getTime()-rec.getStart().getTime();
+                            Long position = currentTime.getTime()-audioRec.getStart().getTime();
                             if(position >= tempVideo.getVideoInfo().getDuration()){
                                 position = tempVideo.getVideoInfo().getDuration() -1;
                             }else if(position<0){
@@ -479,14 +480,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                             System.out.println("not seekable!");
                             JSONObject msg = new JSONObject();
                             msg.put("cmd", "setTime");
-                            msg.put("time", Tools.FORMAT.format(rec.getStart()));
-                            timeOffset = new Date().getTime()- rec.getStart().getTime();
+                            msg.put("time", Tools.FORMAT.format(audioRec.getStart()));
+                            timeOffset = new Date().getTime()- audioRec.getStart().getTime();
                             sendMessage(msg.toString());
                         }
                     }
                 }
             } else {
-                if(rec==null) {
+                if(videoRec==null) {
                     playingId = null;
                     System.out.println("No video here!");
                 }else {
@@ -519,17 +520,16 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 playerAudio = null;
             }
             timeOffset = 0L;
-            playUser = userId;
+            playSid = sessionId;
         }
         if (userId == null) {
             compositePort.connect(endPoint);
 
         } else {
-            UserSession session = room.getUser(playUser);
+            UserSession session = room.getEndPoint(userId,sessionId);
             if (session != null) {
                 session.endPoint.connect(endPoint,MediaType.VIDEO);
                 session.endPoint.connect(compositePort,MediaType.AUDIO);
-
             }
         }
         sendChannels();
@@ -650,4 +650,5 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     public String getSid() {
         return sid.toString();
     }
+
 }
