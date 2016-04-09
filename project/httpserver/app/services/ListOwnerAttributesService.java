@@ -2,6 +2,7 @@ package services;
 
 
 import exceptions.ServiceException;
+import models.Attribute;
 import models.Data;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -53,13 +54,10 @@ public class ListOwnerAttributesService extends Service<Document> {
         if (data != null) {
             doc = new Document();
 
-            for(Document d : data.getData()){
-                String key = d.getString("k");
-                Object value = d.get("v");
-                if((data.hasReadPermission(caller, key))) {
-                        doc.put(key, value);
+            for(Attribute d : data.getData()){
+                if((data.hasReadPermission(caller, d.getKey()))) {
+                    doc.put(d.getKey(), d.getValue());
                 }
-
             }
 
         }

@@ -2,10 +2,7 @@ package services;
 
 import dtos.KeyValue;
 import exceptions.ServiceException;
-import models.Data;
-import models.GroupMembership;
-import models.Relation;
-import models.User;
+import models.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
@@ -74,10 +71,8 @@ public class SearchGroupCandidatesService extends Service<JSONArray> {
 
 
                     JSONObject props = new JSONObject();
-                    for(Document d : data.getData()){
-                        String key = d.getString("k");
-                        Object value = d.get("v");
-                        props.put(key,value);
+                    for(Attribute d : data.getData()){
+                        props.put(d.getKey(),d.getValue());
                     }
 
 

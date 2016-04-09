@@ -10,8 +10,7 @@ import org.bson.types.ObjectId;
 import services.Service;
 
 import javax.print.Doc;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -23,7 +22,7 @@ public class Data {
     private ObjectId id = null;
 
     /** The data. */
-    private List<Document> properties = null;
+    private Map<String,Attribute> properties = null;
 
     /** The owner. */
     private ObjectId owner = null;
@@ -43,36 +42,15 @@ public class Data {
      */
     public Data(ObjectId owner, List<AttributeDto> attributes) {
         this.id = getIdFromOwner(owner);
-        this.properties = new ArrayList<Document>();
+        this.properties = new TreeMap<>();
         this.searchableValues = new ArrayList<String>();
 
         for (AttributeDto attr : attributes) {
             if (attr.isSearchable()) {
                 searchableValues.add(attr.getValue().toString().toLowerCase());
             }
-
-            Object value = attr.getValue();
-            Document doc = new Document();
-            doc.put("k",attr.getKey());
-            doc.put("v",value);
-            doc.put("i",attr.isIdentifiable());
-            List<ObjectId> r = new ArrayList<ObjectId>();
-            if(attr.getReadSet()!=null) {
-                for (String s : attr.getReadSet()) {
-                    r.add(new ObjectId(s));
-                }
-            }
-            if(attr.getWriteSet()!=null) {
-                List<ObjectId> w = new ArrayList<ObjectId>();
-                for (String s : attr.getWriteSet()) {
-                    w.add(new ObjectId(s));
-                }
-                doc.put("r", r);
-                doc.put("w", w);
-            }
-
-
-            properties.add(doc);
+            Attribute attribute = new Attribute(attr);
+            properties.put(attribute.getKey(),attribute);
         }
         this.owner = owner;
     }
@@ -121,19 +99,21 @@ public class Data {
     public static Data load(Document doc) {
         Data user = new Data();
         user.id = doc.getObjectId("_id");
-
         user.owner = doc.getObjectId("owner");
-        user.properties = (List<Document>) doc.get("data");
+        List<Document> attrs = (List<Document>) doc.get("data");
+        user.properties = new TreeMap<>();
+        for(Document attr : attrs){
+            Attribute attribute = new Attribute(attr);
+            user.properties.put(attribute.getKey(),attribute);
+        }
         user.searchableValues = (List<String>) doc.get("search");
-
         return user;
     }
 
     public boolean isIdentifier(String key) {
-        for(Document doc : properties){
-            if(doc.getString("k").equals(key) && doc.getBoolean("i")){
-                return true;
-            }
+        Attribute attr = properties.get(key);
+        if(attr!=null && attr.isIdentifiable()){
+            return true;
         }
         return false;
     }
@@ -296,13 +276,13 @@ public class Data {
                 for (KeyValue<String> kvp : list) {
                     String value = kvp.getValue();
                     if (value != null && ObjectId.isValid(value)) {
-                        and.append("data." + kvp.getKey(), new ObjectId(value));
+                        and.append("data.k" , kvp.getKey()).append("data.v", new ObjectId(value));
                     } else if ("true".equals(value)) {
-                        and.append("data." + kvp.getKey(), true);
+                        and.append("data.k" , kvp.getKey()).append("data.v", true);
                     } else if ("false".equals(value)) {
-                        and.append("data." + kvp.getKey(), false);
+                        and.append("data.k" , kvp.getKey()).append("data.v", false);
                     } else {
-                        and.append("data." + kvp.getKey(), value);
+                        and.append("data.k" , kvp.getKey()).append("data.v", value);
                     }
 
                 }
@@ -388,34 +368,17 @@ public class Data {
      *
      * @return the data
      */
-    public List<Document> getData() {
-        return properties;
+    public Collection<Attribute> getData() {
+        return properties.values();
     }
 
     public Object getData(String key) {
-        for(Document doc : properties){
-            String k = doc.getString("k");
-            Object v = doc.get("v");
-            if(key.equals(k)){
-                return v;
-            }
-
-        }
-
-        return null;
+        Attribute attr = properties.get(key);
+        return attr!=null ? attr.getValue() : null;
     }
 
 
-    private Document getAttribute(String key){
-        for (Document d : properties){
-            String k = d.getString("k");
-            if(key.equals(k)){
-                return d;
-            }
 
-        }
-        return null;
-    }
 
 
     /**
@@ -424,13 +387,13 @@ public class Data {
      * @return the data
      */
     public boolean hasReadPermission(ObjectId caller,String key) {
-        Document doc = getAttribute(key);
+        Attribute doc = properties.get(key);
         if(doc!=null) {
 
             if (hasWritePermission(caller, key)) {
                 return true;
             }
-            List<ObjectId> r = (List<ObjectId>) doc.get("r");
+            List<ObjectId> r = doc.getReadSet();
             if (r != null) {
                 return r.contains(caller);
             }
@@ -440,9 +403,9 @@ public class Data {
     }
 
     public boolean hasWritePermission(ObjectId caller,String key) {
-        Document doc = getAttribute(key);
+        Attribute doc = properties.get(key);
         if (doc != null) {
-            List<ObjectId> w = (List<ObjectId>) doc.get("w");
+            List<ObjectId> w = doc.getWriteSet();
             if (w != null) {
                 return w.contains(caller);
             }
