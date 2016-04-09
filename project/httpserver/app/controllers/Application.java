@@ -1,7 +1,6 @@
 package controllers;
 
 import dtos.AttributeDto;
-import dtos.PermissionDto;
 import exceptions.ServiceException;
 import main.Tools;
 import models.*;
@@ -53,34 +52,34 @@ public class Application extends Controller {
         User user1, user2, user3, user4 ,td1,td2;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "test", true, true, false));
-            attributes.add(new AttributeDto("name", "test", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false, false, false));
-            user1 = new RegisterUserService("test",new ArrayList<PermissionDto>() ,attributes).execute();
+            attributes.add(new AttributeDto("email", "test", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "test", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/user1.jpeg", false, false, false,null,null));
+            user1 = new RegisterUserService("test" ,attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "rjflp", true, true, false));
-            attributes.add(new AttributeDto("name", "Ricardo Pereira", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/ricardo.png", false, false, false));
-            user2 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
+            attributes.add(new AttributeDto("email", "rjflp", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Ricardo Pereira", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/ricardo.png", false, false, false,null,null));
+            user2 = new RegisterUserService("qazokm", attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "grocha", true, true, false));
-            attributes.add(new AttributeDto("name", "Gonçalo Rocha", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/goncalo.jpg", false, false, false));
-            user3 = new RegisterUserService("qazokm", new ArrayList<PermissionDto>(),attributes).execute();
+            attributes.add(new AttributeDto("email", "grocha", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Gonçalo Rocha", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/goncalo.jpg", false, false, false,null,null));
+            user3 = new RegisterUserService("qazokm",attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false));
-            attributes.add(new AttributeDto("name", "Henrique Rocha", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/me.png", false, false, false));
-            user4 = new RegisterUserService("qazokm",new ArrayList<PermissionDto>(), attributes).execute();
+            attributes.add(new AttributeDto("email", "hdlopesrocha", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Henrique Rocha", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/me.png", false, false, false,null,null));
+            user4 = new RegisterUserService("qazokm", attributes).execute();
         }
 /*
         {
@@ -114,16 +113,16 @@ public class Application extends Controller {
 
 
         List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();
-        attributes3.add(new AttributeDto("name", "Task 3", false, true, false));
-        Group group3 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes3).execute();
+        attributes3.add(new AttributeDto("name", "Task 3", false, true, false,null,null));
+        Group group3 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes3).execute();
 
         List<AttributeDto> attributes4 = new ArrayList<AttributeDto>();
-        attributes4.add(new AttributeDto("name", "Task 4", false, true, false));
-        Group group4 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes4).execute();
+        attributes4.add(new AttributeDto("name", "Task 4", false, true, false,null,null));
+        Group group4 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes4).execute();
 
         List<AttributeDto> attributes5 = new ArrayList<AttributeDto>();
-        attributes5.add(new AttributeDto("name", "Task 5", false, true, false));
-        Group group5 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, new ArrayList<PermissionDto>(), attributes5).execute();
+        attributes5.add(new AttributeDto("name", "Task 5", false, true, false,null,null));
+        Group group5 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes5).execute();
 
 
 

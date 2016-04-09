@@ -1,525 +1,490 @@
 @(groupId : String, groupName : String, userId : String, inviteToken : String) @template2(1){
-
-
-<li>
-    <a href="#collaborativeEditorAnchor" title="Collaborative Editor"><i class="fa fa-pencil-square-o"></i></a>
-</li>
-<li>
-    <a href="#contentEditorAnchor" title="Content Editor"><i class="fa fa-object-group"></i></a>
-</li>
-<li>
-    <a href="#chatAnchor" title="Chat"><i class="fa fa fa-comment"></i></a>
-</li>
-<li>
-    <a href="#videoAnchor" title="Video"><i class="fa fa-video-camera"></i></a>
-</li>
-<li>
-    <a href="#addMembers" title="Group members"><i class="fa fa-users"></i></a>
-</li>
-<li>
-    <a href="#timelineAnchor" title="Timeline"><i class="fa fa-clock-o"></i></a>
-</li>
-
+    <li>
+        <a href="#collaborativeEditorAnchor" title="Collaborative Editor"><i class="fa fa-pencil-square-o"></i></a>
+    </li>
+    <li>
+        <a href="#contentEditorAnchor" title="Content Editor"><i class="fa fa-object-group"></i></a>
+    </li>
+    <li>
+        <a href="#chatAnchor" title="Chat"><i class="fa fa fa-comment"></i></a>
+    </li>
+    <li>
+        <a href="#videoAnchor" title="Video"><i class="fa fa-video-camera"></i></a>
+    </li>
+    <li>
+        <a href="#addMembers" title="Group members"><i class="fa fa-users"></i></a>
+    </li>
+    <li>
+        <a href="#timelineAnchor" title="Timeline"><i class="fa fa-clock-o"></i></a>
+    </li>
 }{
-
-<style>
-    #qrCode canvas {
-        width:100%!important;
-    }
-
-</style>
-
-<div id="modalAlert" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body" id="alertBody">
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-   function popup(content){
-        $("#modalAlert").modal("show");
-        $("#alertBody").html(content);
-   }
-</script>
-
-<div id="qrCodeModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">QR Code</h4>
-            </div>
-            <div class="modal-body">
-                <div id="qrCode">
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div id="timeQueryStringModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Time HyperLink</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>URL:</label>
-                    <input type="text" class="form-control" id="timeQueryString">
-                    <input type="hidden" id="timeQueryValue"/>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default btn-info" onclick="sendLink()">Send  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                </button>
-
-                <button type="submit" class="btn btn-default btn-info" onclick="copyLink()">Copy <i class="fa fa-clipboard"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="removeMemberModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Remove member</h4>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to remove <b id="removeUserName"></b> from this group?
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default btn-danger" id="removeUserButton">Remove</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="addMembersModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Member</h4>
-            </div>
-            <div class="modal-body">
-                <label>Group invitation link</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="invite"> <span
-                        class="input-group-addon" onclick="createInvite2()"> Create
-						</span> <span class="input-group-addon" onclick="deleteInvite2()">
-							Delete </span>
-                </div>
-                <label>Add Members manually</label>
-
-
-                <div role="search" class="form">
-
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search"
-                               id="searchCandidateText"
-                               data-provide="typeahead" autocomplete="off"/>
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </span>
-                    </div>
-
+    <style>
+        #qrCode canvas {
+            width:100%!important;
+        }
+    </style>
+    <div id="modalAlert" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="alertBody">
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div id="participantModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">What do you want to do?</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row" >
-                    <div class="col-md-3">
-                        <div class="panel panel-red" onclick="hyperStart(0)">
-                            <div class="panel-heading" style="text-align: center;">
-                                <i class="fa fa-video-camera" style="font-size: 6em;"></i>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left"><small>Share camera</small></span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="panel panel-green" onclick="hyperStart(1)">
-                            <div class="panel-heading " style="text-align: center;">
-                                <i class="fa fa-desktop" style="font-size: 6em;"></i>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left"><small>Share screen</small></span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="panel panel-primary" onclick="hyperStart(2)">
-                            <div class="panel-heading " style="text-align: center;">
-                                <i class="fa fa-eye" style="font-size: 6em;"></i>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left"><small>Watch only</small></span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="panel panel-yellow" onclick="returnToHome()">
-                            <div class="panel-heading " style="text-align: center;">
-                                <i class="fa fa-sign-out" style="font-size: 6em;"></i>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left"><small>Return</small></span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
+    <script>
+       function popup(content){
+            $("#modalAlert").modal("show");
+            $("#alertBody").html(content);
+       }
+    </script>
+    <div id="qrCodeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">QR Code</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="qrCode">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<div id="createTagModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Create Time Annotation</h4>
-            </div>
-            <form id="createTagForm">
+    <div id="timeQueryStringModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Time HyperLink</h4>
+                </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label">Annotation Name:</label>
-                        <input class="form-control" type="text" id="tagTitle"/>
+                        <label>URL:</label>
+                        <input type="text" class="form-control" id="timeQueryString">
+                        <input type="hidden" id="timeQueryValue"/>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="input-group pull-right">
-                        <input type="submit" class="btn btn-success" id="createTag"/>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div class="center">
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-info not-fullscreen">
-                <div class="btn-group pull-right">
-                    <div class="form-inline">
-                        <div class="btn btn-warning" onclick="playStop()" id="playStop">
-                            Pause <i class="fa fa-pause"></i>
-                        </div>
-                        <div class="btn btn-primary" onclick="timeline.setRealTime()"
-                             id="goToPresent">
-                            Real-Time <i class="fa fa-step-forward"></i>
-                        </div>
-                        <div class="btn btn-info" onclick="setTimeLink()"
-                             data-toggle="modal" data-target="#timeQueryStringModal">
-                            Link <i class="fa fa-link"></i>
-                        </div>
-                        <div class="btn btn-success"
-                             data-toggle="modal" data-target="#createTagModal">
-                            Annotation <i class="fa fa-tag"></i>
-                        </div>
-                        <!--<div class="btn btn-primary hidden" onclick="saveTags()"
-                             id="saveButton">
-                            Save <i class="fa fa-floppy-o"></i>
-                        </div>-->
-                    </div>
-                </div>
-                <div class="panel-heading" data-toggle="collapse" id="timelineAnchor"
-                     data-target="#collapse3">
-                    <h4 class="panel-title"><i class="fa fa-clock-o"></i> Timeline</h4>
-                </div>
-                <div id="collapse3" class="panel-collapse collapse in">
-                    <div class="panel panel-default container-full"
-                         style="margin-bottom: 0px;">
-                        <div id="timeline"></div>
-                    </div>
+                    <button type="submit" class="btn btn-default btn-info" onclick="sendLink()">Send  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                    </button>
+                    <button type="submit" class="btn btn-default btn-info" onclick="copyLink()">Copy <i class="fa fa-clipboard"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-info ">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-default" onclick="toggleAutoSelect()">
-                        <i id="autoSelect" class="fa fa-thumb-tack"></i>
-                    </button>
-                    <button class="btn btn-default" onclick="toggleMicrophone()">
-                        <i id="soundIcon" class="fa fa-microphone text-success"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary"
-                            onclick="selectUser(null,null)">
-                        <i class="fa fa-users"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary"
-                            onclick="toggleVideoSize()">
-                        <i class="fa fa-expand"></i>
-                    </button>
+    <div id="removeMemberModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Remove member</h4>
                 </div>
-                <div class="panel-heading" data-toggle="collapse" id="videoAnchor"
-                     data-target="#collapse0">
-                    <h4 class="panel-title"><i class="fa fa-video-camera"></i> Video</h4>
+                <div class="modal-body">
+                    Are you sure you want to remove <b id="removeUserName"></b> from this group?
                 </div>
-                <div id="collapse0" class="panel-collapse collapse in">
-                    <div class="panel-body" id="videoPanel">
-                        <button type="button" id="minimizeVideo" class="btn btn-primary" onclick="toggleVideoSize()"
-                                style="display:none;z-index:9999;position:absolute;right:0px">
-                            <i class="fa fa-compress"></i>
-                        </button>
-                        <div id="videoWrapper">
-                            <div id="currentTag"></div>
-                            <div id="mainVideoContent">
-                                <div id="qrContent" class="fixedLayer"></div>
-                                <div id="previewContent" class="fixedLayer"></div>
-                                <div id="dynamicContent" class="fixedLayer"></div>
-                            </div>
-                            <video id='ownvideo' autoplay muted></video>
-                            <video id='myvideo' autoplay></video>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse" id="contentEditorAnchor"
-                     data-target="#collapse5">
-                    <h4 class="panel-title"><i class="fa fa-object-group"></i> Content editor</h4>
-                </div>
-                <div id="collapse5" class="panel-collapse collapse in">
-                    <form class="form">
-                        <div class="panel-body">
-                            <label>Begin:</label>
-                            (timeline <input type="checkbox" id="beginSync"/>)
-
-                            <div class='input-group date' id='contentStart'>
-                                <input type='text' class="form-control" /> <span
-                                    class="input-group-addon"> <span
-                                    class="glyphicon glyphicon-calendar"></span>
-							</span>
-                            </div>
-                            <label>Duration:</label>
-
-
-                            <div class='input-group date' id='contentDuration'>
-                                <input type='text' class="form-control" /> <span
-                                    class="input-group-addon"> <span
-                                    class="glyphicon glyphicon-calendar"></span>
-							</span>
-                            </div>
-                            <div class="form-group">
-                                <label>Content:</label>
-                                <textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
-                            </div>
-                            <div class="input-group">
-                                <label>Is Caption:</label> <input type="checkbox"
-                                                                  id="contentCaption" checked/>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="btn-group input-group pull-right">
-                                <button type="button" class="btn btn-danger"
-                                        onclick="clearContent()">
-                                    Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-
-                                </button>
-                                <button type="button" class="btn btn-info"
-                                        onclick="generateQRCode()">
-                                    QRcode <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
-
-                                </button>
-                                <button type="button" class="btn btn-info"
-                                        onclick="previewContent()">
-                                    Preview <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-
-                                </button>
-
-                                <button type="button" class="btn btn-success"
-                                        onclick="createContent()">
-                                    Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-
-                                </button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </form>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default btn-danger" id="removeUserButton">Remove</button>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse" id="chatAnchor"
-                     data-target="#collapse2">
-                    <h4 class="panel-title"><i class="fa fa-comment"></i> Recent chat history</h4>
+    </div>
+    <div id="addMembersModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Member</h4>
                 </div>
-                <div id="collapse2" class="panel-collapse collapse in">
-                    <div class="panel-body" style="max-height: 336px; overflow: auto;"
-                         id="messagesPanel">
-                        <ul class="media-list" id="messagesList">
-                        </ul>
+                <div class="modal-body">
+                    <label>Group invitation link</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="invite"> <span
+                            class="input-group-addon" onclick="createInvite2()"> Create
+                            </span> <span class="input-group-addon" onclick="deleteInvite2()">
+                                Delete </span>
                     </div>
-                    <div class="panel-footer">
+                    <label>Add Members manually</label>
+                    <div role="search" class="form">
                         <div class="input-group">
-                          	<span class="input-group-btn">
-                            <input type="file" style="display:none" id="anex" name="anex"/>
-							<button class="btn btn-info" type="button" id="sendAnexButton"
-                                    onclick="sendAnex()">
-                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
-
-                            </button>
-						</span>
-                            <input type="text" class="form-control"
-                                   placeholder="Enter Message" id="messageText"
-                                   onkeydown="if(event.keyCode==13){sendMessage();}"/>
-						<span class="input-group-btn">
-                            <button class="btn btn-info" type="button" id="sendMessageButton"
-                                    onclick="sendMessage()">
-                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-
-                            </button>
-						</span>
+                            <input type="text" class="form-control" placeholder="Search"
+                                   id="searchCandidateText"
+                                   data-provide="typeahead" autocomplete="off"/>
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="panel panel-info">
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
-                            data-target="#addMembersModal">
-                        Add member <i class="fa fa-plus"></i>
-                    </button>
+        </div>
+    </div>
+    <div id="participantModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">What do you want to do?</h4>
                 </div>
-                <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
-                    <h4 class="panel-title"><i class="fa fa-users"></i> Group members</h4>
-                </div>
-                <div id="collapse1" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="media-body" id="videoMembers"></div>
-                            </li>
-                        </ul>
+                <div class="modal-body">
+                    <div class="row" >
+                        <div class="col-md-3">
+                            <div class="panel panel-red" onclick="hyperStart(0)">
+                                <div class="panel-heading" style="text-align: center;">
+                                    <i class="fa fa-video-camera" style="font-size: 6em;"></i>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><small>Share camera</small></span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-green" onclick="hyperStart(1)">
+                                <div class="panel-heading " style="text-align: center;">
+                                    <i class="fa fa-desktop" style="font-size: 6em;"></i>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><small>Share screen</small></span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-primary" onclick="hyperStart(2)">
+                                <div class="panel-heading " style="text-align: center;">
+                                    <i class="fa fa-eye" style="font-size: 6em;"></i>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><small>Watch only</small></span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-yellow" onclick="returnToHome()">
+                                <div class="panel-heading " style="text-align: center;">
+                                    <i class="fa fa-sign-out" style="font-size: 6em;"></i>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><small>Return</small></span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-lg-3">
-            <div class="panel panel-info not-fullscreen">
-                <div class="panel-heading" data-toggle="collapse" id="collaborativeEditorAnchor"
-                     data-target="#collapse6">
-                    <h4 class="panel-title"><i class="fa fa-pencil-square-o"></i> Collaborative editor</h4>
+    <div id="createTagModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Time Annotation</h4>
                 </div>
-                <div id="collapse6" class="panel-collapse collapse in">
-                    <form class="form">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <textarea class="form-control"  id="collabText" name="content"></textarea>
+                <form id="createTagForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label">Annotation Name:</label>
+                            <input class="form-control" type="text" id="tagTitle"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="input-group pull-right">
+                            <input type="submit" class="btn btn-success" id="createTag"/>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="center">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info not-fullscreen">
+                    <div class="btn-group pull-right">
+                        <div class="form-inline">
+                            <div class="btn btn-warning" onclick="playStop()" id="playStop">
+                                Pause <i class="fa fa-pause"></i>
                             </div>
+                            <div class="btn btn-primary" onclick="timeline.setRealTime()"
+                                 id="goToPresent">
+                                Real-Time <i class="fa fa-step-forward"></i>
+                            </div>
+                            <div class="btn btn-info" onclick="setTimeLink()"
+                                 data-toggle="modal" data-target="#timeQueryStringModal">
+                                Link <i class="fa fa-link"></i>
+                            </div>
+                            <div class="btn btn-success"
+                                 data-toggle="modal" data-target="#createTagModal">
+                                Annotation <i class="fa fa-tag"></i>
+                            </div>
+                            <!--<div class="btn btn-primary hidden" onclick="saveTags()"
+                                 id="saveButton">
+                                Save <i class="fa fa-floppy-o"></i>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="panel-heading" data-toggle="collapse" id="timelineAnchor"
+                         data-target="#collapse3">
+                        <h4 class="panel-title"><i class="fa fa-clock-o"></i> Timeline</h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel panel-default container-full"
+                             style="margin-bottom: 0px;">
+                            <div id="timeline"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-info ">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" onclick="toggleAutoSelect()">
+                            <i id="autoSelect" class="fa fa-thumb-tack"></i>
+                        </button>
+                        <button class="btn btn-default" onclick="toggleMicrophone()">
+                            <i id="soundIcon" class="fa fa-microphone text-success"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                onclick="selectUser(null,null)">
+                            <i class="fa fa-users"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                onclick="toggleVideoSize()">
+                            <i class="fa fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="panel-heading" data-toggle="collapse" id="videoAnchor"
+                         data-target="#collapse0">
+                        <h4 class="panel-title"><i class="fa fa-video-camera"></i> Video</h4>
+                    </div>
+                    <div id="collapse0" class="panel-collapse collapse in">
+                        <div class="panel-body" id="videoPanel">
+                            <button type="button" id="minimizeVideo" class="btn btn-primary" onclick="toggleVideoSize()"
+                                    style="display:none;z-index:9999;position:absolute;right:0px">
+                                <i class="fa fa-compress"></i>
+                            </button>
+                            <div id="videoWrapper">
+                                <div id="currentTag"></div>
+                                <div id="mainVideoContent">
+                                    <div id="qrContent" class="fixedLayer"></div>
+                                    <div id="previewContent" class="fixedLayer"></div>
+                                    <div id="dynamicContent" class="fixedLayer"></div>
+                                </div>
+                                <video id='ownvideo' autoplay muted></video>
+                                <video id='myvideo' autoplay></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info not-fullscreen">
+                    <div class="panel-heading" data-toggle="collapse" id="contentEditorAnchor"
+                         data-target="#collapse5">
+                        <h4 class="panel-title"><i class="fa fa-object-group"></i> Content editor</h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse in">
+                        <form class="form">
+                            <div class="panel-body">
+                                <label>Begin:</label>
+                                (timeline <input type="checkbox" id="beginSync"/>)
+
+                                <div class='input-group date' id='contentStart'>
+                                    <input type='text' class="form-control" /> <span
+                                        class="input-group-addon"> <span
+                                        class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                </div>
+                                <label>Duration:</label>
+
+
+                                <div class='input-group date' id='contentDuration'>
+                                    <input type='text' class="form-control" /> <span
+                                        class="input-group-addon"> <span
+                                        class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Content:</label>
+                                    <textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
+                                </div>
+                                <div class="input-group">
+                                    <label>Is Caption:</label> <input type="checkbox"
+                                                                      id="contentCaption" checked/>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="btn-group input-group pull-right">
+                                    <button type="button" class="btn btn-danger"
+                                            onclick="clearContent()">
+                                        Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+
+                                    </button>
+                                    <button type="button" class="btn btn-info"
+                                            onclick="generateQRCode()">
+                                        QRcode <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+
+                                    </button>
+                                    <button type="button" class="btn btn-info"
+                                            onclick="previewContent()">
+                                        Preview <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+
+                                    </button>
+
+                                    <button type="button" class="btn btn-success"
+                                            onclick="createContent()">
+                                        Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+
+                                    </button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-info not-fullscreen">
+                    <div class="panel-heading" data-toggle="collapse" id="chatAnchor"
+                         data-target="#collapse2">
+                        <h4 class="panel-title"><i class="fa fa-comment"></i> Recent chat history</h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body" style="max-height: 336px; overflow: auto;"
+                             id="messagesPanel">
+                            <ul class="media-list" id="messagesList">
+                            </ul>
                         </div>
                         <div class="panel-footer">
-                            <div class="btn-group input-group pull-right">
-                                <button type="button" class="btn btn-success"
-                                        onclick="saveCollab()">
-                                    Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                <input type="file" style="display:none" id="anex" name="anex"/>
+                                <button class="btn btn-info" type="button" id="sendAnexButton"
+                                        onclick="sendAnex()">
+                                    <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
 
                                 </button>
+                            </span>
+                                <input type="text" class="form-control"
+                                       placeholder="Enter Message" id="messageText"
+                                       onkeydown="if(event.keyCode==13){sendMessage();}"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button" id="sendMessageButton"
+                                        onclick="sendMessage()">
+                                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+
+                                </button>
+                            </span>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
-                    </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-success" id="addMembers" data-toggle="modal"
+                                data-target="#addMembersModal">
+                            Add member <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
+                        <h4 class="panel-title"><i class="fa fa-users"></i> Group members</h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="media-body" id="videoMembers"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="panel panel-info not-fullscreen">
+                    <div class="panel-heading" data-toggle="collapse" id="collaborativeEditorAnchor"
+                         data-target="#collapse6">
+                        <h4 class="panel-title"><i class="fa fa-pencil-square-o"></i> Collaborative editor</h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse in">
+                        <form class="form">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <textarea class="form-control"  id="collabText" name="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="btn-group input-group pull-right">
+                                    <button type="button" class="btn btn-success"
+                                            onclick="saveCollab()">
+                                        Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+
+                                    </button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
-</div>
-<script>
+    <script>
         var adapter = null;
-		var group = true;
-		var selectedUser = null;
-		var selectedSession = null;
-		var realTime = true;
-		var firstRecording = true;
-		var participants = {};
-		var timeline = null;
-		var oldestMsg = null;
-		var autoSelect = false;
-		var fullscreen = false;
+        var group = true;
+        var selectedUser = null;
+        var selectedSession = null;
+        var realTime = true;
+        var firstRecording = true;
+        var participants = {};
+        var timeline = null;
+        var oldestMsg = null;
+        var autoSelect = false;
+        var fullscreen = false;
 
         function goTo(time){
             timeline.setTime(time);
             HyperWebSocket.getContent();
         }
 
-		function sendLink(){
-		    $("#timeQueryStringModal").modal("hide");
-			toastr.remove();
+        function sendLink(){
+            $("#timeQueryStringModal").modal("hide");
+            toastr.remove();
             toastr.success('Time HyperLink', 'Sent successfully!');
             var time = $("#timeQueryValue").val();
             HyperWebSocket.sendMessage("<a onclick='goTo(\""+time+"\")'>"+friendlyTime(time)+"</a>");
-		}
-
+        }
 
         function userProfileExtraAction(userId){
             var user = participants[userId];
             var elem = $("<div></div>");
             elem.attr("class",user? "btn btn-danger btn-sm":"btn btn-success btn-sm");
             elem.html(user? "Remove from room":"Add to room");
-
             elem.click(function(){
-   			    $("#userProfileModal").modal("hide");
-
+                $("#userProfileModal").modal("hide");
                 if(user){
                     removeMemberConfirmation(userId,user.name);
                 }
@@ -529,122 +494,113 @@
                     toastr.success('Member management', 'User added successfully!');
                 }
             });
-
             $("#relationAction").prepend(elem);
-
         }
 
-		function setTimeLink(){
-		    var val = timeline.getMyTime().toISOString();
-		    $("#timeQueryValue").val(val);
-			$("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +val );
-		}
+        function setTimeLink(){
+            var val = timeline.getMyTime().toISOString();
+            $("#timeQueryValue").val(val);
+            $("#timeQueryString").val(window.location.href.split("?")[0] + "?time=" +val );
+        }
 
-		function saveCollab(){
+        function saveCollab(){
             var value = adapter.cm.getValue();
             HyperWebSocket.saveCollaborativeContent(value);
             toastr.remove();
             toastr.success('Collaborative Editor', 'Saved document successfully!');
-
             console.log(value);
-		}
+        }
 
-		function toggleAutoSelect(){
-			autoSelect = !autoSelect;
-			$("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
-		}
+        function toggleAutoSelect(){
+            autoSelect = !autoSelect;
+            $("#autoSelect").attr("class",autoSelect ? "fa fa-thumb-tack text-off":"fa fa-thumb-tack");
+        }
 
-		function returnToHome(){
-		    document.location = "/";
-		}
+        function returnToHome(){
+            document.location = "/";
+        }
 
-		function toggleVideoSize(){
-			fullscreen = !fullscreen;
-			if(fullscreen){
-				$("#videoPanel").attr("class","fullscreen");
-				$("#minimizeVideo").show();
-				$(".not-fullscreen").hide();
-
-			}
-			else {
-				$("#videoPanel").attr("class","panel-body");
-				$("#minimizeVideo").hide();
-				$(".not-fullscreen").show();
-
-			}
-		}
+        function toggleVideoSize(){
+            fullscreen = !fullscreen;
+            if(fullscreen){
+                $("#videoPanel").attr("class","fullscreen");
+                $("#minimizeVideo").show();
+                $(".not-fullscreen").hide();
+            }
+            else {
+                $("#videoPanel").attr("class","panel-body");
+                $("#minimizeVideo").hide();
+                $(".not-fullscreen").show();
+            }
+        }
 
         function sendAnex(){
             $("#anex").click();
-
         }
 
-		function toggleMicrophone(){
-			var microphoneState = HyperWebSocket.toggleMicrophone();
-			if(microphoneState){
-				$("#soundIcon").attr("class","fa fa-microphone text-success");
-			} else {
-				$("#soundIcon").attr("class","fa fa-microphone-slash text-danger");
-			}
-		}
+        function toggleMicrophone(){
+            var microphoneState = HyperWebSocket.toggleMicrophone();
+            if(microphoneState){
+                $("#soundIcon").attr("class","fa fa-microphone text-success");
+            } else {
+                $("#soundIcon").attr("class","fa fa-microphone-slash text-danger");
+            }
+        }
 
-		function receiveMore() {
-			if (oldestMsg) {
-				HyperWebSocket.receiveMore(oldestMsg, 1);
-			}
-		}
+        function receiveMore() {
+            if (oldestMsg) {
+                HyperWebSocket.receiveMore(oldestMsg, 1);
+            }
+        }
 
-		function sendMessage() {
-			var text = $("#messageText").val();
-			if(text && text.length>0){
+        function sendMessage() {
+            var text = $("#messageText").val();
+            if(text && text.length>0){
                 HyperWebSocket.sendMessage(text);
                 $("#messageText").val("");
-			}
+            }
+        }
 
-		}
+        function playStop() {
+            timeline.togglePlayStop(function() {
+                $("#playStop").html('<i class="fa fa-pause"></i>');
+                $("#playStop").attr('class', 'btn btn-warning');
+                HyperWebSocket.setPlay(true);
+            }, function() {
+                $("#playStop").html('<i class="fa fa-play"></i>');
+                $("#playStop").attr('class', 'btn btn-success');
+                HyperWebSocket.setPlay(false);
+            });
+        }
 
-		function playStop() {
-			timeline.togglePlayStop(function() {
-				$("#playStop").html('<i class="fa fa-pause"></i>');
-				$("#playStop").attr('class', 'btn btn-warning');
-				HyperWebSocket.setPlay(true);
-			}, function() {
-				$("#playStop").html('<i class="fa fa-play"></i>');
-				$("#playStop").attr('class', 'btn btn-success');
-				HyperWebSocket.setPlay(false);
-			});
-		}
+        function selectUser(userId,sessionId){
+            selectedUser = userId;
+            selectedSession = sessionId;
+            if (realTime) {
+                HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
+            } else {
+                HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,selectedSession);
+            }
+        }
 
-		function selectUser(userId,sessionId){
-			selectedUser = userId;
-			selectedSession = sessionId;
-			if (realTime) {
-				HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
-			} else {
-				HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,selectedSession);
-			}
-		}
-
-
-
-		function saveTags() {
-			timeline.iterateTempTags(function(tag){
-			    if(tag.title!=null){
-				    HyperWebSocket.createTag(tag.id, tag.time, tag.title);
-				}else {
+        function saveTags() {
+            timeline.iterateTempTags(function(tag){
+                if(tag.title!=null){
+                    HyperWebSocket.createTag(tag.id, tag.time, tag.title);
+                }else {
                     HyperWebSocket.removeTag(tag.id);
-				}
-			});
-			timeline.removeTempTags();
-		//	$("#saveButton").addClass("hidden");
-		}
+                }
+            });
+            timeline.removeTempTags();
+        //	$("#saveButton").addClass("hidden");
+        }
 
-	    var candidateSearch = new (function() {
+        var candidateSearch = new (function() {
             this.source = function(query,process){
-       			HyperHttp.searchGroupCandidates("@groupId", query, function(array){
-       			    console.log(array);
+                HyperHttp.searchGroupCandidates("@groupId", query, function(array){
+                    console.log(array);
                     process(array);
-       			});
+                });
             };
 
             this.displayText = function(item){
@@ -662,8 +618,8 @@
 
             this.updater = function(item){
                 console.log(item);
-               	HyperWebSocket.addUserGroup(item.id);
-			    $("#addMembersModal").modal("hide");
+                HyperWebSocket.addUserGroup(item.id);
+                $("#addMembersModal").modal("hide");
                 return item;
             }
 
@@ -675,103 +631,97 @@
             return xml.replace(/<[^>]*>/g, "");
         }
 
-
-		var generalSearch = {
-			source: function(query,process){
-				HyperHttp.searchInsideGroup("@groupId",query, function( array ) {
+        var generalSearch = {
+            source: function(query,process){
+                HyperHttp.searchInsideGroup("@groupId",query, function( array ) {
                      $.get( "/api/search?query="+query, function( data ) {
                        //  console.log(data);
                       //   process(data.data);
-
-        				process(array.concat(data.data));
-
+                        process(array.concat(data.data));
                      });
-
-
-				});
-			},
-			displayText: function(item){
-				if(item.type=="tag"){
-				    return item.title;
-			    }else if(item.type=="html"){
-			        console.log("displayText",item);
-			        console.log("displayText",item.content);
-			        return item.content;
-			    }else {
+                });
+            },
+            displayText: function(item){
+                if(item.type=="tag"){
+                    return item.title;
+                }else if(item.type=="html"){
+                    console.log("displayText",item);
+                    console.log("displayText",item.content);
+                    return item.content;
+                }else {
                     return SearchGeneric.displayText(item);
-			    }
-			},
-			highlighter: function(item){
-			    console.log("highlighter",item);
-				if(item.type=="tag"){
-					return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
-				}else if(item.type=="html"){
-					return "<i class='fa fa-font'></i> " + item.content+ " <small>("+friendlyTime(item.time)+")</small>";
-				}else {
+                }
+            },
+            highlighter: function(item){
+                console.log("highlighter",item);
+                if(item.type=="tag"){
+                    return "<i class='fa fa-tag'></i> "  + item.title + " <small>("+friendlyTime(item.time)+")</small>";
+                }else if(item.type=="html"){
+                    return "<i class='fa fa-font'></i> " + item.content+ " <small>("+friendlyTime(item.time)+")</small>";
+                }else {
                     return SearchGeneric.highlighter(item);
-				}
-			},
-			matcher: function(item){
-				return true;
-			},
-			updater:function(item){
-				if(item.type=="tag"){
-					timeline.setHistoric(item.time);
-				}
-				else if(item.type=="html"){
-					timeline.setHistoric(item.time);
-				}
-				return SearchGeneric.updater(item);
-;
-			}
-		};
+                }
+            },
+            matcher: function(item){
+                return true;
+            },
+            updater:function(item){
+                if(item.type=="tag"){
+                    timeline.setHistoric(item.time);
+                }
+                else if(item.type=="html"){
+                    timeline.setHistoric(item.time);
+                }
+                return SearchGeneric.updater(item);
+            }
+        };
 
-		function copyLink(){
-			$("#timeQueryString").select();
+        function copyLink(){
+            $("#timeQueryString").select();
             // copy the selection
             var succeed;
             try {
-                  succeed = document.execCommand("copy");
+                succeed = document.execCommand("copy");
             } catch(e) {
                 succeed = false;
             }
             if(succeed){
-           		toastr.remove();
+                toastr.remove();
                 toastr.success('Time HyperLink', 'Link copied to clipboard!');
             }else {
-     		    toastr.remove();
+                toastr.remove();
                 toastr.error('Time HyperLink', 'Could not copy link to clipboard');
             }
 
-		    $("#timeQueryStringModal").modal("hide");
+            $("#timeQueryStringModal").modal("hide");
 
-		}
+        }
 
-		function createInvite2(){
-			HyperHttp.createInvite("@groupId",function(token){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);
-			});
-		}
+        function createInvite2(){
+            HyperHttp.createInvite("@groupId",function(token){
+                $("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/" + token);
+            });
+        }
 
-		function deleteInvite2(){
-			HyperHttp.deleteInvite("@groupId",function(){
-				$("#invite").val("");
-			});
-		}
+        function deleteInvite2(){
+            HyperHttp.deleteInvite("@groupId",function(){
+                $("#invite").val("");
+            });
+        }
 
-		function removeMemberConfirmation(uid,name){
-			$("#removeMemberModal").modal("show");
-			$("#removeUserName").html(name);
-			$("#removeUserId").val(uid);
-			$("#removeUserButton").click(function(){
-				HyperWebSocket.removeUserGroup(uid);
-		        toastr.remove();
+        function removeMemberConfirmation(uid,name){
+            $("#removeMemberModal").modal("show");
+            $("#removeUserName").html(name);
+            $("#removeUserId").val(uid);
+            $("#removeUserButton").click(function(){
+                HyperWebSocket.removeUserGroup(uid);
+                toastr.remove();
                 toastr.success('Member management', 'User removed successfully!');
-				$("#removeMemberModal").modal("hide");
-			});
-		}
+                $("#removeMemberModal").modal("hide");
+            });
+        }
 
-		function hyperStart(mode){
+        function hyperStart(mode){
 
             HyperWebSocket.setOnUserRemovedHandler(function (uid) {
                 $("#vidMember"+uid).remove();
@@ -781,31 +731,31 @@
                 }
             });
 
-			HyperWebSocket.start("@groupId",mode, function(){
+            HyperWebSocket.start("@groupId",mode, function(){
                 console.log("WebSocket Ok!");
                 var attrs = parseQuery(document.location.search);
                 if(attrs.time){
                     timeline.setHistoric(new Date(attrs.time));
                 }
-		    });
-			$('#participantModal').modal('hide');
-		}
+            });
+            $('#participantModal').modal('hide');
+        }
 
-		$(document).ready(function() {
-			$('#participantModal').modal('show');
-			$('#searchNav').show();
-			$('#searchText').typeahead(generalSearch);
-			$('#searchCandidateText').typeahead(candidateSearch);
+        $(document).ready(function() {
+            $('#participantModal').modal('show');
+            $('#searchNav').show();
+            $('#searchText').typeahead(generalSearch);
+            $('#searchCandidateText').typeahead(candidateSearch);
 
 
-    $("#anex").change(function() {
-        var form = new FormData();
-        form.append("anex", $("#anex")[0].files[0]);
-        HyperHttp.uploadFile(form, function(data){
-             HyperWebSocket.sendMessage("<a href='/file/"+data.anex.url+"'>"+data.anex.filename+"</a>");
-        },function(){});
-    });
-			$("#navbar-list").append("<li><a>@groupName</a></li>");
+            $("#anex").change(function() {
+                var form = new FormData();
+                form.append("anex", $("#anex")[0].files[0]);
+                HyperHttp.uploadFile(form, function(data){
+                     HyperWebSocket.sendMessage("<a href='/file/"+data.anex.url+"'>"+data.anex.filename+"</a>");
+                },function(){});
+            });
+            $("#navbar-list").append("<li><a>@groupName</a></li>");
             $('#modalAlert').on('hidden.bs.modal', function () {$("#alertBody").html("");})
 
             var editor = CodeMirror.fromTextArea(document.getElementById("collabText"), {
@@ -822,72 +772,68 @@
                 }
             });
 
+            $("#createTagForm").submit(function(event){
+                event.preventDefault();
+                $("#createTagModal").modal('hide');
+                var title = $("#tagTitle").val();
+                timeline.addTempTag(title);
+            });
 
+            $("#refresh-button").click(function() {
+                document.location = document.location;
+            });
 
+            $("#home-button").click(function() {
+                document.location = "/";
+            });
 
+            @if(inviteToken!=null){
+                $("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");
+            }
 
-			$("#createTagForm").submit(function(event){
-				event.preventDefault();
-				$("#createTagModal").modal('hide');
-				var title = $("#tagTitle").val();
-				timeline.addTempTag(title);
-			});
+            $('#contentStart').datetimepicker({
+                format : 'DD/MM/YYYY HH:mm:ss',
+                defaultDate : new Date(),
+                showTodayButton:true,
 
-			$("#refresh-button").click(function() {
-				document.location = document.location;
-			});
+            });
+            $('#contentDuration').datetimepicker({
+                format : 'HH:mm:ss',
+                defaultDate : new Date(10000),
+                showTodayButton:true
 
-			$("#home-button").click(function() {
-				document.location = "/";
-			});
+            });
 
-			@if(inviteToken!=null){
-				$("#invite").val($(location).attr('protocol')+"//"+$(location).attr('host')+"/join/@groupId/@inviteToken");
-			}
+            $("#messagesPanel").scroll(function() {
+                if ($("#messagesPanel").scrollTop() == 0) {
+                    receiveMore();
+                    $("#messagesPanel").scrollTop(1);
+                }
+            });
 
-			$('#contentStart').datetimepicker({
-				format : 'DD/MM/YYYY HH:mm:ss',
-				defaultDate : new Date(),
-				showTodayButton:true,
+            // plugtrade.com - jQuery detect vertical scrollbar function //
+            (function($) {
+                $.fn.hasScrollBar = function() {
+                    var divnode = this.get(0);
+                    if (divnode.scrollHeight > divnode.clientHeight)
+                        return true;
+                }
+            })(jQuery);
 
-			});
-			$('#contentDuration').datetimepicker({
-				format : 'HH:mm:ss',
-				defaultDate : new Date(10000),
-				showTodayButton:true
+            timeline = HyperTimeline.create("timeline",
+                function(offset) {
+                    console.log("HISTORIC", offset);
+                    // current request
+                    HyperWebSocket.receiveHistoric(selectedUser, offset, selectedSession);
+                    realTime = false;
 
-			});
-
-			$("#messagesPanel").scroll(function() {
-				if ($("#messagesPanel").scrollTop() == 0) {
-					receiveMore();
-					$("#messagesPanel").scrollTop(1);
-				}
-			});
-
-			// plugtrade.com - jQuery detect vertical scrollbar function //
-			(function($) {
-				$.fn.hasScrollBar = function() {
-					var divnode = this.get(0);
-					if (divnode.scrollHeight > divnode.clientHeight)
-						return true;
-				}
-			})(jQuery);
-
-			timeline = HyperTimeline.create("timeline",
-				function(offset) {
-					console.log("HISTORIC", offset);
-					// current request
-					HyperWebSocket.receiveHistoric(selectedUser, offset, selectedSession);
-					realTime = false;
-
-				}, function() {
-					console.log("REALTIME");
-					// realtime request
-					HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
-					realTime = true;
-				}, function(tag){
-				    if(tag!=null){
+                }, function() {
+                    console.log("REALTIME");
+                    // realtime request
+                    HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
+                    realTime = true;
+                }, function(tag){
+                    if(tag!=null){
                         $("#currentTag").html(tag.text);
                     }else {
                         $("#currentTag").html("");
@@ -903,20 +849,19 @@
 
                 }, function(){
                     console.log("onDirty");
-				   // $("#saveButton").removeClass("hidden");
+                   // $("#saveButton").removeClass("hidden");
                     saveTags();
                 }
-			);
-		});
+            );
+        });
 
-
-</script>
-<script type="text/javascript" src="/assets/adapter/adapter.screenshare.js"></script>
-<!--<script type="text/javascript" src="/assets/adapter/adapter.js"></script>-->
-<script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
-<script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
-<script type="text/javascript" src="/assets/this/js/scripts.js"></script>
-<script type="text/javascript" src="/assets/this/js/group.handler.js"></script>
-<script type="text/javascript" src="/assets/this/js/group.content.js"></script>
+    </script>
+    <script type="text/javascript" src="/assets/adapter/adapter.screenshare.js"></script>
+    <!--<script type="text/javascript" src="/assets/adapter/adapter.js"></script>-->
+    <script type="text/javascript" src="/assets/this/js/hyper.socket.js"></script>
+    <script type="text/javascript" src="/assets/this/js/hyper.timeline.js"></script>
+    <script type="text/javascript" src="/assets/this/js/scripts.js"></script>
+    <script type="text/javascript" src="/assets/this/js/group.handler.js"></script>
+    <script type="text/javascript" src="/assets/this/js/group.content.js"></script>
 
 }

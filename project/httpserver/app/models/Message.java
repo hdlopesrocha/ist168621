@@ -174,11 +174,11 @@ public class Message {
     public JSONObject toJsonObject() {
         JSONObject messageObj = new JSONObject();
         messageObj.put("id", getId().toString());
-        Document attr = Data.findByOwner(source,new Document("data.name",1));
-        if (attr != null) {
-            attr = (Document) attr.get("data");
-            if (attr != null) {
-                messageObj.put("name", attr.getString("name"));
+        Data data = Data.findByOwner(source);
+        if (data != null) {
+            Object value = data.getData("name");
+            if (value != null) {
+                messageObj.put("name", value);
             }
         }
         messageObj.put("time", Tools.FORMAT.format(time));

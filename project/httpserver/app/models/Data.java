@@ -9,6 +9,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import services.Service;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ public class Data {
     private ObjectId id = null;
 
     /** The data. */
-    private Document properties = null;
+    private List<Document> properties = null;
 
     /** The owner. */
     private ObjectId owner = null;
@@ -30,7 +31,6 @@ public class Data {
     /** The search. */
     private List<String> searchableValues;
 
-    private List<String> identifiableKeys;
 
 
     /**
@@ -43,25 +43,36 @@ public class Data {
      */
     public Data(ObjectId owner, List<AttributeDto> attributes) {
         this.id = getIdFromOwner(owner);
-        this.properties = new Document();
+        this.properties = new ArrayList<Document>();
         this.searchableValues = new ArrayList<String>();
-        this.identifiableKeys = new ArrayList<String>();
 
         for (AttributeDto attr : attributes) {
             if (attr.isSearchable()) {
                 searchableValues.add(attr.getValue().toString().toLowerCase());
             }
-            if (attr.isIdentifiable()) {
-                identifiableKeys.add(attr.getKey());
-            }
-        }
 
-
-
-        for (AttributeDto attr : attributes) {
             Object value = attr.getValue();
+            Document doc = new Document();
+            doc.put("k",attr.getKey());
+            doc.put("v",value);
+            doc.put("i",attr.isIdentifiable());
+            List<ObjectId> r = new ArrayList<ObjectId>();
+            if(attr.getReadSet()!=null) {
+                for (String s : attr.getReadSet()) {
+                    r.add(new ObjectId(s));
+                }
+            }
+            if(attr.getWriteSet()!=null) {
+                List<ObjectId> w = new ArrayList<ObjectId>();
+                for (String s : attr.getWriteSet()) {
+                    w.add(new ObjectId(s));
+                }
+                doc.put("r", r);
+                doc.put("w", w);
+            }
 
-            properties.append(attr.getKey(), value);
+
+            properties.add(doc);
         }
         this.owner = owner;
     }
@@ -112,15 +123,19 @@ public class Data {
         user.id = doc.getObjectId("_id");
 
         user.owner = doc.getObjectId("owner");
-        user.properties = (Document) doc.get("data");
+        user.properties = (List<Document>) doc.get("data");
         user.searchableValues = (List<String>) doc.get("search");
-        user.identifiableKeys = (List<String>) doc.get("iks");
 
         return user;
     }
 
     public boolean isIdentifier(String key) {
-        return identifiableKeys.contains(key);
+        for(Document doc : properties){
+            if(doc.getString("k").equals(key) && doc.getBoolean("i")){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -135,7 +150,6 @@ public class Data {
         doc.put("data", properties);
         doc.put("owner", owner);
         doc.put("search", searchableValues);
-        doc.put("iks", identifiableKeys);
 
         if (id == null) {
             getCollection().insertOne(doc);
@@ -241,31 +255,13 @@ public class Data {
      * @return the by key value
      */
     public static Data getByKeyValue(String key, Object value) {
-        Document doc = new Document("data." + key, value);
+        Document doc = new Document("data.k", key).append("data.v",value);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
         return doc != null ? Data.load(doc) : null;
     }
 
-    /**
-     * Find by owner.
-     *
-     * @param id
-     *            the id
-     * @param projection
-     *            the projection
-     * @return the document
-     */
-    public static Document findByOwner(ObjectId id, Document projection) {
-        Document doc = new Document("owner", id);
-        FindIterable<Document> find = getCollection().find(doc);
 
-        if (projection != null) {
-            find.projection(projection);
-        }
-        doc = find.first();
-        return doc != null ? doc : null;
-    }
 
     /**
      * Find by owner.
@@ -392,7 +388,66 @@ public class Data {
      *
      * @return the data
      */
-    public Document getData() {
+    public List<Document> getData() {
         return properties;
+    }
+
+    public Object getData(String key) {
+        for(Document doc : properties){
+            String k = doc.getString("k");
+            Object v = doc.get("v");
+            if(key.equals(k)){
+                return v;
+            }
+
+        }
+
+        return null;
+    }
+
+
+    private Document getAttribute(String key){
+        for (Document d : properties){
+            String k = d.getString("k");
+            if(key.equals(k)){
+                return d;
+            }
+
+        }
+        return null;
+    }
+
+
+    /**
+     * Gets the data.
+     *
+     * @return the data
+     */
+    public boolean hasReadPermission(ObjectId caller,String key) {
+        Document doc = getAttribute(key);
+        if(doc!=null) {
+
+            if (hasWritePermission(caller, key)) {
+                return true;
+            }
+            List<ObjectId> r = (List<ObjectId>) doc.get("r");
+            if (r != null) {
+                return r.contains(caller);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasWritePermission(ObjectId caller,String key) {
+        Document doc = getAttribute(key);
+        if (doc != null) {
+            List<ObjectId> w = (List<ObjectId>) doc.get("w");
+            if (w != null) {
+                return w.contains(caller);
+            }
+            return true;
+        }
+        return false;
     }
 }

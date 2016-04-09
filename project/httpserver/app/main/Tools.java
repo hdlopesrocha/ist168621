@@ -1,10 +1,7 @@
 package main;
 
-import dtos.PermissionDto;
-import models.DataPermission;
 import models.User;
 import org.apache.commons.codec.binary.Hex;
-import org.bson.types.ObjectId;
 import org.jsoup.Jsoup;
 
 import java.nio.charset.Charset;
@@ -125,29 +122,7 @@ public class Tools {
         return null;
     }
 
-    public static Map<String, DataPermission.Entry> buildPermissions(List<PermissionDto> permissions){
 
-        Map<String, DataPermission.Entry> realPermissions = new TreeMap<>();
-        for(PermissionDto p : permissions){
-            Set<ObjectId> readSet = null;
-            Set<ObjectId> writeSet = null;
-            if(p.getReadSet()!=null) {
-                readSet = new HashSet<>();
-                for (String str : p.getReadSet()) {
-                    readSet.add(new ObjectId(str));
-                }
-            }
-            if(p.getWriteSet()!=null) {
-                writeSet = new HashSet<>();
-                for (String str : p.getWriteSet()) {
-                    writeSet.add(new ObjectId(str));
-                }
-            }
-            realPermissions.put(p.getKey(), new DataPermission.Entry(readSet,writeSet));
-
-        }
-        return realPermissions;
-    }
 
     public static boolean userExists(String uid){
         User u = uid!=null ? User.findById(uid) : null;

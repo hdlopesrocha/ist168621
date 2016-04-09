@@ -2,7 +2,6 @@ package controllers;
 
 import dtos.AttributeDto;
 import dtos.KeyValue;
-import dtos.PermissionDto;
 import exceptions.ServiceException;
 import exceptions.UnauthorizedException;
 import main.Tools;
@@ -196,13 +195,11 @@ public class Rest extends Controller {
             Group.Visibility visibility = Group.Visibility.valueOf(qs.get("v")[0]);
 
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            List<PermissionDto> permissions = new ArrayList<PermissionDto>();
-
-            attributes.add(new AttributeDto("name", name, false, true, false));
             Set<String> writeSet = new HashSet<String>();
             writeSet.add(session("uid"));
-            permissions.add(new PermissionDto("name",null,writeSet));
-            CreateGroupService service = new CreateGroupService(session("uid"), visibility,permissions, attributes);
+            attributes.add(new AttributeDto("name", name, false, true, false,null,writeSet));
+
+            CreateGroupService service = new CreateGroupService(session("uid"), visibility, attributes);
             try {
                 service.execute();
             } catch (ServiceException e) {
@@ -568,7 +565,6 @@ public class Rest extends Controller {
 
         String password = form.get("password")[0];
         List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-        List<PermissionDto> permissions = new ArrayList<PermissionDto>();
 
 
         for (Entry<String, String[]> s : form.entrySet()) {
@@ -595,7 +591,7 @@ public class Rest extends Controller {
                     } else if (s.getKey().equals("email")) {
                         searchable = identifiable = true;
                     }
-                    attributes.add(new AttributeDto(s.getKey(), obj, identifiable, searchable, false));
+                    attributes.add(new AttributeDto(s.getKey(), obj, identifiable, searchable, false,null,null));
                 }
             }
         }
@@ -604,7 +600,7 @@ public class Rest extends Controller {
             KeyValueFile kvf = new KeyValueFile(fp.getKey(), fp.getFilename(), fp.getFile());
             UploadFileService service = new UploadFileService(kvf);
             try {
-                attributes.add(new AttributeDto(kvf.getKey(), "/file/"+service.execute(), false, false, false));
+                attributes.add(new AttributeDto(kvf.getKey(), "/file/"+service.execute(), false, false, false,null,null));
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
@@ -615,7 +611,7 @@ public class Rest extends Controller {
             return Rest.status(409);
         }
 
-        User ret = new RegisterUserService(password,permissions, attributes).execute();
+        User ret = new RegisterUserService(password, attributes).execute();
         session("uid",ret.getId().toString());
         return ok(ret.getToken());
 

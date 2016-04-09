@@ -3,11 +3,9 @@ package services;
 
 import exceptions.ServiceException;
 import models.Data;
-import models.DataPermission;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,20 +47,23 @@ public class ListOwnerAttributesService extends Service<Document> {
      */
     @Override
     public Document dispatch() throws ServiceException {
-        DataPermission permission = DataPermission.findByOwner(owner);
-        Document doc = Data.findByOwner(owner, projection);
+        Data data = Data.findByOwner(owner);
+        Document doc = null;
 
-        if (doc != null) {
-            doc = (Document) doc.get("data");
+        if (data != null) {
+            doc = new Document();
 
-            if (permission != null) {
-                for(String key : new ArrayList<>(doc.keySet())){
-                    if(!permission.hasReadPermission(caller,key)){
-                        doc.remove(key);
-                    }
+            for(Document d : data.getData()){
+                String key = d.getString("k");
+                Object value = d.get("v");
+                if((data.hasReadPermission(caller, key))) {
+                        doc.put(key, value);
                 }
+
             }
+
         }
+
         return doc;
     }
 

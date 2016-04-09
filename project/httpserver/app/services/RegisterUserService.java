@@ -2,16 +2,12 @@ package services;
 
 
 import dtos.AttributeDto;
-import dtos.PermissionDto;
 import exceptions.ServiceException;
-import main.Tools;
 import models.Data;
-import models.DataPermission;
 import models.User;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -24,17 +20,15 @@ public class RegisterUserService extends Service<User> {
     
     /** The attributes. */
     private List<AttributeDto> attributes;
-private List<PermissionDto> permissions;
     /**
      * Instantiates a new register user service.
      *
      * @param password the password
      * @param attributes the attributes
      */
-    public RegisterUserService(final String password, List<PermissionDto> permissions, List<AttributeDto> attributes) {
+    public RegisterUserService(final String password, List<AttributeDto> attributes) {
         this.password = password;
         this.attributes = attributes;
-        this.permissions = permissions;
     }
 
 
@@ -45,13 +39,10 @@ private List<PermissionDto> permissions;
      */
     @Override
     public synchronized User dispatch() throws ServiceException {
-        attributes.add(new AttributeDto("type", User.class.getName(), false, false, true));
-        permissions.add(new PermissionDto("type",null,new HashSet<String>()));
+        attributes.add(new AttributeDto("type", User.class.getName(), false, false, true,null,new HashSet<String>()));
 
         User user = new User(password);
         user.save();
-        Map<String, DataPermission.Entry> realPermissions = Tools.buildPermissions(permissions);
-        new DataPermission(user.getId(),realPermissions, attributes).save();
         new Data(user.getId(), attributes).save();
 
         return user;
