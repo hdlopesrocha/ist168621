@@ -4,6 +4,7 @@ import exceptions.ServiceException;
 import models.Message;
 import org.bson.types.ObjectId;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,7 +18,7 @@ public class ListMessagesService extends Service<List<Message>> {
     private final ObjectId target;
     
     /** The end. */
-    private final Long end;
+    private final ObjectId oid;
     
     /** The len. */
     private final int len;
@@ -30,9 +31,9 @@ public class ListMessagesService extends Service<List<Message>> {
      * @param end the end
      * @param len the len
      */
-    public ListMessagesService(final String target, final Long end, final int len) {
+    public ListMessagesService(final String target, final String oid, final int len) {
         this.target = new ObjectId(target);
-        this.end = end;
+        this.oid = oid!=null ? new ObjectId(oid): null;
         this.len = len;
     }
 
@@ -43,7 +44,7 @@ public class ListMessagesService extends Service<List<Message>> {
      */
     @Override
     public List<Message> dispatch() throws ServiceException {
-        return Message.listByTarget(target, end, len);
+        return Message.listByTarget(target, oid, len);
     }
 
     /*

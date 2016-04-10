@@ -33,8 +33,6 @@ public class Message {
     /** The id. */
     private ObjectId id = null;
     
-    /** The sequence. */
-    private Long sequence;
 
     /**
      * Instantiates a new message.
@@ -81,7 +79,6 @@ public class Message {
         rec.target = doc.getObjectId("target");
         rec.time = doc.getDate("time");
         rec.content = doc.getString("text");
-        rec.sequence = doc.getLong("seq");
         return rec;
     }
 
@@ -93,14 +90,12 @@ public class Message {
      * @param len the len
      * @return the list
      */
-    public static List<Message> listByTarget(ObjectId groupId, Long end, int len) {
+    public static List<Message> listByTarget(ObjectId groupId, ObjectId oid, int len) {
         Document query = new Document("target", groupId);
-        if (end != null) {
-            query.append("seq", new Document("$lt", end));
+        if (oid != null) {
+            query.append("_id", new Document("$lt", oid));
         }
-
-        FindIterable<Document> iter = getCollection()
-                .find(query).sort(new Document("seq", -1)).limit(len);
+        FindIterable<Document> iter = getCollection().find(query).sort(new Document("_id", -1)).limit(len);
         List<Message> ret = new ArrayList<Message>();
         for (Document doc : iter) {
             ret.add(Message.load(doc));
@@ -121,15 +116,6 @@ public class Message {
         return doc != null ? load(doc) : null;
     }
 
-    /**
-     * Generate sequence.
-     *
-     * @return the long
-     */
-    private Long generateSequence() {
-        return getCollection()
-                .count(new Document("target", target));
-    }
 
     /**
      * Save.
@@ -143,12 +129,8 @@ public class Message {
         doc.put("source", source);
         doc.put("time", time);
         doc.put("text", content);
-        doc.put("seq", sequence);
-
 
         if (id == null) {
-            sequence = generateSequence();
-            doc.put("seq", sequence);
             getCollection().insertOne(doc);
         } else
             getCollection().replaceOne(new Document("_id", id), doc);
@@ -183,7 +165,7 @@ public class Message {
         }
         messageObj.put("time", Tools.FORMAT.format(time));
         messageObj.put("text", content);
-        messageObj.put("seq", sequence);
+        messageObj.put("seq", id.getDate().getTime());
         messageObj.put("source", source.toString());
         return messageObj;
     }
@@ -224,14 +206,6 @@ public class Message {
         return content;
     }
 
-    /**
-     * Gets the sequence.
-     *
-     * @return the sequence
-     */
-    public Long getSequence() {
-        return sequence;
-    }
 
     /**
      * Delete.

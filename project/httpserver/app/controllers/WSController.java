@@ -158,8 +158,8 @@ public class WSController extends Controller {
                                 break;
                                 case "getMessages": {
                                     int len = args.getInt("len");
-                                    Long end = args.getLong("end");
-                                    userSession.sendMessages(end, len);
+                                    String oid = args.getString("oid");
+                                    userSession.sendMessages(oid, len);
                                 }
                                 break;
                                 case "offer": {

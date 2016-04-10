@@ -1,7 +1,6 @@
 package main;
 
 import exceptions.ServiceException;
-import models.Data;
 import models.HyperContent;
 import models.Message;
 import models.RecordingChunk;
@@ -54,6 +53,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private HubPort compositePort;
     private PlayerEndpoint playerVideo;
     private PlayerEndpoint playerAudio;
+
+    private RecordingChunk nextVideo;
+    private RecordingChunk nextAudio;
+    private Timer scheduledPlayer;
+    private Object scheduledPlayerLock = new Object();
 
     private Map<String,Object> currentQRCodes = new TreeMap<String,Object>();
     private EventListener<CodeFoundEvent> codeListener;
@@ -372,16 +376,14 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      *
      */
 
-    private RecordingChunk nextVideo;
-    private RecordingChunk nextAudio;
-    private Timer scheduledPlayer;
-
 
     private void cancelScheduledPlayers(){
-        if(scheduledPlayer!=null){
-            scheduledPlayer.cancel();
-            scheduledPlayer.purge();
-            scheduledPlayer=null;
+        synchronized (scheduledPlayerLock) {
+            if (scheduledPlayer != null) {
+                scheduledPlayer.cancel();
+                scheduledPlayer.purge();
+                scheduledPlayer = null;
+            }
         }
     }
 
@@ -391,7 +393,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         setInternalHistoric(owner,sessionId);
     }
 
-    private void playChunks(String owner, String sessionId, Date currentTime,RecordingChunk videoChunk, RecordingChunk audioChunk){
+    private void playChunks(String owner, String sessionId,RecordingChunk videoChunk,long seekVideo, RecordingChunk audioChunk,  long seekAudio){
         String videoUrl=videoChunk.getUrl();
         String audioUrl=audioChunk.getUrl();
 
@@ -454,20 +456,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 tempAudio.connect(endPoint, MediaType.AUDIO);
                 tempVideo.connect(endPoint, MediaType.VIDEO);
 
-                if(tempVideo.getVideoInfo().getIsSeekable()) {
-                    Long position = currentTime.getTime()-audioChunk.getStart().getTime();
-                    if(position >= tempVideo.getVideoInfo().getDuration()){
-                        position = tempVideo.getVideoInfo().getDuration() -1;
-                    }else if(position<0){
-                        position = 0l;
-                    }
-
-                    tempVideo.setPosition(position);
-                    if(tempAudio.getVideoInfo().getIsSeekable()) {
-                        tempAudio.setPosition(position);
-                    }
+                if(tempVideo.getVideoInfo().getIsSeekable() && tempAudio.getVideoInfo().getIsSeekable()) {
+                    // this is the ideal behavior
+                    tempVideo.setPosition(seekVideo);
+                    tempAudio.setPosition(seekAudio);
                 }
                 else {
+                    // Warning!!! this only works if the block bounds are synchronized
                     System.out.println("not seekable!");
                     JSONObject msg = new JSONObject();
                     msg.put("cmd", "setTime");
@@ -519,21 +514,30 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
         if (videoRec!=null && audioRec!=null && !videoRec.getId().equals(playingId)) {
             if(audioRec.contains(currentTime)) {
-                playChunks(owner,sessionId,currentTime, videoRec,audioRec);
+                Long seekAudio = currentTime.getTime()-audioRec.getStart().getTime();
+                Long seekVideo = currentTime.getTime()-videoRec.getStart().getTime();
+                if(seekAudio<0){
+                    seekAudio = 0l;
+                }
+                if(seekVideo<0){
+                    seekVideo = 0l;
+                }
+                playChunks(owner,sessionId, videoRec,seekVideo,audioRec,seekAudio);
             }
             else {
                 long time = audioRec.getStart().getTime() - currentTime.getTime();
                 cancelScheduledPlayers();
-                scheduledPlayer = new Timer();
-                System.out.print("SCHEDULLED!");
-
-                scheduledPlayer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.out.print("PLAYSCHED!");
-                        setInternalHistoric(owner,sessionId);
-                    }
-                },time);
+                synchronized (scheduledPlayerLock) {
+                    scheduledPlayer = new Timer();
+                    System.out.print("SCHEDULLED!");
+                    scheduledPlayer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            System.out.print("PLAYSCHED!");
+                            setInternalHistoric(owner, sessionId);
+                        }
+                    }, time);
+                }
             }
         } else {
             if(videoRec==null) {
@@ -670,8 +674,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * @param end the end
      * @param len the len
      */
-    public void sendMessages(Long end, int len) {
-        ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), end, len);
+    public void sendMessages(String oid, int len) {
+        ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), oid, len);
         JSONArray messagesArray = new JSONArray();
         try {
             List<Message> messages = messagesService.execute();

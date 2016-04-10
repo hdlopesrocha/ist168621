@@ -55,15 +55,12 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      */
     @Override
     public RecordingChunk dispatch() throws BadRequestException {
-
         RecordingChunk ans = getResult1();
-
         if(ans==null){
             // try group
             ans = getResult2();
         }
         return ans;
-
     }
 
     private RecordingChunk getResult1(){
