@@ -77,7 +77,6 @@ public class Data {
             collection = Service.getDatabase().getCollection(Data.class.getName());
             collection.createIndex(new Document("owner",1));
             collection.createIndex(new Document("search","text"));
-
         }
         return collection;
     }
@@ -127,7 +126,13 @@ public class Data {
      */
     public Data save() {
         Document doc = new Document();
-        doc.put("data", properties);
+        List<Document> props = new ArrayList<>();
+        for(Attribute attr : properties.values()) {
+            props.add(attr.toDocument());
+        }
+
+
+        doc.put("data", props);
         doc.put("owner", owner);
         doc.put("search", searchableValues);
 
@@ -177,7 +182,6 @@ public class Data {
         Document doc = new Document("owner", id).append("key", key);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
-
         return iter != null ? Data.load(doc) : null;
     }
 
@@ -201,7 +205,7 @@ public class Data {
      * @return the list
      */
     public static List<Data> listByKeyValue(String key, Object value) {
-        Document doc = new Document("data." + key, value);
+        Document doc = new Document("data.k", key).append("data.v", value);
         MongoCursor<Document> iter = getCollection().find(doc).iterator();
         List<Data> ret = new ArrayList<Data>();
         while (iter.hasNext()) {

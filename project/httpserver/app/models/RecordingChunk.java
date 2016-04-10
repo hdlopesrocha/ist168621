@@ -31,7 +31,6 @@ public class RecordingChunk {
     /** The end. */
     private Date start, end;
 
-    private Long sequence = null;
 
     /** The id. */
     private ObjectId id = null;
@@ -58,7 +57,6 @@ public class RecordingChunk {
         this.end = end;
         this.url = url;
         this.sessionId = sid;
-        this.sequence = countByGroup(groupId,owner,sid);
     }
 
     /**
@@ -70,7 +68,6 @@ public class RecordingChunk {
         if (collection == null) {
             collection = Service.getDatabase().getCollection(RecordingChunk.class.getName());
             collection.createIndex(new Document("gid",1));
-
         }
         return collection;
     }
@@ -84,7 +81,6 @@ public class RecordingChunk {
     public static RecordingChunk load(Document doc) {
         RecordingChunk rec = new RecordingChunk();
         rec.id = doc.getObjectId("_id");
-        rec.sequence = doc.getLong("seq");
         rec.owner = doc.getObjectId("owner");
         rec.end = doc.getDate("end");
         rec.start = doc.getDate("start");
@@ -165,7 +161,6 @@ public class RecordingChunk {
         doc.put("gid", groupId);
         doc.put("start", start);
         doc.put("end", end);
-        doc.put("seq",sequence);
         doc.put("url",url);
         doc.put("sid",sessionId);
 
@@ -177,6 +172,10 @@ public class RecordingChunk {
 
         id = doc.getObjectId("_id");
 
+    }
+
+    public boolean contains(Date date){
+        return start.getTime()<date.getTime() && date.getTime() < end.getTime();
     }
 
     /**
@@ -237,10 +236,6 @@ public class RecordingChunk {
         if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
         }
-    }
-
-    public Long getSequence() {
-        return sequence;
     }
 
     public String getSid() {

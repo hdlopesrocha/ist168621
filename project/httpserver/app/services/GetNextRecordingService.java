@@ -3,18 +3,16 @@ package services;
 import com.mongodb.client.FindIterable;
 import exceptions.BadRequestException;
 import models.RecordingChunk;
-import models.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
 
 
-
 /**
  * The Class GetCurrentRecordingService.
  */
-public class GetCurrentRecordingService extends Service<RecordingChunk> {
+public class GetNextRecordingService extends Service<RecordingChunk> {
 
     /** The caller. */
     private final ObjectId caller;
@@ -27,7 +25,7 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
     private final ObjectId groupId;
 
     /** The time. */
-    private final Date time;
+    private final ObjectId recId;
     private final String sid;
 
 
@@ -36,16 +34,15 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
      *
      * @param callerId the caller id
      * @param groupId the group id
-     * @param time the time
      */
-    public GetCurrentRecordingService(String callerId, String groupId, String owner, String sid, Date time) {
+    public GetNextRecordingService(String callerId, String groupId, String owner, String sid, ObjectId recId) {
         this.caller = new ObjectId(callerId);
         this.groupId = new ObjectId(groupId);
 
         System.out.println(owner+"|"+sid);
         this.owner = new ObjectId(owner);
         this.sid = sid;
-        this.time = time;
+        this.recId = recId;
     }
 
     /*
@@ -58,24 +55,12 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
 
         RecordingChunk ans = getResult1();
 
-        if(ans==null){
-            // try group
-            ans = getResult2();
-        }
         return ans;
 
     }
 
     private RecordingChunk getResult1(){
-        Document query = new Document("gid", groupId).append("owner",owner).append("sid",sid).append("end", new Document("$gte", time));
-        FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
-        Document first = iter.first();
-        return first != null ? RecordingChunk.load(first) : null;
-    }
-
-
-    private RecordingChunk getResult2(){
-        Document query = new Document("gid", groupId).append("owner",groupId).append("end", new Document("$gte", time));
+        Document query = new Document("gid", groupId).append("owner",owner).append("sid",sid).append("_id", new Document("$gt", recId));
         FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
         Document first = iter.first();
         return first != null ? RecordingChunk.load(first) : null;

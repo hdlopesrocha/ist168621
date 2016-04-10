@@ -208,17 +208,16 @@
         $('#searchPeopleModal').modal('show');
     }
 
-
-
     function showUserProfile(userId){
         $('#searchPeopleModal').modal('hide');
        	$("#userProfileModal").modal("show");
         HyperHttp.userProfile(userId,function(user) {
             var html = "";
             for(var attr in user){
-                html += "<tr><td>"+ attr  + "</td><td>" + user[attr] + "</td></tr>";
+                if(attr!="photo" && attr!="type"){
+                    html += "<tr><td>" + attr + "</td><td>" + user[attr] + "</td></tr>";
+                }
             }
-
             $("#userProperties").html(html);
             $('#userPhoto').attr("src",user.photo);
         });
@@ -227,7 +226,6 @@
             var success = function() {
                 showUserProfile(userId);
                 $('#userProfileModal').modal('hide');
-
 		    }
             var from = data.from;
             var to = data.to;

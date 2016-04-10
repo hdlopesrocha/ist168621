@@ -32,16 +32,10 @@ public class Attribute {
         readSet = (List<ObjectId>) doc.get("r");
     }
 
-
-
-
-
     public Attribute(AttributeDto attr) {
         key = attr.getKey();
         value = attr.getValue();
         identifiable = attr.isIdentifiable();
-
-
         if(attr.getReadSet()!=null) {
             readSet = new ArrayList<ObjectId>();
             for (String s : attr.getReadSet()) {

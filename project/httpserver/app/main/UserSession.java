@@ -1,6 +1,7 @@
 package main;
 
 import exceptions.ServiceException;
+import models.Data;
 import models.HyperContent;
 import models.Message;
 import models.RecordingChunk;
@@ -370,133 +371,179 @@ public class UserSession implements Closeable, Comparable<UserSession> {
      * Sets the historic.
      *
      */
-    public void setHistoric(String owner, Long sequence, String sessionId) {
 
-        playSid = sessionId;
-        Date currentTime = new Date(new Date().getTime() - timeOffset);
-        try {
-            RecordingChunk videoRec;
-            RecordingChunk audioRec;
+    private RecordingChunk nextVideo;
+    private RecordingChunk nextAudio;
+    private Timer scheduledPlayer;
 
-            GetCurrentRecordingService audioService = new GetCurrentRecordingService(getUserId(),
-                    room.getGroupId(), room.getGroupId(),"group", currentTime,sequence);
-            audioRec = audioService.execute();
 
-            if(getGroupId().equals(owner)){
-                videoRec =audioRec;
-            }else {
-                GetCurrentRecordingService videoService = new GetCurrentRecordingService(getUserId(),
-                        room.getGroupId(), owner, sessionId, currentTime, sequence);
-                videoRec = videoService.execute();
+    private void cancelScheduledPlayers(){
+        if(scheduledPlayer!=null){
+            scheduledPlayer.cancel();
+            scheduledPlayer.purge();
+            scheduledPlayer=null;
+        }
+    }
+
+    public void setHistoric(String owner, String sessionId) {
+        nextVideo = nextAudio = null;
+        cancelScheduledPlayers();
+        setInternalHistoric(owner,sessionId);
+    }
+
+    private void playChunks(String owner, String sessionId, Date currentTime,RecordingChunk videoChunk, RecordingChunk audioChunk){
+        String videoUrl=videoChunk.getUrl();
+        String audioUrl=audioChunk.getUrl();
+
+        playingId = videoChunk.getId();
+        synchronized (playerLock) {
+            System.out.println("HISTORIC PLAY: " + videoUrl+ " / "+ audioUrl);
+
+            if(ObjectId.isValid(videoUrl)){
+                RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
+                videoUrl= item.getUrl();
             }
 
-            String videoUrl=null;
-            String audioUrl=null;
-            if(audioRec != null){
-                audioUrl = audioRec.getUrl();
+            System.out.println("URL: "+videoUrl);
+            PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
+
+            if(ObjectId.isValid(audioUrl)){
+                RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
+                audioUrl= item.getUrl();
             }
 
-            if(videoRec != null){
-                videoUrl = videoRec.getUrl();
+            PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
+            tempAudio.addErrorListener(new EventListener<ErrorEvent>() {
+                @Override
+                public void onEvent(ErrorEvent arg0) {
+                    System.out.println("FAILURE: " + arg0.getDescription());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    setInternalHistoric(owner,audioChunk.getSid());
+                }
+            });
+
+            tempAudio.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
+                @Override
+                public void onEvent(EndOfStreamEvent arg0) {
+                    setInternalHistoric(owner,audioChunk.getSid());
+                }
+            });
+
+            // stop old video
+            if (playerVideo != null) {
+                playerVideo.release();
+            }
+            // stop old audio
+            if (playerAudio != null) {
+                playerAudio.release();
             }
 
+            playerVideo = tempVideo;
+            playerAudio = tempAudio;
 
 
-            if (videoUrl!=null && audioUrl!=null && !videoRec.getId().equals(playingId)) {
-                playingId = videoRec.getId();
-                synchronized (playerLock) {
-                    System.out.println("HISTORIC PLAY: " + videoUrl+ " / "+ audioUrl);
+            if (play) {
 
-                    if(ObjectId.isValid(videoUrl)){
-                        RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
-                        videoUrl= item.getUrl();
+                tempAudio.play();
+                tempVideo.play();
+
+                tempAudio.connect(endPoint, MediaType.AUDIO);
+                tempVideo.connect(endPoint, MediaType.VIDEO);
+
+                if(tempVideo.getVideoInfo().getIsSeekable()) {
+                    Long position = currentTime.getTime()-audioChunk.getStart().getTime();
+                    if(position >= tempVideo.getVideoInfo().getDuration()){
+                        position = tempVideo.getVideoInfo().getDuration() -1;
+                    }else if(position<0){
+                        position = 0l;
                     }
 
-                    System.out.println("URL: "+videoUrl);
-                    PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
-
-                    if(ObjectId.isValid(audioUrl)){
-                        RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
-                        audioUrl= item.getUrl();
-                    }
-
-                    PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
-
-                    tempAudio.addErrorListener(new EventListener<ErrorEvent>() {
-                        @Override
-                        public void onEvent(ErrorEvent arg0) {
-                            System.out.println("FAILURE: " + arg0.getDescription());
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            setHistoric(owner,audioRec.getSequence()+1,audioRec.getSid());
-                        }
-                    });
-
-                    tempAudio.addEndOfStreamListener(new EventListener<EndOfStreamEvent>() {
-                        @Override
-                        public void onEvent(EndOfStreamEvent arg0) {
-                            setHistoric(owner,audioRec.getSequence()+1,audioRec.getSid());
-                        }
-                    });
-
-                    // stop old video
-                    if (playerVideo != null) {
-                        playerVideo.release();
-                    }
-                    // stop old audio
-                    if (playerAudio != null) {
-                        playerAudio.release();
-                    }
-
-                    playerVideo = tempVideo;
-                    playerAudio = tempAudio;
-
-
-                    if (play) {
-
-                        tempAudio.play();
-                        tempVideo.play();
-
-                        tempAudio.connect(endPoint, MediaType.AUDIO);
-                        tempVideo.connect(endPoint, MediaType.VIDEO);
-
-                        if(tempVideo.getVideoInfo().getIsSeekable()) {
-                            Long position = currentTime.getTime()-audioRec.getStart().getTime();
-                            if(position >= tempVideo.getVideoInfo().getDuration()){
-                                position = tempVideo.getVideoInfo().getDuration() -1;
-                            }else if(position<0){
-                                position = 0l;
-                            }
-
-                            tempVideo.setPosition(position);
-                            if(tempAudio.getVideoInfo().getIsSeekable()) {
-                                tempAudio.setPosition(position);
-                            }
-                        }
-                        else {
-                            System.out.println("not seekable!");
-                            JSONObject msg = new JSONObject();
-                            msg.put("cmd", "setTime");
-                            msg.put("time", Tools.FORMAT.format(audioRec.getStart()));
-                            timeOffset = new Date().getTime()- audioRec.getStart().getTime();
-                            sendMessage(msg.toString());
-                        }
+                    tempVideo.setPosition(position);
+                    if(tempAudio.getVideoInfo().getIsSeekable()) {
+                        tempAudio.setPosition(position);
                     }
                 }
-            } else {
-                if(videoRec==null) {
-                    playingId = null;
-                    System.out.println("No video here!");
-                }else {
-                    System.out.println("Already playing!");
+                else {
+                    System.out.println("not seekable!");
+                    JSONObject msg = new JSONObject();
+                    msg.put("cmd", "setTime");
+                    msg.put("time", Tools.FORMAT.format(audioChunk.getStart()));
+                    timeOffset = new Date().getTime()- audioChunk.getStart().getTime();
+                    sendMessage(msg.toString());
+                }
+
+                try {
+                    // prepare next audio
+                    if (nextAudio == null) {
+                        nextAudio = new GetNextRecordingService(getUserId(), room.getGroupId(), room.getGroupId(), "group", audioChunk.getId()).execute();
+                    }
+                    // prepare next video
+                    if (nextVideo == null) {
+                        nextVideo = new GetNextRecordingService(getUserId(), room.getGroupId(), owner, sessionId, videoChunk.getId()).execute();
+                    }
+                }catch (ServiceException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    private void setInternalHistoric(String owner, String sessionId) {
+        playSid = sessionId;
+        Date currentTime = new Date(new Date().getTime() - timeOffset);
+        RecordingChunk videoRec=nextVideo;
+        RecordingChunk audioRec=nextAudio;
+        nextAudio=nextVideo = null;
+
+        try {
+            if(audioRec==null) {
+                GetCurrentRecordingService audioService = new GetCurrentRecordingService(getUserId(), room.getGroupId(), room.getGroupId(), "group", currentTime);
+                audioRec = audioService.execute();
+            }
+            if(videoRec==null) {
+                if (getGroupId().equals(owner)) {
+                    videoRec = audioRec;
+                } else {
+                    GetCurrentRecordingService videoService = new GetCurrentRecordingService(getUserId(), room.getGroupId(), owner, sessionId, currentTime);
+                    videoRec = videoService.execute();
                 }
             }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
+
+        if (videoRec!=null && audioRec!=null && !videoRec.getId().equals(playingId)) {
+            if(audioRec.contains(currentTime)) {
+                playChunks(owner,sessionId,currentTime, videoRec,audioRec);
+            }
+            else {
+                long time = audioRec.getStart().getTime() - currentTime.getTime();
+                cancelScheduledPlayers();
+                scheduledPlayer = new Timer();
+                System.out.print("SCHEDULLED!");
+
+                scheduledPlayer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.print("PLAYSCHED!");
+                        setInternalHistoric(owner,sessionId);
+                    }
+                },time);
+            }
+        } else {
+            if(videoRec==null) {
+                playingId = null;
+                System.out.println("No video here!");
+            }else {
+                System.out.println("Already playing!");
+            }
+        }
+
         sendChannels();
     }
 
@@ -532,6 +579,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 session.endPoint.connect(compositePort,MediaType.AUDIO);
             }
         }
+        nextVideo = nextAudio = null;
         sendChannels();
         // mixerPort.connect(endPoint, MediaType.AUDIO);
 

@@ -246,7 +246,7 @@ public class WSController extends Controller {
                                                 sessionId = "group";
                                             }
                                             userSession.setOffset(args.getLong("offset"));
-                                            userSession.setHistoric(owner,null,sessionId);
+                                            userSession.setHistoric(owner,sessionId);
                                             userSession.sendMessage(userSession.getContent());
                                         }
                                     }).start();
