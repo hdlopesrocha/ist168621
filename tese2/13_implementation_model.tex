@@ -20,15 +20,13 @@ The model is the most important component of our solution, a badly designed mode
 \label{table:schema}
     \begin{tabular}{|ll|}
         \hline
-        \multicolumn{2}{|c|}{\textbf{Collection name}}       \\ \hline
-        $\Diamondblack$ \underline{\_id (primary key)}  & ObjectId   \\ 
-        $\medbullet$ Not nullable property name           & Property type                    \\ 
-        $\medcirc$ Nullable property name      & Property type                         \\
-        $\medcirc$ Reference to document     & ObjectId                         \\
-        $\medbullet$ Embedded document      & Document                         \\ 
-        $\medbullet$ Embedded list      & List[Type]                         \\ \hline
-        
-        
+        \multicolumn{2}{|c|}{\textbf{Collection name}}              \\ \hline
+        $\Diamondblack$ \underline{\_id (primary key)}  & ObjectId  \\ 
+        $\medbullet$ Not nullable property name  & Property type    \\ 
+        $\medcirc$ Nullable property name      & Property type      \\
+        $\medcirc$ Reference to document     & ObjectId             \\
+        $\medbullet$ Embedded document      & Document              \\ 
+        $\medbullet$ Embedded list      & List[Type]                \\ \hline
     \end{tabular}
 \end{table}
 
@@ -45,18 +43,18 @@ Our first decision for our model in order to avoid repeated code, was the isolat
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{Data}}                                \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                         \\ 
-            $\medbullet$ owner           & ObjectId                            \\ 
+            \multicolumn{2}{|c|}{\textbf{Data}}            \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId     \\ 
+            $\medbullet$ owner           & ObjectId        \\ 
             $\medbullet$ properties      & List[Attribute] \\ 
-            $\medcirc$ searchableValues & List[Text]        \\ \hline
+            $\medcirc$ searchableValues & List[Text]       \\ \hline
         \end{tabular}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{Attribute}}                           \\ \hline
-            $\medbullet$ key           & Text                                  \\ 
-            $\medcirc$ value           & Object                              \\ 
-            $\medbullet$ identifiable    & Boolean                             \\ 
+            \multicolumn{2}{|c|}{\textbf{Attribute}}       \\ \hline
+            $\medbullet$ key           & Text              \\ 
+            $\medcirc$ value           & Object            \\ 
+            $\medbullet$ identifiable    & Boolean         \\ 
             $\medcirc$ readPermissions &  List[ObjectId]   \\ 
             $\medcirc$ writePermissions  & List[ObjectId]  \\ \hline
         \end{tabular}    
@@ -89,10 +87,10 @@ The user model is not tied to the user attributes (table \ref{table:user}), the 
 \label{table:user}
     \begin{tabular}{|ll|}
         \hline
-        \multicolumn{2}{|c|}{\textbf{User}}                             \\ \hline
-        $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-        $\medbullet$ hash           & Text                         \\ 
-        $\medbullet$ salt      & Text                         \\ \hline
+        \multicolumn{2}{|c|}{\textbf{User}}         \\ \hline
+        $\Diamondblack$ \underline{\_id}  & ObjectId  \\ 
+        $\medbullet$ hash           & Text          \\ 
+        $\medbullet$ salt      & Text               \\ \hline
     \end{tabular}
 \end{table}
 
@@ -106,14 +104,16 @@ A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\
 \label{table:relation}
     \begin{tabular}{|ll|}
         \hline
-        \multicolumn{2}{|c|}{\textbf{Relation}}                             \\ \hline
-        $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-        $\medbullet$ source           & ObjectId                         \\ 
-        $\medbullet$ target      & ObjectId                         \\ \hline
+        \multicolumn{2}{|c|}{\textbf{Relation}}     \\ \hline
+        $\Diamondblack$ \underline{\_id}  & ObjectId  \\ 
+        $\medbullet$ source           & ObjectId    \\ 
+        $\medbullet$ target      & ObjectId         \\ \hline
     \end{tabular}
 \end{table}
 
 A user can only interact with friends or with group members. In order to validate a friendship, both users must agree on that friendship, by other words it must exist a bi-directional relation between both users.
+
+In order to improve performance of queries over \emph{Relation} collection we have created indexes on the \emph{source}, \emph{target} and also on the pair composed by both attributes.
 
 \subsection{Group model}
 
@@ -128,18 +128,18 @@ Moreover, a group can be public or private. If the group is public then it is vi
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{Group}}             \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId       \\ 
-            $\medcirc$ inviteToken           & Text          \\ 
-            $\medbullet$ visibility      & Text              \\ \hline
+            \multicolumn{2}{|c|}{\textbf{Group}}        \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId  \\ 
+            $\medcirc$ inviteToken           & Text     \\ 
+            $\medbullet$ visibility      & Text         \\ \hline
         \end{tabular}
 
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{GroupMembership}}   \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId       \\ 
-            $\medbullet$ groupId            & ObjectId        \\ 
-            $\medbullet$ userId & ObjectId                   \\ \hline
+            \multicolumn{2}{|c|}{\textbf{GroupMembership}}  \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId      \\ 
+            $\medbullet$ groupId            & ObjectId      \\ 
+            $\medbullet$ userId & ObjectId                  \\ \hline
         \end{tabular}    
     \end{tabular}
 \end{table}
@@ -151,6 +151,9 @@ When a group is created, a group membership is automatically assigned by its cre
 
 Entities that have a membership with a group can create more memberships by sharing an invite token or by specifying new group members.
 
+In order to improve performance of queries over \emph{GroupMembership} collection we have created indexes on the \emph{groupId}, \emph{userId} and also on the pair composed by both attributes.
+
+
 \subsection{Message model}
 
 A message is composed by its content, time of creation and source and target identification numbers (table \ref{table:message}). The message's target can reference any of object but our application is only covering messages to groups.
@@ -161,13 +164,15 @@ A message is composed by its content, time of creation and source and target ide
 \label{table:message}
     \begin{tabular}{|ll|}
         \hline
-        \multicolumn{2}{|c|}{\textbf{Message}}                             \\ \hline
-        $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-        $\medbullet$ source           & ObjectId                         \\ 
-        $\medbullet$ target      & ObjectId                         \\ 
-        $\medbullet$ content      & Text                         \\ \hline
+        \multicolumn{2}{|c|}{\textbf{Message}}      \\ \hline
+        $\Diamondblack$ \underline{\_id}  & ObjectId  \\ 
+        $\medbullet$ source           & ObjectId    \\ 
+        $\medbullet$ target      & ObjectId         \\ 
+        $\medbullet$ content      & Text            \\ \hline
     \end{tabular}
 \end{table}
+
+In order to improve performance of queries over \emph{Relation} collection we have created indexes on the \emph{target} attribute and also on the pair composed by \emph{target} and \emph{\_id} attributes for finding and sorting the messages received by an entity more efficiently.
 
 \subsection{Hyper content model}
 
@@ -185,21 +190,21 @@ The hyper content is used to synchronize content among users during a conversati
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{HyperContent}}                             \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medbullet$ groupId            & ObjectId                         \\ 
-            $\medbullet$ start              & Date                         \\ 
-            $\medbullet$ end                & Date                         \\ 
-            $\medbullet$ content            & Text                         \\ \hline
+            \multicolumn{2}{|c|}{\textbf{HyperContent}}  \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId   \\ 
+            $\medbullet$ groupId            & ObjectId   \\ 
+            $\medbullet$ start              & Date       \\ 
+            $\medbullet$ end                & Date       \\ 
+            $\medbullet$ content            & Text       \\ \hline
         \end{tabular}
 
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{TimeAnnotation}}                   \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medbullet$ groupId            & ObjectId                         \\ 
-            $\medbullet$ title & Text                           \\ 
-            $\medbullet$ time & Date                           \\ \hline
+            \multicolumn{2}{|c|}{\textbf{TimeAnnotation}}  \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId     \\ 
+            $\medbullet$ groupId            & ObjectId     \\ 
+            $\medbullet$ title & Text                      \\ 
+            $\medbullet$ time & Date                       \\ \hline
 
         \end{tabular}    
     \end{tabular}
@@ -217,10 +222,10 @@ Within a conversation, users can write documents collaboratively. Each document 
     \label{my-label}
     \begin{tabular}{|ll|}
         \hline
-        \multicolumn{2}{|c|}{\textbf{CollaborativeContent}}                             \\ \hline
-        $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-        $\medbullet$ groupId            & ObjectId                         \\ 
-        $\medbullet$ content            & Text                         \\ \hline
+        \multicolumn{2}{|c|}{\textbf{CollaborativeContent}}  \\ \hline
+        $\Diamondblack$ \underline{\_id}  & ObjectId           \\ 
+        $\medbullet$ groupId            & ObjectId           \\ 
+        $\medbullet$ content            & Text               \\ \hline
     \end{tabular}
 \end{table}
 
@@ -237,22 +242,22 @@ In order to allow different devices within the same user, storing just the \ac{U
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{RecordingInterval}}                   \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medbullet$ groupId            & ObjectId                         \\ 
-             $\medbullet$ start             & Date                         \\ 
-            $\medbullet$ end                & Date                         \\ \hline
+            \multicolumn{2}{|c|}{\textbf{RecordingInterval}}  \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId        \\ 
+            $\medbullet$ groupId            & ObjectId        \\ 
+             $\medbullet$ start             & Date            \\ 
+            $\medbullet$ end                & Date            \\ \hline
         \end{tabular}   
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{RecordingChunk}}                             \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medbullet$ groupId            & ObjectId                         \\ 
-            $\medbullet$ owner           & ObjectId                      \\ 
-            $\medbullet$ sessionId          & Text                       \\
-            $\medbullet$ start              & Date                         \\ 
-            $\medbullet$ end                & Date                         \\ 
-            $\medbullet$ url               & Text                       \\ \hline
+            \multicolumn{2}{|c|}{\textbf{RecordingChunk}}  \\ \hline
+            $\Diamondblack$ \underline{\_id}  & ObjectId     \\ 
+            $\medbullet$ groupId            & ObjectId     \\ 
+            $\medbullet$ owner           & ObjectId        \\ 
+            $\medbullet$ sessionId          & Text         \\
+            $\medbullet$ start              & Date         \\ 
+            $\medbullet$ end                & Date         \\ 
+            $\medbullet$ url               & Text          \\ \hline
         \end{tabular}
     \end{tabular}
 \end{table}

@@ -28,11 +28,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     /** The out. */
     private final WebSocket.Out<String> out;
-    
     private final Room room;
-
     private final Object playerLock = new Object();
-
     private boolean play = true;
     private long timeOffset = 0L;
     private String playSid;
@@ -41,19 +38,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private Boolean hasAudio = true;
     private Boolean hasVideo = true;
     private UUID sid = UUID.randomUUID();
-
     private Recorder recorder;
     private ZBarFilter qrCodeFilter;
-
-    public String getUserId() {
-        return userId;
-    }
-
     private WebRtcEndpoint endPoint;
     private HubPort compositePort;
     private PlayerEndpoint playerVideo;
     private PlayerEndpoint playerAudio;
-
     private RecordingChunk nextVideo;
     private RecordingChunk nextAudio;
     private Timer scheduledPlayer;
@@ -443,19 +433,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             if (playerAudio != null) {
                 playerAudio.release();
             }
-
             playerVideo = tempVideo;
             playerAudio = tempAudio;
 
 
             if (play) {
-
                 tempAudio.play();
                 tempVideo.play();
-
                 tempAudio.connect(endPoint, MediaType.AUDIO);
                 tempVideo.connect(endPoint, MediaType.VIDEO);
-
                 if(tempVideo.getVideoInfo().getIsSeekable() && tempAudio.getVideoInfo().getIsSeekable()) {
                     // this is the ideal behavior
                     tempVideo.setPosition(seekVideo);
@@ -470,7 +456,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                     timeOffset = new Date().getTime()- audioChunk.getStart().getTime();
                     sendMessage(msg.toString());
                 }
-
                 try {
                     // prepare next audio
                     if (nextAudio == null) {
@@ -547,7 +532,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 System.out.println("Already playing!");
             }
         }
-
         sendChannels();
     }
 
@@ -701,6 +685,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
     public String getSid() {
         return sid.toString();
+    }
+    public String getUserId() {
+        return userId;
     }
 
 }

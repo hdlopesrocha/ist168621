@@ -51,8 +51,9 @@ public class Group {
      * @return the collection
      */
     private static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(Group.class.getName());
+        }
         return collection;
     }
 
@@ -83,28 +84,15 @@ public class Group {
         return doc != null ? load(doc) : null;
     }
 
-    /**
-     * List all.
-     *
-     * @return the list
-     */
-    public static List<Group> listAll() {
-        FindIterable<Document> iter = getCollection().find(new Document());
-        List<Group> ret = new ArrayList<Group>();
-        for (Document doc : iter) {
-            ret.add(load(doc));
-        }
-        return ret;
-    }
+
 
     /**
      * Search.
      *
-     * @param caller the caller
      * @param query the query
      * @return the list
      */
-    public static List<Group> search(User caller, String query) {
+    public static List<Group> search(String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Document doc = new Document("name", regex);
         FindIterable<Document> iter = getCollection().find(doc);

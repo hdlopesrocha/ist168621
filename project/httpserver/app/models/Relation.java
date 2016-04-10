@@ -35,10 +35,8 @@ public class Relation {
      * @param ti the ti
      */
     public Relation(ObjectId fi, ObjectId ti) {
-
         this.target = ti;
         this.source = fi;
-
     }
 
     /**
@@ -47,8 +45,12 @@ public class Relation {
      * @return the collection
      */
     private static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(Relation.class.getName());
+            collection.createIndex(new Document("s",1));
+            collection.createIndex(new Document("t",1));
+            collection.createIndex(new Document("s",1).append("t",1));
+        }
         return collection;
     }
 
@@ -61,9 +63,8 @@ public class Relation {
     private static Relation load(Document doc) {
         Relation user = new Relation();
         user.setId(doc.getObjectId("_id"));
-        user.setFrom(doc.getObjectId("fi"));
-        user.setTo(doc.getObjectId("ti"));
-
+        user.setFrom(doc.getObjectId("s"));
+        user.setTo(doc.getObjectId("t"));
         return user;
     }
 
@@ -75,7 +76,7 @@ public class Relation {
      * @return the relation
      */
     public static Relation findByEndpoint(ObjectId a, ObjectId b) {
-        Document doc = new Document("fi", a).append("ti", b);
+        Document doc = new Document("s", a).append("t", b);
         FindIterable<Document> iter = getCollection().find(doc);
         doc = iter.first();
         return doc != null ? load(doc) : null;
@@ -88,10 +89,8 @@ public class Relation {
      * @return the list
      */
     public static List<Relation> listFrom(ObjectId ep) {
-        Document doc = new Document("fi", ep);
+        Document doc = new Document("s", ep);
         FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-
         Iterator<Document> i = iter.iterator();
         List<Relation> ret = new ArrayList<Relation>();
         while (i.hasNext()) {
@@ -107,10 +106,8 @@ public class Relation {
      * @return the list
      */
     public static List<Relation> listTo(ObjectId ep) {
-        Document doc = new Document("ti", ep);
+        Document doc = new Document("t", ep);
         FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-
         Iterator<Document> i = iter.iterator();
         List<Relation> ret = new ArrayList<Relation>();
         while (i.hasNext()) {
@@ -140,8 +137,8 @@ public class Relation {
         if (id != null)
             doc.put("_id", id);
 
-        doc.put("fi", source);
-        doc.put("ti", target);
+        doc.put("s", source);
+        doc.put("t", target);
 
 
         if (id == null)

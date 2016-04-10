@@ -16,22 +16,17 @@ import java.util.List;
  */
 public class GroupMembership {
 
-
     /** The collection. */
     private static MongoCollection<Document> collection;
     
     /** The user id. */
     private ObjectId id = null, groupId = null, userId = null;
-    
-
-
 
     /**
      * Instantiates a new membership.
      */
     private GroupMembership() {
     }
-
 
     /**
      * Instantiates a new membership.
@@ -50,8 +45,12 @@ public class GroupMembership {
      * @return the collection
      */
     private static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(GroupMembership.class.getName());
+            collection.createIndex(new Document("uid",1));
+            collection.createIndex(new Document("gid",1));
+            collection.createIndex(new Document("gid",1).append("uid",1));
+        }
         return collection;
     }
 
@@ -135,17 +134,17 @@ public class GroupMembership {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
+        }
         doc.put("gid", groupId);
         doc.put("uid", userId);
 
-
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        } else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
     }
 
@@ -207,8 +206,9 @@ public class GroupMembership {
      * Delete.
      */
     public void delete() {
-        if (id != null)
+        if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
+        }
     }
 
 

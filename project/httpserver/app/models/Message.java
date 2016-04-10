@@ -61,8 +61,11 @@ public class Message {
      * @return the collection
      */
     private static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(Message.class.getName());
+            collection.createIndex(new Document("target",1));
+            collection.createIndex(new Document("target",1).append("_id",1));
+        }
         return collection;
     }
 
@@ -123,19 +126,15 @@ public class Message {
         Document doc = new Document();
         if (id != null)
             doc.put("_id", id);
-
         doc.put("target", target);
         doc.put("source", source);
         doc.put("time", time);
         doc.put("text", content);
-
         if (id == null) {
             getCollection().insertOne(doc);
         } else
             getCollection().replaceOne(new Document("_id", id), doc);
-
         id = doc.getObjectId("_id");
-
     }
 
     /**
