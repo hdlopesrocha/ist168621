@@ -18,7 +18,7 @@ public class ListMessagesService extends Service<List<Message>> {
     private final ObjectId target;
     
     /** The end. */
-    private final ObjectId oid;
+    private final Long ts;
     
     /** The len. */
     private final int len;
@@ -28,12 +28,12 @@ public class ListMessagesService extends Service<List<Message>> {
      * Instantiates a new list messages service.
      *
      * @param target the target
-     * @param end the end
+     * @param ts the end
      * @param len the len
      */
-    public ListMessagesService(final String target, final String oid, final int len) {
+    public ListMessagesService(final String target, final Long ts, final int len) {
         this.target = new ObjectId(target);
-        this.oid = oid!=null ? new ObjectId(oid): null;
+        this.ts = ts;
         this.len = len;
     }
 
@@ -44,7 +44,7 @@ public class ListMessagesService extends Service<List<Message>> {
      */
     @Override
     public List<Message> dispatch() throws ServiceException {
-        return Message.listByTarget(target, oid, len);
+        return Message.listByTarget(target, ts, len);
     }
 
     /*

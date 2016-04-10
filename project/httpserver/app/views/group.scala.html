@@ -461,10 +461,7 @@
         var firstRecording = true;
         var participants = {};
         var timeline = null;
-        var oldestMsgSeq = null;
-        var oldestMsgOid = null;
-
-
+        var oldestMsgTs = null;    
         var autoSelect = false;
         var fullscreen = false;
 
@@ -551,8 +548,8 @@
         }
 
         function receiveMore() {
-            if (oldestMsgOid) {
-                HyperWebSocket.receiveMore(oldestMsgOid, 1);
+            if (oldestMsgTs) {
+                HyperWebSocket.receiveMore(oldestMsgTs, 1);
             }
         }
 

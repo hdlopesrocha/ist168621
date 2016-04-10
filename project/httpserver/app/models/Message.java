@@ -86,14 +86,13 @@ public class Message {
      * List by target.
      *
      * @param groupId the group id
-     * @param end the end
      * @param len the len
      * @return the list
      */
-    public static List<Message> listByTarget(ObjectId groupId, ObjectId oid, int len) {
+    public static List<Message> listByTarget(ObjectId groupId, Long ts, int len) {
         Document query = new Document("target", groupId);
-        if (oid != null) {
-            query.append("_id", new Document("$lt", oid));
+        if (ts != null) {
+            query.append("_id", new Document("$lt", new ObjectId(new Date(ts))));
         }
         FindIterable<Document> iter = getCollection().find(query).sort(new Document("_id", -1)).limit(len);
         List<Message> ret = new ArrayList<Message>();

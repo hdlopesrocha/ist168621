@@ -155,11 +155,11 @@ var HyperWebSocket = new (function() {
 		}));
 	}
 	
-	this.receiveMore = function(oid,len){
+	this.receiveMore = function(ts,len){
 		ws.send(JSON.stringify({
 			cmd : "getMessages",
 			len: len,
-			oid: oid
+			ts: ts
 		}));
 	}
 	

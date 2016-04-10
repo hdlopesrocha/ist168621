@@ -67,8 +67,8 @@ HyperWebSocket.setChannelsArrivedHandler(function (array,play) {
 
 });
 
-HyperWebSocket.setOnMessageArrivedHandler(function(userId, time, text, name, mid, seq) {
-    console.log("messageArrived",seq,oldestMsgOid);
+HyperWebSocket.setOnMessageArrivedHandler(function(userId, time, text, name, mid, ts) {
+    console.log("messageArrived",ts,oldestMsgTs);
 
     var html = '<li class="media"><div class="media-body"><div class="media">'
             + '<a class="pull-left" href="#"><img class="media-object img-circle"  style="height: 40px;" src="/photo/'+userId+'" /></a>'
@@ -76,9 +76,8 @@ HyperWebSocket.setOnMessageArrivedHandler(function(userId, time, text, name, mid
             +' <small class="text-muted">' + name + ' | ' + time + '</small>'
             + '<hr /></div></div></div></li>';
 
-    if (oldestMsgSeq==null || seq < oldestMsgSeq) {
-        oldestMsgSeq = seq;
-        oldestMsgOid = mid;
+    if (oldestMsgTs==null || ts < oldestMsgTs) {
+        oldestMsgTs = ts;
         var oldHeight = $("#messagesList").height();
         $("#messagesList").prepend(html);
         var newHeight = $("#messagesList").height();

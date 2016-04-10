@@ -671,11 +671,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     /**
      * Send messages.
      *
-     * @param end the end
+     * @param ts the end
      * @param len the len
      */
-    public void sendMessages(String oid, int len) {
-        ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), oid, len);
+    public void sendMessages(Long ts, int len) {
+        ListMessagesService messagesService = new ListMessagesService(room.getGroupId(), ts, len);
         JSONArray messagesArray = new JSONArray();
         try {
             List<Message> messages = messagesService.execute();
