@@ -36,12 +36,12 @@ The model is the most important component of our solution, a badly designed mode
 
 For designing our model we have taken into account generic programming techniques. We observed that operations like searching for an object was quite repeated amongst different types of objects. 
 
-Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently from the object type. To this generic set of properties we call data and each object of this type has a reference to the owner, which is a unique identification number.
+Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently from the object type. To this generic set of properties we call data (table \ref{table:generic}) and each object of this type has a reference to the owner, which is a unique identification number.
 
 \begin{table}[!htb]
 \centering
 \caption{Generic data model}
-\label{my-label}
+\label{table:generic}
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
@@ -81,12 +81,12 @@ In summary, with this model we can perform search and identification of any kind
 
 \subsection{User model}
 
-The user model is not tied to the user attributes, the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters long.
+The user model is not tied to the user attributes (table \ref{table:user}), the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters long.
 
 \begin{table}[!htb]
 \centering
 \caption{User model}
-\label{my-label}
+\label{table:user}
     \begin{tabular}{|ll|}
         \hline
         \multicolumn{2}{|c|}{\textbf{User}}                             \\ \hline
@@ -98,12 +98,12 @@ The user model is not tied to the user attributes, the information maintained in
 
 \subsection{Relation model}
 
-A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$, where $e_1$ is the source and $e_2$ is the target. This relation is said bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
+A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$ (table \ref{table:relation}), where $e_1$ is the source and $e_2$ is the target. This relation is said bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
 
 \begin{table}[!htb]
 \centering
 \caption{Relation model}
-\label{my-label}
+\label{table:relation}
     \begin{tabular}{|ll|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Relation}}                             \\ \hline
@@ -117,27 +117,29 @@ A user can only interact with friends or with group members. In order to validat
 
 \subsection{Group model}
 
-A group can be public or private. If the group is public then it is visible to all users that maintain a friendship with a member of this group. If the group is private then it is only visible to their members.
+A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on table \ref{table:group}.
+
+Moreover, a group can be public or private. If the group is public then it is visible to all users that maintain a friendship with a member of this group. If the group is private then it is only visible to their members.
 
 \begin{table}[!htb]
 \centering
 \caption{Group model}
-\label{my-label}
+\label{table:group}
     \begin{tabular}{cc}
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{Group}}                             \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medcirc$ inviteToken           & Text                         \\ 
-            $\medbullet$ visibility      & Text                         \\ \hline
+            \multicolumn{2}{|c|}{\textbf{Group}}             \\ \hline
+            $\Diamondblack$ \underline{id}  & ObjectId       \\ 
+            $\medcirc$ inviteToken           & Text          \\ 
+            $\medbullet$ visibility      & Text              \\ \hline
         \end{tabular}
 
         \begin{tabular}{|ll|}
             \hline
-            \multicolumn{2}{|c|}{\textbf{GroupMembership}}                   \\ \hline
-            $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
-            $\medbullet$ groupId           & ObjectId                         \\ 
-            $\medbullet$ userId & ObjectId                           \\ \hline
+            \multicolumn{2}{|c|}{\textbf{GroupMembership}}   \\ \hline
+            $\Diamondblack$ \underline{id}  & ObjectId       \\ 
+            $\medbullet$ groupId            & ObjectId        \\ 
+            $\medbullet$ userId & ObjectId                   \\ \hline
         \end{tabular}    
     \end{tabular}
 \end{table}
@@ -151,19 +153,18 @@ Entities that have a membership with a group can create more memberships by shar
 
 \subsection{Message model}
 
-A message is composed by its content, sequence number, time of creation and source and target identification numbers. The message's target can reference any of object but our application is only covering messages to groups.
+A message is composed by its content, time of creation and source and target identification numbers (table \ref{table:message}). The message's target can reference any of object but our application is only covering messages to groups.
 
 \begin{table}[!htb]
 \centering
 \caption{Message model}
-\label{my-label}
+\label{table:message}
     \begin{tabular}{|ll|}
         \hline
         \multicolumn{2}{|c|}{\textbf{Message}}                             \\ \hline
         $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
         $\medbullet$ source           & ObjectId                         \\ 
         $\medbullet$ target      & ObjectId                         \\ 
-        $\medbullet$ sequence      & Number                         \\ 
         $\medbullet$ content      & Text                         \\ \hline
     \end{tabular}
 \end{table}
@@ -225,7 +226,7 @@ Within a conversation, users can write documents collaboratively. Each document 
 
 \subsection{Recording model}
 
-During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains a reference to a group and list of \ac{URL}s with the correspondent owner identification number and \emph{WebSocket} session id.
+During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains the media \ac{URL}, a reference to a group, an owner identification number and the correspondent \emph{WebSocket} session id.
 
 In order to allow different devices within the same user, storing just the \ac{URL} with an associated user id is not enough as in this case it is needed one more parameter to differentiate the different \emph{webSocket} sessions opened by the same user. For this reason we had to associate a random session identification number to each \emph{webSocket}.
 
@@ -247,11 +248,11 @@ In order to allow different devices within the same user, storing just the \ac{U
             \multicolumn{2}{|c|}{\textbf{RecordingChunk}}                             \\ \hline
             $\Diamondblack$ \underline{id}  & ObjectId                      \\ 
             $\medbullet$ groupId            & ObjectId                         \\ 
-            $\medbullet$ interval           & ObjectId                      \\ 
+            $\medbullet$ owner           & ObjectId                      \\ 
+            $\medbullet$ sessionId          & Text                       \\
             $\medbullet$ start              & Date                         \\ 
             $\medbullet$ end                & Date                         \\ 
-            $\medbullet$ sequenceNumber     & Number                         \\ 
-            $\medbullet$ urls               & Document                       \\ \hline
+            $\medbullet$ url               & Text                       \\ \hline
         \end{tabular}
     \end{tabular}
 \end{table}

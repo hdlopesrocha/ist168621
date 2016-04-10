@@ -2,7 +2,6 @@
 	In this section we describe the algorithm we created to show synchronized interactive content to clients.
 
 
-
 	\subsection{Content creation}
 
 	In order to create content the user has the option to write simple movie captions without writing any code, otherwise, as mentioned before, it can write \ac{HTML}, \ac{CSS} and \emph{JavaScript}. The definition of the content's starting and ending time by the user it's not an easy task. Defining the content's time to appear in real-time would require a previous user plan. Otherwise the user could make a speech and add the content for later reproduction.
@@ -64,7 +63,7 @@ function onCodeFound(content) {
 	Our main content synchronization mechanism is time based but with some programming knowledge it is possible to insert \emph{JavaScript} code that fires events on user interaction. For example, after a teacher's lecture, it is possible to show a quiz to the users in order to understand what they learned and then submit the data to the server for further analysis.
 
 
-	\subsection{Synchronization}
+	\subsection{Interactive media synchronization}
 
 	In our solution content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}, this content is displayed on defined intervals of time.
 
@@ -238,6 +237,7 @@ function scheduleContent() {
 		\label{fig:search}
 \end{figure}
 
+
 	\subsection{Switching views}
 
 		We provide a way for users to select the composite view of the conference room or the video shared by a particular user device as it can be seen on figure \ref{fig:devices}. 
@@ -256,3 +256,19 @@ function scheduleContent() {
 		We also provide an automatic mechanism for switching the view to the current speaker. With respect to sound analysis, the sound samples are analyzed on the client side through the web audio \ac{API}.
 
 		Our speech detector is straightforward, we could perform a spectral analysis in order to understand if the analyzed sound contains frequencies in the range of the human voice but instead we just capture sound samples in real time and calculate the maximum sound amplitude. If a sound sample has an amplitude bigger than a factor of the maximum amplitude (we have used an empirical value of 10\%) we say that the user is speaking and therefore we send a message to the server if the speaking state has changed. Subsequently, the server receives the user speaking state and sends it to the other users so they can request a different view.
+
+
+\subsection{Non interactive media synchronization}
+		By default each user receives the real time mixed video and audio of every users. As described on the previous section, users can switch the current view even for recorded media.
+
+		Whenever a user changes the current viewed time, our server calculates which chunks to reproduce.
+
+		In order to determine which chunks are going to be played we could find any chunk that matches the session id and intersects the given user time. Although this seems logical, we limit the size of the results to one and ignore the starting component of the recording chunk. As a consequence, we will obtain the recording chunk that ends after the playing time.
+
+		The obtained chunk may or not intersect the given time, if it intersects than we immediately start playing the chunk, otherwise we know that the chunks starting time is after the playing time and we schedule the player to reproduce after a time duration given by the difference of the playing time and chunk starting time.
+
+		In order to reduce the delay between switching parts we perform a query on the database for finding the next chunk to play while the selected media is playing. In order to find the next chunk we use the chunk that has a bigger id immediately after the playing chunk.
+
+		In order to allow the users to watch an individual image and ear the audio of everyone, we are using two players, one for audio and another for video. 
+
+		If a user leaves a conference room, it is expected that the sequence of played blocks ends. When a block is not found for a given \emph{webSocket} session we try to find a block for the same user and if not possible we try to play a composite recorded block, lastly, if every attempt fails we wait for the next interval the contains media.
