@@ -6,6 +6,7 @@ import main.Tools;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
+import services.ListCurrentRecordingsService;
 import services.Service;
 
 import java.util.ArrayList;
@@ -59,8 +60,9 @@ public class HyperContent {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(HyperContent.class.getName());
+        }
         return collection;
     }
 
@@ -77,7 +79,6 @@ public class HyperContent {
         content.end = doc.getDate("end");
         content.groupId = doc.getObjectId("gid");
         content.content = doc.getString("content");
-
         return content;
     }
 
@@ -95,20 +96,6 @@ public class HyperContent {
     }
 
     /**
-     * List all.
-     *
-     * @return the list
-     */
-    public static List<HyperContent> listAll() {
-        FindIterable<Document> iter = getCollection().find(new Document());
-        List<HyperContent> ret = new ArrayList<HyperContent>();
-        for (Document doc : iter) {
-            ret.add(load(doc));
-        }
-        return ret;
-    }
-
-    /**
      * Search.
      *
      * @param gid the gid
@@ -119,12 +106,7 @@ public class HyperContent {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Document doc = new Document("gid", gid).append("content", regex);
         FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<HyperContent> ret = new ArrayList<HyperContent>();
-        while (i.hasNext()) {
-            ret.add(HyperContent.load(i.next()));
-        }
-        return ret;
+        return deserialize(iter.iterator());
     }
 
     /**
@@ -132,21 +114,40 @@ public class HyperContent {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
-
+        }
         doc.put("start", start);
         doc.put("end", end);
         doc.put("gid", groupId);
         doc.put("content", content);
-
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        }else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
+    }
 
+
+    public static List<HyperContent> listFutureIntersections(ObjectId groupId, Date time, int limit) {
+        FindIterable<Document> iter2 = HyperContent.getCollection().find(new Document("gid", groupId)
+                .append("start", new Document("$gte", time))).sort(new Document("start", 1)).limit(limit);
+        return deserialize(iter2.iterator());
+    }
+
+    public static List<HyperContent> listIntersections(ObjectId groupId,Date time){
+        FindIterable<Document> iter = HyperContent.getCollection().find(new Document("gid", groupId)
+                .append("start", new Document("$lt", time)).append("end", new Document("$gte", time)));
+        return deserialize(iter.iterator());
+    }
+
+    private static List<HyperContent> deserialize(Iterator<Document> it){
+        List<HyperContent> ret = new ArrayList<>();
+        while (it.hasNext()) {
+            ret.add(load(it.next()));
+        }
+        return ret;
     }
 
     /**
@@ -207,8 +208,9 @@ public class HyperContent {
      * Delete.
      */
     public void delete() {
-        if (id != null)
+        if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
+        }
     }
 
     /**
@@ -223,4 +225,5 @@ public class HyperContent {
         obj.put("time", Tools.FORMAT.format(start));
         return obj;
     }
+
 }

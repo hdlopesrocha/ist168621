@@ -77,12 +77,7 @@ public class GroupMembership {
     public static List<GroupMembership> listByUser(ObjectId id) {
         Document doc = new Document("uid", id);
         FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<GroupMembership> ans = new ArrayList<GroupMembership>();
-        while (i.hasNext()) {
-            ans.add(load(i.next()));
-        }
-        return ans;
+        return deserialize(iter.iterator());
     }
 
     /**
@@ -108,12 +103,16 @@ public class GroupMembership {
     public static List<GroupMembership> listByGroup(ObjectId id) {
         Document doc = new Document("gid", id);
         FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<GroupMembership> ans = new ArrayList<GroupMembership>();
-        while (i.hasNext()) {
-            ans.add(load(i.next()));
+        return deserialize(iter.iterator());
+    }
+
+
+    private static List<GroupMembership> deserialize(Iterator<Document> it){
+        List<GroupMembership> ret = new ArrayList<>();
+        while (it.hasNext()) {
+            ret.add(load(it.next()));
         }
-        return ans;
+        return ret;
     }
 
     /**

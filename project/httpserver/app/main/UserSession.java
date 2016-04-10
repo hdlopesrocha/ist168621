@@ -212,7 +212,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         JSONArray jArr = new JSONArray();
         boolean hasMore = false;
         try {
-            GetCurrentHyperContentService service = new GetCurrentHyperContentService(getUserId(),
+            ListHyperContentService service = new ListHyperContentService(getUserId(),
                     room.getGroupId(), time);
             List<HyperContent> result = service.execute();
             hasMore = service.hasMore();

@@ -94,20 +94,6 @@ public class CollaborativeContent {
         return doc != null ? load(doc) : null;
     }
 
-    /**
-     * List all.
-     *
-     * @return the list
-     */
-    public static List<CollaborativeContent> listAll() {
-        FindIterable<Document> iter = getCollection().find(new Document());
-        List<CollaborativeContent> ret = new ArrayList<CollaborativeContent>();
-        for (Document doc : iter) {
-            ret.add(load(doc));
-        }
-        return ret;
-    }
-
 
     /**
      * Save.

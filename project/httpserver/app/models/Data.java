@@ -131,7 +131,6 @@ public class Data {
             props.add(attr.toDocument());
         }
 
-
         doc.put("data", props);
         doc.put("owner", owner);
         doc.put("search", searchableValues);
@@ -170,22 +169,6 @@ public class Data {
     }
 
     /**
-     * Gets the by owner key.
-     *
-     * @param id
-     *            the id
-     * @param key
-     *            the key
-     * @return the by owner key
-     */
-    public static Data getByOwnerKey(ObjectId id, String key) {
-        Document doc = new Document("owner", id).append("key", key);
-        FindIterable<Document> iter = getCollection().find(doc);
-        doc = iter.first();
-        return iter != null ? Data.load(doc) : null;
-    }
-
-    /**
      * Delete by owner.
      *
      * @param owner
@@ -206,13 +189,8 @@ public class Data {
      */
     public static List<Data> listByKeyValue(String key, Object value) {
         Document doc = new Document("data.k", key).append("data.v", value);
-        MongoCursor<Document> iter = getCollection().find(doc).iterator();
-        List<Data> ret = new ArrayList<Data>();
-        while (iter.hasNext()) {
-            ret.add(Data.load(iter.next()));
-        }
-
-        return ret;
+        FindIterable<Document> iter = getCollection().find(doc);
+        return deserialize(iter.iterator());
     }
 
     /**
@@ -297,6 +275,16 @@ public class Data {
         return query;
     }
 
+
+    private static List<Data> deserialize(Iterator<Document> it){
+        List<Data> ret = new ArrayList<>();
+        while (it.hasNext()) {
+            ret.add(load(it.next()));
+        }
+        return ret;
+    }
+
+
     /**
      * Search.
      *
@@ -326,13 +314,7 @@ public class Data {
             find.limit(limit);
         }
 
-        MongoCursor<Document> iter = find.iterator();
-        List<Data> ret = new ArrayList<Data>();
-        while (iter.hasNext()) {
-            ret.add(Data.load(iter.next()));
-        }
-        return ret;
-
+        return deserialize(find.iterator());
     }
 
     /**

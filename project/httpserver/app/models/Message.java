@@ -124,8 +124,9 @@ public class Message {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
+        }
         doc.put("target", target);
         doc.put("source", source);
         doc.put("time", time);

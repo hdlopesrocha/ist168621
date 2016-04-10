@@ -51,8 +51,9 @@ public class User implements Comparable<User> {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(User.class.getName());
+        }
         return collection;
     }
 

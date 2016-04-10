@@ -91,12 +91,7 @@ public class Relation {
     public static List<Relation> listFrom(ObjectId ep) {
         Document doc = new Document("s", ep);
         FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<Relation> ret = new ArrayList<Relation>();
-        while (i.hasNext()) {
-            ret.add(load(i.next()));
-        }
-        return ret;
+        return deserialize(iter.iterator());
     }
 
     /**
@@ -108,13 +103,17 @@ public class Relation {
     public static List<Relation> listTo(ObjectId ep) {
         Document doc = new Document("t", ep);
         FindIterable<Document> iter = getCollection().find(doc);
-        Iterator<Document> i = iter.iterator();
-        List<Relation> ret = new ArrayList<Relation>();
-        while (i.hasNext()) {
-            ret.add(load(i.next()));
+        return deserialize(iter.iterator());
+    }
+
+    private static List<Relation> deserialize(Iterator<Document> it){
+        List<Relation> ret = new ArrayList<>();
+        while (it.hasNext()) {
+            ret.add(load(it.next()));
         }
         return ret;
     }
+
 
     /**
      * Find by id.
@@ -134,18 +133,17 @@ public class Relation {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null){
             doc.put("_id", id);
-
+        }
         doc.put("s", source);
         doc.put("t", target);
 
-
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        } else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
 
     }
@@ -208,8 +206,9 @@ public class Relation {
      * Delete.
      */
     public void delete() {
-        if (id != null)
+        if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
+        }
     }
 
 }

@@ -82,33 +82,6 @@ public class TimeAnnotation {
     }
 
     /**
-     * Count by group.
-     *
-     * @param owner the owner
-     * @return the long
-     */
-    public static long countByGroup(ObjectId owner) {
-        Document doc = new Document("gid", owner);
-        return getCollection().count(doc);
-    }
-
-    /**
-     * List by group.
-     *
-     * @param groupId the group id
-     * @return the list
-     */
-    public static List<TimeAnnotation> listByGroup(ObjectId groupId) {
-        FindIterable<Document> iter = getCollection()
-                .find(new Document("gid", groupId));
-        List<TimeAnnotation> ret = new ArrayList<TimeAnnotation>();
-        for (Document doc : iter) {
-            ret.add(TimeAnnotation.load(doc));
-        }
-        return ret;
-    }
-
-    /**
      * Find by id.
      *
      * @param id the id
@@ -145,20 +118,19 @@ public class TimeAnnotation {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
-
+        }
         doc.put("gid", gid);
         doc.put("time", time);
         doc.put("title", title);
 
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        } else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
-
     }
 
     /**

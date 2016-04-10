@@ -181,8 +181,9 @@ public class Group {
      * Delete.
      */
     public void delete() {
-        if (id != null)
+        if (id != null) {
             getCollection().deleteOne(new Document("_id", id));
+        }
     }
 
     /**

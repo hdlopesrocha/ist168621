@@ -32,15 +32,6 @@ public class RecordingInterval {
 
     }
 
-    /**
-     * Instantiates a new interval.
-     *
-     * @param gid the gid
-     */
-    public RecordingInterval(ObjectId gid) {
-        this.groupId = gid;
-
-    }
 
     /**
      * Instantiates a new interval.
@@ -61,8 +52,9 @@ public class RecordingInterval {
      * @return the collection
      */
     private static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null){
             collection = Service.getDatabase().getCollection(RecordingInterval.class.getName());
+        }
         return collection;
     }
 
@@ -79,17 +71,6 @@ public class RecordingInterval {
         rec.groupId = doc.getObjectId("gid");
         rec.start = doc.getDate("start");
         return rec;
-    }
-
-    /**
-     * Count by group.
-     *
-     * @param owner the owner
-     * @return the long
-     */
-    public static long countByGroup(ObjectId owner) {
-        Document doc = new Document("gid", owner);
-        return getCollection().count(doc);
     }
 
     /**
@@ -126,20 +107,19 @@ public class RecordingInterval {
      */
     public void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
-
+        }
         doc.put("gid", groupId);
         doc.put("start", start);
         doc.put("end", end);
 
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        } else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
-
     }
 
     /**
