@@ -47,7 +47,7 @@ public class ListCurrentRecordingsService extends Service<List<RecordingChunk>> 
     @Override
     public List<RecordingChunk> dispatch() throws BadRequestException {
         List<RecordingChunk> ans = new ArrayList<>();
-        Document query = new Document("gid", groupId).append("end", new Document("$gte", time)).append("start", new Document("$lt", time));
+        Document query = new Document("gid", groupId).append("start", new Document("$lt", time)).append("end", new Document("$gte", time));
 
 
         FindIterable<Document> findIter = RecordingChunk.getCollection().find(query);

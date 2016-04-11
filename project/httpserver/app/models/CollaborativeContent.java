@@ -48,8 +48,10 @@ public class CollaborativeContent {
      * @return the collection
      */
     public static MongoCollection<Document> getCollection() {
-        if (collection == null)
+        if (collection == null) {
             collection = Service.getDatabase().getCollection(CollaborativeContent.class.getName());
+            collection.createIndex(new Document("gid",1));
+        }
         return collection;
     }
 

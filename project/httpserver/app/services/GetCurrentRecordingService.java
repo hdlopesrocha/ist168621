@@ -57,14 +57,19 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
     public RecordingChunk dispatch() throws BadRequestException {
         RecordingChunk ans = getResult1();
         if(ans==null){
-            // try group
+            // try same user
             ans = getResult2();
+        }
+
+        if(ans==null){
+            // try group
+            ans = getResult3();
         }
         return ans;
     }
 
     private RecordingChunk getResult1(){
-        Document query = new Document("gid", groupId).append("owner",owner).append("sid",sid).append("end", new Document("$gte", time));
+        Document query = new Document("gid", groupId).append("sid",sid).append("end", new Document("$gte", time));
         FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
         Document first = iter.first();
         return first != null ? RecordingChunk.load(first) : null;
@@ -72,6 +77,13 @@ public class GetCurrentRecordingService extends Service<RecordingChunk> {
 
 
     private RecordingChunk getResult2(){
+        Document query = new Document("gid", groupId).append("owner",owner).append("end", new Document("$gte", time));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
+        Document first = iter.first();
+        return first != null ? RecordingChunk.load(first) : null;
+    }
+
+    private RecordingChunk getResult3(){
         Document query = new Document("gid", groupId).append("owner",groupId).append("end", new Document("$gte", time));
         FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
         Document first = iter.first();

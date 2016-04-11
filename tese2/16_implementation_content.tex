@@ -272,3 +272,31 @@ function scheduleContent() {
 		In order to allow the users to watch an individual image and ear the audio of everyone, we are using two players, one for audio and another for video. 
 
 		If a user leaves a conference room, it is expected that the sequence of played blocks ends. When a block is not found for a given \emph{webSocket} session we try to find a block for the same user and if not possible we try to play a composite recorded block, lastly, if every attempt fails we wait for the next interval the contains media.
+
+\subsection{Chat}
+		Lastly and not less important the chat functionality was implemented using \emph{webSockets}, when a message is sent by a user, it is received by the server, which records it and sends to all the users.
+
+		In order to support receiving a huge amount of messages and not having a bottleneck when loading the conference room, we just load an amount of messages that fill the chat panel. When a user scrolls the chat to read old messages, we detect when the chat scroll bar reaches the limit and we request more older messages to the server automatically.
+
+		Moreover, when the clients receive messages, whether older or newer ones, their ids are used to place them in the correct position. By other words, older messages are placed in the top of the chat panel and newer ones in the bottom.
+
+		Besides that, we also support sending files to other users, which are stored on database and accessed through an \ac{URL}.
+
+\subsection{Collaborative editor}
+
+Our collaborative editor is a simple text editor that is synchronized with all participants within a conference room implemented using \emph{ot.js}.
+
+The state of our collaborative editor is not saved on database every time it changes. Instead the users just synchronize the editor content among them and save it a priori.
+
+If a user joins a conference room which editor was changed and the content differs from the version stored in the database, our server does not have the right content to deliver the user. As a consequence our server names a random participant to yield its collaborative content and delivers it to the joining user.
+
+All operations that we perform over the conference room's collaborative editor are performed in mutual exclusion so all updates are delivered in the same order to all participants. For example consider two write events $W_1$ and $W_2$ if they occur at the same time, our server will receive one of the events first, say $W_1$, and delivers is to every users including its writer. Only then the server delivers the $W_2$ content. With this serialization mechanism we can ensure the content is equal on every user editor.
+
+Accordingly to \emph{ot.js} there are three types of operations:
+\begin{itemize}
+\item{retain} $\rightarrow$ advance the cursor by a given number of positions.
+\item{insert} $\rightarrow$ write the given text in the current position.
+\item{delete} $\rightarrow$ delete a given number of characters forward.
+\end{itemize}
+
+In summary, our server just ensures mutual exclusion and delivers the messages among users without even parsing the messages content.

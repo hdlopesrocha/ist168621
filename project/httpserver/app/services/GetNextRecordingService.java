@@ -54,19 +54,40 @@ public class GetNextRecordingService extends Service<RecordingChunk> {
     public RecordingChunk dispatch() throws BadRequestException {
 
         RecordingChunk ans = getResult1();
-
+        if(ans==null){
+            // try same user
+            ans = getResult2();
+        }
+        if(ans==null){
+            // try group
+            ans = getResult3();
+        }
         return ans;
 
     }
 
     private RecordingChunk getResult1(){
-        Document query = new Document("gid", groupId).append("owner",owner).append("sid",sid).append("_id", new Document("$gt", recId));
+        Document query = new Document("gid", groupId).append("sid",sid).append("_id", new Document("$gt", recId));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
+        Document first = iter.first();
+        return first != null ? RecordingChunk.load(first) : null;
+    }
+
+    private RecordingChunk getResult2(){
+        Document query = new Document("gid", groupId).append("owner",owner).append("_id", new Document("$gt", recId));
         FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
         Document first = iter.first();
         return first != null ? RecordingChunk.load(first) : null;
     }
 
 
+
+    private RecordingChunk getResult3(){
+        Document query = new Document("gid", groupId).append("owner",groupId).append("_id", new Document("$gt", recId));
+        FindIterable<Document> iter = RecordingChunk.getCollection().find(query).limit(1);
+        Document first = iter.first();
+        return first != null ? RecordingChunk.load(first) : null;
+    }
 
 
     /*

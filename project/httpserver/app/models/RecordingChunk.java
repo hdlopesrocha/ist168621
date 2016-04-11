@@ -67,7 +67,11 @@ public class RecordingChunk {
     public static MongoCollection<Document> getCollection() {
         if (collection == null) {
             collection = Service.getDatabase().getCollection(RecordingChunk.class.getName());
-            collection.createIndex(new Document("gid",1));
+            collection.createIndex(new Document("gid",1).append("start",1).append("end",1));
+            collection.createIndex(new Document("gid",1).append("sid",1).append("end",1));
+            collection.createIndex(new Document("gid",1).append("owner",1).append("end",1));
+            collection.createIndex(new Document("gid",1).append("sid",1).append("_id",1));
+            collection.createIndex(new Document("gid",1).append("owner",1).append("_id",1));
         }
         return collection;
     }
@@ -90,51 +94,6 @@ public class RecordingChunk {
         return rec;
     }
 
-    /**
-     * Count by group.
-     *
-     * @param owner the owner
-     * @return the long
-     */
-    public static long countByGroup(ObjectId groupId , ObjectId owner, String sid) {
-        Document doc = new Document("gid", groupId).append("owner",owner).append("sid",sid);
-        return getCollection().count(doc);
-    }
-
-/*
-    public List<RecordingUrl> getUrls(){
-        List<RecordingUrl> ans = new ArrayList<RecordingUrl>();
-        for(Document doc : urls){
-            RecordingUrl ru = new RecordingUrl(doc);
-            ans.add(ru);
-        }
-
-        return ans;
-    }
-
-
-    public List<RecordingUrl> getUrl(String owner, String sid){
-        List<RecordingUrl> ans = new ArrayList<RecordingUrl>();
-        for(Document doc : urls){
-            RecordingUrl ru = new RecordingUrl(doc);
-            if(ru.getUid()!=null && ru.getUid().equals(owner)){
-                if(ru.getSid().equals(sid)) {
-                    ans.add(0, ru);
-                }else {
-                    ans.add(ru);
-                }
-            }
-        }
-
-        return ans;
-    }
-
-
-    public synchronized void setUrl(RecordingUrl ru){
-       urls.add(ru.toDocument());
-    }
-
-*/
 
 
     /**
@@ -155,23 +114,21 @@ public class RecordingChunk {
      */
     public synchronized void save() {
         Document doc = new Document();
-        if (id != null)
+        if (id != null) {
             doc.put("_id", id);
+        }
         doc.put("owner", owner);
         doc.put("gid", groupId);
         doc.put("start", start);
         doc.put("end", end);
         doc.put("url",url);
         doc.put("sid",sessionId);
-
-
         if (id == null) {
             getCollection().insertOne(doc);
         }else {
             getCollection().replaceOne(new Document("_id", id), doc);
         }
         id = doc.getObjectId("_id");
-
     }
 
     public boolean contains(Date date){

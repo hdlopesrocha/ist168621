@@ -52,63 +52,6 @@ public class Tools {
         return builder.toString();
     }
 
-    private static Pattern HTML_PATTERN = Pattern.compile("<(\\w+)>.*?</\\1>");
-
-    public static String getTextFromHtml(String html){
-/*
-        Matcher m = HTML_PATTERN.matcher(html);
-        String text = "";
-        while (m.find()) {
-            text += m.group();
-        }
-        return text;
-*/
-
-        return Jsoup.parse(html).text();
-    }
-
-    /**
-     * Friendly time.
-     *
-     * @param time the time
-     * @return the string
-     */
-    static public String friendlyTime(String time) {
-        try {
-
-            if (time.charAt(time.length() - 1) != 'Z') {
-                time += "Z";
-            }
-
-
-            ZonedDateTime zdt = ZonedDateTime.parse(time);
-            LocalDateTime ldt = zdt.toLocalDateTime();
-
-
-            return String.format("%02d", ldt.getDayOfMonth()) + "/" + String.format("%02d", ldt.getMonthValue()) + "/" + String.format("%04d", ldt.getYear())
-                    + " " + String.format("%02d", ldt.getHour()) + ":" + String.format("%02d", ldt.getMinute()) + ":" + String.format("%02d", ldt.getSecond());
-        } catch (Exception e) {
-            e.printStackTrace();
-            // return "00/00/0000 00:00:00";
-        }
-        return time;
-    }
-
-    /**
-     * Gets the current time.
-     *
-     * @return the current time
-     */
-    public static String getCurrentTime() {
-        return FORMAT.format(new Date());
-        //return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC).format(Instant.now());
-    }
-
-    public static int clamp(int min, int x, int max) {
-        return (x<min? min :(x>=max? max : x));
-
-    }
-
     public static String md5(String content) {
         try {
             final MessageDigest messageDigest = MessageDigest.getInstance("MD5");

@@ -209,6 +209,4 @@ public class GroupMembership {
             getCollection().deleteOne(new Document("_id", id));
         }
     }
-
-
 }

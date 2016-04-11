@@ -117,10 +117,9 @@ public class Rest extends Controller {
             for (HyperContent content : contents) {
                 JSONObject msg = content.toJson();
                 msg.put("type", "html");
-                String html = content.getContent();
-                String text = Tools.getTextFromHtml(html);
+                String text = content.getSearchableContent();
 
-                int pos = text.toLowerCase().indexOf(tokens[0].toLowerCase());
+                int pos = text.indexOf(tokens[0].toLowerCase());
                 int min = pos - 20;
                 int max = pos + 20;
                 boolean rmin = false;

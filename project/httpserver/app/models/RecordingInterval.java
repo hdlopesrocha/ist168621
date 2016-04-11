@@ -54,6 +54,7 @@ public class RecordingInterval {
     private static MongoCollection<Document> getCollection() {
         if (collection == null){
             collection = Service.getDatabase().getCollection(RecordingInterval.class.getName());
+            collection.createIndex(new Document("gid",1));
         }
         return collection;
     }

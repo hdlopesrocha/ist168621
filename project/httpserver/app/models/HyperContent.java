@@ -6,6 +6,7 @@ import main.Tools;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 import services.ListCurrentRecordingsService;
 import services.Service;
 
@@ -29,7 +30,9 @@ public class HyperContent {
     
     /** The content. */
     private String content = null;
-    
+
+    private String searchableContent;
+
     /** The group id. */
     private ObjectId id, groupId = null;
 
@@ -46,7 +49,15 @@ public class HyperContent {
         this.end = end;
         this.groupId = gid;
         this.content = content;
+        this.searchableContent = getTextFromHtml(content);
     }
+
+
+    private static String getTextFromHtml(String html){
+
+        return Jsoup.parse(html).text().toLowerCase();
+    }
+
 
     /**
      * Instantiates a new hyper content.
@@ -62,6 +73,9 @@ public class HyperContent {
     public static MongoCollection<Document> getCollection() {
         if (collection == null) {
             collection = Service.getDatabase().getCollection(HyperContent.class.getName());
+            collection.createIndex(new Document("gid",1).append("start",1).append("end",1));
+            collection.createIndex(new Document("gid",1).append("start",1));
+            collection.createIndex(new Document("gid",1).append("search","Text"));
         }
         return collection;
     }
@@ -79,6 +93,8 @@ public class HyperContent {
         content.end = doc.getDate("end");
         content.groupId = doc.getObjectId("gid");
         content.content = doc.getString("content");
+        content.searchableContent = doc.getString("search");
+
         return content;
     }
 
@@ -104,7 +120,7 @@ public class HyperContent {
      */
     public static List<HyperContent> search(ObjectId gid, String query) {
         Pattern regex = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
-        Document doc = new Document("gid", gid).append("content", regex);
+        Document doc = new Document("gid", gid).append("search", regex);
         FindIterable<Document> iter = getCollection().find(doc);
         return deserialize(iter.iterator());
     }
@@ -121,6 +137,7 @@ public class HyperContent {
         doc.put("end", end);
         doc.put("gid", groupId);
         doc.put("content", content);
+        doc.put("search", searchableContent);
         if (id == null) {
             getCollection().insertOne(doc);
         }else {
@@ -226,4 +243,7 @@ public class HyperContent {
         return obj;
     }
 
+    public String getSearchableContent() {
+        return searchableContent;
+    }
 }
