@@ -75,7 +75,7 @@ public class HyperContent {
             collection = Service.getDatabase().getCollection(HyperContent.class.getName());
             collection.createIndex(new Document("gid",1).append("start",1).append("end",1));
             collection.createIndex(new Document("gid",1).append("start",1));
-            collection.createIndex(new Document("gid",1).append("search","Text"));
+            collection.createIndex(new Document("gid",1).append("search","text"));
         }
         return collection;
     }

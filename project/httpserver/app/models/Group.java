@@ -150,13 +150,13 @@ public class Group {
         doc.put("invite", inviteToken);
         doc.put("visibility", visibility.toString());
 
-        if (id == null)
+        if (id == null) {
             getCollection().insertOne(doc);
-        else
+        }
+        else {
             getCollection().replaceOne(new Document("_id", id), doc);
-
+        }
         id = doc.getObjectId("_id");
-
     }
 
     /**
