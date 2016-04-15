@@ -95,7 +95,7 @@ public class Message {
     public static List<Message> listByTarget(ObjectId groupId, Long ts, int len) {
         Document query = new Document("target", groupId);
         if (ts != null) {
-            query.append("_id", new Document("$lt", new ObjectId(new Date(ts))));
+            query.append("time", new Document("$lt", new Date(ts)));
         }
         FindIterable<Document> iter = getCollection().find(query).sort(new Document("_id", -1)).limit(len);
         List<Message> ret = new ArrayList<Message>();

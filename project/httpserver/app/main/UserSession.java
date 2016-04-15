@@ -16,6 +16,8 @@ import services.*;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.*;
 
 
@@ -84,11 +86,33 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             }
         });
 
-        endPoint.setStunServerAddress("74.125.206.127");
-        endPoint.setStunServerPort(19302);
+
+        try {
+            InetAddress address = InetAddress.getByName("stun.iptel.org");
+            String addr = address.getHostAddress();
+            endPoint.setStunServerAddress(addr);
+            //endPoint.setStunServerPort(19302);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+
+
+/*
+        try {
+            InetAddress address = InetAddress.getByName("citysdk.tagus.ist.utl.pt");
+            String addr = address.getHostAddress();
+            System.out.println(addr);
+            endPoint.setStunServerAddress(addr);
+            endPoint.setStunServerPort(3478);
+            endPoint.setTurnUrl("username:password@"+addr+":3478");
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         //    endPoint.setTurnUrl("citysdk.tagus.ist.utl.pt:3478");
-
+*/
         compositePort = room.getCompositePort(sid.toString());
         endPoint.addMediaSessionStartedListener(new EventListener<MediaSessionStartedEvent>() {
             @Override
