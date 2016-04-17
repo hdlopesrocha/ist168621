@@ -16,16 +16,16 @@
 	] 
 	
 
-		\addplot[smooth,color=Blue,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_8_mongod.dat};
+		\addplot[color=Blue,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_8_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=Red,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_91_kurento-media-server.dat};
+		\addplot[color=Red,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_91_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=Green,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_36_kurento-repo.dat};
+		\addplot[color=Green,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_36_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=Magenta,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_228_bash.dat};
+		\addplot[color=Magenta,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}] {stats/test_hour/cpu_228_bash.dat};
 		\addlegendentry{Java}
 
 	\end{axis}

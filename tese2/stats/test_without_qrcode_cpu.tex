@@ -9,7 +9,7 @@
 	    ymin=0, ymax=600,
 	    xtick={0,100,...,2000},
 	    ytick={0,100,...,2000},
-	    extra x ticks={10,70,...,1000},
+	    extra x ticks={0,60,...,1000},
     	extra x tick labels={,,},
 		extra tick style={
 			grid=major,
@@ -23,16 +23,16 @@
 	] 
 	
 
-		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-35,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_7_mongod.dat};
+		\addplot[color=Blue] table[x expr=\thisrowno{0}-31,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_7_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-35,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_67_kurento-media-server.dat};
+		\addplot[color=Red] table[x expr=\thisrowno{0}-31,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_67_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-35,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_35_kurento-repo.dat};
+		\addplot[color=Green] table[x expr=\thisrowno{0}-31,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_35_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-35,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_233_bash.dat};
+		\addplot[color=Magenta] table[x expr=\thisrowno{0}-31,y expr=\thisrowno{1}] {stats/test_without_qrcode/cpu_233_bash.dat};
 		\addlegendentry{Java}
 
 	\end{axis}

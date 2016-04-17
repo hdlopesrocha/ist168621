@@ -225,8 +225,9 @@
 
 %\overfullrule=2cm
 
-\usetikzlibrary{positioning,shapes,shadows,arrows,matrix,decorations.pathreplacing}
-
+\usetikzlibrary{positioning,shapes,shadows,arrows,matrix,decorations.pathreplacing,external}
+\tikzexternalize
+\tikzset{external/mode=graphics if exists}
 
 \newganttchartelement*{mymilestone}{
 mymilestone/.style={

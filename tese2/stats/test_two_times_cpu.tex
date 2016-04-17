@@ -22,16 +22,16 @@
 	    grid style=dashed,
 	] 
 
-		\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_7_mongod.dat};
+		\addplot[color=Blue] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_7_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_68_kurento-media-server.dat};
+		\addplot[color=Red] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_68_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_35_kurento-repo.dat};
+		\addplot[color=Green] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_35_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=Magenta] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_234_bash.dat};
+		\addplot[color=Magenta] table[x expr=\thisrowno{0}-72,y index=1] {stats/test_two_times3/cpu_234_bash.dat};
 		\addlegendentry{Java}
 
 	\end{axis}

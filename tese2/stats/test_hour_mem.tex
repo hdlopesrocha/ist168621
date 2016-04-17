@@ -15,16 +15,16 @@
 	    grid style=dashed,
 	] 
 
-		\addplot[smooth,color=Blue,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_8_mongod.dat};
+		\addplot[color=Blue,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_8_mongod.dat};
 		\addlegendentry{Mongod}
 
-		\addplot[smooth,color=Red,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_91_kurento-media-server.dat};
+		\addplot[color=Red,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_91_kurento-media-server.dat};
 		\addlegendentry{Kurento Media Server}
 
-		\addplot[smooth,color=Green,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_36_kurento-repo.dat};
+		\addplot[color=Green,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_36_kurento-repo.dat};
 		\addlegendentry{Kurento Repository}
 
-		\addplot[smooth,color=Magenta,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_228_bash.dat};
+		\addplot[color=Magenta,each nth point={5}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}/1000000] {stats/test_hour/res_228_bash.dat};
 		\addlegendentry{Java}
 
 	\end{axis}

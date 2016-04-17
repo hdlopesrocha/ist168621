@@ -22,10 +22,10 @@
 	    grid style=dashed,
 	]
 	
-	\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/send.dat};
+	\addplot[color=Blue] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/send.dat};
 	\addlegendentry{Sent(eth0)}
 
-	\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/recv.dat};
+	\addplot[color=Red] table[x expr=\thisrowno{0}-0,y expr=\thisrowno{1}/1000] {stats/client/recv.dat};
 	\addlegendentry{Recv(eth0)}
 
 

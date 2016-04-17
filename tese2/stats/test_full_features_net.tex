@@ -22,13 +22,13 @@
 	    grid style=dashed,
 	]
 	
-	\addplot[smooth,color=Blue] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/sent_eth0.dat};
+	\addplot[color=Blue] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/sent_eth0.dat};
 	\addlegendentry{Sent(eth0)}
 
-	\addplot[smooth,color=Red] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/recv_eth0.dat};
+	\addplot[color=Red] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/recv_eth0.dat};
 	\addlegendentry{Recv(eth0)}
 
-	\addplot[smooth,color=Green] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/recv_lo.dat};
+	\addplot[color=Green] table[x expr=\thisrowno{0}-122,y expr=\thisrowno{1}*8/1000000] {stats/test_full_features/recv_lo.dat};
 	\addlegendentry{Sent/Recv(lo)}
 
 	\end{axis}

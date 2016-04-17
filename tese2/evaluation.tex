@@ -300,7 +300,7 @@ On the second task one user clicked on the friends list for adding a friend to r
 
 On the third task we noticed that both users were not expecting to search the content directly from the search bar, instead they used the time-line.
 
-On the fourth task both users didn't placed their annotations on wright place, we only provide one way to place annotations, which is by dragging them on the time-line. 
+On the fourth task both users didn't placed their annotations on right place, we only provide one way to place annotations, which is by dragging them on the time-line. 
 After creating an annotation users also didn't understand that they had to save their changes on the time-line, we solved this problem by saving automatically each time the user changed any annotation, the old user interface can be seen on figure \ref{fig:test_ui_05}.
 
 \begin{figure}[!htb]
@@ -328,3 +328,77 @@ We have also gathered comments and suggestions after letting the users explore o
 \end{itemize}
 
   \subsubsection {Second phase}
+
+On the second phase of our user interface tests, in a general view, we have noticed great improvements on the learning time.
+
+From the data that we have collected, namely the task duration (figure \ref{fig:user_times}), number of clicks (figure \ref{fig:user_clicks}), number of errors (figure \ref{fig:user_errors}), task difficulty (figure \ref{fig:user_diffs}) and qualitative evaluation (figure \ref{fig:user_evals}), we have calculated the confidence intervals in order to understand the most plausible values for each metric.
+
+As a result of both true average and variance being unknown and the usage of a relatively small amount of samples, we had to use \emph{t-distribution} to estimate our metrics confidence intervals. 
+
+Accordingly, we have used the following formula to calculate the intervals for the expected value of the true average with 95\% confidence:
+
+$[\bar{x}-F^{-1}_{t_{(n-1)}}(1-\alpha/2)\times \frac{s}{\sqrt{n}}, \bar{x}+F^{-1}_{t_{(n-1)}}(1-\alpha/2)\times \frac{s}{\sqrt{n}}]$
+
+Where $\alpha=0.05$, $n$ is the number of samples (which may not coincide with the number of tests due to failed tasks) and $s$ is the sample standard deviation that is given by:
+
+$s=\sqrt{\frac{1}{n-1}\Sigma^{n}_{i=1}(x_i-\bar{x})^2}$
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+  \begin{center}
+    \input{stats/user_times.tex}
+  \end{center}
+  \caption{Time spent per task}
+  \label{fig:user_times}
+\end{minipage}
+\begin{minipage}[b]{0.45\linewidth}
+   \begin{center}
+    \input{stats/user_clicks.tex}
+  \end{center}
+  \caption{Mouse clicks per task}
+  \label{fig:user_clicks}
+\end{minipage}
+\end{figure}
+
+
+Accordingly to figure \ref{fig:user_evals}, we can observe that most users had less difficulties with the first two tasks, which represents types of tasks that most users are familiar with. As soon as users had to navigate in time, manipulate annotations and create content (respectively \emph{task3}, \emph{task4} and \emph{task5}) we have observed that they revealed more difficulties. Most of those difficulties, based on the users feedback, were mainly due to those concepts not being familiar to them.
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+  \begin{center}
+    \input{stats/user_errors.tex}
+  \end{center}
+  \caption{Errors per task}
+  \label{fig:user_errors}
+\end{minipage}
+\begin{minipage}[b]{0.45\linewidth}
+  \begin{center}
+    \input{stats/user_diffs.tex}
+  \end{center}
+  \caption{Difficulty per task}
+  \label{fig:user_diffs}
+\end{minipage}
+\end{figure}
+
+Although we had relatively bad results with some users, we have explained to the users that could not conclude the tasks or performed incorrectly the most efficient way to perform the requested tasks. Some users suggested to display more hints in order to achieve a faster learning but after all they were impressed and gave us a better evaluation (as seen on figure \ref{fig:user_evals}).
+
+\begin{figure}[!htb]
+  \begin{center}
+    \input{stats/user_evals.tex}
+  \end{center}
+  \caption{Solution evaluation}
+  \label{fig:user_evals}
+\end{figure}
+
+Most users gave us worse evaluations on our user interface layout and content editor, which was due to having a lot of tools present in the same web page and some of them were hidden due the screen size. In some cases users had to scroll down in order to find the tools they were looking for. 
+
+Another weak aspect was our content editor, which in fact we recognize the difficulty to handle with, most due to the amount of information that is necessary to create a synchronized content (starting time, duration and content itself). Some users have suggested that the content should also be present on the time-line so they could be easily dragged and resized (on time).
+
+We are aware that placing content on the time-line will reduce our solutions performance, especially when there is a relatively big amount of content due to the content that is present on the time-line being loaded all in once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the time-line could not have a great impact on our solutions performance. 
+
+
+
+
+

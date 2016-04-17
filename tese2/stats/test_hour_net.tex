@@ -15,13 +15,13 @@
 	    grid style=dashed,
 	]
 	
-	\addplot[smooth,color=Blue,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/sent_eth0.dat};
+	\addplot[color=Blue,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/sent_eth0.dat};
 	\addlegendentry{Sent(eth0)}
 
-	\addplot[smooth,color=Red,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_eth0.dat};
+	\addplot[color=Red,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_eth0.dat};
 	\addlegendentry{Recv(eth0)}
 
-	\addplot[smooth,color=Green,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_lo.dat};
+	\addplot[color=Green,each nth point={10}] table[x expr=\thisrowno{0}-50,y expr=\thisrowno{1}*8/1000000] {stats/test_hour/recv_lo.dat};
 	\addlegendentry{Sent/Recv(lo)}
 
 	\end{axis}
