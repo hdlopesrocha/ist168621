@@ -56,14 +56,13 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
       Figure \ref{fig:test_full_features_net} confirms our expectations, each vertical yellow line represents each event, the first seven events are users entering the conference room the next ones represent users leaving the conversation. 
       
 
-
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_full_features_net.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_full_features_net.eps}
   \caption{Network usage after implementing all features}
   \label{fig:test_full_features_net}
 \end{figure}
+
 
       The blue peaks are caused by the signaling phase and web page downloads, including resources such as images, stylesheets and javascript files. 
       The green peaks are caused by that being transfered between \ac{KMS} and \emph{MongoDB} through \emph{Kurento Repository} each peak occurs each time a block of video is recorded which in this case is every ten seconds. 
@@ -72,13 +71,15 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
       Figure \ref{fig:summary_full_net} shows the average transmission rate per interval of consecutive events. 
 
+
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/summary_full_net.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/summary_full_net.eps}
   \caption{Average network usage per interval of events after implementing all features}
   \label{fig:summary_full_net}
 \end{figure}
+
+
 
 If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
 
@@ -86,13 +87,14 @@ With this results we conclude that if we want to scale our solution's storage us
 
 On the other hand figure \ref{fig:test_client_net} shows the respective network usage on the client side during our test case. We observe that int he first seconds the client adjusts the video quality that sends to \ac{KMS}, whenever a new client enters in the conference we observer that \ac{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room, after a while \ac{KMS} realizes that its network can handle the increase of clients and sends the video with a better quality to every participant. When a user leaves the conference room \ac{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
 
-  \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_client_net.tex}
-  \end{center}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_client_net.eps}
   \caption{Client Network usage during our test case}
   \label{fig:test_client_net}
 \end{figure}
+
+
 
 \subsubsection{Memory usage}
 
@@ -100,13 +102,14 @@ On the other hand figure \ref{fig:test_client_net} shows the respective network 
 Figure \ref{fig:test_full_features_mem} shows the memory usage during our performance test case. Both \ac{JVM}, \emph{MongoDB} and \ac{KMS} performs their own memory management by holding and recycling objects when needed. The expected and observed behavior of the memory usage is growth memory usage while the users are entering in the conference room and a memory usage stabilization afterwards.
 
 
+
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_full_features_mem.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_full_features_mem.eps}
   \caption{Memory usage after implementing all features}
   \label{fig:test_full_features_mem}
 \end{figure}
+
 
 \emph{MongoDB} memory usage keeps increasing because it tries to fit part of the database on \ac{RAM} for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case. When the conference room is empty no there are no video recordings, which explains the memory stabilization at the end.
 
@@ -117,13 +120,15 @@ Hence, in order to confirm our suspicions, we have decided to read the implement
 
 Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performance test case taking into account the patch that we applied to \ac{KMS}.
 
+
+
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_ram_fixed_mem.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_ram_fixed_mem.eps}
   \caption{Memory usage after fixing recorder memory leak}
   \label{fig:test_ram_fixed_mem}
 \end{figure}
+
 
 \subsubsection{CPU usage}
 
@@ -131,9 +136,8 @@ Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performanc
 Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage during our performance test case. Each 100\% represents one \ac{CPU} core, although that does not mean one \ac{CPU} is fully used, for example two cores at 60\% represent 120\% \ac{CPU} usage. As we can see, the percentage of \ac{CPU} used increases and decreases linearly in function of the amount of conference participants. 
 
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_full_features_cpu.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_full_features_cpu.eps}
   \caption{Percentage of CPU used during the performance tests}
   \label{fig:test_full_features_cpu}
 \end{figure}
@@ -141,29 +145,29 @@ Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage d
 Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic processing peaks every ten seconds that are due to block recording. 
 
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_full_features_cpu_zoom.tex}
-  \end{center}
-  \caption{Percentage of CPU used during the performance tests}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_full_features_cpu_zoom.eps}
+  \caption{Percentage of CPU used during the performance tests (zoomed)}
   \label{fig:test_full_features_cpu_zoom}
 \end{figure}
+
 
    Figure \ref{fig:summary_full_cpu} shows the average used \ac{CPU} per interval of consecutive events. 
 
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/summary_full_cpu.tex}
-  \end{center}
-  \caption{Average percentage of CPU used per interval of events after implementing all features (zoomed)}
+  \centering
+  \includegraphics[width=\textwidth]{stats/summary_full_cpu.eps}
+  \caption{Average percentage of CPU used per interval of events after implementing all features}
   \label{fig:summary_full_cpu}
 \end{figure}
 
+
+
   Just for testing purposes we have done the same performance tests without detecting \emph{QR codes} in order to understand how \ac{CPU} intensive is this task. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \emph{QR code} detection disabled.
 
-  \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_without_qrcode_cpu.tex}
-  \end{center}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_without_qrcode_cpu.eps}
   \caption{Percentage of CPU used during the performance tests without QR code detection}
   \label{fig:test_without_qrcode_cpu}
 \end{figure}
@@ -175,23 +179,24 @@ We conclude that \emph{QR code} detection is a very intensive task, approximatel
 
 We have also performed two consecutive test cases in order to understand if we the influence of the first test case over the second, as observed in figure \ref{fig:test_two_times_cpu}, there is no \ac{CPU} influence between two test cases.
 
-  \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_two_times_cpu.tex}
-  \end{center}
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_two_times_cpu.eps}
   \caption{Percentage of CPU used during two consecutive test cases}
   \label{fig:test_two_times_cpu}
 \end{figure}
 
 On the other hand due to memory recycling techniques we can observe in figure \ref{fig:test_two_times_mem} that some of the memory that was allocated in the first test was reused in the second case.
 
+
 \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_two_times_mem.tex}
-  \end{center}
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_two_times_mem.eps}
   \caption{Memory usage during two consecutive test cases}
   \label{fig:test_two_times_mem}
 \end{figure}
+
 
 \subsubsection{One hour test case}
 
@@ -199,10 +204,9 @@ On the other hand due to memory recycling techniques we can observe in figure \r
    Figure \ref{fig:test_hour_mem} shows the memory used by our solution with seven clients simultaneously on the same conference room during one hour. As we can observe \ac{KMS} memory usage stabilizes.
 
 
-  \begin{figure}[!htb]
-  \begin{center}
-    \input{stats/test_hour_mem.tex}
-  \end{center}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{stats/test_hour_mem.eps}
   \caption{Memory usage during one hour with seven clients}
   \label{fig:test_hour_mem}
 \end{figure}
@@ -396,7 +400,7 @@ To this end, with regard to optimal task duration and minimal clicks, we obtaine
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
 \textbf{Task} & 1 & 2 & 3 & 4 & 5 \\ \hline
-\textbf{Time} & 20 & 50 & 30 & 40 & 50 \\ \hline
+\textbf{Time} & 20 & 35 & 30 & 25 & 35 \\ \hline
 \textbf{Clicks} & 7 & 10 & 5 & 9 & 7 \\ \hline
 \end{tabular}
 \end{table}

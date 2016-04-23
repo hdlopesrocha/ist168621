@@ -1,0 +1,5 @@
+for f in *.pdf
+do
+	echo "Removing password for pdf file - $f"
+        pdftk "$f" output "output.$f" user_pw "YOURPASSWORD-HERE"
+don

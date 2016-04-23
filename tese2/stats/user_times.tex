@@ -4,6 +4,8 @@
 \begin{axis}[
 height=6cm,
 width=7cm,  
+  xlabel={Tasks},
+  ylabel={Duration (seconds)},
   ymax=150,
   ymin=0,
   xmin=0.5,
@@ -26,5 +28,9 @@ coordinates {
 (5,117.92) +- (16.31,16.31)
 };
 \addplot[dashed] coordinates {(0,0) (5.5,0)};
+\addplot[only marks,mark=*,mark options={}] coordinates {
+(1,20) (2,35) (3,30) (4,25) (5,35)
+};
+
 \end{axis}
 \end{tikzpicture}%

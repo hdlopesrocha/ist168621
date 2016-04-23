@@ -203,7 +203,14 @@
                             <label class="control-label">Annotation Name:</label>
                             <input class="form-control" type="text" id="tagTitle"/>
                         </div>
+                        <div class="center form-group center">
+                            <h5 style="text-align:center">Set the annotation's time by drag and dropping.</h5><br>
+                            <img class="center-block" src="/assets/images/hint_01.png"/>
+                        </div>
+
                     </div>
+
+
                     <div class="modal-footer">
                         <div class="input-group pull-right">
                             <input type="submit" class="btn btn-success" id="createTag"/>
@@ -317,8 +324,6 @@
                                 </span>
                                 </div>
                                 <label>Duration:</label>
-
-
                                 <div class='input-group date' id='contentDuration'>
                                     <input type='text' class="form-control" /> <span
                                         class="input-group-addon"> <span
@@ -327,7 +332,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Content:</label>
-                                    <textarea class="form-control" rows="5" id="contentText" name="content"></textarea>
+                                    <textarea class="form-control" rows="5" id="contentText" placeholder="Create subtitles, forms, insert images..." name="content"></textarea>
                                 </div>
                                 <div class="input-group">
                                     <label>Is Caption:</label> <input type="checkbox"
@@ -339,23 +344,18 @@
                                     <button type="button" class="btn btn-danger"
                                             onclick="clearContent()">
                                         Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-
                                     </button>
                                     <button type="button" class="btn btn-info"
                                             onclick="generateQRCode()">
                                         QRcode <span class="glyphicon glyphicon glyphicon-qrcode" aria-hidden="true"></span>
-
                                     </button>
                                     <button type="button" class="btn btn-info"
                                             onclick="previewContent()">
                                         Preview <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-
                                     </button>
-
                                     <button type="button" class="btn btn-success"
                                             onclick="createContent()">
                                         Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-
                                     </button>
                                 </div>
                                 <div class="clearfix"></div>
