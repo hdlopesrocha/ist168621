@@ -6,7 +6,7 @@ set ylabel "Memory [MB]"
 
 set grid
 set tics scale 0
-set key left box
+set key below
 
 set xrange [0:3600]
 set yrange [0:4000]
