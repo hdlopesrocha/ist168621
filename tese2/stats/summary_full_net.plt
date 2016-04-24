@@ -22,7 +22,7 @@ set style line 4 lt 1 lc rgb "magenta" lw 4
 start = 122
 y_unit = 0.000008
 
-do for [t=0:14] {
+do for [t=0:13] {
 	set arrow from t*60,0 to t*60,10 nohead lc rgb 'yellow' lw 2
 }
 
