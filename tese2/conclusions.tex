@@ -14,6 +14,8 @@ Based on our evaluation of the state of the art, we have defined the architectur
 
 Although we have used our own signaling protocol on our implementation, the first steps we have made during the development of our prototype were using \ac{XMPP}, we have discovered the drawbacks of this approach in practice and we moved our learnings to the state of the art. Besides starting our prototype using this approach, we have used \emph{strophe.js} for performing communications with \ac{XMPP} servers. We have found and fixed a bug present on \emph{strophe.js} library that silenced an error raised by duplicated user registrations.
 
+As a consequence of not using \ac{XMPP} for the signaling protocol, we have defined our own protocol based on \emph{WebSockets} for performing the stream between clients and \ac{KMS}. From the \ac{KMS} functionalities, our solution uses the recording feature, composite endpoints that mix multiple audio and video streams into a single one and \emph{QR code} detection for creating hyper content.
+
 Another important contribution we have made was a bug fix of a memory leak present on \ac{KMS} which we discovered when we were doing performance tests with our solution.
 
 \section{Achievements}
@@ -26,11 +28,11 @@ Another important contribution we have made was a bug fix of a memory leak prese
 
 \section{Future Work}
 \label{section:future}
-Nesta secção devem identificar o trabalho futuro, sob duas perspectivas:
-\begin{itemize}
-\item o trabalho que resulta directamente dos problemas que a vossa proposta criou, ou não conseguiu resolver
-\item o trabalho que resulta da evolução do sistemas
-\end{itemize}
+	Playing back video with a faster rate is not possible using the current version of \ac{KMS} which we expect the availability of that feature in a near future but we have proposed an alternative way to implement faster playback by using \emph{ffmpeg} to convert the video before playing it.
 
+	Although we have tested our solution in a powerful machine for the current time, our performance tests revealed that the streaming component uses a lot of resources. We left for a future work a deep analysis on the scalability of our system which we have proposed different approaches but we have not tested them.
 
+	Another aspect we could have tested was the performance of our solution when using \ac{TURN} servers for relaying the traffic that fails using \ac{STUN}.
+
+	Lastly, we have chosen functionality over security in respect to displaying content to users which lead to security flaws on our solution. Although we have not solved the security problems, we have proposed a solution which at the same time limits the flexibility of adding new functionalities to our prototype.
 \cleardoublepage
