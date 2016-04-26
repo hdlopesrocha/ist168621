@@ -16,7 +16,7 @@ set ytics 5
 set style line 1 lt 1 lc rgb "#0060ad" lw 4  # --- blue
 set style line 2 lt 1 lc rgb "#dd181f" lw 4  # --- red
 set style line 3 lt 1 lc rgb "#00ad60" lw 4  # --- green
-set style line 4 lt 1 lc rgb "magenta" lw 4
+set style line 4 lt 1 lc rgb "#ffb400" lw 4  # --- orange
 
 
 start = 122

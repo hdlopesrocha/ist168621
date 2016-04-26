@@ -274,7 +274,7 @@ function scheduleContent() {
 		If a user leaves a conference room, it is expected that the sequence of played blocks ends. When a block is not found for a given \emph{webSocket} session we try to find a block for the same user and if not possible we try to play a composite recorded block, lastly, if every attempt fails we wait for the next interval the contains media.
 
 \subsection{Chat}
-		Lastly and not less important the chat functionality was implemented using \emph{webSockets}, when a message is sent by a user, it is received by the server, which records it and sends to all the users.
+		Not less important the chat functionality was implemented using \emph{webSockets}, when a message is sent by a user, it is received by the server, which records it and sends to all the users.
 
 		In order to support receiving a huge amount of messages and not having a bottleneck when loading the conference room, we just load an amount of messages that fill the chat panel. When a user scrolls the chat to read old messages, we detect when the chat scroll bar reaches the limit and we request more older messages to the server automatically.
 
