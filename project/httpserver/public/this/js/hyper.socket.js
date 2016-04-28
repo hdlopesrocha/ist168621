@@ -26,13 +26,11 @@ var HyperWebSocket = new (function() {
     var local_none = {offerToReceiveAudio:true,offerToReceiveVideo:true};
     var screen_user = {video: {mediaSource: 'window' || 'screen'}, audio: false};
     var camera_user = {audio:true, video:true };
-
     var audio_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     var remote_constraints = { 'offerToReceiveAudio':true,'offerToReceiveVideo':true};
     // ===============================================
     // ================== UTILITIES ==================
     // ===============================================
-
 
     function logError(err) {
         console.log(err);
@@ -82,7 +80,7 @@ var HyperWebSocket = new (function() {
 						soundDetected = true;
 						this.talk(true);
 					}
-				}else {
+				} else {
 					if(soundDetected){
 						soundDetected = false;
 						this.talk(false);
@@ -189,7 +187,6 @@ var HyperWebSocket = new (function() {
 			uid:userId
 		}));
 	}
-	
 
     this.removeUserGroup = function(userId){
         ws.send(JSON.stringify({
@@ -197,8 +194,6 @@ var HyperWebSocket = new (function() {
             uid:userId
         }));
     }
-
-
 
 	this.receiveRealTime = function(userId,sessionId){
 		console.log("receiveRealTime",userId);
@@ -211,7 +206,6 @@ var HyperWebSocket = new (function() {
 		}
 		ws.send(JSON.stringify(msg));
 	}
-
 
 	this.receiveHistoric = function(userId,offset,sessionId){
 		console.log("receiveHistoric",userId);
@@ -227,6 +221,7 @@ var HyperWebSocket = new (function() {
 	}
 	
 	this.sendMessage = function(text){
+	    console.log("sendMessage",text);
 		ws.send(JSON.stringify({
 			cmd: "createMessage",
 			data: text
@@ -252,7 +247,6 @@ var HyperWebSocket = new (function() {
     this.setServerTimeSynchronizationHandler = function(handler){
         serverTimeHandler = handler;
     }
-
 
     this.setChannelsArrivedHandler = function (handler) {
         channelsArrivedHandler = handler;
@@ -539,7 +533,7 @@ var HyperWebSocket = new (function() {
 		
 			window.onbeforeunload = function() {
 				ws.close();
-			};
+			}.bind(this);
 		
 		} else {
 			console.log("no websocket support!");

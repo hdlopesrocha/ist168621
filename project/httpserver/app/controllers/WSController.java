@@ -127,211 +127,242 @@ public class WSController extends Controller {
 
                     // For each event received on the socket,
                     in.onMessage(new Callback<String>() {
-                        public void invoke(String event) {
-
-                            JSONObject args = new JSONObject(event);
-                            String cmd = args.getString("cmd");
-
-
-                            if(!"talk".equals(cmd))
-                                System.out.println("\nRECV: " + event);
-                            switch (cmd) {
-                                case "createMessage": {
-                                    String data = args.getString("data");
-                                    CreateMessageService messageService = new CreateMessageService(
-                                            userId, groupId, data);
-                                    try {
-                                        Message message = messageService.execute();
-                                        JSONArray messagesArray = new JSONArray();
-                                        JSONObject messageObj = message.toJsonObject();
-                                        messagesArray.put(messageObj);
-                                        JSONObject msg = new JSONObject();
-                                        msg.put("cmd", "msg");
-                                        msg.put("data", messagesArray);
-                                        room.sendMessage(msg.toString());
-
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                    // send msg
-                                }
-                                break;
-                                case "getMessages": {
-                                    int len = args.getInt("len");
-                                    Long ts = args.getLong("ts");
-                                    userSession.sendMessages(ts, len);
-                                }
-                                break;
-                                case "offer": {
-                                    JSONObject data = args.getJSONObject("data");
-                                    String rsd = data.getString("sdp");
-                                    userSession.processOffer(rsd);
-                                }
-                                break;
-                                case "iceCandidate": {
-                                    JSONObject jCand = args.getJSONObject("candidate");
-                                    IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
-                                            jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
-                                    userSession.addCandidate(candidate);
-                                }
-                                break;
-                                case "setRealTime": {
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            String owner = args.optString("uid",null);
-                                            String sessionId = args.optString("sid", null);
-                                            userSession.setRealTime(owner,sessionId);
-                                            userSession.sendMessage(userSession.getContent());
-                                        }
-                                    }).start();
-                                }
-                                break;
-                                case "removeUser": {
-                                    String uid = args.optString("uid", null);
-                                    RemoveGroupMemberService service = new RemoveGroupMemberService(userId, groupId, uid);
-                                    try {
-                                        service.execute();
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                    final JSONObject myAdvertise = new JSONObject().put("cmd", "removedUser").put("uid", uid);
-                                    room.sendMessage(myAdvertise.toString());
-                                }
-                                break;
-                                case "addUser": {
-                                    String uid = args.optString("uid", null);
-                                    AddGroupMemberService service = new AddGroupMemberService(userId, groupId, uid);
-                                    try {
-                                        service.execute();
-                                        Document attributes = new ListOwnerAttributesService(userId, uid, null).execute();
-                                        JSONObject result = new JSONObject(attributes.toJson());
-                                        result.put("cmd", uid);
-                                        final JSONObject myAdvertise = new JSONObject().put("cmd", "participants").put("data",
-                                                new JSONArray().put(result.put("online", false)));
-                                        room.sendMessage(myAdvertise.toString());
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                                case "play": {
-                                    boolean play = args.getBoolean("data");
-                                    userSession.setPlay(play);
-                                }
-                                break;
-                                case "getContent": {
-                                    userSession.sendMessage(userSession.getContent());
-                                }
-                                break;
-                                case "talk": {
-                                    Boolean value = args.optBoolean("value", false);
-                                    JSONObject msg = new JSONObject();
-                                    msg.put("cmd", "talk");
-                                    JSONObject data = new JSONObject();
-                                    data.put("uid", userId);
-                                    data.put("value", value);
-                                    msg.put("data", data);
-                                    room.sendMessage(msg.toString());
-                                }
-                                break;
-                                case "setHistoric": {
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            String owner = args.optString("uid",null);
-                                            String sessionId = args.optString("sid", null);
-                                            if(owner==null){
-                                                owner = room.getGroupId();
-                                                sessionId = "group";
+                        public void invoke(final String event) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println("\nRECV: " + event);
+                                    JSONObject args = new JSONObject(event);
+                                    String cmd = args.has("cmd")? args.getString("cmd") : "";
+                                    switch (cmd) {
+                                        case "createMessage":
+                                            if(args.has("data")) {
+                                                String data = args.getString("data");
+                                                CreateMessageService messageService = new CreateMessageService(
+                                                        userId, groupId, data);
+                                                try {
+                                                    Message message = messageService.execute();
+                                                    JSONArray messagesArray = new JSONArray();
+                                                    JSONObject messageObj = message.toJsonObject();
+                                                    messagesArray.put(messageObj);
+                                                    JSONObject msg = new JSONObject();
+                                                    msg.put("cmd", "msg");
+                                                    msg.put("data", messagesArray);
+                                                    room.sendMessage(msg.toString());
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                return;
                                             }
-                                            userSession.setOffset(args.getLong("offset"));
-                                            userSession.setHistoric(owner,sessionId);
-                                            userSession.sendMessage(userSession.getContent());
+                                            // send msg
+
+                                        break;
+                                        case "getMessages":
+                                            if (args.has("len") && args.has("ts")) {
+                                                int len = args.getInt("len");
+                                                Long ts = args.getLong("ts");
+                                                userSession.sendMessages(ts, len);
+                                                return;
+                                            }
+                                        break;
+                                        case "offer":
+                                            if(args.has("data")) {
+                                                JSONObject data = args.getJSONObject("data");
+                                                String rsd = data.getString("sdp");
+                                                userSession.processOffer(rsd);
+                                                return;
+                                            }
+                                        break;
+                                        case "iceCandidate":
+                                            if(args.has("candidate")){
+                                                JSONObject jCand = args.getJSONObject("candidate");
+                                                IceCandidate candidate = new IceCandidate(jCand.getString("candidate"),
+                                                        jCand.getString("sdpMid"), jCand.getInt("sdpMLineIndex"));
+                                                userSession.addCandidate(candidate);
+                                                return;
+                                            }
+                                        break;
+                                        case "setRealTime":
+                                            if(args.has("uid")) {
+                                                String owner = args.getString("uid");
+                                                String sessionId = args.optString("sid", null);
+                                                userSession.setRealTime(owner, sessionId);
+                                                userSession.sendMessage(userSession.getContent());
+                                                return;
+                                            }
+
+                                        break;
+                                        case "removeUser":
+                                            if (args.has("uid")) {
+                                                String uid = args.getString("uid");
+                                                RemoveGroupMemberService service = new RemoveGroupMemberService(userId, groupId, uid);
+                                                try {
+                                                    service.execute();
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                final JSONObject myAdvertise = new JSONObject().put("cmd", "removedUser").put("uid", uid);
+                                                room.sendMessage(myAdvertise.toString());
+                                                return;
+                                            }
+
+                                        break;
+                                        case "addUser":
+                                            if(args.has("uid")) {
+                                                String uid = args.getString("uid");
+                                                AddGroupMemberService service = new AddGroupMemberService(userId, groupId, uid);
+                                                try {
+                                                    service.execute();
+                                                    Document attributes = new ListOwnerAttributesService(userId, uid, null).execute();
+                                                    JSONObject result = new JSONObject(attributes.toJson());
+                                                    result.put("cmd", uid);
+                                                    final JSONObject myAdvertise = new JSONObject().put("cmd", "participants").put("data",
+                                                            new JSONArray().put(result.put("online", false)));
+                                                    room.sendMessage(myAdvertise.toString());
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                return;
+                                            }
+                                        break;
+                                        case "play": {
+                                            if(args.has("data")) {
+                                                boolean play = args.getBoolean("data");
+                                                userSession.setPlay(play);
+                                                return;
+                                            }
                                         }
-                                    }).start();
-                                }
-                                break;
-                                case "createTag": {
-                                    try {
-                                        Date time = Tools.FORMAT.parse(args.getString("time"));
-                                        String title = args.getString("title");
-                                        String tid = args.optString("id",null);
-                                        SetTimeTagService service = new SetTimeTagService(groupId,tid, time, title);
-                                        TimeAnnotation tag = service.execute();
-                                        JSONObject msg = new JSONObject();
-                                        msg.put("cmd", "tag");
-                                        msg.put("data", tag.toJson());
-                                        room.sendMessage(msg.toString());
-                                    } catch (ServiceException | JSONException | ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                                case "removeTag":{
-                                    String tagId = args.getString("tid");
-                                    try {
-                                        new DeleteTimeTagService(groupId,tagId).execute();
-                                        JSONObject msg = new JSONObject();
-                                        msg.put("cmd", "removeTag");
-                                        msg.put("tid", tagId);
-                                        room.sendMessage(msg.toString());
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                                case "createContent": {
-                                    try {
-                                        Date start = Tools.FORMAT.parse(args.getString("start"));
-                                        Date end = Tools.FORMAT.parse(args.getString("end"));
-                                        String content = args.getString("content");
-                                        CreateHyperContentService service = new CreateHyperContentService(userId,
-                                                groupId, start, end, content);
-                                        service.execute();
-                                        room.sendContents();
-                                    } catch (ServiceException | ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                                case "deleteContent": {
-                                    String contentId = args.getString("cid");
-                                    try {
-                                        DeleteHyperContentService service = new DeleteHyperContentService(userId,
-                                                groupId, contentId);
-                                        service.execute();
-                                    } catch (ServiceException e) {
-                                        e.printStackTrace();
-                                    }
-                                    // System.out.println("content");
-                                   room.sendContents();
-                                }
-                                case "operation" : {
-                                    synchronized (room.getOperationLock()) {
-                                        if (args.has("sid")) {
-                                            UserSession sess = room.getUser(UUID.fromString(args.getString("sid")));
-                                            sess.sendMessage(event);
-                                        } else {
-                                            room.sendMessage(userSession, event);
+                                        break;
+                                        case "getContent":
+                                            if(true){
+                                                userSession.sendMessage(userSession.getContent());
+                                            }
+                                            return;
+                                        case "talk":
+                                            if(args.has("value")){
+                                                Boolean value = args.getBoolean("value");
+                                                JSONObject msg = new JSONObject();
+                                                msg.put("cmd", "talk");
+                                                JSONObject data = new JSONObject();
+                                                data.put("uid", userId);
+                                                data.put("value", value);
+                                                msg.put("data", data);
+                                                room.sendMessage(msg.toString());
+                                                return;
+                                            }
+                                        break;
+                                        case "setHistoric":
+                                            if(args.has("uid")){
+                                                String owner = args.getString("uid");
+                                                String sessionId = args.optString("sid", null);
+                                                if(owner==null){
+                                                    owner = room.getGroupId();
+                                                    sessionId = "group";
+                                                }
+                                                userSession.setOffset(args.getLong("offset"));
+                                                userSession.setHistoric(owner,sessionId);
+                                                userSession.sendMessage(userSession.getContent());
+                                                return;
+                                            }
+                                        break;
+                                        case "createTag":
+                                            if(args.has("time") && args.has("title")){
+                                                try {
+                                                    Date time = Tools.FORMAT.parse(args.getString("time"));
+                                                    String title = args.getString("title");
+                                                    String tid = args.optString("id",null);
+                                                    SetTimeTagService service = new SetTimeTagService(groupId,tid, time, title);
+                                                    TimeAnnotation tag = service.execute();
+                                                    JSONObject msg = new JSONObject();
+                                                    msg.put("cmd", "tag");
+                                                    msg.put("data", tag.toJson());
+                                                    room.sendMessage(msg.toString());
+                                                } catch (ServiceException | JSONException | ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                return;
+                                            }
+                                        break;
+                                        case "removeTag":
+                                            if(args.has("tid")){
+                                                String tagId = args.getString("tid");
+                                                try {
+                                                    new DeleteTimeTagService(groupId,tagId).execute();
+                                                    JSONObject msg = new JSONObject();
+                                                    msg.put("cmd", "removeTag");
+                                                    msg.put("tid", tagId);
+                                                    room.sendMessage(msg.toString());
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                return;
+                                            }
+                                        break;
+                                        case "createContent":
+                                            if(args.has("start") && args.has("end") && args.has("content")){
+                                                try {
+                                                    Date start = Tools.FORMAT.parse(args.getString("start"));
+                                                    Date end = Tools.FORMAT.parse(args.getString("end"));
+                                                    String content = args.getString("content");
+                                                    CreateHyperContentService service = new CreateHyperContentService(userId,
+                                                            groupId, start, end, content);
+                                                    service.execute();
+                                                    room.sendContents();
+                                                } catch (ServiceException | ParseException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                return;
+                                            }
+                                        break;
+                                        case "deleteContent":
+                                            if(args.has("cid")){
+                                                String contentId = args.getString("cid");
+                                                try {
+                                                    DeleteHyperContentService service = new DeleteHyperContentService(userId,
+                                                            groupId, contentId);
+                                                    service.execute();
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                // System.out.println("content");
+                                                room.sendContents();
+                                                return;
+                                            }
+                                        case "operation" : {
+                                            synchronized (room.getOperationLock()) {
+                                                if (args.has("sid")) {
+                                                    UserSession sess = room.getUser(args.getString("sid"));
+                                                    sess.sendMessage(event);
+                                                } else {
+                                                    room.sendMessage(userSession, event);
+                                                }
+                                                return;
+                                            }
                                         }
-                                    }
-                                }
-                                break;
-                                case "saveCollab":{
-                                    synchronized (room.getOperationLock()) {
-                                        String data = args.getString("data");
-                                        try {
-                                            new SetCollaborativeContentService(userId, groupId, data).execute();
-                                        } catch (ServiceException e) {
-                                            e.printStackTrace();
+                                        case "saveCollab": if(args.has("data")){
+                                            synchronized (room.getOperationLock()) {
+                                                String data = args.getString("data");
+                                                try {
+                                                    new SetCollaborativeContentService(userId, groupId, data).execute();
+                                                } catch (ServiceException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                            return;
                                         }
+                                        break;
+                                        default:
+                                            break;
+
+
                                     }
+                                    System.out.println("============== INVALID CMD! ===============");
+
                                 }
-                                break;
-                                default:
-                                    break;
-                            }
+                            }).start();
+
+
+
                         }
                     });
                 } else {

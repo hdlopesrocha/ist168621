@@ -60,6 +60,8 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         this.room = room;
         playSid = "group";
         initEndpoint();
+
+        System.out.println("new UserSession ---> " + sid.toString());
     }
 
     private void initEndpoint(){

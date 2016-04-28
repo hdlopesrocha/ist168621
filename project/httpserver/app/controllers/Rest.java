@@ -613,7 +613,6 @@ public class Rest extends Controller {
         User ret = new RegisterUserService(password, attributes).execute();
         session("uid",ret.getId().toString());
         return ok(ret.getToken());
-
     }
 
 

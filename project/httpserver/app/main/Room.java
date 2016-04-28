@@ -334,7 +334,7 @@ public class Room implements Closeable {
         return alternativeSession;
     }
 
-    public UserSession getUser(final UUID sid) {
+    public UserSession getUser(final String sid) {
         if(sid!=null) {
             synchronized (participants) {
                 for (UserSession session : participants) {
