@@ -1,0 +1,12 @@
+\section{Chapter Summary}
+\label{related:summary}
+
+In order to implement an hyper-linked communication solution, several design decisions are to be made. The \emph{Internet} structure, their protocols and browser capabilities are a key factors when implementing a solution that allows bi-directional communications, interactive media and collaboration environments.
+
+Bi-directional communications between clients have different needs from request-response based communications between clients and servers due to the introduction of \ac{NAT}, this leads to the appearance of mechanisms such as \ac{STUN}, \ac{TURN} and \ac{ICE} in order to bypass the limits imposed by \ac{NAT}.
+
+With those problems solved using techniques such as described, \ac{WebRTC} came to introduce an \ac{API} for video, audio and data communications through web browsers without using plug-ins.
+
+By itself \ac{WebRTC} does not define how each user gets to know each other and how the information flows between users. For this reason we have studied the multiple ways we could implement this \emph{get-to-know} mechanism which is known by signaling protocol.
+
+Therefore, with the communications established, we had to discuss the different types of media and what can be done with each kind in order to increase the value of communications among users.

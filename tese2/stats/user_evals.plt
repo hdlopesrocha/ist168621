@@ -1,7 +1,7 @@
 set terminal postscript size 16cm,8cm eps
 set title "Solution Evaluation" font ",20"
 set xlabel "Categories"
-set ylabel "User evaluation"
+set ylabel "User evaluation [percentage]"
 
 set grid
 set tics scale 0
