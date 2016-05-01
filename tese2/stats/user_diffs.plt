@@ -1,7 +1,7 @@
 set terminal postscript size 8cm,8cm eps
 set title "Task difficulty" font ",20"
 set xlabel "Tasks"
-set ylabel "Difficulty"
+set ylabel "Difficulty [percentage]"
 
 set grid
 set tics scale 0

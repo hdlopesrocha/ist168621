@@ -46,7 +46,7 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 	Media Types can be distinguished by two criteria, the first one describes a media as discrete or continuous, the second one describes it as interactive or non-interactive. A discrete media is characterized by not depending from time, and continuous media as depending on it. Interactive media is characterized by its state being changed by external events such as user interactions.
   %RP estavas a falar de gravar video e passaste a falar de protocolos de streaming. Convém explicar o racional para esta abordagem. Começa a secção a explicar sobre o que vais falar e porquê.
   %RP e usa subsecções...
-\begin{figure}[H]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.4\textwidth]{figures/media_types.png}
 	\caption{Media Types}
@@ -119,11 +119,12 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 	{\color{blue}\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations on client side over plain text. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage, besides this drawback this library is very flexible because it's not tied to a specific database or server side technology.}
 	
 
+	{\color{blue} In summary, table \ref{table:otcomparision} shows a comparision of the \ac{OT} libraries presented so far.}
 
-\begin{table}[H]
+\begin{table}[!htb]
 \centering
 \caption{Comparision between Operational Transformation libraries}
-\label{my-label}
+\label{table:otcomparision}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Library} & \textbf{Own Server} & \textbf{Own Storage} & \textbf{Operations} \\ \hline

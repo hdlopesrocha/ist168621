@@ -1,18 +1,19 @@
 \section{Real time communications}\label{rtc}
 
-\ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser based real time communications without installing any additional application or plug-in. 
+\ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser based real time communications without installing any additional application or plug-in. {\color{blue}Table \ref{table:webrtcstack} shows the protocols that \ac{WebRTC} rely on.}
 
 Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{OSX} and \emph{Windows} implement native \ac{WebRTC} libraries, extending the usage of \ac{WebRTC} to applications outside the web browser. This native support can help to implement applications that record video and audio streams for further playback.
 
 %RP indicar que agora também já temos webrtc fora do browser devido ao seu sucesso e ao facto de reunir tecnologia state of the art?
 
+
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 %\renewcommand{\arraystretch}{2}
 
-\begin{table}[]
+\begin{table}[!htb]
 \centering
 \caption{WebRTC protocol Stack}
-\label{my-label}
+\label{table:webrtcstack}
     \begin{tabularx}{\textwidth}{*8{Y}@{}m{0pt}@{}} 
     	\cline{5-8}
 		&&&\multicolumn{1}{c|}{} & \multicolumn{2}{c|}{~~~~~~~~~~MediaStream~~~~~~~~~~} & \multicolumn{2}{c|}{~~~~~~~~~~DataChannel~~~~~~~~~~} 								&\\[12pt]
@@ -47,12 +48,15 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 
 \ac{DTLS} is similar to \ac{TLS}, but is used on top of \ac{UDP}.
 The main difference is the inclusion of a sequence number per packet that is used for packet re-ordering on reception and protects from duplicated packets. If a packet sequence number is less than the expected sequence number the packet is discarded. If a packet sequence number is greater than the expected sequence number the packet may be enqueued or discarded. By knowing the sequence of messages that are sent and received in \ac{DTLS}, timers are used for packet retransmission avoiding acknowledgment messages.
+
+{\color{blue} Table \ref{table:transport_protocols} shows an overview of the transport protocols.}
+
 %RP TLS?
 %\def\tabularxcolumn#1{m{#1}}
-\begin{table}[]
+\begin{table}[!htb]
 \centering
 	\caption{Overview of transport protocols}
-	\label{my-label}
+	\label{table:transport_protocols}
     \begin{tabularx}{\textwidth}{X|Y|Y|Y|@{}m{0pt}@{}}
 \cline{2-4}
                                                      & \textbf{TCP}  & \textbf{UDP}     & \textbf{SCTP}    &\\[12pt]\hline
