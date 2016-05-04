@@ -252,8 +252,8 @@ public class WSController extends Controller {
                                             }
                                         break;
                                         case "setHistoric":
-                                            if(args.has("uid")){
-                                                String owner = args.getString("uid");
+                                            if(args.has("offset")){
+                                                String owner = args.optString("uid",null);
                                                 String sessionId = args.optString("sid", null);
                                                 if(owner==null){
                                                     owner = room.getGroupId();

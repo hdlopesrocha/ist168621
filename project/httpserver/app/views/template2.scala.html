@@ -118,7 +118,8 @@
                 </a>
             </li>
 
-            <li><span><i class="fa fa-user-plus"></i></span>FRIENDSHIP REQUESTS</li>
+            <li><span><i class="fa fa-user-plus"></i></span>FRIENDSHIP REQUESTS <div style="display:inline" id="requestCount2"></div>
+            </li>
             <div id="request-list" ></div>
             <li onclick="showSearchOPeople()"><a><span><i class="fa fa-search"></i></span>Find people...</a></li>
 
@@ -226,6 +227,7 @@
             var success = function() {
                 showUserProfile(userId);
                 $('#userProfileModal').modal('hide');
+                updateRequestsAndFriends();
 		    }
             var from = data.from;
             var to = data.to;
@@ -263,18 +265,8 @@
         });
     }
 
-
-
-	$(document).ready(function() {
-        $('#searchPeople').typeahead(SearchPeople);
-
-         $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-         });
-
-
-       HyperHttp.listRequests(function(array) {
+    function updateRequestsAndFriends(){
+        HyperHttp.listRequests(function(array) {
             console.log("listRequests",array);
             var html = "";
             var html2 = "";
@@ -292,7 +284,11 @@
 
             $("#requestList").html(html);
             if(array.length) {
-                $("#requestCount").html("<span class='badge badge-danger'>"+array.length+"</span>");
+                $("#requestCount").html("<div class='badge badge-danger'>"+array.length+"</div>");
+                $("#requestCount2").html("<div class='badge badge-danger'>"+array.length+"</div>");
+            }else {
+                $("#requestCount").html("");
+                $("#requestCount2").html("");
             }
         });
         HyperHttp.listRelations(function(array) {
@@ -304,6 +300,19 @@
             }
             $("#friend-list").html(html);
         });
+    }
+
+
+	$(document).ready(function() {
+        $('#searchPeople').typeahead(SearchPeople);
+
+         $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+         });
+
+        updateRequestsAndFriends();
+
 
         $("#fullscreen").hide();
         $("#logout-button").click(function(){

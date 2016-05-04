@@ -121,16 +121,16 @@ public class Room implements Closeable {
 
             recording = r;
             if (recording) {
+                Date start = new Date();
+
                 try {
                     if(this.interval==null) {
-                        this.interval = new CreateIntervalService(groupId, new Date()).execute();
+                        this.interval = new CreateIntervalService(groupId, start).execute();
                     }
                     //record(10000);
                 } catch (ServiceException e) {
                     e.printStackTrace();
                 }
-
-                Date start = new Date();
 
                 ObjectId gid = new ObjectId(groupId);
                 recorder = new Recorder(compositePort, duration, new Recorder.RecorderHandler() {
