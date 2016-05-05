@@ -9,11 +9,12 @@
 	Since the early days of Human History, we tried to communicate over far locations, from smoke signals to letters delivered by messengers. Real-time communications were limited or even nonexistent. Despite all the efforts made to improve communications, written communication could never replace face to face communication.
 	With the advent of the telephone network, communications have taken a very important step for us to feel more connected with whom we communicate. Still, only the human voice was not enough, and the invention of cameras and consequent video digitalization were a huge step for real-time communications.
 
-	In the past, handwritten documents were limited to a writer per page at a time. Writing a book collaboratively was a difficult task due to synchronism between writers.
-	Today, we can achieve more, it is possible to write a document collaboratively, correct spelling mistakes without wasting physical resources, restructure text at any moment, add a video to a newspaper article and more. Although much of what was said seems banal nowadays, none of this was possible before the computer's invention. 
+	In the past, handwritten documents were limited to a writer per page at a time. Writing a book collaboratively was a difficult task due to synchronization between writers.
+	Today, we can achieve more. It is possible to write a document collaboratively, correct spelling mistakes without wasting physical resources, restructure text at any moment, add a video to a newspaper article and more. Although much of what was said seems banal nowadays, none of this was possible before the computer's invention. 
 
-	As Martin Geddes states\cite{geddes}, \say{No computer in our lifetimes will ever rival a human voice's capacity to conveying rich and complex social and emotional meaning} , although nothing replaces the physical contact with a person while we communicate, we are at a time when we can do more than just a visual and verbal communication, hypermedia can be added to video and voice in order to extend its value. The concept of structured voice and video synchronized with hypermedia is called hypervoice\cite{geddes}.
+	As Martin Geddes states\cite{geddes}, \say{No computer in our lifetimes will ever rival a human voice's capacity to conveying rich and complex social and emotional meaning}. Although nothing replaces the physical contact with a person while we communicate, we are at a time when we can do more than just visual and verbal communication. Hypermedia can be added to video and voice in order to extend its value. The concept of structured voice and video synchronized with hypermedia is called hypervoice\cite{geddes}.
 
+     
 
 \section{Proposed Solution}
 \label{section:proposed}
@@ -25,42 +26,54 @@
     Furthermore, real-time communication applications can make a significant difference on business, education and health sectors by providing tools for developing teaching and learning online, teamworking and socializing web applications.
 
 	For multiple reasons, we often need to repeat or postpone some of our tasks, some people tend to forget what they ear or see.
-               %RP acho que toda a gente se esquece eventualmente. Pode não lhe parecer importante na altura. Não é preciso estar doente!
+        %RP Parece-me que até aqui ainda é background ou motivação. Não me parece que estejas já a descrever a solução proposta.
+        
 	Therefore, a real-time system is a huge source of information that requires much attention from its users. In this context, an application that provides a way to remember our past communications would be a strong tool for not only to catch what we lost but also to enhance our knowledge.
 
 
 	{\color{blue}Another point to consider is making available collaborative tools for text edition, instant messaging and video superimposed content creation and visualization.}
 
 
+        
+
 \section{Thesis Contribution}
 \label{section:contribution}
 %Nesta secção devem identificar como é que a vossa solução vai contribuir para resolver o problema.
 
-	Making it clear, this project aims to complement current audio, text and video communications in order to create rich and collaborative interfaces with the ability to add more content on a future time (e.g. creating time annotations for improving content search) in order to increase its value. It is also important to highlight another goal of this project which is the ability to navigate in time by rewinding communications, fast-forward and jump to certain points.
+Making it clear, this project aims to complement current audio, text and video communications in order to create rich and collaborative interfaces with the ability to add more content on a future time (e.g. creating time annotations for improving content search) in order to increase its value. It is also important to highlight another goal of this project which is the ability to navigate in time by rewinding communications, fast-forward and jump to certain points.
 
-	A web application with an easy to learn user interface will be developed to accomplish solving our problem. Our application, unnamed yet, is targeted at web browsers that are compatible with only standard technologies like JavaScript, \ac{WebRTC}, \ac{HTML}5 and \ac{CSS}3. Any additional plug-in is avoidable, \emph{JavaScript} libraries will be preferred as they can be downloaded on the fly.  
+%RP Estás a misturar goals com contribuições. Nesta altura deves falar do que foi feito (na solução). Os objectivos podem ficar no inicio da arquitectura para a motivar e condicionar 
+
+A web application with an easy to learn user interface will be developed to accomplish solving our problem. Our application, unnamed yet, is targeted at web browsers that are compatible with only standard technologies like JavaScript, \ac{WebRTC}, \ac{HTML}5 and \ac{CSS}3. Any additional plug-in is avoidable, \emph{JavaScript} libraries will be preferred as they can be downloaded on the fly.
+
+%RP ``will be developed''!!! ``was''. Não podes estar a falar no futuro. Isto é passado. Estás a descrever o que fizeste.
 
 	Although we propose an initial solution to solve our problem, we will make a continuous effort to survey the systems that solve our problem either completely or just a part of it, not excluding solutions that may appear during the implementation of our project.
 
 	We will present an architecture that can meet our goals, implement the respective prototype and test it with real users and performance benchmarks.
 
+        %RP mais uma vez, passado e muito vago.
+        
 	According to Martin Geddes, the quality of the interaction worsens as the number of users increase\cite{geddes}. In our testing phases we will quantify and qualify the impact of increasing users on the interface and performance of our prototype. 
 
 	All the problems faced during the development and limitations will be reported on the thesis so that a future project better then ours can be easily and better developed.
 
-
+        %RP este capítulo precisa de uma revisão. A estrutura tem de ser:
+        %Motivação/background - descrever os problemas / desafios / oportunidades que motivam a tese
+        %Proposed solution - descrever por alto a solução para o problema, uma aplicação web com determinadas funcionalides (listando todas elas)
+        %contribution - as contribuições são: uma arquitectura, um interface utilizador para lidar com um conceito novo (andar no tempo), um protótipo funcional, teste com utilizadores e respectivas conclusões (avaliação experimental), documentação (tese).
 
 \section{Outline}
 
-This document is structured as follows:
+This rest of this document is structured as follows:
 
 \begin{itemize}
-\item \textbf{Chapter \ref{chapter:introduction}} presents the motivation, background and proposed solution.
+%\item \textbf{Chapter \ref{chapter:introduction}} presents the motivation, background and proposed solution.
 \item \textbf{Chapter \ref{chapter:relatedwork}} describes the previous work in the field.
 \item \textbf{Chapter \ref{chapter:architecture}} describes the system requirements and the architecture for an Web Application that fulfills the goals of this thesis.
 \item \textbf{Chapter \ref{chapter:implementation}} describes the implementation of our Web Application and the technologies chosen.
-\item \textbf{Chapter \ref{chapter:evaluation}} describes the evaluation tests performed and the corresponding results.
-\item \textbf{Chapter \ref{chapter:conclusion}} summarizes the work developed and future work.
+\item \textbf{Chapter \ref{chapter:evaluation}} presents the evaluation tests performed and the corresponding results.
+\item \textbf{Chapter \ref{chapter:conclusion}} summarizes the work developed and proposes future work.
 \end{itemize}
 
 \cleardoublepage
