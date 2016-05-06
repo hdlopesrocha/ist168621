@@ -4,7 +4,7 @@
 Real time collaboration applications have become a huge help on team tasks, providing a great boost on business, research and investigation velocity. Technologies like these are appearing along these days, but they were not be possible a few years ago because technology was limited or unavailable. Although today's technology is still limited on some aspects, progress is being done in order to improve the web ecosystem, by creating standards and migrating to newer technologies.
 %RP aqui dizes ``we are doing progress''. Parece que é parte do teu trabalho e que tens algo a ver com isso. Muda para frase impessoal
 
-Section \ref{recstream} presents the RTP protocol how it can be used to record media streams. Section \ref{mediatype} describes the media types and what types of media should be streamed. Section\ref{intrecord} addresses how an interactive media can be recorded. Section \ref{collabenv} presents the collaborative environment and libraries to synchronize distributed object among users.
+Section \ref{recstream} presents the RTP protocol how it can be used to record media streams. Section \ref{mediatype} describes the media types and what types of media should be streamed. Section \ref{intrecord} addresses how an interactive media can be recorded. Section \ref{collabenv} presents the collaborative environment and libraries to synchronize distributed object among users.
 
 \subsection{Streaming and Recording}\label{recstream}~\\
 	If, for instance, one wants to rewind a real-time video, recordings will be needed from whom is streaming the video. 
@@ -38,8 +38,9 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 	\emph{Jitsi Video Bridge} uses \ac{XMPP} as a signaling protocol and its \emph{colibri} extension \cite{xep0340} to reserve channels for video transmission. Despite this choice for signaling protocol, \emph{Jitsi Video Bridge} also supports \ac{SIP}.
 
 	{\color{blue}
-	\ac{KMS} supports trans-coding, group communications, recording, mixing, broadcasting, applying filters, image and sound analysis, for example it allows face and qrcode detection. \ac{KMS} functionalities are exposed through \emph{JSON-RPC} over \emph{WebSocket}, there are three clients available: \emph{JavaScript} client for web browsers, \emph{Java} client for \emph{Java EE} servers and \emph{JavaScript} client for \emph{Node.js} servers. 
-	\ac{KMS} supports streaming over \emph{WebRTC}, \ac{HTTP} and \ac{RTP} endpoints. Another important component of \ac{KMS} is \emph{Kurento Repository} which supports recording and playing directly from \emph{MongoDB}, that is important for providing a scalable media storage. Unlinke \emph{Jitsi Video Bridge}, \ac{KMS} does not enforce a specific signaling protocol.
+	  \ac{KMS} supports trans-coding, group communications, recording, mixing, broadcasting, applying filters and performing image and sound analysis (for example it allows face and QRcode detection). \ac{KMS} functionalities are exposed through \emph{JSON-RPC} over \emph{WebSocket}.
+          There are three clients available: \emph{JavaScript} client for web browsers, \emph{Java} client for \emph{Java EE} servers and \emph{JavaScript} client for \emph{Node.js} servers. 
+	\ac{KMS} supports streaming over \emph{WebRTC}, \ac{HTTP} and \ac{RTP} endpoints. Another important component of \ac{KMS} is \emph{Kurento Repository}, which supports recording and playing directly from \emph{MongoDB}. That is important for providing a scalable media storage. Unlike \emph{Jitsi Video Bridge}, \ac{KMS} does not enforce a specific signaling protocol.
 	}
 
 \subsection{Media Types}\label{mediatype}~\\
@@ -89,21 +90,23 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 
   \subsection{Collaborative Environment}\label{collabenv}~\\
 	\emph{Google Wave} was a distributed collaboration platform based on \emph{Jupiter}\cite{jupiter} that adopted \ac{OT} techniques.
-        	\ac{OT} technology was originally developed for consistency maintenance and concurrency control over distributed objects, \ac{OT} algorithms are mainly used in collaborative applications such as distributed document edition.
+        \ac{OT} technology was originally developed for consistency maintenance and concurrency control over distributed objects.
+        \ac{OT} algorithms are mainly used in collaborative applications such as distributed document edition.
     Other Google products, such as Google Docs, are also using this type of technology. In 2010 Google stopped the development of Google Wave and released the main components as Open Source code to Apache, the project is currently known as \emph{Apache Wave} and the reference implementation is named as \emph{Wave in a Box}.
                 %RP acho que o google wave merecia uma descrição mais detalhada. Mas não era aqui. Vê o comentário no final
 
     Among other platforms and libraries we present \emph{ShareJS}\footnote{\url{http://sharejs.org/}(accessed June 2, 2015).}, \emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).}, \emph{Goodow}\footnote{\url{http://realtimeplayground.goodow.com/}(accessed June 2, 2015).}, \emph{Etherpad Lite}\footnote{\url{https://github.com/ether/etherpad-lite}(Accessed 20 March 2016)} and \emph{otJS}\footnote{\url{http://operational-transformation.github.io}(accessed March 10, 2016)}.
 
-	\emph{ShareJS} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integration is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
+	\emph{ShareJS} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integrations is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
 
-	\emph{TogetherJS} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, all the synchronization work is performed by the clients. Although the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}, if we would not choose \emph{NodeJS} for server implementation we would need read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
+	\emph{TogetherJS} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, with all the synchronization work being performed by the clients. Despite the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}. If we chose a server other than \emph{NodeJS} for our implementation, we would need to read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
+        %RP terias de alterar o servidor onde corres o software (é o que está escrito) ou portar o hub para o novo servidor? São coisas muito diferentes.
 
 	\emph{Goodow} is a collaborative framework with its own server implementation, it supports four types of collaborative elements: String, Lists, Maps and Custom objects.
         %RP estes 3 últimos parágrafos estão desligados do resto. O que pretendes apresentar?
 	
 
-	{\color{blue}\emph{Etherpad Lite} is a collaborative text editor implemented with \emph{NodeJS} that allows not only the text operations but also to associate authorships to pieces of text. It supports adding functionality trough plug-ins\footnote{\url{http://static.etherpad.org/plugins.html}(Accessed 20 March 2016)}, for example:
+	{\color{blue}\emph{Etherpad Lite} is a collaborative text editor implemented with \emph{NodeJS} that allows not only the basic text operations but also to associate authorships to pieces of text. It supports adding functionality through plug-ins\footnote{\url{http://static.etherpad.org/plugins.html}(Accessed 20 March 2016)}, for example:
 		\begin{itemize}
 		\item exporting and importing document formats such as \emph{DOC}, \emph{PDF}, \emph{ODT} and \emph{DOCX}.
 		\item painting and drawing.
@@ -113,10 +116,10 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 		\item text to speech.
 		\end{itemize}
 	}
+%RP acho que não vale a pena fazer o itemize. Podia ficar tudo na linha, assim: 1, 2, 3...
 
 
-
-	{\color{blue}\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations on client side over plain text. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage, besides this drawback this library is very flexible because it's not tied to a specific database or server side technology.}
+	{\color{blue}\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations over plain text on the client side. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage. Besides this drawback, this library is very flexible because it's not tied to a specific database or server side technology.}
 	
 
 	{\color{blue} In summary, table \ref{table:otcomparision} shows a comparision of the \ac{OT} libraries presented so far.}

@@ -1,6 +1,9 @@
 \section{Early days of the Internet and its remaining flaws}\label{early}
 
-The need to build a global communications network in an age when almost nobody had access to that technology and the unpredictability of the number of future users, lead to some protocols not being suitable for the explosive growth and proliferation of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. {\color{blue} Today we live in the \emph{Internet of Things} era, users and companies may have multiple devices that require internet connectivity, from personal computers, smart phones, tablets, traffic sensors, public vigillance systems, health monitoring tools and so on, all those devices combined cannot be publicly addressed by \ac{IPv4}.} 
+The need to build a global communications network in an age when almost nobody had access to that technology and the unpredictability of the number of future users, lead to some protocols not being suitable for the explosive growth and proliferation of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. {\color{blue} Today we live in the \emph{Internet of Things} era.
+  Users and companies may have multiple devices that require Internet connectivity, such as personal computers, smart phones, tablets, traffic sensors, public vigillance systems, health monitoring tools and so on. All those devices combined cannot be publicly addressed by \ac{IPv4}.}
+%RP vigillance -> surveilance?
+%RP usa acrónimo IoT para Internet of Things
 
 To this end, one way to overcome the \ac{IPv4} address scarcity problem was the development of a mechanism that groups multiple address into a single one, the machine that is assigned that address is then responsible for redirecting messages to members of its group using their private addresses, each connection in the private network is identified publicly by the same \ac{IP} address with a different port.
 %RP o porto não identifica uma máquina (membro da rede privada) mas uma ligação.
@@ -13,10 +16,10 @@ This technique is known as \ac{NAT}.
 \end{figure}
 %RP na figura devias indicar que uns tem ips publicos e outros privados. Alternativamente, colocavas metade da nat box dentro da núvem para indicar que esta pertence à Internet e os pc não. 
 
-Initially \ac{NAT} offered an alternative to address exhaustion and a minimal sensation of security, although its current wide usage, \ac{NAT}s are exposing their weaknesses to the application layer, {\color{blue}namely on applications that require direct communications between two private networks.}
-%RP initially? E hoje?
-It is also important to highlight that it exists four types of \ac{NAT} implementations\cite{rfc3489}: \emph{Full Cone NAT}, \emph{Restricted Cone NAT}, \emph{Port Restricted Cone NAT}, \emph{Symmetric NAT}.
-%RP apresentas 5. falas em asymmetric. É um erro?
+Initially \ac{NAT} offered an alternative to address exhaustion and a minimal sensation of security.
+However, due to their current wide usage, \ac{NAT}s weaknesses are being exposing at the application layer, {\color{blue}namely impacting applications that require direct communications between two private networks.}
+
+There are four types of \ac{NAT} implementations\cite{rfc3489}: \emph{Full Cone NAT}, \emph{Restricted Cone NAT}, \emph{Port Restricted Cone NAT}, \emph{Symmetric NAT}.
 
 \emph{Full Cone} \ac{NAT} maps each public \ac{IP} address and port to a private \ac{IP} address and port.
 Any external host can communicate with private hosts through their mapped public address and port. This represents the least restrictive type of \ac{NAT} and, as we will see later, the unique type of \ac{NAT} that enables real time communications from point to point.
