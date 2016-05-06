@@ -80,7 +80,7 @@
 \@writefile{toc}{\contentsline {chapter}{Bibliography}{67}{chapter*.128}}
 \@writefile{toc}{\contentsline {chapter}{List of Figures}{xiv}{chapter*.6}}
 \@writefile{toc}{\contentsline {chapter}{List of Tables}{xv}{chapter*.7}}
-\@writefile{toc}{\contentsline {chapter}{Resumo}{vii}{chapter*.4}}
+\@writefile{toc}{\contentsline {chapter}{Resumo}{vii}{chapter*.3}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Related Work}{5}{chapter.2}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Architecture}{22}{chapter.3}}
@@ -88,9 +88,9 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Evaluation}{48}{chapter.5}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusions}{62}{chapter.6}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Background}{1}{section.1.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Proposed Solution}{1}{section.1.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Proposed Solution}{2}{section.1.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Thesis Contribution}{2}{section.1.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Outline}{2}{section.1.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Outline}{3}{section.1.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Early days of the Internet and its remaining flaws}{5}{section.2.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Real time communications}{7}{section.2.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Signaling: meet and get to know}{9}{section.2.3}}
@@ -515,9 +515,6 @@
 \acronymused{URL}
 \acronymused{URL}
 \acronymused{VoIP}
-\acronymused{WebRTC}
-\acronymused{WebRTC}
-\acronymused{WebRTC}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
 \acronymused{WebRTC}
