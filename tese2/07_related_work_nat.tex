@@ -1,7 +1,7 @@
 \section{Early days of the Internet and its remaining flaws}\label{early}
 
-The need to build a global communications network in an age when almost nobody had access to that technology and the unpredictability of the number of future users, lead to some protocols not being suitable for the explosive growth and proliferation of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. {\color{blue} Today we live in the \ac{IoT} era.
-  Users and companies may have multiple devices that require Internet connectivity, such as personal computers, smart phones, tablets, traffic sensors, public surveilance systems, health monitoring tools and so on. All those devices combined cannot be publicly addressed by \ac{IPv4}.}
+The need to build a global communications network in an age when almost nobody had access to that technology and the unpredictability of the number of future users, lead to some protocols not being suitable for the explosive growth and proliferation of users that followed. \ac{IPv4} limits the number of public addresses in such a way that today they are scarce \cite{ipv4}. Today we live in the \ac{IoT} era.
+  Users and companies may have multiple devices that require Internet connectivity, such as personal computers, smart phones, tablets, traffic sensors, public surveilance systems, health monitoring tools and so on. All those devices combined cannot be publicly addressed by \ac{IPv4}.
 %RP vigillance -> surveilance?
 %RP usa acrónimo IoT para Internet of Things
 
@@ -18,7 +18,7 @@ This technique is known as \ac{NAT} (figure \ref{fig:nat}).
 %RP na figura devias indicar que uns tem ips publicos e outros privados. Alternativamente, colocavas metade da nat box dentro da núvem para indicar que esta pertence à Internet e os pc não. 
 
 Initially \ac{NAT} offered an alternative to address exhaustion and a minimal sensation of security.
-However, due to their current wide usage, \ac{NAT}s weaknesses are being exposing at the application layer, {\color{blue}namely impacting applications that require direct communications between two private networks.}
+However, due to their current wide usage, \ac{NAT}s weaknesses are being exposing at the application layer, namely impacting applications that require direct communications between two private networks.
 
 There are four types of \ac{NAT} implementations\cite{rfc3489}: \emph{Full Cone NAT}, \emph{Restricted Cone NAT}, \emph{Port Restricted Cone NAT}, \emph{Symmetric NAT}.
 
@@ -33,7 +33,7 @@ Any external host can communicate with private hosts through their mapped public
 
 \emph{Non-Symmetric} \ac{NAT}s became the common configurations on the Internet. As a direct result, problems started to appear: the amount of ports that \ac{IP} makes available is also small compared to our current needs; worse than that, \ac{NAT} also difficults end-to-end communication, forcing most applications that follow this model to be implemented ineffectively.
 
-{\color{blue}Unless the router that performs as \ac{NAT} has forwarding rules to every desired ports of each user}, applications behind a \ac{NAT} are prevented from receiving incoming connections from the public network, which forces them to behave as a client of a client-server model. 
+Unless the router that performs as \ac{NAT} has forwarding rules to every desired ports of each user, applications behind a \ac{NAT} are prevented from receiving incoming connections from the public network, which forces them to behave as a client of a client-server model. 
 
 Applications based on multimedia and peer-to-peer file sharing have been one of the most strained by the \ac{NAT} technique. It is also important to highlight that those kind of applications require real time communication in order to achieve the best performance.
 
@@ -51,7 +51,6 @@ Applications based on multimedia and peer-to-peer file sharing have been one of 
 
 On the other hand, \ac{TURN} uses public servers to relay traffic between private endpoints.
 It may use a \ac{P2P} network relay to find the best peer, but after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \emph{full cone}. \ac{ICE} is a technique that uses \ac{STUN} when direct communications are possible and \ac{TURN} while a direct communication isn't possible.
-%RP ainda não explicaste o que é o ICE
 %RP explicar que para usar TURN as aplicações têm de estar cientes disso.
 
 Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly \ac{TURN} requires a more expensive relaying infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of real-time video communication makes this kind of model unsuitable.
