@@ -35,8 +35,6 @@ Any external host can communicate with private hosts through their mapped public
 
 {\color{blue}Unless the router that performs as \ac{NAT} has forwarding rules to every desired ports of each user}, applications behind a \ac{NAT} are prevented from receiving incoming connections from the public network, which forces them to behave as a client of a client-server model. 
 
-%RP explicar que o nat funciona num cenário em que a máquina atrás do nat é apenas um consumidor de informação, trabalhando em modo cliente do modelo cliente-servidor. Em P2P isto falha.
-
 Applications based on multimedia and peer-to-peer file sharing have been one of the most strained by the \ac{NAT} technique. It is also important to highlight that those kind of applications require real time communication in order to achieve the best performance.
 
 \begin{figure}[!htb]
@@ -46,12 +44,10 @@ Applications based on multimedia and peer-to-peer file sharing have been one of 
 	\label{fig:multinat}
 \end{figure}
 
-%RP file sharing não precisa de real-time
 \ac{STUN} and \ac{TURN} \cite{natvoip} servers are a possible solution to overcome \ac{NAT}. None of those can establish direct connections on multiple level \ac{NAT}s (figure \ref{fig:multinat}).
 %RP explicar o que são multiple level pois não falaste disto antes? São ``nested''?
 
 \ac{STUN} servers are quite simple. They receive requests from \ac{NAT}ed clients, with the source address of a request being the public address that \ac{NAT} mapped to the client. \ac{STUN} servers will then reply to the client, providing the mapped public address, so it knows its associated public \ac{IP} address and port. Symmetric \ac{NAT} changes \ac{IP} port for each different connection, for that reason, when the \ac{STUN} servers reply with the \ac{IP} address and port of their connection, it will be useless for clients to use them on other application connections. That is why Symmetric \ac{NAT} represents a problem for peer-to-peer communications.   
-%RP os problemas que relatas têm a ver com P2P ou real-time?
 
 On the other hand, \ac{TURN} uses public servers to relay traffic between private endpoints.
 It may use a \ac{P2P} network relay to find the best peer, but after that, the behavior is much like client-server. Direct communication is only achieved by \ac{STUN} when \ac{NAT} is a type \emph{full cone}. \ac{ICE} is a technique that uses \ac{STUN} when direct communications are possible and \ac{TURN} while a direct communication isn't possible.
@@ -59,7 +55,5 @@ It may use a \ac{P2P} network relay to find the best peer, but after that, the b
 %RP explicar que para usar TURN as aplicações têm de estar cientes disso.
 
 Most of client-server applications aren't affected by \ac{NAT} when the servers are public, but they're inadequate for real time communication between two private endpoints. Clearly \ac{TURN} requires a more expensive relaying infrastructure and, in most cases, more network usage, leading to a worse quality of service. The requirements of real-time video communication makes this kind of model unsuitable.
-%RP quando falas em infraestrutura mais dispendiosa para o video, está a falar da internet ou ainda estamos a falar de usar ICE?
-
 
 When connection is established, either in a direct or indirect way (via \ac{TURN} servers), \ac{WebRTC} came to simplify how audio and video are transmitted through web browsers.

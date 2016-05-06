@@ -4,8 +4,6 @@
 
 Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{OSX} and \emph{Windows} implement native \ac{WebRTC} libraries, extending the usage of \ac{WebRTC} to applications outside the web browser. This native support can help to implement applications that record video and audio streams for further playback.
 
-%RP indicar que agora também já temos webrtc fora do browser devido ao seu sucesso e ao facto de reunir tecnologia state of the art?
-
 
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 %\renewcommand{\arraystretch}{2}
@@ -38,7 +36,7 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
   \item \textbf{MediaStream} allows the browser to access the camera, microphone and the device's screen. 
 
   \item \textbf{PeerConnection} acquires connection data and negotiates with peers.
-%RP establishes and negociates a connection with a peer for transmitting real-time video or audio?
+
   \item \textbf{DataChannel} provides a channel for exchanging arbitrary data with other peers.
 \end{itemize}
 
@@ -71,7 +69,6 @@ The main difference is the inclusion of a sequence number per packet that is use
 
 
 \ac{WebRTC}'s \emph{MediaStream} is built on top of \ac{SRTP}, which requires an external mechanism for key exchange. \ac{DTLS} keys are negotiated on handshake in order to achieve a secure connection. The new keys derived from \ac{DTLS} handshake are seized for \ac{SRTP} encryption, the remaining \ac{SRTP} communications are done through \ac{UDP} without using \ac{DTLS}.
-%RP quais remaining?  A última frase é confusa
 
 \ac{WebRTC} aims to provide a standard platform for real-time audio and video on the Web. It arrives at a time when several proprietary products are well established.
 \emph{Skype}\footnote{\url{http://www.skype.com/}(accessed June 1, 2015).} is an application that allows video, voice, instant messaging and multi-party communication over proprietary protocols, its main strength are the amount of users that are using it nowadays and the ability to perform voice calls to the \ac{PSTN}. But compared to \emph{Skype}, \ac{WebRTC} applications don't need to be pre-installed.
