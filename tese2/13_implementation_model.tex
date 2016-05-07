@@ -4,7 +4,11 @@
 The data model is a critical component of our solution, as a badly designed model can imply serious difficulties when implementing new features that are not part of the plans. During the course of this project, we had to redesign the model more than once in order to support new features.
 %RP mudei ``most important'' para critical
 
-%
+%RP devias começar com um overview dos dados que é necessário guardar para a aplicação
+%RP ao apresentar o modelo falas de coisas como mensagens para grupos, mas ainda não sabemos nada disso. Na arquitectura, devias falar da concepção, do modelo de comunicação. Que tens utilizadores, grupos, mensagens, chats, convites, etc...
+
+
+
 \subsection {Schema representation}
     \emph{MongoDB} has a slightly different terminology from relational databases. The first big difference is instead of having tables \emph{MongoDB} stores its objects on collections. The analogous data structure to the table row is a document.
 
@@ -85,6 +89,8 @@ In summary, with this model we can perform search and identification of any kind
 % Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it's possible to search for the administrative role and return users and groups of users that contains that property. <= [currently this operation is possible but it is not specified]
 
 
+%RP antes de falares de cada modelo, que tal incluir uma figura com a relação entre os vários tipos de dados. Mesmo não sendo SQL, as relações existem conceptualmente e falas em chaves estrangeiras, pelo que tal figura faz sentido e ajuda a perceber.
+
 \subsection{User model}
 
 The user model is not tied to the user attributes (Table \ref{table:user}), the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters.
@@ -164,7 +170,7 @@ In order to improve performance of queries over \emph{GroupMembership} collectio
 
 \subsection{Message model}
 
-A message is composed by its content, time of creation and source and target identification numbers (table \ref{table:message}). The message's target can reference any of object but our application is only covering messages to groups.
+A message is composed by its content, time of creation and source and target identification numbers (Table \ref{table:message}). The message's target could reference any object, but our application is only handling messages to groups.
 
 \begin{table}[!htb]
 \centering
@@ -181,14 +187,16 @@ A message is composed by its content, time of creation and source and target ide
 \end{table}
 
 In order to improve performance of queries over \emph{Relation} collection we have created indexes on the \emph{target} attribute and also on the pair composed by \emph{target} and \emph{\_id} attributes for finding and sorting the messages received by an entity more efficiently.
+%RP pela justificação não consigo perceber para que serve a chave no par target e _id
 
 \subsection{Hyper content model}
 
-During a group conversation it is possible to create time annotations for making it easy to access that time either by searching or sharing with other users.
-
+During a group conversation, it is possible to create time annotations for making it easy to access that time either for searching or sharing with other users.
 A time annotation (table \ref{table:hyper}) contains a title, the correspondent group identification number and the time itself.
 
-The hyper content is used to synchronize content among users during a conversation. Table \ref{table:hyper} shows that every hyper content must have a start and ending time, the correspondent group identification number and the content itself in the form of text. Beside those attributes, in order to perform queries over the \ac{HTML} contents with more precision, we have added an additional \emph{searchableContent} attribute that contains just the searchable content extracted from the content excluding the \ac{HTML} tags and parameters using \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed April 11, 2016)}. 
+The hyper content is used to synchronize content among users during a conversation. Table \ref{table:hyper} shows that every hyper content must have a start and ending time, the correspondent group identification number and the content itself, in the form of text. Beside those attributes, in order to perform queries over the \ac{HTML} contents with more precision, we have added an additional \emph{searchableContent} attribute. It contains just the searchable content extracted from the content, by excluding the \ac{HTML} tags and parameters using \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed April 11, 2016)}.
+
+%RP explica melhor a diferença entre HyperContent e Time Annotation do ponto de vista do utilizador / funcionalidade proporcionada.
 
 
 \begin{table}[!htb]
@@ -232,14 +240,14 @@ For example the content showed in listing \ref{lst:jsoup} would produce the sear
 In order to improve the performance of searching content and calculate interval intersections, we have created indexes over the following sequences of attributes: 
 
 \begin{itemize}
-\item{\emph{\{groupId,start,end\}} $\rightarrow$ finding visible contents for a given time  within a group (intersections).}
-\item{\emph{\{groupId,start\}} $\rightarrow$  finding contents that starts after a given time within a group (for pre-loading).}
-\item{\emph{\{groupId,searchableContent\}} $\rightarrow$ searching contents by keywords within a group.}  
+\item{\emph{\{groupId,start,end\}} $\rightarrow$ for finding visible contents for a given time  within a group (intersections).}
+\item{\emph{\{groupId,start\}} $\rightarrow$  for finding contents that starts after a given time within a group (for pre-loading).}
+\item{\emph{\{groupId,searchableContent\}} $\rightarrow$ for searching contents by keywords within a group.}  
 \end{itemize}
 
 \subsection{Collaborative Content model}
 
-Within a conversation, users can write documents collaboratively. As we can see in table \ref{table:collaborative}, each document has a content and a reference to the correspondent group. 
+Within a conversation, users can write documents collaboratively. As we can see in Table \ref{table:collaborative}, each document has a content and a reference to the correspondent group. 
 
 
 \begin{table}[!htb]
@@ -259,9 +267,10 @@ In order to improve the performance of finding the group's content we have creat
 
 \subsection{Recording model}
 
-During a conversation, users may allow sharing their web cameras, by doing so their video is stored in recording chunks. Each chunk, as seen in table \ref{table:recording}, represents an interval of time  $T=\big[c^{start},c^{end}\big[$, it contains the media \ac{URL}, a reference to a group, an owner identification number and the correspondent \emph{WebSocket} session id.
-
-In order to allow different devices within the same user, storing just the \ac{URL} with an associated user id is not enough as in this case it is needed one more parameter to differentiate the different \emph{webSocket} sessions opened by the same user. For this reason we had to associate a random session identification number to each \emph{webSocket}.
+During a conversation, users may allow sharing their web cameras. By doing so, their video is stored in recording chunks. Each chunk, described in Table \ref{table:recording}, represents an interval of time $T=\big[c^{start},c^{end}\big[$ of the video stream. It also contains the media's \ac{URL}, a reference to a group, an owner identification number and the correspondent \emph{WebSocket} session id.
+    %RP ainda não tenho forma de perceber o que é o websocket session id. Nunca falaste de websockets antes, quanto mais disto! Nem do media URL, é gravado ou webrtc (dispositivo do utilizador)?
+    
+In order to allow the same user to have different devices, storing just the \ac{URL} with an associated user id is not enough. In this case, one more parameter is needed to differentiate the different \emph{webSocket} sessions opened by the same user. For this reason we had to associate a random session identification number to each \emph{webSocket}.
 
 \begin{table}[!htb]
 \centering
@@ -293,16 +302,18 @@ In order to allow different devices within the same user, storing just the \ac{U
 
 
 A set of chunks $S=[c_1,c_2,\ldots,c_n]$ is said continuous if $\forall c_i\in S, \exists c_j \in S$ where $j\neq i$ and $c_i^{start} = c_j^{end} \vee c_i^{end} = c_j^{start}$. 
-
 A recording interval represents a continuous set of recording chunks.
 
-In order to improve the performance of searching recording chunks and calculate which chunks are are going to be reproduced, we have created indexes over the following sequences of attributes: 
+In order to improve the performance of searching recording chunks and calculate which chunks are going to be reproduced, we have created indexes over the following sequences of attributes: 
 \begin{itemize}
-    \item{\emph{\{groupId,start,end\}} $\rightarrow$ finding all available chunks for a given time} 
-    \item{\emph{\{groupId,sessionId,end\}} $\rightarrow$ finding intersecting chunks with a given time within a session}
-    \item{\emph{\{groupId,owner,end\}} $\rightarrow$ finding intersecting chunks with a given time within a user (for a different session) or group}
-    \item{\emph{\{groupId,sessionId,\_id\}} $\rightarrow$ finding chunks that follow a given \emph{id} within a session}
-    \item{\emph{\{groupId,owner,\_id\}} $\rightarrow$ finding chunks that follow a given \emph{id} within a user or group}
+    \item{\emph{\{groupId,start,end\}} $\rightarrow$ for finding all available chunks for a given time} 
+    \item{\emph{\{groupId,sessionId,end\}} $\rightarrow$ for finding intersecting chunks with a given time within a session}
+    \item{\emph{\{groupId,owner,end\}} $\rightarrow$ for finding intersecting chunks with a given time within a user (for a different session) or group}
+    \item{\emph{\{groupId,sessionId,\_id\}} $\rightarrow$ for finding chunks that follow a given \emph{id} within a session}
+    \item{\emph{\{groupId,owner,\_id\}} $\rightarrow$ for finding chunks that follow a given \emph{id} within a user or group}
 \end{itemize}
+%RP os _id não são únicos? Para que servem os index que os incluem?
+%RP para a intercepção não precisaste de usar o start, apenas o end?
 
-Not less important we have also created an index over the \emph{RecordingInterval}'s \emph{groupId} attribute for listing all intervals withing a conference room. 
+Not less important, we have also created an index over the \emph{RecordingInterval}'s \emph{groupId} attribute for listing all intervals within a conference room. 
+%RP olha outra coisa nova! Ainda não falaste de conference rooms!
