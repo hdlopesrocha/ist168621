@@ -1,17 +1,23 @@
-\section{Model}
-The model is the most important component of our solution, a badly designed model can imply serious difficulties when implementing new features that are not part of the plans, sometimes we had to redesign the model in order to support new features.
+%RP antes desta secção fala um introdução ao capítulo a explicar o que vai ser apresentado.
 
+\section{Data Model}
+The data model is a critical component of our solution, as a badly designed model can imply serious difficulties when implementing new features that are not part of the plans. During the course of this project, we had to redesign the model more than once in order to support new features.
+%RP mudei ``most important'' para critical
+
+%
 \subsection {Schema representation}
     \emph{MongoDB} has a slightly different terminology from relational databases. The first big difference is instead of having tables \emph{MongoDB} stores its objects on collections. The analogous data structure to the table row is a document.
 
-    Each \emph{MongoDB} document is represented by a \emph{JSON} object and, as a result, each document may have different attributes within a collection. Needless to say that following this approach we don't need to create the collections with a well predefined schema, in fact we don't to define it at all. Although, for reasons of coherence and organization, we represent our database collections as they would have a predefined schema by following the same document structure.
+    Each \emph{MongoDB} document is represented by a \emph{JSON} object and, as a result, each document may have different attributes within a collection. Needless to say that, by following this approach we don't need to create the collections with a well predefined schema. In fact we don't need to define it at all. Although, for reasons of coherence and organization, we represent our database collections as they would have a predefined schema by following the same document structure.
+    %RP a última frase é confusa. O que queres dizer? Reescreve
 
-    Similarly to relational databases, \emph{MongoDB} requires a primary key (typically typed as \emph{ObjectId} and named \emph{"\_id"}) for each document which is automatically assigned if not specified. 
+    Similarly to relational databases, \emph{MongoDB} requires a primary key (typically of type \emph{ObjectId} and named \emph{"\_id"}) for each document, which is automatically assigned if not specified. 
 
     In order to define \emph{foreign keys}, we just store them as \emph{ObjectId}s if and only if the foreign keys point to documents within a unique collection, otherwise we need an additional attribute to specify which collection is the \emph{foreign key} pointing at.
 
-    In respect to attributes nullability, \emph{MongoDB} does not enforce a document's attribute to have a non nullable value, although, for sake of good functionality, we perform those constraints validation programmatically and by so we also represent them in our schema.
-
+    In respect to attributes nullability, \emph{MongoDB} does not enforce a document's attribute to have a non nullable value, although, for sake of good functionality, we perform those constraints validation programmatically and as such we also represent them in our schema.
+    %RP nullable ou null?
+    
     An example of schema representation can be seen on table \ref{table:schema}.
 
 \begin{table}[!htb]
@@ -32,9 +38,9 @@ The model is the most important component of our solution, a badly designed mode
 
 \subsection {Generic model}
 
-For designing our model we have taken into account generic programming techniques. We observed that operations like searching for an object was quite repeated amongst different types of objects. 
+For designing our model we have taken into account generic programming techniques. We observed that operations like searching for an object were quite repeated across different types of objects. 
 
-Our first decision for our model in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently from the object type. To this generic set of properties we call data (table \ref{table:generic}) and each object of this type has a reference to the owner, which is a unique identification number.
+Our first decision for our model, in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently of the object type. To this generic set of properties we call data (Table \ref{table:generic}) and each object of this type has a reference to the owner, which is a unique identification number.
 
 \begin{table}[!htb]
 \centering
@@ -61,25 +67,28 @@ Our first decision for our model in order to avoid repeated code, was the isolat
     \end{tabular}
 \end{table}
 
-The identification number by itself is not sufficient to identify an object, objects from different types can have the same identification number. In order to solve this problem, when an object is created, its correspondent data must contain the owner's object type. 
+The identification number by itself is not sufficient to identify an object, as objects from different types can have the same identification number. In order to solve this problem, when an object is created, its correspondent data must contain the owner's object type. 
+%RP mas o _id é apresentado com sendo uma chave primária na figura 4.2, logo única!
 
-Whenever an attribute is created, it must be specified the attributes name, its value, searcheability, identifiability and the set of object identification numbers that can read and write that attribute. 
+Whenever an attribute is created, its name, value and indentifiability must be specified. The set of objects that can read and write that attribute must also be defined. 
+In regard to our permission mechanism, if the read or write sets are not specified we assume the attribute is readable and writable by everyone. Conversely if the read and write sets are empty, nobody is allowed to read or write the attribute. Implicitly, if an entity can write an attribute, it can also read it.
 
-In relation to our permission mechanism, if the read or write sets are not specified we assume the attribute is readable and writable by everyone, conversely if the read and write sets are empty, nobody is allowed to read or write the attribute. Implicitly if an entity can write an attribute it can also read it.
+In particular, if all attributes were searchable, it could be simple to search for attributes that could reveal sensible information about an object. For example if we consider that a user could have a health related attribute, searching by a disease would reveal which users could suffer from a certain disease. The leak of that kind of information could, for instance, change the agreement between users and health insurance companies. For this reason only the specified attributes as searchable will be taken into account when performing keyword searches.
+%RP era melhor que o exemplo fosse relativo à tua aplicação e não algo abstracto como saúde.
+%RP Dás permissões de leitura e escrita a objectos. Normalmente é a utilizadores. Explicar relação. Assumo que sejam aqui referenciados apenas objectos que representam utilizadores
 
-In particular, if all attributes were searchable it could be simple to search for attributes that could reveal sensible information about an object. For example if we consider that a user could have a health related attribute, searching by a disease would reveal which users could suffer from a certain disease, the leak of that kind of information could, for instance, change the agreement between users and health insurance companies. For this reason only the specified attributes as searchable will be taken into account when performing keyword searches.
+Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification lets us create abstract authentication services. For example a user can login into our system by providing any attribute that identifies himself, e.g. the e-mail but others are possible like the user name or cellphone number. 
 
-Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification let us create abstract authentication services, for example a user can login into our system by providing any attribute that identifies himself, for example the e-mail but others are possible like the user name or cellphone number. 
+Not less important, in order to get an object's properties efficiently, we have created an index over the \emph{owner} attribute. We have also created an index over the \emph{searchableValues} in order to improve the keyword search performance.
 
-Not less important, in order to get an object properties efficiently, we have created an index over the \emph{owner} attribute. In the meantime , we have also created an index over the \emph{searchableValues} in order to improve the keyword search performance.
-
-In summary, with this model we can perform search and identification of any kind of objects, as we will see on the following models, the \emph{user} and \emph{group} models are using this generic model for storing their attributes. 
+In summary, with this model we can perform search and identification of any kind of objects, as we will see on the following models. In particular, the \emph{user} and \emph{group} models are using this generic model for storing their attributes. 
 % Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it's possible to search for the administrative role and return users and groups of users that contains that property. <= [currently this operation is possible but it is not specified]
 
 
 \subsection{User model}
 
-The user model is not tied to the user attributes (table \ref{table:user}), the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters long.
+The user model is not tied to the user attributes (Table \ref{table:user}), the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters.
+%RP Table x, Figure y, etc é sempre maiusculas.
 
 \begin{table}[!htb]
 \centering
@@ -96,7 +105,7 @@ The user model is not tied to the user attributes (table \ref{table:user}), the 
 
 \subsection{Relation model}
 
-A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$ (table \ref{table:relation}), where $e_1$ is the source and $e_2$ is the target. This relation is said bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
+A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$ (Table \ref{table:relation}), where $e_1$ is the source and $e_2$ is the target. This relation is said to be bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
 
 \begin{table}[!htb]
 \centering
@@ -111,15 +120,14 @@ A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\
     \end{tabular}
 \end{table}
 
-A user can only interact with friends or with group members. In order to validate a friendship, both users must agree on that friendship, by other words it must exist a bi-directional relation between both users.
+A user can only interact with friends or with group members. In order to validate a friendship, both users must agree on that friendship, in other words it, there must exist a bi-directional relation between both users.
 
-In order to improve performance of queries over \emph{Relation} collection we have created indexes on the \emph{source}, \emph{target} and also on the pair composed by both attributes.
+In order to improve the performance of queries over the \emph{Relation} collection we have created indexes on the \emph{source}, \emph{target} and also on the pair composed by both attributes.
 
 \subsection{Group model}
 
 A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on table \ref{table:group}.
-
-Moreover, a group can be public or private. If the group is public then it is visible to all users that maintain a friendship with a member of this group. If the group is private then it is only visible to their members.
+Moreover, a group can be public or private. If the group is public, then it is visible to all users that maintain a friendship with a member of this group. If the group is private, then it is only visible to its members.
 
 \begin{table}[!htb]
 \centering
@@ -146,10 +154,10 @@ Moreover, a group can be public or private. If the group is public then it is vi
 
 
 The group membership is a special case of relation, where the target entity is always a group.
-
-When a group is created, a group membership is automatically assigned by its creator.
+When a group is created, a group membership is automatically assigned to its creator.
 
 Entities that have a membership with a group can create more memberships by sharing an invite token or by specifying new group members.
+%RP isto quer dizer que quem tem o token se pode juntar ao grupo? Explicar. O que impede alguém de o partihar com outros?
 
 In order to improve performance of queries over \emph{GroupMembership} collection we have created indexes on the \emph{groupId}, \emph{userId} and also on the pair composed by both attributes.
 
