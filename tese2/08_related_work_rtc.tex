@@ -1,10 +1,8 @@
 \section{Real time communications}\label{rtc}
 
-\ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser based real time communications without installing any additional application or plug-in. {\color{blue}Table \ref{table:webrtcstack} shows the protocols that \ac{WebRTC} rely on.}
+\ac{WebRTC} is an open source technology that defines a collection of standard protocols and JavaScript \ac{API}s for web browser based real time communications without installing any additional application or plug-in. Table \ref{table:webrtcstack} shows the protocols that \ac{WebRTC} rely on.
 
 Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{OSX} and \emph{Windows} implement native \ac{WebRTC} libraries, extending the usage of \ac{WebRTC} to applications outside the web browser. This native support can help to implement applications that record video and audio streams for further playback.
-
-%RP indicar que agora também já temos webrtc fora do browser devido ao seu sucesso e ao facto de reunir tecnologia state of the art?
 
 
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
@@ -38,7 +36,7 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
   \item \textbf{MediaStream} allows the browser to access the camera, microphone and the device's screen. 
 
   \item \textbf{PeerConnection} acquires connection data and negotiates with peers.
-%RP establishes and negociates a connection with a peer for transmitting real-time video or audio?
+
   \item \textbf{DataChannel} provides a channel for exchanging arbitrary data with other peers.
 \end{itemize}
 
@@ -49,7 +47,7 @@ Some operating systems such as \emph{Android}, \emph{iOS}, \emph{Linux}, \emph{O
 \ac{DTLS} is similar to \ac{TLS}, but is used on top of \ac{UDP}.
 The main difference is the inclusion of a sequence number per packet that is used for packet re-ordering on reception and protects from duplicated packets. If a packet sequence number is less than the expected sequence number the packet is discarded. If a packet sequence number is greater than the expected sequence number the packet may be enqueued or discarded. By knowing the sequence of messages that are sent and received in \ac{DTLS}, timers are used for packet retransmission avoiding acknowledgment messages.
 
-{\color{blue} Table \ref{table:transport_protocols} shows an overview of the transport protocols.}
+Table \ref{table:transport_protocols} shows an overview of the transport protocols.
 \ac{WebRTC}'s \emph{DataChannel} is built on top of \ac{SCTP}, which is encapsulated by \ac{DTLS}. \ac{DTLS} encapsulation provides confidentiality, authentication and integrity to the transfered data. A \emph{Data Channel} has one incoming stream and one outgoing stream, providing bidirectional communication. Each data channel direction can be configured for reliable or unreliable transmission, the same can be done for order delivery and priority. which can also be defined for improving the quality of service of a particular stream over the others.
 
 %RP TLS?
@@ -71,7 +69,6 @@ The main difference is the inclusion of a sequence number per packet that is use
 
 
 \ac{WebRTC}'s \emph{MediaStream} is built on top of \ac{SRTP}, which requires an external mechanism for key exchange. \ac{DTLS} keys are negotiated on handshake in order to achieve a secure connection. The new keys derived from \ac{DTLS} handshake are seized for \ac{SRTP} encryption, the remaining \ac{SRTP} communications are done through \ac{UDP} without using \ac{DTLS}.
-%RP quais remaining?  A última frase é confusa
 
 \ac{WebRTC} aims to provide a standard platform for real-time audio and video on the Web. It arrives at a time when several proprietary products are well established.
 \emph{Skype}\footnote{\url{http://www.skype.com/}(accessed June 1, 2015).} is an application that allows video, voice, instant messaging and multi-party communication over proprietary protocols, its main strength are the amount of users that are using it nowadays and the ability to perform voice calls to the \ac{PSTN}. But compared to \emph{Skype}, \ac{WebRTC} applications don't need to be pre-installed.

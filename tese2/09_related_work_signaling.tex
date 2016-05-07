@@ -3,8 +3,8 @@
 
 
   Signaling is the process by which applications exchange connection information about peers and servers, their capabilities and meta-data.
-  \ac{WebRTC} doesn't implement signaling, as different applications may require different protocols, and there is no single answer that fits all problems.
-  Multiple options are available for signaling, which can be performed using \ac{SIP}, \ac{XMPP}, \emph{WebSockets}, \emph{Socket.io}\footnote{\url{http://socket.io/}(accessed June 1, 2015).} or by implementing a custom protocol.
+  In particular, \ac{WebRTC} does not implement signaling, as different applications may require different protocols and there is no single answer that fits all problems.
+  As a consequence, multiple options are available for filling the missing \ac{WebRTC}'s signaling component, which can be performed using \ac{SIP}, \ac{XMPP}, \emph{WebSockets}, \emph{Socket.io}\footnote{\url{http://socket.io/}(accessed June 1, 2015).} or by implementing a custom protocol.
 
   \subsection{WebRTC}
 
@@ -57,36 +57,33 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
   \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
   \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \emph{XEP-0096}\cite{xep0096}, which adds file transfer capabilities between two entities, and \emph{XEP-0045}\cite{xep0045}, which enables multi-user chat.
   \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH} \cite{xep0206}.
-  %RP falta um `` bi-directional communication OVER HTTP is achieved through''?
-  %RP BOSH já foi explicado antes pelo que não vale a pena voltar a falar em long-pooling
   This kind of communication is also possible through WebSockets \cite{rfc7395}.
   Today, multiple \ac{XMPP} server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}(accessed June 1, 2015).}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}(accessed June 1, 2015).}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}(accessed June 1, 2015).} and \emph{Prosody}\footnote{\url{http://prosody.im/}(accessed June 1, 2015).}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}(accessed June 1, 2015).}.
   %RP fazes muitos paragrafos. Um paragrafo por tecnologia é normalmente suficiente se não forem muito grandes.
   
-{\color{blue}
 
     One of the advantages that \ac{XMPP} based applications offer is the possibility to send messages across different servers. An \ac{XMPP} user is identified by its \textit{Jabber ID}, which is defined by the pair username and server name in the form \textit{username@server}.
 
     The user profile is represented in terms of Data Forms\cite{xep0004} protocol and managed (registration and update) through \textit{Info/Query} (IQ) \cite{rfc3920} requests to the \ac{XMPP} server, which responds with an IQ response containing information to retrieve the registration fields needed to fill its profile (eg username, password, telephone). 
 %RP frase demasiado longa. Torna-se confusa.
     
-    An important aspect of this model is the ability to define a user as a set of attributes that can change dinamically in order to fit the \ac{IM} application's needs. 
+    An important aspect of this model is the ability to define a user as a set of attributes that can change dynamically in order to fit the \ac{IM} application's needs. 
 
-    The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance.
+    The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance. On the other hand, users can directly connect directly to \ac{XMPP} servers from web applications using the \emph{JavaScript} library \emph{strophe.js} \footnote{\url{http://strophe.im/strophejs/} (accessed May 6, 2016).}
 
-    Typically a web application consists in multiple web pages which are navigated by users. Each time a webpage is accessed, either from a new context or a transition from a previous page, its context is cleared except for local storage and cookies. The javascript context is cleared, including the \ac{XMPP} connections performed by \emph{strophe.js}. As such, an automatic mechanism is required for avoiding the implicit user reauthentication.
-    One solution for reauthentication can be achieved by storing the user's JabberID and password on local storage and everytime a page is accessed the authentication is performed without the users knowledge. Clearly this solution represents security flaws as the local storage can be easily accessed locally or by performing a cross site scripting attack to reveal all the local storage. The same problem arises if the credentials are stored on cookies.
+    Typically a web application consists in multiple web pages which are navigated by users. Each time a web page is accessed, either from a new context or a transition from a previous page, its context is cleared except for local storage and cookies. The \emph{JavaScript} context is cleared, including the \ac{XMPP} connections performed by \emph{strophe.js}. As such, an automatic mechanism is required for avoiding the implicit user reauthentication.
+    One solution for reauthentication can be achieved by storing the user's JabberID and password on local storage and every time a page is accessed the authentication is performed without the users knowledge. Clearly this solution represents security flaws as the local storage can be easily accessed locally or by performing a cross site scripting attack to reveal all the local storage. The same problem arises if the credentials are stored on cookies.
     %RP tinhas este comentário (HOW? explain!)
     %RP o strophe.js caiu aqui da paraquedas! Explicar o que é
 
-    An alternative solution is known as Session Attachment \footnote{\url{https://metajack.im/2008/10/03/getting-attached-to-strophe/}}, which requires that a \textit{session identifier}(SID) together with a \textit{initial request identifier (RID)} be passed to strophe.js in order to re-connect to the same stream on \ac{XMPP} server. Either SID and RID are unpredictable and, particularly, \textit{RID} changes on every request making it worthless if a user mantains more than one tab opened, for example for multiple conversations at the same time.
+    An alternative solution is known as Session Attachment \footnote{\url{https://metajack.im/2008/10/03/getting-attached-to-strophe/} (accessed May 6, 2016).}, which requires that a \textit{session identifier}(SID) together with a \textit{initial request identifier (RID)} be passed to \emph{strophe.js} in order to re-connect to the same stream on \ac{XMPP} server. Either SID and RID are unpredictable and, particularly, \textit{RID} changes on every request making it worthless if a user maintains more than one tab opened, for example for multiple conversations at the same time.
     %RP either ou both?
     %RP verifica se não alterei o sentido da frase
     
-    Another alternative would be the development of our solution in a single web page, which would increse drastically the complexity of our web application.
+    Another alternative would be the development of our solution in a single web page, which would increase drastically the complexity of our web application.
 
-    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that \ac{XMPP} already implemment, but  we don't need all of them. In fact, we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
-}
+    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that \ac{XMPP} already implement, but  we don't need all of them. In fact, we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
+
 
   \subsection{Signaling-On-the-fly}
 

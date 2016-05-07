@@ -37,11 +37,11 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 	\emph{Jitsi Video Bridge} \footnote{\url{http://jitsi.org/Projects/JitsiVideobridge}(accessed June 2, 2015).} receives one stream from every participant on a conference, either from a \emph{jitsi} client or a \emph{WebRTC} application, and redirects it to all the other conference participants, reducing the amount of data that each peer sends. Although all the participants still need to download all the streams from the \emph{Jitsi Video Bridge} server, typically download rates are much bigger than upload rates, making this solution more feasible.
 	\emph{Jitsi Video Bridge} uses \ac{XMPP} as a signaling protocol and its \emph{colibri} extension \cite{xep0340} to reserve channels for video transmission. Despite this choice for signaling protocol, \emph{Jitsi Video Bridge} also supports \ac{SIP}.
 
-	{\color{blue}
+	
 	  \ac{KMS} supports trans-coding, group communications, recording, mixing, broadcasting, applying filters and performing image and sound analysis (for example it allows face and QRcode detection). \ac{KMS} functionalities are exposed through \emph{JSON-RPC} over \emph{WebSocket}.
           There are three clients available: \emph{JavaScript} client for web browsers, \emph{Java} client for \emph{Java EE} servers and \emph{JavaScript} client for \emph{Node.js} servers. 
 	\ac{KMS} supports streaming over \emph{WebRTC}, \ac{HTTP} and \ac{RTP} endpoints. Another important component of \ac{KMS} is \emph{Kurento Repository}, which supports recording and playing directly from \emph{MongoDB}. That is important for providing a scalable media storage. Unlike \emph{Jitsi Video Bridge}, \ac{KMS} does not enforce a specific signaling protocol.
-	}
+	
 
 \subsection{Media Types}\label{mediatype}~\\
 	Media Types can be distinguished by two criteria, the first one describes a media as discrete or continuous, the second one describes it as interactive or non-interactive. A discrete media is characterized by not depending from time, and continuous media as depending on it. Interactive media is characterized by its state being changed by external events such as user interactions.
@@ -97,32 +97,24 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 
     Among other platforms and libraries we present \emph{ShareJS}\footnote{\url{http://sharejs.org/}(accessed June 2, 2015).}, \emph{TogetherJS}\footnote{\url{http://togetherjs.com/}(accessed June 2, 2015).}, \emph{Goodow}\footnote{\url{http://realtimeplayground.goodow.com/}(accessed June 2, 2015).}, \emph{Etherpad Lite}\footnote{\url{https://github.com/ether/etherpad-lite}(Accessed 20 March 2016)} and \emph{otJS}\footnote{\url{http://operational-transformation.github.io}(accessed March 10, 2016)}.
 
-	\emph{ShareJS} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. {\color{blue} It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integrations is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}}.
+	\emph{ShareJS} is an \ac{OT} \emph{JavaScript} library, developed by the ex \emph{Google Wave} engineer Joseph Gentle, for collaborative text and \ac{JSON} documents edition in real-time. It uses \emph{ShareDB} \footnote{\url{https://github.com/share/sharedb}(accessed March 10, 2016)} for its backend and data model, which supports simple integration with any database. One of \emph{ShareDB}'s integrations is over \emph{MongoDB}\footnote{\url{https://github.com/share/sharedb-mongo}(accessed March 10, 2016)}.
 
-	\emph{TogetherJS} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. {\color{blue}\emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, with all the synchronization work being performed by the clients. Despite the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}. If we chose a server other than \emph{NodeJS} for our implementation, we would need to read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.}
+	\emph{TogetherJS} is a JavaScript library that uses \ac{WebRTC} for collaborative web applications. It uses \ac{JSON} messages for \ac{OT} concurrency control but it does not provide storage. \emph{TogetherJS} uses its own servers for the signaling phase and it supports microphone and mouse sharing between users. It requires a simple server (also known as hub) that echoes messages between clients, with all the synchronization work being performed by the clients. Despite the hub's reduced complexity, \emph{TogetherJS}'s server is implemented with \emph{NodeJS}. If we chose a server other than \emph{NodeJS} for our implementation, we would need to read the hub's source code and understand what changes are needed to perform on our web server in order to make it compatible with \emph{TogetherJS}.
         %RP terias de alterar o servidor onde corres o software (é o que está escrito) ou portar o hub para o novo servidor? São coisas muito diferentes.
 
 	\emph{Goodow} is a collaborative framework with its own server implementation, it supports four types of collaborative elements: String, Lists, Maps and Custom objects.
         %RP estes 3 últimos parágrafos estão desligados do resto. O que pretendes apresentar?
 	
 
-	{\color{blue}\emph{Etherpad Lite} is a collaborative text editor implemented with \emph{NodeJS} that allows not only the basic text operations but also to associate authorships to pieces of text. It supports adding functionality through plug-ins\footnote{\url{http://static.etherpad.org/plugins.html}(Accessed 20 March 2016)}, for example:
-		\begin{itemize}
-		\item exporting and importing document formats such as \emph{DOC}, \emph{PDF}, \emph{ODT} and \emph{DOCX}.
-		\item painting and drawing.
-		\item video and audio chat using WebRTC.
-		\item create sideshows.
-		\item spell checking.
-		\item text to speech.
-		\end{itemize}
-	}
+	\emph{Etherpad Lite} is a collaborative text editor implemented with \emph{NodeJS} that allows not only the basic text operations but also to associate authorships to pieces of text. It supports adding functionality through plug-ins\footnote{\url{http://static.etherpad.org/plugins.html}(Accessed 20 March 2016)}, for example: exporting and importing document formats such as \emph{DOC}, \emph{PDF}, \emph{ODT} and \emph{DOCX}, painting and drawing, video and audio chat using WebRTC, create sideshows, spell checking and text to speech.
+	
 %RP acho que não vale a pena fazer o itemize. Podia ficar tudo na linha, assim: 1, 2, 3...
 
 
-	{\color{blue}\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations over plain text on the client side. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage. Besides this drawback, this library is very flexible because it's not tied to a specific database or server side technology.}
+	\emph{otJS} is a \emph{JavaScript} library that only implements operation transformations over plain text on the client side. An implication of implementing just the client side is the extra effort that is necessary to implement content's persistent storage. Besides this drawback, this library is very flexible because it's not tied to a specific database or server side technology.
 	
 
-	{\color{blue} In summary, table \ref{table:otcomparision} shows a comparision of the \ac{OT} libraries presented so far.}
+	In summary, table \ref{table:otcomparision} shows a comparision of the \ac{OT} libraries presented so far.
 
 \begin{table}[!htb]
 \centering
