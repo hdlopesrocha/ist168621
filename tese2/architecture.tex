@@ -1,32 +1,6 @@
 \chapter{Architecture}
 \label{chapter:architecture}
-%Esta secção deve englobar:
 
-%\begin{itemize}
-%    \item Uma análise de requisitos, onde devem “abrir” portas para as principais
-%        características da vossa arquitectura.
-%    \item Uma descrição de alto nível da arquitectura do vosso sistema. Esta descrição
-%        pode ser:
-%        \begin{itemize}
-%            \item A arquitectura de rede, explicando os principais componentes e as
-%                funções que executam.
-%            \item A arquitectura de SW da aplicação, explicando os principais
-%                componentes e as funções que executam.
-%        \end{itemize}
-%    \item Descrições detalhadas de todos os componentes da vossa arquitectura.
-%    \item As escolhas que efectuarem em termos de arquitectura global e de detalhe,
-%        devem ser justificadas, face aos requisitos que identificaram.
-%\end{itemize}
-
-%Sempre que possível, ilustrem a arquitectura com figuras, que descrevam
-%sucintamente o modelo como na Figure~\ref{fig:logoCNM}.
-
-%\begin{figure}[!htb]
-%  \centering
-%  \includegraphics[width=0.25\textwidth]{Figures/logoCNM.png}
-%  \caption[Caption for figure in TOC]{Caption for figure.}
-%  \label{fig:logoCNM}
-%\end{figure}
 
 Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real-time.
 
@@ -124,16 +98,30 @@ On the other hand, the access to our streaming servers is also restricted, but c
 \subsection{Client connections}
 	Although the delegation of processing work to clients can improve our system's scalability, we are concerned about using the least resources possible on the client side, as huge resource consumption may drain battery very fast or may even be impossible to run on mobile devices. We are aware that streaming video from clients is already a very intensive task which we cannot avoid but can improve by delegating the most intensive tasks to our servers. 
 
-	\begin{figure}[!htb]
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
 	\centering
-	\includegraphics[width=0.4\textwidth]{figures/central.pdf}
-	\caption{Centralized Connections}
+	\includegraphics[width=\textwidth]{figures/ccomposite.pdf}
+	\caption{Centralized connections}
 	\label{fig:central}
-	\end{figure}
+\end{minipage}
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/dcomposite.pdf}
+	\caption{Peer-to-Peer connections}
+	\label{fig:p2p}
+\end{minipage}
+\end{figure}
 
-	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on figure \ref{fig:central}.
+	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on figure \ref{fig:central}. Otherwise clients could follow a peer-to-peer connection, as seen on figure \ref{fig:p2p}, which would result on maintaining more connections and performing the composition of videos on client side.
 
-	The same can be applied to instant message delivery, each client must have only one \emph{WebSocket} connection to the application server which consequently relays the messages to other users.
+	The composition of streams on client side is performed by receiving streams with the best quality possible but, due to undersizing the video of clients into a smaller region, this would result on wasting bandwidth on a quality that is not needed.
+
+	Although the peer-to-peer approach could be used on our system, we conclude that we need to record the video on our streaming server because web clients have a very limited storage and peer disconnections may result on recorded video loss. 
+
+	The same can be concluded to instant message delivery, each client must have only one \emph{WebSocket} connection to the application server which consequently relays the messages to other users.
 
 	Relaying instant messages from clients through the our web servers is easier if all clients are connected to the same server because all messages can be directly delivered without sending messages across multiple web servers. 
 
@@ -188,4 +176,5 @@ With respect to displaying content, the synchronization between multimedia eleme
 In this chapter we have shown the modules needed in order to implement our solution.
 
 Several technologies were taken into account for implementing each module, we have studied the pros and cons of each technology and decided the architecture for our solution.
+
 
