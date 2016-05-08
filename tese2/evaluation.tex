@@ -83,7 +83,25 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
 
-With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine.
+With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces as seen on figure \ref{fig:scale1}. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine as seen on figure \ref{fig:scale2}. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
+
+\begin{figure}[!htb]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/scale1.pdf}
+  \caption{Repository and database in the same machine}
+  \label{fig:scale1}
+\end{minipage}
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/scale2.pdf}
+  \caption{Repository and KMS in the same machine}
+  \label{fig:scale2}
+\end{minipage}
+\end{figure}
+
 
 On the other hand figure \ref{fig:test_client_net} shows the respective network usage on the client side during our test case. We observe that int he first seconds the client adjusts the video quality that sends to \ac{KMS}, whenever a new client enters in the conference we observer that \ac{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room, after a while \ac{KMS} realizes that its network can handle the increase of clients and sends the video with a better quality to every participant. When a user leaves the conference room \ac{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
 
