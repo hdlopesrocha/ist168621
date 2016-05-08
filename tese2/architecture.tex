@@ -30,34 +30,38 @@
 
 Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real-time.
 
+\section{Requirements}
+In a general way our system's goal is to provide a multi-party video and audio conference environment that supports chat, time manipulation, collaborative text edition and hyper-content creation.
+
 %RP isto pode ser muito expandido. Podes começar por descrever os goals (mais alto nível): audio e video conferência multi-party, possibilidade de rever o que foi dito antes, chat, etc etc.
 % Só depois traduzes isso em requisitos, tanto funcionais como não funcionais
 % Depois apresentas a arquitectura, fazendo um paralelo entre os módulo e escolhas realizadas e quais os requisitos que cada um deles satisfaz. 
 
-The requirements for our web application are:
+For our system, the goals include:
 
 \begin{itemize}
- \item Text, Audio and Video communication using \ac{WebRTC}.
- \item Ability to record and playback interactive multimedia.
- \item Create annotations over video and voice content.
- \item Enrich communications by overlaying multiple media types.
- \item Search and navigate through annotations and contents.
- \item Ability to create and share time links among users.
- \item Mix multiple user streams into a single stream.
- \item Sound detection for showing the current speaker.
- \item Structure presentation of the content.
- \item Collaborative text edition.
- \item Easy interface for content creation and synchronization. 
+ \item \textbf{Instant Messaging} - Our application must provide a simple way to send instant text messages to the conference participants.
+ \item \textbf{Room management} - Conference rooms can be public or private. Public chat rooms are moderated by a group of clients which initially consists only of the room creator. This type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will only be visible to a defined list of clients or can be accessed by clients that have a link for that conference room.
+ \item \textbf{Stream Recording} - Ability to recording and playback recorded video including all the hyper-content displayed at that time.
+ \item \textbf{Stream Composition} - Our streaming server must support mixing multiple user streams into a single stream. The sound played on clients must be the composed sound of all participants but the video played can be switched to the individual or group view.
+ \item \textbf{Time annotations} - Our application must give the possibility to create annotations associated to a specified time and support viewing them on a time-line. 
+ \item \textbf{Content Overlay} - Our system must allow users to superimpose hyper-content to video given a range of time. This content can be continuous or discrete and interactive or non interactive.
+ \item \textbf{Search} - Unified search every objects related to a conference room such as hyper-content, time annotations and users.
+ \item \textbf{Content Sharing} - Our application must have the ability to share files and time links among users.
+ \item \textbf{Active talker detection} - The system must enable sound detection for showing the current speaker.
+ \item \textbf{Collaboration} - The web application must provide a collaborative text edition tool.
+ \item \textbf{QR Code detection} - The system must interpret \emph{QR codes} in order to ease content creation.
+ \item \textbf{NAT Traversal} - The system's services must be available to users that are inside a private network.
+ \item \textbf{Fault tolerance} - Our system's must use a database that supports data replication.
+ \item \textbf{Scalability} - Our system must be horizontally scalable, which means that load must be distributed across web, streaming and database servers.
 \end{itemize}
 
 %RP capacidade de lidar com NAT
 
-	Moreover we allow clients to discover chat rooms and other clients by navigating on the web pages provided by our web server. In addition users can create rooms for multi-party audio and video communication communication which is achieved by using \ac{WebRTC}'s \emph{MediaStream} and \emph{PeerConnection}.
+	Moreover we allow clients to discover chat rooms and other clients by navigating on the web pages provided by our web server. In addition users can create rooms for multi-party audio and video communication communication which is achieved by using \ac{WebRTC}'s \emph{PeerConnection}.
         %RP falas em peerconnection, mas na figura 3.1 apenas há um cliente, o que obviamente impede mostrar a comunicação entre peers.
         %RP acho que podes fazer outro diagrama com a comunicação entre os vários componentes, onde apareceriam vários clientes. A aí indicas o tipo de ligação entre cada par de componentes (HTTP, PeerConnectino, websocket, MediaStream ...)
         
-	Furthermore, chat rooms can be public or private. Public chat rooms are moderated by a group of clients which initially consistes only of the room creator. This type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will only be visible to a defined list of clients or can be accessed by clients that have a link for that conference room.
-
 \section{Modules}
 In this section we present the several modules that were designed in order com fulfill the set requirements.
 	Figure~\ref{fig:modules} presents the structure of our system which was divided into six modules:
@@ -67,32 +71,30 @@ In this section we present the several modules that were designed in order com f
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/modules.pdf}
 	\caption{System Modules}
-        \label{fig:modules}
+    \label{fig:modules}
 \end{figure}
 
 
 
 \begin{itemize}
 
-\item \underline{Application module} - responsible for providing information about the relevant modules (\emph{NAT Traversal} and \emph{Signaling}) and user interface to the \emph{Client}.
+\item \textbf{Application module} - responsible for providing information about the relevant modules (\emph{NAT Traversal} and \emph{Signaling}) and user interface to the \emph{Client} in the form of web pages in \ac{HTML} and \emph{JavaScript} libraries through \ac{HTTP}.
+ 
+\item \textbf{Signaling module} - responsible for \emph{Client} and \emph{Stream} coordination which will be performed using \emph{WebSockets}.
 
-\item \underline{Signaling module} - responsible for \emph{Client} and \emph{Stream} coordination.
+ \item \textbf{NAT Traversal module} - \ac{STUN} and \ac{TURN} techniques used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
 
- \item \underline{NAT Traversal module} - used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
+ \item \textbf{Stream module} - responsible to deliver and receive multimedia content from the \emph{Client} using \ac{WebRTC}. 
 
- \item \underline{Stream module} - responsible to deliver and receive multimedia content from the \emph{Client}. 
+ \item \textbf{Storage module} - provides two main functionalities: store the model information and media recorded. This is the single module responsible for persistent storage. It stores user and communication data as well as all the data required among user sessions. It is also use to store all the communication streams, so that they can be viewed later.
 
- \item \underline{Storage module} - provides two main functionalities: store the model information and media recorded. This is the single module responsible for persistent storage. It stores user and communication data as well as all the data required among user sessions. It is also use to store all the communication streams, so that they can be viewed later.
-
- \item \underline{Client module} - responsible for the interaction with the user.
+ \item \textbf{Client module} - responsible for the interaction with the user.
 
 \end{itemize}
 
 %RP Acho que podes escrever muito mais sobre cada componente. Isto está muito curto. Fala de algumas das funções que proporcionam. Vê o que fiz com o Storage Module
 
 %RP também podes fazer um diagrama com vários utilizadores e mostrar quais os streams que vão de e para cada um (mostrar a mistura de som, video, etc).
-
-% Each room will be associated to multiple Media-Types, interactive and non-interactive, discrete and continuous. This media types can be structured with chains of events. Some components of the user interface may not be synchronized to all participants, for example an help or suggestion window.  
 
  
 \section{Implementation Proposal}
@@ -107,6 +109,8 @@ The infrastructure is composed by: web server, stream server, signaling server, 
 
 In order to simplify our solution, we propose that the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules be implemented within the same server application, so it could be easy to deploy as a single image. To this set of modules, we often call \emph{backend}.
 
+	\subsection{Security and authorization}
+
 Having established that the \emph{backend} modules are placed in the same machine, that helps controlling which resources the client has permission to access as those modules are seen as a private network.
 %RP na mesma ``server application'' ou ``machine''? São coisa diferentes! Apresentas vantages de instalar tudo na mesma máquina mas não falas das desvantagens. Menor escalabilidade parece-me ser logo uma delas. Na figura 3.2 aparecem várias máquinas!
 
@@ -117,6 +121,26 @@ In relation to the database there is no directly access from the outside. All th
 
 On the other hand, the access to our streaming servers is also restricted, but clients can connect to them after concluding the signaling phase. This signaling phase may or not proceed in function of the client access permissions. For example, if a user is trying to access a private conference room that he is not a member of nor has an invitation link for, the signaling server refuses to start the signaling phase and the user cannot access the streaming server.
 
+\subsection{Client connections}
+	Although the delegation of processing work to clients can improve our system's scalability, we are concerned about using the least resources possible on the client side, as huge resource consumption may drain battery very fast or may even be impossible to run on mobile devices. We are aware that streaming video from clients is already a very intensive task which we cannot avoid but can improve by delegating the most intensive tasks to our servers. 
+
+	\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/central.pdf}
+	\caption{Centralized Connections}
+	\label{fig:central}
+	\end{figure}
+
+	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on figure \ref{fig:central}.
+
+	The same can be applied to instant message delivery, each client must have only one \emph{WebSocket} connection to the application server which consequently relays the messages to other users.
+
+	Relaying instant messages from clients through the our web servers is easier if all clients are connected to the same server because all messages can be directly delivered without sending messages across multiple web servers. 
+
+	In the context of this thesis, we will not implement sending messages across web servers but, in order to allow our system to scale, we will consider that all conference participants are connected to the same server and our system is scaled by having conference rooms distributed across different servers.
+
+\subsection{Software choices}
+
 Furthermore, we have taken into account the compatibility between the streaming server, database and the operation transformation solutions, in order choose the appropriate framework to implement our web server.
 %RP esta secção devia começar aqui, a explicar a escolha das tecnologias/produtos a usar em cada componente. O que tens antes são pormenores que só faz sentido discutir no final. Tens de ir sempre do mais geral para o mais detalhado.
 
@@ -124,8 +148,7 @@ As a result of our study about signaling protocols we have decided to exclude \a
 
 Accordingly, by excluding \emph{Jitsi Video Brigde} we have decided that our solution must use \ac{KMS}. Our web server could be implemented easily with \emph{NodeJS} or \emph{Java} due to the fact \ac{KMS} provides clients for both technologies. But others could also be used as \ac{KMS} also exposes their \ac{API} via \emph{WebSockets}.
 
-Due to the fact we are going to use \ac{KMS} as streaming server solution, we could choose \emph{NodeJS} or any \emph{Java} based web framework for implementing our web application server. One of our criteria for choosing the web framework is the ability to follow the \ac{MVC} paradigm which can help us to organize our code. Without any strong reason we have decided to implement our web server with the \emph{PlayFramework}\footnote{\url{https://www.playframework.com/}(acessed March 25, 2016)} using \emph{Java}.
-%RP nem sequer por estares mais familiarizado com java ou a playframework? Ou porque querias aprender? Alguma razão há-de ter havido
+Due to the fact we are going to use \ac{KMS} as streaming server solution, we could choose \emph{NodeJS} or any \emph{Java} based web framework for implementing our web application server. One of our criteria for choosing the web framework is the ability to follow the \ac{MVC} paradigm which can help us to organize our code. We have decided to implement our web server with the \emph{PlayFramework}\footnote{\url{https://www.playframework.com/}(acessed March 25, 2016)} using \emph{Java} because of our previous experience with it.
 
 By default, \emph{Kurento Repository} is implemented over \emph{MongoDB}, for convenience our storage model will also use the same database.
 
@@ -143,7 +166,7 @@ Not less important, on the client computers, both \emph{Mozilla Firefox} and \em
     \begin{tabular}{cccccccc@{}m{0pt}@{}}
 	\hline 
 \multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
-\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
+\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
 \multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
 \end{tabular}
 \end{table}
@@ -156,7 +179,7 @@ Table~\ref{table:apparch} presents the application architecture and the underlyi
 \emph{Bootstrap} will be used to make the user interface more appellative and responsive. With \emph{Bootstrap} it is quite easy to develop applications that adapt to mobile devices with different screen sizes.
 %RP bootstrap não aparece na figura!
 
-The synchronization between multimedia elements will be performed through chains of \emph{JavasSript} events or by specifying the interval of time which time content must be visible. Other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
+With respect to displaying content, the synchronization between multimedia elements will be performed through chains of \emph{JavasSript} events or by specifying the interval of time which time content must be visible. Other animations can be implemented with \ac{SVG} embedded on \ac{HTML}.
 %RP Caiu do céu! Tens de explicar e ligar melhor a sequencia de texto
 
 \section{Chapter Summary}
