@@ -37,7 +37,7 @@ Hypermedia is a concept that holds the promise of future technology and features
   \ac{SMIL}\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. With \ac{SMIL} it is possible to synchronize multiple videos, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyper-links, among multiple other features.
   %RP synchronize multiple sections of video? vários videos apresentados em simultâneo?
 
-  \ac{SMIL} is an \ac{XML} based language that defines twelve modules: \emph{Animation}, \emph{Content Control}, \emph{Layout}, \emph{Linking}, \emph{Media Objects}, \emph{SmilText}, \emph{Metainformation}, \emph{Structure}, \emph{Timing}, \emph{Time Manipulations}, \emph{State} and \emph{Transitions}.
+  \ac{SMIL} is an \ac{XML} based language that defines twelve modules: \emph{Animation}, \emph{Content Control}, \emph{Layout}, \emph{Linking}, \emph{Media Objects}, \emph{SmilText}, \emph{Meta Information}, \emph{Structure}, \emph{Timing}, \emph{Time Manipulations}, \emph{State} and \emph{Transitions}.
 
 
 \begin{itemize}
@@ -54,9 +54,9 @@ Hypermedia is a concept that holds the promise of future technology and features
 
   \item The \textbf{SmilText} module contains elements and attributes that define and control timed text. For example, this module could be used to create labels and captions.
 
-  \item The \textbf{Metainformation} module contains elements and attributes that allows describing the \ac{SMIL} document. For example, this module could be used to define movie details such as category, director, writers and cast.
+  \item The \textbf{Meta Information} module contains elements and attributes that allows describing the \ac{SMIL} document. For example, this module could be used to define movie details such as category, director, writers and cast.
 
-  \item The \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \emph{head} element that contains non temporal behavior information defined by  \emph{Metainformation}, \emph{Layout} and \emph{Content Control} modules. This module also defines the \emph{body} element, where all temporal related module information is contained.
+  \item The \textbf{Structure} module defines the basic elements and attributes for structuring \ac{SMIL} content. This module defines a \emph{head} element that contains non temporal behavior information defined by  \emph{Meta Information}, \emph{Layout} and \emph{Content Control} modules. This module also defines the \emph{body} element, where all temporal related module information is contained.
 
   \item The \textbf{Timing} module is the most important module on \ac{SMIL} specification. Due to its complexity, it is divided into seventeen sub-modules for coordination and synchronization of media over time. The three main elements are \emph{seq}, \emph{excl} and \emph{par}, that, respectively, play child elements in sequence, one at a time and all at the same time. 
 
@@ -102,28 +102,20 @@ Like \ac{DOM}, \ac{SMIL} \ac{DOM} is an \ac{API} for \ac{SMIL} documents. Allowi
 
   \emph{JavaScript} has compatibility issues among the different web browsers, leading to different behaviors. To solve that problem, there are libraries written in \emph{JavasSript}, namely \emph{jQuery}, that implements the same functionality for multiple browsers, masking most of the incompatibility issues.
 
-%RP explicar melhor. Não vejo como low-latency pode ser mau
-  %HR troquei-me todo
-  With the emergence of \ac{HTML}5, tags like \emph{video}, \emph{audio} and \emph{track} allow us to play video with multiple codecs, audio and subtitles in \ac{WebVTT} format. Another important tag is \emph{canvas} that allows drawing graphics with \emph{JavaScript} on a rectangle within a web page.
+  With the emergence of \ac{HTML}5, tags like \emph{video}, \emph{audio} and \emph{track} allow us to play video with multiple \emph{codecs}, audio and subtitles in \ac{WebVTT} format. Another important tag is \emph{canvas} that allows drawing graphics with \emph{JavaScript} on a rectangle within a web page.
 
   For example, with \ac{API}s like WebGL\footnote{\url{http://khronos.org/webgl/}(accessed June 2, 2015).}, it is now possible to manipulate a three dimensional environment in the context of a hyper-call. Another example would be a collaborative spreadsheet using \ac{WebRTC}. With this, hyper-calls are not limited to only audio, image, text and video, but also interaction with complex graphical user interfaces that changes over time.
- %XXX
-  %RP porque escolheste falar aogra de webgl se não falas antes?
-%HR já troquei, o WebGL usa o canvas do HTML5, talvez seja este o local mais adequado
 
 
   \ac{SVG} is an \ac{XML} based format that incorporates the animation module of \ac{SMIL}. Currently, \ac{SVG} allows adding movement and animating attributes of elements. When embedded on \ac{HTML}5, it allows dynamic changes to inner content in real-time through the \ac{DOM} \ac{API}. Besides that, it also allows calling \emph{JavaScript} functions on events such as animation end, mouse over and mouse click.
   
-  Back in 1995, \emph{flash}\footnote{\url{http://www.adobe.com/products/flash.html}(accessed June 2, 2015).} was developed for web-based animations. Introducing video support in 2002, \emph{flash} started to grow after that. Competitor's players, at that time were focused on playing video and audio, while \emph{flash} had vector graphics and focused on streaming \emph{on-demand} video across multiple platforms. \emph{VP6} was their choice of video codec, providing half the video size (in Byte) for the same quality and providing video quality adjusted to \emph{Internet} connection latency. 
+  Back in 1995, \emph{flash}\footnote{\url{http://www.adobe.com/products/flash.html}(accessed June 2, 2015).} was developed for web-based animations. Introducing video support in 2002, \emph{flash} started to grow after that. Competitor's players, at that time were focused on playing video and audio, while \emph{flash} had vector graphics and focused on streaming \emph{on-demand} video across multiple platforms. \emph{VP6} was their choice of video \emph{codec}, providing half the video size (in Byte) for the same quality and providing video quality adjusted to \emph{Internet} connection latency. 
   In 2010, \emph{Adobe Flash} was the most widely used applications for reproducing live broadcast and recorded video \cite{flashvideo}, it supports progressive video download using \ac{HTTP} and streaming using \ac{RTMP}.
-  %RP ``was'' quando? Em 2010? Ontem?
-  %HR exacto.
 
   \ac{RTMP} is a \ac{TCP} based protocol used for streaming audio, video and data between a \ac{FMS} and \emph{flash} players. A bidirectional connection is established between the two in order to allow real time communications. A \emph{flash} player can stream a webcam video to a \ac{FMS} using \ac{RTMP} or it can request a video stream to \ac{FMS} that can either be a pre-recorded stream, live stream or data. Multiple \ac{FMS} servers can be used in parallel to increase capacity and handle more streams simultaneously.
   %RP chained ou usados em paralelo?
 
   \ac{FMS} can stream video and audio to one or more subscribers by sending a separate copy for each subscriber. With \ac{RTMFP} it is possible to stream video directly between \emph{flash} players, allowing a publisher to break up a stream into pieces that can be cooperatively distributed in a P2P mesh. \ac{RTMFP} uses \ac{UDP} to speed packet delivery, which although it is not reliable, is well suited for video streaming. Like \ac{WebRTC}, \emph{flash} players also need to apply techniques like \ac{STUN} and \ac{TURN} for \ac{NAT} traversal.
-  %RP as vezes fazes \emph{flash} e outras vezes não. Convém ser coerente.
 
   Although \ac{HTML}5, \emph{JavaScript}, \ac{CSS} and \ac{WebRTC} implement some of \emph{flash}'s features, it doesn't mean that \emph{flash} will be replaced soon.
   Instead, both technologies can be used to develop rich \emph{Internet} applications.

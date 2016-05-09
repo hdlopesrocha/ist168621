@@ -40,6 +40,19 @@
 %e façam as modificações necessárias à obtenção da arquitectura do protótipo.
 %\ldots
 
+In this chapter we are going to present our implementation choices, the difficulties that we have faced and the strategies available to overcome them.
+
+To this end, we are going to present and explain our database model, how we have improved it and how this model can help us reach our goals. 
+
+Subsequently, we are going to describe our signaling protocol which will make it possible to use the \ac{WebRTC}'s functionalities in order to implement our system's streaming features.
+
+With the model and signaling protocol defined we are prepared to show the multiple approaches we have followed in order to implement stream recording, their drawbacks and our choices.
+
+Then are going to describe how we show hyper-content to users, namely the multiple ways to create hyper-content and the algorithm behind the user interface synchronization, the security flaws of our content displaying mechanism and a possible solution to overcome vulnerabilities. 
+
+Not less important we also are going to describe how we have implemented our application time-line and the functionalities above it such as time manipulation and annotations management. Among other different functionalities we also are going to describe how we perform stream composition, synchronization of our collaborative text editor and implementation of our instant messenger.
+
+Lastly, we are going to describe the deployment of our solution in respect to the hardware that we have used and the software installed onto it.
 
 \input{13_implementation_model.tex}
 \input{14_implementation_signaling.tex}
