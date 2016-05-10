@@ -174,7 +174,7 @@ function scheduleContent() {
 
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[width=\textwidth]{figures/timeline.png}
+		\includegraphics[width=0.8\textwidth]{figures/timeline.png}
 		\caption{Interactive time-line}
 		\label{fig:timeline}
 	\end{figure}
@@ -190,7 +190,7 @@ function scheduleContent() {
 
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[width=0.7\textwidth]{figures/annotation.png}
+		\includegraphics[width=0.5\textwidth]{figures/annotation.png}
 		\caption{Creating a time annotation}
 		\label{fig:annotation}
 	\end{figure}
@@ -200,7 +200,7 @@ function scheduleContent() {
 
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[width=0.8\textwidth]{figures/timelink.png}
+		\includegraphics[width=0.6\textwidth]{figures/timelink.png}
 		\caption{Time link creation}
 		\label{fig:timelink}
 	\end{figure}
@@ -217,13 +217,13 @@ function scheduleContent() {
 
 \begin{figure}[!htb]
 	\centering
-	\begin{minipage}[b]{0.55\linewidth}
+	\begin{minipage}[b]{0.45\linewidth}
 		\centering
 		\includegraphics[width=\textwidth]{figures/search.png}
 		a) Result list
 	\end{minipage}
 	\quad
-	\begin{minipage}[b]{0.40\linewidth}
+	\begin{minipage}[b]{0.30\linewidth}
 		\centering
 		\includegraphics[width=\textwidth]{figures/search2.png}
 	    b) Selected result
@@ -235,18 +235,29 @@ function scheduleContent() {
 
 	\subsection{Switching views}
 
+		The composite operation, as shown on figure \ref{fig:wcomposite} works by decoding the incoming client streams, mixing audio and video and encoding again to send back to users.
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.6\textwidth]{figures/wcomposite.pdf}
+		\caption{Stream decoding, composition and encoding}
+		\label{fig:wcomposite}
+	\end{figure}
+
+
 		We provide a way for users to select the composite view of the conference room or the video shared by a particular user device as it can be seen on figure \ref{fig:devices}. 
+	
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.6\textwidth]{figures/devices.png}
+		\caption{Multiple devices per user}
+		\label{fig:devices}
+	\end{figure}
+
 
 		In order to maintain a list of available user devices that can be played at the navigated time if a user plays or ends playing a block of recorded video it obtains at the same time a list of all devices available for each user at that time.
 
 		On the other hand, if a user changes to real time, the list of devices is extracted from the set of \emph{webSockets} that are associated to the respective conference room. This list of devices is also sent to the users that are also in real time mode whenever a new user enters or leaves the conference room.
-
-	\begin{figure}[!htb]
-		\centering
-		\includegraphics[width=0.8\textwidth]{figures/devices.png}
-		\caption{Multiple devices per user}
-		\label{fig:devices}
-	\end{figure}
 
 		We also provide an automatic mechanism for switching the view to the current speaker. With respect to sound analysis, the sound samples are analyzed on the client side through the web audio \ac{API}.
 
