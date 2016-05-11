@@ -182,16 +182,6 @@ public class WSController extends Controller {
                                                 return;
                                             }
                                         break;
-                                        case "setRealTime":
-                                            if(args.has("uid")) {
-                                                String owner = args.getString("uid");
-                                                String sessionId = args.optString("sid", null);
-                                                userSession.setRealTime(owner, sessionId);
-                                                userSession.sendMessage(userSession.getContent());
-                                                return;
-                                            }
-
-                                        break;
                                         case "removeUser":
                                             if (args.has("uid")) {
                                                 String uid = args.getString("uid");
@@ -251,20 +241,18 @@ public class WSController extends Controller {
                                                 return;
                                             }
                                         break;
-                                        case "setHistoric":
+                                        case "setTime":
+                                            String owner = args.optString("uid",null);
+                                            String sessionId = args.optString("sid", null);
+
                                             if(args.has("offset")){
-                                                String owner = args.optString("uid",null);
-                                                String sessionId = args.optString("sid", null);
-                                                if(owner==null){
-                                                    owner = room.getGroupId();
-                                                    sessionId = "group";
-                                                }
                                                 userSession.setOffset(args.getLong("offset"));
                                                 userSession.setHistoric(owner,sessionId);
-                                                userSession.sendMessage(userSession.getContent());
-                                                return;
+                                            }else {
+                                                userSession.setRealTime(owner, sessionId);
                                             }
-                                        break;
+                                            userSession.sendMessage(userSession.getContent());
+                                            return;
                                         case "createTag":
                                             if(args.has("time") && args.has("title")){
                                                 try {

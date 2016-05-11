@@ -198,7 +198,7 @@ var HyperWebSocket = new (function() {
 	this.receiveRealTime = function(userId,sessionId){
 		console.log("receiveRealTime",userId);
 		var msg = {
-            cmd : "setRealTime",
+            cmd : "setTime",
             uid:userId
         };
 		if(sessionId){
@@ -210,7 +210,7 @@ var HyperWebSocket = new (function() {
 	this.receiveHistoric = function(userId,offset,sessionId){
 		console.log("receiveHistoric",userId);
 		var msg = {
-            cmd : "setHistoric",
+            cmd : "setTime",
             uid:userId,
             offset:offset
         };

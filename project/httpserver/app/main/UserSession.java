@@ -51,7 +51,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     private Timer scheduledPlayer;
     private Object scheduledPlayerLock = new Object();
 
-    private Map<String,Object> currentQRCodes = new TreeMap<String,Object>();
+    private Object QRLocker = new Object();
+    private Map<String,Date> startingQRCodes = new TreeMap<String,Date>();
+    private Map<String,Date> currentQRCodes = new TreeMap<String,Date>();
+
+
     private EventListener<CodeFoundEvent> codeListener;
 
     public UserSession(final String userId, final Room room, WebSocket.Out<String> out) throws ServiceException {
@@ -137,12 +141,13 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 System.out.println(".");
                 final String content = event.getValue();
                 final String hash = Tools.md5(content);
-                final Date startTime = new Date(new Date().getTime() - timeOffset);
+                final Date currentTime = new Date(new Date().getTime() - timeOffset);
 
                 if (hash != null) {
                     boolean containsQR;
-                    synchronized (currentQRCodes) {
-                        containsQR = currentQRCodes.containsKey(hash);
+                    synchronized (QRLocker) {
+                        containsQR = startingQRCodes.containsKey(hash);
+
                     }
 
                     if (!containsQR) {
@@ -153,8 +158,11 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                         room.sendMessage(msg.toString());
                     }
 
-                    synchronized (currentQRCodes) {
-                        currentQRCodes.put(hash,startTime);
+                    synchronized (QRLocker) {
+                        currentQRCodes.put(hash,currentTime);
+                        if(!startingQRCodes.containsKey(hash)){
+                            startingQRCodes.put(hash,currentTime);
+                        }
                     }
 
                     new Thread(new Runnable() {
@@ -166,13 +174,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                                 e.printStackTrace();
                             }
                             Object newestQRCode;
-                            synchronized (currentQRCodes) {
+                            synchronized (QRLocker) {
                                 newestQRCode = currentQRCodes.get(hash);
                             }
 
-                            if (startTime == newestQRCode) {
-                                synchronized (currentQRCodes) {
+                            if (currentTime == newestQRCode) {
+                                Date startingTime;
+                                synchronized (QRLocker) {
                                     currentQRCodes.remove(hash);
+                                    startingTime= startingQRCodes.remove(hash);
                                 }
                                 JSONObject msg = new JSONObject();
                                 msg.put("cmd", "qrCode");
@@ -182,7 +192,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
 
                                 Date endTime = new Date(new Date().getTime() - timeOffset);
                                 CreateHyperContentService service = new CreateHyperContentService(userId,
-                                        getGroupId(), startTime, endTime, content);
+                                        getGroupId(), startingTime, endTime, content);
                                 try {
                                     service.execute();
                                     room.sendContents();
@@ -404,6 +414,10 @@ public class UserSession implements Closeable, Comparable<UserSession> {
     }
 
     public void setHistoric(String owner, String sessionId) {
+        if(owner==null){
+            owner = getGroupId();
+            sessionId = "group";
+        }
         nextVideo = nextAudio = null;
         cancelScheduledPlayers();
         setInternalHistoric(owner,sessionId);

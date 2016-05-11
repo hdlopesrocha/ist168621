@@ -39,18 +39,27 @@
 \begin{minipage}[!htb]{\linewidth}
 \begin{lstlisting}[caption={Pseudo code for QR code leaving detection},label={lst:pseudo_qrcode},language=JavaScript]
 var ongoingCodesMap = {};
+var startedCodesMap = {}
+
 function onCodeFound(content) {
 	var startingTime = getCurrentTime() - getUserOffset();
 	var hash = md5(content);
-	if(ongoingCodesMap[hash] == null){
+
+	if(startedCodesMap[hash] == null) {
 		sendQRCodeToEditingUser(hash,content);
+		startedCodesMap[hash] = currentTime;
 	}
-	ongoingCodesMap[hash] = startingTime;
+
+	ongoingCodesMap[hash] = currentTime;
 	waitTwoSeconds(); // onCodeFound() may be called from other threads
 	var newestTime = ongoingCodesMap[hash]; 
-	if(newestTime == startingTime){
+	if(newestTime == currentTime){
+		var startingTime = startedCodesMap[hash];
 		var endingTime = getCurrentTime() - getUserOffset();
+		
+		startedCodesMap[hash] = null; 
 		ongoingCodesMap[hash] = null; 
+
 		sendQRCodeToEditingUser(hash,null); // remove from UI
 		insertContentIntoDatabase(startingTime,endingTime,content);
 		sendContentToUsers(startingTime,endingTime,content);
@@ -132,7 +141,7 @@ function onCodeFound(content) {
 function scheduleContent() {
     var navigatedTime = getCurrentTime() - getUserOffset();
     while ( hasLocalEvents() ) {
-        if ( firstEventIsOlderThanNavigatedTime() ) {
+        if ( firstEventIsOlderThan(navigatedTime)) {
             if ( firstEventIsStart() ) {
             	addHtmlLayer(event);
             } else {
@@ -143,7 +152,7 @@ function scheduleContent() {
             break;
         }
     }
-    if ( hasNoLocalEvents() ) {
+    if ( hasNoLocalEvents() && !serverHasMoreContent()) {
     	return;	// nothing to do
     } 
     if ( hasNoStartEvents() && serverHasMoreContent() ) { 
