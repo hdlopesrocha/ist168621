@@ -1,5 +1,6 @@
 \section{Stream Recording}
-In this section we describe our approaches for the stream recording implementation, namely recording on the client side and server side.
+ Initially we experimented with local recording and synchronizing with our servers. Even thought it got it to work, it consumed to much bandwidth. We then tried recording on server side. In this section, we describe the several techniques evaluated.
+
 %RP Innitially we experimented with local recording. Even thought it got it to work, it consumed to much bandwith. We then tried ....  In this section, we describe the several techniques evaluated.
 
 \subsection{Client side recording}
@@ -7,7 +8,9 @@ In order to record used shared streams, our first approach consisted in locally 
 %RP used -> user?
 
 After recording, each block was uploaded to our server through \ac{HTTP}, saved into the server's file system, the block meta-data was created and inserted on our database. Each block meta-data contained the file's location for the recorded block, the starting date, duration, user identification and group identification.
-%RP referenciar o modelo na secção 3.xx?
+%RP referenciar o modelo na secção 3.xx? 
+%HR talvez não, não é o mesmo modelo, foi uma abordagem diferente
+
 When the file was completely saved, the meta-data was advertised to the remaining users. This meta-data was simply used to refresh the user interface and was completely discarded after that, because an huge amount of small blocks' meta-data would use more and more memory as time went by. 
 
 	The process to play a video was quite simple. The user specified which user and date he intended to play, the server calculated the intersection between the requested date and the block bounds and returned the file to the client.
@@ -15,27 +18,43 @@ When the file was completely saved, the meta-data was advertised to the remainin
 
         With this technique, block switching became more acceptable, but switching the \ac{URL} always produced a flash. We solved this problem by having two layers and changing the \ac{URL} on the back layer. When the front layer froze on the last frame, we changed the back layer to the front. 
 
-	After we implemented this recording solution using this approach, we tested locally (client and server on the same machine) and remotely. For remote connections we observed a fairly high bandwidth usage, mainly because blocks were both sent and received at maximum quality. 
+	After we implemented this recording solution using this approach, we tested locally (client and server on the same machine) and remotely. For remote connections we observed a fairly high bandwidth usage, mainly because blocks were both sent and received at maximum quality.
+
+	We deemed this high bandwidth usage to be a significant bottleneck on our application and decided to explore other solutions.
+
         %RP We deemed this high bandwidth usage to be a significant bottleneck on our application and decided to explore other solutions.
         
 \subsection{Server side recording to file system}
+
+In addition to perform as an \ac{MCU}, \ac{KMS} also allow recording individual incoming streams and the composition of streams which can be reproduced later using the existing \emph{Peer Connection} and as a consequence making our application more efficient and scalable.
+
+Without additional configurations, \ac{KMS} allows recording video directly to file system by specifying each file path. This approach makes the file management more complex as file paths are relative to one file system within a specific machine. If we use this approach with multiple instances of \ac{KMS} in order to scale our solution, we have to associate the machine location to each recording chunk and we also have to take into account replication so that we can provide fault tolerance.
+
 %RP começar por explicar razão para usar KMS: permite gravar e juntar várias streams numa só, o que torna a aplicação muito mais escalável.
+% HR better?
 
 Before recording any type of stream, we had to analyze the user media offer in order to check if a video was really being received by \ac{KMS}, otherwise if we did not verify the user's offer, the recording video would be black.
 %RP Entras logo em grandes pormenores. Falta aqui uma introdução.
+% HR better?
 
-The streaming content received on \ac{KMS} was already compressed due to \ac{WebRTC}'s exchanged quality of service metrics data. As a direct consequence, our recorder solution used on most cases less disk space per block, but would never use more storage than client side recording. \ac{KMS} allows recording files using \emph{webm} and \emph{mp4} containers.
-%RP escolheste qual?
+The streaming content received on \ac{KMS} was already compressed due to \ac{WebRTC}'s exchanged quality of service metrics data. As a direct consequence, our recorder solution used on most cases less disk space per block, but would never use more storage than client side recording. \ac{KMS} allows recording files using the \emph{webm} container by default but \emph{mp4} is also available.
+%RP escolheste qual? 
+%HR webm, assim fica subentendido que deixei por default
 
 	With server side recording, the user would maintain always the same stream \ac{URL} even if it is playing real-time video or reproducing recorded video. It is \ac{KMS} that sends different content through that stream. When a user desires to play recorded video, a \emph{webSocket} message is sent specifying the time and the intended user id. The group identification is not sent because it is already associated to the \emph{webSocket}. The server performs the same calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
 
 	We still observed differences in image quality when switching parts. That was even noticeable if we set a short block duration. We also noticed a small gap on audio when switching blocks but it was acceptable and speech understanding was not very affected. 
 
-	When we started implementing our solution, \ac{KMS} had no support for seeking videos, which meant that blocks would would always start playing from their beginning. This lead to a theoretic playing time error that can be at most half the duration of a block. In practice, the maximum playing time error coincides with the block duration because we perform the intersection between the requested date and the block. But we could decrease the error by half if we calculate the intersection with the requested time plus half the duration.
+	When we started implementing our solution, \ac{KMS} had no support for seeking videos, which meant that blocks would would always start playing from their beginning. 
+
+	If we choose the closest chunk to play this lead to a playing time error that can be at most half the duration of a block, as it can be seen on figure \ref{fig:nearchunkerror} where the black dot represents the requested time to play. In this case, which is the worst, either $ block_{n}$ or $ block_{n+1}$ (with duration $d$) can be played from their beginning with a maximum error ($e$) correspondent to half their duration ($\frac{d}{2}$) . 
+
+
+	In practice, the maximum playing time error coincides with the block duration because we must show always what the user requests, as it can be seen on figure \ref{fig:interchunkerror}. In this case, if a user wishes to play a time that is close to the end of $block_n$ the maximum playing error ($e$) is at most the chunk's duration ($d$) because we have to play $block_n$ from its beginning.
         %RP já tinhamos falado sobre isto. O erro é no máximo o tamanho do bloco pois queres garantir que a pessoa ve sempre o que solicita. Assim começas sempre no bloco que fica antes e nunca no que fica depois.
 
         %RP Figura tem de ser apresentada no texto e explicada. O que significam as letras?
-        
+        %HR done
 	\begin{figure}
 			\centering
 
@@ -69,7 +88,8 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 		\draw [brace_bottom] (3*1.5+0.03,-3.3) -- node [below, pos=0.5] {$d$} 						(5*1.5-0.03,-3.3);
 
 	\end{tikzpicture}
-		\caption{Theoretic maximum playing error $(e)$}
+		\caption{Maximum playing error $(e)$ if we play the closest chunk}
+		\label{fig:nearchunkerror}
 	\end{figure}
 
 	\begin{figure}
@@ -100,10 +120,13 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 		% low brace period
 	
 		\draw [brace_bottom] (1*1.5+0.03,-3.3) -- node [below, pos=0.5] {$e_{n}=d$} 	(3*1.5-0.03,-3.3);
+		\draw  (3*1.5+0.03,-3.3) -- node [below, pos=0.5] {$e_{n+1}=0$} 	(3*1.5-0.03,-3.3);
 		\draw [brace_bottom] (3*1.5+0.03,-3.3) -- node [below, pos=0.5] {$d$} 		(5*1.5-0.03,-3.3);
 
 	\end{tikzpicture}
-		\caption{Practical maximum playing error $(e)$}
+		\caption{Maximum playing error $(e)$ if we play the chunk that intersect the user's time}
+		\label{fig:interchunkerror}
+
 	\end{figure}
 
 
