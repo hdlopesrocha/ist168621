@@ -25,7 +25,7 @@ In order to offer all the functionalities that we promise, some information abou
     
     An example of schema representation can be seen on table \ref{table:schema}.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Schema representation}
 \label{table:schema}
@@ -47,7 +47,7 @@ For designing our model we have taken into account generic programming technique
 
 Our first decision for our model, in order to avoid repeated code, was the isolation of the object's attributes from themselves, so we could apply the search operation to a set of attributes independently of the object type. To this generic set of properties we call data (Table \ref{table:generic}) and each object of this type has a reference to the owner, which is a unique identification number.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Generic data model}
 \label{table:generic}
@@ -98,7 +98,7 @@ In summary, with this model we can perform search and identification of any kind
 The user model is not tied to the user attributes (Table \ref{table:user}), the information maintained in this model is just used for authentication purposes. Passwords are not stored in plain text, instead we apply hashing and salting techniques \cite{password} in order to make it harder to decode the password by an attacker. Accordingly, we use \emph{SHA-1} and a random salt per user with 32 characters.
 %RP Table x, Figure y, etc é sempre maiusculas.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{User model}
 \label{table:user}
@@ -115,7 +115,7 @@ The user model is not tied to the user attributes (Table \ref{table:user}), the 
 
 A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$ (Table \ref{table:relation}), where $e_1$ is the source and $e_2$ is the target. This relation is said to be bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Relation model}
 \label{table:relation}
@@ -139,7 +139,7 @@ A conference room, which is the environment where users communicate among their 
 A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on table \ref{table:group}.
 Moreover, a group can be public or private. If the group is public, then it is visible to all users that maintain a friendship with a member of this group. If the group is private, then it is only visible to its members.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Group model}
 \label{table:group}
@@ -177,7 +177,7 @@ In order to improve performance of queries over \emph{GroupMembership} collectio
 
 A message is composed by its content, time of creation and source and target identification numbers (Table \ref{table:message}). The message's target could reference any object, but our application is only handling messages to groups.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Message model}
 \label{table:message}
@@ -210,7 +210,7 @@ In the point o view of a user, a time annotation is just a simple way to associa
 %RP explica melhor a diferença entre HyperContent e Time Annotation do ponto de vista do utilizador / funcionalidade proporcionada.
 %HR done
 
-\begin{table}[!htb]
+\begin{table}
 \centering
 \caption{Hyper content model}
 \label{table:hyper}
@@ -261,7 +261,7 @@ In order to improve the performance of searching content and calculate interval 
 Within a conversation, users can write documents collaboratively. As we can see in Table \ref{table:collaborative}, each document has a content and a reference to the correspondent group. 
 
 
-\begin{table}[!htb]
+\begin{table}
 \centering
     \caption{Collaborative content model}
     \label{table:collaborative}
@@ -286,7 +286,7 @@ During a conversation, users may allow sharing their web cameras. By doing so, t
     
     In order to allow the same user to have different devices, storing just the \ac{URL} with an associated user id is not enough. In this case, one more parameter is needed to differentiate the different \emph{webSocket} sessions opened by the same user. For this reason we had to associate a random session identification number to each \emph{webSocket}.
 
-\begin{table}[!htb]
+\begin{table}
 \centering
     \caption{Recording model}
     \label{table:recording}

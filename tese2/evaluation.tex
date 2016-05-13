@@ -1,29 +1,32 @@
 \chapter{Evaluation}
 \label{chapter:evaluation}
-  In the previous chapter we described how we implemented our solution namely the data model that we used, the description of the signaling protocol, how we performed stream recording, how we overlayed interactive content to video and lastly how we deployed our solution. 
+  In the previous chapter we described how we implemented our solution namely the data model that we used, the description of the signaling protocol, how we performed stream recording, how we overlayed interactive content to video. 
 
-  In this chapter we describe how we tested our solution, show and analyze the results in order to validate the contributions of this thesis.
+  In this chapter we describe how we deployed our solution, tested our prototype, show and analyze the results in order to validate the contributions of this thesis.
+
+\input{17_implementation_deploy.tex}
+
 
 \section{Tests Objectives}
 
   We have tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's usability.
 
-  We have also tested the performance of our solution by measuring the used resources. Those performance tests are crucial to ensure that our solution is in fact stable and users can use it timelessly without decreasing the quality of their experience. 
+  We have also tested the performance of our solution by measuring the used resources. Those performance tests are crucial to ensure that our solution is in fact stable and users can use it endlessly without decreasing the quality of their experience. 
 
 
   \section {Performance Tests}
 
-     In this section we describe performance test scenarios that we have applied and their respective results.
+     In this section we describe performance tests that we have applied and their respective results.
 
 
     \subsection{Tests Scenarios}
 
 
-      In order to benchmark our system, we have implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects with a periodicity of one second; CPU, physical memory information relative to each running process and network usage relative to each interface. 
+      In order to benchmark our system, we have implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects with a periodicity of one second: CPU, physical memory information relative to each running process and network usage relative to each interface. 
 
-      We would like to collect network information relative to each process, which \emph{nethogs}\footnote{\url{https://raboof.github.io/nethogs/} (Accessed March 27, 2016)} provide but it could not capture the network usage of some processes. Although this would be useful for a deep analysis, we know which network interfaces are used to establish connections between processes as we show on table \ref{table:interfacemap}.
+      We would like to collect network information relative to each process, which \emph{nethogs}\footnote{\url{https://raboof.github.io/nethogs/} (Accessed March 27, 2016)} provide but it could not capture the network usage of some processes. Although this would be useful for a deep analysis, we know which network interfaces are used to establish connections between processes as we show on Table \ref{table:interfacemap}.
 
-  \begin{table}[!htb]
+  \begin{table}
 \centering
 \caption{Mapping of connections by network interface}
 \label{table:interfacemap}
@@ -39,24 +42,22 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 \end{table}
 
 
-      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer and network specifications, entering sequentially on the conference room, the second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute in total of thirteen minutes (780 seconds).
+      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer and network specifications, entering sequentially on the conference room. The second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute in total of thirteen minutes (780 seconds).
 
   
 
 
 \subsection{Test Results}
   
-      We are presenting in this section the results of our performance tests after implementing our solution.
+      In this section we discuss the results of our performance tests performed after implementing our solution.
 \subsubsection{Network usage}
 
-      Every time a user shares its camera or its screen in the context of a conference room, its offered video is sent to the server and independently from watching an individual stream or the mixed version the server just sends a unique stream back to the user.
+      Every time a user shares its camera or its screen in the context of a conference room, its offered video is sent to the server and, independently from watching an individual stream or the mixed version, the server just sends a unique stream back to the user.
 
-      From the media server prespective if there are $n$ clients connected each of them sending and receiving one stream, it is expected that server sends and receives also $n$ streams. By so we expect that the amount of network increases linearly as users join a conference room.
-
-      Figure \ref{fig:test_full_features_net} confirms our expectations, each vertical yellow line represents each event, the first seven events are users entering the conference room the next ones represent users leaving the conversation. 
+      From the media server perspective if there are $n$ clients connected, each of them sending and receiving one stream, it is expected that server sends and receives also $n$ streams. As such, we expect that the amount of network traffic increases linearly as users join a conference room. Figure \ref{fig:test_full_features_net} confirms our expectations. Each vertical yellow line represents one event: the first seven events are users entering the conference room, the next ones represent users leaving the conversation. 
       
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_full_features_net.eps}
   \caption{Network usage after implementing all features}
@@ -65,14 +66,14 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 
       The blue peaks are caused by the signaling phase and web page downloads, including resources such as images, stylesheets and javascript files. 
-      The green peaks are caused by that being transfered between \ac{KMS} and \emph{MongoDB} through \emph{Kurento Repository} each peak occurs each time a block of video is recorded which in this case is every ten seconds. 
-      The recordings are synchronized so all user and mixed blocks starts and ends at the same time, that's why the amount of work done every ten seconds accumulates and because this is performed locally the maximum transfer rate is limited by the performance of the memory as buffers are written to buffers then to disks. 
-      Client's sent data transfer rate has no significant peaks as signaling information contains few information.
+      The green peaks are caused by video and audio being transfered between \ac{KMS} and \emph{MongoDB} through \emph{Kurento Repository}. Each peak occurs every time a block of video is recorded, which in this case is every ten seconds. 
+      The recordings are synchronized so all user and mixed blocks start and end at the same time. That is why the amount of work done every ten seconds accumulates, and because this is performed locally, the maximum transfer rate is limited by the performance of the memory as buffers are written to buffers then to disks. 
+      Sent data transfer rate has no significant peaks as \ac{HTTP} requests and signaling information contains little information.
 
       Figure \ref{fig:summary_full_net} shows the average transmission rate per interval of consecutive events. 
 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/summary_full_net.eps}
   \caption{Average network usage per interval of events after implementing all features}
@@ -83,29 +84,20 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
 
-With this results we conclude that if we want to scale our solution's storage using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \emph{MongoDB} should be installed in the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces as seen on figure \ref{fig:scale1}. For the same reason another possible configuration for scaling the storage is to install both \emph{Kurento Repository} and \ac{KMS} on the same machine as seen on figure \ref{fig:scale2}. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
+With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \ac{KMS} should be installed on the same machine, as depicted on figure \ref{fig:scale2}, because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
 
-\begin{figure}[!htb]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
+\begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{figures/scale1.pdf}
-  \caption{Repository and database in the same machine}
-  \label{fig:scale1}
-\end{minipage}
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-  \centering
-  \includegraphics[width=0.9\textwidth]{figures/scale2.pdf}
+  \includegraphics[width=0.5\textwidth]{figures/scale2.pdf}
   \caption{Repository and KMS in the same machine}
   \label{fig:scale2}
-\end{minipage}
 \end{figure}
 
 
-On the other hand figure \ref{fig:test_client_net} shows the respective network usage on the client side during our test case. We observe that int he first seconds the client adjusts the video quality that sends to \ac{KMS}, whenever a new client enters in the conference we observer that \ac{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room, after a while \ac{KMS} realizes that its network can handle the increase of clients and sends the video with a better quality to every participant. When a user leaves the conference room \ac{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
 
-\begin{figure}[!htb]
+On the other hand, Figure \ref{fig:test_client_net} shows the respective network usage on the client side during our test case. We observe that in the first seconds the client adjusts the video quality it sends to \ac{KMS}. Whenever a new client enters the conference, we observe that \ac{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room. After a while, \ac{KMS} realizes that the network can handle the increase of clients and sends the video with a better quality to every participant. When a user leaves the conference room \ac{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
+
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_client_net.eps}
   \caption{Client Network usage during our test case}
@@ -117,11 +109,11 @@ On the other hand figure \ref{fig:test_client_net} shows the respective network 
 \subsubsection{Memory usage}
 
 
-Figure \ref{fig:test_full_features_mem} shows the memory usage during our performance test case. Both \ac{JVM}, \emph{MongoDB} and \ac{KMS} performs their own memory management by holding and recycling objects when needed. The expected and observed behavior of the memory usage is growth memory usage while the users are entering in the conference room and a memory usage stabilization afterwards.
+Figure \ref{fig:test_full_features_mem} shows the memory usage during our performance test. Both \ac{JVM}, \emph{MongoDB} and \ac{KMS} performs their own memory management by holding and recycling objects when needed. The expected and observed behavior of the memory usage is growth of memory usage while the users are entering the conference room and a memory usage stabilization afterwards.
 
 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_full_features_mem.eps}
   \caption{Memory usage after implementing all features}
@@ -129,18 +121,18 @@ Figure \ref{fig:test_full_features_mem} shows the memory usage during our perfor
 \end{figure}
 
 
-\emph{MongoDB} memory usage keeps increasing because it tries to fit part of the database on \ac{RAM} for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case. When the conference room is empty no there are no video recordings, which explains the memory stabilization at the end.
+\emph{MongoDB} memory usage keeps increasing because it tries to fit part of the database on \ac{RAM} for fast read access. \emph{MongoDB} checkpoints data to disk every 60 seconds or when journal data exceeds 2GB\footnote{\url{https://docs.mongodb.org/manual/faq/storage/}(Accessed March 28, 2016)}, that explains the small memory usage peaks during our test case. When the conference room is empty there are no video recordings, which explains the memory stabilization at the end.
 
-\emph{KMS} memory usage was increasing and in fact we did not expected that, we have done more tests and we have observed that by disabling the recorder feature memory usage kept linearly related to the amount of clients present on the room. Therefore, we have verified our implementation and we have concluded that nothing was wrong with our code, we have confirmed that every allocated resource was indeed released after the end of recording. As a result of our intensive tests and consecutive failures we suspected that the problem was not ours.
+\emph{KMS} memory usage was increasing and in fact we did not expected that. We have done more tests and we have observed that by disabling the recorder feature, memory usage kept linearly related to the amount of clients present on the room. Therefore, we have verified our implementation and we have concluded that nothing was wrong with our code: we have confirmed that every allocated resource was indeed released after the end of recording. As a result of our intensive tests and consecutive failures we suspected that the problem was not ours.
 
-Hence, in order to confirm our suspicions, we have decided to read the implementation of \ac{KMS} and we have found that \ac{KMS} was not releasing the memory if the recorder was stopped by us. Subsequently, we have changed the source code and submitted to \emph{Kurento} team through a \emph{GIT}'s \emph{"pull request"}.
-
-
-Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performance test case taking into account the patch that we applied to \ac{KMS}.
+Hence, in order to confirm our suspicions, we have decided to read the implementation of \ac{KMS} and we have found that \ac{KMS} was not releasing the memory if the recorder was stopped by us. Subsequently, we have changed the source code and submitted to \emph{Kurento} team through a \emph{GitHub}'s \emph{"pull request"}, which was accepted.
 
 
+Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performance test case using the patch that we applied to \ac{KMS}. As we can observe, there were \ac{KMS} and also \emph{Kurento Repository} memory usage improvements. 
 
-\begin{figure}[!htb]
+
+
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_ram_fixed_mem.eps}
   \caption{Memory usage after fixing recorder memory leak}
@@ -153,16 +145,16 @@ Figure \ref{fig:test_ram_fixed_mem} shows the memory usage during our performanc
 
 Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage during our performance test case. Each 100\% represents one \ac{CPU} core, although that does not mean one \ac{CPU} is fully used, for example two cores at 60\% represent 120\% \ac{CPU} usage. As we can see, the percentage of \ac{CPU} used increases and decreases linearly in function of the amount of conference participants. 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_full_features_cpu.eps}
   \caption{Percentage of CPU used during the performance tests}
   \label{fig:test_full_features_cpu}
 \end{figure}
 
-Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic processing peaks every ten seconds that are due to block recording. 
+Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic processing peaks every ten seconds that are due to block recording. \ac{KMS} is responsible for most \ac{CPU} usage.
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_full_features_cpu_zoom.eps}
   \caption{Percentage of CPU used during the performance tests (zoomed)}
@@ -172,7 +164,7 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
 
    Figure \ref{fig:summary_full_cpu} shows the average used \ac{CPU} per interval of consecutive events. 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/summary_full_cpu.eps}
   \caption{Average percentage of CPU used per interval of events after implementing all features}
@@ -181,16 +173,18 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
 
 
 
-  Just for testing purposes we have done the same performance tests without detecting \emph{QR codes} in order to understand how \ac{CPU} intensive is this task. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \emph{QR code} detection disabled.
+  Just for testing purposes, we performed the same performance tests disabling \emph{QR codes} detection in order to understand how \ac{CPU} intensive this task is. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \emph{QR code} detection disabled.
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_without_qrcode_cpu.eps}
   \caption{Percentage of CPU used during the performance tests without QR code detection}
   \label{fig:test_without_qrcode_cpu}
 \end{figure}
 
-We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by \ac{CPU}. Without this feature the network and memory usage had insignificant changes compared to \ac{CPU} usage.
+We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by the \ac{CPU}s. Without this feature, the network and memory usage had insignificant changes compared to \ac{CPU} usage.
+
+Even though, with this test results, we conclude that our solution's bottleneck is the \ac{CPU} usage at \ac{KMS}.
 
 \subsubsection{Two consecutive test cases}
 
@@ -198,7 +192,7 @@ We conclude that \emph{QR code} detection is a very intensive task, approximatel
 We have also performed two consecutive test cases in order to understand if we the influence of the first test case over the second, as observed in figure \ref{fig:test_two_times_cpu}, there is no \ac{CPU} influence between two test cases.
 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_two_times_cpu.eps}
   \caption{Percentage of CPU used during two consecutive test cases}
@@ -208,7 +202,7 @@ We have also performed two consecutive test cases in order to understand if we t
 On the other hand due to memory recycling techniques we can observe in figure \ref{fig:test_two_times_mem} that some of the memory that was allocated in the first test was reused in the second case.
 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_two_times_mem.eps}
   \caption{Memory usage during two consecutive test cases}
@@ -222,7 +216,7 @@ On the other hand due to memory recycling techniques we can observe in figure \r
    Figure \ref{fig:test_hour_mem} shows the memory used by our solution with seven clients simultaneously on the same conference room during one hour. As we can observe \ac{KMS} memory usage stabilizes.
 
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/test_hour_mem.eps}
   \caption{Memory usage during one hour with seven clients}
@@ -277,7 +271,7 @@ In the first testing phase we have performed just three tests with users and cea
 
 Both users that tested our solution had difficulties on the first task when finding new friendship requests and adding new friends, as friendship request were possible to access only from the top bar and new user profiles were only accessible through the search bar. In order to solve this problem we have added a menu for adding new users in the friends list and another near the friends list as it can be seen on figure \ref{fig:test_ui_01_02_03}.
 
-\begin{figure}[!htb]
+\begin{figure}
 \centering
 \begin{minipage}[b]{0.2\linewidth}
 \centering
@@ -307,7 +301,7 @@ Both users that tested our solution had difficulties on the first task when find
 
 On the second task one user clicked on the friends list for adding a friend to room and by consequence made him leave the conference room to the user profile. We solved this problem by showing a pop-up with the user profile and an additional button to add the user to the conference room as it can be seen on figure \ref{fig:test_ui_04}.
 
-\begin{figure}[!htb]
+\begin{figure}
 \centering
 \begin{minipage}[b]{0.7\linewidth}
 \centering
@@ -325,7 +319,7 @@ On the third task we noticed that both users were not expecting to search the co
 On the fourth task both users didn't placed their annotations on right place, we only provide one way to place annotations, which is by dragging them on the time-line. 
 After creating an annotation users also didn't understand that they had to save their changes on the time-line, we solved this problem by saving automatically each time the user changed any annotation, the old user interface can be seen on figure \ref{fig:test_ui_05}.
 
-\begin{figure}[!htb]
+\begin{figure}
 \centering
 \begin{minipage}[b]{0.3\linewidth}
 \centering
@@ -386,7 +380,7 @@ s=\sqrt{\frac{1}{n-1}\Sigma^{n}_{i=1}(x_i-\bar{x})^2}
 \end{equation}
 
 
-\begin{figure}[!htb]
+\begin{figure}
 \centering
 \begin{minipage}{.5\textwidth}
   \centering
@@ -406,7 +400,7 @@ s=\sqrt{\frac{1}{n-1}\Sigma^{n}_{i=1}(x_i-\bar{x})^2}
 
 Accordingly to figure \ref{fig:user_evals}, we can observe that most users had less difficulties with the first two tasks, which represents types of tasks that most users are familiar with. As soon as users had to navigate in time, manipulate annotations and create content (respectively \emph{task3}, \emph{task4} and \emph{task5}) we have observed that they revealed more difficulties. Most of those difficulties, based on the users feedback, were mainly due to those concepts not being familiar to them.
 
-\begin{figure}[!htb]
+\begin{figure}
 \centering
 \begin{minipage}{.5\textwidth}
   \centering
@@ -425,7 +419,7 @@ Accordingly to figure \ref{fig:user_evals}, we can observe that most users had l
 
 Although we had relatively bad results with some users, we have explained to the users that could not conclude the tasks or performed incorrectly the most efficient way to perform the requested tasks. Some users suggested to display more hints in order to achieve a faster learning but after all they were impressed and gave us a better evaluation (as seen on figure \ref{fig:user_evals}).
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{stats/user_evals.eps}
   \caption{Solution evaluation}
@@ -446,7 +440,9 @@ In conclusion, 100\% of our testers though that our solution was an innovation a
 \section{Chapter Summary}
 \label{evaluation:summary}
 
-In this chapter we described the test scenarios that we have created in order to evaluate our system. 
+In this chapter we have described how we have deployed our system for allowing a public access and perform tests in a real case environment.
+ 
+Then, we described the test scenarios that we have created in order to evaluate our system. 
 
 The performance tests revealed unexpected results which were crucial to find and solve performance issues. Another important aspect of our performance test results, were the understanding of how data flows between our system modules.
 

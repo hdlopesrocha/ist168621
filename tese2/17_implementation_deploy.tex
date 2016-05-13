@@ -5,9 +5,9 @@
 
 	\subsection{Hardware}
 
-	The hardware was gently provided by INESC-ID\footnote{\url{http://www.inesc-id.pt/} (Accessed March 26, 2016)}, the specifications of the server that we used are specified on table \ref{table:hwspecs}.
+	The hardware was gently provided by INESC-ID\footnote{\url{http://www.inesc-id.pt/} (Accessed March 26, 2016)}. The specifications of the server that we used are described in Table \ref{table:hwspecs}.
 
-	\begin{table}[!htb]
+	\begin{table}
 \centering
 \caption{Hardware specifications}
 \label{table:hwspecs}
@@ -28,13 +28,13 @@ Disks & \begin{tabular}[c]{@{}l@{}}2x SAMSUNG SSD 840 PRO 256GB SATA III (Drive 
 	
 On table \ref{table:osspecs} we present an overview of the operating system configurations of the machine we used for deployment.
 
-	\begin{table}[!htb]
+	\begin{table}
 \centering
 \caption{Operating system specifications}
 \label{table:osspecs}
 \begin{tabular}{|l|l|}
 \hline
-Operating System & Linux version 3.16.0-4-amd64 \\ \hline
+Kernel & Linux version 3.16.0-4-amd64 \\ \hline
 Distribution & Debian GNU/Linux 8 (jessie)\footnotemark \\ \hline
 Swap & 16GB (Drive 0)\\ \hline
 Root & 40GB (Drive0)\\ \hline
@@ -46,15 +46,15 @@ Bcache & Remaining space (Drive 0 \& Drive 1) \\ \hline
 \footnotetext{\url{https://www.debian.org/} (Accessed March 26, 2016)}
 
 \subsection{Software}
-	\emph{INESC-ID} provided us a restricted \emph{Linux} account without administration permissions, which we prevented us the installation of our solution directly on the machine because we would need administrative privileges to install all the software that our solution depends on. Although that limitation, they provided access to Docker\footnote{\url{https://www.docker.com/} (Accessed March 27, 2016)} which run on host operating system as an isolated process in user space.
+	\emph{INESC-ID} provided us a restricted \emph{Linux} account without administration permissions, which prevented us from installing our solution directly on the machine because we would need administrative privileges to install all the software that our solution depends on. Despite that limitation, they provided access to Docker\footnote{\url{https://www.docker.com/} (Accessed March 27, 2016)} which run on the host operating system as an isolated process in user space.
 
 	Inside a Docker container we have the administrative privileges to install all the software dependencies.
 
-	We could use one docker image for each component but in order to reduce the network usage we preferred to install all the components within the same image. At the same we provide an all-in-one easy to deploy solution as all the \ac{IP}s are local.
+	We could use one docker image for each component but, in order to reduce the network usage, we preferred to install all the components within the same image. At the same we provide an all-in-one easy to deploy solution as all the \ac{IP}s are local.
 
 	We present, on table \ref{table:softspecs}, the software we have installed inside our docker container including the versions that are in use.
 
-	\begin{table}[!htb]
+	\begin{table}
 \centering
 \caption{Installed Software}
 \label{table:softspecs}

@@ -133,12 +133,12 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
         \ac{KMS} does not support playing video at higher speeds, a useful feature that enables users to watch a video in less time than its duration.
 	For playing video with an higher velocity, we used \emph{ffmpeg}\footnote{\url{https://www.ffmpeg.org/}(accessed: 17 March 2016)} to convert the block into a new video with the desired velocity and seek time. Because the media duration is known, when the video started to being converted the headers located at the beginning of the file were already written and that made it possible to stream while converting.
 	%{\color{red} [TALK ABOUT COMPLEXITY OF DECODE VS DECODE+MANIPULATE+ENCODE]}
-	Although we implemented a solution that worked, we immediately noticed that \emph{ffmpeg} would take some time to initialize and that lead to pauses between switching parts.
+	Although we implemented a solution that worked, we immediately noticed that \emph{ffmpeg} would take some time to initialize and that lead to pauses between switching parts which represents an undesirable behavior.
         
 	Later the \emph{Kurento} team released a version with support for seeking videos but we had to suspend the implementation of the fast forwarding feature as currently \ac{KMS} is not supporting that.
         %RP fiquei sem perceber. O método com o ffmpeg deixou de funcionar? Ou desististe devido ao outros problemas (delay, qualidade, cpu)?
 
-	We could have implemented fast forwarding without real time conversion by creating multiple versions of the same video with different playback speeds after the recording of a block. When a user needed to play, he would also need to specify one of the available speed. We did not followed this approach has it would require larger disk space usage. 
+	Although we have not implemented fast forwarding, we could implement it without real time conversion by creating multiple versions of the same video with different playback speeds after the recording of a block. When a user needed to play, he would also need to specify one of the available speed. We did not followed this approach has it would require larger disk space usage. 
 
 \subsection{Server side recording to database}
 
@@ -150,7 +150,7 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 	Although we did not implement recorded file seeking, that could be achieved by waiting for full file recording and then proceed to database re-insertion with the correct headers. Another approach would be the specification of the file duration before recording, so the correct file headers could be written a priori. Both approaches were not possible to implement using just the \emph{Kurento} clients. We would need change the source code of \emph{Kurento} in order to add those new features.
         %RP explicar razões para não o fazer: perder upgrades, tornar instalação mais simples, maior complexidade manutenção app, etc.
         
-
+    
 
 
 
