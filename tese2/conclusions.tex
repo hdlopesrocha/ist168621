@@ -5,29 +5,33 @@
 \label{section:summary}
 In this thesis, our goal was the development of a web application using \emph{WebRTC} that complements current audio, text and video communications, in order to create rich and collaborative interfaces with the ability to add more content on a future time. Another important goal of this project is the ability to navigate in time by rewinding communications, fast-forward and jump to certain points.
 
-Having this in mind, we started by analyzing the technologies necessary to implement our solution. In a first glance, we have analyzed the problems that real time communication applications face when using the current Internet infrastructure. Next, we analyzed the main components of the \emph{WebRTC} stack. Furthermore, we analyzed how we could implement the signaling component that \emph{WebRTC} does not not define. Hence, with the transport component analyzed, we have studied how we could expose content in a synchronized and interactive way. Moreover, we have performed an analysis on the kinds of media types ant the particularities of each one when manipulating time. Lastly, on the state of the art context, we analyzed existing frameworks and libraries that could help us implementing a collaborative environment.
+Having this in mind, we started by analyzing the technologies necessary to implement our solution. In a first glance, we have analyzed the problems that real time communication applications face when using the current Internet infrastructure. Next, we analyzed the main components of the \emph{WebRTC} stack. Furthermore, we analyzed how we could implement the signaling component that \emph{WebRTC} does not define. With the transport component analyzed, we then studied how we could expose content in a synchronized and interactive way. We also performed an analysis on the kinds of media types and the particularities of each one when manipulating time. Lastly, on the state of the art context, we analyzed existing frameworks and libraries that could help us implementing a collaborative environment.
 
 Based on our evaluation of the state of the art, we have defined the architecture of our proposed solution.
+%RP podes falar um pouco da solução: aplicação web, servidor web para sinalização, KMS para transcoding e KS e MongoDB para guardar. App possibilita chat, multi-party, partilha de ficheiro, edição colaborativa. Funcionalidades inovadoras: tags, legendas, timeline com navegação, QR codes. Mistura de som, mistura de video. Trafego no client independente do numero de participantes.
 
-Although we have used our own signaling protocol we have made our first steps using \ac{XMPP} and we have discovered the drawbacks of this approach. Dor performing communications with \ac{XMPP} servers, we used \emph{strophe.js} which we found to have a bug that we have fixed.
+%RP avaliação, como nota positiva dos utilizadores.
+
+Although we ended up using our own signaling protocol, we made our first steps using \ac{XMPP} and we  discovered the drawbacks of this approach. For performing communications with \ac{XMPP} servers, we used \emph{strophe.js} which we found to have a bug that we have fixed.
 
 Another important contribution we have made was a bug fix of a memory leak present on \ac{KMS} which we discovered when we were doing performance tests with our solution.
 
-\section{Achievements}
-\label{section:achievements}
+%\section{Achievements}
+%\label{section:achievements}
 	We have successfully implemented the basic functionalities of our prototype and spare some time for adding more valuable features such as the ability to create content by exposing \emph{QR codes} to the camera and lastly perform changes to the user interface in order to improve the quality of user's experience.
-
+%RP acho que estás a ser muito modesto. Tens de dizer que cumpriste todos (ou quase) os objectivos a que te tinhas proposto e ainda acrescentaste mais funcionalidades inovadoras 
+        
 	The performance tests that we have executed showed that our system is stable and more importantly that our web server is lightweight and most of processing power is dedicated to the streaming server.
 
-	Our usability tests show results that are considerably worse than the established optimal values due to our solution propose a different way to communicate that most people are not used to. Although we have obtained those results, in general our users gave us positive feedback and valuable advices which we have used to improve our system. 
+	Our usability tests show results that are considerably worse than the established optimal values due to our solution proposing a different way to communicate that most people are not used to. Although we have obtained those results, in general our users gave us positive feedback and valuable advices which we have used to improve our system. 
 
 \section{Future Work}
 \label{section:future}
-	Playing back video with a faster rate is not possible using the current version of \ac{KMS}. Even though we expect the availability of that feature in a near future but we have proposed an alternative way to implement faster playback by using \emph{ffmpeg} to convert the video before playing it.
+	Playing back video with a faster rate is not possible using the current version of \ac{KMS}. This is useful feature that enables users to go through large amounts of video in less time. Even though we expect the availability of that feature in a near future, we have proposed an alternative way to implement faster playback by using \emph{ffmpeg} to convert the video before playing it.
 
 	Although we have tested our solution in a powerful machine for the current time, our performance tests revealed that the streaming component uses a lot of resources. We left for a future work a deep analysis on the scalability of our system for which we have proposed different approaches but we have not tested them.
 
 	Another aspect we could have tested was the performance of our solution when using \ac{TURN} servers for relaying the traffic that fails using \ac{STUN}.
 
-	Lastly, we have chosen functionality over security in respect to displaying content to users which lead to security flaws on our solution. Although we have not solved the security problems, we have proposed a solution which at the same time limits the flexibility of adding new functionalities to our prototype.
+	Lastly, we have chosen functionality over security in respect to displaying content to users, which lead to security flaws on our solution. Although we have not solved the security problems, we have proposed a solution that at the same time limits the flexibility of adding new functionalities to our prototype.
 \cleardoublepage
