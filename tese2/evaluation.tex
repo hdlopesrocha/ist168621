@@ -278,21 +278,18 @@ The initial users that tested our solution had difficulties in the first task wh
 
     \includegraphics[width=\textwidth]{figures/test_ui_01.png}
         a) Friend list path
-\label{fig:minipage1}
 \end{minipage}
 \begin{minipage}[b]{0.35\linewidth}
     \centering
 
     \includegraphics[width=\textwidth]{figures/test_ui_02.png}
          b) Friend requests path
-\label{fig:minipage2}
 \end{minipage}
 \begin{minipage}[b]{0.2\linewidth}
     \centering
 
     \includegraphics[width=\textwidth]{figures/test_ui_03.png}
          c) Search bar path
-\label{fig:minipage2}
 \end{minipage}
 
     \caption{Multiple paths for finding people}
@@ -366,7 +363,7 @@ To this end, with regard to optimal task duration and minimal clicks, we obtaine
 \end{table}
 
 
-From the data that we have collected, namely the task duration (Figure \ref{fig:user_times}), number of clicks (Figure \ref{fig:user_clicks}), number of errors (Figure \ref{fig:user_errors}), task difficulty (Figure \ref{fig:user_diffs}) and qualitative evaluation (Figure \ref{fig:user_evals}), we have calculated the confidence intervals in order to understand the most plausible values for each metric.
+From the data collected with twenty tests with users, namely the task duration (Figure \ref{fig:user_times}), number of clicks (Figure \ref{fig:user_clicks}), number of errors (Figure \ref{fig:user_errors}), task difficulty (Figure \ref{fig:user_diffs}) and qualitative evaluation (Figure \ref{fig:user_evals}), we have calculated the confidence intervals in order to understand the most plausible values for each metric.
 
 As a result of both true average and variance being unknown and the usage of a relatively small amount of samples, we had to use \emph{t-distribution} to estimate our metrics confidence intervals. 
 
@@ -375,11 +372,23 @@ Accordingly, we have used the following formula to calculate the intervals for t
 [\bar{x}-F^{-1}_{t_{(n-1)}}(1-\alpha/2)\times \frac{s}{\sqrt{n}}, \bar{x}+F^{-1}_{t_{(n-1)}}(1-\alpha/2)\times \frac{s}{\sqrt{n}}]
 \end{equation}
 
+The youngest and oldest testers were, receptively, twenty two and thirty eight years old. Figure \ref{fig:user_ages} the ages of the users that tested our system.
 
-Where $\alpha=0.05$ \footnote{95\% ($\alpha=0.05=1-0.95$) is a common value, used by researchers, to calculate confidence intervals}, $n$ is the number of samples (which may not coincide with the number of tests due to failed tasks), $\bar{x}$ is the sample mean, $x_i$ is the sample value and $s$ is the sample standard deviation that is given by:
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{stats/user_ages.eps}
+  \caption{Ages of the users that tested our system}
+  \label{fig:user_ages}
+\end{figure}
+
+
+Where $\alpha=0.05$ \footnote{95\% ($\alpha=0.05=1-0.95$) is a common confidence level value used, by researchers, to calculate confidence intervals}, $n$ is the number of samples (which may not coincide with the number of tests due to failed tasks), $\bar{x}$ is the sample mean, $x_i$ is the sample value and $s$ is the sample standard deviation that is given by:
 \begin{equation}
 s=\sqrt{\frac{1}{n-1}\Sigma^{n}_{i=1}(x_i-\bar{x})^2}
 \end{equation}
+
+
+
 
 
 \begin{figure}

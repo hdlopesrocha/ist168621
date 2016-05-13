@@ -30,12 +30,13 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Multiple paths for finding people\relax }}{66}{figure.caption.125}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Adding user to conference room from user profile\relax }}{66}{figure.caption.126}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Save button that was removed\relax }}{67}{figure.caption.127}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Time spent per task\relax }}{68}{figure.caption.130}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Mouse clicks per task\relax }}{68}{figure.caption.130}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Errors per task\relax }}{69}{figure.caption.131}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Ages of the users that tested our system\relax }}{68}{figure.caption.130}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Time spent per task\relax }}{68}{figure.caption.131}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Mouse clicks per task\relax }}{68}{figure.caption.131}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Network usage after implementing all features\relax }}{57}{figure.caption.105}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Difficulty per task\relax }}{69}{figure.caption.131}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Solution evaluation\relax }}{69}{figure.caption.132}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Errors per task\relax }}{70}{figure.caption.132}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Difficulty per task\relax }}{70}{figure.caption.132}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces Solution evaluation\relax }}{70}{figure.caption.133}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Average network usage per interval of events after implementing all features\relax }}{58}{figure.caption.106}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Repository and KMS in the same machine\relax }}{58}{figure.caption.107}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Client Network usage during our test case\relax }}{59}{figure.caption.108}}
@@ -84,7 +85,7 @@
 \@writefile{toc}{\contentsline {chapter}{Abstract}{v}{chapter*.2}}
 \@writefile{toc}{\contentsline {chapter}{Acknowledgments}{iii}{chapter*.1}}
 \@writefile{toc}{\contentsline {chapter}{Acronyms}{xvii}{section*.8}}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{75}{chapter*.133}}
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{75}{chapter*.134}}
 \@writefile{toc}{\contentsline {chapter}{List of Figures}{xiv}{chapter*.6}}
 \@writefile{toc}{\contentsline {chapter}{List of Tables}{xv}{chapter*.7}}
 \@writefile{toc}{\contentsline {chapter}{Resumo}{vii}{chapter*.3}}
@@ -118,7 +119,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}Tests Objectives}{55}{section.5.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}Performance Tests}{55}{section.5.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.4}Usability Tests}{61}{section.5.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Chapter Summary}{70}{section.5.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Chapter Summary}{69}{section.5.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.1}Summary}{71}{section.6.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.2}Achievements}{71}{section.6.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{72}{section.6.3}}
