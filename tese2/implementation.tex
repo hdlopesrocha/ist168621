@@ -60,7 +60,7 @@ Lastly, we are going to describe the deployment of our solution in respect to th
 \section{XMPP experiments}
 Although we have used our own signaling protocol on our implementation, the first steps we made during the development of our prototype were using \ac{XMPP}. We discovered the drawbacks of this approach in practice and described our learnings in the state of the art. We have found and fixed a bug present on \emph{strophe.js} library that silenced an error raised by duplicated user registrations.
 
-As a consequence of not using \ac{XMPP} for the signaling protocol, we have defined our own protocol based on \emph{WebSockets} for performing the stream between clients and \ac{KMS}. From the \ac{KMS} functionalities, our solution uses the recording feature, composite endpoints that mix multiple audio and video streams into a single one and \emph{QR code} detection for creating hyper content.
+As a consequence of not using \ac{XMPP} for the signaling protocol, we have defined our own protocol based on \emph{WebSockets} for performing the stream between clients and \ac{KMS}. From the \ac{KMS} functionalities, our solution uses the recording feature, composite endpoints that mix multiple audio and video streams into a single one and \ac{QR} code detection for creating hyper content.
 
 \input{14_implementation_signaling.tex}
 \input{15_implementation_recording.tex}

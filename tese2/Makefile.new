@@ -217,7 +217,7 @@ export LC_ALL		?= C
 # Chris Monson (2011-02-03):
 # * Bumped version to 2.2.0-rc10
 # * Issue 112: Added path normalization for cygwin systems
-# * Fixed a bug in get-missing-inputs where we weren't specifying target files
+# * Fixed a bug in get-missing-inputs where we were not specifying target files
 # Chris Monson (2011-01-24):
 # * Issue 111: Added .jpeg as a possible image extension
 # Chris Monson (2011-01-21):
@@ -236,7 +236,7 @@ export LC_ALL		?= C
 # Chris Monson (2011-01-04):
 # * Issue 106: not cleaning eps log files properly
 # * Issue 106: not rebuilding after creating .pdf graphics from .eps
-# * Issue 94: svg going unnecessarily through eps (can't reproduce)
+# * Issue 94: svg going unnecessarily through eps (cannot reproduce)
 # Chris Monson (2010-12-31):
 # * Issue 100: make hanging because of faulty graphics detection (sed bug)
 # * Issue 108: do not ignore fatal errors from pdftex
@@ -285,7 +285,7 @@ export LC_ALL		?= C
 # * Bumped version to 2.2.0-beta8
 # * Work on issue 76: bad backtick escape for some sed versions, failure
 #     to clear out the hold buffer when outputting MISSING comment.
-#     - Backed out 2>&1 to &> (doesn't work in sh)
+#     - Backed out 2>&1 to &> (does not work in sh)
 #     - Backed out using . to source variables
 # Chris Monson (2010-03-22):
 # * Bumped version to 2.2.0-beta7
@@ -303,11 +303,11 @@ export LC_ALL		?= C
 # * Moved Makefile.ini import up higher.
 # * Changed bare stems to not recursively invoke make
 # * Updated diff output to be more silent everywhere
-# * Added a MISSING comment to the .d file if stuff isn't found - forces
+# * Added a MISSING comment to the .d file if stuff is not found - forces
 #     removal of .1st.make file, which often forces it to try again.
 # * Fixed broken graphics-target function
 # * Added sleep to .d file generation when stuff is missing - if it
-#     builds too fast, make doesn't realize it needs to be reloaded,
+#     builds too fast, make does not realize it needs to be reloaded,
 #     and thus never discovers some deeper dependencies (especially
 #     evident when graphics are included from scripted include
 #     files).
@@ -345,7 +345,7 @@ export LC_ALL		?= C
 # * Fixed clean-graphics to get rid of intermediate .eps files that may
 #     be hanging around
 # * Added an automatic setting to use eps terminals in pdflatex mode for
-#     gnuplot if it doesn't understand pdf.
+#     gnuplot if it does not understand pdf.
 # * issue 66: Removed grayscale generation via magic suffix.  Grayscale
 #     generation is now only available via GRAY=1
 # * issue 68: Added explicit handling of LC_ALL for locale-aware tools
@@ -430,7 +430,7 @@ export LC_ALL		?= C
 # * Added .lol files to the cleanable list
 # Chris Monson (2009-09-08):
 # * Bumped version to 2.1.31
-# * Closed issue 43: evince doesn't notice pdf change w/out touch
+# * Closed issue 43: evince does not notice pdf change w/out touch
 # Chris Monson (2009-08-28):
 # * Bumped version to 2.1.30
 # * Closed issue 39: Capture multi-line log warnings/errors to output
@@ -587,7 +587,7 @@ export LC_ALL		?= C
 # * Fixed a problem with rebuilding .bbl files
 # Chris Monson (2006-04-11):
 # * Bumped version to 2.0.3
-# * Fixed some BSD sed problems: can't use \n in substitutions
+# * Fixed some BSD sed problems: cannot use \n in substitutions
 # Chris Monson (2006-04-10):
 # * Bumped version to 2.0.2
 # * Once again removed ability to create .tex files from scripts
@@ -619,7 +619,7 @@ export LC_ALL		?= C
 # * Removed the ability to specify clean and build targets at once
 # * Verified that epsfig works fine with current code
 # * Fixed included scripts so that they are added to the dep files
-# * Fixed so that graphics includes don't happen if they aren't for gpi
+# * Fixed so that graphics includes do not happen if they are not for gpi
 # * Fixed dot output to allow grayscale.
 # Chris Monson (2006-04-05):
 # * Bumped version to 2.0b2
@@ -639,7 +639,7 @@ export LC_ALL		?= C
 # * Shortened and simplified the final latex invocation loop
 # * Added version-specific output ($$i vs. $$$$i) in latex loop
 # * Added a build message for the first .dvi run (Building .dvi (0))
-# * Removed some build messages that most people don't care about.
+# * Removed some build messages that most people do not care about.
 # * Simplified procedure for user-set colors -- simple text specification
 # * Fixed diff output to...not output.
 # * Fixed rerun bug -- detect not only when preceded with LaTeX Warning
@@ -648,7 +648,7 @@ export LC_ALL		?= C
 # * Documented color changing stuff.
 # * Now sort the flattened aux file to avoid false recompilation needs
 # * Added clean-nographics target
-# * Don't remove self.dvi file if self.aux is missing in the log
+# * Do not remove self.dvi file if self.aux is missing in the log
 # * Clarified some code.  Did some very minor adjusting.
 # Chris Monson (2006-04-03):
 # * Bumped version to 2.0a7
@@ -659,7 +659,7 @@ export LC_ALL		?= C
 # * Fixed the inputs generation to be much simpler and to use pipes.
 # * Added the dependency graph directly into the makefile.
 # * Changed flatten-aux to remove \@writefile \relax \newlabel, etc.
-# * Undid pipe changes with sed usage (BSD sed doesn't know -f-).
+# * Undid pipe changes with sed usage (BSD sed does not know -f-).
 # * Added a _check_programs target that tells you what your system has.
 # * Fixed an error in colorization that made unnecessary errors appear
 # * Added view targets.
@@ -826,7 +826,7 @@ DEFAULT_GPI_PDF_FONTSIZE	?= 12
 RST_STYLE_FILE			?= $(wildcard _rststyle_._include_.tex)
 
 # This ensures that even when echo is a shell builtin, we still use the binary
-# (the builtin doesn't always understand -n)
+# (the builtin does not always understand -n)
 FIXED_ECHO	:= $(if $(findstring -n,$(shell $(ECHO) -n)),$(shell which echo),$(ECHO))
 ECHO		:= $(if $(FIXED_ECHO),$(FIXED_ECHO),$(ECHO))
 
@@ -876,19 +876,19 @@ RESTARTS		:= $(if $(MAKE_RESTARTS),$(MAKE_RESTARTS),0)
 #
 # On some systems, /bin/sh, which is the default shell, is not linked to
 # /bin/bash.  While bash is supposed to be sh-compatible when invoked as sh, it
-# just isn't.  This section details some of the things you have to stay away
+# just is not.  This section details some of the things you have to stay away
 # from to remain sh-compatible.
 #
 #	* File pattern expansion does not work for {}
 #	* [ "$x" = "$y" ] has to be [ x"$x" x"$y" ]
-#	* &> for stderr redirection doesn't work, use 2>&1 instead
+#	* &> for stderr redirection does not work, use 2>&1 instead
 #
 # BSD SED NOTES
 #
 # BSD SED is not very nice compared to GNU sed, but it is the most
 # commonly-invoked sed on Macs (being based on BSD), so we have to cater to
 # it or require people to install GNU sed.  It seems like the GNU
-# requirement isn't too bad since this makefile is really a GNU makefile,
+# requirement is not too bad since this makefile is really a GNU makefile,
 # but apparently GNU sed is much less common than GNU make in general, so
 # I'm supporting it here.
 #
@@ -954,7 +954,7 @@ endef
 # $(call tee-warning,<expression>,[optional warning prefix])
 tee-warning = $(warning $2$1)$1
 
-# Don't call this directly - it is here to avoid calling wildcard more than
+# Do not call this directly - it is here to avoid calling wildcard more than
 # once in remove-files.
 remove-files-helper	= $(if $1,$(RM) $1,$(sh_true))
 
@@ -989,8 +989,8 @@ endef
 
 # This removes files without checking whether they are there or not.  This
 # sometimes has to be used when the file is created by a series of shell
-# commands, but there ends up being a race condition: make doesn't know about
-# the file generation as quickly as the system does, so $(wildcard ...) doesn't
+# commands, but there ends up being a race condition: make does not know about
+# the file generation as quickly as the system does, so $(wildcard ...) does not
 # work right.  Blech.
 # $(call remove-temporary-files,filenames)
 remove-temporary-files	= $(if $(KEEP_TEMP),:,$(if $1,$(RM) $1,:))
@@ -1012,7 +1012,7 @@ test-not-exists   = [ ! -e '$1' ]
 # $(call move-files,source,destination)
 move-if-exists		= $(call test-exists,$1) && $(MV) '$1' '$2'
 
-# Copy file1 to file2 only if file2 doesn't exist or they are different
+# Copy file1 to file2 only if file2 does not exist or they are different
 # $(call copy-if-different,sfile,dfile)
 copy-if-different	= $(call test-different,$1,$2) && $(CP) '$1' '$2'
 copy-if-exists		= $(call test-exists,$1) && $(CP) '$1' '$2'
@@ -1086,7 +1086,7 @@ SHELL	+= -x
 endif
 
 # Get the name of this makefile (always right in 3.80, often right in 3.79)
-# This is only really used for documentation, so it isn't too serious.
+# This is only really used for documentation, so it is not too serious.
 ifdef MAKEFILE_LIST
 this_file	:= $(firstword $(MAKEFILE_LIST))
 else
@@ -1433,7 +1433,7 @@ stems_ss		:= $(sort $(stems_source) $(stems_source_gen) $(stems_script))
 stems_sg		:= $(sort $(stems_script) $(stems_source_gen))
 stems_ssg		:= $(sort $(stems_ss))
 
-# Calculate names that can generate the need for an include file.  We can't
+# Calculate names that can generate the need for an include file.  We cannot
 # really do this with patterns because it's too easy to screw up, so we create
 # an exhaustive list.
 allowed_source_suffixes	:= \
@@ -1719,7 +1719,7 @@ endef
 # Get the target file for the specified graphics file/stem
 #
 # Works by first trying to determine whether any of the
-# graphic_target_extensions match the "stem" (which obviously isn't, since it
+# graphic_target_extensions match the "stem" (which obviously is not, since it
 # has an extension). If so, it returns the stem directly, as it is a valid
 # target already.
 #
@@ -1753,7 +1753,7 @@ endef
 # Note that we try to escape spaces in filenames where possible.  We have to do
 # it with three backslashes so that as the name percolates through the makefile
 # it eventually ends up with the proper escaping when the build rule is found.
-# Ugly, but it appears to work.  Note that graphicx doesn't allow filenames
+# Ugly, but it appears to work.  Note that graphicx does not allow filenames
 # with spaces, so this could in many ways be moot unless you're using something
 # like grffile.
 #
@@ -1957,7 +1957,7 @@ if $(EGREP) -q '^! LaTeX Error: File .*\.pstex.* not found' $1; then \
 fi
 endef
 
-# Checks for the use of import.sty and bails - we don't support subdirectories
+# Checks for the use of import.sty and bails - we do not support subdirectories
 #
 # $(call die-on-import-sty,<log file>)
 define die-on-import-sty
@@ -1982,7 +1982,7 @@ fi
 endef
 
 # Checks for the existence of a .aux file, and dies with an error message if it
-# isn't there.  Note that we pass the file stem in, not the full filename,
+# is not there.  Note that we pass the file stem in, not the full filename,
 # e.g., to check for foo.aux, we call it thus: $(call die-on-no-aux,foo)
 #
 # $(call die-on-no-aux,<aux stem>)
@@ -2078,7 +2078,7 @@ endef
 #
 # This command script also generates 'include' directives for every 'load'
 # command in the .gpi file.  The load command must appear on a line by itself
-# and the file it loads must have the suffix .gpi.  If you don't want it to be
+# and the file it loads must have the suffix .gpi.  If you do not want it to be
 # compiled when running make graphics, then give it a suffix of ._include_.gpi.
 #
 # $(call get-gpi-deps,<gpi file>,<targets>)
@@ -2105,7 +2105,7 @@ $(SED) \
 '$1'
 endef
 
-# Colorizes real, honest-to-goodness LaTeX errors that can't be overcome with
+# Colorizes real, honest-to-goodness LaTeX errors that cannot be overcome with
 # recompilation.
 #
 # Note that we only ignore file not found errors for things that we know how to
@@ -2114,7 +2114,7 @@ endef
 # Also note that the output of this is piped through sed again to escape any
 # backslashes that might have made it through.  This is to avoid sending things
 # like "\right" to echo, which interprets \r as LF.  In bash, we could just do
-# ${var//\\/\\\\}, but in other popular sh variants (like dash), this doesn't
+# ${var//\\/\\\\}, but in other popular sh variants (like dash), this does not
 # work.
 #
 # $(call colorize-latex-errors,<log file>)
@@ -2344,7 +2344,7 @@ endef
 
 # Generate pdf from postscript
 #
-# Note that we don't just call ps2pdf, since there are so many versions of that
+# Note that we do not just call ps2pdf, since there are so many versions of that
 # script on various systems.  Instead, we call the postscript interpreter
 # directly.
 #
@@ -2430,7 +2430,7 @@ $(SED) \
 -e '/(.*error.*)/s//$(C_ERROR)&$(C_RESET)/' \
 -e 'd'
 
-# Make beamer output big enough to print on a full page.  Landscape doesn't
+# Make beamer output big enough to print on a full page.  Landscape does not
 # seem to work correctly.
 enlarge_beamer	= $(PSNUP) -l -1 -W128mm -H96mm -pletter
 
@@ -2458,7 +2458,7 @@ endef
 #  -recorder: generates .fls files for things that are input and output
 #  -jobname: to make sure that .fls files are named after the source that created them
 #  -file-line-error: to make sure that we have good line information for error output
-#  -interaction=batchmode: so that we don't stop on errors (we'll parse logs for that)
+#  -interaction=batchmode: so that we do not stop on errors (we'll parse logs for that)
 #
 # $(call latex,<tex file stem, e.g., $*>,[extra LaTeX args])
 define run-latex
@@ -2518,7 +2518,7 @@ endef
 run-bibtex	= $(BIBTEX) $1 | $(color_bib); $(call transcript,bibtex,$1)
 
 # $(call convert-eps-to-pdf,<eps file>,<pdf file>,[gray])
-# Note that we don't use the --filter flag because it has trouble with bounding boxes that way.
+# Note that we do not use the --filter flag because it has trouble with bounding boxes that way.
 define convert-eps-to-pdf
 $(if $3,$(CAT) '$1' | $(call kill-ps-color) > '$1.cookie',$(CP) '$1' '$1.cookie'); \
 $(EPSTOPDF) '$1.cookie' --outfile='$2' > $1.log; \
@@ -2610,7 +2610,7 @@ endef
 # Creation of .eps files from .png files
 #
 # The intermediate step of PNM (using NetPBM) produces much nicer output than
-# ImageMagick's "convert" binary.  I couldn't get the right combination of
+# ImageMagick's "convert" binary.  I could not get the right combination of
 # flags to make it look nice, anyway.
 #
 # To handle gray scale conversion, we pipe things through ppmtopgm in the
@@ -2885,7 +2885,7 @@ endif
 # MAIN TARGETS
 #
 
-# Note that we don't just say %: %.pdf here - this can tend to mess up our
+# Note that we do not just say %: %.pdf here - this can tend to mess up our
 # includes, which detect what kind of file we are asking for.  For example,
 # asking to build foo.pdf is much different than asking to build foo when
 # foo.gpi exists, because we look through all of the goals for *.pdf that
@@ -2957,8 +2957,8 @@ endif
 #
 #	* the .aux file changed in a way that necessitates attention
 #
-#		Note that if the .auxtarget.make file doesn't exist, this means
-#		that we are doing a clean build, so it doesn't figure into the
+#		Note that if the .auxtarget.make file does not exist, this means
+#		that we are doing a clean build, so it does not figure into the
 #		test for running again.
 #
 #		compare against .auxtarget.make
@@ -3052,7 +3052,7 @@ endif
 #
 # Note that we do NOT touch the .bbl file if there is no need to
 # create/recreate it.  We would like to leave existing files alone if they
-# don't need to be changed, thus possibly avoiding a rebuild trigger.
+# do not need to be changed, thus possibly avoiding a rebuild trigger.
 %.bbl: %.auxbbl.make
 	$(QUIET)\
 	$(if $(filter %.bib,$^),\
@@ -3241,7 +3241,7 @@ ifneq "$(default_graphic_extension)" "pdf"
 	$(QUIET)$(call echo-graphic,$^,$@)
 	$(QUIET)$(call convert-dia,$<,$@,$(GRAY))
 
-# Similarly for these, we don't need eps if we have supported extensions
+# Similarly for these, we do not need eps if we have supported extensions
 # already.
 %.eps: %.jpg $(if $(GRAY),$(gray_eps_file))
 	$(QUIET)$(call echo-graphic,$^,$@)
@@ -3525,7 +3525,7 @@ clean-tex: clean-deps
 # TODO: This *always* deletes pstex files, even if they were not generated by
 # anything....  In other words, if you create a pstex and pstex_t pair by hand
 # an drop them in here without the generating fig file, they will be deleted
-# and you won't get them back.  It's a hack put in here because I'm not sure we
+# and you wo not get them back.  It's a hack put in here because I'm not sure we
 # even want to keep pstex functionality, so my motivation is not terribly high
 # for doing it right.
 clean-graphics:
@@ -3682,7 +3682,7 @@ define help_text
 #
 #   export LATEX_COLOR_SUCCESS='bold blue uline'
 #
-#   in your .bashrc file.  I don't know why, but you may want to.
+#   in your .bashrc file.  I do not know why, but you may want to.
 #
 # STANDARD TARGETS:
 #
@@ -3710,11 +3710,11 @@ define help_text
 #        so you could do something similar with includes.gpi, for example.
 #        Note that this works for *any valid source* target.  All of the
 #        onlysources.* variables are commented out in the shipping version of
-#        this file, so it does the right thing when they simply don't exist.
+#        this file, so it does the right thing when they simply do not exist.
 #        The comments are purely documentation.  If you know, for example, that
-#        file.mycoolformat is supported by this Makefile, but don't see the
-#        "onlysources.mycoolformat" declared in the comments, that doesn't mean
-#        you can't use it.  Go ahead and set "onlysources.mycoolformat" and it
+#        file.mycoolformat is supported by this Makefile, but do not see the
+#        "onlysources.mycoolformat" declared in the comments, that does not mean
+#        you cannot use it.  Go ahead and set "onlysources.mycoolformat" and it
 #        should do the right thing.
 #
 #    show:
@@ -3824,7 +3824,7 @@ define help_text
 #
 #    _includes:
 #        A list of .d files that would be included in this run if _includes
-#        weren't specified.  This target may be used alone or in conjunction
+#        were not specified.  This target may be used alone or in conjunction
 #        with other targets.
 #
 #    _graphic_outputs:
@@ -3849,8 +3849,8 @@ define help_text
 #
 #        Reasons for using latex -> dvips include the "psfrag" package, and the
 #        generation of postscript instead of PDF.  Arguments for using pdflatex
-#        include "new and shiny" and "better supported."  I can't argue with
-#        either of those, and supporting them both didn't turn out to be that
+#        include "new and shiny" and "better supported."  I cannot argue with
+#        either of those, and supporting them both did not turn out to be that
 #        difficult, so there you have it.  Choices.
 #
 #    %._show:
@@ -3923,7 +3923,7 @@ define help_text
 #        ALLCAPS variable at the top of this file.  This should allow you to
 #        make judgments about whether your system supports the use of this
 #        makefile.  The list is available in the ALL_PROGRAMS variable and,
-#        provided that you are using GNU make 3.80 or later (or you haven't
+#        provided that you are using GNU make 3.80 or later (or you have not
 #        renamed this file to something weird like "mylatexmakefile" and like
 #        invoking it with make -f) can be viewed using
 #
@@ -3980,7 +3980,7 @@ define help_text
 #           too.
 #
 #           Scripts are run every time make is invoked.  Some trickery is
-#           employed to make sure that multiple restarts of make don't cause
+#           employed to make sure that multiple restarts of make do not cause
 #           them to be run again.
 #
 #        reST: %.rst
@@ -4042,7 +4042,7 @@ define help_text
 #        The presence of this comment forces the output of dvips through psnup
 #        to enlarge beamer slides to take up an entire letter-sized page.  This
 #        is particularly useful when printing transparencies or paper versions
-#        of the slides.  For some reason landscape orientation doesn't appear
+#        of the slides.  For some reason landscape orientation does not appear
 #        to work, though.
 #
 #        If you want to put multiple slides on a page, use this option and then
@@ -4061,7 +4061,7 @@ define help_text
 #
 #           gnuplot -persist myfile.gpi
 #
-#        so don't do specify a terminal or an output file in your .gpi files.
+#        so do not do specify a terminal or an output file in your .gpi files.
 #
 #        When building a gpi file into an eps file, there are several features
 #        available to the document designer:
@@ -4120,9 +4120,9 @@ define help_text
 #
 #            Note that, as with pstex, the makefile cannot use latex's own
 #            output to discover all missing dot_t (output) files, since anytime
-#            TeX includes TeX, it has to bail when it can't find the include
+#            TeX includes TeX, it has to bail when it cannot find the include
 #            file.  It can therefore only stop on the first missing file it
-#            discovers, and we can't get a large list of them out easily.
+#            discovers, and we cannot get a large list of them out easily.
 #
 #            So, the makefile errors out if it's missing an included dot_t
 #            file, then prompts the user to run this command manually:
@@ -4132,8 +4132,8 @@ define help_text
 #    GZipped EPS Graphics:
 #
 #        A .eps.gz file is sometimes a nice thing to have.  EPS files can get
-#        very large, especially when created from bitmaps (don't do this if you
-#        don't have to).  This makefile will unzip them (not in place) to
+#        very large, especially when created from bitmaps (do not do this if you
+#        do not have to).  This makefile will unzip them (not in place) to
 #        create the appropriate EPS file.
 #
 #

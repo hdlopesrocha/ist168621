@@ -173,7 +173,7 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
 
 
 
-  Just for testing purposes, we performed the same performance tests disabling \emph{QR codes} detection in order to understand how \ac{CPU} intensive this task is. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \emph{QR code} detection disabled.
+  Just for testing purposes, we performed the same performance tests disabling \ac{QR} codes detection in order to understand how \ac{CPU} intensive this task is. Figure \ref{fig:test_without_qrcode_cpu} shows the results for the same experience but with \ac{QR} code detection disabled.
 
 \begin{figure}
   \centering
@@ -182,7 +182,7 @@ Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test
   \label{fig:test_without_qrcode_cpu}
 \end{figure}
 
-We conclude that \emph{QR code} detection is a very intensive task, approximately doubling the amount of work performed by the \ac{CPU}s. Without this feature, the network and memory usage had insignificant changes compared to \ac{CPU} usage.
+We conclude that \ac{QR} code detection is a very intensive task, approximately doubling the amount of work performed by the \ac{CPU}s. Without this feature, the network and memory usage had insignificant changes compared to \ac{CPU} usage.
 
 Even though, with this test results, we conclude that our solution's bottleneck is the \ac{CPU} usage at \ac{KMS}.
 
@@ -248,7 +248,7 @@ On the other hand due to memory recycling techniques we can observe in figure \r
 
       \item Enter a conference room by sharing their camera and create a time annotation in the instant of time when they entered, navigate to the current time, search for the annotation and leave the conference room.
 
-      \item Enter a conference room by sharing their camera and add a subtitle in the video, preview it, specify an interval of time and save it. Then show the provided \emph{QR code} to the camera and leave the leave the conference room.
+      \item Enter a conference room by sharing their camera and add a subtitle in the video, preview it, specify an interval of time and save it. Then show the provided \ac{QR} code to the camera and leave the leave the conference room.
       \end{enumerate}
 
       The goal of the first task is to evaluating the interface for authentication and friendship management.
@@ -313,8 +313,8 @@ On the second task one user clicked on the friends list for adding a friend to a
 
 On the third task we noticed that users were not expecting to search the content directly from the search bar, instead they used the time-line.
 
-On the fourth task the users didn't placed their annotations on right place. We only provide one way to place annotations, which is by dragging them on the time-line. 
-After creating an annotation, users also didn't understand that they had to save their changes on the time-line. We solved this problem by saving automatically each time the user changed any annotation. The old user interface can be seen on figure \ref{fig:test_ui_05}.
+On the fourth task the users did not placed their annotations on right place. We only provide one way to place annotations, which is by dragging them on the time-line. 
+After creating an annotation, users also did not understand that they had to save their changes on the time-line. We solved this problem by saving automatically each time the user changed any annotation. The old user interface can be seen on figure \ref{fig:test_ui_05}.
 
 \begin{figure}
 \centering
@@ -329,9 +329,9 @@ After creating an annotation, users also didn't understand that they had to save
     \label{fig:test_ui_05}
 \end{figure}
 
-The three users had success with the fifth task, but they revealed difficulties choosing the time interval for the hyper content. We are aware that this is a difficult task and that's why we have introduced the \emph{QR code} content creation mechanism which was very easy to learn (with a \emph{QR code} already printed into paper).
+The three users had success with the fifth task, but they revealed difficulties choosing the time interval for the hyper content. We are aware that this is a difficult task and that's why we have introduced the \ac{QR} code content creation mechanism which was very easy to learn (with a \ac{QR} code already printed into paper).
 
-Although content creation through \emph{QR codes} revealed much easier to perform, this approach implies showing and, as a consequence, recording video with the \emph{QR codes}, making them visible to other users. In order to solve this problem, we could add a new video sharing mode that allow users to send video to \ac{KMS} without composing, recording and showing to other users.
+Although content creation through \ac{QR} codes revealed much easier to perform, this approach implies showing and, as a consequence, recording video with the \ac{QR} codes, making them visible to other users. In order to solve this problem, we could add a new video sharing mode that allow users to send video to \ac{KMS} without composing, recording and showing to other users.
 
 We have also gathered comments and suggestions after letting the users explore our system, extra improvements were made such as:
 

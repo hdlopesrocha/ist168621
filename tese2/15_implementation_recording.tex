@@ -14,7 +14,7 @@ After recording, each block was uploaded to our server through \ac{HTTP}, saved 
 When the file was completely saved, the meta-data was advertised to the remaining users. This meta-data was simply used to refresh the user interface and was completely discarded after that, because an huge amount of small blocks' meta-data would use more and more memory as time went by. 
 
 	The process to play a video was quite simple. The user specified which user and date he intended to play, the server calculated the intersection between the requested date and the block bounds and returned the file to the client.
-	Although this idea was fairly simple, we couldn't achieve seamless sequential block switching. Downloading the video file always took a noticeable amount of time. To solve this problem, while we were playing a block, the next one was downloading in parallel, so when the current block finished playing we would have an available block to play. 
+	Although this idea was fairly simple, we could not achieve seamless sequential block switching. Downloading the video file always took a noticeable amount of time. To solve this problem, while we were playing a block, the next one was downloading in parallel, so when the current block finished playing we would have an available block to play. 
 
         With this technique, block switching became more acceptable, but switching the \ac{URL} always produced a flash. We solved this problem by having two layers and changing the \ac{URL} on the back layer. When the front layer froze on the last frame, we changed the back layer to the front. 
 
@@ -144,7 +144,7 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 
 	One of our concerns during the development of our solution was the storage scalability. Saving files directly into the file system would require an extra effort to distribute and replicate files among servers. For that purpose, the \emph{Kurento} team developed \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} which is based on \emph{MongoDB}.
 
-	One of the features that \emph{Kurento Repository} provides is the ability to play directly from the database without having to download the entire file to \ac{KMS}. The same is true for recording, but because the file headers are in the beginning and the file is written until is stops, the headers don't contain the necessary information for seeking the file.
+	One of the features that \emph{Kurento Repository} provides is the ability to play directly from the database without having to download the entire file to \ac{KMS}. The same is true for recording, but because the file headers are in the beginning and the file is written until is stops, the headers do not contain the necessary information for seeking the file.
 	Although we gain with scalability with this approach, we lose access over the file for changing it to fit our needs, namely for using \emph{ffmpeg} or other video manipulation tool.
         
 	Although we did not implement recorded file seeking, that could be achieved by waiting for full file recording and then proceed to database re-insertion with the correct headers. Another approach would be the specification of the file duration before recording, so the correct file headers could be written a priori. Both approaches were not possible to implement using just the \emph{Kurento} clients. We would need change the source code of \emph{Kurento} in order to add those new features.

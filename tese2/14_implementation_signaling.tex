@@ -24,8 +24,6 @@ In a general view, the signaling protocol is used to share connection and media 
 
 %RP faz sentido haver dois ICE? Se queres colocar 2 dá-lhes nomes diferentes (nem que seja cliente e servidor ou 1 e 2).
 
-
-
 After the web application server validates the user access, the signaling protocol allows the users to directly connect to the \ac{KMS}, which is placed in a private network, and lets the application server and users negotiate media types and encoding information to use during the conversation.
 %RP o it em ``it allows'' é quem? webserver ou signaling protocol?
 %HR done
@@ -35,7 +33,7 @@ However, they would transport extra information such as \ac{HTTP} headers and wo
 Instead, if we create a \emph{WebSocket} \ac{API}, we only need one \ac{TCP} connection and, at the same, provide bi-directional communications without additional headers. Moreover, using \emph{WebSocket} allows the application server to send messages asynchronously to the client without the client having to request it, which can be slightly faster than using \ac{HTTP} which is based on a request followed by a response.
 %RP em vez de slighhtly faster não queres antes enfatizar que pode ser antes o servidor a iniciar a comunicação, de forma assincrona?
 %HR done
-Our signaling protocol consists of sending and receiving \ac{JSON} formated messages, e.g. listing \ref{lst:msgtype}, over WebSockets by both the application server and the client. 
+Our signaling protocol consists of sending and receiving \ac{JSON} formated messages, \emph{e.g.} listing \ref{lst:msgtype}, over WebSockets by both the application server and the client. 
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={General structure of our WebSocket messages},label={lst:msgtype},language=json]
@@ -56,7 +54,7 @@ The Web application server retrieves all the information needed from the databas
 When the connection is established between the application server and the client, a \emph{PeerConnection} is created on the client and immediately after, an \ac{WebRTC} endpoint is created on the server, specifying a possible set of \ac{ICE} servers to connect.
 %RP Usa Application server e não apenas server. Há muitos servers.
 
-At this stage, the web application's user is asked if he wants to share its camera and microphone, share screen or just receive streams from the server. If the user decides to perform a screen share, \emph{adapter.js}\footnote{\url{https://github.com/Temasys/AdapterJS}(accessed March 15, 2016).} may ask to install a plug-in if the browser doesn't support screen sharing \footnote{\url{http://iswebrtcreadyyet.com/} (Accessed May 11, 2016)}.
+At this stage, the web application's user is asked if he wants to share its camera and microphone, share screen or just receive streams from the server. If the user decides to perform a screen share, \emph{adapter.js}\footnote{\url{https://github.com/Temasys/AdapterJS}(accessed March 15, 2016).} may ask to install a plug-in if the browser does not support screen sharing \footnote{\url{http://iswebrtcreadyyet.com/} (Accessed May 11, 2016)}.
 %RP web app user? OU apenas client user?
 %RP foot note com exemplos de browsers que aceitem screen sharing?
 %HR done
@@ -98,7 +96,7 @@ If the resources are not shared or the user specified to receive stream only, an
 \end{lstlisting}
 \end{minipage}
 
-The \emph{local session description} contains the session identifier, codecs, containers, transport protocols and ports used per media type. The \emph{local session description} is useful to conclude if the client is receiving only, which means that \ac{KMS} doesn't need to mix, record nor analyze streams coming from the user's \ac{WebRTC} endpoint. 
+The \emph{local session description} contains the session identifier, codecs, containers, transport protocols and ports used per media type. The \emph{local session description} is useful to conclude if the client is receiving only, which means that \ac{KMS} does not need to mix, record nor analyze streams coming from the user's \ac{WebRTC} endpoint. 
 
 The server receives and processes the offer and sets the \emph{remote session description} to its client associated \ac{WebRTC} endpoint. Then a \emph{local session description}, like the one presented in Listing \ref{lst:sig02}, is created on the server and sent back to the client, after that the server tries to gather \ac{ICE} candidates.
 %RP listing -> Listing

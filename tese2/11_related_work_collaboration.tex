@@ -27,7 +27,7 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
   %HR esse RFC é grande
 
 
-  \ac{RTP} recorders are independent of payload encoding, they don't decode \ac{RTP} packets, they record packets instead, allowing to record all video and audio formats even if they're encrypted.
+  \ac{RTP} recorders are independent of payload encoding, they do not decode \ac{RTP} packets, they record packets instead, allowing to record all video and audio formats even if they're encrypted.
 
         %RP lá vais tu mudar de tema da conversa sem explicar porquê....
         Even though one on one calls are common, there are occasions when several people take part of the same video call.
@@ -54,7 +54,7 @@ Section \ref{recstream} presents the RTP protocol how it can be used to record m
 \end{figure}
 	For example, an image is non-interactive and discrete, while a video is continuous and non-interactive. A simple collaborative editor with just text is interactive and discrete. An animation that changes in function of user behavior is interactive and continuous.
 
-	Streaming protocols like \ac {RTP} and \ac{RTSP} were designed for continuous and non-interactive media types, such as audio and video. Discrete and non-interactive media don't need to be streamed through \ac{RTP} because they don't change with time. For example, if an image appears in a specific time interval, just the \ac{HTML} or \emph{JavaScript} that will reference the image must be streamed, the image itself is then transferred through \ac{HTTP}.
+	Streaming protocols like \ac {RTP} and \ac{RTSP} were designed for continuous and non-interactive media types, such as audio and video. Discrete and non-interactive media do not need to be streamed through \ac{RTP} because they do not change with time. For example, if an image appears in a specific time interval, just the \ac{HTML} or \emph{JavaScript} that will reference the image must be streamed, the image itself is then transferred through \ac{HTTP}.
 
 	In order to play a stream, a player must be prepared to interpret the stream content. For interactive stream the player must download an environment, decode the \ac{RTP} payload to determine the state and display it to the user. Streaming interactive media like a combination of \ac{HTML}, \ac{CSS} and JavaScript requires more than interpreting the code: a streamed user interface may contain an internal state that is not shown on code.
         %RP não percebi

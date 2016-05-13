@@ -8,7 +8,7 @@
 
   \subsection{WebRTC}
 
-  \ac{WebRTC} uses \ac{SDP} \cite{rfc4566} to define peer connection properties such as types of supported media, codecs, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
+  \ac{WebRTC} uses \ac{SDP}~\cite{rfc4566} to define peer connection properties such as types of supported media, \emph{codecs}, protocols used and network information. An \ac{SDP} offer describes to other peers the expected type of communication and its details, such as used transport protocols, codecs, security and other.
 
   One of \ac{WebRTC} signaling's requisites is bi-directional communication.
 %RP acrescentei o webrtc pois isto não é um requisito geral de signaling. era o que querias dizer?
@@ -18,21 +18,17 @@
 %RP de certeza que queres dizer que o http é unidirecional? 
 %HR era mais o facto de o servidor não poder comunicar com o cliente sem que o cliente comunique primeiro (tem que haver uma iniciativa por parte do cliente)
   Sometimes it is required that some information be obtained in real time, but we saw, some \ac{NAT}'s do not support callbacks from servers, preventing them from notifying clients as soon as an event occures.
-One technique to overcome this problem is polling.
-  %RP num documento formal não se usam contrações como it's.
-  %RP o teu ingles é parco em artigos. Faltam muitos the, of, it, etc.
-  
-Polling consists on sending periodic messages to which the server responds immediately with empty content or fresh information. Text and presence messages are unpredictable, if the time between periodic requests is short, most of the time the server will return empty results wasting network bandwidth and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive too late.
+One technique to overcome this problem is polling. Polling consists on sending periodic messages to which the server responds immediately with empty content or fresh information. Text and presence messages are unpredictable, if the time between periodic requests is short, most of the time the server will return empty results wasting network bandwidth and energy. On the other hand, if the time between periodic requests is large, newer messages may arrive too late.
 %RP  Real time communications are unpredictable. Normalmente falamos de audio e video, que são previsíveis. Estás a referir-te às comunicações em si ou ao signaling e estabelecimento?
 
 A technique called long polling consists on making the server hold the request until there is fresh information or expiring it after some time.
 As soon as it receives the reply, the client makes another request. Long polling technique results on a better network usage and a faster server response, but both simple polling and long polling requests are sent with \ac{HTTP} headers, which add data overhead and can be noticed especially for short sized messages.
 
-The \emph{WebSocket} protocol allows bi-directional communications over a full-duplex socket channel \cite{rfc6455}, by other words it supports sending and receiving data simultaneously.
+The \emph{WebSocket} protocol allows bi-directional communications over a full-duplex socket channel~\cite{rfc6455}, by other words it supports sending and receiving data simultaneously.
 %RP coloca as citações no final da frase. Pode haver excepções onde a citação apenas cobre parte da frase ou precisas de colocar várias a dizer coisas diferentes.
  \emph{WebSocket} handshake phase specifies a \ac{HTTP} header in order to upgrade to \emph{WebSocket} type of communication, but the remainder messages are exchanged without \ac{HTTP} headers, which leads to much smaller messages and better network usage. WebSockets may not be available on every web browser, frameworks like \emph{socket.io} and \emph{SockJS}\footnote{\url{http://github.com/sockjs}(accessed June 1, 2015).} fall back to using \ac{HTTP} long polling when there is no support for \emph{WebSockets}. 
 
-  \ac{BOSH}\cite{xep0124} is a technique based on long polling that uses two socket connections and allows sending client messages to the server while a previous request is held.
+  \ac{BOSH}~\cite{xep0124} is a technique based on long polling that uses two socket connections and allows sending client messages to the server while a previous request is held.
   The \ac{BOSH} specification assumes that a connection manager is implemented to handle \ac{HTTP} connections. This connection manager is basically a translator from \ac{HTTP} to raw message so that the server may be implemented as if this communication is performed over \ac{TCP}.
   When the connection manager holds for a response for too long, it responds with an empty body, this technique prevents an \ac{HTTP} session from expiring when the client is waiting for a response, thus expanding the session time. Expiring sessions can be expensive due to the overhead of establishing new connections, which is even worse when \ac{HTTP} is used over \ac{SSL}.
 
@@ -41,9 +37,9 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
 
   \subsection{Session Initiation Protocol}
 
-  \ac{SIP} \cite{rfc3261} is a protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as a signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls between the telephone network and applications over \ac{IP} networks.
+  \ac{SIP}~\cite{rfc3261} is a protocol used for negotiation, creation, modification and finalization of communication sessions between users. \ac{SIP} follows a client/server architecture with \ac{HTTP} like messages and it can be used as a signaling protocol. The advantage of \ac{SIP} is the ability to make video and voice calls between the telephone network and applications over \ac{IP} networks.
 
-  The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}(accessed June 1, 2015).} proposed the creation of \ac{SIP} extensions, namely presence information \cite{rfc5263} and instant messaging \cite{rfc3428}.
+  The working group \ac{SIMPLE}\footnote{\url{https://datatracker.ietf.org/wg/simple/documents/}(accessed June 1, 2015).} proposed the creation of \ac{SIP} extensions, namely presence information~\cite{rfc5263} and instant messaging~\cite{rfc3428}.
 
   \ac{SIP} is used in \ac{VoIP} applications due to its compatibility with the \ac{PSTN}.
   Service providers are making their \ac{SIP} infrastructures available through WebSockets\footnote{\url{https://tools.ietf.org/html/draft-ietf-sipcore-sip-websocket-10} (accessed March 25, 2016)}.
@@ -55,16 +51,16 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
 \subsection{Extensible Messaging and Presence Protocol}
 
   \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
-  \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \emph{XEP-0096}\cite{xep0096}, which adds file transfer capabilities between two entities, and \emph{XEP-0045}\cite{xep0045}, which enables multi-user chat.
-  \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH} \cite{xep0206}.
-  This kind of communication is also possible through WebSockets \cite{rfc7395}.
+  \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \emph{XEP-0096}~\cite{xep0096}, which adds file transfer capabilities between two entities, and \emph{XEP-0045}~\cite{xep0045}, which enables multi-user chat.
+  \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH}~\cite{xep0206}.
+  This kind of communication is also possible through WebSockets~\cite{rfc7395}.
   Today, multiple \ac{XMPP} server implementations exists, such as: \emph{ejabberd}\footnote{\url{http://jabberd.im/}(accessed June 1, 2015).}, \emph{Metronome}\footnote{\url{http://lightwitch.org/metronome}(accessed June 1, 2015).}, \emph{Openfire}\footnote{\url{http://igniterealtime.org/projects/openfire/}(accessed June 1, 2015).} and \emph{Prosody}\footnote{\url{http://prosody.im/}(accessed June 1, 2015).}. \emph{Ejabberd} is the server that implements more \ac{RFC} specifications and \ac{XEP}s\footnote{\url{http://en.wikipedia.org/wiki/Comparison_of_XMPP_server_software}(accessed June 1, 2015).}.
   %RP fazes muitos paragrafos. Um paragrafo por tecnologia é normalmente suficiente se não forem muito grandes.
   
 
     One of the advantages that \ac{XMPP} based applications offer is the possibility to send messages across different servers. An \ac{XMPP} user is identified by its \textit{Jabber ID}, which is defined by the pair username and server name in the form \textit{username@server}.
 
-    The user profile is represented in terms of Data Forms\cite{xep0004} protocol and managed (registration and update) through \textit{Info/Query} (IQ) \cite{rfc3920} requests to the \ac{XMPP} server, which responds with an IQ response containing information to retrieve the registration fields needed to fill its profile (eg username, password, telephone). 
+    The user profile is represented in terms of Data Forms~\cite{xep0004} protocol and managed (registration and update) through \textit{Info/Query} (IQ)~\cite{rfc3920} requests to the \ac{XMPP} server, which responds with an IQ response containing information to retrieve the registration fields needed to fill its profile (eg username, password, telephone). 
 %RP frase demasiado longa. Torna-se confusa.
     
     An important aspect of this model is the ability to define a user as a set of attributes that can change dynamically in order to fit the \ac{IM} application's needs. 
@@ -82,7 +78,7 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
     
     Another alternative would be the development of our solution in a single web page, which would increase drastically the complexity of our web application.
 
-    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that \ac{XMPP} already implement, but  we don't need all of them. In fact, we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
+    We know that an \ac{XMPP} based application could simplify our work just by using functionalities that \ac{XMPP} already implement, but  we do not need all of them. In fact, we just need a subset of \ac{XMPP} features, namely a simple way to register users, access and edit user's information, create chat rooms, send messages and access to presence information.
 
 
   \subsection{Signaling-On-the-fly}
