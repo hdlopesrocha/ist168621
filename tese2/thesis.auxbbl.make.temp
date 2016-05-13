@@ -1,0 +1,852 @@
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Network Address Translation\relax }}{6}{figure.caption.17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Multiple level NATs\relax }}{7}{figure.caption.18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Media Types\relax }}{18}{figure.caption.69}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces System Modules\relax }}{24}{figure.caption.75}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces System Infrastructure\relax }}{24}{figure.caption.76}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Centralized connections\relax }}{25}{figure.caption.77}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Peer-to-Peer connections\relax }}{25}{figure.caption.77}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Server-side stream composition\relax }}{49}{figure.caption.98}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Stream decoding, composition and encoding\relax }}{50}{figure.caption.99}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Multiple devices per user\relax }}{51}{figure.caption.100}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Signaling sequence diagram\relax }}{35}{figure.caption.89}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Maximum playing error $(e)$ if we play the closest chunk\relax }}{40}{figure.caption.91}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Maximum playing error $(e)$ if we play the chunk that intersect the user's time\relax }}{41}{figure.caption.92}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Manual content creation\relax }}{42}{figure.caption.93}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Interactive time-line\relax }}{47}{figure.caption.94}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Creating a time annotation\relax }}{48}{figure.caption.95}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Time link creation\relax }}{49}{figure.caption.96}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Example of search results\relax }}{49}{figure.caption.97}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Client-side stream composition\relax }}{49}{figure.caption.98}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.10}{\ignorespaces Percentage of CPU used during the performance tests without QR code detection\relax }}{63}{figure.caption.119}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.11}{\ignorespaces Percentage of CPU used during two consecutive test cases\relax }}{63}{figure.caption.121}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Memory usage during two consecutive test cases\relax }}{64}{figure.caption.122}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Memory usage during one hour with seven clients\relax }}{64}{figure.caption.124}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Multiple paths for finding people\relax }}{66}{figure.caption.126}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Adding user to conference room from user profile\relax }}{66}{figure.caption.127}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Save button that was removed\relax }}{67}{figure.caption.128}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Ages of the users that tested our system\relax }}{68}{figure.caption.131}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Time spent per task\relax }}{68}{figure.caption.132}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.19}{\ignorespaces Mouse clicks per task\relax }}{68}{figure.caption.132}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Network usage after implementing all features\relax }}{57}{figure.caption.106}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.20}{\ignorespaces Errors per task\relax }}{70}{figure.caption.133}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.21}{\ignorespaces Difficulty per task\relax }}{70}{figure.caption.133}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.22}{\ignorespaces Solution evaluation\relax }}{70}{figure.caption.134}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Average network usage per interval of events after implementing all features\relax }}{58}{figure.caption.107}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Repository and KMS in the same machine\relax }}{58}{figure.caption.108}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Client Network usage during our test case\relax }}{59}{figure.caption.109}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Memory usage after implementing all features\relax }}{60}{figure.caption.112}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Memory usage after fixing recorder memory leak\relax }}{60}{figure.caption.114}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Percentage of CPU used during the performance tests\relax }}{61}{figure.caption.116}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.8}{\ignorespaces Percentage of CPU used during the performance tests (zoomed)\relax }}{62}{figure.caption.117}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.9}{\ignorespaces Average percentage of CPU used per interval of events after implementing all features\relax }}{62}{figure.caption.118}}
+\@writefile{lof}{\select@language{english}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.10}Pseudo code for hyper content scheduler}{46}{lstlisting.4.10}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.11}Example of removing content message sent by one user}{47}{lstlisting.4.11}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}Example of HTML content}{32}{lstlisting.4.1}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}General structure of our WebSocket messages}{36}{lstlisting.4.2}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}Media constraints}{37}{lstlisting.4.3}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}Offer created by client}{37}{lstlisting.4.4}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}Answer created by KMS}{38}{lstlisting.4.5}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}ICE candidates sent by KMS and client}{38}{lstlisting.4.6}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.7}Example of content created by one user}{42}{lstlisting.4.7}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.8}Pseudo code for QR code leaving detection}{43}{lstlisting.4.8}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.9}Exampe of content sent to users}{45}{lstlisting.4.9}}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces WebRTC protocol Stack\relax }}{8}{table.caption.24}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Overview of transport protocols\relax }}{9}{table.caption.31}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Comparision between Operational Transformation libraries\relax }}{21}{table.caption.74}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Application Architecture\relax }}{27}{table.caption.78}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Schema representation\relax }}{29}{table.caption.79}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Generic data model\relax }}{30}{table.caption.80}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces User model\relax }}{30}{table.caption.81}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Relation model\relax }}{31}{table.caption.82}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Group model\relax }}{31}{table.caption.83}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Message model\relax }}{32}{table.caption.85}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Hyper content model\relax }}{32}{table.caption.86}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Collaborative content model\relax }}{33}{table.caption.87}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.9}{\ignorespaces Recording model\relax }}{34}{table.caption.88}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Hardware specifications\relax }}{54}{table.caption.101}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Operating system specifications\relax }}{55}{table.caption.102}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Installed Software\relax }}{55}{table.caption.103}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.4}{\ignorespaces Mapping of connections by network interface\relax }}{56}{table.caption.104}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.5}{\ignorespaces Metrics for an experienced user\relax }}{67}{table.caption.130}}
+\@writefile{lot}{\select@language{english}}
+\@writefile{toc}{\contentsline {chapter}{Abstract}{v}{chapter*.2}}
+\@writefile{toc}{\contentsline {chapter}{Acknowledgments}{iii}{chapter*.1}}
+\@writefile{toc}{\contentsline {chapter}{Acronyms}{xvii}{section*.8}}
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{75}{chapter*.135}}
+\@writefile{toc}{\contentsline {chapter}{List of Figures}{xiv}{chapter*.6}}
+\@writefile{toc}{\contentsline {chapter}{List of Tables}{xv}{chapter*.7}}
+\@writefile{toc}{\contentsline {chapter}{Resumo}{vii}{chapter*.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Related Work}{5}{chapter.2}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Architecture}{22}{chapter.3}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Implementation}{28}{chapter.4}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Evaluation}{54}{chapter.5}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusions}{71}{chapter.6}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Background}{1}{section.1.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Proposed Solution}{2}{section.1.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Thesis Contribution}{2}{section.1.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Outline}{3}{section.1.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Early days of the Internet and its remaining flaws}{5}{section.2.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Real time communications}{7}{section.2.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Signaling: meet and get to know}{9}{section.2.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Hypermedia: more than words, more than images}{13}{section.2.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Extending collaboration tools with time manipulation}{17}{section.2.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Chapter Summary}{21}{section.2.6}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Requirements}{22}{section.3.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Modules}{23}{section.3.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation Proposal}{24}{section.3.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Chapter Summary}{27}{section.3.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Data Model}{28}{section.4.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}XMPP experiments}{34}{section.4.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Signaling Protocol}{34}{section.4.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Stream Recording}{38}{section.4.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Hyper Content}{41}{section.4.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Chapter Summary}{52}{section.4.6}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Solution deployment}{54}{section.5.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Tests Objectives}{55}{section.5.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Performance Tests}{55}{section.5.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Usability Tests}{61}{section.5.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Chapter Summary}{69}{section.5.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Summary}{71}{section.6.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Future Work}{72}{section.6.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}WebRTC}{10}{subsection.2.3.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Session Initiation Protocol}{11}{subsection.2.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Extensible Messaging and Presence Protocol}{11}{subsection.2.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Signaling-On-the-fly}{12}{subsection.2.3.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Streaming and Recording}{17}{subsection.2.5.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Media Types}{18}{subsection.2.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}Recording and Streaming Interactive Media}{19}{subsection.2.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.4}Collaborative Environment}{20}{subsection.2.5.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Security and authorization}{24}{subsection.3.3.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Client connections}{25}{subsection.3.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Software choices}{26}{subsection.3.3.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Schema representation}{29}{subsection.4.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Generic model}{29}{subsection.4.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}User model}{30}{subsection.4.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Relation model}{30}{subsection.4.1.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.5}Group model}{31}{subsection.4.1.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.6}Message model}{31}{subsection.4.1.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.7}Hyper content model}{32}{subsection.4.1.7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.8}Collaborative Content model}{33}{subsection.4.1.8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.9}Recording model}{33}{subsection.4.1.9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Client side recording}{39}{subsection.4.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Server side recording to file system}{39}{subsection.4.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Server side recording to database}{41}{subsection.4.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.10}Chat}{51}{subsection.4.5.10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.11}Collaborative editor}{52}{subsection.4.5.11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Content creation}{41}{subsection.4.5.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Interactive media synchronization}{43}{subsection.4.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Content Removal}{46}{subsection.4.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}Security Concerns}{47}{subsection.4.5.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.5}Time Manipulation}{47}{subsection.4.5.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.6}Time annotations creation}{48}{subsection.4.5.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.7}Content Search}{48}{subsection.4.5.7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.8}View composition and switching view}{48}{subsection.4.5.8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.9}Non interactive media synchronization}{50}{subsection.4.5.9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Hardware}{54}{subsection.5.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Operating System}{54}{subsection.5.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Software}{55}{subsection.5.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Tests Scenarios}{56}{subsection.5.3.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Test Results}{56}{subsection.5.3.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Tests Scenarios}{65}{subsection.5.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Test Results}{65}{subsection.5.4.2}}
+\@writefile{toc}{\contentsline {subsubsection}{CPU usage}{59}{section*.115}}
+\@writefile{toc}{\contentsline {subsubsection}{First phase}{65}{section*.125}}
+\@writefile{toc}{\contentsline {subsubsection}{Memory usage}{57}{section*.110}}
+\@writefile{toc}{\contentsline {subsubsection}{Network usage}{56}{section*.105}}
+\@writefile{toc}{\contentsline {subsubsection}{One hour test case}{61}{section*.123}}
+\@writefile{toc}{\contentsline {subsubsection}{Second phase}{67}{section*.129}}
+\@writefile{toc}{\contentsline {subsubsection}{Two consecutive test cases}{61}{section*.120}}
+\@writefile{toc}{\select@language{english}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\acronymused{AES}
+\acronymused{AES}
+\acronymused{AES}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{API}
+\acronymused{BOSH}
+\acronymused{BOSH}
+\acronymused{BOSH}
+\acronymused{CBC}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CPU}
+\acronymused{CRUD}
+\acronymused{CRUD}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{CSS}
+\acronymused{DOM}
+\acronymused{DOM}
+\acronymused{DOM}
+\acronymused{DOM}
+\acronymused{DOM}
+\acronymused{DOM}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DTLS}
+\acronymused{DVD}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{FMS}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTML}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{HTTP}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{ICE}
+\acronymused{IM}
+\acronymused{IPv4}
+\acronymused{IPv4}
+\acronymused{IPv4}
+\acronymused{IPv4}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IP}
+\acronymused{IoT}
+\acronymused{JSON}
+\acronymused{JSON}
+\acronymused{JSON}
+\acronymused{JVM}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{KMS}
+\acronymused{MCU}
+\acronymused{MCU}
+\acronymused{MPEG}
+\acronymused{MPEG}
+\acronymused{MPEG}
+\acronymused{MVC}
+\acronymused{MVC}
+\acronymused{MVC}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{NAT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{OT}
+\acronymused{P2P}
+\acronymused{PSTN}
+\acronymused{PSTN}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{QR}
+\acronymused{RAM}
+\acronymused{REST}
+\acronymused{RFC}
+\acronymused{RTCP}
+\acronymused{RTCP}
+\acronymused{RTMFP}
+\acronymused{RTMFP}
+\acronymused{RTMP}
+\acronymused{RTMP}
+\acronymused{RTMP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTP}
+\acronymused{RTSP}
+\acronymused{SAMI}
+\acronymused{SCTP}
+\acronymused{SCTP}
+\acronymused{SDP}
+\acronymused{SDP}
+\acronymused{SDP}
+\acronymused{SDP}
+\acronymused{SIMPLE}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SIP}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMIL}
+\acronymused{SMS}
+\acronymused{SRTCP}
+\acronymused{SRTCP}
+\acronymused{SRTP}
+\acronymused{SRTP}
+\acronymused{SRTP}
+\acronymused{SRTP}
+\acronymused{SRTP}
+\acronymused{SRTP}
+\acronymused{SRT}
+\acronymused{SSL}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{STUN}
+\acronymused{SVG}
+\acronymused{SVG}
+\acronymused{SVG}
+\acronymused{SVG}
+\acronymused{SVG}
+\acronymused{SigOfly}
+\acronymused{SigOfly}
+\acronymused{SigOfly}
+\acronymused{SigOfly}
+\acronymused{TCP}
+\acronymused{TCP}
+\acronymused{TCP}
+\acronymused{TCP}
+\acronymused{TCP}
+\acronymused{TCP}
+\acronymused{TLS}
+\acronymused{TLS}
+\acronymused{TLS}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{TURN}
+\acronymused{UDP}
+\acronymused{UDP}
+\acronymused{UDP}
+\acronymused{UDP}
+\acronymused{UDP}
+\acronymused{UDP}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{URL}
+\acronymused{VoIP}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebRTC}
+\acronymused{WebVTT}
+\acronymused{XAML}
+\acronymused{XEP}
+\acronymused{XHTML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XML}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\acronymused{XMPP}
+\bibdata{references}
+\bibstyle{splncs}
+\citation{ambulant}
+\citation{ambulant}
+\citation{dom}
+\citation{earlybird}
+\citation{embedded}
+\citation{flashvideo}
+\citation{geddes}
+\citation{geddes}
+\citation{geddes}
+\citation{hitchcock}
+\citation{hypercafe}
+\citation{hyval}
+\citation{interactive_record}
+\citation{interactive_stream}
+\citation{interactive_stream}
+\citation{ipv4}
+\citation{jupiter}
+\citation{natvoip}
+\citation{password}
+\citation{rfc3261}
+\citation{rfc3428}
+\citation{rfc3489}
+\citation{rfc3550}
+\citation{rfc3551}
+\citation{rfc3920}
+\citation{rfc4566}
+\citation{rfc5263}
+\citation{rfc6347}
+\citation{rfc6455}
+\citation{rfc6455}
+\citation{rfc7395}
+\citation{sigofly}
+\citation{smil3}
+\citation{smillingweb}
+\citation{smil}
+\citation{xep0004}
+\citation{xep0045}
+\citation{xep0096}
+\citation{xep0124}
+\citation{xep0206}
+\citation{xep0340}
+\fi}
+\fi}
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\global\let\hyper@last\relax 
+\global\let\oldcontentsline\contentsline
+\global\let\oldnewlabel\newlabel
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\newacro{AES}[\AC@hyperlink{AES}{AES}]{Advanced Encryption Standard}
+\newacro{API}[\AC@hyperlink{API}{API}]{Application Programming Interface}
+\newacro{BOSH}[\AC@hyperlink{BOSH}{BOSH}]{Bidirectional-streams Over Synchronous HTTP}
+\newacro{CBC}[\AC@hyperlink{CBC}{CBC}]{Cipher Block Chaining}
+\newacro{CPU}[\AC@hyperlink{CPU}{CPU}]{Central Processing Unit}
+\newacro{CRUD}[\AC@hyperlink{CRUD}{CRUD}]{Create, Read, Update and Delete}
+\newacro{CSS}[\AC@hyperlink{CSS}{CSS}]{Cascading Style Sheets}
+\newacro{DOM}[\AC@hyperlink{DOM}{DOM}]{Document Object Model}
+\newacro{DTLS}[\AC@hyperlink{DTLS}{DTLS}]{Datagram Transport Layer Security}
+\newacro{DVD}[\AC@hyperlink{DVD}{DVD}]{Digital Versatile Discs}
+\newacro{FMS}[\AC@hyperlink{FMS}{FMS}]{Flash Media Server}
+\newacro{HTML}[\AC@hyperlink{HTML}{HTML}]{HyperText Markup Language}
+\newacro{HTTP}[\AC@hyperlink{HTTP}{HTTP}]{Hypertext Transfer Protocol}
+\newacro{ICE}[\AC@hyperlink{ICE}{ICE}]{Interactive Connectivity Establishment}
+\newacro{IM}[\AC@hyperlink{IM}{IM}]{Instant Messenger}
+\newacro{IPv4}[\AC@hyperlink{IPv4}{IPv4}]{Internet Protocol Version 4}
+\newacro{IPv6}[\AC@hyperlink{IPv6}{IPv6}]{Internet Protocol Version 6}
+\newacro{IP}[\AC@hyperlink{IP}{IP}]{Internet Protocol}
+\newacro{IoT}[\AC@hyperlink{IoT}{IoT}]{Internet of Things}
+\newacro{JSON}[\AC@hyperlink{JSON}{JSON}]{JavaScript Object Notation}
+\newacro{JVM}[\AC@hyperlink{JVM}{JVM}]{Java virtual machine}
+\newacro{KMS}[\AC@hyperlink{KMS}{KMS}]{Kurento Media Server}
+\newacro{MCU}[\AC@hyperlink{MCU}{MCU}]{Multipoint Control Unit}
+\newacro{MPEG}[\AC@hyperlink{MPEG}{MPEG}]{Moving Picture Experts Group}
+\newacro{MVC}[\AC@hyperlink{MVC}{MVC}]{Model-View-Controller}
+\newacro{NAT}[\AC@hyperlink{NAT}{NAT}]{Network Address Translation}
+\newacro{OT}[\AC@hyperlink{OT}{OT}]{Operational transformation}
+\newacro{P2P}[\AC@hyperlink{P2P}{P2P}]{Peer-to-peer}
+\newacro{PSTN}[\AC@hyperlink{PSTN}{PSTN}]{Public Switched Telephone Network}
+\newacro{QR}[\AC@hyperlink{QR}{QR}]{Quick Response}
+\newacro{RAM}[\AC@hyperlink{RAM}{RAM}]{Random-access memory}
+\newacro{REST}[\AC@hyperlink{REST}{REST}]{Representational State Transfer}
+\newacro{RFC}[\AC@hyperlink{RFC}{RFC}]{Request For Comments}
+\newacro{RTCP}[\AC@hyperlink{RTCP}{RTCP}]{Real Time Control Protocol}
+\newacro{RTMFP}[\AC@hyperlink{RTMFP}{RTMFP}]{Real-Time Media Flow Protocol}
+\newacro{RTMP}[\AC@hyperlink{RTMP}{RTMP}]{Real Time Messaging Protocol}
+\newacro{RTP}[\AC@hyperlink{RTP}{RTP}]{Real-time Transport Protocol}
+\newacro{RTSP}[\AC@hyperlink{RTSP}{RTSP}]{Real Time Streaming Protocol}
+\newacro{SAMI}[\AC@hyperlink{SAMI}{SAMI}]{Synchronized Accessible Media Interchange}
+\newacro{SCTP}[\AC@hyperlink{SCTP}{SCTP}]{Stream Control Transmission Protocol}
+\newacro{SDP}[\AC@hyperlink{SDP}{SDP}]{Session Description Protocol}
+\newacro{SIMPLE}[\AC@hyperlink{SIMPLE}{SIMPLE}]{SIP for Instant Messaging and Presence Leveraging Extensions}
+\newacro{SIP}[\AC@hyperlink{SIP}{SIP}]{Session Initiation Protocol}
+\newacro{SMIL}[\AC@hyperlink{SMIL}{SMIL}]{Synchronized Multimedia Integration Language}
+\newacro{SMS}[\AC@hyperlink{SMS}{SMS}]{Short Message Service}
+\newacro{SRTCP}[\AC@hyperlink{SRTCP}{SRTCP}]{Secure RTCP}
+\newacro{SRTP}[\AC@hyperlink{SRTP}{SRTP}]{Secure Real-time Transport Protocol}
+\newacro{SRT}[\AC@hyperlink{SRT}{SRT}]{SubRip Text}
+\newacro{SSL}[\AC@hyperlink{SSL}{SSL}]{Secure Sockets Layer}
+\newacro{STUN}[\AC@hyperlink{STUN}{STUN}]{Session Traversal Utilities for NAT}
+\newacro{SVG}[\AC@hyperlink{SVG}{SVG}]{Scalable Vector Graphics}
+\newacro{SigOfly}[\AC@hyperlink{SigOfly}{SigOfly}]{Signaling-On-the-fly}
+\newacro{TCP}[\AC@hyperlink{TCP}{TCP}]{Transmission Control Protocol}
+\newacro{TLS}[\AC@hyperlink{TLS}{TLS}]{Transport Layer Security}
+\newacro{TMN}[\AC@hyperlink{TMN}{TMN}]{This Means Nothing}
+\newacro{TURN}[\AC@hyperlink{TURN}{TURN}]{Traversal Using Relays around NAT}
+\newacro{UDP}[\AC@hyperlink{UDP}{UDP}]{User Datagram Protocol}
+\newacro{URL}[\AC@hyperlink{URL}{URL}]{Uniform Resource Locator}
+\newacro{VoIP}[\AC@hyperlink{VoIP}{VoIP}]{Voice Over IP}
+\newacro{WebRTC}[\AC@hyperlink{WebRTC}{WebRTC}]{Web Real-Time Communication}
+\newacro{WebVTT}[\AC@hyperlink{WebVTT}{WebVTT}]{Web Video Text Tracks}
+\newacro{XAML}[\AC@hyperlink{XAML}{XAML}]{eXtensible Application Markup Language}
+\newacro{XEP}[\AC@hyperlink{XEP}{XEP}]{XMPP Extensions}
+\newacro{XHTML}[\AC@hyperlink{XHTML}{XHTML}]{eXtensible Hypertext Markup Language}
+\newacro{XML}[\AC@hyperlink{XML}{XML}]{eXtensible Markup Language}
+\newacro{XMPP}[\AC@hyperlink{XMPP}{XMPP}]{Extensible Messaging and Presence Protocol}
+\providecommand \oddpage@label [2]{}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\providecommand\hyper@newdestlabel[2]{}
+\reset@newl@bel
+\select@language{english}
+\undonewlabel{acro:AES}
+\undonewlabel{acro:API}
+\undonewlabel{acro:BOSH}
+\undonewlabel{acro:CBC}
+\undonewlabel{acro:CPU}
+\undonewlabel{acro:CRUD}
+\undonewlabel{acro:CSS}
+\undonewlabel{acro:DOM}
+\undonewlabel{acro:DTLS}
+\undonewlabel{acro:DVD}
+\undonewlabel{acro:FMS}
+\undonewlabel{acro:HTML}
+\undonewlabel{acro:HTTP}
+\undonewlabel{acro:ICE}
+\undonewlabel{acro:IM}
+\undonewlabel{acro:IPv4}
+\undonewlabel{acro:IP}
+\undonewlabel{acro:IoT}
+\undonewlabel{acro:JSON}
+\undonewlabel{acro:JVM}
+\undonewlabel{acro:KMS}
+\undonewlabel{acro:MCU}
+\undonewlabel{acro:MPEG}
+\undonewlabel{acro:MVC}
+\undonewlabel{acro:NAT}
+\undonewlabel{acro:OT}
+\undonewlabel{acro:P2P}
+\undonewlabel{acro:PSTN}
+\undonewlabel{acro:QR}
+\undonewlabel{acro:RAM}
+\undonewlabel{acro:REST}
+\undonewlabel{acro:RFC}
+\undonewlabel{acro:RTCP}
+\undonewlabel{acro:RTMFP}
+\undonewlabel{acro:RTMP}
+\undonewlabel{acro:RTP}
+\undonewlabel{acro:RTSP}
+\undonewlabel{acro:SAMI}
+\undonewlabel{acro:SCTP}
+\undonewlabel{acro:SDP}
+\undonewlabel{acro:SIMPLE}
+\undonewlabel{acro:SIP}
+\undonewlabel{acro:SMIL}
+\undonewlabel{acro:SMS}
+\undonewlabel{acro:SRTCP}
+\undonewlabel{acro:SRTP}
+\undonewlabel{acro:SRT}
+\undonewlabel{acro:SSL}
+\undonewlabel{acro:STUN}
+\undonewlabel{acro:SVG}
+\undonewlabel{acro:SigOfly}
+\undonewlabel{acro:TCP}
+\undonewlabel{acro:TLS}
+\undonewlabel{acro:TURN}
+\undonewlabel{acro:UDP}
+\undonewlabel{acro:URL}
+\undonewlabel{acro:VoIP}
+\undonewlabel{acro:WebRTC}
+\undonewlabel{acro:WebVTT}
+\undonewlabel{acro:XAML}
+\undonewlabel{acro:XEP}
+\undonewlabel{acro:XHTML}
+\undonewlabel{acro:XML}
+\undonewlabel{acro:XMPP}

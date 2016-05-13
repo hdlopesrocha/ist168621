@@ -88,7 +88,7 @@ Another important attribute specification is the owner identifiability, which te
 Not less important, in order to get an object's properties efficiently, we have created an index over the \emph{owner} attribute. We have also created an index over the \emph{searchableValues} in order to improve the keyword search performance.
 
 In summary, with this model we can perform search and identification of any kind of objects, as we will see on the following models. In particular, the \emph{user} and \emph{group} models are using this generic model for storing their attributes. 
-% Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it's possible to search for the administrative role and return users and groups of users that contains that property. <= [currently this operation is possible but it is not specified]
+% Not less important, attributes can specify aggregations of objects. For example, the user role is an aggregator property that within users it allows the identifaction of each one is administrator. This aggregation specification is independent from the object type, so it is possible to search for the administrative role and return users and groups of users that contains that property. <= [currently this operation is possible but it is not specified]
 
 
 %RP antes de falares de cada modelo, que tal incluir uma figura com a relação entre os vários tipos de dados. Mesmo não sendo SQL, as relações existem conceptualmente e falas em chaves estrangeiras, pelo que tal figura faz sentido e ajuda a perceber.
