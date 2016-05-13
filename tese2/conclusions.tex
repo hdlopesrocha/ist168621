@@ -9,15 +9,18 @@ Having this in mind, we started by analyzing the technologies necessary to imple
 
 Based on our evaluation of the state of the art, we have defined the architecture of our proposed solution.
 
-Although we have used our own signaling protocol we have made our first steps using \ac{XMPP} and we have discovered the drawbacks of this approach. Dor performing communications with \ac{XMPP} servers, we used \emph{strophe.js} which we found to have a bug that we have fixed.
+Although we have used our own signaling protocol we have made our first steps using \ac{XMPP} and we have discovered the drawbacks of this approach. For performing communications with \ac{XMPP} servers, we used \emph{strophe.js} which we found to have a bug that we fixed.
 
 Another important contribution we have made was a bug fix of a memory leak present on \ac{KMS} which we discovered when we were doing performance tests with our solution.
 
 \section{Achievements}
 \label{section:achievements}
-	We have successfully implemented the basic functionalities of our prototype and spare some time for adding more valuable features such as the ability to create content by exposing \emph{QR codes} to the camera and lastly perform changes to the user interface in order to improve the quality of user's experience.
 
-	The performance tests that we have executed showed that our system is stable and more importantly that our web server is lightweight and most of processing power is dedicated to the streaming server.
+	We have successfully implemented the architecture that we proposed, which made possible to create and use an innovative prototype for virtual meeting and e-learning.
+
+	Our prototype includes the basic functionalities that we planned to have. We dedicated additional effort to incorporate more valuable features such as the ability to create content by exposing \ac{QR} codes to the camera and lastly perform changes to the user interface in order to improve the quality of user's experience.
+
+	The performance tests let other researchers, in this area, to understand the expected behavior of each module present on our solution and the faced difficulties when implementing this kind of solutions. We have shown that our system is stable and, more importantly, that our web server is lightweight in comparison with streaming, which uses most of processing power.
 
 	Our usability tests show results that are considerably worse than the established optimal values due to our solution propose a different way to communicate that most people are not used to. Although we have obtained those results, in general our users gave us positive feedback and valuable advices which we have used to improve our system. 
 
