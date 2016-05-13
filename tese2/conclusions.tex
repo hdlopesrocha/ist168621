@@ -3,15 +3,13 @@
 
 \section{Summary}
 \label{section:summary}
-In this thesis, our goal was the development of a web application using \emph{WebRTC} that complement current audio, text and video communications in order to create rich and collaborative interfaces with the ability to add more content on a future time. Another important goal of this project is the ability to navigate in time by rewinding communications, fast-forward and jump to certain points.
+In this thesis, our goal was the development of a web application using \emph{WebRTC} that complements current audio, text and video communications, in order to create rich and collaborative interfaces with the ability to add more content on a future time. Another important goal of this project is the ability to navigate in time by rewinding communications, fast-forward and jump to certain points.
 
-Having this in mind, we started to analyze the technologies necessary to implement our solution. In a first glance, we have analyzed the problems that real time communication applications are facing when using the current Internet infrastructure. Next we have we have analyzed the main components of the \emph{WebRTC} stack. Furthermore, we have analyzed how we could implement the signalization component that \emph{WebRTC} does not not define. Hence, with the transport component being analyzed, we have studied how we could expose content in a synchronized and interactive way. Moreover, we have performed an analysis on the kinds of media types the particularities of each one when manipulating time. Lastly, on the state of the art context, we have analyzed existing frameworks and libraries that could help us implementing a collaborative environment.
+Having this in mind, we started by analyzing the technologies necessary to implement our solution. In a first glance, we have analyzed the problems that real time communication applications face when using the current Internet infrastructure. Next, we analyzed the main components of the \emph{WebRTC} stack. Furthermore, we analyzed how we could implement the signaling component that \emph{WebRTC} does not not define. Hence, with the transport component analyzed, we have studied how we could expose content in a synchronized and interactive way. Moreover, we have performed an analysis on the kinds of media types ant the particularities of each one when manipulating time. Lastly, on the state of the art context, we analyzed existing frameworks and libraries that could help us implementing a collaborative environment.
 
 Based on our evaluation of the state of the art, we have defined the architecture of our proposed solution.
 
-Although we have used our own signaling protocol on our implementation, the first steps we have made during the development of our prototype were using \ac{XMPP}, we have discovered the drawbacks of this approach in practice and we moved our learnings to the state of the art. Besides starting our prototype using this approach, we have used \emph{strophe.js} for performing communications with \ac{XMPP} servers. We have found and fixed a bug present on \emph{strophe.js} library that silenced an error raised by duplicated user registrations.
-
-As a consequence of not using \ac{XMPP} for the signaling protocol, we have defined our own protocol based on \emph{WebSockets} for performing the stream between clients and \ac{KMS}. From the \ac{KMS} functionalities, our solution uses the recording feature, composite endpoints that mix multiple audio and video streams into a single one and \emph{QR code} detection for creating hyper content.
+Although we have used our own signaling protocol we have made our first steps using \ac{XMPP} and we have discovered the drawbacks of this approach. Dor performing communications with \ac{XMPP} servers, we used \emph{strophe.js} which we found to have a bug that we have fixed.
 
 Another important contribution we have made was a bug fix of a memory leak present on \ac{KMS} which we discovered when we were doing performance tests with our solution.
 
@@ -25,9 +23,9 @@ Another important contribution we have made was a bug fix of a memory leak prese
 
 \section{Future Work}
 \label{section:future}
-	Playing back video with a faster rate is not possible using the current version of \ac{KMS} which we expect the availability of that feature in a near future but we have proposed an alternative way to implement faster playback by using \emph{ffmpeg} to convert the video before playing it.
+	Playing back video with a faster rate is not possible using the current version of \ac{KMS}. Even though we expect the availability of that feature in a near future but we have proposed an alternative way to implement faster playback by using \emph{ffmpeg} to convert the video before playing it.
 
-	Although we have tested our solution in a powerful machine for the current time, our performance tests revealed that the streaming component uses a lot of resources. We left for a future work a deep analysis on the scalability of our system which we have proposed different approaches but we have not tested them.
+	Although we have tested our solution in a powerful machine for the current time, our performance tests revealed that the streaming component uses a lot of resources. We left for a future work a deep analysis on the scalability of our system for which we have proposed different approaches but we have not tested them.
 
 	Another aspect we could have tested was the performance of our solution when using \ac{TURN} servers for relaying the traffic that fails using \ac{STUN}.
 

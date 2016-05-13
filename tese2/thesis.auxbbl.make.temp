@@ -17,7 +17,7 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Signaling sequence diagram\relax }}{35}{figure.caption.88}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Maximum playing error $(e)$ if we play the closest chunk\relax }}{40}{figure.caption.90}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Maximum playing error $(e)$ if we play the chunk that intersect the user's time\relax }}{41}{figure.caption.91}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Manual content creation\relax }}{41}{figure.caption.92}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Manual content creation\relax }}{42}{figure.caption.92}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Interactive time-line\relax }}{47}{figure.caption.93}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Creating a time annotation\relax }}{48}{figure.caption.94}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Time link creation\relax }}{49}{figure.caption.95}}
@@ -28,7 +28,7 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {5.12}{\ignorespaces Memory usage during two consecutive test cases\relax }}{64}{figure.caption.121}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.13}{\ignorespaces Memory usage during one hour with seven clients\relax }}{64}{figure.caption.123}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.14}{\ignorespaces Multiple paths for finding people\relax }}{66}{figure.caption.125}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Adding user to conference room from user profile\relax }}{67}{figure.caption.126}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.15}{\ignorespaces Adding user to conference room from user profile\relax }}{66}{figure.caption.126}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.16}{\ignorespaces Save button that was removed\relax }}{67}{figure.caption.127}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.17}{\ignorespaces Time spent per task\relax }}{68}{figure.caption.130}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.18}{\ignorespaces Mouse clicks per task\relax }}{68}{figure.caption.130}}
@@ -49,9 +49,9 @@
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.11}Example of removing content message sent by one user}{47}{lstlisting.4.11}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.1}Example of HTML content}{32}{lstlisting.4.1}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.2}General structure of our WebSocket messages}{36}{lstlisting.4.2}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}Media constraints}{36}{lstlisting.4.3}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.3}Media constraints}{37}{lstlisting.4.3}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.4}Offer created by client}{37}{lstlisting.4.4}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}Answer created by KMS}{37}{lstlisting.4.5}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.5}Answer created by KMS}{38}{lstlisting.4.5}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.6}ICE candidates sent by KMS and client}{38}{lstlisting.4.6}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.7}Example of content created by one user}{42}{lstlisting.4.7}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {4.8}Pseudo code for QR code leaving detection}{43}{lstlisting.4.8}}
@@ -109,17 +109,18 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation Proposal}{24}{section.3.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Chapter Summary}{27}{section.3.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Data Model}{28}{section.4.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Signaling Protocol}{34}{section.4.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Stream Recording}{38}{section.4.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Hyper Content}{41}{section.4.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Chapter Summary}{52}{section.4.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}XMPP experiments}{34}{section.4.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Signaling Protocol}{34}{section.4.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Stream Recording}{38}{section.4.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Hyper Content}{41}{section.4.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Chapter Summary}{52}{section.4.6}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.1}Solution deployment}{54}{section.5.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}Tests Objectives}{55}{section.5.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}Performance Tests}{55}{section.5.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.4}Usability Tests}{61}{section.5.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.5}Chapter Summary}{70}{section.5.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.1}Summary}{71}{section.6.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Achievements}{72}{section.6.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Achievements}{71}{section.6.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {6.3}Future Work}{72}{section.6.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}WebRTC}{10}{subsection.2.3.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Session Initiation Protocol}{11}{subsection.2.3.2}}
@@ -141,20 +142,20 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.7}Hyper content model}{32}{subsection.4.1.7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.8}Collaborative Content model}{33}{subsection.4.1.8}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.9}Recording model}{33}{subsection.4.1.9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Client side recording}{38}{subsection.4.3.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Server side recording to file system}{39}{subsection.4.3.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Server side recording to database}{40}{subsection.4.3.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.10}Chat}{51}{subsection.4.4.10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.11}Collaborative editor}{52}{subsection.4.4.11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Content creation}{41}{subsection.4.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Interactive media synchronization}{43}{subsection.4.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Content Removal}{46}{subsection.4.4.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}Security Concerns}{47}{subsection.4.4.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.5}Time Manipulation}{47}{subsection.4.4.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.6}Time annotations creation}{48}{subsection.4.4.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.7}Content Search}{48}{subsection.4.4.7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.8}View composition and switching view}{48}{subsection.4.4.8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.9}Non interactive media synchronization}{50}{subsection.4.4.9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Client side recording}{39}{subsection.4.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Server side recording to file system}{39}{subsection.4.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Server side recording to database}{41}{subsection.4.4.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.10}Chat}{51}{subsection.4.5.10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.11}Collaborative editor}{52}{subsection.4.5.11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Content creation}{41}{subsection.4.5.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Interactive media synchronization}{43}{subsection.4.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Content Removal}{46}{subsection.4.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}Security Concerns}{47}{subsection.4.5.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.5}Time Manipulation}{47}{subsection.4.5.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.6}Time annotations creation}{48}{subsection.4.5.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.7}Content Search}{48}{subsection.4.5.7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.8}View composition and switching view}{48}{subsection.4.5.8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.9}Non interactive media synchronization}{50}{subsection.4.5.9}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Hardware}{54}{subsection.5.1.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Operating System}{54}{subsection.5.1.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Software}{55}{subsection.5.1.3}}
@@ -167,7 +168,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{Memory usage}{57}{section*.109}}
 \@writefile{toc}{\contentsline {subsubsection}{Network usage}{56}{section*.104}}
 \@writefile{toc}{\contentsline {subsubsection}{One hour test case}{61}{section*.122}}
-\@writefile{toc}{\contentsline {subsubsection}{Second phase}{66}{section*.128}}
+\@writefile{toc}{\contentsline {subsubsection}{Second phase}{67}{section*.128}}
 \@writefile{toc}{\contentsline {subsubsection}{Two consecutive test cases}{61}{section*.119}}
 \@writefile{toc}{\select@language{english}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
@@ -322,6 +323,7 @@
 \acronymused{JSON}
 \acronymused{JSON}
 \acronymused{JVM}
+\acronymused{KMS}
 \acronymused{KMS}
 \acronymused{KMS}
 \acronymused{KMS}
@@ -614,6 +616,7 @@
 \acronymused{XML}
 \acronymused{XML}
 \acronymused{XML}
+\acronymused{XMPP}
 \acronymused{XMPP}
 \acronymused{XMPP}
 \acronymused{XMPP}

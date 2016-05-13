@@ -1,14 +1,14 @@
 #average	error		label
-72.9797979798	9.3915468722	"Sound quality"
-72.7272727273	8.9940989228	"Video quality"
-63.1313131313	11.5563448965	"Layout organization"
-54.5454545455	14.134810283	"Content editor"
-67.9292929293	13.695502335	"Collaborative editor"
-79.797979798	8.6695549391	"Time navigation"
-69.1919191919	10.0882070646	"Annotation handling"
-71.2121212121	11.3555645675	"Content search"
-82.0707070707	9.5817841756	"Member management"
-81.5656565657	9.3953140392	"Chat"
+83.611	7.2389	"Sound quality"
+83.889	7.267	"Video quality"
+72.222	11.268	"Layout organization"
+73.889	12.332	"Content editor"
+81.944	11.263	"Collaborative editor"
+89.444	5.5395	"Time navigation"
+80.556	8.235	"Annotation handling"
+80		10.258	"Content search"
+92.5	6.0678	"Member management"
+91.944	7.1721	"Chat"
 
 
 
