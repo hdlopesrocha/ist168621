@@ -84,7 +84,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
 
-With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \ac{KMS} should be installed on the same machine, as depicted on figure \ref{fig:scale2}, because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
+With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \ac{KMS} should be installed on the same machine, as depicted on Figure \ref{fig:scale2}, because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
 
 \begin{figure}
   \centering
@@ -152,7 +152,7 @@ Figure \ref{fig:test_full_features_cpu} shows the percentage of \ac{CPU} usage d
   \label{fig:test_full_features_cpu}
 \end{figure}
 
-Figure \ref{fig:test_full_features_cpu_zoom} is the same as figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic processing peaks every ten seconds that are due to block recording. \ac{KMS} is responsible for most \ac{CPU} usage.
+Figure \ref{fig:test_full_features_cpu_zoom} is the same as Figure \ref{fig:test_full_features_cpu} but zoomed over \emph{MongoDB}, \emph{Java} and \emph{Kurento Repository}. As we can see there are periodic processing peaks every ten seconds that are due to block recording. \ac{KMS} is responsible for most \ac{CPU} usage.
 
 \begin{figure}
   \centering
@@ -189,7 +189,7 @@ Even though, with this test results, we conclude that our solution's bottleneck 
 \subsubsection{Two consecutive test cases}
 
 
-We have also performed two consecutive test cases in order to understand if we the influence of the first test case over the second, as observed in figure \ref{fig:test_two_times_cpu}, there is no \ac{CPU} influence between two test cases.
+We have also performed two consecutive test cases in order to understand if we the influence of the first test case over the second, as observed in Figure \ref{fig:test_two_times_cpu}, there is no \ac{CPU} influence between two test cases.
 
 
 \begin{figure}
@@ -199,7 +199,7 @@ We have also performed two consecutive test cases in order to understand if we t
   \label{fig:test_two_times_cpu}
 \end{figure}
 
-On the other hand due to memory recycling techniques we can observe in figure \ref{fig:test_two_times_mem} that some of the memory that was allocated in the first test was reused in the second case.
+On the other hand due to memory recycling techniques we can observe in Figure \ref{fig:test_two_times_mem} that some of the memory that was allocated in the first test was reused in the second case.
 
 
 \begin{figure}
@@ -269,7 +269,7 @@ In this section we present the results of our usability tests. The first time we
 
 In the first testing phase we have performed tests with just three users and ceased for improvements. 
 
-The initial users that tested our solution had difficulties in the first task when finding new friendship requests and adding new friends, as friendship request were only possible to access from the top bar and new user profiles were only accessible through the search bar. In order to solve this problem we have added a menu for adding new users in the friends list and another near the friends list as it can be seen on figure \ref{fig:test_ui_01_02_03}.
+The initial users that tested our solution had difficulties in the first task when finding new friendship requests and adding new friends, as friendship request were only possible to access from the top bar and new user profiles were only accessible through the search bar. In order to solve this problem we have added a menu for adding new users in the friends list and another near the friends list as it can be seen on Figure \ref{fig:test_ui_01_02_03}.
 
 \begin{figure}
 \centering
@@ -296,7 +296,7 @@ The initial users that tested our solution had difficulties in the first task wh
     \label{fig:test_ui_01_02_03}
 \end{figure}
 
-On the second task one user clicked on the friends list for adding a friend to a room and, as a consequence, left the conference room to the user profile. We solved this problem by showing a pop-up with the user profile and an additional button to add the user to the conference room as it can be seen on figure \ref{fig:test_ui_04}.
+On the second task one user clicked on the friends list for adding a friend to a room and, as a consequence, left the conference room to the user profile. We solved this problem by showing a pop-up with the user profile and an additional button to add the user to the conference room as it can be seen on Figure \ref{fig:test_ui_04}.
 
 \begin{figure}
 \centering
@@ -311,10 +311,10 @@ On the second task one user clicked on the friends list for adding a friend to a
     \label{fig:test_ui_04}
 \end{figure}
 
-On the third task we noticed that users were not expecting to search the content directly from the search bar, instead they used the time-line.
+On the third task we noticed that users were not expecting to search the content directly from the search bar, instead they used the timeline.
 
-On the fourth task the users did not placed their annotations on right place. We only provide one way to place annotations, which is by dragging them on the time-line. 
-After creating an annotation, users also did not understand that they had to save their changes on the time-line. We solved this problem by saving automatically each time the user changed any annotation. The old user interface can be seen on figure \ref{fig:test_ui_05}.
+On the fourth task the users did not placed their annotations on right place. We only provide one way to place annotations, which is by dragging them on the timeline. 
+After creating an annotation, users also did not understand that they had to save their changes on the timeline. We solved this problem by saving automatically each time the user changed any annotation. The old user interface can be seen on Figure \ref{fig:test_ui_05}.
 
 \begin{figure}
 \centering
@@ -337,7 +337,7 @@ We have also gathered comments and suggestions after letting the users explore o
 
 \begin{itemize}
 \item Giving feedback to user when performing operations such as create superimposed content and save the collaborative editor content.
-\item Starting with our time-line more zoomed in order to give more sensation of time passing.
+\item Starting with our timeline more zoomed in order to give more sensation of time passing.
 \item Create content with starting time and duration, instead of ending time.
 \end{itemize}
 
@@ -347,7 +347,7 @@ On the second phase of our user interface tests, in a general way, we have notic
 
 In order to measure the users learning speed, we have performed tests with experienced users in order to retrieve the optimal task duration and minimal task clicks.
 
-To this end, with regard to optimal task duration and minimal clicks, we obtained the values shown in table \ref{table:optimal}.
+To this end, with regard to optimal task duration and minimal clicks, we obtained the values shown in Table \ref{table:optimal}.
 
 
 \begin{table}[H]
@@ -441,9 +441,9 @@ As we had relatively bad results with some users, we explained to those users th
 
 Most users gave us worse evaluations on our user interface layout and content editor, which was due to having a lot of tools present in the same web page and some of them being hidden due the screen size. In some cases users had to scroll down in order to find the tools they were looking for. 
 
-Another weak aspect was our content editor, which, in fact, we recognize is difficult to work with, mostly due to the amount of information that is necessary to create a synchronized content (starting time, duration and content itself). Some users have suggested that the content should also be present on the time-line so they could be easily dragged and resized (on time).
+Another weak aspect was our content editor, which, in fact, we recognize is difficult to work with, mostly due to the amount of information that is necessary to create a synchronized content (starting time, duration and content itself). Some users have suggested that the content should also be present on the timeline so they could be easily dragged and resized (on time).
 
-We are aware that placing content on the time-line will reduce our solutions performance, especially when there is a relatively large amount of content, due to the content that is present on the time-line being loaded all at once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the time-line could not have a great impact on our solutions performance, we choose not to implement this.
+We are aware that placing content on the timeline will reduce our solutions performance, especially when there is a relatively large amount of content, due to the content that is present on the timeline being loaded all at once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the timeline could not have a great impact on our solutions performance, we choose not to implement this.
 
 In conclusion, 100\% of our testers though that our solution was an innovation and 95\% recommended using our solution.
 

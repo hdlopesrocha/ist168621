@@ -52,7 +52,7 @@ The Hyper-linked communications concept applies much of the hypermedia concepts,
 
 Voice and image together can express emotions like no other medium can. With hypermedia concepts, we can add more value to conference calls.
 
-\emph{WebRTC} technology allows real-time communications between web browsers without the need to install additional software. The nature of web browser applications already follows the hypermedia concept, which makes \emph{WebRTC} the ideal technology to apply the hyper-linked communications concepts.
+\emph{WebRTC} technology allows real time communications between web browsers without the need to install additional software. The nature of web browser applications already follows the hypermedia concept, which makes \emph{WebRTC} the ideal technology to apply the hyper-linked communications concepts.
 The web browser platform provides an abstraction layer that makes it possible to create applications that run independently from the operating system.
 The native support for \emph{WebRTC} in operating systems extends its usage to outside the web browser, allowing for the exploration of functionalities for which web browsers provide poor support, such as video recording and massive information storage.
 
@@ -71,7 +71,7 @@ Our goal was the development of an application targeted to the web platform, res
 
 	With the advent of WebRTC and its successive integration with web browsers, it became possible to develop video conference web applications without plugins, this presents a range of possibilities on what can be implemented using already existing web technologies.
 		
-    Furthermore, real-time communication applications can make a significant difference on business, education and health sectors by providing tools for developing teaching and learning online, teamworking and socializing web applications.
+    Furthermore, real time communication applications can make a significant difference on business, education and health sectors by providing tools for developing teaching and learning online, teamworking and socializing web applications.
 
 \subsection{Proposed Solution}
 \label{section:proposed}
@@ -168,7 +168,7 @@ Real time collaboration applications have become a huge help on team tasks, prov
 \section{Architecture}
 \label{chapter:architecture}
 
-Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real-time.
+Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real time.
 
 \subsection{Requirements}
 In a general way our system's goal is to provide a multi-party video and audio conference environment that supports chat, time manipulation, collaborative text edition and hyper-content creation.
@@ -334,7 +334,7 @@ At this stage, the web application's user is asked if he wants to share its came
 
 If the user decides to share his camera or screen the user agent creates an offer, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the WebSocket to the Application Server.
 
-The server receives and processes the offer and sets the \emph{remote session description} to its client associated \gls{WebRTC} endpoint. Then a \emph{local session description} is created on the server and sent back to the client, after that the server tries to gather \gls{ICE} candidates.
+The server receives and processes the offer and sets the \emph{remote session description} to its client associated \gls{WebRTC} endpoint. Then a \emph{local session description} is created on the server and sent back to the client. After that, the server tries to gather \gls{ICE} candidates.
 
 The client receives the server answer, sets the \emph{remote session description} and gets the ice candidates from the \gls{ICE} server.
 %RP tens ``ice'', ``\gls{ICE}''. Acho que também já vi ``ICE''. Convém ser sempre igual!
@@ -353,7 +353,7 @@ Having the media session established, the server starts to record any received s
 	One of our concerns during the development of our solution was the storage scalability. Saving files directly into the file system would require an extra effort to distribute and replicate files among servers. For that purpose, the \emph{Kurento} team developed \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} which is based on \emph{MongoDB}.
 
 
-	With server side recording, the user would maintain always the same stream \gls{URL} even if it is playing real-time video or reproducing recorded video. It is \gls{KMS} that sends different content through that stream. When a user desires to play recorded video, a \emph{webSocket} message is sent specifying the time and the intended user id. The server performs the calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
+	With server side recording, the user would maintain always the same stream \gls{URL} even if it is playing real time video or reproducing recorded video. It is \gls{KMS} that sends different content through that stream. When a user desires to play recorded video, a \emph{webSocket} message is sent specifying the time and the intended user id. The server performs the calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
 
 %RP não falas nada sobre chats, etc! Não há signalling para isso?
 %HR não, só video e audio, chat é websockets
@@ -365,7 +365,7 @@ Having the media session established, the server starts to record any received s
 
 	In order to create content, the user has the option to write simple movie captions without writing any code, otherwise, as mentioned before, it can write \gls{HTML}, \gls{CSS} and \emph{JavaScript}.
 
-	As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.	In order to help the content creator to introduce and synchronize its content in real-time, we allow the user to encode its content into \gls{QR} codes and show it to the camera in real time.
+	As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.	In order to help the content creator to introduce and synchronize its content in real time, we allow the user to encode its content into \gls{QR} codes and show it to the camera in real time.
 
 
 \subsection{Collaborative editor}
@@ -481,7 +481,7 @@ On the second phase of our user interface tests, in a general way, we have notic
 
 In order to measure the users learning speed, we have performed tests with experienced users in order to retrieve the optimal task duration and minimal task clicks.
 
-To this end, with regard to optimal task duration and minimal clicks, we obtained the values shown in table \ref{table:optimal}.
+To this end, with regard to optimal task duration and minimal clicks, we obtained the values shown in Table \ref{table:optimal}.
 
 
 \begin{table}[H]
@@ -532,9 +532,9 @@ As we had relatively bad results with some users, we explained to those users th
 
 Most users gave us worse evaluations on our user interface layout and content editor, which was due to having a lot of tools present in the same web page and some of them being hidden due the screen size. In some cases users had to scroll down in order to find the tools they were looking for. 
 
-Another weak aspect was our content editor, which, in fact, we recognize is difficult to work with, mostly due to the amount of information that is necessary to create a synchronized content (starting time, duration and content itself). Some users have suggested that the content should also be present on the time-line so they could be easily dragged and resized (on time).
+Another weak aspect was our content editor, which, in fact, we recognize is difficult to work with, mostly due to the amount of information that is necessary to create a synchronized content (starting time, duration and content itself). Some users have suggested that the content should also be present on the timeline so they could be easily dragged and resized (on time).
 
-We are aware that placing content on the time-line will reduce our solutions performance, especially when there is a relatively large amount of content, due to the content that is present on the time-line being loaded all at once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the time-line could not have a great impact on our solutions performance, we choose not to implement this.
+We are aware that placing content on the timeline will reduce our solutions performance, especially when there is a relatively large amount of content, due to the content that is present on the timeline being loaded all at once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the timeline could not have a great impact on our solutions performance, we choose not to implement this.
 
 In conclusion, 100\% of our testers though that our solution was an innovation and 95\% recommended using our solution.
 

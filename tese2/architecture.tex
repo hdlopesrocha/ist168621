@@ -2,7 +2,7 @@
 \label{chapter:architecture}
 
 
-Taking into account the goals of this project and all the technology presented so far. Our proposal is the development of a web application that provides communication and collaboration features in real-time.
+Taking into account the goals of this project and all the technology presented so far, our proposal is the development of a web application that provides communication and collaboration features in real time.
 
 \section{Requirements}
 In a general way our system's goal is to provide a multi-party video and audio conference environment that supports chat, time manipulation, collaborative text edition and hyper-content creation.
@@ -16,9 +16,9 @@ For our system, the goals include:
 \begin{itemize}
  \item \textbf{Instant Messaging} - Our application must provide a simple way to send instant text messages to the conference participants.
  \item \textbf{Room management} - Conference rooms can be public or private. Public chat rooms are moderated by a group of clients which initially consists only of the room creator. This type of room has no access restrictions by default, but that can be changed by its moderators. Private chat rooms will only be visible to a defined list of clients or can be accessed by clients that have a link for that conference room.
- \item \textbf{Stream Recording} - Ability to recording and playback recorded video including all the hyper-content displayed at that time.
+ \item \textbf{Stream Recording} - Ability to record and playback recorded video including all the hyper-content displayed at that time.
  \item \textbf{Stream Composition} - Our streaming server must support mixing multiple user streams into a single stream. The sound played on clients must be the composed sound of all participants but the video played can be switched to the individual or group view.
- \item \textbf{Time annotations} - Our application must give the possibility to create annotations associated to a specified time and support viewing them on a time-line. 
+ \item \textbf{Time annotations} - Our application must give the possibility to create annotations associated to a specified time and support viewing them on a timeline. 
  \item \textbf{Content Overlay} - Our system must allow users to superimpose hyper-content to video given a range of time. This content can be continuous or discrete and interactive or non interactive.
  \item \textbf{Search} - Unified search every objects related to a conference room such as hyper-content, time annotations and users.
  \item \textbf{Content Sharing} - Our application must have the ability to share files and time links among users.
@@ -56,7 +56,7 @@ In this section we present the several modules that were designed in order com f
  
 \item \textbf{Signaling module} - responsible for \emph{Client} and \emph{Stream} coordination which will be performed using \emph{WebSockets}.
 
- \item \textbf{NAT Traversal module} - \ac{STUN} and \ac{TURN} techniques used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
+ \item \textbf{NAT Traversal module} - \ac{STUN} and \ac{TURN} are techniques used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
 
  \item \textbf{Stream module} - responsible to deliver and receive multimedia content from the \emph{Client} using \ac{WebRTC}. 
 
@@ -81,7 +81,7 @@ The infrastructure is composed by: web server, stream server, signaling server, 
 	\caption{System Infrastructure}
 \end{figure}
 
-In order to simplify our solution, we propose that the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules be implemented within the same server application, so it could be easy to deploy as a single image. To this set of modules, we often call \emph{backend}.
+In order to simplify our solution, we propose that the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules be implemented within the same server application, so it could be easy to deploy as a single virtual machine image. To this set of modules, we often call \emph{backend}.
 
 	\subsection{Security and authorization}
 
@@ -117,7 +117,7 @@ The placement of our streaming servers inside a \ac{NAT} also has an important r
 \end{minipage}
 \end{figure}
 
-	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on figure \ref{fig:central}. Otherwise clients could follow a peer-to-peer connection, as seen on figure \ref{fig:p2p}, which would result on maintaining more connections and performing the composition of videos on client side.
+	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on Figure \ref{fig:central}. Otherwise clients could follow a peer-to-peer connection, as seen on Figure \ref{fig:p2p}, which would result on maintaining more connections and performing the composition of videos on client side.
 
 	The composition of streams on client side is performed by receiving streams with the best quality possible but, due to undersizing the video of clients into a smaller region, this would result on wasting bandwidth on a quality that is not needed.
 
@@ -175,8 +175,8 @@ With respect to displaying content, the synchronization between multimedia eleme
 \section{Chapter Summary}
 \label{architecture:summary}
 
-In this chapter we have shown the modules needed in order to implement our solution.
+In this chapter we have described the modules needed in order to implement our solution.
 
-Several technologies were taken into account for implementing each module, we have studied the pros and cons of each technology and decided the architecture for our solution.
+Several technologies were taken into account for implementing each module. We have studied the pros and cons of each technology and decided the architecture for our solution.
 
 

@@ -13,7 +13,7 @@ In order to offer all the functionalities that we promise, some information abou
 \subsection {Schema representation}
     \emph{MongoDB} has a slightly different terminology from relational databases. The first big difference is instead of having tables \emph{MongoDB} stores its objects on collections. The analogous data structure to the table row is a document.
 
-    Each \emph{MongoDB} document is represented by a \emph{JSON} object and, as a result, each document may have different attributes within a collection. Needless to say that, by following this approach we do not need to create the collections with a well predefined schema. In fact we do not need to define it at all but, for reasons of coherence and organization, we represent our database collections as they would have a predefined schema by following the same document structure as we will present in this section.
+    Each \emph{MongoDB} document is represented by a \emph{JSON} object and, as a result, each document may have different attributes within a collection. Needless to say that, by following this approach we do not need to create the collections with a well predefined schema. In fact, we do not need to define it at all but, for reasons of coherence and organization, we represent our database collections as they would have a predefined schema by following the same document structure as we will present in this section.
     %RP a última frase é confusa. O que queres dizer? Reescreve
     %HR está melhor?
 
@@ -23,7 +23,7 @@ In order to offer all the functionalities that we promise, some information abou
 
     In respect to attributes nullability, \emph{MongoDB} does not enforce a document's attribute to have a not null value, although, for sake of good functionality, we perform those constraints validation programmatically and as such we also represent them in our schema.
     
-    An example of schema representation can be seen on table \ref{table:schema}.
+    An example of schema representation can be seen on Table \ref{table:schema}.
 
 \begin{table}
 \centering
@@ -83,7 +83,7 @@ In particular, if all attributes were searchable, it could be simple to search f
 %RP era melhor que o exemplo fosse relativo à tua aplicação e não algo abstracto como saúde.
 %RP Dás permissões de leitura e escrita a objectos. Normalmente é a utilizadores. Explicar relação. Assumo que sejam aqui referenciados apenas objectos que representam utilizadores
 
-Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification lets us create abstract authentication services. For example a user can login into our system by providing any attribute that identifies himself, \emph{e.g.} the e-mail but others are possible like the user name or cellphone number. 
+Another important attribute specification is the owner identifiability, which tells us if the attribute identifies the object. This specification lets us create abstract authentication services. For example a user can login into our system by providing any attribute that identifies himself, \emph{e.g.} the e-mail, but others are possible like the user name or cellphone number. 
 
 Not less important, in order to get an object's properties efficiently, we have created an index over the \emph{owner} attribute. We have also created an index over the \emph{searchableValues} in order to improve the keyword search performance.
 
@@ -134,9 +134,9 @@ In order to improve the performance of queries over the \emph{Relation} collecti
 
 \subsection{Group model}
 
-A conference room, which is the environment where users communicate among their selves, is represented persistently by a group of participating entities (in general users but our system allow other types of entities).
+A conference room, which is the environment where users communicate among themselves, is represented persistently by a group of participating entities (in general users but our system allow other types of entities).
 
-A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on table \ref{table:group}.
+A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on Table \ref{table:group}.
 Moreover, a group can be public or private. If the group is public, then it is visible to all users that maintain a friendship with a member of this group. If the group is private, then it is only visible to its members.
 
 \begin{table}
@@ -201,11 +201,11 @@ In order to improve performance of queries over \emph{Relation} collection we ha
 \subsection{Hyper content model}
 
 During a group conversation, it is possible to create time annotations for making it easy to access that time either for searching or sharing with other users.
-A time annotation (table \ref{table:hyper}) contains a title, the correspondent group identification number and the time itself.
+A time annotation (Table \ref{table:hyper}) contains a title, the correspondent group identification number and the time itself.
 
 The hyper content is used to synchronize content among users during a conversation. Table \ref{table:hyper} shows that every hyper content must have a start and ending time, the correspondent group identification number and the content itself, in the form of text. Beside those attributes, in order to perform queries over the \ac{HTML} contents with more precision, we have added an additional \emph{searchableContent} attribute. It contains just the searchable content extracted from the content, by excluding the \ac{HTML} tags and parameters using \emph{Jsoup}\footnote{\url{http://jsoup.org/} (Accessed April 11, 2016)}.
 
-In the point o view of a user, a time annotation is just a simple way to associate a time stamp to a topic in order to make it easier to find. On the other hand, the hyper-content is more complete than time annotations, except they are not visible on the time-line. In addition to time annotations, hyper-contents have a duration and content that can be superimposed to video.
+In the point o view of a user, a time annotation is just a simple way to associate a time stamp to a topic in order to make it easier to find. On the other hand, the hyper-content is more complete than time annotations, except they are not visible on the timeline. In addition to time annotations, hyper-contents have a duration and content that can be superimposed to video.
 
 %RP explica melhor a diferença entre HyperContent e Time Annotation do ponto de vista do utilizador / funcionalidade proporcionada.
 %HR done
@@ -238,7 +238,7 @@ In the point o view of a user, a time annotation is just a simple way to associa
     \end{tabular}
 \end{table}
 
-For example the content showed in listing \ref{lst:jsoup} would produce the searchable content "Click here!".
+For example the content showed in Listing \ref{lst:jsoup} would produce the searchable content "Click here!".
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={Example of HTML content},label={lst:jsoup},language=JavaScript]

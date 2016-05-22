@@ -41,16 +41,16 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 %RP escolheste qual? 
 %HR webm, assim fica subentendido que deixei por default
 
-	With server side recording, the user would maintain always the same stream \ac{URL} even if it is playing real-time video or reproducing recorded video. It is \ac{KMS} that sends different content through that stream. When a user desires to play recorded video, a \emph{webSocket} message is sent specifying the time and the intended user id. The group identification is not sent because it is already associated to the \emph{webSocket}. The server performs the same calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
+	With server side recording, the user would maintain always the same stream \ac{URL} even if it is playing real time video or reproducing recorded video. It is \ac{KMS} that sends different content through that stream. When a user desires to play recorded video, a \emph{webSocket} message is sent specifying the time and the intended user id. The group identification is not sent because it is already associated to the \emph{webSocket}. The server performs the same calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
 
 	We still observed differences in image quality when switching parts. That was even noticeable if we set a short block duration. We also noticed a small gap on audio when switching blocks but it was acceptable and speech understanding was not very affected. 
 
 	When we started implementing our solution, \ac{KMS} had no support for seeking videos, which meant that blocks would would always start playing from their beginning. 
 
-	If we choose the closest chunk to play this lead to a playing time error that can be at most half the duration of a block, as it can be seen on figure \ref{fig:nearchunkerror} where the black dot represents the requested time to play. In this case, which is the worst, either $ block_{n}$ or $ block_{n+1}$ (with duration $d$) can be played from their beginning with a maximum error ($e$) correspondent to half their duration ($\frac{d}{2}$) . 
+	If we choose the closest chunk to play this lead to a playing time error that can be at most half the duration of a block, as it can be seen on Figure \ref{fig:nearchunkerror} where the black dot represents the requested time to play. In this case, which is the worst, either $ block_{n}$ or $ block_{n+1}$ (with duration $d$) can be played from their beginning with a maximum error ($e$) correspondent to half their duration ($\frac{d}{2}$) . 
 
 
-	In practice, the maximum playing time error coincides with the block duration because we must show always what the user requests, as it can be seen on figure \ref{fig:interchunkerror}. In this case, if a user wishes to play a time that is close to the end of $block_n$ the maximum playing error ($e$) is at most the chunk's duration ($d$) because we have to play $block_n$ from its beginning.
+	In practice, the maximum playing time error coincides with the block duration because we must show always what the user requests, as it can be seen on Figure \ref{fig:interchunkerror}. In this case, if a user wishes to play a time that is close to the end of $block_n$ the maximum playing error ($e$) is at most the chunk's duration ($d$) because we have to play $block_n$ from its beginning.
         %RP já tinhamos falado sobre isto. O erro é no máximo o tamanho do bloco pois queres garantir que a pessoa ve sempre o que solicita. Assim começas sempre no bloco que fica antes e nunca no que fica depois.
 
         %RP Figura tem de ser apresentada no texto e explicada. O que significam as letras?

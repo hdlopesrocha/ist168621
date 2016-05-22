@@ -50,7 +50,7 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
 
 \subsection{Extensible Messaging and Presence Protocol}
 
-  \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real-time communications. 
+  \ac{XMPP} was initially developed for instant messaging and presence (Jabber\footnote{\url{http://jabber.org/}(accessed June 1, 2015).}). It is nowadays an open technology for standardized, decentralized, secure and extensible real time communications. 
   \ac{XMPP} messages are \ac{XML} based, which is attractive for applications that need structured messages and rich hypermedia. Another advantage of \ac{XMPP} is the addition of extensions, for example \emph{XEP-0096}~\cite{xep0096}, which adds file transfer capabilities between two entities, and \emph{XEP-0045}~\cite{xep0045}, which enables multi-user chat.
   \ac{XMPP}'s bi-directional communication over \ac{HTTP} is achieved through \ac{BOSH}~\cite{xep0206}.
   This kind of communication is also possible through WebSockets~\cite{rfc7395}.
@@ -65,7 +65,7 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
     
     An important aspect of this model is the ability to define a user as a set of attributes that can change dynamically in order to fit the \ac{IM} application's needs. 
 
-    The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance. On the other hand, users can directly connect directly to \ac{XMPP} servers from web applications using the \emph{JavaScript} library \emph{strophe.js} \footnote{\url{http://strophe.im/strophejs/} (accessed May 6, 2016).}
+    The connection to the \ac{XMPP} server can be done through the same web server as the user is connected, but this web server would handle a lot of connections and that would have a great impact on the overall system performance. On the other hand, users can directly connect directly to \ac{XMPP} servers from web applications using the \emph{JavaScript} library \emph{strophe.js}. \footnote{\url{http://strophe.im/strophejs/} (accessed May 6, 2016).}
 
     Typically a web application consists in multiple web pages which are navigated by users. Each time a web page is accessed, either from a new context or a transition from a previous page, its context is cleared except for local storage and cookies. The \emph{JavaScript} context is cleared, including the \ac{XMPP} connections performed by \emph{strophe.js}. As such, an automatic mechanism is required for avoiding the implicit user reauthentication.
     One solution for reauthentication can be achieved by storing the user's JabberID and password on local storage and every time a page is accessed the authentication is performed without the users knowledge. Clearly this solution represents security flaws as the local storage can be easily accessed locally or by performing a cross site scripting attack to reveal all the local storage. The same problem arises if the credentials are stored on cookies.
@@ -84,7 +84,7 @@ The \emph{WebSocket} protocol allows bi-directional communications over a full-d
   \subsection{Signaling-On-the-fly}
 
 
-  Another interesting approach for signaling would be \ac{SigOfly} which allows inter-domain real-time communications, while abstracting the protocol used~\cite{sigofly}.
+  Another interesting approach for signaling would be \ac{SigOfly} which allows inter-domain real time communications, while abstracting the protocol used~\cite{sigofly}.
 %RP o ~ antes do cite faz com que não haja um espaço mas não haja uma mudança de linha entre a última palavra e a citação
   \ac{SigOfly} provides inter-domain communication by making use of the \emph{Identity Providers} of each peer. 
   The caller entity downloads a page with all the code needed, also known as messaging stub, to communicate with the called party.

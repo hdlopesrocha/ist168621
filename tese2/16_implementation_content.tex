@@ -30,12 +30,12 @@
 \end{minipage}
 
 
-	Defining the content's time to appear in real-time would require a previous user plan. Otherwise the user could make a speech and insert the content later.
+	Defining the content's time to appear in real time would require a previous user plan. Otherwise the user could make a speech and insert the content later.
 
 
-	As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.	In order to help the content creator to introduce and synchronize its content in real-time, we allow the user to encode its content into \ac{QR} codes and show it to the camera in real time.
+	As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.	In order to help the content creator to introduce and synchronize its content in real time, we allow the user to encode its content into \ac{QR} codes and show it to the camera in real time.
 
-	\ac{KMS} lets registering event handlers for \ac{QR} code detection. The component that detects \ac{QR} codes on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \ac{QR} code enters or leaves the screen. We had to implement our own mechanism for detecting those events. Each user session in the server maintains a map with the contents that are present on the screen. In order to apply our algorithm more efficiently we calculate the content's hash through the \emph{md5} method. If the hash is not present in the map, it means the \ac{QR} code was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in real-time. If the same \ac{QR} code is not detected after a time bigger then two periods we can conclude that the \ac{QR} code left the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \ac{QR} code leaving detection.
+	\ac{KMS} lets registering event handlers for \ac{QR} code detection. The component that detects \ac{QR} codes on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \ac{QR} code enters or leaves the screen. We had to implement our own mechanism for detecting those events. Each user session in the server maintains a map with the contents that are present on the screen. In order to apply our algorithm more efficiently we calculate the content's hash through the \emph{md5} method. If the hash is not present in the map, it means the \ac{QR} code was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in real time. If the same \ac{QR} code is not detected after a time bigger then two periods we can conclude that the \ac{QR} code left the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \ac{QR} code leaving detection.
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={Pseudo code for QR code leaving detection},label={lst:pseudo_qrcode},language=JavaScript]
@@ -73,7 +73,7 @@ function onCodeFound(content) {
 	In order to allow users to visualize past and present communications, we express the user's position as the time offset between its navigated time and the current time.
 
 
-	In our solution, content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}. This content is displayed on defined intervals of time. Multiple contents can be displayed at the same time. In order to achieve that, we define layers above the video with the same size. Each layer is associated to the content.	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of the content instead of all of it, which would be very inefficient. The content to display for each user depends on the user's position on the time-line. This position is given by an offset between the current time and the navigated time. If the user is watching the content in real-time this offset is always zero. If the user is reproducing past communications in normal playback rate, this offset is constant and, as a consequence, there is need to re-synchronize this value. If, for instance, we had to implement communication reproduction with a faster or slower playback rate, we would need to take into account the fact of this time offset not being constant. 
+	In our solution, content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}. This content is displayed on defined intervals of time. Multiple contents can be displayed at the same time. In order to achieve that, we define layers above the video with the same size. Each layer is associated to the content.	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of the content instead of all of it, which would be very inefficient. The content to display for each user depends on the user's position on the timeline. This position is given by an offset between the current time and the navigated time. If the user is watching the content in real time this offset is always zero. If the user is reproducing past communications in normal playback rate, this offset is constant and, as a consequence, there is need to re-synchronize this value. If, for instance, we had to implement communication reproduction with a faster or slower playback rate, we would need to take into account the fact of this time offset not being constant. 
 
 	Each content is divided into two components, the \emph{start} and the \emph{end} which are sent to users. The \emph{start} component contains a time stamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the time stamp and the content identification number. 
 
@@ -182,25 +182,25 @@ function scheduleContent() {
 
 	\subsection{Time Manipulation}
 
-	We have used \emph{vis.js} to display out time-line. This library was created for content navigation through time, but it was not designed to be always moving automatically. We have created a background timer that performs the animation of moving the window of time bounds and user navigated time marker.
+	We have used \emph{vis.js} to display out timeline. This library was created for content navigation through time, but it was not designed to be always moving automatically. We have created a background timer that performs the animation of moving the window of time bounds and user navigated time marker.
 
-	Figure \ref{fig:timeline} shows the graphical appearance of our interactive time-line. In order to navigate through time, the user must drag and drop the time-line horizontally. When the user drops the time-line an event handler is called with the new user's time offset, which will be used to send a message to the server in order to choose the correspondent content to display. 
+	Figure \ref{fig:timeline} shows the graphical appearance of our interactive timeline. In order to navigate through time, the user must drag and drop the timeline horizontally. When the user drops the timeline an event handler is called with the new user's time offset, which will be used to send a message to the server in order to choose the correspondent content to display. 
 
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.95\textwidth]{figures/timeline.png}
-		\caption{Interactive time-line}
+		\caption{Interactive timeline}
 		\label{fig:timeline}
 	\end{figure}
 
-	We have noticed the server time being different from client time and this created timing inconsistencies, such as showing existing recorded blocks of movie in the future. To solve this problem, the server sends its time to the client immediately after the \emph{webSocket} creation. We synchronize the time-line with the server and although it may exist a small error due to network transmission time, the graphical error is negligible. 
+	We have noticed the server time being different from client time and this created timing inconsistencies, such as showing existing recorded blocks of movie in the future. To solve this problem, the server sends its time to the client immediately after the \emph{webSocket} creation. We synchronize the timeline with the server and although it may exist a small error due to network transmission time, the graphical error is negligible. 
 
 
 	\subsection{Time annotations creation}
 
-	Time annotations are a simpler way to mark points in time and share them with other users. When a user enters a conference room, the server sends all annotations so they can be displayed directly into the user time-line. When each time annotation is created, all users are notified so they can update their interfaces.
+	Time annotations are a simpler way to mark points in time and share them with other users. When a user enters a conference room, the server sends all annotations so they can be displayed directly into the user timeline. When each time annotation is created, all users are notified so they can update their interfaces.
 
-	Figure \ref{fig:annotation} shows the creation and placement of annotations on the time-line. To save the annotation the user must click on the floppy icon in order to save it and notify the conference participants. 
+	Figure \ref{fig:annotation} shows the creation and placement of annotations on the timeline. To save the annotation the user must click on the floppy icon in order to save it and notify the conference participants. 
 
 	\begin{figure}
 		\centering
@@ -276,7 +276,7 @@ function scheduleContent() {
 
 		When the amount of participants is just two, both solutions require the same amount of streams but as the number of participants increase, the composition operation tends to be a more efficient approach. 
 
-		The composite operation, as shown on figure \ref{fig:wcomposite}, is performed at \ac{KMS} and works by decoding the incoming client streams, mixing audio and video and encoding again to send back to users.
+		The composite operation, as shown on Figure \ref{fig:wcomposite}, is performed at \ac{KMS} and works by decoding the incoming client streams, mixing audio and video and encoding again to send back to users.
 
 	\begin{figure}
 		\centering
@@ -286,7 +286,7 @@ function scheduleContent() {
 	\end{figure}
 
 
-		We provide a way for users to select the composite view of the conference room or the video shared by a particular user device as it can be seen on figure \ref{fig:devices}. 
+		We provide a way for users to select the composite view of the conference room or the video shared by a particular user device as it can be seen on Figure \ref{fig:devices}. 
 	
 	\begin{figure}
 		\centering

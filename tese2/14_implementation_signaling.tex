@@ -6,7 +6,7 @@ The signaling protocol plays a fundamental role on our solution. Taking into acc
 
 Although we have mentioned that the signaling protocol is used to establish connections between peers, on our system our media server (\ac{KMS}) is a peer that receives video streams and sends to its connected clients. 
 
-In a general view, the signaling protocol is used to share connection and media properties between two peers. In order to ease the understanding of our signaling protocol, we have created a sequence diagram that represented on figure \ref{fig:signaling2}\footnote{Although two \ac{ICE} servers are shown they are, in fact, the same. Showing just one \ac{ICE} server would be difficult to draw.}.
+In a general view, the signaling protocol is used to share connection and media properties between two peers. In order to ease the understanding of our signaling protocol, we have created a sequence diagram that is represented on Figure \ref{fig:signaling2}\footnote{Although two \ac{ICE} servers are shown they are, in fact, the same. Showing just one \ac{ICE} server would be difficult to draw.}.
 %RP devias começar com uma introdução a explicar que tiveste de desenvolver um protocolo para coordenar a interacção dos clientes com o servidor e entre clientes (?).
 %RP explicar quando é usado (começar chamada, terminar, juntar, chat(?), edição colaborativa (?), etc).
 %HR done
@@ -33,7 +33,7 @@ However, they would transport extra information such as \ac{HTTP} headers and wo
 Instead, if we create a \emph{WebSocket} \ac{API}, we only need one \ac{TCP} connection and, at the same, provide bi-directional communications without additional headers. Moreover, using \emph{WebSocket} allows the application server to send messages asynchronously to the client without the client having to request it, which can be slightly faster than using \ac{HTTP} which is based on a request followed by a response.
 %RP em vez de slighhtly faster não queres antes enfatizar que pode ser antes o servidor a iniciar a comunicação, de forma assincrona?
 %HR done
-Our signaling protocol consists of sending and receiving \ac{JSON} formated messages, \emph{e.g.} listing \ref{lst:msgtype}, over WebSockets by both the application server and the client. 
+Our signaling protocol consists of sending and receiving \ac{JSON} formated messages, \emph{e.g.} Listing \ref{lst:msgtype}, over WebSockets by both the application server and the client. 
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={General structure of our WebSocket messages},label={lst:msgtype},language=json]
@@ -58,7 +58,7 @@ At this stage, the web application's user is asked if he wants to share its came
 %RP web app user? OU apenas client user?
 %RP foot note com exemplos de browsers que aceitem screen sharing?
 %HR done
-If the user decides to share either from camera or screen, \emph{getUserMedia} is called with the correspondent constraints in order to obtain a local stream. We use the constraints presented on listing \ref{lst:constraints}. 
+If the user decides to share either from camera or screen, \emph{getUserMedia} is called with the correspondent constraints in order to obtain a local stream. We use the constraints presented on Listing \ref{lst:constraints}. 
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={Media constraints},label={lst:constraints},language=JavaScript]
@@ -79,7 +79,7 @@ var receiveOnlyConstraints = {
 \end{lstlisting}
 \end{minipage}
 
-If the user decides to share his camera or screen, a pop-up is raised in order to ask the user to give permission to share those resources. If the resources are shared successfully, the user agent creates an offer like listing \ref{lst:sig01}, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the WebSocket to the Application Server.
+If the user decides to share his camera or screen, a pop-up is raised in order to ask the user to give permission to share those resources. If the resources are shared successfully, the user agent creates an offer like Listing \ref{lst:sig01}, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the WebSocket to the Application Server.
 %RP usas ``user'' duas vezes, uma para te referires ao utilizador e outra ao browser (user agent).
 If the resources are not shared or the user specified to receive stream only, an \ac{SDP} offer is created specifying the constraints for receiving only video and audio.
 %RP offer -> SDP offer?
@@ -98,7 +98,7 @@ If the resources are not shared or the user specified to receive stream only, an
 
 The \emph{local session description} contains the session identifier, codecs, containers, transport protocols and ports used per media type. The \emph{local session description} is useful to conclude if the client is receiving only, which means that \ac{KMS} does not need to mix, record nor analyze streams coming from the user's \ac{WebRTC} endpoint. 
 
-The server receives and processes the offer and sets the \emph{remote session description} to its client associated \ac{WebRTC} endpoint. Then a \emph{local session description}, like the one presented in Listing \ref{lst:sig02}, is created on the server and sent back to the client, after that the server tries to gather \ac{ICE} candidates.
+The server receives and processes the offer and sets the \emph{remote session description} to its client associated \ac{WebRTC} endpoint. Then a \emph{local session description}, like the one presented in Listing \ref{lst:sig02}, is created on the server and sent back to the client. After that, the server tries to gather \ac{ICE} candidates.
 %RP listing -> Listing
 
 \begin{minipage}{\linewidth}
@@ -116,7 +116,7 @@ The server receives and processes the offer and sets the \emph{remote session de
 The client receives the server answer, sets the \emph{remote session description} and gets the ice candidates from the \ac{ICE} server.
 %RP tens ``ice'', ``\ac{ICE}''. Acho que também já vi ``ICE''. Convém ser sempre igual!
 
-Subsequently, after a while both the server and client receive the \ac{ICE} candidates that allow the client to connect directly to \ac{KMS} and vice-versa. The candidates are received at the client which sets them to its \emph{PeerConnection}. The same is done on the server which receives the \ac{ICE} candidates like on listing \ref{lst:sig03} from the client and propagates them to \ac{KMS}.
+Subsequently, after a while both the server and client receive the \ac{ICE} candidates that allow the client to connect directly to \ac{KMS} and vice-versa. The candidates are received at the client which sets them to its \emph{PeerConnection}. The same is done on the server which receives the \ac{ICE} candidates like on Listing \ref{lst:sig03} from the client and propagates them to \ac{KMS}.
 %RP A figura 4.1 precisa de vir antes deste texto todo, para ser mais fácil de perceber.
 %RP também tens de explicar porque razão escolheste colocar o KMS numa rede privada. Se está numa rede privada, usas NAT ou um proxy (socket) para estabelecer a ligação?
 %HR uso NAT, falei disso na arquitectura, serve para o cliente não aceder directamente ao servidor de streaming e realizar o seu proprio protocolo de sinalizacao (uso indevido por parte de atacantes)
