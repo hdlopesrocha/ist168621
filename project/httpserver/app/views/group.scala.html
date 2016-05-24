@@ -576,11 +576,7 @@
         function selectUser(userId,sessionId){
             selectedUser = userId;
             selectedSession = sessionId;
-            if (realTime) {
-                HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
-            } else {
-                HyperWebSocket.receiveHistoric(selectedUser, timeline.hyper_offset,selectedSession);
-            }
+            HyperWebSocket.setTime(selectedUser, (realTime ? null : timeline.hyper_offset),selectedSession);
         }
 
         function saveTags() {
@@ -823,13 +819,13 @@
                 function(offset) {
                     console.log("HISTORIC", offset);
                     // current request
-                    HyperWebSocket.receiveHistoric(selectedUser, offset, selectedSession);
+                    HyperWebSocket.setTime(selectedUser, offset, selectedSession);
                     realTime = false;
 
                 }, function() {
                     console.log("REALTIME");
                     // realtime request
-                    HyperWebSocket.receiveRealTime(selectedUser, selectedSession);
+                    HyperWebSocket.setTime(selectedUser, null, selectedSession);
                     realTime = true;
                 }, function(tag){
                     if(tag!=null){

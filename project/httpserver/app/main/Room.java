@@ -39,7 +39,6 @@ public class Room implements Closeable {
     
     /** The composite. */
     private Hub composite = null;
-    private long sequence = 0;
     /** The hub port. */
     private HubPort compositePort;
     private Recorder recorder;
@@ -139,7 +138,6 @@ public class Room implements Closeable {
                         Date end = new Date();
 
                         RecordingChunk rec = new RecordingChunk(gid,gid,start,end,"group",filepath);
-
                         rec.save();
 
                         interval.setEnd(end);
@@ -154,7 +152,7 @@ public class Room implements Closeable {
                         msg.put(interval.getId().toString(), array);
                         sendMessage(msg.toString());
 
-                        System.out.println("GRP REC: " + filepath);
+                        System.out.println("REC: group|"+filepath);
                         record(duration,true);
                     }
                 });

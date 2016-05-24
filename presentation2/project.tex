@@ -28,7 +28,7 @@ wasysym
 \pgfplotsset{compat=1.8}
 \usepackage[T1]{fontenc}
 \usepackage{newpxtext,newpxmath}
-
+\usepackage{pifont}% http://ctan.org/pkg/pifont
 \usepackage[utf8x]{inputenc}
 
 \usepackage{multicol}
@@ -38,6 +38,10 @@ wasysym
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
 \usepackage{listings}
+\usepackage{color, colortbl}
+\newcommand{\cmark}{\color{green}\ding{51}}%
+\newcommand{\xmark}{\color{red}\ding{55}}%
+
 \lstset{ %
 language=[LaTeX]TeX,
 basicstyle=\normalsize\ttfamily,
@@ -90,7 +94,7 @@ mindmap
 
 \logo{\includegraphics[height=1.5cm]{logo.pdf}}
 \newcommand{\nologo}{\setbeamertemplate{logo}{}}
-
+\definecolor{Gray}{gray}{0.9}
 \newcommand{\myquote}[2]{\begin{exampleblock}{}{\large ``#1''}\vskip5mm\hspace*\fill{\small--- #2}\end{exampleblock}}
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -161,7 +165,7 @@ Co-Advisor: Paulo Chainho \\
 
 		\vfill
 
-		An application that provides a way to remember our past communications would be a strong tool.
+		An application that provides a collaborative environment and a way to remember our past communications would be a strong tool.
 		
 		\end{frame}
 
@@ -191,7 +195,7 @@ Co-Advisor: Paulo Chainho \\
 	\subsection{Thesis Goals} % English
   		\begin{frame}[c]
 		\frametitle{Thesis Goals}
-		Development of an application that applies the hypermedia concepts.
+		Allow multi party conference calls.
 
 		\vfill
 		
@@ -199,7 +203,12 @@ Co-Advisor: Paulo Chainho \\
 		
 		\vfill
 
+        Create a collaborative environment        
+
+        \vfill
+
 		Use only standard technologies like JavaScript, WebRTC, HTML5 and CSS3.
+
 
 		\end{frame}
 
@@ -229,7 +238,7 @@ Co-Advisor: Paulo Chainho \\
 		\begin{flushright}
 
 			\vspace*{-8\baselineskip}
-			\includegraphics[width=0.55\textwidth]{figures/ice2.png}
+			\includegraphics[width=0.55\textwidth]{figures/ice.pdf}
 		\end{flushright}
 		
 		\end{frame}
@@ -239,53 +248,67 @@ Co-Advisor: Paulo Chainho \\
 
 	\subsection{Real-Time communications}\label{rtc}
 
-
-		\begin{frame}[c]
-		\frametitle{Real-Time communications}
-		\begin{figure}
-			\includegraphics[height=0.2\textwidth]{figures/skype.png}
-			\includegraphics[height=0.1\textheight]{figures/space.png}
-			\includegraphics[height=0.2\textwidth]{figures/hangouts.png}
-			\includegraphics[height=0.1\textheight]{figures/space.png}
-			\includegraphics[height=0.2\textwidth]{figures/jitsi.png}
-		\end{figure}
-		\end{frame}
-
 		\begin{frame}[c]
 		\frametitle{Real-Time communications}
 
 		WebRTC (Web Real-Time Communications)
 
 		\begin{itemize}
-		\item MediaStream	
-		\item DataChannel
-		\item RTCPeerConnection
+		\item Access to camera, microphone and screen*
+		\item Peer to Peer file and stream sharing
+		\item Standardized protocols
+		\item No plug-ins required
 		\end{itemize}
 
 		\begin{flushright}
 
 			\vspace*{-5\baselineskip}
 			\includegraphics[width=0.2\textwidth]{figures/webrtc.png}
-			\includegraphics[width=0.2\textwidth]{figures/space.png}
 		\end{flushright}
 		
+			\tiny{* requires installing a plug-in yet.}
+
+		\end{frame}
+
+
+		\begin{frame}[c]
+		\frametitle{Real-Time communications}
+
+\begin{table}[]
+\centering
+%\caption{My caption}
+\label{my-label}
+\begin{tabular}{cccc}
+ \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/skype.png}\end{minipage} &  
+ \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/hangouts.png}\end{minipage} &  
+ \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/jitsi.png}\end{minipage} &  
+ \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/kurento.png}\end{minipage} \\
+Skype & Hangouts & Jitsi & Kurento   \\
+\tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video  \\
+\tiny File Sharing & \tiny Collaborative Tools & \tiny Collaborative Tools & \tiny Stream Recording \\
+\tiny Proprietary & \tiny WebRTC$^{*}$ & \tiny WebRTC & \tiny WebRTC  
+\end{tabular}
+\end{table}
+
+	\tiny{* requires installing a plug-in on non chrome web browsers.}
 		\end{frame}
 
 
 
-	\subsection{Signaling}
-  		\begin{frame}[c]
-		\frametitle{Signaling: meet and get to know}
-		\begin{itemize}
-		\item Own Implementation
-		\vfill
-		\item SIP
-		\vfill
-		\item XMPP
-		\vfill
-		\item SigOFly 
-		\end{itemize}
-		\end{frame}
+
+%	\subsection{Signaling}
+%  		\begin{frame}[c]
+%		\frametitle{Signaling: meet and get to know}
+%		\begin{itemize}
+%		\item Own Implementation
+%		\vfill
+%		\item SIP
+%		\vfill
+%		\item XMPP
+%		\vfill
+%		\item SigOFly 
+%		\end{itemize}
+%		\end{frame}
 
 
 
@@ -307,41 +330,41 @@ Co-Advisor: Paulo Chainho \\
 		\end{frame}
 
 
-		\begin{frame}[c]
-		\frametitle{Hypermedia: more than words, more than images}
-		\begin{itemize}		
-		\item \textbf{Languages:} HyVAL \& SMIL
-		\vfill
-		\item \textbf{WebBrowser:} Ambulant \& SmillingWeb \& SVG
-		\end{itemize}
-		
-		\begin{multicols}{2}
-		\begin{figure}
-			\includegraphics[height=0.4\textheight]{figures/hyval.png}
-			\caption{HyVAL structure}
-		\end{figure}
-		\begin{figure}
-			\includegraphics[height=0.4\textheight]{figures/smil.png}
-			\caption{SMIL example}
-		\end{figure}
-		\end{multicols}
-		\end{frame}
+%		\begin{frame}[c]
+%		\frametitle{Hypermedia: more than words, more than images}
+%		\begin{itemize}		
+%		\item \textbf{Languages:} HyVAL \& SMIL
+%		\vfill
+%		\item \textbf{WebBrowser:} Ambulant \& SmillingWeb \& SVG
+%		\end{itemize}
+%		
+%		\begin{multicols}{2}
+%		\begin{figure}
+%			\includegraphics[height=0.4\textheight]{figures/hyval.png}
+%			\caption{HyVAL structure}
+%		\end{figure}
+%		\begin{figure}
+%			\includegraphics[height=0.4\textheight]{figures/smil.png}
+%			\caption{SMIL example}
+%		\end{figure}
+%		\end{multicols}
+%		\end{frame}
 
 
- 		\begin{frame}[c]
-		\frametitle{Web-Browser plug-ins}
-		\begin{figure}
-			\includegraphics[height=0.3\textheight]{figures/flash.jpg}
-			\includegraphics[height=0.1\textheight]{figures/space.png}
-			\includegraphics[height=0.3\textheight]{figures/silverlight.png}
-		\end{figure}
-		\end{frame}
+% 		\begin{frame}[c]
+%		\frametitle{Web-Browser plug-ins}
+%		\begin{figure}
+%			\includegraphics[height=0.3\textheight]{figures/flash.jpg}
+%			\includegraphics[height=0.1\textheight]{figures/space.png}
+%			\includegraphics[height=0.3\textheight]{figures/silverlight.png}
+%		\end{figure}
+%		\end{frame}
 
 
 	\subsection{Collaboration \& Time manipulation}
   		\begin{frame}[c]
 		\frametitle{Extending collaboration tools with time manipulation}
-		
+	
 		\begin{figure}
 			\includegraphics[height=0.5\textheight]{figures/media_types.png}
 			\caption{Media Types}
@@ -352,13 +375,22 @@ Co-Advisor: Paulo Chainho \\
 
   		\begin{frame}[c]
 		\frametitle{Extending collaboration tools with time manipulation}
-		\begin{itemize}
-		\item Streaming and Recording (RTP, SRTP)
-		\vfill
-		\item Recording and Streaming Interactive Media
-		\vfill
-		\item Collaborative Environment (TogetherJS)
-		\end{itemize}
+
+			\begin{table}
+			\centering
+			\caption{Comparision between Operational Transformation libraries}
+			\label{table:otcomparision}
+			\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Library} & \textbf{Own Server} & \textbf{Own Storage} & \textbf{Operations} \\ \hline
+			ShareJS          & \cmark                 & \cmark                  & text+objects        \\ \hline
+			TogetherJS       & \cmark                 & \xmark                   & text+objects        \\ \hline
+			Goodow           & \cmark                 & \cmark                  & text+objects        \\ \hline
+			Etherpad Lite    & \cmark                 & \cmark                  & extendable 			    \\ \hline
+			OT.js            & \xmark                  & \xmark                   & text                \\ \hline
+			\end{tabular}
+			\end{table}
+
 		\end{frame}
 
 %\subsubsection{Streaming and Recording}\label{recstream}
@@ -368,7 +400,7 @@ Co-Advisor: Paulo Chainho \\
 
 
 
-\section{Proposed Architecture}\label{arch}
+\section{Architecture}\label{arch}
 
 \begin{frame}[t,shrink]
 \frametitle{Related Work} 
@@ -380,7 +412,7 @@ Co-Advisor: Paulo Chainho \\
 	\begin{frame}[c]
 		\frametitle{Modules}
 		\begin{figure}[H]
-			\includegraphics[width=0.6\textwidth]{figures/archs.png}
+			\includegraphics[width=0.8\textwidth]{figures/modules.pdf}
 			\caption{System Modules}
 		\end{figure}
 	\end{frame}
@@ -388,148 +420,171 @@ Co-Advisor: Paulo Chainho \\
 \subsection{Implementation Proposal}
 
 		\begin{frame}[c]
-		\frametitle{Implementation Proposal}
+		\frametitle{System Infrastructure}
 
 
-\begin{columns}[c]
-\begin{column}{.4\textwidth}
+
 		\begin{figure}[H]
-			\includegraphics[width=\textwidth]{figures/arch.png}
+			\includegraphics[width=0.9\textwidth]{figures/infrastructure.pdf}
 			\caption{System Infrastructure}
 		\end{figure}
-\end{column}
-\begin{column}{.6\textwidth}
 
 \begin{itemize}
-\small
-		\item \textbf{ICE Server}: restund
-		\vfill
-		\item \textbf{Signaling Server}: Ejabberd
-		\vfill
-		\item \textbf{Web Server}: Play Framework
-		\vfill
-		\item \textbf{Stream Server}: Jitsi VideoBridge
+		\item \small \textbf{Signaling Server \& Web Server}: Play Framework
+		\item \textbf{Stream Server}: Kurento Media Server		
+		\item \textbf{Database}: MongoDB
 		\end{itemize}
 
-\end{column}
-\end{columns}
 
 
 
-{
-		\centering
-		\begin{figure}[H]
-			\includegraphics[width=0.9\textwidth]{figures/apparch.png}
-			\caption{App Architecture}
-		\end{figure}
-}
+		\end{frame}
+
+		\begin{frame}[c]
+
+		\frametitle{Application Architecture}
+
+\begin{table}[H]
+\centering
+	\caption{Application Architecture}
+	\label{table:apparch}
+
+	\resizebox{\textwidth}{!}{%
+    \begin{tabular}{cccccccc@{}m{0pt}@{}}
+	\hline 
+\multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
+\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
+\multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
+\end{tabular}}
+\end{table}
+
 
 		\end{frame}
 
 
-\begin{frame}[c]
-		\frametitle{Wireframe}
-		\begin{figure}[H]
-			\includegraphics[width=0.6\textwidth]{figures/pbf.png}
-			\caption{Application wireframe}
-		\end{figure}
-	\end{frame}
-
-\section{Methodology}\label{meth} % Section
-\subsection{Evaluation}
+\section{Implementation}\label{meth} % Section
 \begin{frame}[t,shrink]
 \frametitle{Related Work} 
 \tableofcontents[currentsection,hideothersubsections]
 \end{frame}
+
+\subsection{Signaling Protocol}
 \begin{frame}[c]
-		\frametitle{Evaluation}
-Qualitative and quantitative evaluation.
+		\frametitle{Signaling Protocol}
+		\begin{figure}[H]
+			\includegraphics[width=0.55\textwidth]{figures/signaling.eps}
+			\caption{Signaling Protocol}
+		\end{figure}
+\end{frame}
+
+
+
+\subsection{Stream Recording}
+\begin{frame}[c]
+\centering
+		\frametitle{Stream Recording}
 
 		\begin{itemize}
-		\item Tests with users.
-		
-			\begin{itemize}
-			\item Task duration.
-			\item Feedback.
-			\end{itemize}
-		\item Benchmarks.
-			\begin{itemize}
-			\item Amount of users.
-			\item Parallel conversations.
-			\end{itemize}
-		
+\item Client-side recording.
+		\vfill
+
+\item Server-side recording to file system.
+		\vfill
+
+\item Server-side recording to database (Kurento Repository).
 		\end{itemize}
 	\end{frame}
 
 
+\subsection{Hyper-Content}
 
-\subsection{Planned Schedule}
-\begin{frame}[c]
-\centering
-		\frametitle{Planned Schedule}
-
-\tikzset{every picture/.style={xscale=0.35,yscale=0.28,transform shape}}
-
-\begin{ganttchart}[vgrid, hgrid]{1}{36}
-\gantttitle{2015}{28}
-\gantttitle{2016}{8} \\
-\gantttitle{Jun}{4}
-\gantttitle{Jul}{4}
-\gantttitle{Aug}{4}
-\gantttitle{Sep}{4}
-\gantttitle{Oct}{4}
-\gantttitle{Nov}{4}
-\gantttitle{Dec}{4}
-\gantttitle{Jan}{4}
-\gantttitle{Feb}{4} \\
-\gantttitlelist{1,...,36}{1}\\
-%First Group
-\ganttgroup{Thesis}{1}{35} \\
-\ganttbar{Related work evaluation}{1}{30}\\
-\ganttbar{Thesis writing}{19}{35} \\
-\ganttbar{Paper writing}{25}{35} \\
-\ganttmilestone{Delivery}{35}{35} \\
-%\ganttlink{elem0}{elem1}
-%\ganttgroup{Resume}{1}{10} \\
-
-%\ganttmilestone{Milestone 1}{11}
-%Second Group
-\ganttgroup{Implementation}{1}{1}\ganttgroup{}{4}{8}\ganttgroup{}{11}{26}\ganttgroup{}{29}{30} \\
-\ganttbar{Basic configuration}{1}{1} \\
-%\ganttlink{elem4}{elem5}
-%\ganttmilestone{Milestone 1}{11}
-%Third Group
-\ganttbar{WebRTC basics}{4}{4} \\
-\ganttbar{Video \& Audio Communication}{4}{5} \\
-\ganttbar{Non-Interactive Record \& Playback}{6}{8} \\
-\ganttbar{Interactive Record \& Playback}{11}{14}\\
-\ganttmilestone{First Prototype}{18}\\
-\ganttbar{Collaborative Environment}{15}{18}\\
-\ganttmilestone{Second Prototype}{22} \\
-\ganttbar{Interface Improvement I}{19}{22} \\
-\ganttbar{Usability Tests I}{23}{23} \\
-\ganttmilestone{Third Prototype}{25} \\
-\ganttbar{Interface Improvement II}{24}{25} \\
-\ganttbar{Usability Tests II}{26}{26} \\
-\ganttbar{Performance Tests}{29}{30} \\
-\ganttbar{Performance Improvements}{30}{30} \\
-\ganttmilestone{Final Prototype}{30}
-
-%\ganttlink{elem8}{elem9}
+		\begin{frame}[c]
+		\frametitle{Hyper-Content}
 
 
-\ganttlink{elem9}{elem10}
-\ganttlink[link type=F-S]{elem11}{elem12}
-\ganttlink{elem12}{elem13}
-\ganttlink[link type=F-S]{elem13}{elem15}
-\ganttlink[link type=F-S]{elem15}{elem17}
-\ganttlink[link type=F-S]{elem17}{elem18}
-\ganttlink[link type=F-S]{elem18}{elem20}
-\ganttlink[link type=F-S]{elem20}{elem21}
-\end{ganttchart}
+		\begin{itemize}
+		\item Create \& Search content
+				\vfill
+\item Scheduler
+		\vfill
+		\item QR codes
+		\vfill
+		\item Security concerns
+		\end{itemize}
 
-	\end{frame}
+		\begin{flushright}
 
+			\vspace*{-11\baselineskip}
+			\includegraphics[width=0.5\textwidth]{figures/edition.png}
+		\end{flushright}
+		
+
+		\end{frame}
+
+
+\subsection{Time manipulation}
+
+		\begin{frame}[c]
+		\frametitle{Time manipulation}
+
+
+		\begin{itemize}
+		\item Playback recordings
+		\item Create \& Search annotations
+		\item Time Hyper-links
+		\end{itemize}
+
+			\includegraphics[width=\textwidth]{figures/timeline.png}
+				\begin{flushright}
+
+			\vspace*{-12\baselineskip}
+			\includegraphics[width=0.45\textwidth]{figures/search.png}
+		\end{flushright}
+		
+
+		\end{frame}
+
+
+\subsection{Stream composition}
+
+		\begin{frame}[c]
+		\frametitle{Stream composition}
+		\begin{figure}
+			\includegraphics[width=0.5\textwidth]{figures/wcomposite.pdf}
+			\includegraphics[width=0.5\textwidth]{figures/devices.png}
+		\end{figure}
+		\end{frame}
+
+\subsection{Chat \& Collaborative environment}
+
+		\begin{frame}[c]
+		\frametitle{Chat \& Collaborative environment}
+
+
+		\begin{itemize}
+		\item Instant text messaging
+			\begin{itemize}
+			\item WebSockets
+			\end{itemize}
+
+		\item File sharing
+			\begin{itemize}
+			\item HTTP file upload
+			\item stored in the database
+			\end{itemize}
+		
+		\item Collaborative text editor (OT.js)
+			\begin{itemize}
+			\item retain
+			\item insert
+			\item delete
+			\end{itemize}
+		
+
+		\end{itemize}
+		
+
+		\end{frame}
 
 
 

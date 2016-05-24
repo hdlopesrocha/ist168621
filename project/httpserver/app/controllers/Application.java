@@ -49,7 +49,7 @@ public class Application extends Controller {
         System.out.println("RESET!");
         Service.reset();
 
-        User user1, user2, user3, user4 ,td1,td2;
+        User user1, user2, user3, user4 , user5,td1,td2;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("email", "test", true, true, false,null,null));
@@ -73,6 +73,15 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("photo", "/assets/images/goncalo.jpg", false, false, false,null,null));
             user3 = new RegisterUserService("qazokm",attributes).execute();
         }
+
+        {
+            List<AttributeDto> attributes = new ArrayList<AttributeDto>();
+            attributes.add(new AttributeDto("email", "dora", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Dora Korolczyk", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/dora.jpg", false, false, false,null,null));
+            user5 = new RegisterUserService("qazokm",attributes).execute();
+        }
+
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
@@ -110,6 +119,14 @@ public class Application extends Controller {
 
 //        new CreateRelationService(user1.getId().toString(), user4.getId().toString()).execute();
         new CreateRelationService(user4.getId().toString(), user1.getId().toString()).execute();
+
+
+        new CreateRelationService(user4.getId().toString(), user5.getId().toString()).execute();
+        new CreateRelationService(user5.getId().toString(), user4.getId().toString()).execute();
+        new CreateRelationService(user4.getId().toString(), user3.getId().toString()).execute();
+        new CreateRelationService(user3.getId().toString(), user4.getId().toString()).execute();
+
+
 
 
         List<AttributeDto> attributes3 = new ArrayList<AttributeDto>();

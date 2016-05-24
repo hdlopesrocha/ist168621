@@ -2,6 +2,9 @@
 \beamer@slide {related}{10}
 \beamer@slide {early}{11}
 \beamer@slide {rtc}{12}
-\beamer@slide {arch}{21}
-\beamer@slide {meth}{26}
-\beamer@slide {concl}{30}
+\beamer@slide {my-label}{13}
+\beamer@slide {table:otcomparision}{16}
+\beamer@slide {arch}{18}
+\beamer@slide {table:apparch}{21}
+\beamer@slide {meth}{23}
+\beamer@slide {concl}{31}

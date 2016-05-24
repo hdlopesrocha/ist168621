@@ -195,26 +195,21 @@ var HyperWebSocket = new (function() {
         }));
     }
 
-	this.receiveRealTime = function(userId,sessionId){
-		console.log("receiveRealTime",userId);
-		var msg = {
-            cmd : "setTime",
-            uid:userId
-        };
-		if(sessionId){
-		    msg.sid = sessionId;
-		}
-		ws.send(JSON.stringify(msg));
-	}
 
-	this.receiveHistoric = function(userId,offset,sessionId){
+
+	this.setTime = function(userId,offset,sessionId){
 		console.log("receiveHistoric",userId);
 		var msg = {
-            cmd : "setTime",
-            uid:userId,
-            offset:offset
-        };
-    	if(sessionId){
+            cmd : "setTime"
+        }
+        if(userId!=null){
+            msg.uid = userId;
+        }
+        if(offset!=null){
+            msg.offset = offset;
+        }
+
+    	if(sessionId!=null){
 		    msg.sid = sessionId;
 		}
 		ws.send(JSON.stringify(msg));

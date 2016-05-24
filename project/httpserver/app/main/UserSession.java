@@ -221,8 +221,9 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             recorder = new Recorder(endPoint, duration, new Recorder.RecorderHandler() {
                 @Override
                 public void onFileRecorded(String filepath) {
+                    System.out.println("REC: "+sid.toString()+"|"+filepath);
                     Date end = new Date();
-                    RecordingChunk rec = new RecordingChunk(new ObjectId(room.getGroupId()),new ObjectId(userId),start,end,getSid(),filepath);
+                    RecordingChunk rec = new RecordingChunk(new ObjectId(getGroupId()),new ObjectId(userId),start,end,getSid(),filepath);
                     rec.save();
                 }
             });
@@ -329,8 +330,12 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             ListCurrentRecordingsService service = new ListCurrentRecordingsService(getUserId(),
                     getGroupId(), currentTime);
             try {
+                Map<String, RecordingChunk> uniqueAns = new TreeMap<String, RecordingChunk>();
                 List<RecordingChunk> recs = service.execute();
                 for (RecordingChunk ru : recs) {
+                    uniqueAns.put(ru.getSid(),ru);
+                }
+                for(RecordingChunk ru : uniqueAns.values()) {
                     JSONObject obj = new JSONObject();
                     obj.put("sid",ru.getSid());
                     obj.put("uid",ru.getOwner());
@@ -431,20 +436,21 @@ public class UserSession implements Closeable, Comparable<UserSession> {
         synchronized (playerLock) {
             System.out.println("HISTORIC PLAY: " + videoUrl+ " / "+ audioUrl);
 
-            if(ObjectId.isValid(videoUrl)){
-                RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
-                videoUrl= item.getUrl();
-            }
-
-            System.out.println("URL: "+videoUrl);
-            PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
 
             if(ObjectId.isValid(audioUrl)){
                 RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(audioUrl);
                 audioUrl= item.getUrl();
             }
+            System.out.println("URL: "+audioUrl);
 
-            PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(),audioUrl).build();
+            if(ObjectId.isValid(videoUrl)){
+                RepositoryItemPlayer item =  KurentoManager.repository.getReadEndpoint(videoUrl);
+                videoUrl= item.getUrl();
+            }
+
+            PlayerEndpoint tempAudio = new PlayerEndpoint.Builder(room.getMediaPipeline(), audioUrl).build();
+            PlayerEndpoint tempVideo = new PlayerEndpoint.Builder(room.getMediaPipeline(), videoUrl).build();
+
             tempAudio.addErrorListener(new EventListener<ErrorEvent>() {
                 @Override
                 public void onEvent(ErrorEvent arg0) {
@@ -465,6 +471,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
                 }
             });
 
+
             // stop old video
             if (playerVideo != null) {
                 playerVideo.release();
@@ -473,6 +480,7 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             if (playerAudio != null) {
                 playerAudio.release();
             }
+
             playerVideo = tempVideo;
             playerAudio = tempAudio;
 
@@ -597,16 +605,15 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             timeOffset = 0L;
             playSid = sessionId;
         }
-        if (userId == null) {
-            compositePort.connect(endPoint);
-
-        } else {
-            UserSession session = room.getEndPoint(userId,sessionId);
-            if (session != null) {
-                session.endPoint.connect(endPoint,MediaType.VIDEO);
-                session.endPoint.connect(compositePort,MediaType.AUDIO);
-            }
+        UserSession session = userId!=null? room.getEndPoint(userId,sessionId): null;
+        if (session != null) {
+            session.endPoint.connect(endPoint,MediaType.VIDEO);
         }
+        else {
+            compositePort.connect(endPoint, MediaType.VIDEO);
+        }
+        compositePort.connect(endPoint,MediaType.AUDIO);
+
         nextVideo = nextAudio = null;
         sendChannels();
         // mixerPort.connect(endPoint, MediaType.AUDIO);
