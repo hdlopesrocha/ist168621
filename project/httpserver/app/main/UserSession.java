@@ -484,7 +484,6 @@ public class UserSession implements Closeable, Comparable<UserSession> {
             playerVideo = tempVideo;
             playerAudio = tempAudio;
 
-
             if (play) {
                 tempAudio.play();
                 tempVideo.play();

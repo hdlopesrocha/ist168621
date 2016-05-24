@@ -237,7 +237,7 @@ Co-Advisor: Paulo Chainho \\
 		\end{itemize}
 		\begin{flushright}
 
-			\vspace*{-8\baselineskip}
+			\vspace*{-6\baselineskip}
 			\includegraphics[width=0.55\textwidth]{figures/ice.pdf}
 		\end{flushright}
 		
@@ -496,6 +496,17 @@ Skype & Hangouts & Jitsi & Kurento   \\
 	\end{frame}
 
 
+\subsection{Stream composition}
+
+		\begin{frame}[c]
+		\frametitle{Stream composition}
+		\begin{figure}
+			\includegraphics[width=0.5\textwidth]{figures/wcomposite.pdf}
+			\includegraphics[width=0.5\textwidth]{figures/devices.png}
+		\end{figure}
+		\end{frame}
+
+
 \subsection{Hyper-Content}
 
 		\begin{frame}[c]
@@ -545,16 +556,6 @@ Skype & Hangouts & Jitsi & Kurento   \\
 		\end{frame}
 
 
-\subsection{Stream composition}
-
-		\begin{frame}[c]
-		\frametitle{Stream composition}
-		\begin{figure}
-			\includegraphics[width=0.5\textwidth]{figures/wcomposite.pdf}
-			\includegraphics[width=0.5\textwidth]{figures/devices.png}
-		\end{figure}
-		\end{frame}
-
 \subsection{Chat \& Collaborative environment}
 
 		\begin{frame}[c]
@@ -587,6 +588,88 @@ Skype & Hangouts & Jitsi & Kurento   \\
 		\end{frame}
 
 
+
+
+\section{Evaluation}\label{arch}
+
+\begin{frame}[t,shrink]
+\frametitle{Evaluation} 
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
+
+\subsection{Performance Tests}
+
+	\begin{frame}[c]
+		\frametitle{CPU}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/cpu.pdf}
+			\caption{CPU usage at server}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{CPU (average)}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/cpu_avg.pdf}
+			\caption{CPU usage at server (average per interval)}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Memory}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/ram.pdf}
+			\caption{Memory usage at server}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Network Usage}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/net.pdf}
+			\caption{Network usage at server}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Network Usage (average)}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/net_avg.pdf}
+			\caption{Network usage at server (average per interval)}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Network Usage}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/net_clt.pdf}
+			\caption{Network usage at client}
+		\end{figure}
+	\end{frame}
+
+\subsection{User Interface Tests}
+
+	\begin{frame}[c]
+		\frametitle{User Interface Tests}
+		\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{figures/user_ages.pdf}
+			\caption{Users age}
+		\end{figure}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Five tasks}
+		\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{figures/user_times.pdf}
+			\includegraphics[width=0.5\textwidth]{figures/user_clicks.pdf}
+			\caption{Tasks metrics}
+		\end{figure}
+		\begin{itemize}
+			\item Difficulty per task.
+			\item Errors per task.
+		\end{itemize}
+	\end{frame}
+	\begin{frame}[c]
+		\frametitle{Overall evaluation}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/user_evals.pdf}
+			\caption{Overall evaluation}
+		\end{figure}
+	\end{frame}
 
 \section{Conclusions}\label{concl} % English
 \begin{frame}[t,shrink]

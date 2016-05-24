@@ -14,8 +14,11 @@
 \beamer@sectionintoc {4}{Implementation}{22}{0}{4}
 \beamer@subsectionintoc {4}{1}{Signaling Protocol}{24}{0}{4}
 \beamer@subsectionintoc {4}{2}{Stream Recording}{25}{0}{4}
-\beamer@subsectionintoc {4}{3}{Hyper-Content}{26}{0}{4}
-\beamer@subsectionintoc {4}{4}{Time manipulation}{27}{0}{4}
-\beamer@subsectionintoc {4}{5}{Stream composition}{28}{0}{4}
+\beamer@subsectionintoc {4}{3}{Stream composition}{26}{0}{4}
+\beamer@subsectionintoc {4}{4}{Hyper-Content}{27}{0}{4}
+\beamer@subsectionintoc {4}{5}{Time manipulation}{28}{0}{4}
 \beamer@subsectionintoc {4}{6}{Chat \& Collaborative environment}{29}{0}{4}
-\beamer@sectionintoc {5}{Conclusions}{30}{0}{5}
+\beamer@sectionintoc {5}{Evaluation}{30}{0}{5}
+\beamer@subsectionintoc {5}{1}{Performance Tests}{32}{0}{5}
+\beamer@subsectionintoc {5}{2}{User Interface Tests}{38}{0}{5}
+\beamer@sectionintoc {6}{Conclusions}{41}{0}{6}
