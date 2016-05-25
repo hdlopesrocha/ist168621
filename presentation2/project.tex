@@ -142,11 +142,10 @@ Co-Advisor: Paulo Chainho \\
 
 \section{Introduction}\label{intro}
 
-\begin{frame}[t,shrink]
-\frametitle{Introduction} 
-\tableofcontents[currentsection,hideothersubsections]
-
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Introduction} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 	\subsection{Context}   % English
 		\begin{frame}[c]
@@ -170,22 +169,7 @@ Co-Advisor: Paulo Chainho \\
 		\end{frame}
 
 
-  		\begin{frame}[c]
-		\frametitle{Problem Statement: Use case}
-		%A teacher record and streams an interactive class, some students participate in real-time others may participate later.
-		%\vfill
-		%The teacher adds information to its class (create tags, add links, overlay images ...).
-		%\vfill
-		%Students can answer to quizzes.
-	
-		\begin{center}
-		\href{run:video.mp4}{
-		\includegraphics[scale=0.25]
-		{video.eps}}
-		\end{center}
 
-
-		\end{frame}
 
 
 
@@ -215,11 +199,10 @@ Co-Advisor: Paulo Chainho \\
 
 \section{Related Work}\label{related}
 
-\begin{frame}[t,shrink]
-\frametitle{Related Work} 
-\tableofcontents[currentsection,hideothersubsections]
-
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Related Work} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 	\subsection{Early days of the Internet}\label{early}
 
@@ -231,8 +214,8 @@ Co-Advisor: Paulo Chainho \\
 		\vfill
 		\item Network Address Translation	
 		\vfill
-		\item Client-Server model
-		\vfill
+		%\item Client-Server model
+		%--\vfill
 		\item STUN + TURN = ICE
 		\end{itemize}
 		\begin{flushright}
@@ -284,9 +267,9 @@ Co-Advisor: Paulo Chainho \\
  \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/jitsi.png}\end{minipage} &  
  \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/kurento.png}\end{minipage} \\
 Skype & Hangouts & Jitsi & Kurento   \\
+\tiny Proprietary Application & \tiny WebRTC Application$^{*}$ & \tiny WebRTC Application \& Framework & \tiny WebRTC Framework  \\
 \tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video  \\
-\tiny File Sharing & \tiny Collaborative Tools & \tiny Collaborative Tools & \tiny Stream Recording \\
-\tiny Proprietary & \tiny WebRTC$^{*}$ & \tiny WebRTC & \tiny WebRTC  
+\tiny File Sharing & \tiny Collaborative Tools & \tiny Collaborative Tools & \tiny Stream Recording 
 \end{tabular}
 \end{table}
 
@@ -316,7 +299,7 @@ Skype & Hangouts & Jitsi & Kurento   \\
   		\begin{frame}[c]
 		\frametitle{Hypermedia: more than words, more than images}
 		\begin{itemize}
-		\item \textbf{Concepts:} HyperText \& HyperMedia \& HyperCommunications
+		\item \textbf{Concepts:} HyperText \& HyperMedia \& HyperCommunications \& Detail on  Demand
 		\vfill
 		\item \textbf{Implementations:} HyperCafe \& HyperHitchcock  % Detail on Demand
 				
@@ -362,14 +345,14 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 
 	\subsection{Collaboration \& Time manipulation}
-  		\begin{frame}[c]
-		\frametitle{Extending collaboration tools with time manipulation}
-	
-		\begin{figure}
-			\includegraphics[height=0.5\textheight]{figures/media_types.png}
-			\caption{Media Types}
-		\end{figure}
-		\end{frame}
+% 		\begin{frame}[c]
+%		\frametitle{Extending collaboration tools with time manipulation}
+%	
+%		\begin{figure}
+%			\includegraphics[height=0.5\textheight]{figures/media_types.png}
+%			\caption{Media Types}
+%		\end{figure}
+%		\end{frame}
 
 
 
@@ -402,10 +385,10 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 \section{Architecture}\label{arch}
 
-\begin{frame}[t,shrink]
-\frametitle{Related Work} 
-\tableofcontents[currentsection,hideothersubsections]
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Related Work} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 \subsection{Modules}
 
@@ -450,11 +433,11 @@ Skype & Hangouts & Jitsi & Kurento   \\
 	\label{table:apparch}
 
 	\resizebox{\textwidth}{!}{%
-    \begin{tabular}{cccccccc@{}m{0pt}@{}}
+    \begin{tabular}{ccccccccc@{}m{0pt}@{}}
 	\hline 
-\multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
-\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
-\multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
+\multicolumn{9}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-6}\cline{8-8}
+\multicolumn{2}{|c|}{~~~~~jQuery~~~~~} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
+\multicolumn{1}{|c|}{HTTP} & \multicolumn{3}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
 \end{tabular}}
 \end{table}
 
@@ -463,10 +446,10 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 
 \section{Implementation}\label{meth} % Section
-\begin{frame}[t,shrink]
-\frametitle{Related Work} 
-\tableofcontents[currentsection,hideothersubsections]
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Implementation} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 \subsection{Signaling Protocol}
 \begin{frame}[c]
@@ -592,50 +575,50 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 \section{Evaluation}\label{arch}
 
-\begin{frame}[t,shrink]
-\frametitle{Evaluation} 
-\tableofcontents[currentsection,hideothersubsections]
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Evaluation} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 \subsection{Performance Tests}
 
 	\begin{frame}[c]
-		\frametitle{CPU}
+		\frametitle{Performance Tests - CPU}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/cpu.pdf}
 			\caption{CPU usage at server}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{CPU (average)}
+		\frametitle{Performance Tests - CPU (average)}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/cpu_avg.pdf}
 			\caption{CPU usage at server (average per interval)}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Memory}
+		\frametitle{Performance Tests - Memory}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/ram.pdf}
 			\caption{Memory usage at server}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Network Usage}
+		\frametitle{Performance Tests - Network Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/net.pdf}
 			\caption{Network usage at server}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Network Usage (average)}
+		\frametitle{Performance Tests - Network Usage (average)}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/net_avg.pdf}
 			\caption{Network usage at server (average per interval)}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Network Usage}
+		\frametitle{Performance Tests - Network Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/net_clt.pdf}
 			\caption{Network usage at client}
@@ -672,10 +655,10 @@ Skype & Hangouts & Jitsi & Kurento   \\
 	\end{frame}
 
 \section{Conclusions}\label{concl} % English
-\begin{frame}[t,shrink]
-\frametitle{Related Work} 
-\tableofcontents[currentsection,hideothersubsections]
-\end{frame}
+%\begin{frame}[t,shrink]
+%\frametitle{Related Work} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
 
 \begin{frame}[c]
 		\frametitle{Conclusions}
@@ -687,6 +670,43 @@ Skype & Hangouts & Jitsi & Kurento   \\
 		\vfill
 
 \item Prototype implementation and testing.
+		\end{itemize}
+
+	\end{frame}
+
+  		\begin{frame}[c]
+		\frametitle{Demonstration}
+		%A teacher record and streams an interactive class, some students participate in real-time others may participate later.
+		%\vfill
+		%The teacher adds information to its class (create tags, add links, overlay images ...).
+		%\vfill
+		%Students can answer to quizzes.
+	
+		\begin{center}
+		\href{run:video.mp4}{
+		\includegraphics[scale=0.25]
+		{video.eps}}
+		\end{center}
+
+
+		\end{frame}
+
+\section{Future Work}\label{concl} % English
+%\begin{frame}[t,shrink]
+%\frametitle{Related Work} 
+%\tableofcontents[currentsection,hideothersubsections]
+%\end{frame}
+
+\begin{frame}[c]
+		\frametitle{Future Work}
+		\begin{itemize}
+\item Implement fast-forward playback.
+		\vfill
+
+\item Improve solution's security.
+		\vfill
+
+\item Scale our solution to multiple servers.
 		\end{itemize}
 
 	\end{frame}
