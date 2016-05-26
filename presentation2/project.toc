@@ -4,22 +4,18 @@
 \beamer@subsectionintoc {1}{2}{Problem Statement}{5}{0}{1}
 \beamer@subsectionintoc {1}{3}{Thesis Goals}{6}{0}{1}
 \beamer@sectionintoc {2}{Related Work}{7}{0}{2}
-\beamer@subsectionintoc {2}{1}{Early days of the Internet}{8}{0}{2}
-\beamer@subsectionintoc {2}{2}{Real-Time communications}{9}{0}{2}
-\beamer@subsectionintoc {2}{3}{Hypermedia}{11}{0}{2}
-\beamer@subsectionintoc {2}{4}{Collaboration \& Time manipulation}{12}{0}{2}
-\beamer@sectionintoc {3}{Architecture}{13}{0}{3}
-\beamer@subsectionintoc {3}{1}{Modules}{14}{0}{3}
-\beamer@subsectionintoc {3}{2}{Implementation Proposal}{15}{0}{3}
-\beamer@sectionintoc {4}{Implementation}{17}{0}{4}
-\beamer@subsectionintoc {4}{1}{Signaling Protocol}{18}{0}{4}
-\beamer@subsectionintoc {4}{2}{Stream Recording}{19}{0}{4}
-\beamer@subsectionintoc {4}{3}{Stream composition}{20}{0}{4}
-\beamer@subsectionintoc {4}{4}{Hyper-Content}{21}{0}{4}
-\beamer@subsectionintoc {4}{5}{Time manipulation}{22}{0}{4}
-\beamer@subsectionintoc {4}{6}{Chat \& Collaborative environment}{23}{0}{4}
-\beamer@sectionintoc {5}{Evaluation}{24}{0}{5}
-\beamer@subsectionintoc {5}{1}{Performance Tests}{25}{0}{5}
+\beamer@subsectionintoc {2}{1}{Overview}{13}{0}{2}
+\beamer@sectionintoc {3}{Architecture}{14}{0}{3}
+\beamer@subsectionintoc {3}{1}{Modules}{15}{0}{3}
+\beamer@subsectionintoc {3}{2}{Implementation Proposal}{16}{0}{3}
+\beamer@sectionintoc {4}{Implementation}{18}{0}{4}
+\beamer@subsectionintoc {4}{1}{Signaling Protocol}{19}{0}{4}
+\beamer@subsectionintoc {4}{2}{Stream operations}{21}{0}{4}
+\beamer@subsectionintoc {4}{3}{Hyper-Content}{22}{0}{4}
+\beamer@subsectionintoc {4}{4}{Time manipulation}{23}{0}{4}
+\beamer@subsectionintoc {4}{5}{Chat \& Collaborative environment}{24}{0}{4}
+\beamer@sectionintoc {5}{Evaluation}{26}{0}{5}
+\beamer@subsectionintoc {5}{1}{Performance Tests}{27}{0}{5}
 \beamer@subsectionintoc {5}{2}{User Interface Tests}{31}{0}{5}
-\beamer@sectionintoc {6}{Conclusions}{34}{0}{6}
-\beamer@sectionintoc {7}{Future Work}{37}{0}{7}
+\beamer@sectionintoc {6}{Conclusions}{33}{0}{6}
+\beamer@sectionintoc {7}{Future Work}{35}{0}{7}

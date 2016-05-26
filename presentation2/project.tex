@@ -39,8 +39,10 @@ wasysym
 
 \usepackage{listings}
 \usepackage{color, colortbl}
-\newcommand{\cmark}{\color{green}\ding{51}}%
-\newcommand{\xmark}{\color{red}\ding{55}}%
+
+\definecolor{mygreen}{HTML}{4cd964}
+\newcommand{\cmark}{{\color{mygreen}\ding{51}}}%
+\newcommand{\xmark}{{\color{red}\ding{55}}}%
 
 \lstset{ %
 language=[LaTeX]TeX,
@@ -90,7 +92,13 @@ mindmap
 \usepackage{tikz}
 \usepackage{pgf}
 
-
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
 
 \logo{\includegraphics[height=1.5cm]{logo.pdf}}
 \newcommand{\nologo}{\setbeamertemplate{logo}{}}
@@ -203,15 +211,23 @@ Co-Advisor: Paulo Chainho \\
 %\frametitle{Related Work} 
 %\tableofcontents[currentsection,hideothersubsections]
 %\end{frame}
+	\begin{frame}[c]
+			\frametitle{State of the Art overview}
+	\begin{enumerate}
+		\item Connection Establishment
+		\item Streaming audio and video
+		\item Overlay communications with content
+		\item Collaboration Environment
+	\end{enumerate}
 
-	\subsection{Early days of the Internet}\label{early}
 
+	\end{frame}
 
   		\begin{frame}[c]
-		\frametitle{Early days of the Internet}
+		\frametitle{Connection Establishment}
 		\begin{itemize}
-		\item IPv4 Address Exhaustion
-		\vfill
+	%	\item IPv4 Address Exhaustion
+	%	\vfill
 		\item Network Address Translation	
 		\vfill
 		%\item Client-Server model
@@ -220,19 +236,14 @@ Co-Advisor: Paulo Chainho \\
 		\end{itemize}
 		\begin{flushright}
 
-			\vspace*{-6\baselineskip}
+			\vspace*{-4\baselineskip}
 			\includegraphics[width=0.55\textwidth]{figures/ice.pdf}
 		\end{flushright}
 		
 		\end{frame}
 
-
-
-
-	\subsection{Real-Time communications}\label{rtc}
-
 		\begin{frame}[c]
-		\frametitle{Real-Time communications}
+		\frametitle{Streaming audio and video}
 
 		WebRTC (Web Real-Time Communications)
 
@@ -253,51 +264,8 @@ Co-Advisor: Paulo Chainho \\
 
 		\end{frame}
 
-
-		\begin{frame}[c]
-		\frametitle{Real-Time communications}
-
-\begin{table}[]
-\centering
-%\caption{My caption}
-\label{my-label}
-\begin{tabular}{cccc}
- \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/skype.png}\end{minipage} &  
- \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/hangouts.png}\end{minipage} &  
- \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/jitsi.png}\end{minipage} &  
- \begin{minipage}{.2\textwidth}\includegraphics[width=\linewidth]{figures/kurento.png}\end{minipage} \\
-Skype & Hangouts & Jitsi & Kurento   \\
-\tiny Proprietary Application & \tiny WebRTC Application$^{*}$ & \tiny WebRTC Application \& Framework & \tiny WebRTC Framework  \\
-\tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video/Text & \tiny Audio/Video  \\
-\tiny File Sharing & \tiny Collaborative Tools & \tiny Collaborative Tools & \tiny Stream Recording 
-\end{tabular}
-\end{table}
-
-	\tiny{* requires installing a plug-in on non chrome web browsers.}
-		\end{frame}
-
-
-
-
-%	\subsection{Signaling}
-%  		\begin{frame}[c]
-%		\frametitle{Signaling: meet and get to know}
-%		\begin{itemize}
-%		\item Own Implementation
-%		\vfill
-%		\item SIP
-%		\vfill
-%		\item XMPP
-%		\vfill
-%		\item SigOFly 
-%		\end{itemize}
-%		\end{frame}
-
-
-
-	\subsection{Hypermedia}
   		\begin{frame}[c]
-		\frametitle{Hypermedia: more than words, more than images}
+		\frametitle{Overlay communications with content}
 		\begin{itemize}
 		\item \textbf{Concepts:} HyperText \& HyperMedia \& HyperCommunications \& Detail on  Demand
 		\vfill
@@ -344,7 +312,6 @@ Skype & Hangouts & Jitsi & Kurento   \\
 %		\end{frame}
 
 
-	\subsection{Collaboration \& Time manipulation}
 % 		\begin{frame}[c]
 %		\frametitle{Extending collaboration tools with time manipulation}
 %	
@@ -357,7 +324,7 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 
   		\begin{frame}[c]
-		\frametitle{Extending collaboration tools with time manipulation}
+		\frametitle{Collaboration Environment}
 
 			\begin{table}
 			\centering
@@ -375,6 +342,66 @@ Skype & Hangouts & Jitsi & Kurento   \\
 			\end{table}
 
 		\end{frame}
+
+	\subsection{Overview}
+
+
+		\begin{frame}[c]
+		\frametitle{Overview}
+
+\begin{table}[]
+\centering
+%\caption{My caption}
+\label{my-label}
+	\resizebox{\textwidth}{!}{%
+
+\begin{tabular}{rcccccc} 
+  &
+ \begin{minipage}{.1\textwidth}\includegraphics[width=\linewidth]{figures/skype.png}\end{minipage} &  
+ \begin{minipage}{.1\textwidth}\includegraphics[width=\linewidth]{figures/hangouts.png}\end{minipage} &  
+ \begin{minipage}{.1\textwidth}\includegraphics[width=\linewidth]{figures/jitsi.png}\end{minipage} &  
+ \begin{minipage}{.1\textwidth}\includegraphics[width=\linewidth]{figures/kurento.png}\end{minipage} 
+ &
+ \begin{minipage}{.1\textwidth}\includegraphics[width=\linewidth]{figures/logo.png}\end{minipage} \\
+
+\tiny Name & \tiny Skype & \tiny Hangouts & \tiny Jitsi & \tiny Kurento & \tiny Our proposal   \\
+\tiny Technology & \tiny Proprietary & \tiny WebRTC$^{1}$ & \tiny WebRTC & \tiny WebRTC & \tiny WebRTC \\
+\tiny Development & \xmark & \cmark \tiny $^2$ & \cmark & \cmark & \cmark \\
+\tiny Audio/Video & \cmark & \cmark & \cmark & \cmark & \cmark \\
+\tiny Text Messaging & \cmark & \cmark & \cmark & \xmark  & \cmark \\
+\tiny Collaborative Editor & \xmark & \cmark & \cmark & \xmark  & \cmark \\
+\tiny File sharing & \cmark & \cmark & \cmark & \xmark  & \cmark\\
+\tiny Recording \& Playback  & \xmark & \xmark & \xmark & \cmark  & \cmark \\
+\tiny Interactive Content  & \xmark & \xmark & \xmark & \xmark  & \cmark 
+
+
+\end{tabular}}
+\end{table}
+
+	\tiny{$^1$ requires installing a plug-in on non chrome web browsers.}
+
+	\tiny{$^2$ allows the development of extensions.}
+
+		\end{frame}
+
+
+
+
+%	\subsection{Signaling}
+%  		\begin{frame}[c]
+%		\frametitle{Signaling: meet and get to know}
+%		\begin{itemize}
+%		\item Own Implementation
+%		\vfill
+%		\item SIP
+%		\vfill
+%		\item XMPP
+%		\vfill
+%		\item SigOFly 
+%		\end{itemize}
+%		\end{frame}
+
+
 
 %\subsubsection{Streaming and Recording}\label{recstream}
 %\subsubsection{Media Types}\label{mediatype}
@@ -396,7 +423,6 @@ Skype & Hangouts & Jitsi & Kurento   \\
 		\frametitle{Modules}
 		\begin{figure}[H]
 			\includegraphics[width=0.8\textwidth]{figures/modules.pdf}
-			\caption{System Modules}
 		\end{figure}
 	\end{frame}
 
@@ -404,18 +430,14 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 		\begin{frame}[c]
 		\frametitle{System Infrastructure}
-
-
-
 		\begin{figure}[H]
 			\includegraphics[width=0.9\textwidth]{figures/infrastructure.pdf}
-			\caption{System Infrastructure}
 		\end{figure}
-
-\begin{itemize}
-		\item \small \textbf{Signaling Server \& Web Server}: Play Framework
-		\item \textbf{Stream Server}: Kurento Media Server		
-		\item \textbf{Database}: MongoDB
+		\begin{itemize}
+		\scriptsize \item \textbf{Signaling Server \& Web Server}: Play Framework
+		\scriptsize \item \textbf{Stream Server}: Kurento Media Server		
+		\scriptsize \item \textbf{Storage}: MongoDB \& Kurento Repository
+		\scriptsize \item \textbf{NAT Traversal}: Public STUN Servers
 		\end{itemize}
 
 
@@ -425,22 +447,13 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 		\begin{frame}[c]
 
+
 		\frametitle{Application Architecture}
 
-\begin{table}[H]
-\centering
-	\caption{Application Architecture}
-	\label{table:apparch}
+\Wider{
+			\includegraphics[width=\textwidth]{figures/app.pdf}
 
-	\resizebox{\textwidth}{!}{%
-    \begin{tabular}{ccccccccc@{}m{0pt}@{}}
-	\hline 
-\multicolumn{9}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-6}\cline{8-8}
-\multicolumn{2}{|c|}{~~~~~jQuery~~~~~} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{~~~~~ot.js~~~~~} & \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} & \multicolumn{1}{c|}{adapter.js} &   \multicolumn{1}{c|}{\cellcolor{Gray}~~~~~~~~~~~~~~~} &\\[12pt]\hline
-\multicolumn{1}{|c|}{HTTP} & \multicolumn{3}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
-\end{tabular}}
-\end{table}
-
+}
 
 		\end{frame}
 
@@ -453,39 +466,32 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 \subsection{Signaling Protocol}
 \begin{frame}[c]
-		\frametitle{Signaling Protocol}
+		\frametitle{Signaling Protocol - Part 1}
 		\begin{figure}[H]
-			\includegraphics[width=0.55\textwidth]{figures/signaling.eps}
-			\caption{Signaling Protocol}
+			\includegraphics[width=0.9\textwidth]{figures/signaling1.png}
+		\end{figure}
+\end{frame}
+\begin{frame}[c]
+		\frametitle{Signaling Protocol - Part 2}
+		\begin{figure}[H]
+			\includegraphics[width=0.9\textwidth]{figures/signaling2.png}
 		\end{figure}
 \end{frame}
 
 
-
-\subsection{Stream Recording}
-\begin{frame}[c]
-\centering
-		\frametitle{Stream Recording}
+\subsection{Stream operations}
+	\begin{frame}[c]
+		\frametitle{Stream operations}
 
 		\begin{itemize}
-\item Client-side recording.
-		\vfill
-
-\item Server-side recording to file system.
-		\vfill
-
-\item Server-side recording to database (Kurento Repository).
+			\item Server-side recording to database (Kurento Repository).
+			\item Server-side stream composition.
 		\end{itemize}
-	\end{frame}
 
 
-\subsection{Stream composition}
-
-		\begin{frame}[c]
-		\frametitle{Stream composition}
 		\begin{figure}
-			\includegraphics[width=0.5\textwidth]{figures/wcomposite.pdf}
-			\includegraphics[width=0.5\textwidth]{figures/devices.png}
+			\includegraphics[width=0.6\textwidth]{figures/wcomposite.pdf}
+			\includegraphics[width=0.4\textwidth]{figures/devices.png}
 		\end{figure}
 		\end{frame}
 
@@ -570,6 +576,22 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 		\end{frame}
 
+  		\begin{frame}[c]
+		\frametitle{Demonstration}
+		%A teacher record and streams an interactive class, some students participate in real-time others may participate later.
+		%\vfill
+		%The teacher adds information to its class (create tags, add links, overlay images ...).
+		%\vfill
+		%Students can answer to quizzes.
+	
+		\begin{center}
+		\href{run:video.mkv}{
+		\includegraphics[scale=0.25]
+		{video.eps}}
+		\end{center}
+
+
+		\end{frame}
 
 
 
@@ -583,63 +605,38 @@ Skype & Hangouts & Jitsi & Kurento   \\
 \subsection{Performance Tests}
 
 	\begin{frame}[c]
-		\frametitle{Performance Tests - CPU}
+		\frametitle{Performance Tests at Server - CPU Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/cpu.pdf}
-			\caption{CPU usage at server}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Performance Tests - CPU (average)}
-		\begin{figure}[H]
-			\includegraphics[width=\textwidth]{figures/cpu_avg.pdf}
-			\caption{CPU usage at server (average per interval)}
-		\end{figure}
-	\end{frame}
-	\begin{frame}[c]
-		\frametitle{Performance Tests - Memory}
+		\frametitle{Performance Tests at Server - Memory Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/ram.pdf}
-			\caption{Memory usage at server}
 		\end{figure}
 	\end{frame}
 	\begin{frame}[c]
-		\frametitle{Performance Tests - Network Usage}
+		\frametitle{Performance Tests at Server - Network Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/net.pdf}
-			\caption{Network usage at server}
 		\end{figure}
 	\end{frame}
+
 	\begin{frame}[c]
-		\frametitle{Performance Tests - Network Usage (average)}
-		\begin{figure}[H]
-			\includegraphics[width=\textwidth]{figures/net_avg.pdf}
-			\caption{Network usage at server (average per interval)}
-		\end{figure}
-	\end{frame}
-	\begin{frame}[c]
-		\frametitle{Performance Tests - Network Usage}
+		\frametitle{Performance Tests at Client - Network Usage}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/net_clt.pdf}
-			\caption{Network usage at client}
 		\end{figure}
 	\end{frame}
 
 \subsection{User Interface Tests}
 
 	\begin{frame}[c]
-		\frametitle{User Interface Tests}
-		\begin{figure}[H]
-			\includegraphics[width=0.5\textwidth]{figures/user_ages.pdf}
-			\caption{Users age}
-		\end{figure}
-	\end{frame}
-	\begin{frame}[c]
 		\frametitle{Five tasks}
 		\begin{figure}[H]
 			\includegraphics[width=0.5\textwidth]{figures/user_times.pdf}
 			\includegraphics[width=0.5\textwidth]{figures/user_clicks.pdf}
-			\caption{Tasks metrics}
 		\end{figure}
 		\begin{itemize}
 			\item Difficulty per task.
@@ -650,7 +647,6 @@ Skype & Hangouts & Jitsi & Kurento   \\
 		\frametitle{Overall evaluation}
 		\begin{figure}[H]
 			\includegraphics[width=\textwidth]{figures/user_evals.pdf}
-			\caption{Overall evaluation}
 		\end{figure}
 	\end{frame}
 
@@ -674,22 +670,6 @@ Skype & Hangouts & Jitsi & Kurento   \\
 
 	\end{frame}
 
-  		\begin{frame}[c]
-		\frametitle{Demonstration}
-		%A teacher record and streams an interactive class, some students participate in real-time others may participate later.
-		%\vfill
-		%The teacher adds information to its class (create tags, add links, overlay images ...).
-		%\vfill
-		%Students can answer to quizzes.
-	
-		\begin{center}
-		\href{run:video.mp4}{
-		\includegraphics[scale=0.25]
-		{video.eps}}
-		\end{center}
-
-
-		\end{frame}
 
 \section{Future Work}\label{concl} % English
 %\begin{frame}[t,shrink]
@@ -722,6 +702,49 @@ Skype & Hangouts & Jitsi & Kurento   \\
 \begin{frame}[c]
 \Huge{\centerline{Questions?}}
 \end{frame}
+	\begin{frame}[c]
+		\frametitle{Performance Tests - CPU (average)}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/cpu_avg.pdf}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Performance Tests - Network Usage (average)}
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{figures/net_avg.pdf}
+		\end{figure}
+	\end{frame}
+
+
+	\begin{frame}[c]
+		\frametitle{User Interface Tests}
+		\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{figures/user_ages.pdf}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Five tasks}
+		\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{figures/user_diffs.pdf}
+			\includegraphics[width=0.5\textwidth]{figures/user_errors.pdf}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Web Browser support}
+		\Wider{
+\begin{table}
+			\label{table:otcomparision}
+			\begin{tabular}{lr}
+			\includegraphics[width=0.8\textwidth]{figures/ready.png} & 	\includegraphics[width=0.24\textwidth]{figures/space.png}
+
+			\end{tabular}
+			\end{table}}
+
+		
+	\end{frame}
 
 %----------------------------------------------------------------------------------------
 
