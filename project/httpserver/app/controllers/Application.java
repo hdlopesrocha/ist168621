@@ -49,7 +49,7 @@ public class Application extends Controller {
         System.out.println("RESET!");
         Service.reset();
 
-        User user1, user2, user3, user4 , user5,td1,td2;
+        User user1, user2, user3, user4 , user5,user6,user7;
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
             attributes.add(new AttributeDto("email", "test", true, true, false,null,null));
@@ -90,26 +90,28 @@ public class Application extends Controller {
             attributes.add(new AttributeDto("photo", "/assets/images/me.png", false, false, false,null,null));
             user4 = new RegisterUserService("qazokm", attributes).execute();
         }
-/*
+
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "talkdesk1", true, true, false));
-            attributes.add(new AttributeDto("name", "Talkdesk 1", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/td1.png", false, false, false));
-            td1 = new RegisterUserService("talkdesk",new ArrayList<PermissionDto>() ,attributes).execute();
+            attributes.add(new AttributeDto("email", "monster", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Cookie Monster", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/monster.jpeg", false, false, false,null,null));
+            user6 = new RegisterUserService("qazokm",attributes).execute();
         }
 
         {
             List<AttributeDto> attributes = new ArrayList<AttributeDto>();
-            attributes.add(new AttributeDto("email", "talkdesk2", true, true, false));
-            attributes.add(new AttributeDto("name", "Talkdesk 2", false, true, false));
-            attributes.add(new AttributeDto("photo", "/assets/images/td2.png", false, false, false));
-            td2 = new RegisterUserService("talkdesk",new ArrayList<PermissionDto>() ,attributes).execute();
+            attributes.add(new AttributeDto("email", "kermit", true, true, false,null,null));
+            attributes.add(new AttributeDto("name", "Kermit the Frog", false, true, false,null,null));
+            attributes.add(new AttributeDto("photo", "/assets/images/kermit.jpg", false, false, false,null,null));
+            user7 = new RegisterUserService("qazokm",attributes).execute();
         }
 
-        new CreateRelationService(td1.getId().toString(), td2.getId().toString()).execute();
-        new CreateRelationService(td2.getId().toString(), td1.getId().toString()).execute();
-*/
+        new CreateRelationService(user6.getId().toString(), user7.getId().toString()).execute();
+        new CreateRelationService(user7.getId().toString(), user6.getId().toString()).execute();
+        new CreateRelationService(user6.getId().toString(), user4.getId().toString()).execute();
+        new CreateRelationService(user7.getId().toString(), user4.getId().toString()).execute();
+
 
         new CreateRelationService(user1.getId().toString(), user2.getId().toString()).execute();
         new CreateRelationService(user2.getId().toString(), user1.getId().toString()).execute();
@@ -141,6 +143,10 @@ public class Application extends Controller {
         attributes5.add(new AttributeDto("name", "Task 5", false, true, false,null,null));
         Group group5 = new CreateGroupService(user1.getId().toString(), Group.Visibility.PUBLIC, attributes5).execute();
 
+        List<AttributeDto> attributes6 = new ArrayList<AttributeDto>();
+        attributes6.add(new AttributeDto("name", "Sesame Street", false, true, false,null,null));
+        Group group6 = new CreateGroupService(user4.getId().toString(), Group.Visibility.PRIVATE, attributes6).execute();
+
 
 
 /*
@@ -165,6 +171,10 @@ public class Application extends Controller {
 
         new AddGroupMemberService(user1.getId().toString(), group5.getId().toString(), user2.getId().toString()).execute();
         new AddGroupMemberService(user1.getId().toString(), group5.getId().toString(), user4.getId().toString()).execute();
+
+        new AddGroupMemberService(user4.getId().toString(), group6.getId().toString(), user6.getId().toString()).execute();
+        new AddGroupMemberService(user4.getId().toString(), group6.getId().toString(), user7.getId().toString()).execute();
+
 
 /*
         new AddGroupMemberService(user1.getId().toString(), group0.getId().toString(), td1.getId().toString()).execute();

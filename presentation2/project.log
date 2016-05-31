@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.4.16)  27 MAY 2016 00:11
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.4.16)  29 MAY 2016 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1321,21 +1321,47 @@ File: uni-global.def 2013/05/13 UCS: Unicode global data
 \uc@combtoksb=\toks60
 \uc@temptokena=\toks61
 )
+(/usr/share/texmf/tex/latex/pgf/utilities/pgfpages.sty
+Package: pgfpages 2004/11/05 ver 0.01
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count219
+\calc@Bcount=\count220
+\calc@Adimen=\dimen265
+\calc@Bdimen=\dimen266
+\calc@Askip=\skip76
+\calc@Bskip=\skip77
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count221
+\calc@Cskip=\skip78
+)
+\pgf@logicalpages=\count222
+\pgf@firstshipout=\count223
+\pgf@lastshipout=\count224
+\pgf@currentshipout=\count225
+\pgf@cpn=\count226
+\pgf@shipoutnextto=\count227
+\pgfphysicalheight=\dimen267
+\pgfphysicalwidth=\dimen268
+\pgfpages@shipoutbox=\box87
+)
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
-\captionmargin=\dimen265
-\captionmargin@=\dimen266
-\captionwidth=\dimen267
-\caption@tempdima=\dimen268
-\caption@indent=\dimen269
-\caption@parindent=\dimen270
-\caption@hangindent=\dimen271
+\captionmargin=\dimen269
+\captionmargin@=\dimen270
+\captionwidth=\dimen271
+\caption@tempdima=\dimen272
+\caption@indent=\dimen273
+\caption@parindent=\dimen274
+\caption@hangindent=\dimen275
 )
-\c@ContinuedFloat=\count219
+\c@ContinuedFloat=\count228
 Package caption Info: beamer document class.
 Package caption Info: hyperref package is loaded.
 Package caption Info: Hyperref support is turned off
@@ -1350,13 +1376,13 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 
 (/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryarrows.code.tex
 File: pgflibraryarrows.code.tex 2008/10/27 v2.10 (rcs-revision 1.9)
-\arrowsize=\dimen272
+\arrowsize=\dimen276
 ))
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybackg
 rounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2010/02/08 v2.10 (rcs-revision 1.2)
-\pgf@layerbox@background=\box87
-\pgf@layerboxsaved@background=\box88
+\pgf@layerbox@background=\box88
+\pgf@layerboxsaved@background=\box89
 )
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.
 code.tex
@@ -1383,43 +1409,43 @@ File: pgflibraryshapes.geometric.code.tex 2008/06/26 v2.10 (rcs-revision 1.1)
 )) (/usr/share/texmf/tex/latex/pgf/utilities/pgfcalendar.sty
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfcalendar.code.tex
 File: pgfcalendar.code.tex 2007/07/23 v2.10 (rcs-revision 1.11)
-\pgfcalendarcurrentjulian=\count220
+\pgfcalendarcurrentjulian=\count229
 ))
-\gtt@currentline=\count221
-\gtt@lasttitleline=\count222
-\gtt@currgrid=\count223
-\gtt@chartwidth=\count224
-\gtt@lasttitleslot=\count225
-\gtt@elementid=\count226
-\gtt@today@slot=\count227
-\gtt@startjulian=\count228
-\gtt@endjulian=\count229
-\gtt@calendar@slots=\count230
-\gtt@calendar@weeknumber=\count231
-\gtt@calendar@startofweek=\count232
-\gtt@left@slot=\count233
+\gtt@currentline=\count230
+\gtt@lasttitleline=\count231
+\gtt@currgrid=\count232
+\gtt@chartwidth=\count233
 Normal \count register pool exhausted, switching to extended pool.
-\gtt@right@slot=\count277
+\gtt@lasttitleslot=\count277
+\gtt@elementid=\count278
+\gtt@today@slot=\count279
+\gtt@startjulian=\count280
+\gtt@endjulian=\count281
+\gtt@calendar@slots=\count282
+\gtt@calendar@weeknumber=\count283
+\gtt@calendar@startofweek=\count284
+\gtt@left@slot=\count285
+\gtt@right@slot=\count286
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count278
-\lst@gtempboxa=\box89
+\lst@mode=\count287
+\lst@gtempboxa=\box90
 \lst@token=\toks62
-\lst@length=\count279
-\lst@currlwidth=\dimen273
-\lst@column=\count280
-\lst@pos=\count281
-\lst@lostspace=\dimen274
-\lst@width=\dimen275
-\lst@newlines=\count282
-\lst@lineno=\count283
-\lst@maxwidth=\dimen276
+\lst@length=\count288
+\lst@currlwidth=\dimen277
+\lst@column=\count289
+\lst@pos=\count290
+\lst@lostspace=\dimen278
+\lst@width=\dimen279
+\lst@newlines=\count291
+\lst@lineno=\count292
+\lst@maxwidth=\dimen280
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
-\c@lstnumber=\count284
-\lst@skipnumbers=\count285
-\lst@framebox=\box90
+\c@lstnumber=\count293
+\lst@skipnumbers=\count294
+\lst@framebox=\box91
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2013/08/26 1.5b listings configuration
@@ -1429,7 +1455,7 @@ Package: listings 2013/08/26 1.5b (Carsten Heinz)
 (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
 \everycr=\toks63
-\minrowclearance=\skip76
+\minrowclearance=\skip79
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
@@ -1481,54 +1507,54 @@ LaTeX Warning: Label `table:otcomparision' multiply defined.
 )
 \openout1 = `project.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/npxmi/m/it on input line 129.
-LaTeX Font Info:    Try loading font information for OML+npxmi on input line 12
-9.
+LaTeX Font Info:    Checking defaults for OML/npxmi/m/it on input line 132.
+LaTeX Font Info:    Try loading font information for OML+npxmi on input line 13
+2.
  (/usr/share/texlive/texmf-dist/tex/latex/newpx/omlnpxmi.fd
 File: omlnpxmi.fd 2013/03/21 Fontinst v1.933 font definitions for OML/npxmi.
 )
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OMS/npxsy/m/n on input line 129.
-LaTeX Font Info:    Try loading font information for OMS+npxsy on input line 12
-9.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMS/npxsy/m/n on input line 132.
+LaTeX Font Info:    Try loading font information for OMS+npxsy on input line 13
+2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/omsnpxsy.fd
 File: omsnpxsy.fd 2013/03/24 Fontinst v1.933 font definitions for OMS/npxsy.
 )
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for U/npxexa/m/n on input line 129.
-LaTeX Font Info:    Try loading font information for U+npxexa on input line 129
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for U/npxexa/m/n on input line 132.
+LaTeX Font Info:    Try loading font information for U+npxexa on input line 132
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/unpxexa.fd
 File: unpxexa.fd 2013/03/24 Fontinst v1.933 font definitions for U/npxexa.
 )
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 129.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 129.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 132.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 132.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Checking defaults for LMX/npxexx/m/n on input line 129.
-LaTeX Font Info:    ... okay on input line 129.
-LaTeX Font Info:    Try loading font information for T1+qhv on input line 129.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for LMX/npxexx/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Try loading font information for T1+qhv on input line 132.
 
 (/usr/share/texmf/tex/latex/tex-gyre/t1qhv.fd
 File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 )
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 10.29301pt on input line 129.
+(Font)              scaled to size 10.29301pt on input line 132.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1566,16 +1592,16 @@ LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count286
-\scratchdimen=\dimen277
-\scratchbox=\box91
-\nofMPsegments=\count287
-\nofMParguments=\count288
+\scratchcounter=\count295
+\scratchdimen=\dimen281
+\scratchbox=\box92
+\nofMPsegments=\count296
+\nofMParguments=\count297
 \everyMPshowfont=\toks64
-\MPscratchCnt=\count289
-\MPscratchDim=\dimen278
-\MPnumerator=\count290
-\makeMPintoPDFobject=\count291
+\MPscratchCnt=\count298
+\MPscratchDim=\dimen282
+\MPnumerator=\count299
+\makeMPintoPDFobject=\count300
 \everyMPtoPDFconversion=\toks65
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -1593,8 +1619,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box92
-Package hyperref Info: Link coloring OFF on input line 129.
+\AtBeginShipoutBox=\box93
+Package hyperref Info: Link coloring OFF on input line 132.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1602,63 +1628,63 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count292
+\c@section@level=\count301
 )
-LaTeX Info: Redefining \ref on input line 129.
-LaTeX Info: Redefining \pageref on input line 129.
-LaTeX Info: Redefining \nameref on input line 129.
+LaTeX Info: Redefining \ref on input line 132.
+LaTeX Info: Redefining \pageref on input line 132.
+LaTeX Info: Redefining \nameref on input line 132.
 
 (./project.out) (./project.out)
 \@outlinefile=\write5
 \openout5 = `project.out'.
 
 LaTeX Font Info:    Encoding `T1' has changed to `OT1' for symbol font
-(Font)              `operators' in the math version `normal' on input line 129.
+(Font)              `operators' in the math version `normal' on input line 132.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  T1/zplx/m/n --> OT1/cmss/m/n on input line 129.
+(Font)                  T1/zplx/m/n --> OT1/cmss/m/n on input line 132.
 LaTeX Font Info:    Encoding `T1' has changed to `OT1' for symbol font
-(Font)              `operators' in the math version `bold' on input line 129.
+(Font)              `operators' in the math version `bold' on input line 132.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  T1/zplx/b/n --> OT1/cmss/bx/n on input line 129.
+(Font)                  T1/zplx/b/n --> OT1/cmss/bx/n on input line 132.
 \symnumbers=\mathgroup10
 \sympureletters=\mathgroup11
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/zplx/m/n on input line 129.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 129.
+(Font)                  OT1/cmss/m/n --> T1/zplx/m/n on input line 132.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  T1/zplx/b/n --> T1/qhv/bx/n on input line 129.
+(Font)                  T1/zplx/b/n --> T1/qhv/bx/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/zplx/b/n --> T1/qhv/bx/n on input line 129.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 129.
+(Font)                  T1/zplx/b/n --> T1/qhv/bx/n on input line 132.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  T1/qhv/m/n --> T1/qhv/m/n on input line 129.
+(Font)                  T1/qhv/m/n --> T1/qhv/m/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/qhv/b/n --> T1/qhv/m/n on input line 129.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 129.
+(Font)                  T1/qhv/b/n --> T1/qhv/m/n on input line 132.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  T1/zplx/m/it --> T1/qhv/m/it on input line 129.
+(Font)                  T1/zplx/m/it --> T1/qhv/m/it on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/zplx/b/it --> T1/qhv/m/it on input line 129.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 129.
+(Font)                  T1/zplx/b/it --> T1/qhv/m/it on input line 132.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  T1/npxtt/m/n --> T1/npxtt/m/n on input line 129.
+(Font)                  T1/npxtt/m/n --> T1/npxtt/m/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/npxtt/b/n --> T1/npxtt/m/n on input line 129.
+(Font)                  T1/npxtt/b/n --> T1/npxtt/m/n on input line 132.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/qhv/m/n --> T1/qhv/bx/n on input line 129.
+(Font)                  T1/qhv/m/n --> T1/qhv/bx/n on input line 132.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/qhv/m/it --> T1/qhv/bx/it on input line 129.
+(Font)                  T1/qhv/m/it --> T1/qhv/bx/it on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/zplx/bx/n on input line 129.
+(Font)                  OT1/cmss/bx/n --> T1/zplx/bx/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/qhv/bx/n --> T1/qhv/bx/n on input line 129.
+(Font)                  T1/qhv/bx/n --> T1/qhv/bx/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/qhv/m/n --> T1/qhv/bx/n on input line 129.
+(Font)                  T1/qhv/m/n --> T1/qhv/bx/n on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/qhv/m/it --> T1/qhv/bx/it on input line 129.
+(Font)                  T1/qhv/m/it --> T1/qhv/bx/it on input line 132.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/npxtt/m/n --> T1/npxtt/bx/n on input line 129.
+(Font)                  T1/npxtt/m/n --> T1/npxtt/bx/n on input line 132.
 
 (/usr/share/texmf/tex/latex/beamer/base/translator/dicts/translator-basic-dicti
 onary/translator-basic-dictionary-English.dict
@@ -1684,15 +1710,15 @@ Dictionary: translator-numbers-dictionary, Language: English
 tionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 129.
+LaTeX Info: Redefining \includegraphics on input line 132.
 
 Package pgfplots notification 'compat/show suggested version=true': you might b
 enefit from \pgfplotsset{compat=1.9} (current compat level: 1.8).
 
 ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 129.
-\c@mv@tabular=\count293
-\c@mv@boldtabular=\count294
+LaTeX Info: Redefining \selectfont on input line 132.
+\c@mv@tabular=\count302
+\c@mv@boldtabular=\count303
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
@@ -1700,88 +1726,88 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count295
+\c@lstlisting=\count304
  (./project.nav)
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 5.64001pt on input line 129.
+(Font)              scaled to size 5.64001pt on input line 132.
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 15.04004pt on input line 135.
+(Font)              scaled to size 15.04004pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 11.28003pt on input line 135.
+(Font)              scaled to size 11.28003pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 7.52002pt on input line 135.
+(Font)              scaled to size 7.52002pt on input line 139.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 135.
+(Font)              size <5> substituted on input line 139.
 
-LaTeX Font Info:    Try loading font information for U+npxsya on input line 135
+LaTeX Font Info:    Try loading font information for U+npxsya on input line 139
 .
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/unpxsya.fd
 File: unpxsya.fd 2013/03/24 Fontinst v1.933 font definitions for U/npxsya.
 )
-LaTeX Font Info:    Try loading font information for U+npxsyb on input line 135
+LaTeX Font Info:    Try loading font information for U+npxsyb on input line 139
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/unpxsyb.fd
 File: unpxsyb.fd 2013/03/24 Fontinst v1.933 font definitions for U/npxsyb.
 )
-LaTeX Font Info:    Try loading font information for U+wasy on input line 135.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 139.
 
 (/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
 
 LaTeX Font Warning: Font shape `U/wasy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 135.
+(Font)              size <5> substituted on input line 139.
 
-LaTeX Font Info:    Try loading font information for U+npxmia on input line 135
+LaTeX Font Info:    Try loading font information for U+npxmia on input line 139
 .
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/unpxmia.fd
 File: unpxmia.fd 2013/03/24 Fontinst v1.933 font definitions for U/npxmia.
 )
-LaTeX Font Info:    Try loading font information for U+npxsyc on input line 135
+LaTeX Font Info:    Try loading font information for U+npxsyc on input line 139
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newpx/unpxsyc.fd
 File: unpxsyc.fd 2013/03/24 Fontinst v1.933 font definitions for U/npxsyc.
 )
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 5.828pt on input line 135.
+(Font)              scaled to size 5.828pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 5.17001pt on input line 135.
+(Font)              scaled to size 5.17001pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 7.52002pt on input line 135.
+(Font)              scaled to size 7.52002pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 5.828pt on input line 135.
+(Font)              scaled to size 5.828pt on input line 139.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 5.17001pt on input line 135.
+(Font)              scaled to size 5.17001pt on input line 139.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 9.40002pt on input line 135.
+(Font)              scaled to size 9.40002pt on input line 139.
 
-Underfull \hbox (badness 10000) in paragraph at lines 135--135
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--135
+Underfull \hbox (badness 10000) in paragraph at lines 139--139
 
  []
 
 
-Overfull \vbox (24.20988pt too high) detected at line 135
+Underfull \hbox (badness 10000) in paragraph at lines 139--139
+
+ []
+
+
+Overfull \vbox (24.20988pt too high) detected at line 139
  []
 
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 3.76001pt on input line 135.
+(Font)              scaled to size 3.76001pt on input line 139.
 <background.pdf, id=95, 6323.625pt x 4746.69356pt>
 File: background.pdf Graphic file (type pdf)
  <use background.pdf>
-Package pdftex.def Info: background.pdf used on input line 135.
+Package pdftex.def Info: background.pdf used on input line 139.
 (pdftex.def)             Requested size: 364.19536pt x 273.34561pt.
 
 [1
@@ -1793,38 +1819,38 @@ with page group included in a single page
 >] (./project.toc) <logo.pdf, id=125, 845.0471pt x 597.51233pt>
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 143.
+Package pdftex.def Info: logo.pdf used on input line 150.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
 
 [2
 
  <./logo.pdf>]
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 16.24324pt on input line 151.
+(Font)              scaled to size 16.24324pt on input line 158.
  [3
 
 ]
 LaTeX Font Info:    Font shape `T1/qhv/bx/n' in size <12> not available
-(Font)              Font shape `T1/qhv/b/n' tried instead on input line 166.
+(Font)              Font shape `T1/qhv/b/n' tried instead on input line 173.
 LaTeX Font Info:    Font shape `T1/qhv/b/n' will be
-(Font)              scaled to size 11.28003pt on input line 166.
+(Font)              scaled to size 11.28003pt on input line 173.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 166.
+Package pdftex.def Info: logo.pdf used on input line 173.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [4
 
 ]
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 177.
+Package pdftex.def Info: logo.pdf used on input line 184.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [5
 
 ]
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 205.
+Package pdftex.def Info: logo.pdf used on input line 212.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
 
 [6
@@ -1834,26 +1860,26 @@ Package pdftex.def Info: logo.pdf used on input line 205.
 ]
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 224.
+Package pdftex.def Info: logo.pdf used on input line 231.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [8
 
 ]
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 5.73401pt on input line 243.
+(Font)              scaled to size 5.73401pt on input line 250.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 10.29301pt on input line 243.
+(Font)              scaled to size 10.29301pt on input line 250.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 5.73401pt on input line 243.
+(Font)              scaled to size 5.73401pt on input line 250.
  <figures/ice.pdf, id=184, 597.23125pt x 363.3575pt>
 File: figures/ice.pdf Graphic file (type pdf)
 
 <use figures/ice.pdf>
-Package pdftex.def Info: figures/ice.pdf used on input line 243.
+Package pdftex.def Info: figures/ice.pdf used on input line 250.
 (pdftex.def)             Requested size: 169.01036pt x 102.8261pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 243.
+Package pdftex.def Info: logo.pdf used on input line 250.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [9
 
@@ -1861,50 +1887,50 @@ Package pdftex.def Info: logo.pdf used on input line 243.
 <figures/webrtc.png, id=210, 250.9375pt x 250.9375pt>
 File: figures/webrtc.png Graphic file (type png)
  <use figures/webrtc.png>
-Package pdftex.def Info: figures/webrtc.png used on input line 265.
+Package pdftex.def Info: figures/webrtc.png used on input line 272.
 (pdftex.def)             Requested size: 61.45703pt x 61.45532pt.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 265.
+Package pdftex.def Info: logo.pdf used on input line 272.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [10
 
  <./figures/webrtc.png>]
 LaTeX Font Info:    Font shape `T1/qhv/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/qhv/b/n' tried instead on input line 281.
+(Font)              Font shape `T1/qhv/b/n' tried instead on input line 288.
 LaTeX Font Info:    Font shape `T1/qhv/b/n' will be
-(Font)              scaled to size 10.29301pt on input line 281.
+(Font)              scaled to size 10.29301pt on input line 288.
 
 <figures/hypercafe.png, id=218, 660.066pt x 582.978pt>
 File: figures/hypercafe.png Graphic file (type png)
 
 <use figures/hypercafe.png>
-Package pdftex.def Info: figures/hypercafe.png used on input line 281.
+Package pdftex.def Info: figures/hypercafe.png used on input line 288.
 (pdftex.def)             Requested size: 113.18669pt x 99.97316pt.
  <figures/space.png, id=219, 64.24pt x 64.24pt>
 File: figures/space.png Graphic file (type png)
 
 <use figures/space.png>
-Package pdftex.def Info: figures/space.png used on input line 281.
+Package pdftex.def Info: figures/space.png used on input line 288.
 (pdftex.def)             Requested size: 24.99565pt x 24.9952pt.
 
 <figures/hitchcock.png, id=220, 483.8075pt x 414.54875pt>
 File: figures/hitchcock.png Graphic file (type png)
 
 <use figures/hitchcock.png>
-Package pdftex.def Info: figures/hitchcock.png used on input line 281.
+Package pdftex.def Info: figures/hitchcock.png used on input line 288.
 (pdftex.def)             Requested size: 116.66985pt x 99.97316pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 281.
+Package pdftex.def Info: logo.pdf used on input line 288.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [11
 
  <./figures/hypercafe.png> <./figures/space.png> <./figures/hitchcock.png>]
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 344.
+Package pdftex.def Info: logo.pdf used on input line 351.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [12
 
@@ -1912,54 +1938,54 @@ Package pdftex.def Info: logo.pdf used on input line 344.
 <figures/skype.png, id=237, 285.065pt x 284.06125pt>
 File: figures/skype.png Graphic file (type png)
  <use figures/skype.png>
-Package pdftex.def Info: figures/skype.png used on input line 385.
+Package pdftex.def Info: figures/skype.png used on input line 392.
 (pdftex.def)             Requested size: 30.73085pt x 30.62267pt.
 
 <figures/hangouts.png, id=238, 1027.84pt x 1027.84pt>
 File: figures/hangouts.png Graphic file (type png)
 
 <use figures/hangouts.png>
-Package pdftex.def Info: figures/hangouts.png used on input line 385.
+Package pdftex.def Info: figures/hangouts.png used on input line 392.
 (pdftex.def)             Requested size: 30.73085pt x 30.72408pt.
 
 <figures/jitsi.png, id=239, 789.54974pt x 789.54974pt>
 File: figures/jitsi.png Graphic file (type png)
  <use figures/jitsi.png>
-Package pdftex.def Info: figures/jitsi.png used on input line 385.
+Package pdftex.def Info: figures/jitsi.png used on input line 392.
 (pdftex.def)             Requested size: 30.73085pt x 30.72122pt.
 
 <figures/kurento.png, id=240, 350.30875pt x 350.30875pt>
 File: figures/kurento.png Graphic file (type png)
 
 <use figures/kurento.png>
-Package pdftex.def Info: figures/kurento.png used on input line 385.
+Package pdftex.def Info: figures/kurento.png used on input line 392.
 (pdftex.def)             Requested size: 30.73085pt x 30.72998pt.
  <figures/logo.png, id=241, 192.72pt x 192.72pt>
 File: figures/logo.png Graphic file (type png)
 
 <use figures/logo.png>
-Package pdftex.def Info: figures/logo.png used on input line 385.
+Package pdftex.def Info: figures/logo.png used on input line 392.
 (pdftex.def)             Requested size: 30.73085pt x 30.72995pt.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <6.5> not available
-(Font)              size <6> substituted on input line 385.
+(Font)              size <6> substituted on input line 392.
 
 
 LaTeX Font Warning: Font shape `U/wasy/m/n' in size <6.5> not available
-(Font)              size <6> substituted on input line 385.
+(Font)              size <6> substituted on input line 392.
 
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 6.11002pt on input line 385.
+(Font)              scaled to size 6.11002pt on input line 392.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 6.11002pt on input line 385.
+(Font)              scaled to size 6.11002pt on input line 392.
 
-Overfull \vbox (1.01376pt too high) detected at line 385
+Overfull \vbox (1.01376pt too high) detected at line 392
  []
 
 File: logo.pdf Graphic file (type pdf)
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 385.
+Package pdftex.def Info: logo.pdf used on input line 392.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [13
 
@@ -1971,11 +1997,11 @@ s/kurento.png> <./figures/logo.png>] [14
 File: figures/modules.pdf Graphic file (type pdf)
 
 <use figures/modules.pdf>
-Package pdftex.def Info: figures/modules.pdf used on input line 427.
+Package pdftex.def Info: figures/modules.pdf used on input line 434.
 (pdftex.def)             Requested size: 245.83282pt x 134.7565pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 427.
+Package pdftex.def Info: logo.pdf used on input line 434.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [15
 
@@ -1984,15 +2010,15 @@ Package pdftex.def Info: logo.pdf used on input line 427.
 File: figures/infrastructure.pdf Graphic file (type pdf)
 
 <use figures/infrastructure.pdf>
-Package pdftex.def Info: figures/infrastructure.pdf used on input line 446.
+Package pdftex.def Info: figures/infrastructure.pdf used on input line 453.
 (pdftex.def)             Requested size: 276.559pt x 141.6686pt.
 LaTeX Font Info:    Font shape `T1/qhv/bx/n' in size <8> not available
-(Font)              Font shape `T1/qhv/b/n' tried instead on input line 446.
+(Font)              Font shape `T1/qhv/b/n' tried instead on input line 453.
 LaTeX Font Info:    Font shape `T1/qhv/b/n' will be
-(Font)              scaled to size 7.52002pt on input line 446.
+(Font)              scaled to size 7.52002pt on input line 453.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 446.
+Package pdftex.def Info: logo.pdf used on input line 453.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [16
 
@@ -2000,12 +2026,12 @@ Package pdftex.def Info: logo.pdf used on input line 446.
 25pt>
 File: figures/app.pdf Graphic file (type pdf)
  <use figures/app.pdf>
-Package pdftex.def Info: figures/app.pdf used on input line 458.
+Package pdftex.def Info: figures/app.pdf used on input line 465.
 (pdftex.def)             Requested size: 338.16891pt x 105.51353pt.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 458.
+Package pdftex.def Info: logo.pdf used on input line 465.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [17
 
@@ -2016,11 +2042,11 @@ Package pdftex.def Info: logo.pdf used on input line 458.
 File: figures/signaling1.png Graphic file (type png)
 
 <use figures/signaling1.png>
-Package pdftex.def Info: figures/signaling1.png used on input line 473.
+Package pdftex.def Info: figures/signaling1.png used on input line 480.
 (pdftex.def)             Requested size: 276.559pt x 160.33763pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 473.
+Package pdftex.def Info: logo.pdf used on input line 480.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [19
 
@@ -2029,11 +2055,11 @@ Package pdftex.def Info: logo.pdf used on input line 473.
 File: figures/signaling2.png Graphic file (type png)
 
 <use figures/signaling2.png>
-Package pdftex.def Info: figures/signaling2.png used on input line 479.
+Package pdftex.def Info: figures/signaling2.png used on input line 486.
 (pdftex.def)             Requested size: 276.559pt x 183.07643pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 479.
+Package pdftex.def Info: logo.pdf used on input line 486.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [20
 
@@ -2042,18 +2068,18 @@ Package pdftex.def Info: logo.pdf used on input line 479.
 File: figures/wcomposite.pdf Graphic file (type pdf)
 
 <use figures/wcomposite.pdf>
-Package pdftex.def Info: figures/wcomposite.pdf used on input line 496.
+Package pdftex.def Info: figures/wcomposite.pdf used on input line 503.
 (pdftex.def)             Requested size: 184.3758pt x 94.2111pt.
 
 <figures/devices.png, id=364, 629.35126pt x 525.965pt>
 File: figures/devices.png Graphic file (type png)
 
 <use figures/devices.png>
-Package pdftex.def Info: figures/devices.png used on input line 496.
+Package pdftex.def Info: figures/devices.png used on input line 503.
 (pdftex.def)             Requested size: 122.91406pt x 102.71925pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 496.
+Package pdftex.def Info: logo.pdf used on input line 503.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [21
 
@@ -2062,11 +2088,11 @@ Package pdftex.def Info: logo.pdf used on input line 496.
 File: figures/edition.png Graphic file (type png)
 
 <use figures/edition.png>
-Package pdftex.def Info: figures/edition.png used on input line 522.
+Package pdftex.def Info: figures/edition.png used on input line 526.
 (pdftex.def)             Requested size: 153.64493pt x 140.60374pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 522.
+Package pdftex.def Info: logo.pdf used on input line 526.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [22
 
@@ -2075,32 +2101,32 @@ x 171.64125pt>
 File: figures/timeline.png Graphic file (type png)
 
 <use figures/timeline.png>
-Package pdftex.def Info: figures/timeline.png used on input line 545.
+Package pdftex.def Info: figures/timeline.png used on input line 549.
 (pdftex.def)             Requested size: 307.28987pt x 54.85036pt.
 
 <figures/search.png, id=386, 591.20876pt x 333.245pt>
 File: figures/search.png Graphic file (type png)
  <use figures/search.png>
-Package pdftex.def Info: figures/search.png used on input line 545.
+Package pdftex.def Info: figures/search.png used on input line 549.
 (pdftex.def)             Requested size: 138.2795pt x 77.94138pt.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 545.
+Package pdftex.def Info: logo.pdf used on input line 549.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [23
 
  <./figures/timeline.png> <./figures/search.png (PNG copy)>]
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 6.86201pt on input line 577.
+(Font)              scaled to size 6.86201pt on input line 581.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 9.40002pt on input line 577.
+(Font)              scaled to size 9.40002pt on input line 581.
 LaTeX Font Info:    Font shape `T1/qhv/m/it' will be
-(Font)              scaled to size 6.86201pt on input line 577.
+(Font)              scaled to size 6.86201pt on input line 581.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 577.
+Package pdftex.def Info: logo.pdf used on input line 581.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [24
 
@@ -2113,17 +2139,17 @@ Package epstopdf Info: Source file: <video.eps>
 (epstopdf)                    size: 3280 bytes
 (epstopdf)             Command: <repstopdf --outfile=video-eps-converted-to.pdf
  video.eps>
-(epstopdf)             \includegraphics on input line 594.
+(epstopdf)             \includegraphics on input line 598.
 Package epstopdf Info: Output file is already uptodate.
  <video-eps-converted-to.pdf, id=400, 281.05pt x 281.05pt>
 File: video-eps-converted-to.pdf Graphic file (type pdf)
 
 <use video-eps-converted-to.pdf>
-Package pdftex.def Info: video-eps-converted-to.pdf used on input line 594.
+Package pdftex.def Info: video-eps-converted-to.pdf used on input line 598.
 (pdftex.def)             Requested size: 70.26231pt x 70.26231pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 594.
+Package pdftex.def Info: logo.pdf used on input line 598.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [25
 
@@ -2133,16 +2159,16 @@ Package pdftex.def Info: logo.pdf used on input line 594.
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.612 	\end{frame}
+l.616 	\end{frame}
                    <figures/cpu.pdf, id=412, 454.69875pt x 226.8475pt>
 File: figures/cpu.pdf Graphic file (type pdf)
 
 <use figures/cpu.pdf>
-Package pdftex.def Info: figures/cpu.pdf used on input line 612.
+Package pdftex.def Info: figures/cpu.pdf used on input line 616.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 612.
+Package pdftex.def Info: logo.pdf used on input line 616.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [27
 
@@ -2150,12 +2176,12 @@ Package pdftex.def Info: logo.pdf used on input line 612.
 <figures/ram.pdf, id=423, 454.69875pt x 226.8475pt>
 File: figures/ram.pdf Graphic file (type pdf)
  <use figures/ram.pdf>
-Package pdftex.def Info: figures/ram.pdf used on input line 618.
+Package pdftex.def Info: figures/ram.pdf used on input line 622.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 618.
+Package pdftex.def Info: logo.pdf used on input line 622.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [28
 
@@ -2163,12 +2189,12 @@ Package pdftex.def Info: logo.pdf used on input line 618.
 <figures/net.pdf, id=434, 454.69875pt x 226.8475pt>
 File: figures/net.pdf Graphic file (type pdf)
  <use figures/net.pdf>
-Package pdftex.def Info: figures/net.pdf used on input line 624.
+Package pdftex.def Info: figures/net.pdf used on input line 628.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
 
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 624.
+Package pdftex.def Info: logo.pdf used on input line 628.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [29
 
@@ -2177,11 +2203,11 @@ Package pdftex.def Info: logo.pdf used on input line 624.
 File: figures/net_clt.pdf Graphic file (type pdf)
 
 <use figures/net_clt.pdf>
-Package pdftex.def Info: figures/net_clt.pdf used on input line 631.
+Package pdftex.def Info: figures/net_clt.pdf used on input line 635.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 631.
+Package pdftex.def Info: logo.pdf used on input line 635.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [30
 
@@ -2190,18 +2216,18 @@ Package pdftex.def Info: logo.pdf used on input line 631.
 File: figures/user_times.pdf Graphic file (type pdf)
 
 <use figures/user_times.pdf>
-Package pdftex.def Info: figures/user_times.pdf used on input line 645.
+Package pdftex.def Info: figures/user_times.pdf used on input line 649.
 (pdftex.def)             Requested size: 153.64493pt x 153.64503pt.
 
 <figures/user_clicks.pdf, id=457, 226.8475pt x 226.8475pt>
 File: figures/user_clicks.pdf Graphic file (type pdf)
 
 <use figures/user_clicks.pdf>
-Package pdftex.def Info: figures/user_clicks.pdf used on input line 645.
+Package pdftex.def Info: figures/user_clicks.pdf used on input line 649.
 (pdftex.def)             Requested size: 153.64493pt x 153.64503pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 645.
+Package pdftex.def Info: logo.pdf used on input line 649.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [31
 
@@ -2210,11 +2236,11 @@ Package pdftex.def Info: logo.pdf used on input line 645.
 File: figures/user_evals.pdf Graphic file (type pdf)
 
 <use figures/user_evals.pdf>
-Package pdftex.def Info: figures/user_evals.pdf used on input line 651.
+Package pdftex.def Info: figures/user_evals.pdf used on input line 655.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 651.
+Package pdftex.def Info: logo.pdf used on input line 655.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [32
 
@@ -2224,7 +2250,7 @@ Package pdftex.def Info: logo.pdf used on input line 651.
 ]
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 671.
+Package pdftex.def Info: logo.pdf used on input line 675.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [34
 
@@ -2234,20 +2260,20 @@ Package pdftex.def Info: logo.pdf used on input line 671.
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.692 	\end{frame}
+l.696 	\end{frame}
                   
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 692.
+Package pdftex.def Info: logo.pdf used on input line 696.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [36
 
 ]
 LaTeX Font Info:    Font shape `T1/qhv/m/n' will be
-(Font)              scaled to size 23.38725pt on input line 704.
+(Font)              scaled to size 23.38725pt on input line 708.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 704.
+Package pdftex.def Info: logo.pdf used on input line 708.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [37
 
@@ -2256,11 +2282,11 @@ Package pdftex.def Info: logo.pdf used on input line 704.
 File: figures/cpu_avg.pdf Graphic file (type pdf)
 
 <use figures/cpu_avg.pdf>
-Package pdftex.def Info: figures/cpu_avg.pdf used on input line 710.
+Package pdftex.def Info: figures/cpu_avg.pdf used on input line 714.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 710.
+Package pdftex.def Info: logo.pdf used on input line 714.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [38
 
@@ -2269,11 +2295,11 @@ Package pdftex.def Info: logo.pdf used on input line 710.
 File: figures/net_avg.pdf Graphic file (type pdf)
 
 <use figures/net_avg.pdf>
-Package pdftex.def Info: figures/net_avg.pdf used on input line 717.
+Package pdftex.def Info: figures/net_avg.pdf used on input line 721.
 (pdftex.def)             Requested size: 307.28987pt x 153.30582pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 717.
+Package pdftex.def Info: logo.pdf used on input line 721.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [39
 
@@ -2282,11 +2308,11 @@ Package pdftex.def Info: logo.pdf used on input line 717.
 File: figures/user_ages.pdf Graphic file (type pdf)
 
 <use figures/user_ages.pdf>
-Package pdftex.def Info: figures/user_ages.pdf used on input line 725.
+Package pdftex.def Info: figures/user_ages.pdf used on input line 729.
 (pdftex.def)             Requested size: 153.64493pt x 153.64503pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 725.
+Package pdftex.def Info: logo.pdf used on input line 729.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [40
 
@@ -2295,18 +2321,18 @@ Package pdftex.def Info: logo.pdf used on input line 725.
 File: figures/user_diffs.pdf Graphic file (type pdf)
 
 <use figures/user_diffs.pdf>
-Package pdftex.def Info: figures/user_diffs.pdf used on input line 733.
+Package pdftex.def Info: figures/user_diffs.pdf used on input line 737.
 (pdftex.def)             Requested size: 153.64493pt x 153.64503pt.
 
 <figures/user_errors.pdf, id=543, 226.8475pt x 226.8475pt>
 File: figures/user_errors.pdf Graphic file (type pdf)
 
 <use figures/user_errors.pdf>
-Package pdftex.def Info: figures/user_errors.pdf used on input line 733.
+Package pdftex.def Info: figures/user_errors.pdf used on input line 737.
 (pdftex.def)             Requested size: 153.64493pt x 153.64503pt.
 File: logo.pdf Graphic file (type pdf)
  <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 733.
+Package pdftex.def Info: logo.pdf used on input line 737.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [41
 
@@ -2315,33 +2341,68 @@ destination with the same identifier (name{table:otcomparision}) has been alrea
 dy used, duplicate ignored
 <to be read again> 
                    \relax 
-l.747 	\end{frame}
+l.751 	\end{frame}
                    <figures/ready.png, id=559, 1113.15875pt x 833.1125pt>
 File: figures/ready.png Graphic file (type png)
 
 <use figures/ready.png>
-Package pdftex.def Info: figures/ready.png used on input line 747.
+Package pdftex.def Info: figures/ready.png used on input line 751.
 (pdftex.def)             Requested size: 270.53616pt x 202.48082pt.
 File: figures/space.png Graphic file (type png)
  <use figures/space.png>
-Package pdftex.def Info: figures/space.png used on input line 747.
-(pdftex.def)             Requested size: 81.16238pt x 81.16925pt.
+Package pdftex.def Info: figures/space.png used on input line 751.
+(pdftex.def)             Requested size: 67.63274pt x 67.63826pt.
 
-Overfull \hbox (37.52963pt too wide) in paragraph at lines 747--747
+Overfull \hbox (23.99998pt too wide) in paragraph at lines 751--751
  [] 
  []
 
 
-Overfull \vbox (14.39568pt too high) detected at line 747
+Overfull \vbox (14.39568pt too high) detected at line 751
  []
 
 File: logo.pdf Graphic file (type pdf)
 <use logo.pdf>
-Package pdftex.def Info: logo.pdf used on input line 747.
+Package pdftex.def Info: logo.pdf used on input line 751.
 (pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
  [42
 
  <./figures/ready.png (PNG copy)>]
+File: logo.pdf Graphic file (type pdf)
+ <use logo.pdf>
+Package pdftex.def Info: logo.pdf used on input line 764.
+(pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
+ [43
+
+]
+<figures/scale2.pdf, id=571, 415.5525pt x 431.6125pt>
+File: figures/scale2.pdf Graphic file (type pdf)
+ <use figures/scale2.pdf>
+Package pdftex.def Info: figures/scale2.pdf used on input line 784.
+(pdftex.def)             Requested size: 153.64493pt x 159.58215pt.
+File: logo.pdf Graphic file (type pdf)
+
+<use logo.pdf>
+Package pdftex.def Info: logo.pdf used on input line 784.
+(pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
+ [44
+
+ <./figures/scale2.pdf>]
+File: logo.pdf Graphic file (type pdf)
+ <use logo.pdf>
+Package pdftex.def Info: logo.pdf used on input line 798.
+(pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
+ [45
+
+]
+File: logo.pdf Graphic file (type pdf)
+ <use logo.pdf>
+Package pdftex.def Info: logo.pdf used on input line 815.
+(pdftex.def)             Requested size: 60.3585pt x 42.67912pt.
+
+[46
+
+]
 \tf@nav=\write6
 \openout6 = `project.nav'.
 
@@ -2351,11 +2412,11 @@ Package pdftex.def Info: logo.pdf used on input line 747.
 \tf@snm=\write8
 \openout8 = `project.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 751.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 751.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 819.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 819.
  (./project.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 751.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 751.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 819.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 819.
 Package rerunfilecheck Info: File `project.out' has not changed.
 (rerunfilecheck)             Checksum: 5C2E62C68335B648EDDCB682250AF1CE;1199.
 
@@ -2366,13 +2427,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 751.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 819.
  ) 
 Here is how much of TeX's memory you used:
- 33978 strings out of 493304
- 720530 string characters out of 6139871
- 929053 words of memory out of 5000000
- 36454 multiletter control sequences out of 15000+600000
+ 34191 strings out of 493304
+ 725478 string characters out of 6139871
+ 937230 words of memory out of 5000000
+ 36652 multiletter control sequences out of 15000+600000
  107469 words of font info for 120 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  59i,17n,122p,989b,924s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2383,10 +2444,10 @@ share/texmf/fonts/type1/public/tex-gyre/qhvri.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/zapfding/uzdr.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/wasy/wasy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/wasy/w
 asy8.pfb>
-Output written on project.pdf (42 pages, 2677470 bytes).
+Output written on project.pdf (46 pages, 2698274 bytes).
 PDF statistics:
- 617 PDF objects out of 1000 (max. 8388607)
- 446 compressed objects within 5 object streams
- 108 named destinations out of 1000 (max. 500000)
- 395 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 473 compressed objects within 5 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 400 words of extra memory for PDF output out of 10000 (max. 10000000)
 

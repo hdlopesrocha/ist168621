@@ -30,19 +30,22 @@ wasysym
 \usepackage{newpxtext,newpxmath}
 \usepackage{pifont}% http://ctan.org/pkg/pifont
 \usepackage[utf8x]{inputenc}
-
+\usepackage{pgfpages}
 \usepackage{multicol}
 \usepackage{caption}
 \usepackage{pgfgantt}
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
-
 \usepackage{listings}
 \usepackage{color, colortbl}
 
 \definecolor{mygreen}{HTML}{4cd964}
 \newcommand{\cmark}{{\color{mygreen}\ding{51}}}%
 \newcommand{\xmark}{{\color{red}\ding{55}}}%
+
+
+%\setbeameroption{show notes on second screen=right}
+
 
 \lstset{ %
 language=[LaTeX]TeX,
@@ -77,7 +80,7 @@ mindmap
 %        BEAMER OPTIONS
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-\setbeameroption{show notes}
+%\setbeameroption{show notes}
 
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 %        BEAMER COMMANDS
@@ -132,12 +135,16 @@ Co-Advisor: Paulo Chainho \\
 \begin{frame}
 \maketitle % Print the title page as the first slide
 
+\note{Boa Tarde! \\ Comunicações hiperligadas - Colaboração através de WebRTC}
 \end{frame}
 }
 
 \begin{frame}[t]
 \frametitle{Overview} 
 \tableofcontents[hidesubsections]
+\note{Introdução, Estado de arte\\
+Arquitectura, implementação e avaliação da nossa proposta\\
+Por fim as conlusões e trabalhos futuro}
 
 
 \end{frame}
@@ -503,13 +510,10 @@ Co-Advisor: Paulo Chainho \\
 
 
 		\begin{itemize}
-		\item Create \& Search content
-				\vfill
-\item Scheduler
-		\vfill
-		\item QR codes
-		\vfill
-		\item Security concerns
+			\item Create \& Search content \vfill
+			\item Scheduler \vfill
+			\item QR codes \vfill
+			\item Security concerns
 		\end{itemize}
 
 		\begin{flushright}
@@ -738,12 +742,76 @@ Co-Advisor: Paulo Chainho \\
 \begin{table}
 			\label{table:otcomparision}
 			\begin{tabular}{lr}
-			\includegraphics[width=0.8\textwidth]{figures/ready.png} & 	\includegraphics[width=0.24\textwidth]{figures/space.png}
+			\includegraphics[width=0.8\textwidth]{figures/ready.png} & 	\includegraphics[width=0.2\textwidth]{figures/space.png}
 
 			\end{tabular}
 			\end{table}}
 
 		
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Security Concerns}
+		\begin{itemize}
+		\item Subset of actions implemented and triggered by messages. 
+				\vfill
+		\item Defined actions on demand, requires detecting malicious code.
+		\begin{itemize}
+			\item EarlyBird - machine learning techniques.
+		\end{itemize}
+	\end{itemize}
+
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Scalability}
+		\begin{itemize}
+				\vfill
+		\item Kurento Media Server and \\ Kurento Repository in \\the same machine. 
+				\vfill
+		\item Fast data transfer on \\ localhost.
+				\vfill
+		\item Database bottleneck
+		\end{itemize}
+
+		\begin{flushright}
+			\vspace*{-12\baselineskip}
+			\includegraphics[width=0.5\textwidth]{figures/scale2.pdf}
+		\end{flushright}
+	
+
+
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Fast Forward}
+		\begin{itemize}
+				\vfill
+		\item Implement fast forward on Kurento Media Server.
+				\vfill
+		\item Convert videos in real time with a new playback velocity using \emph{ffmpeg}.
+				\vfill
+		\item Convert videos after recording with predefined playback velocities.
+		\end{itemize}
+
+
+	\end{frame}
+
+	\begin{frame}[c]
+		\frametitle{Memory Usage}
+
+		\begin{itemize}
+				\vfill
+				\item MongoDB - Always receiving data, caches inserted data on RAM. Checkpoints data to disk every 60 seconds or when journal data exceeds
+2GB.
+				\vfill 
+				\item Play Framework - JVM uses memory recycling techniques instead of releasing to operating system.
+				\vfill
+				\item Kurento Repository - Caching videos.
+				\vfill
+				\item Kurento Media Server - Releases some memory and also recycles some of it.
+
+		\end{itemize}
 	\end{frame}
 
 %----------------------------------------------------------------------------------------
