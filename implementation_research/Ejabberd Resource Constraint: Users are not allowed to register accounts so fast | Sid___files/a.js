@@ -1,1 +1,0 @@
-/**/skimlinksApplyHandlers({"country":"PT","sessid":"bd10f2249861afee148632498892277f","guid":"492594c6b114f0cdf04c0b628625ca94","merchant_domains":["vimeo.com"]});
