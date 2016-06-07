@@ -124,8 +124,7 @@ Universidade de Lisboa \\ % Your institution for the title page
 \textit{henrique.rocha@tecnico.ulisboa.pt}\\ % Your email address
 \small
 
-Advisor: Ricardo Pereira \\
-Co-Advisor: Paulo Chainho \\
+Supervisors: Ricardo Pereira \& Paulo Chainho
 }
 \date{\today} % Date, can be changed to a custom date
 
@@ -175,12 +174,13 @@ Por fim as conlusões e trabalhos futuro}
 	\subsection{Problem Statement} % English
   		\begin{frame}[c]
 		\frametitle{Problem Statement}
-		Real-time communication applications can make a difference on business, education and health sectors.
-
-		\vfill
-
+		
 		An application that provides a collaborative environment and a way to remember our past communications would be a strong tool.
 		
+		\vfill
+
+		Real-time communication applications can make a difference on business, education and health sectors.
+
 		\end{frame}
 
 
@@ -274,7 +274,7 @@ Por fim as conlusões e trabalhos futuro}
   		\begin{frame}[c]
 		\frametitle{Overlay communications with content}
 		\begin{itemize}
-		\item \textbf{Concepts:} HyperText \& HyperMedia \& HyperCommunications \& Detail on  Demand
+		\item \textbf{Concepts:} HyperMedia \& Detail on Demand
 		\vfill
 		\item \textbf{Implementations:} HyperCafe \& HyperHitchcock  % Detail on Demand
 				
@@ -335,16 +335,16 @@ Por fim as conlusões e trabalhos futuro}
 
 			\begin{table}
 			\centering
-			\caption{Comparision between Operational Transformation libraries}
+			\caption{Comparison between Operational Transformation libraries}
 			\label{table:otcomparision}
 			\begin{tabular}{|c|c|c|c|}
 			\hline
-			\textbf{Library} & \textbf{Own Server} & \textbf{Own Storage} & \textbf{Operations} \\ \hline
-			ShareJS          & \cmark                 & \cmark                  & text+objects        \\ \hline
-			TogetherJS       & \cmark                 & \xmark                   & text+objects        \\ \hline
-			Goodow           & \cmark                 & \cmark                  & text+objects        \\ \hline
-			Etherpad Lite    & \cmark                 & \cmark                  & extendable 			    \\ \hline
-			OT.js            & \xmark                  & \xmark                   & text                \\ \hline
+			\textbf{Library} & \textbf{Server Freedom} & \textbf{Storage Freedom} & \textbf{Operations} \\ \hline
+			ShareJS          & \xmark                 & \xmark                  & text+objects        \\ \hline
+			TogetherJS       & \xmark                 & \cmark                   & text+objects        \\ \hline
+			Goodow           & \xmark                 & \xmark                  & text+objects        \\ \hline
+			Etherpad Lite    & \xmark                 & \xmark                  & extendable 			    \\ \hline
+			OT.js            & \cmark                  & \cmark                   & text                \\ \hline
 			\end{tabular}
 			\end{table}
 
@@ -493,10 +493,11 @@ Por fim as conlusões e trabalhos futuro}
 		\begin{itemize}
 			\item Server-side recording to database (Kurento Repository).
 			\item Server-side stream composition.
+			\item Speech detection.
 		\end{itemize}
-
-
 		\begin{figure}
+			\vspace*{-1.5\baselineskip}
+
 			\includegraphics[width=0.6\textwidth]{figures/wcomposite.pdf}
 			\includegraphics[width=0.4\textwidth]{figures/devices.png}
 		\end{figure}
@@ -534,16 +535,18 @@ Por fim as conlusões e trabalhos futuro}
 
 		\begin{itemize}
 		\item Playback recordings
-		\item Create \& Search annotations
-		\item Time Hyper-links
+		\vfill
+		\item Create time hyper-links \& annotations
+		\vfill
+		\item Search annotations \& content
+		\vfill
 		\end{itemize}
 
-			\includegraphics[width=\textwidth]{figures/timeline.png}
-				\begin{flushright}
-
-			\vspace*{-12\baselineskip}
-			\includegraphics[width=0.45\textwidth]{figures/search.png}
-		\end{flushright}
+		%\includegraphics[width=\textwidth]{figures/timeline.png}
+		%\begin{flushright}
+		%\vspace*{-12\baselineskip}
+		%\includegraphics[width=0.45\textwidth]{figures/search.png}
+		%\end{flushright}
 		
 
 		\end{frame}
@@ -589,12 +592,9 @@ Por fim as conlusões e trabalhos futuro}
 		%Students can answer to quizzes.
 	
 		\begin{center}
-		\href{run:video.mkv}{
-		\includegraphics[scale=0.25]
-		{video.eps}}
+		%\href{run:video.mkv}{
+		\includegraphics[width=0.8\textwidth]{figures/sshot.png}
 		\end{center}
-
-
 		\end{frame}
 
 
@@ -637,7 +637,7 @@ Por fim as conlusões e trabalhos futuro}
 \subsection{User Interface Tests}
 
 	\begin{frame}[c]
-		\frametitle{Five tasks}
+		\frametitle{Usability tests}
 		\begin{figure}[H]
 			\includegraphics[width=0.5\textwidth]{figures/user_times.pdf}
 			\includegraphics[width=0.5\textwidth]{figures/user_clicks.pdf}
