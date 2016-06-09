@@ -6,10 +6,11 @@
 
 \input{17_implementation_deploy.tex}
 
+  
 
 \section{Tests Objectives}
 
-  We have tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's usability.
+  We have tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's user interface usability.
 
   We have also tested the performance of our solution by measuring the used resources. Those performance tests are crucial to ensure that our solution is in fact stable and users can use it endlessly without decreasing the quality of their experience. 
 
@@ -22,7 +23,7 @@
     \subsection{Tests Scenarios}
 
 
-      In order to benchmark our system, we have implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects with a periodicity of one second: CPU, physical memory information relative to each running process and network usage relative to each interface. 
+      In order to benchmark our system, we have implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects to a text file with a periodicity of one second: CPU, RAM usage relative to each running process and network usage relative to each interface. 
 
       We would like to collect network information relative to each process, which \emph{nethogs}\footnote{\url{https://raboof.github.io/nethogs/} (Accessed March 27, 2016)} provide but it could not capture the network usage of some processes. Although this would be useful for a deep analysis, we know which network interfaces are used to establish connections between processes as we show on Table \ref{table:interfacemap}.
 
@@ -42,7 +43,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 \end{table}
 
 
-      The performance test scenario that we have defined consists on two phases, the first phase consists only on having users, with similar computer and network specifications, entering sequentially on the conference room. The second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute in total of thirteen minutes (780 seconds).
+      The performance test scenario that we have defined consists of two phases, the first phase consists only on having users, with similar computer and network specifications, entering sequentially on the conference room. The second phase consists on the users leaving the conference room. Each event, joining and leaving, occurs with intervals of one minute in total of 13 minutes (780 seconds).
 
   
 
@@ -82,9 +83,7 @@ Ethernet & Kurento Media Server $\leftrightarrow$ Client\\ \hline
 
 
 
-If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users.
-
-With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \ac{KMS} should be installed on the same machine, as depicted on Figure \ref{fig:scale2}, because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
+If we consider all streams equal and an incoming stream uses $x$kbps, with $n$ incoming streams the rate of data received at \ac{KMS} is $nx$ and the expected rate of data transfered to \emph{Kurento Repo} using localhost is $(n+1)x$. Due to the data being transfered also from \emph{Kurento Repo} to \emph{MongoDB} via localhost, the expected total rate of data transfered through localhost is $2((n+1)x) = (2n+2)x$, which explains the reason for the average amount of data transfered through localhost being more than twice the average amount of data received from users. With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \ac{KMS} should be installed on the same machine, as depicted on Figure \ref{fig:scale2}, because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \ac{KMS} and \emph{Kurento Repository} on the same machine.
 
 \begin{figure}
   \centering
@@ -445,7 +444,7 @@ Another weak aspect was our content editor, which, in fact, we recognize is diff
 
 We are aware that placing content on the timeline will reduce our solutions performance, especially when there is a relatively large amount of content, due to the content that is present on the timeline being loaded all at once. Although, we recognize that for some cases (relatively low amount of content), displaying the content on the timeline could not have a great impact on our solutions performance, we choose not to implement this.
 
-In conclusion, 100\% of our testers though that our solution was an innovation and 95\% recommended using our solution.
+%In conclusion, 100\% of our testers though that our solution was an innovation and 95\% recommended using our solution.
 
 
 \section{Chapter Summary}
@@ -459,4 +458,4 @@ The performance tests revealed unexpected results which were crucial to find and
 
 In respect to user interface tests, we have obtained valuable feedback that we used to improve our prototype's usability. 
 
-In order to understand how good the results were for each performed task, we have defined optimal values for the different metrics. In general the results reveal a significant difference between observed values and optimal values, which can be explained by the user's lack of experience with systems such as the one we have created.
+In order to understand how good the results were for each performed task, we have defined optimal values for the different metrics. In general the results reveal a significant difference between observed values and optimal values, which can be explained by the user's lack of experience with with the tools that we provided.

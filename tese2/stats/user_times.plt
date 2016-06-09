@@ -1,4 +1,4 @@
-set terminal postscript size 8cm,8cm eps
+set terminal postscript size 8cm,8cm eps color
 set title "Task  duration" font ",20"
 set xlabel "Tasks"
 set ylabel "Time [seconds]"

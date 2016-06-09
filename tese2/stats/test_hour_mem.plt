@@ -1,4 +1,4 @@
-set terminal postscript size 16cm,8cm eps
+set terminal postscript size 16cm,8cm eps color
 
 set title "Memory Usage" font ",20"
 set xlabel "Time [seconds]"

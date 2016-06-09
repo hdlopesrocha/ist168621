@@ -35,7 +35,7 @@
 
 	As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.	In order to help the content creator to introduce and synchronize its content in real time, we allow the user to encode its content into \ac{QR} codes and show it to the camera in real time.
 
-	\ac{KMS} lets registering event handlers for \ac{QR} code detection. The component that detects \ac{QR} codes on \ac{KMS} is called periodically and fires the handlers with the decoded content. This mechanism does not detect if the \ac{QR} code enters or leaves the screen. We had to implement our own mechanism for detecting those events. Each user session in the server maintains a map with the contents that are present on the screen. In order to apply our algorithm more efficiently we calculate the content's hash through the \emph{md5} method. If the hash is not present in the map, it means the \ac{QR} code was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in real time. If the same \ac{QR} code is not detected after a time bigger then two periods we can conclude that the \ac{QR} code left the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \ac{QR} code leaving detection.
+	\ac{KMS} allows registering event handlers for \ac{QR} code detection. The component that detects \ac{QR} codes on \ac{KMS} is called periodically and fires the handlers with the decoded content. Although the \ac{QR} code detection period is defined by \ac{KMS} we observed to be one second. This mechanism does not detect if the \ac{QR} code enters or leaves the screen. We had to implement our own mechanism for detecting those events. Each user session in the server maintains a map with the contents that are present on the screen, which can be represented by multiple \ac{QR} codes simultaneously. In order to apply our algorithm more efficiently we calculate the content's hash through the \emph{md5} method. If the hash is not present in the map, it means the \ac{QR} code was entering the screen, we add that hash to the map and associate the current time to it, all the users are notified to watch that content in real time. If the same \ac{QR} code is not detected after a time bigger then two periods we can conclude that the \ac{QR} code left the screen and we add the correspondent content into our database. Listing \ref{lst:pseudo_qrcode} shows the pseudo code for \ac{QR} code leaving detection.
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption={Pseudo code for QR code leaving detection},label={lst:pseudo_qrcode},language=JavaScript]
@@ -70,12 +70,12 @@ function onCodeFound(content) {
 
 	\subsection{Interactive media synchronization}
 
-	In order to allow users to visualize past and present communications, we express the user's position as the time offset between its navigated time and the current time.
+	In order to allow users to visualize past and present communications, we express the user's time position as the time offset between its reproducing time and the current time.
 
 
-	In our solution, content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}. This content is displayed on defined intervals of time. Multiple contents can be displayed at the same time. In order to achieve that, we define layers above the video with the same size. Each layer is associated to the content.	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of the content instead of all of it, which would be very inefficient. The content to display for each user depends on the user's position on the timeline. This position is given by an offset between the current time and the navigated time. If the user is watching the content in real time this offset is always zero. If the user is reproducing past communications in normal playback rate, this offset is constant and, as a consequence, there is need to re-synchronize this value. If, for instance, we had to implement communication reproduction with a faster or slower playback rate, we would need to take into account the fact of this time offset not being constant. 
+	In our solution, content is represented as simple text that can contain \ac{HTML}, \ac{CSS} or even \emph{JavaScript}. This content is displayed on defined intervals of time. Multiple contents can be displayed at the same time. In order to achieve that, we define layers above the video with the same size. Each layer is associated to the content.	We have taken into account that the amount of content tends to grow with time and the user should only have access to a subset of the content instead of all of it, which would be very inefficient. The content to display for each user depends on the user's position on the timeline. This position is given by an offset between the current time and the reproducing time. If the user is watching the content in real time this offset is always zero. If the user is reproducing past communications in normal playback rate, this offset is constant and, as a consequence, there is need to re-synchronize this value. If, for instance, we had to implement communication reproduction with a faster or slower playback rate, we would need to take into account the fact of this time offset not being constant. 
 
-	Each content is divided into two components, the \emph{start} and the \emph{end} which are sent to users. The \emph{start} component contains a time stamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the time stamp and the content identification number. 
+	Each content, that users receive from our application server, is divided into two components, the \emph{start} and the \emph{end}. The \emph{start} component contains a time stamp, the content identification number and the content itself in form of text. The \emph{end} component only contains the time stamp and the content identification number. 
 
 	The users will receive their contents from the server on five different situations:
 
@@ -90,7 +90,7 @@ function onCodeFound(content) {
 	The content to return is given by the union of the two following content subsets:
 	\begin{itemize}
 		\item Content that should be currently on display.
-		\item A subset of contents whose starting time is immediately following the user's time.
+		\item A subset of contents whose starting time is immediately after the user's time.
 	\end{itemize}
 
 	The second subset is used for predicting which content the user will watch and avoid requests during its events.
@@ -173,7 +173,7 @@ function scheduleContent() {
 
 	\subsection{Security Concerns}
 
-	Our solution is flexible on what kind of interactions are possible to the users in real time, but allowing users to write \emph{JavaScript} that is executed on the other users browser would attackers to misuse their resources and access critical information. We could solve this problem easily by escaping any \emph{script} tag present on the content, but we would sacrifice the kind of interactions that are possible. By not allowing \emph{JavaScript} we would need to implement a subset of conceivable actions a priori and fire them when a type of message is received. We decided to ignore the security vulnerabilities that are exposed by evaluating \emph{JavaScript} because, in order to offer the same interactions, we would have to do an exhaustive functional requirements gathering and, in our prototype, our goal is to explore users behavior when interacting with our system. 
+	Our solution is flexible on what kind of interactions are possible to the users in real time, but allowing users to write \emph{JavaScript} that is executed on the other users' browser would allow attackers to misuse their resources and access critical information. We could solve this problem easily by escaping any \emph{script} tag present on the content, but we would sacrifice the kind of interactions that are possible. By not allowing \emph{JavaScript} we would need to implement a subset of conceivable actions a priori and fire them when a type of message is received. We decided to postpone, to future work, the correction of the security vulnerabilities that are exposed by evaluating \emph{JavaScript} because, in order to offer the same interactions, we would have to do an exhaustive functional requirements gathering and, in our prototype, our goal is to explore users behavior when interacting with our system. 
 
 	Another way to solve this problem, which is not within the goals of this thesis, is to analyze the \emph{JavaScript} code and detect if it is malicious. Although we have not performed a detailed study on this field, we are aware of its complexity and the existence of solutions to deal with this problem, in particular \emph{EarlyBird}\cite{earlybird} came to our attention. 
 
@@ -249,7 +249,7 @@ function scheduleContent() {
 
 	\subsection{View composition and switching view}
 
-		In order to show all streams to all users, each conference participant could receive individual streams for each user that share video. In overall, if there were $n$ active participants in the conference room, the number of streams per user would be $n$ ($1$ for sending video and $n-1$ for receiving) and, consequently, the number of streams in that conference room, as observed in Figure \ref{fig:xcomposite}, would be $n^2$.
+		In order to show all streams to all users, each conference participant could receive individual streams for each user that share video. If there are $n$ active participants in the conference room, the number of streams per user is $n$ ($1$ for sending video and $n-1$ for receiving) and, consequently, the number of streams in that conference room, as observed in Figure \ref{fig:xcomposite}, is $n^2$.
 
 
 \begin{figure}
@@ -270,7 +270,7 @@ function scheduleContent() {
 \end{figure}
 
 
-		By mixing all streams into a single one, users can receive a single stream with the representation of all active users. With this approach, the total number of streams within a conference room can be, at most, $2n$ (each user has $2$ streams, one to send and another to receive) as observed in Figure \ref{fig:ecomposite}.
+		By mixing all streams into a single one, users can receive a single stream with the image (in a grid) and audio of all active users. With this approach, the total number of streams within a conference room can be, at most, $2n$ (each user has $2$ streams, one to send and another to receive) as observed in Figure \ref{fig:ecomposite}.
 
 		The numbers we have presented above were calculated taking into account that all users would receive and send video at the same time, which is the worst case scenario, although users may choose just receiving streams.
 

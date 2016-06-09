@@ -1,4 +1,4 @@
-set terminal postscript size 8cm,8cm eps
+set terminal postscript size 8cm,8cm eps color
 set title "User ages" font ",20"
 set xlabel "Age intervals [years]"
 set ylabel "Amount of users"

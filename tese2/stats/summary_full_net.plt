@@ -1,4 +1,4 @@
-set terminal postscript size 16cm,8cm eps
+set terminal postscript size 16cm,8cm eps color
 set title "Network usage" font ",20"
 set xlabel "Time [seconds]"
 set ylabel "Transfer rate [mbps]"
@@ -27,6 +27,6 @@ do for [t=0:13] {
 }
 
 plot [-10:850] \
-	'test_full_features/summary_sent_eth0.dat' u ($1-start):($2*y_unit) with lines ls 1 title "Sent(eth0)}",\
-	'test_full_features/summary_recv_eth0.dat' u ($1-start):($2*y_unit) with lines ls 2 title "Recv(eth0)",\
-	'test_full_features/summary_sent_lo.dat' u ($1-start):($2*y_unit) with lines ls 3 title "Sent/Recv(lo)", \
+	'test_full_features/summary_sent_eth0.dat' u ($1-start):($2*y_unit) with lines ls 1 title "ethernet (sent)",\
+	'test_full_features/summary_recv_eth0.dat' u ($1-start):($2*y_unit) with lines ls 2 title "ethernet (recv)",\
+	'test_full_features/summary_sent_lo.dat' u ($1-start):($2*y_unit) with lines ls 3 title "localhost", \

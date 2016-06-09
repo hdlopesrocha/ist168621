@@ -1,4 +1,4 @@
-set terminal postscript size 8cm,8cm eps
+set terminal postscript size 8cm,8cm eps color
 set title "Task difficulty" font ",20"
 set xlabel "Tasks"
 set ylabel "Difficulty [percentage]"

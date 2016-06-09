@@ -1,4 +1,4 @@
-set terminal postscript size 8cm,8cm eps
+set terminal postscript size 8cm,8cm eps color
 set title "Task errors" font ",20"
 set xlabel "Tasks"
 set ylabel "Number of errors"
