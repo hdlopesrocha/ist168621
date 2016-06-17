@@ -22,6 +22,8 @@ In a general view, the signaling protocol is used to share connection and media 
 \end{figure} 
 
 
+Before the signaling protocol starts, the user must be authenticated. After the user provide the correct credentials, it receives an \ac{HTTP} \emph{cookie} from our server in order to be identified in the following \ac{HTTP} requests.
+
 %RP faz sentido haver dois ICE? Se queres colocar 2 dá-lhes nomes diferentes (nem que seja cliente e servidor ou 1 e 2).
 
 After the web application server validates the user access, the signaling protocol allows the users to directly connect to the \ac{KMS}, which is placed in a private network, and lets the application server and users negotiate media types and encoding information to use during the conversation.
@@ -48,7 +50,7 @@ When a user enters a group conference, after the page is completely loaded, a We
 But before creating the web socket, we must identify the user and check if he has permissions to participate in the conference. The user identification is done by retrieving the session id from the cookie provided by the user-agent (web browser) through the \ac{HTTP} headers.
 %RP não é bem o user que fornece o cookie. é o user-agent (browser). Convém ser preciso.
 %HR done
-The Web application server retrieves all the information needed from the database in order to check if the user has permissions to join that conference room. It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake is performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \ac{HTTP} context is lost.
+The web application server retrieves all the information needed from the database in order to check if the user has permissions to join that conference room. It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake is performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \ac{HTTP} context is lost.
 %RP socket -> websocket?
 
 When the connection is established between the application server and the client, a \emph{PeerConnection} is created on the client and immediately after, an \ac{WebRTC} endpoint is created on the server, specifying a possible set of \ac{ICE} servers to connect.

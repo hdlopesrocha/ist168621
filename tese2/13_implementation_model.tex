@@ -112,6 +112,7 @@ The user model is not tied to the user attributes (Table \ref{table:user}), the 
 \end{table}
 
 \subsection{Relation model}
+% HR-FINAL - Sim isso, relações em geral, user-grupo, user-user, grupo-grupo, user-carro, user-escola... no fundo entidades, como está escrito
 
 A relation between two entities $e_1$ and $e_2$ is represented by the pair $e_1\rightarrow e_2$ (Table \ref{table:relation}), where $e_1$ is the source and $e_2$ is the target. This relation is said to be bi-directional if and only if it also exists the relation $e_2\rightarrow e_1$.
 
@@ -134,10 +135,11 @@ In order to improve the performance of queries over the \emph{Relation} collecti
 
 \subsection{Group model}
 
-A conference room, which is the environment where users communicate among themselves, is represented persistently by a group of participating entities (in general users but our system allow other types of entities).
+A conference room, which is the environment where users communicate among themselves, is represented persistently by a group of participating entities (in general users but our system allow other types of entities). A conference room is composed by only online users and does not need to be stored on database.
 
 A group is composed by an \emph{id}, \emph{inviteToken} and a \emph{visibility} as shown on Table \ref{table:group}.
 Moreover, a group can be public or private. If the group is public, then it is visible to all users that maintain a friendship with a member of this group. If the group is private, then it is only visible to its members.
+
 
 \begin{table}
 \centering

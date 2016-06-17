@@ -123,7 +123,7 @@ function onCodeFound(content) {
 
 	When a user enters the conference room, immediately after the \emph{WebSocket} creation the server sends him the current content. The user receives the content, sorts all components by time and creates a set of events. All the events before the user's time are displayed and removed from the set of events. A timer is scheduled for the first component on the event set and the process repeats while the set is not empty.
 
-	If the event set is empty, there two options. If the server contained more content, a new request for content is made and the process starts from the beginning, namely the server sends the correspondent content again. If the server has no more content, the process is stopped until it sends more.
+	If the event set is empty, there are two options. If the server contained more content, a new request for content is made and the process starts from the beginning, namely the server sends the correspondent content again. If the server has no more content, the process is stopped until it sends more.
 
 	Listing \ref{lst:pseudo_render} presents the pseudo code for our content scheduler.
 

@@ -1,17 +1,21 @@
 \section{Stream Recording}
- Initially we experimented with local recording and synchronizing with our servers. Even thought it got it to work, it consumed to much bandwidth. We then tried recording on server side. In this section, we describe the several techniques evaluated.
+ Initially we experimented with local recording and synchronizing with our servers. Even thought it worked, it consumed too much bandwidth. We then tried recording on server side. In this section, we describe the several techniques evaluated.
 
 %RP Innitially we experimented with local recording. Even thought it got it to work, it consumed to much bandwith. We then tried ....  In this section, we describe the several techniques evaluated.
 
 \subsection{Client side recording}
-In order to record used shared streams, our first approach consisted in locally recording video and audio streams into blobs of limited duration. Because each user was recording directly from their shared local resources, we achieved the best stream quality.
+In order to record user shared streams, our first approach consisted in locally recording video and audio streams into blobs of limited duration. Because each user was recording directly from their shared local resources, we achieved the best stream quality.
 %RP used -> user?
 
-After recording, each block was uploaded to our server through \ac{HTTP}, saved into the server's file system, the block meta-data was created and inserted on our database. Each block meta-data contained the file's location for the recorded block, the starting date, duration, user identification and group identification.
+After recording, each block was uploaded to our server through \ac{HTTP}, saved into the server's file system, the block meta-data was created and inserted in our database. Each block meta-data contained the file's location for the recorded block, the starting date, duration, user identification and group identification.
 %RP referenciar o modelo na secção 3.xx? 
 %HR talvez não, não é o mesmo modelo, foi uma abordagem diferente
 
-When the file was completely saved, the meta-data was advertised to the remaining users. This meta-data was simply used to refresh the user interface and was completely discarded after that, because an huge amount of small blocks' meta-data would use more and more memory as time went by. 
+
+
+When the file was completely saved, the meta-data was advertised to the remaining users. This meta-data was simply used to refresh the user interface and was completely discarded after that, because a huge amount of small blocks' meta-data would use more and more memory as time went by. 
+
+% HR-FINAL - streaming? gravação de x em x tempo, streaming em tempo real já foi
 
 	The process to play a video was quite simple. The user specified which user and date he intended to play, the server calculated the intersection between the requested date and the block bounds and returned the file to the client.
 	Although this idea was fairly simple, we could not achieve seamless sequential block switching. Downloading the video file always took a noticeable amount of time. To solve this problem, while we were playing a block, the next one was downloading in parallel, so when the current block finished playing we would have an available block to play. 
@@ -131,20 +135,20 @@ The streaming content received on \ac{KMS} was already compressed due to \ac{Web
 
 
         \ac{KMS} does not support playing video at higher speeds, a useful feature that enables users to watch a video in less time than its duration.
-	For playing video with an higher velocity, we used \emph{ffmpeg}\footnote{\url{https://www.ffmpeg.org/}(accessed: 17 March 2016)} to convert the block into a new video with the desired velocity and seek time. Because the media duration is known, when the video started to being converted the headers located at the beginning of the file were already written and that made it possible to stream while converting.
+	For playing video with an higher velocity, we used \emph{ffmpeg}\footnote{\url{https://www.ffmpeg.org/}(accessed: 17 March 2016)} to convert the block into a new video with the desired velocity and seek time. Because the media duration is known, when the video started being converted the headers located at the beginning of the file were already written and that made it possible to stream while converting.
 	%{\color{red} [TALK ABOUT COMPLEXITY OF DECODE VS DECODE+MANIPULATE+ENCODE]}
 	Although we implemented a solution that worked, we immediately noticed that \emph{ffmpeg} would take some time to initialize and that lead to pauses between switching parts which represents an undesirable behavior.
         
-	Later the \emph{Kurento} team released a version with support for seeking videos but we had to suspend the implementation of the fast forwarding feature as currently \ac{KMS} is not supporting that.
+	Later the \emph{Kurento} team released a version with support for seeking videos.% but we had to suspend the implementation of the fast forwarding feature as currently \ac{KMS} is not supporting that.
         %RP fiquei sem perceber. O método com o ffmpeg deixou de funcionar? Ou desististe devido ao outros problemas (delay, qualidade, cpu)?
 
-	Although we have not implemented fast forwarding, we could implement it without real time conversion by creating multiple versions of the same video with different playback speeds after the recording of a block. When a user needed to play, he would also need to specify one of the available speed. We did not followed this approach has it would require larger disk space usage. 
+	We have not implemented fast forwarding, as currently \ac{KMS} is not supporting that. We could implement fast forwarding without real time conversion by creating multiple versions of the same video with different playback speeds after the recording of a block. When a user needed to play, he would also need to specify one of the available speed. We did not followed this approach has it would require larger disk space usage. 
 
 \subsection{Server side recording to database}
 
-	One of our concerns during the development of our solution was the storage scalability. Saving files directly into the file system would require an extra effort to distribute and replicate files among servers. For that purpose, the \emph{Kurento} team developed \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} which is based on \emph{MongoDB}.
+	One of our concerns during the development of our solution was the storage scalability. Saving files directly into the file system would require an extra effort to distribute and replicate files among servers. For that purpose, the \emph{Kurento} team developed \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} which is based on \emph{MongoDB} and, as a consequence, improve our solution's scalability by performing replication.
 
-	One of the features that \emph{Kurento Repository} provides is the ability to play directly from the database without having to download the entire file to \ac{KMS}. The same is true for recording, but because the file headers are in the beginning and the file is written until is stops, the headers do not contain the necessary information for seeking the file.
+	One of the features that \emph{Kurento Repository} provides is the ability to play directly from the database without having to download the entire file to \ac{KMS}. The same is true for recording, but because the file headers are in the beginning and the file is written until it stops, the headers do not contain the necessary information for seeking the file.
 	Although we gain with scalability with this approach, we lose access over the file for changing it to fit our needs, namely for using \emph{ffmpeg} or other video manipulation tool.
         
 	Although we did not implement recorded file seeking, that could be achieved by waiting for full file recording and then proceed to database re-insertion with the correct headers. Another approach would be the specification of the file duration before recording, so the correct file headers could be written a priori. Both approaches were not possible to implement using just the \emph{Kurento} clients. We would need change the source code of \emph{Kurento} in order to add those new features.
