@@ -11,6 +11,7 @@ In a general way our system's goal is to provide a multi-party video and audio c
 % Só depois traduzes isso em requisitos, tanto funcionais como não funcionais
 % Depois apresentas a arquitectura, fazendo um paralelo entre os módulo e escolhas realizadas e quais os requisitos que cada um deles satisfaz. 
 
+
 For our system, the goals include:
 
 \begin{itemize}
@@ -20,7 +21,7 @@ For our system, the goals include:
  \item \textbf{Stream Composition} - Our streaming server must support mixing multiple user streams into a single stream. The sound played on clients must be the composed sound of all participants but the video played can be switched to the individual or group view.
  \item \textbf{Time annotations} - Our application must give the possibility to create annotations associated to a specified time and support viewing them on a timeline. 
  \item \textbf{Content Overlay} - Our system must allow users to superimpose hyper-content to video given a range of time. This content can be continuous or discrete and interactive or non interactive.
- \item \textbf{Search} - Unified search every objects related to a conference room such as hyper-content, time annotations and users.
+ \item \textbf{Search} - Search every objects related to a conference room such as hyper-content, time annotations and users.
  \item \textbf{Content Sharing} - Our application must have the ability to share files and time links among users.
  \item \textbf{Active talker detection} - The system must enable sound detection for showing the current speaker.
  \item \textbf{Collaboration} - The web application must provide a collaborative text edition tool.
@@ -31,6 +32,8 @@ For our system, the goals include:
 \end{itemize}
 
 %RP capacidade de lidar com NAT
+% HR-FINAL - Collaboration VS QRCode, completamente diferentes
+% HR-FINAL - annotation vs content, specified time VS range of time, timeline VS superimposed video content (what else?)
 
 	Moreover we allow clients to discover chat rooms and other clients by navigating on the web pages provided by our web server. In addition users can create rooms for multi-party audio and video communication communication which is achieved by using \ac{WebRTC}'s \emph{PeerConnection}.
         %RP falas em peerconnection, mas na figura 3.1 apenas há um cliente, o que obviamente impede mostrar a comunicação entre peers.
@@ -58,7 +61,7 @@ In this section we present the several modules that were designed in order com f
 
  \item \textbf{NAT Traversal module} - \ac{STUN} and \ac{TURN} are techniques used by \emph{Client} and \emph{Stream} modules during the \emph{Signaling} phase which ends by establishing the connection between them.
 
- \item \textbf{Stream module} - responsible to deliver and receive multimedia content from the \emph{Client} using \ac{WebRTC}. 
+ \item \textbf{Stream module} - responsible to receive and deliver multimedia content to the \emph{Client} using \ac{WebRTC}. 
 
  \item \textbf{Storage module} - provides two main functionalities: store the model information and media recorded. This is the single module responsible for persistent storage. It stores user and communication data as well as all the data required among user sessions. It is also use to store all the communication streams, so that they can be viewed later.
 
@@ -72,8 +75,10 @@ In this section we present the several modules that were designed in order com f
 
  
 \section{Implementation Proposal}
-The infrastructure is composed by: web server, stream server, signaling server, database and video repository.
+The infrastructure is composed by: web server, stream server, database and video repository.
 %RP tens da fazer o paralelo entre isto e os componentes apresentados na secção anterior. O mesmo com a imagem, que parece não estar relacionada. Podes colocar os elementos na mesma posição, ou dentro das caixas da imagem 3.1
+
+% HR-FINAL - Corrigido
 
 \begin{figure}[H]
 	\centering
@@ -91,9 +96,11 @@ Having established that the \emph{backend} modules are placed in the same machin
 To qualify the above we provide public access to \ac{HTTP} server ports, maintaining the access to other components restricted through firewall rules.
 %RP qualify?
 %RP Imagem com firewall e estes portos? Mas isto já me parece muito detalhe de implementação.
-In relation to the database there is no directly access from the outside. All the database information is accessed via our application server which validates the permissions of users on our system.
+In relation to the database there is no direct access from the outside. All the database information is accessed via our application server which validates the permissions of users on our system.
 
-On the other hand, the access to our streaming servers is also restricted, but clients can connect to them after concluding the signaling phase. This signaling phase may or not proceed in function of the client access permissions. For example, if a user is trying to access a private conference room that he is not a member of nor has an invitation link for, the signaling server refuses to start the signaling phase and the user cannot access the streaming server.
+On the other hand, the access to our streaming servers is also restricted, but clients can connect to them after concluding the signaling phase. This signaling phase may or not proceed in function of the client's access permissions. For example, if a user is trying to access a private conference room that he is not a member of nor has an invitation link for, the signaling server refuses to start the signaling phase and the user cannot access the streaming server.
+
+% HR-FINAL - Bastava o cliente saber o a API do KMS, ligar-se a ele e controla-lo como se fosse administrador (o servidor web faz isso). Uma forma de ter o servidor publico e ano ser vulneravel a ameaças passaria por configurar a firewall de forma a bloquear o acesso indevido.
 
 The placement of our streaming servers inside a \ac{NAT} also has an important role with respect to external misuse prevention. Otherwise, placing our streaming servers could allow external clients to perform their own signaling protocol and, as a consequence, use our infrastructure without our consent.
 
@@ -117,9 +124,15 @@ The placement of our streaming servers inside a \ac{NAT} also has an important r
 \end{minipage}
 \end{figure}
 
+% HR-FINAL - KMS? Não só, também as ligações por websocket são centralizadas, por isso é que não especifiquei na figura se era KMS ou WebServer.
+
 	In this context, each client must only have one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand either being it an individual or a composite view. This approach is centralized, as seen on Figure \ref{fig:central}. Otherwise clients could follow a peer-to-peer connection, as seen on Figure \ref{fig:p2p}, which would result on maintaining more connections and performing the composition of videos on client side.
 
-	The composition of streams on client side is performed by receiving streams with the best quality possible but, due to undersizing the video of clients into a smaller region, this would result on wasting bandwidth on a quality that is not needed.
+% HR-FINAL - Já foi definido. Sim é o que está escrito.
+
+	The composition of streams on client side could be performed by receiving streams with the best quality possible from other users but, due to resizing the video of clients into a smaller region, this would result on wasting bandwidth on a quality that is not needed.
+
+% HR-FINAL - is VS could = could wins. Receive video with the best quality from other users... resizing
 
 	Although the peer-to-peer approach could be used on our system, we conclude that we need to record the video on our streaming server because web clients have a very limited storage and peer disconnections may result on recorded video loss. 
 
@@ -128,6 +141,8 @@ The placement of our streaming servers inside a \ac{NAT} also has an important r
 	Relaying instant messages from clients through the our web servers is easier if all clients are connected to the same server because all messages can be directly delivered without sending messages across multiple web servers. 
 
 	In the context of this thesis, we will not implement sending messages across web servers but, in order to allow our system to scale, we will consider that all conference participants are connected to the same server and our system is scaled by having conference rooms distributed across different servers.
+
+% HR-FINAL - "all conference participants are connected to the same server" sim é mesmo isso, se não fosse teria que enviar as mensagens entre varios servidores (é o que está escrito)	
 
 \subsection{Software choices}
 
