@@ -67,7 +67,7 @@ From a deployment point of view, our performance tests showed that our solution 
 
 
 As communications technologies evolved, we adapted the way we communicate. 
-Multi-party video conference is today a commonly used tool in the enterprise, academia and personal live.
+Multi-party video conference is today a commonly used tool in the enterprise, academia and individually.
 The \gls{WWW} has made us familiar with the concept of text hyper-media, in the form of hyper-links.
 \gls{IPTV} and video hosting platforms, such as Youtube, made non-linear video watching a common practice.
 The latter also use the concept of hyper-links superimposed over videos.
@@ -124,8 +124,9 @@ HyVAL defines defines video structure, internal video and external media objects
 %External media objects are linked by primary video, those objects can represent other videos, images, text, animation and sound.
   %RP não percebo bem a última frase. O que é primary video?
 
-  \gls{SMIL}~\cite{smil} was introduced to describe temporal behavior of multimedia content, in particular, it could be used to overlay subtitles on films. 
-With \gls{SMIL} it is possible to synchronize multiple videos, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements with hyper-links, among multiple other features.
+  \gls{SMIL}~\cite{smil} was introduced to describe temporal behavior of multimedia content%, in particular, it could be used to overlay subtitles on films%
+  . 
+With \gls{SMIL} it is possible to synchronize multiple videos, either in parallel or in sequence, reproduce a different audio track, overlay user interface elements like subtitles or hyper-links, among multiple other features.
   %RP synchronize multiple sections of video? vários videos apresentados em simultâneo?
 
  % \gls{SMIL} is an \gls{XML} based language that defines twelve modules: \emph{Animation}, \emph{Content Control}, \emph{Layout}, \emph{Linking}, \emph{Media Objects}, \emph{SmilText}, \emph{Meta Information}, \emph{Structure}, \emph{Timing}, \emph{Time Manipulations}, \emph{State} and \emph{Transitions}.
@@ -189,20 +190,20 @@ However, \gls{WebRTC} by itself does not define how users get to know each other
 From an user experience point of view, we designed our collaboration application around the concept of group conferences (or conference rooms).
 Users can create group conferences and invite other users to participate in these, either by adding the other user or by sharing a \gls{URL} (invitation link).
 In order to meet user expectation, a group conference provides functionality similar to those found in established applications such as \emph{Skype} or \emph{Google Hangouts}.
-Among other common features, one can view a small video of each participant or a large video of a selected participant.
+Among other common features, one can view a video composed by all participants or a video of a selected participant.
 Each participant may use more than one camera, in order to show different angles or objects, e.g. a white board and himself.
-The source of the large video can be selected manually or automatically assigned to the participant talking.
+The source of the video can be selected manually or automatically by the talking participant.
 Participating users may choose to view only, share their microphone, camera or screen.
 
 Besides the videos, a group conference includes a chat, collaborative text editor, list of users and document sharing.
 The major differentiating feature is a time-line bar, for navigating in time.
 While the group conference is taking place, this time bar is continuously progressing as time goes by.
 The user is free to slide over to any instant in the past or back to real-time.
-Changing the instant of time updates the state of not only the video but of other collaboration elements.
+Changing the instant of time updates the state of not only the video but of other collaboration elements. % ("other collaboration elements", nao foi implementado, apenas para conteudo sobreposto...) %
 
 Either in real-time or later, users can create bookmarks, displayed in the time-line, for easier navigation in time.
-Users can also add content to superimpose on the video.
-This content can be as simple as subtitles or as complex as a \gls{HTML} document or JavaScript code to perform an animation.
+Users can also superimpose content to video.
+This content can be as simple as subtitles or as complex as a \gls{HTML} document or JavaScript code to perform an animation or interaction.
 All the content is searchable, allowing for time navigation by content.
 
 From an early stage, we decided to target the browser platform, due to its ubiquity and breadth of devices, from desktops, to tablets and smartphones.
@@ -210,7 +211,9 @@ The nature of web browser applications already follows the hypermedia concept, w
 The advent of \gls{WebRTC}, currently available on the major web browsers, makes it possible to develop video conference web applications without plugins.
 However, mobile devices have limited resources for handling a large number of simultaneous video stream.
 
-In order to limit the processing requirement in the client application (browser), we decided to use a server to combine the audio and video streams from all the participants into a single video and a single audio track.
+\gls{SFU} is a technique that consists on having a server relaying each stream, as it is, to other users. Leaving the stream selection and composition operations to the user.
+
+In order to limit the processing requirement in the client application (browser), we decided to use a server to combine the audio and video streams from all the participants into a single video and a single audio track. This techinique is called \gls{MCU}.
 This also helps conserve battery on mobile devices.
 Each user listens to the combined audio track and may choose to see a single participant or all of them, in this case using the combined video track. 
 
@@ -237,10 +240,9 @@ Figure~\ref{fig:modules} presents the structure of our system, which was divided
 
 \paragraph{Stream module} responsible to deliver and receive multimedia content from the \emph{Client} using \gls{WebRTC}. This is where audio and video are combined into single streams. It is also here that \gls{QR} codes present in the client streams are detected.
 
-\paragraph{Storage module} provides two main functionalities: store the model information and media recorded. This is the single module responsible for persistent storage. It stores user and communication data as well as all the data required among user sessions. It is also use to store all the communication streams, so that they can be viewed later.
+\paragraph{Storage module} provides two main functionalities: store the model information and media recorded. This is the single module responsible for persistent storage. It stores user and communication data as well as all the data required among user sessions. It is used as well to store all the communication streams, so that they can be viewed later.
 
-\paragraph{Client module} responsible for the interaction with the user. Runs on the browser on the user device.
-
+\paragraph{Client module} responsible for the interaction with the user. It runs on the user device's browser.
 
 
 Figure \ref{fig:infrastructure} depicts the architecture of our system, being composed by: web server, streaming server (\gls{KMS}), signaling server (\gls{ICE} server), database (MongoDB) and video repository (Kurento Repository).
@@ -252,7 +254,7 @@ Figure \ref{fig:infrastructure} depicts the architecture of our system, being co
         \label{fig:infrastructure}
 \end{figure}
 
-In order to simplify our solution, the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules are deployed within the same  server, so to facilitate deployment.
+In order to simplify our solution, the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules are deployed within the same server, so to facilitate deployment.
 To this set of modules, we call \emph{backend}.
 The \emph{Application} module is split between client and server part.
 The \emph{Signaling} module is implemented together with the application server.
@@ -262,20 +264,13 @@ Access to our streaming servers is given to clients after concluding the signali
 This signaling phase may or not proceed in function of the client access permissions to the particular group conference.
 
 With the use of a centralized architecture, each client only has one \emph{PeerConnection} to our streaming server and content shown to them is changed on demand, either being it an individual or a composite view. 
-A peer-to-peer approach would have required each peer to maintain a connection to each of the other participants an one to the streaming server, for recording.
+A peer-to-peer approach would have required each peer to maintain a connection to each of the other participants and one to the streaming server, for recording.
 This would seriously limit the size of each group conference by placing high bandwidth and processing requirements on the clients. 
 The same can be concluded about instant message delivery.
 Each client has only one \emph{WebSocket} connection to the application server which consequently relays the messages to other users.
 
 Our architecture can be scaled by having conference rooms distributed across different servers.
 However, all of a group conference participants must be connected to the same server.
-
-
-
-
-
-
-
 
 
 \section{Implementation}
@@ -290,9 +285,11 @@ For the collaborative text editor, we resorted to \emph{OT.js}\footnote{\url{htt
 
 By default, \emph{Kurento Repository}, used for storing the recorded video and audio streams, is implemented over \emph{MongoDB}.
 For convenience, our storage model also uses the same database.
-In order to offer all the functionality, some information about objects must be persistent such as users, groups, relations among users, group memberships, messages, hyper-content, recordings and collaborative editor state. 
+In order to offer all the functionality, some information about objects must be stored on database, such as users, groups, relations among users, group memberships, messages, hyper-content, recordings and collaborative editor state. 
 
-For the \emph{NAT Traversal} module a public \gls{STUN} server was used for testing our solution.
+% persistent -> stored on database, reviewer2 confundiu persistent com fixed 
+
+For the \emph{NAT Traversal} module, a public \gls{STUN} server was used for testing our solution.
 Nevertheless, we recognize that for a production environment we would need to maintain our own \gls{TURN} servers in order to ensure connectivity to all clients.
 
 
@@ -302,7 +299,7 @@ Table~\ref{table:apparch} presents the client application architecture and the u
 Both \emph{Mozilla Firefox} and \emph{Google Chrome} browsers are supported.
 \emph{Adapter.js} and \emph{jQuery} ensure that our application is compatible with the most popular web browsers.
 \emph{Bootstrap} is used to make the user interface more appellative and responsive, adapting to mobile devices with different screen sizes.
-\emph{OT.js} is used to build the collaborative text editor.
+\emph{OT.js} is used to synchronize the collaborative text editor.
 
 
 \begin{table}
@@ -330,10 +327,10 @@ After the web application server validates the user access, the client creates a
 Our signaling protocol consists of sending and receiving \gls{JSON} formated messages over that \emph{WebSockets} by both the application server and the client. 
 
 The Web application server retrieves all the information needed from the database in order to check if the user has permissions to join that conference room. 
-It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake is performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \gls{HTTP} context is lost.
+It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \gls{HTTP} context is lost.
 
 At this stage, the web application's user is asked if he wants to share its camera and microphone, share screen or just receive streams from the server. 
-If the user decides to share his camera or screen the user agent creates an offer, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the WebSocket to the Application Server.
+If the user decides to share his camera or screen the user agent creates an offer, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the \emph{WebSocket} to the Application Server.
 From a \gls{WebRTC} point of view, our media server (\gls{KMS}) is a peer that receives video streams and sends it to its connected peers (the clients). 
 
 Figure \ref{fig:signaling2} shows the sequence of messages, intermediated by the server, by which both client and \gls{KMS} determine and exchange \gls{ICE} candidates for establishing a direct connection despite \gls{NAT} firewalls.
@@ -357,18 +354,17 @@ Figure \ref{fig:signaling2} shows the sequence of messages, intermediated by the
     \label{fig:signaling2}
 \end{figure} 
 
-Having the media session established, \gls{KMS} starts to record any received stream and the client creates an \gls{URL} correspondent to the stream location.
-It also combines all the streams into a single one, which is also recorded.
+Having the media session established, \gls{KMS} starts to record any received stream, combines all the streams into a single one (which is also recorded) and the client creates an \gls{URL} correspondent to the stream location.
 Figure \ref{fig:devices} shows a combined stream with two different views of the same user with two cameras.
 %One of our concerns was the storage scalability. 
 %Saving files directly into the file system would require an extra effort to distribute and replicate files among servers.
 \emph{Kurento Repository}\footnote{\url{http://doc-kurento-repository.readthedocs.org} (accessed on 17 March 2016)} provides a scalable, replicated storage solution for streams, based on \emph{MongoDB}.
-Streams are saved in 10s blocks.
+Streams are saved into blocks of 10 seconds.
 
-With server side recording, the user would maintain always the same stream \gls{URL} even if it is playing real time video or reproducing recorded video. 
+With server side recording, the user keeps the same stream \gls{URL} even if it is playing real time video or reproducing recorded video. 
 It is \gls{KMS} that sends different content through that stream.
 When a user desires to play recorded video, he uses the time bar, shown in Figure \ref{fig:timeline}, to select a bookmark or simply drags it backwards.
-In response, the client uses the \emph{webSocket} to send a message specifying the time and the intended user id.
+In response, the client uses the \emph{WebSocket} to send a message specifying the time and the intended user id.
 The server performs the calculations in order to find a block that intersects the requested time, plays it and when finished, the next part is automatically played without the user intervention.
 
 	\begin{figure}
@@ -394,9 +390,9 @@ The decision of which content to be displayed to each user is performed by our c
 
 In order to create content, the user has the option to write simple movie captions without writing any code, otherwise, as mentioned before, it can write \gls{HTML}, \gls{CSS} and \emph{JavaScript}.
 
-As manually content insertion is a laborious task that can be realized after the video is recorder, we provide an alternative mechanism for real time introduction of superimposed content.
+As manually content insertion is a laborious task that can be realized after the video is recorded, we provide an alternative mechanism for real time introduction of superimposed content.
 In order to help the content creator to introduce and synchronize its content in real time, we allow the user to encode its content into \gls{QR} codes and show it to the camera in real time.
-The \gls{QR} code processing is performed at \gls{KMS}.
+The \gls{QR} code processing is performed at \gls{KMS} and its content is returned by our content scheduler.
 
 
 Our collaborative editor is a simple text editor, that is synchronized with all participants within a conference room, implemented using \emph{ot.js}.
@@ -405,27 +401,15 @@ Instead, the users just synchronize the editor content among themselves using th
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 \section{Evaluation}
 \label{chapter:evaluation}
 
 
 We tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's usability.
-We have also tested the performance of our solution by measuring the used resources.
+We have tested as well the performance of our solution by measuring the used resources.
 Those performance tests are crucial to ensure that our solution is in fact stable and scalable.
 
-We evaluated our system by running all the backend components as Docker containers on a Debian 8 machine with 128GB of RAM, 2 Intel Xeon E5-2640V2 CPUs, hybrid SSD, HDD storage and 1 Gbps Ethernet. 
+We evaluated our system by running all the backend components as Docker containers on a Debian 8 machine with 128GB of \emph{RAM}, 2 Intel Xeon E5-2640V2 CPUs, hybrid \emph{SSD}, \emph{HDD} storage and 1 Gbps Ethernet. 
 We implemented a small \emph{Python} script using \emph{psutil}\footnote{\url{https://github.com/giampaolo/psutil} (Accessed March 27, 2016)} that collects, every second, CPU and physical memory information relative to each running process and network usage relative to each interface. 
 
 The performance test scenario consists of having 7 users join the conference room sequentially and then leaving it, one at a time.
@@ -447,23 +431,23 @@ Each vertical yellow line represents one event: the first seven events are users
 
 
 The blue peaks are caused by the signaling phase and web page download when a new client joins.
-The green peaks inter-container traffic, caused by video and audio being transfered between \gls{KMS} and \emph{MongoDB} through \emph{Kurento Repository}.
-Peaks occurs every 10s, when a block of video is recorded.
+The green peaks are inter-container traffic, caused by video and audio being transfered between \gls{KMS} and \emph{MongoDB} through \emph{Kurento Repository}.
+Peaks occurs every 10 seconds, when a block of video is recorded.
 The recordings are synchronized, so all user and mixed blocks start and end at the same time.
 %That is why the amount of work done every ten seconds accumulates, and because this is performed locally, the maximum transfer rate is limited by the performance of the memory as buffers are written to buffers then to disks. 
-Sent data transfer rate has no significant peaks as \gls{HTTP} requests and signaling information contains little information, being mostly made up of video streams sent to the clients.
-As expected, send and received traffic grows linearly with the number of users.
+Received data transfer rate has no significant peaks as \gls{HTTP} requests and signaling information contains little information, being mostly made up of video streams sent by the clients. % Esta frase estava um bocado sem sentido (olhando para a figura, no grafico mostra o ponto de vista do servidor, a frase estava no ponto de vista do utilizador)
+As expected, sent and received traffic grows linearly with the number of users.
 
 %candidato a apagar
 %With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \gls{KMS} should be installed on the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \gls{KMS} and \emph{Kurento Repository} on the same machine.
 
 
-Figure \ref{fig:test_client_net} shows the same events from the respective of network usage on the client side.
+Figure \ref{fig:test_client_net} shows the same events from the respective network usage on the client side.
 We observe that in the first seconds the client adjusts the video quality it sends to \gls{KMS} and maintains that upload rate throughout.
 Whenever a new client enters the conference, we observe that \gls{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room.
 After a while, \gls{KMS} realizes that the network can handle the increase of clients and sends the video with a better quality to every participant.
 When a user leaves the conference room \gls{KMS} has no need to decrease the participant's video quality as less network bandwidth will be used.
-As expected, the maximum bandwidth used is constant and independent of the number of participants.
+As expected, the maximum bandwidth used is constant and independent from the amount of participants.
 
 \begin{figure}
   \centering
@@ -553,18 +537,6 @@ Another weak aspect was our content editor, which, in fact, we recognize is diff
 Some users have suggested that the content should also be present on the timeline so they could be easily dragged and resized (on time).
 
 In conclusion, 100\% of our testers though that our solution was an innovation and 95\% recommended using our solution.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
