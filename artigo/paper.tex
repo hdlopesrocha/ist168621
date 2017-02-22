@@ -192,14 +192,14 @@ Users can create group conferences and invite other users to participate in thes
 In order to meet user expectation, a group conference provides functionality similar to those found in established applications such as \emph{Skype} or \emph{Google Hangouts}.
 Among other common features, one can view a video composed by all participants or a video of a selected participant.
 Each participant may use more than one camera, in order to show different angles or objects, e.g. a white board and himself.
-The source of the video can be selected manually or automatically by the talking participant.
+The source of the video can be selected manually or be automatically assigned to the talking participant.
 Participating users may choose to view only, share their microphone, camera or screen.
 
 Besides the videos, a group conference includes a chat, collaborative text editor, list of users and document sharing.
 The major differentiating feature is a time-line bar, for navigating in time.
 While the group conference is taking place, this time bar is continuously progressing as time goes by.
 The user is free to slide over to any instant in the past or back to real-time.
-Changing the instant of time updates the state of not only the video but of other collaboration elements. % ("other collaboration elements", nao foi implementado, apenas para conteudo sobreposto...) %
+Changing the instant of time updates the state of not only the video but also of other collaboration elements. % ("other collaboration elements", nao foi implementado, apenas para conteudo sobreposto...) %
 
 Either in real-time or later, users can create bookmarks, displayed in the time-line, for easier navigation in time.
 Users can also superimpose content to video.
@@ -213,7 +213,7 @@ However, mobile devices have limited resources for handling a large number of si
 
 \gls{SFU} is a technique that consists on having a server relaying each stream, as it is, to other users. Leaving the stream selection and composition operations to the user.
 
-In order to limit the processing requirement in the client application (browser), we decided to use a server to combine the audio and video streams from all the participants into a single video and a single audio track. This techinique is called \gls{MCU}.
+In order to limit the processing requirement in the client application (browser), we decided to use a server to combine the audio and video streams from all the participants into a single video and a single audio track. This technique is called \gls{MCU}.
 This also helps conserve battery on mobile devices.
 Each user listens to the combined audio track and may choose to see a single participant or all of them, in this case using the combined video track. 
 
@@ -227,7 +227,7 @@ Figure~\ref{fig:modules} presents the structure of our system, which was divided
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth]{figures/modules2.png}
+	\includegraphics[width=\linewidth]{figures/modules.pdf}
 	\caption{System Modules}
     \label{fig:modules}
 \end{figure}
@@ -254,7 +254,7 @@ Figure \ref{fig:infrastructure} depicts the architecture of our system, being co
         \label{fig:infrastructure}
 \end{figure}
 
-In order to simplify our solution, the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules are deployed within the same server, so to facilitate deployment.
+In order to simplify our solution, the \emph{Application}, \emph{Signaling}, \emph{Stream} and \emph{Storage} modules are deployed within the same server, as to facilitate deployment.
 To this set of modules, we call \emph{backend}.
 The \emph{Application} module is split between client and server part.
 The \emph{Signaling} module is implemented together with the application server.
@@ -285,7 +285,7 @@ For the collaborative text editor, we resorted to \emph{OT.js}\footnote{\url{htt
 
 By default, \emph{Kurento Repository}, used for storing the recorded video and audio streams, is implemented over \emph{MongoDB}.
 For convenience, our storage model also uses the same database.
-In order to offer all the functionality, some information about objects must be stored on database, such as users, groups, relations among users, group memberships, messages, hyper-content, recordings and collaborative editor state. 
+In order to offer all the functionality, some information about objects must be stored on the database, such as users, groups, relations among users, group memberships, messages, hyper-content, recordings and collaborative editor state. 
 
 % persistent -> stored on database, reviewer2 confundiu persistent com fixed 
 
@@ -310,9 +310,9 @@ Both \emph{Mozilla Firefox} and \emph{Google Chrome} browsers are supported.
 \resizebox{\columnwidth}{!}{%
     \begin{tabular}{cccccccc@{}m{0pt}@{}}
 	\hline 
-	\multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[2pt]\cline{1-5}\cline{7-7}
-	\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{ot.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} & \multicolumn{1}{c|}{adapter.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} &\\[2pt]\hline
-	\multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[2pt]\hline
+	\multicolumn{8}{|c|}{\cellcolor{Gray}Application}  &\\[12pt]\cline{1-5}\cline{7-7}
+	\multicolumn{1}{|c|}{jQuery} & \multicolumn{1}{c|}{HTML5} & \multicolumn{1}{c|}{CSS3 (Bootstrap)} & \multicolumn{1}{c|}{Signaling} & \multicolumn{1}{c|}{ot.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} & \multicolumn{1}{c|}{adapter.js} & \multicolumn{1}{c|}{\cellcolor{Gray}} &\\[12pt]\hline
+	\multicolumn{1}{|c|}{HTTP} & \multicolumn{2}{c|}{User Interface}  & \multicolumn{3}{c|}{WebSocket}    & \multicolumn{2}{c|}{WebRTC}      &\\[12pt]\hline
 	\end{tabular}
 }
 \end{table}
@@ -327,7 +327,7 @@ After the web application server validates the user access, the client creates a
 Our signaling protocol consists of sending and receiving \gls{JSON} formated messages over that \emph{WebSockets} by both the application server and the client. 
 
 The Web application server retrieves all the information needed from the database in order to check if the user has permissions to join that conference room. 
-It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \gls{HTTP} context is lost.
+It is important to save the user identification before the \emph{WebSocket} connection is created because, after the handshake is performed by the \emph{WebSocket} protocol\cite{rfc6455}, the \gls{HTTP} context is lost.
 
 At this stage, the web application's user is asked if he wants to share its camera and microphone, share screen or just receive streams from the server. 
 If the user decides to share his camera or screen the user agent creates an offer, sets a \emph{local session description} to its \emph{PeerConnection} and sends it through the \emph{WebSocket} to the Application Server.
@@ -369,7 +369,7 @@ The server performs the calculations in order to find a block that intersects th
 
 	\begin{figure}
 		\centering
-		\includegraphics[width=\linewidth]{figures/devices2.png}
+		\includegraphics[width=\linewidth]{figures/devices.png}
 		\caption{Multiple devices per user}
 		\label{fig:devices}
 	\end{figure}
@@ -406,7 +406,7 @@ Instead, the users just synchronize the editor content among themselves using th
 
 
 We tested our solution with real users for a better understanding of their difficulties and what can be done in order to improve our solution's usability.
-We have tested as well the performance of our solution by measuring the used resources.
+We have also tested the performance of our solution by measuring the used resources.
 Those performance tests are crucial to ensure that our solution is in fact stable and scalable.
 
 We evaluated our system by running all the backend components as Docker containers on a Debian 8 machine with 128GB of \emph{RAM}, 2 Intel Xeon E5-2640V2 CPUs, hybrid \emph{SSD}, \emph{HDD} storage and 1 Gbps Ethernet. 
@@ -442,7 +442,7 @@ As expected, sent and received traffic grows linearly with the number of users.
 %With this results we conclude that if we want to scale our storage solution using the \emph{MongoDB}'s cluster configuration, both \emph{Kurento Repository} and \gls{KMS} should be installed on the same machine because the loopback interface can handle bigger transfer rates than the remaining network interfaces. Installing the repository on the same machine as a database node does not ensure that recorded videos are stored in the same machine, for this reason we would prefer installing \gls{KMS} and \emph{Kurento Repository} on the same machine.
 
 
-Figure \ref{fig:test_client_net} shows the same events from the respective network usage on the client side.
+Figure \ref{fig:test_client_net} shows the same events regarding network usage from the perspective of the client.
 We observe that in the first seconds the client adjusts the video quality it sends to \gls{KMS} and maintains that upload rate throughout.
 Whenever a new client enters the conference, we observe that \gls{KMS} decreases the video quality in order to instantaneously integrate a new user into the conference room.
 After a while, \gls{KMS} realizes that the network can handle the increase of clients and sends the video with a better quality to every participant.
